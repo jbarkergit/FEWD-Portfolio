@@ -1,0 +1,54 @@
+.flexBox,
+.flexBoxY {
+  display: flex;
+  align-items: center;
+}
+.flexBoxY {
+  flex-wrap: wrap;
+}
+.flexColumn {
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+.alignUnset {
+  align-items: unset;
+}
+.col-span-2 {
+  display: grid;
+  grid-column: span 2;
+}
+.col-span-3 {
+  display: grid;
+  grid-column: span 3;
+}
+.col-span-4 {
+  display: grid;
+  grid-column: span 4;
+}
+.row-span-2 {
+  display: grid;
+  grid-row: span 2;
+}
+.row-span-3 {
+  display: grid;
+  grid-row: span 3;
+}
+.row-span-4 {
+  display: grid;
+  grid-row: span 4;
+}
+.posRelative {
+  position: relative;
+}
+.posAbsolute {
+  position: absolute;
+}
+.justifyStart {
+  justify-content: flex-start;
+}
+.justifyCenter {
+  justify-content: center;
+}
+.justifyEnd {
+  justify-content: flex-end;
+}

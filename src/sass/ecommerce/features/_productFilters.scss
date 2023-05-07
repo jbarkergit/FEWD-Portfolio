@@ -1,0 +1,17 @@
+@use '../../util/functions' as u;
+@use '../../styles/mixins' as i;
+
+.productFilters {
+  width: 100%;
+  height: u.rem(100);
+  padding: 0 u.rem(25) 0 u.rem(25);
+  &--half {
+    width: 50%;
+    &__button {
+      gap: u.rem(25);
+      & i {
+        font-size: u.rem(30);
+      }
+    }
+  }
+}

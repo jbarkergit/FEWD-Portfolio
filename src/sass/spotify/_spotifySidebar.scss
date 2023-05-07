@@ -1,0 +1,58 @@
+@use '../util/functions' as u;
+@use '../styles/mixins' as i;
+
+.spotifySidebar {
+  grid-area: spotifySidebar;
+  width: u.rem(241);
+  height: 100%;
+  min-height: 0;
+  max-width: u.rem(241);
+  padding-top: u.rem(24);
+  background-color: hsl(0, 0%, 0%);
+  &__spotifyLogo {
+    display: inline-block;
+    width: 100%;
+    height: u.rem(40);
+    max-width: u.rem(131);
+    margin-bottom: u.rem(18);
+    & a {
+      padding: 0 u.rem(24);
+      & title {
+        color: white;
+      }
+    }
+  }
+  &__mainNav-1,
+  &__mainNav-2 {
+    padding: 0 u.rem(8);
+    & button {
+      gap: u.rem(16);
+      width: 100%;
+      height: 40px;
+      padding: 0 u.rem(16);
+      & .btnIcon {
+        color: white;
+      }
+      & .btnText {
+        color: white;
+        text-transform: capitalize;
+        font-size: clamp(u.rem(12), u.rem(6) + 0.5vw, u.rem(14));
+        font-weight: 900;
+      }
+    }
+  }
+  &__userLibaries {
+    & button {
+      gap: u.rem(16);
+      width: 100%;
+      height: 40px;
+      padding: 0 u.rem(16);
+      & h4 {
+        color: white;
+        text-transform: capitalize;
+        font-size: clamp(u.rem(12), u.rem(6) + 0.5vw, u.rem(14));
+        font-weight: 400;
+      }
+    }
+  }
+}

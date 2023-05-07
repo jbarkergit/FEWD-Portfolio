@@ -1,0 +1,41 @@
+import DemoPreview from '../components/main/DemoPreview';
+import DeveloperInfo from '../components/main/DeveloperInfo';
+import SidebarProps from '../components/props/main/SidebarProps';
+
+const DevDemo = () => {
+  return (
+    <main className="developmentDemo">
+      <DeveloperInformation dataIndex={0} dataStatus="active" />
+      <EcommerceDemo dataIndex={1} dataStatus="inactive" />
+    </main>
+  );
+};
+
+export default DevDemo;
+
+type FooterNavPropsType = {
+  dataIndex: number;
+  dataStatus: string;
+};
+
+const DeveloperInformation = ({ dataIndex, dataStatus }: FooterNavPropsType) => {
+  return (
+    <section className="demoSection flexBox" data-index={dataIndex} data-status={dataStatus}>
+      <DeveloperInfo />
+      <aside className="sidebar flexBox" aria-label="Project Information">
+        <SidebarProps description="This portfolio and its projects were crafted without the aid of component libraries. This portfolio utilizes Vite, React, TypeScript, a Prettier/ESLint combo with AIRBNB config, BEM methodology, and Sass." />
+      </aside>
+    </section>
+  );
+};
+
+const EcommerceDemo = ({ dataIndex, dataStatus }: FooterNavPropsType) => {
+  return (
+    <section className="demoSection flexBox" data-index={dataIndex} data-status={dataStatus}>
+      <DemoPreview />
+      <aside className="sidebar flexBox" aria-label="Project Information">
+        <SidebarProps description="Ecommerce placeholder" />
+      </aside>
+    </section>
+  );
+};

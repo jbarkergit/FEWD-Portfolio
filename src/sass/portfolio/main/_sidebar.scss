@@ -1,0 +1,41 @@
+@use '../../util/functions' as u;
+@use '../../styles/mixins' as i;
+@use '../../util/breakpoints' as b;
+
+.sidebar {
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  z-index: 2;
+  @include i.portElement;
+  @include b.breakpoint(portfolioTablet) {
+    flex-basis: 25%;
+    flex-grow: 1;
+    height: 75vh;
+  }
+  &__article {
+    position: absolute;
+    min-width: 100%;
+    height: 25vh;
+    padding: 0 10vw;
+    @include b.breakpoint(portfolioTablet) {
+      height: 75vh;
+      padding: calc(u.rem(10) + 1.5625vw);
+    }
+    &__digest {
+      height: fit-content;
+      & h2 {
+        width: 100%;
+        white-space: wrap;
+        font-weight: 600;
+        @include i.gradientText;
+      }
+      & p {
+        min-width: 100%;
+        padding-bottom: u.rem(15);
+        color: var(--textSecondary);
+        font-weight: 400;
+      }
+    }
+  }
+}

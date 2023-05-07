@@ -1,0 +1,59 @@
+@use '../../util/functions' as u;
+@use '../../styles/mixins' as i;
+
+.productPage {
+  gap: u.rem(25);
+  width: 90vw;
+  height: 90vh;
+  padding: u.rem(25) u.rem(100);
+  margin: 0 auto;
+}
+.productPhotos {
+  display: grid;
+  grid-template-rows: repeat(auto-fit, calc(100% / 3));
+  grid-auto-rows: 1fr;
+  gap: u.rem(10);
+  width: 20%;
+  height: 100%;
+  & button picture {
+    max-height: u.rem(250);
+    @include i.productPhoto;
+    filter: contrast(90%) brightness(83%);
+    border-radius: u.rem(8);
+    &[data-status='active'] {
+      filter: contrast(100%) brightness(100%);
+      transform: scale(106%);
+    }
+    & img {
+      max-height: u.rem(250);
+      object-fit: scale-down;
+      @include i.photoFilters;
+    }
+  }
+}
+.activeProductPhoto {
+  position: relative;
+  width: 45%;
+  & picture {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: u.rem(8);
+    @include i.productPhoto;
+    @include i.productPhotoHover;
+    cursor: zoom-in;
+    & img {
+      width: 100%;
+      height: 100%;
+      padding: u.rem(40) 0;
+      object-fit: scale-down;
+      @include i.photoFilters;
+    }
+  }
+}
+.productPlate {
+  width: 35%;
+  height: 100%;
+  padding: u.rem(40) u.rem(40);
+}

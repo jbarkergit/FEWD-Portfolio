@@ -1,0 +1,10 @@
+@use '../util/functions' as u;
+@use '../styles/mixins' as i;
+
+.spotifyMain {
+  grid-area: spotifyMain;
+  width: 100%;
+  min-height: calc(-673px + 100vh);
+  background-color: hsl(0, 0%, 33%);
+  overflow: hidden;
+}

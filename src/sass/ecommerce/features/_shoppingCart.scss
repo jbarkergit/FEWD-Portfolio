@@ -1,0 +1,27 @@
+@use '../../util/functions' as u;
+@use '../../styles/mixins' as i;
+
+.cartWrapper {
+  display: flex;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  pointer-events: none;
+}
+.shoppingCart {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: u.rem(500);
+  height: auto;
+  z-index: 10;
+  border-radius: u.rem(10);
+  margin: 16vh 0 0 0;
+  background-color: white;
+  opacity: 0.9;
+  &__cart {
+  }
+}

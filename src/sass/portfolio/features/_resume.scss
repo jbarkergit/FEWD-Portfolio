@@ -1,0 +1,91 @@
+@use '../../util/functions' as u;
+@use '../../styles/mixins' as i;
+@use '../../util/breakpoints' as b;
+
+#resume {
+  position: relative;
+  z-index: 30;
+}
+#resume.fadeIn {
+  display: flex;
+  height: 100vh;
+  background-color: hsla(0, 0%, 0%, 80%);
+  backdrop-filter: blur(2px);
+  transform: translateY(-100%);
+  transition: background-color 0.35s ease-in 250ms, backdrop-filter 0.25s ease-in 250ms;
+}
+#resume.fadeOut {
+  display: none;
+  height: 0;
+  background-color: hsla(0, 0%, 0%, 0);
+  backdrop-filter: blur(0px);
+  transform: translateY(0);
+  transition: background-color 0.35s ease-out 50ms, backdrop-filter 0.25s ease-out 50ms;
+  pointer-events: none;
+}
+.resume__block.fadeIn,
+.resume__navigation--button.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-in 150ms, transform 0.4s ease-in 150ms;
+}
+.resume__block.fadeOut,
+.resume__navigation--button.fadeOut {
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 0.6s ease-out 50ms, transform 0.4s ease-out 50ms;
+}
+.resume {
+  position: relative;
+  display: flex;
+  gap: u.rem(50);
+  height: 100vh;
+  background-color: transparent;
+  transform: translateY(0);
+  &:nth-of-type(1) {
+    width: 35%;
+    padding: 5% 1% 5% 5%;
+    overflow: hidden;
+  }
+  &:nth-of-type(2) {
+    width: 65%;
+    padding: 5% 10% 18% u.rem(50);
+    overflow-y: scroll;
+  }
+  &__block {
+    height: fit-content;
+    width: 100%;
+    padding: 6% 8%;
+    border-radius: u.rem(20);
+    background-color: hsl(215, 46%, 93%);
+    @include i.portBtn;
+    animation: fadeIn 0.65s ease-in;
+    &--header {
+      flex-wrap: nowrap;
+      gap: u.rem(10);
+    }
+    & ol {
+      padding-left: u.rem(10);
+      & li {
+        list-style: disc;
+      }
+    }
+  }
+  &__navigation {
+    gap: u.rem(50);
+    animation: fadeIn 0.65s ease-in-out;
+    & button {
+      aspect-ratio: 1/1;
+      width: calc(100% / 3);
+      background-color: hsl(215, 46%, 93%);
+      @include i.portBtn;
+      animation: fadeIn 0.65s ease-in;
+      & i {
+        font-size: clamp(u.rem(26), u.rem(16) + 2vw, u.rem(40));
+        font-weight: 700;
+        line-height: 1;
+        color: white;
+      }
+    }
+  }
+}

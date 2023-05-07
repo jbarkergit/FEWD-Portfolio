@@ -1,0 +1,71 @@
+@use '../../util/functions' as u;
+@use '../../styles/mixins' as i;
+@use '../../util/breakpoints' as b;
+
+.portNav {
+  position: relative;
+  display: flex;
+  height: 12.5vh;
+  z-index: 2;
+  &__block {
+    flex-basis: calc(100% / 3);
+    height: inherit;
+    @include i.portElement;
+    & a,
+    button {
+      display: inline-block;
+      width: inherit;
+      height: inherit;
+      &:active {
+        @include i.portBtnActive;
+      }
+      & h4 {
+        color: var(--textPrimary);
+        font-weight: 700;
+        text-transform: capitalize;
+        letter-spacing: u.rem(1.5);
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+    }
+    &__inline {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      & i {
+        padding-right: u.rem(8);
+        color: var(--textPrimary);
+      }
+    }
+  }
+}
+.fa-paper-plane {
+  color: var(--textPrimary);
+  text-shadow: var(--btnBoxShadow);
+  font-size: clamp(u.rem(12), u.rem(6) + 0.5vw, u.rem(20));
+}
+.fa-angles-left,
+.fa-angles-right,
+.fa-github {
+  color: var(--textPrimary);
+  text-shadow: var(--btnBoxShadow);
+  font-size: clamp(u.rem(22), u.rem(12) + 2vw, u.rem(36));
+}
+.--labels {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: (1.5vw);
+  & button {
+    width: fit-content;
+    & label {
+      width: clamp(u.rem(26), u.rem(14) + 1vw, u.rem(35));
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      background-color: #fff;
+      border: var(--border);
+      box-shadow: var(--btnBoxShadow);
+      cursor: pointer;
+    }
+  }
+}

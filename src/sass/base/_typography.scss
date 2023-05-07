@@ -1,0 +1,101 @@
+@use '../util/functions' as u;
+
+@font-face {
+  font-optical-sizing: auto;
+  font-family: 'Plus Jakarta Sans';
+  src: url('https://cdn.fontshare.com/wf/U2HFRBAHB5SL53RHFEF22BIJZSJRHR2Y/LFPV5QZIFT7V5OMDNHDQPJYOQAHFUE4W/CLVUG765RK3TA3ESG2NBCJJGWFQVIBTA.woff2')
+    format('woff2');
+  font-weight: 200 800;
+  font-display: swap;
+  font-style: normal;
+  font-stretch: normal;
+  font-variant-ligatures: common-ligatures;
+}
+@font-face {
+  font-optical-sizing: auto;
+  font-family: 'Plus Jakarta Sans';
+  src: url('https://cdn.fontshare.com/wf/QZRCKFY3YNTSI7ZJRBICCIGOZTP4A7XJ/N5R3WNWTF5UMZX6H7KNBVR5N5PJZCKKX/TJFEEESODHVFXP2MHRXMD2MGSHGGFUZG.woff2')
+    format('woff2');
+  font-weight: 200 800;
+  font-display: swap;
+  font-style: italic;
+  font-stretch: normal;
+  font-variant-ligatures: common-ligatures;
+}
+/* SHORTHAND - STYLE [SMALL-CAPS] WEIGHT SIZE/LINE-HEIGHT FAMILY FAMILY-FALLBACK */
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  font: 400 100% / 1.25 'Plus Jakarta Sans', 'PT Sans';
+}
+h1 {
+  font-size: clamp(u.rem(26), u.rem(16) + 2vw, u.rem(40));
+  font-weight: 700;
+  line-height: 1;
+}
+h2 {
+  font-size: clamp(u.rem(22), u.rem(14) + 0.5vw, u.rem(36));
+  font-weight: 500;
+}
+h3 {
+  font-size: clamp(u.rem(18), u.rem(12) + 0.5vw, u.rem(32));
+  font-weight: 400;
+}
+h4 {
+  font-size: clamp(u.rem(16), u.rem(10) + 0.5vw, u.rem(28));
+  font-weight: 400;
+}
+h5 {
+  font-size: clamp(u.rem(14), u.rem(8) + 0.5vw, u.rem(24));
+  font-weight: 400;
+}
+h6 {
+  font-size: clamp(u.rem(12), u.rem(6) + 0.5vw, u.rem(20));
+  font-weight: 400;
+}
+p,
+article {
+  //width: clamp(45ch, 50%, 75ch);
+  font-size: clamp(u.rem(18), u.rem(15) + 0.25vw, u.rem(32));
+  font-weight: 400;
+}
+article {
+  scroll-padding: u.rem(10) 0 0 0;
+  letter-spacing: u.rem(0);
+  text-decoration: none;
+}
+a,
+a:hover,
+a:active,
+a:visited,
+ul,
+li {
+  color: inherit;
+  list-style: none;
+  text-decoration: none;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+//Add the correct font weight in Chrome/Edge/Safari
+b,
+strong {
+  font-weight: bolder;
+}
+//Remove the inheritance of text transform in Firefox
+button,
+select {
+  text-transform: none;
+}
+//Corrects odd em font sizing in all browsers
+pre,
+code,
+kbd,
+samp {
+  font-size: u.em(1);
+}
