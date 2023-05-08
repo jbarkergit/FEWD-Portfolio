@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 
-type ProductPropsType = {
-  id: any;
+export type ProductType = {
+  id: string;
+  category: string;
   productImg: string;
   productCompany: string;
   productName: string;
@@ -9,7 +10,7 @@ type ProductPropsType = {
   productPrice: number;
 };
 
-const ProductCartProps = ({ id, productImg, productCompany, productName, productDescription, productPrice }: ProductPropsType) => {
+const ProductCartProps = ({ id, productImg, productCompany, productName, productDescription, productPrice }: ProductType) => {
   let cartQuantity = 0;
   return (
     <li className="productGrid__product">

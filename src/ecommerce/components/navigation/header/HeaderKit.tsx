@@ -1,14 +1,10 @@
 import { NavLink, useLocation } from 'react-router-dom';
 
-function HeaderKit() {
+const HeaderKit = () => {
   return (
     <>
       <span className="navkit__logo flexBox">
-        <NavLink
-          to="/ecommerce"
-          className="flexBox"
-          style={{ color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)' }}
-        >
+        <NavLink to="/ecommerce" className="flexBox" style={{ color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)' }}>
           <i className="fa-solid fa-microphone-lines"></i>
           {'Dynamic Audio'}
         </NavLink>
@@ -64,6 +60,6 @@ function HeaderKit() {
       </span>
     </>
   );
-}
+};
 
 export default HeaderKit;

@@ -1,48 +1,45 @@
 import { Link } from 'react-router-dom';
-import { useCart } from '../hooks/useCart';
+
+import { useState } from 'react';
 
 const ShoppingCart = () => {
-  const { totalItems, totalPrice } = useCart();
-  return (
-    <section className="cartWrapper" id="cartWrapper">
-      <div className="shoppingCart flexBox flexColumn">
-        <div className="shoppingCart__heading">
-          <h2>Your Cart</h2>
-        </div>
-        <div className="shoppingCart__products flexBox flexColumn">
-          <Link to="">
-            <picture className="shoppingCart__products--picture">
-              <img src="" alt="" loading="lazy" />
-            </picture>
-          </Link>
-          <div className="shoppingCart__products--details flexBox flexColumn">
-            <span className="shoppingCart__products--productName">
-              <Link to="">
-                <h2></h2>
-              </Link>
-            </span>
-            <span className="shoppingCart__products--quantity">
-              <span className="">
-                <h4>{totalItems}</h4>
-              </span>
-            </span>
-          </div>
-          <div className="shoppingCart__products--productPrice">
-            <h4></h4>
-          </div>
-        </div>
-        <div className="shoppingCart__orderDetails flexBox flexColumn">
-          <span className="shoppingCart__orderDetails--subtotal">
-            <h4>{totalPrice}</h4>
-          </span>
-          <span className="shoppingCart__orderDetails--shippingNotice">
-            <h4></h4>
-          </span>
-          <button className="shoppingCart__orderDetails--checkout"></button>
-        </div>
+  /*
+  const pageContent = confirm ? (
+    <h2>Thank you for placing an order with Dynamic Audio.</h2>
+  ) : (
+    <div className="shoppingCart flexBox flexColumn">
+      <div className="shoppingCart__heading">
+        <h2>Your Cart</h2>
       </div>
+      <ul className="ShoppingCart__products">
+        {cart.map((item) => {
+          return <CartLineItem key={item.id} item={item} dispatch={dispatch} REDUCER_ACTIONS={REDUCER_ACTIONS} />;
+        })}
+      </ul>
+      <div className="shoppingCart__orderDetails flexBox flexColumn">
+        <span className="shoppingCart__orderDetails--totalItems">
+          <h4>Items: {totalItems}</h4>
+        </span>
+        <span className="shoppingCart__orderDetails--subtotal">
+          <h4>Subtotal: {totalPrice}</h4>
+        </span>
+        <span className="shoppingCart__orderDetails--shippingNotice">
+          <h4></h4>
+        </span>
+        <button className="shoppingCart__orderDetails--checkout" disabled={!totalItems} onClick={onSubmitOrder}>
+          Checkout
+        </button>
+      </div>
+    </div>
+  );
+
+  const content = (
+    <section className="cartWrapper" id="cartWrapper">
+      {pageContent}
     </section>
   );
+  return content;
+*/
 };
 
 export default ShoppingCart;
