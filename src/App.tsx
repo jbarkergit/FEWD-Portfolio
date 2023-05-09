@@ -7,25 +7,30 @@ const NotFound = lazy(() => import('./shared/pages/NotFound'));
 import Portfolio from './portfolio/pages/Portfolio';
 
 const Ecommerce = lazy(() => import('./ecommerce/pages/Home'));
+import ProvideContext from './ecommerce/context/ProvideContext';
 const BrowseProduct = lazy(() => import('./ecommerce/pages/BrowseProduct'));
 const ProductPage = lazy(() => import('./ecommerce/pages/ProductPage'));
 
 function App() {
   return (
-    <BrowserRouter>
-      <Suspense fallback={SuspenseLoader()}>
-        <Routes>
-          <Route path="/suspense-loader" element={<SuspenseLoader />} />
-          <Route path="*" element={<NotFound />} />
+    <>
+      <BrowserRouter>
+        <Suspense fallback={SuspenseLoader()}>
+          <Routes>
+            <Route path="/suspense-loader" element={<SuspenseLoader />} />
+            <Route path="*" element={<NotFound />} />
 
-          <Route path="/" element={<Portfolio />} />
+            <Route path="/" element={<Portfolio />} />
 
-          <Route path="/ecommerce" element={<Ecommerce />} />
-          <Route path="/products" element={<BrowseProduct />} />
-          <Route path="/products/:sku" element={<ProductPage />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+            <Route path="/ecommerce" element={<Ecommerce />} />
+            <Route path="/ecommerce/products" element={<BrowseProduct />} />
+            <Route path="/ecommerce/products/*" element={<BrowseProduct />} />
+            <Route path="/ecommerce/products/:sku" element={<ProductPage />} />
+          </Routes>
+        </Suspense>
+        <ProvideContext />
+      </BrowserRouter>
+    </>
   );
 }
 

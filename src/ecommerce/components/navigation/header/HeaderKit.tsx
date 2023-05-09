@@ -21,7 +21,16 @@ const HeaderKit = () => {
             {'Home'}
           </NavLink>
           <NavLink
-            to="/headphones"
+            to="/ecommerce/products"
+            className="flexBox"
+            style={{
+              color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
+            }}
+          >
+            {'Browse All'}
+          </NavLink>
+          <NavLink
+            to="/ecommerce/products/headphones"
             className="flexBox"
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -30,7 +39,7 @@ const HeaderKit = () => {
             {'Headphones'}
           </NavLink>
           <NavLink
-            to="/amps-dacs"
+            to="/ecommerce/products/amps-dacs"
             className="flexBox"
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -39,7 +48,16 @@ const HeaderKit = () => {
             {'Amps & Dacs'}
           </NavLink>
           <NavLink
-            to="/microphones"
+            to="/ecommerce/products/amp-dac-comboes"
+            className="flexBox"
+            style={{
+              color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
+            }}
+          >
+            {'Amp/Dac Comboes'}
+          </NavLink>
+          <NavLink
+            to="/ecommerce/products/microphones"
             className="flexBox"
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -48,7 +66,7 @@ const HeaderKit = () => {
             {'Microphones'}
           </NavLink>
           <NavLink
-            to="/interfaces"
+            to="/ecommerce/products/interfaces"
             className="flexBox"
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',

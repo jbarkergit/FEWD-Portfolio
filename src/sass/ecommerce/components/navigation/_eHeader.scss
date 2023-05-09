@@ -18,7 +18,7 @@
   &__collections {
     width: 80%;
     &__links {
-      width: 75%;
+      width: 100%;
       gap: u.rem(25);
       height: inherit;
       & a {
@@ -26,6 +26,7 @@
         color: hsl(0, 0%, 20%);
         font-size: clamp(u.rem(18), u.rem(12) + 0.5vw, u.rem(18));
         font-weight: 500;
+        white-space: nowrap;
         transition: 0.45ms;
         transition-delay: 0.45ms;
         &.active {
