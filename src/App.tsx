@@ -5,9 +5,9 @@ import SuspenseLoader from './shared/pages/SuspenseLoader';
 const NotFound = lazy(() => import('./shared/pages/NotFound'));
 
 import Portfolio from './portfolio/pages/Portfolio';
+import { CategoryFilterProvider } from './ecommerce/context/CategoryFilterContext';
 
 const Ecommerce = lazy(() => import('./ecommerce/pages/Home'));
-import ProvideContext from './ecommerce/context/ProvideContext';
 const BrowseProduct = lazy(() => import('./ecommerce/pages/BrowseProduct'));
 const ProductPage = lazy(() => import('./ecommerce/pages/ProductPage'));
 
@@ -16,19 +16,20 @@ function App() {
     <>
       <BrowserRouter>
         <Suspense fallback={SuspenseLoader()}>
-          <Routes>
-            <Route path="/suspense-loader" element={<SuspenseLoader />} />
-            <Route path="*" element={<NotFound />} />
+          <CategoryFilterProvider>
+            <Routes>
+              <Route path="/suspense-loader" element={<SuspenseLoader />} />
+              <Route path="*" element={<NotFound />} />
 
-            <Route path="/" element={<Portfolio />} />
+              <Route path="/" element={<Portfolio />} />
 
-            <Route path="/ecommerce" element={<Ecommerce />} />
-            <Route path="/ecommerce/products" element={<BrowseProduct />} />
-            <Route path="/ecommerce/products/*" element={<BrowseProduct />} />
-            <Route path="/ecommerce/products/:sku" element={<ProductPage />} />
-          </Routes>
+              <Route path="/ecommerce" element={<Ecommerce />} />
+              <Route path="/ecommerce/products" element={<BrowseProduct />} />
+              <Route path="/ecommerce/products/*" element={<BrowseProduct />} />
+              <Route path="/ecommerce/products/:sku" element={<ProductPage />} />
+            </Routes>
+          </CategoryFilterProvider>
         </Suspense>
-        <ProvideContext />
       </BrowserRouter>
     </>
   );

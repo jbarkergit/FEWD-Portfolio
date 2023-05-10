@@ -282,7 +282,7 @@ export const ProductDatabase: ProductType[] = [
     srcset: 'https://www.schiit.com/public/upload/images/loki%20max%20front%201920.jpg',
   },
   {
-    category: 'headphones',
+    category: 'headphone',
     sku: 'beyerdynamic-t5',
     //, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_perspective_v1.png.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_side_v1.png.jpg
     company: 'Beyerdynamic',
@@ -292,7 +292,7 @@ export const ProductDatabase: ProductType[] = [
     srcset: 'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-t5-perspective_transparent.png',
   },
   {
-    category: 'headphones',
+    category: 'headphone',
     sku: 'beyerdynamic-t1',
     srcset:
       'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-t1-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t1-3rd-generation_20-03_perspective_v1.png.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t1-3rd-generation_20-03_front_v1.png.jpg',
@@ -302,7 +302,7 @@ export const ProductDatabase: ProductType[] = [
     price: 899.0,
   },
   {
-    category: 'headphones',
+    category: 'headphone',
     sku: 'beyerdynamic-dt-900-pro-x',
     srcset:
       'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-900-pro-x-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-side.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-front.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-front.jpg',
@@ -312,7 +312,7 @@ export const ProductDatabase: ProductType[] = [
     price: 259.0,
   },
   {
-    category: 'headphones',
+    category: 'headphone',
     sku: 'beyerdynamic-dt-700-pro-x',
     srcset:
       'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-900-pro-x-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-side.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-front.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-perspective-1_2.jpg',
@@ -322,7 +322,7 @@ export const ProductDatabase: ProductType[] = [
     price: 259.0,
   },
   {
-    category: 'headphones',
+    category: 'headphone',
     sku: 'beyerdynamic-dt-1990-pro',
     srcset:
       'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-1990-pro-perspective_transparent_1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1990pro_16-05_perspective_v1-webartikel_1.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1990pro_16-05_front_v1-webartikel_1.png',
@@ -332,7 +332,7 @@ export const ProductDatabase: ProductType[] = [
     price: 499.0,
   },
   {
-    category: 'headphones',
+    category: 'headphone',
     sku: 'beyerdynamic-dt-1770-pro',
     srcset:
       'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-1770-pro-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1770pro_15-07_perspective_v1-webartikel_1.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1770pro_15-07_side_v1-webartikel.jpg',
@@ -342,7 +342,7 @@ export const ProductDatabase: ProductType[] = [
     price: 499.0,
   },
   {
-    category: 'headphones',
+    category: 'headphone',
     sku: 'beyerdynamic-dt-990-black-se',
     srcset:
       'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-990-black-special-edition-perspective_transparent_1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt_990_black_special_edition_perspektive.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt_990_black_special_edition_seite.png',
@@ -352,7 +352,7 @@ export const ProductDatabase: ProductType[] = [
     price: 159.0,
   },
   {
-    category: 'headphones',
+    category: 'headphone',
     sku: 'beyerdynamic-dt-990-pro',
     srcset:
       'src/ecommerce/assets/images/Beyerdynamic/beyerdynamic-dt-990-pro-perspective.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-pro-perspective.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-pro-side.png',
@@ -362,7 +362,7 @@ export const ProductDatabase: ProductType[] = [
     price: 159.0,
   },
   {
-    category: 'headphones',
+    category: 'headphone',
     sku: 'beyerdynamic-dt-880-pro',
     srcset:
       'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-880-pro-perspective_transparent-3.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-880-pro-perspective-1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-880-pro-front-1.png',
@@ -372,7 +372,7 @@ export const ProductDatabase: ProductType[] = [
     price: 199.0,
   },
   {
-    category: 'headphones',
+    category: 'headphone',
     sku: 'beyerdynamic-dt-770-pro',
     srcset:
       'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt-770-pro-headphones-beyerdynamic-perspective_transparent_1.png',
@@ -382,7 +382,7 @@ export const ProductDatabase: ProductType[] = [
     price: 159.0,
   },
   {
-    category: 'headphones',
+    category: 'headphone',
     sku: 'beyerdynamic-dt-990-e',
     srcset:
       'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-perspective_transparent_2.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-perspective_transparent_2.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-side_1.png',

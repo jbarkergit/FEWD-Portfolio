@@ -12,7 +12,8 @@ export type ProductType = {
 };
 
 export const ProductProvider = () => {
-  const { categoryFilter } = useCategoryFilterContext; //setCategoryFilter
+  // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
+  const { categoryFilter, setCategoryFilter } = useCategoryFilterContext();
   return (
     <>
       {/* Filters ProductDatabase with useState(category) as conditional param then maps filtered array of objects */}
@@ -31,6 +32,9 @@ export const ProductProvider = () => {
 // Life cycle reference
 // useEffect(() => {
 //   // const componentDidMount = () => {};
-//   // const componentDidUpdate = () => {};
+//   // const componentDidUpdate = () => {
+//   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//   setCategoryFilter(event.target.value);
+// }};
 //   // const componentWillUnmount = () => {};
 // }, []);
