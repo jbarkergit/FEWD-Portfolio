@@ -605,33 +605,4 @@ export const ProductDatabase: ProductType[] = [
     price: 1450.0,
     srcset: 'https://static-neumann.s3.amazonaws.com/img/499/product_detail_x2_desktop_TLM-107-with-SG02_Neumann-Studio-Microphone_M.png',
   },
-  {
-    category: 'microphone',
-    sku: 'beyerdynamic-dt-700-pro-x',
-    company: 'Beyerdynamic',
-    unit: 'DT 700 PRO X',
-    description: 'Studio headphones for recording & monitoring (closed)',
-    price: 259.0,
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-900-pro-x-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-side.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-front.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-perspective-1_2.jpg',
-  },
-  {
-    category: 'microphone',
-    sku: 'Neumann-TLM-107-Studio-Set',
-    company: 'Neumann',
-    unit: 'TLM 107 Studio Set',
-    description: 'Extremely versatile and surprisingly affordable!',
-    price: 1550.0,
-    srcset: 'https://static-neumann.s3.amazonaws.com/img/501/product_detail_x2_desktop_TLM-107-with-EA4_Neumann-Studio-Microphone_M.png',
-  },
-  {
-    category: 'microphone',
-    sku: 'Shure-SM7B',
-    company: 'Shure',
-    unit: 'SM7B',
-    description: 'Vocal Microphone',
-    price: 399.0,
-    srcset:
-      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/614/548/0a-/header_transparent/b40288cd0b085f70f2bf067c3658cc8c.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/46b/e9a/f9-/header_transparent/a8b067c287d7e46bf10821c653e8449c.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/170/99d/38-/header_transparent/1beff88dd84a9d67d82cf0449e93dbc0.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/5d7/cae/9d-/header_transparent/2140e6b3255a02c1671635465b5c46f6.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/f4c/fe7/75-/header_transparent/8bda20c57483ef023664ba14b35deabe.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/6fe/805/7b-/header_transparent/3ea1206a7192e05a95e4869c443ae0b1.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/239/f57/ba-/header_transparent/a2477a5c6eb6c9b115ed9805f5b81702.png',
-  },
 ];

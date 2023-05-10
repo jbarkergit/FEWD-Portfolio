@@ -25,7 +25,11 @@ function App() {
 
               <Route path="/ecommerce" element={<Ecommerce />} />
               <Route path="/ecommerce/products" element={<BrowseProduct />} />
-              <Route path="/ecommerce/products/*" element={<BrowseProduct />} />
+              <Route path="/ecommerce/products/headphones" element={<BrowseProduct />} />
+              <Route path="/ecommerce/products/amps&dacs" element={<BrowseProduct />} />
+              <Route path="/ecommerce/products/amp&dac-comboes" element={<BrowseProduct />} />
+              <Route path="/ecommerce/products/microphones" element={<BrowseProduct />} />
+              <Route path="/ecommerce/products/interfaces" element={<BrowseProduct />} />
               <Route path="/ecommerce/products/:sku" element={<ProductPage />} />
             </Routes>
           </CategoryFilterProvider>
