@@ -11,7 +11,7 @@ export default function useBreadcrumbs() {
       currentLocation += `/${breadcrumb}`;
     });
   return (
-    <div className="breadcrumb" aria-label={currentLocation}>
+    <div className="breadcrumb" key={breadcrumbs} aria-label={currentLocation}>
       <h1>{currentLocation}</h1>
     </div>
   );

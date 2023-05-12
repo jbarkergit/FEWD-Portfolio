@@ -12,7 +12,7 @@ export type ProductType = {
   srcset: string;
 };
 
-export const ProductProvider = () => {
+const ProductProvider = () => {
   // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
   // @ts-ignore:
   const { categoryFilter } = useCategoryFilterContext();
@@ -22,7 +22,7 @@ export const ProductProvider = () => {
       {ProductDatabase.filter((product) => product.category.includes(categoryFilter))
         .sort((a, b) => (a.company > b.company ? 1 : -1))
         .map((ProductData: ProductType) => (
-          <li className="productGrid__product">
+          <li className="productGrid__product" key={ProductData.sku}>
             <Link to={`/headphones/${ProductData.sku}`}>
               <picture className="productGrid__product__img">
                 <img srcSet={ProductData.srcset} alt={ProductData.unit} />
@@ -56,6 +56,8 @@ export const ProductProvider = () => {
     </>
   );
 };
+
+export default ProductProvider;
 
 // Life cycle reference
 // useEffect(() => {

@@ -1,8 +1,0 @@
-@use '../util/functions' as u;
-@use '../styles/mixins' as i;
-
-.spotifyTopBar {
-  grid-area: spotifyTopBar;
-  height: u.rem(64);
-  position: sticky;
-}

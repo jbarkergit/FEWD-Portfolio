@@ -30,7 +30,7 @@ function App() {
               <Route path="/ecommerce/amp-dac-combos" element={<BrowseProduct />} />
               <Route path="/ecommerce/microphones" element={<BrowseProduct />} />
               <Route path="/ecommerce/interfaces" element={<BrowseProduct />} />
-              <Route path="/ecommerce/:sku" element={<ProductPage />} />
+              <Route path="/ecommerce/products/:sku" element={<ProductPage />} />
             </Routes>
           </CategoryFilterProvider>
         </Suspense>
