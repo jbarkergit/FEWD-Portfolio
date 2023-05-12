@@ -8,10 +8,9 @@ interface CategoryFilterContextType {
 // GUARD: Throws intentional error for Application Context Provider
 const CategoryFilterContext = createContext<CategoryFilterContextType | undefined>(undefined);
 
-// React 18 introduced changes to the children parameter which resulted in multiple errors when passing interface in conjuction with casting FunctionalComponent.
-// Due to varying numerous errors regarding types the following packages were downgraded:
-// "@types/react": "^18.0.28" => "@types/react": "17.0.2",
-// "@types/react-dom": "^18.0.10" => "@types/react-dom": "17.0.2",
+// Modern dependencies altered the children parameter, creating numerous Type errors: { children } param: interface & React.FunctionalComponent.
+// The following packages can be downgraded to bypass Type errors, or the errors can be ignored manually.
+// "@types/react": => "17.0.2", // "@types/react-dom": => "17.0.2",
 //@ts-ignore:
 export const CategoryFilterProvider: React.FunctionComponent = ({ children }): JSX.Element => {
   const [categoryFilter, setCategoryFilter] = useState<string | null>('headphone');
