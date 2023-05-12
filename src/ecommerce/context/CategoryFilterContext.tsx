@@ -14,7 +14,7 @@ const CategoryFilterContext = createContext<CategoryFilterContextType | undefine
 // "@types/react-dom": "^18.0.10" => "@types/react-dom": "17.0.2",
 
 export const CategoryFilterProvider: React.FunctionComponent = ({ children }): JSX.Element => {
-  const [categoryFilter, setCategoryFilter] = useState<string | null>('microphone');
+  const [categoryFilter, setCategoryFilter] = useState<string | null>('headphone');
   return <CategoryFilterContext.Provider value={{ categoryFilter, setCategoryFilter }}>{children}</CategoryFilterContext.Provider>;
 };
 

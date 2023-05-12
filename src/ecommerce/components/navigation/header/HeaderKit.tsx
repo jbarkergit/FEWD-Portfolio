@@ -30,7 +30,7 @@ const HeaderKit = () => {
             {'All Products'}
           </NavLink>
           <NavLink
-            to="/ecommerce/products/headphones"
+            to="/ecommerce/headphones"
             className="flexBox"
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -39,7 +39,7 @@ const HeaderKit = () => {
             {'Headphones'}
           </NavLink>
           <NavLink
-            to="/ecommerce/products/amps&dacs"
+            to="/ecommerce/amps-dacs"
             className="flexBox"
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -48,7 +48,7 @@ const HeaderKit = () => {
             {'Amps & Dacs'}
           </NavLink>
           <NavLink
-            to="/ecommerce/products/amp&dac-comboes"
+            to="/ecommerce/amp-dac-combos"
             className="flexBox"
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -57,7 +57,7 @@ const HeaderKit = () => {
             {'Amp/Dac Comboes'}
           </NavLink>
           <NavLink
-            to="/ecommerce/products/microphones"
+            to="/ecommerce/microphones"
             className="flexBox"
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -66,7 +66,7 @@ const HeaderKit = () => {
             {'Microphones'}
           </NavLink>
           <NavLink
-            to="/ecommerce/products/interfaces"
+            to="/ecommerce/interfaces"
             className="flexBox"
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',

@@ -1,7 +1,8 @@
 import Header from '../layouts/navigation/Header';
 import Footer from '../layouts/navigation/Footer';
 import { ProductProvider } from '../context/ProductProvider';
-import ProductFilters from '../features/ProductFilters';
+import ProductDisplayFilter from '../features/ProductDisplayFilter';
+import ProductFiltersProps from '../components/props/features/ProductFiltersProps';
 
 const BrowseProduct = () => {
   return (
@@ -9,7 +10,7 @@ const BrowseProduct = () => {
       <Header />
       <section className="flexBox justifyCenter alignUnset">
         <main>
-          <ProductFilters />
+          <ProductDisplayFilter />
           <ul className="productGrid">
             <ProductProvider />
           </ul>
