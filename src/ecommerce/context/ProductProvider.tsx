@@ -16,6 +16,7 @@ const ProductProvider = () => {
   // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
   // @ts-ignore:
   const { categoryFilter } = useCategoryFilterContext();
+
   return (
     <>
       {/* Filters ProductDatabase with useState(category) as conditional param, Sorts filteredData alphabetically A-Z, Maps filtered and sorted array of objects */}

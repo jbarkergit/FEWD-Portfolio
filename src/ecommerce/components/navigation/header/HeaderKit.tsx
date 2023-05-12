@@ -1,6 +1,10 @@
 import { NavLink, useLocation } from 'react-router-dom';
+import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 const HeaderKit = () => {
+  // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
+  // @ts-ignore:
+  const { setCategoryFilter } = useCategoryFilterContext();
   return (
     <>
       <span className="navkit__logo flexBox">
@@ -26,6 +30,7 @@ const HeaderKit = () => {
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
             }}
+            onClick={() => setCategoryFilter('')}
           >
             {'All Products'}
           </NavLink>
@@ -35,6 +40,7 @@ const HeaderKit = () => {
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
             }}
+            onClick={() => setCategoryFilter('headphone')}
           >
             {'Headphones'}
           </NavLink>
@@ -44,17 +50,9 @@ const HeaderKit = () => {
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
             }}
+            onClick={() => setCategoryFilter('amp', 'dac')}
           >
             {'Amps & Dacs'}
-          </NavLink>
-          <NavLink
-            to="/ecommerce/amp-dac-combos"
-            className="flexBox"
-            style={{
-              color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
-            }}
-          >
-            {'Amp/Dac Comboes'}
           </NavLink>
           <NavLink
             to="/ecommerce/microphones"
@@ -62,6 +60,7 @@ const HeaderKit = () => {
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
             }}
+            onClick={() => setCategoryFilter('microphone')}
           >
             {'Microphones'}
           </NavLink>
@@ -71,6 +70,7 @@ const HeaderKit = () => {
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
             }}
+            onClick={() => setCategoryFilter('interface')}
           >
             {'Interfaces'}
           </NavLink>

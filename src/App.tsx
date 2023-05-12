@@ -16,6 +16,7 @@ function App() {
     <>
       <BrowserRouter>
         <Suspense fallback={SuspenseLoader()}>
+          {/* @ts-ignore */}
           <CategoryFilterProvider>
             <Routes>
               <Route path="/suspense-loader" element={<SuspenseLoader />} />
