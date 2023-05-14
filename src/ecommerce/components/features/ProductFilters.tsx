@@ -1,55 +1,99 @@
+import { useLocation } from 'react-router-dom';
 import { ProductDatabase } from '../../data/ProductDatabase';
+import { useCallback, useEffect } from 'react';
 
-const companyFilters = () => {
+const useBreadcrumbs = () => {
+  const location = useLocation();
+  let currentLocation: string = '';
+  const breadcrumbs = location.pathname
+    .replace(/-/g, ' ')
+    .split('/ecommerce/')
+    .filter((breadcrumb) => breadcrumb !== '')
+    .map((breadcrumb) => {
+      currentLocation += `/${breadcrumb}`;
+    });
+  return (
+    <div className="breadcrumb" key={breadcrumbs} aria-label={currentLocation}>
+      <h1>{currentLocation}</h1>
+    </div>
+  );
+};
+
+const useCompanies = () => {
   const getCompanies = [...new Set(ProductDatabase.map((product) => product.company))];
   return (
     <>
       {getCompanies
         .sort((a, b) => (a > b ? 1 : -1))
         .map((company) => (
-          <button className="flexBox" key={company}>
-            {company}
-          </button>
+          <li className="selectMenu__menu--option" key={company}>
+            <button>{company}</button>
+          </li>
         ))}
     </>
   );
 };
 
 const ProductFilters = () => {
+  useEffect(() => {
+    const selectMenu = document.querySelector('.selectMenu')!;
+    const menu = document.querySelector('.selectMenu__menu')!;
+
+    const useSelectMenu = (event: any) => {
+      if (menu.getAttribute('data-activity') === 'active' && !selectMenu.contains(event.target)) {
+        menu.setAttribute('data-activity', 'inactive');
+      } else if (menu.getAttribute('data-activity') === 'inactive' && !selectMenu.contains(event.target)) {
+        null;
+      } else if (menu.getAttribute('data-activity') === 'inactive') {
+        menu.setAttribute('data-activity', 'active');
+      } else if (menu.getAttribute('data-activity') === 'active') {
+        menu.setAttribute('data-activity', 'inactive');
+      } else {
+        null;
+      }
+    };
+
+    selectMenu.addEventListener('click', useSelectMenu);
+    document.body.addEventListener('click', useSelectMenu, true);
+
+    return () => {
+      selectMenu.removeEventListener('click', useSelectMenu);
+      document.body.removeEventListener('click', useSelectMenu);
+    };
+  }, []);
+
   return (
-    <div role="tablist">
-      <div className="productFilters flexBox flexColumn" role="presentation" data-role="collapsible" data-collapsible="true">
-        <div
-          className="productFilters__category flexBox flexColumn justifyEnd"
-          role="tab"
-          tab-index=""
-          data-role="title"
-          aria-selected="false"
-          aria-expanded="false"
-        >
-          <h3>Sort By</h3>
-          <span>
-            <h4>Company</h4>
-            {companyFilters()}
-          </span>
-          <span>
-            <button>Price ($ - $$$$)</button>
-          </span>
-          <span>
-            <button>Price ($$$$ - $)</button>
-          </span>
-          <span>
-            <button></button>
-          </span>
-        </div>
-        <div className="productFilters__subCategory flexBox justifyEnd" role="tabpanel" data-role="content" aria-hidden="false">
-          <span>
-            <a href=""></a>
-          </span>
+    <section className="productFilters flexBox">
+      <div className="productFilters__panel">{useBreadcrumbs()}</div>
+
+      <div className="productFilters__panel">
+        <div className="selectMenu">
+          <div className="selectMenu__selection">
+            <span className="selectMenu__selection__indicator">
+              <span className="selectMenu__selection__indicator--area">Filter By Brand</span>
+              <span className="selectMenu__selection__indicator--area">
+                <i className="fa-solid fa-sort"></i>
+              </span>
+            </span>
+            <div className="selectMenu--divider"></div>
+          </div>
+          <ul className="selectMenu__menu" data-activity="inactive">
+            {useCompanies()}
+          </ul>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
 export default ProductFilters;
+
+{
+  /* <div className="selectMenu" onClick={useSelectMenu}>
+          <div className="selectMenu__selection">
+            <span className="selectMenu__selection__indicator--area">
+              <i className="fa-solid fa-gear"></i>Alter Display
+            </span>
+          </div>
+        </div> */
+}
