@@ -27,7 +27,7 @@ const ProductProvider = () => {
             <Link to={`/headphones/${ProductData.sku}`}>
               <span className="productGrid__product--containedHover">
                 <picture>
-                  <img srcSet={ProductData.srcset} alt={ProductData.unit} />
+                  <img srcSet={ProductData.srcset} alt={ProductData.unit} loading="lazy" />
                 </picture>
               </span>
             </Link>

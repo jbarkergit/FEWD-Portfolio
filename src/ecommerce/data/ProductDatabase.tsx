@@ -284,12 +284,12 @@ export const ProductDatabase: ProductType[] = [
   {
     category: 'headphone',
     sku: 'beyerdynamic-t5',
-    //, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_perspective_v1.png.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_side_v1.png.jpg
     company: 'Beyerdynamic',
     unit: 'T5',
     description: 'High-end Tesla Headphones (3rd Generation) closed',
     price: 899.0,
     srcset: 'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-t5-perspective_transparent.png',
+    //, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_perspective_v1.png.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_side_v1.png.jpg
   },
   {
     category: 'headphone',
