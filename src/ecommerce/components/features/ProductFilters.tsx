@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
-import { ProductDatabase } from '../../data/ProductDatabase';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useCategoryFilterContext } from '../../context/StateProvider';
+import { companyList } from '../../context/ProductProvider';
 
 const useBreadcrumbs = () => {
   const location = useLocation();
@@ -20,14 +21,16 @@ const useBreadcrumbs = () => {
 };
 
 const useCompanies = () => {
-  const getCompanies = [...new Set(ProductDatabase.map((product) => product.company))];
+  // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
+  // @ts-ignore:
+  const { setCategoryFilter } = useCategoryFilterContext();
   return (
     <>
-      {getCompanies
+      {companyList
         .sort((a, b) => (a > b ? 1 : -1))
         .map((company) => (
           <li className="selectMenu__menu--option" key={company}>
-            <button>{company}</button>
+            <button onClick={() => setCategoryFilter(`${company}`)}>{company}</button>
           </li>
         ))}
     </>
@@ -70,7 +73,7 @@ const ProductFilters = () => {
         <div className="selectMenu">
           <div className="selectMenu__selection">
             <span className="selectMenu__selection__indicator">
-              <span className="selectMenu__selection__indicator--area">Filter By Brand</span>
+              <span className="selectMenu__selection__indicator--area">Filter By Brands</span>
               <span className="selectMenu__selection__indicator--area">
                 <i className="fa-solid fa-sort"></i>
               </span>
@@ -90,10 +93,10 @@ export default ProductFilters;
 
 {
   /* <div className="selectMenu" onClick={useSelectMenu}>
-          <div className="selectMenu__selection">
-            <span className="selectMenu__selection__indicator--area">
-              <i className="fa-solid fa-gear"></i>Alter Display
-            </span>
-          </div>
-        </div> */
+  <div className="selectMenu__selection">
+    <span className="selectMenu__selection__indicator--area">
+      <i className="fa-solid fa-gear"></i>Alter Display
+    </span>
+  </div>
+</div>; */
 }

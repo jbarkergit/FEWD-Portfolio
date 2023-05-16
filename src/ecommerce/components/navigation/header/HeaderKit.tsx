@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
+import { useCategoryFilterContext } from '../../../context/StateProvider';
 
 const HeaderKit = () => {
   // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider

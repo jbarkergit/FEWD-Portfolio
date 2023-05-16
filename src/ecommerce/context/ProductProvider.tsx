@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ProductDatabase } from '../data/ProductDatabase';
-import { useCategoryFilterContext } from './CategoryFilterContext';
+import { useCategoryFilterContext } from './StateProvider';
 
 export type ProductType = {
   category: string;
@@ -12,15 +12,24 @@ export type ProductType = {
   srcset: string;
 };
 
+export const companyList = [...new Set(ProductDatabase.map((product) => product.company))];
+
 const ProductProvider = () => {
   // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
   // @ts-ignore:
   const { categoryFilter } = useCategoryFilterContext();
   const formatCurrency = Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' });
+
+  function handleProductFilter() {
+    if (companyList.includes(categoryFilter)) {
+      return ProductDatabase.filter((product) => product.company.includes(categoryFilter));
+    } else return ProductDatabase.filter((product) => product.category.includes(categoryFilter));
+  }
+
   return (
     <>
       {/* Filters ProductDatabase with useState(category) as conditional param, Sorts filteredData alphabetically A-Z, Maps filtered and sorted array of objects */}
-      {ProductDatabase.filter((product) => product.category.includes(categoryFilter))
+      {handleProductFilter()
         .sort((a, b) => (a.company > b.company ? 1 : -1))
         .map((ProductData: ProductType) => (
           <li className="productGrid__product" key={ProductData.sku}>
@@ -59,13 +68,3 @@ const ProductProvider = () => {
 };
 
 export default ProductProvider;
-
-// Life cycle reference
-// useEffect(() => {
-//   // const componentDidMount = () => {};
-//   // const componentDidUpdate = () => {
-//   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//   setCategoryFilter(event.target.value);
-// }};
-//   // const componentWillUnmount = () => {};
-// }, []);
