@@ -7,11 +7,12 @@ const useBreadcrumbs = () => {
   const location = useLocation();
   let currentLocation: string = '';
   const breadcrumbs = location.pathname
-    .replace(/-/g, ' ')
-    .split('/ecommerce/')
+    .replaceAll('/', '')
+    .replaceAll('-', ' ')
+    .split('ecommerce')
     .filter((breadcrumb) => breadcrumb !== '')
     .map((breadcrumb) => {
-      currentLocation += `/${breadcrumb}`;
+      currentLocation += `${breadcrumb}`;
     });
   return (
     <div className="breadcrumb" key={currentLocation} aria-label={currentLocation}>
