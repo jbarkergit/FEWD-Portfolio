@@ -33,7 +33,7 @@ const ProductProvider = () => {
         .sort((a, b) => (a.company > b.company ? 1 : -1))
         .map((ProductData: ProductType) => (
           <li className="productGrid__product" key={ProductData.sku}>
-            <Link to={`/headphones/${ProductData.sku}`}>
+            <Link to={`/ecommerce/product/${ProductData.sku}`}>
               <span className="productGrid__product--containedHover">
                 <picture>
                   <img srcSet={ProductData.srcset} alt={ProductData.unit} loading="lazy" />
@@ -41,7 +41,7 @@ const ProductProvider = () => {
               </span>
             </Link>
             <div className="productGrid__product__information flexBox flexColumn alignUnset">
-              <Link to={`/headphones/${ProductData.sku}`}>
+              <Link to={`/ecommerce/product/${ProductData.sku}`}>
                 <h2 className="flexBox">
                   {ProductData.company} {ProductData.unit}
                 </h2>
