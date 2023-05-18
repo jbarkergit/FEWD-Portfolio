@@ -10,20 +10,12 @@ type InfographicPropsType = {
   ctaBtn2Name: string;
 };
 
-const InfographicProps = ({
-  bannerImg,
-  imgAlt,
-  companyName,
-  companyMissionStatement,
-  companyValue,
-  ctaBtnName,
-  ctaBtn2Name,
-}: InfographicPropsType) => {
+const InfographicProps = ({ bannerImg, imgAlt, companyName, companyMissionStatement, companyValue, ctaBtnName, ctaBtn2Name }: InfographicPropsType) => {
   return (
     <main className="infographic">
       <picture className="infographic__graphic">
         <span className="imgFadeGradient" />
-        <img srcSet={bannerImg} alt={imgAlt} loading="lazy" />
+        <img srcSet={bannerImg} alt={imgAlt} loading="lazy" decoding="async" fetchpriority="high" />
       </picture>
       <article className="infographic__information flexBox flexColumn">
         <h1>
@@ -40,11 +32,16 @@ const InfographicProps = ({
           </Link>
         </span>
         <picture className="infographic__information__logos flexBox">
-          <img src="https://audient.com/wp-content/themes/sydney-audient/logowhite.svg"></img>
-          <img src="https://d33p2k2w4zpozf.cloudfront.net/static/version1680503554/frontend/Flagbit/beyerdynamic/de_DE/images/logo.svg"></img>
-          <img src="https://www.neumann.com/dist/images/logo.png"></img>
-          <img src="https://www.shure.com/packs/media/images/shure_branding_clean-5f036c9a.svg"></img>
-          <img src="https://www.solidstatelogic.com/assets/template/images/solid-state-logic-logo.svg"></img>
+          <img src="https://audient.com/wp-content/themes/sydney-audient/logowhite.svg" loading="lazy" decoding="async" fetchpriority="high" />
+          <img
+            src="https://d33p2k2w4zpozf.cloudfront.net/static/version1680503554/frontend/Flagbit/beyerdynamic/de_DE/images/logo.svg"
+            loading="lazy"
+            decoding="async"
+            fetchpriority="high"
+          />
+          <img src="https://www.neumann.com/dist/images/logo.png" loading="lazy" decoding="async" fetchpriority="high" />
+          <img src="https://www.shure.com/packs/media/images/shure_branding_clean-5f036c9a.svg" loading="lazy" decoding="async" fetchpriority="high" />
+          <img src="https://www.solidstatelogic.com/assets/template/images/solid-state-logic-logo.svg" loading="lazy" decoding="async" fetchpriority="high" />
         </picture>
       </article>
     </main>

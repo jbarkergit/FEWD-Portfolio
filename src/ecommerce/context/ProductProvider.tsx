@@ -36,7 +36,7 @@ const ProductProvider = () => {
             <Link to={`/ecommerce/product/${ProductData.sku}`}>
               <span className="productGrid__product--containedHover">
                 <picture>
-                  <img srcSet={ProductData.srcset} alt={ProductData.unit} loading="lazy" />
+                  <img srcSet={ProductData.srcset} alt={ProductData.unit} loading="lazy" decoding="async" fetchpriority="high" />
                 </picture>
               </span>
             </Link>

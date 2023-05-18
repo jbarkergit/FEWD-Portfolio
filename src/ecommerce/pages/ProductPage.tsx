@@ -26,23 +26,13 @@ const getProductBySku = () => {
           <section className="productPhotos flexBox justifyCenter">
             <button>
               <picture data-status="active">
-                <img src={findProduct.srcset} alt={`${findProduct.company} ${findProduct.unit} `} />
-              </picture>
-            </button>
-            <button>
-              <picture data-status="inactive">
-                <img src={findProduct.srcset} alt={`${findProduct.company} ${findProduct.unit} `} />
-              </picture>
-            </button>
-            <button>
-              <picture data-status="inactive">
-                <img src={findProduct.srcset} alt={`${findProduct.company} ${findProduct.unit} `} />
+                <img src={findProduct.srcset} alt={`${findProduct.company} ${findProduct.unit} `} loading="lazy" decoding="async" fetchpriority="high" />
               </picture>
             </button>
           </section>
           <section className="activeProductPhoto flexBox justifyCenter">
             <picture>
-              <img src={findProduct.srcset} alt={`${findProduct.company} ${findProduct.unit} `} />
+              <img src={findProduct.srcset} alt={`${findProduct.company} ${findProduct.unit} `} loading="lazy" decoding="async" fetchpriority="high" />
             </picture>
           </section>
           <main className="productPlate flexBox flexColumn alignUnset">

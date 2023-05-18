@@ -6,7 +6,7 @@ function CarouselProps({ carouselImg, carouselPost, link }: carouselPropTypes) {
   return (
     <div className="carousel__track__slide">
       <Link to={link}>
-        <img src={carouselImg} alt={carouselPost} loading="lazy" />
+        <img src={carouselImg} alt={carouselPost} loading="lazy" decoding="async" fetchpriority="high" />
       </Link>
     </div>
   );

@@ -4,7 +4,7 @@ function ProductCarouselProps({ src, productName, productCompany, productPrice }
   return (
     <article className="productCarousel__product">
       <picture className="productCarousel__product__image">
-        <img src={src} loading="lazy" alt={`${productCompany} ${productName}`}></img>
+        <img src={src} alt={`${productCompany} ${productName}`} loading="lazy" decoding="async" fetchpriority="high"></img>
       </picture>
       <div className="productCarousel__product__overlay">
         <span className="productCarousel__product__overlay--quarter">{productName}</span>

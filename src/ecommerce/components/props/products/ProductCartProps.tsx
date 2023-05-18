@@ -16,7 +16,7 @@ const ProductCartProps = ({ id, productImg, productCompany, productName, product
     <li className="productGrid__product">
       <Link to={`/headphones/${id}`}>
         <picture className="productGrid__product__img">
-          <img srcSet={productImg} alt={productName} />
+          <img srcSet={productImg} alt={productName} loading="lazy" decoding="async" fetchpriority="high" />
         </picture>
       </Link>
       <div className="productGrid__product__information flexBox flexColumn">
