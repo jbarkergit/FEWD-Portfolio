@@ -1,5 +1,5 @@
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 import { useCategoryFilterContext } from '../../context/StateProvider';
 import { companyList } from '../../context/ProductProvider';
 
@@ -25,13 +25,16 @@ const useCompanies = () => {
   // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
   // @ts-ignore:
   const { setCategoryFilter } = useCategoryFilterContext();
+
   return (
     <>
       {companyList
         .sort((a, b) => (a > b ? 1 : -1))
         .map((company) => (
           <li className="selectMenu__menu--option" key={company}>
-            <button onClick={() => setCategoryFilter(`${company}`)}>{company}</button>
+            <button id={company} onClick={() => setCategoryFilter(`${company}`)}>
+              {company}
+            </button>
           </li>
         ))}
     </>
@@ -39,6 +42,23 @@ const useCompanies = () => {
 };
 
 const ProductFilters = () => {
+  const [filterName, setFilterName] = useState('Filter by Brand');
+
+  useEffect(() => {
+    const companyButton = document.querySelectorAll('.selectMenu__menu--option button')!;
+
+    const useFilterNameState = (event: any) => {
+      const getElemId: string = event.target.getAttribute('id');
+      getElemId === null ? null : setFilterName(getElemId);
+    };
+
+    companyButton.forEach((...company) => addEventListener('click', useFilterNameState));
+
+    return () => {
+      companyButton.forEach((...company) => removeEventListener('click', useFilterNameState));
+    };
+  }, []);
+
   useEffect(() => {
     const selectMenu = document.querySelector('.selectMenu')!;
     const menu = document.querySelector('.selectMenu__menu')!;
@@ -48,6 +68,8 @@ const ProductFilters = () => {
         menu.setAttribute('data-activity', 'inactive');
       } else if (menu.getAttribute('data-activity') === 'inactive' && !selectMenu.contains(event.target)) {
         null;
+      } else if (menu.getAttribute('data-activity') === 'active' && selectMenu.contains(event.target)) {
+        menu.setAttribute('data-activity', 'inactive');
       } else if (menu.getAttribute('data-activity') === 'inactive') {
         menu.setAttribute('data-activity', 'active');
       } else if (menu.getAttribute('data-activity') === 'active') {
@@ -74,7 +96,7 @@ const ProductFilters = () => {
         <div className="selectMenu">
           <div className="selectMenu__selection">
             <span className="selectMenu__selection__indicator">
-              <span className="selectMenu__selection__indicator--area">Filter By Brands</span>
+              <span className="selectMenu__selection__indicator--area">{filterName}</span>
               <span className="selectMenu__selection__indicator--area">
                 <i className="fa-solid fa-sort"></i>
               </span>
@@ -91,13 +113,3 @@ const ProductFilters = () => {
 };
 
 export default ProductFilters;
-
-{
-  /* <div className="selectMenu" onClick={useSelectMenu}>
-  <div className="selectMenu__selection">
-    <span className="selectMenu__selection__indicator--area">
-      <i className="fa-solid fa-gear"></i>Alter Display
-    </span>
-  </div>
-</div>; */
-}
