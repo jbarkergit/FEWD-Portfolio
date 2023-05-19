@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../../context/StateProvider';
 
 const HeaderKit = () => {
@@ -8,14 +8,14 @@ const HeaderKit = () => {
   return (
     <>
       <span className="navkit__logo flexBox">
-        <NavLink to="/ecommerce" className="flexBox" style={{ color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)' }}>
+        <Link to="/ecommerce" className="flexBox" style={{ color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)' }}>
           <i className="fa-solid fa-microphone-lines"></i>
           {'Dynamic Audio'}
-        </NavLink>
+        </Link>
       </span>
       <span className="navkit__collections flexBox">
         <span className="navkit__collections__links flexBox justifyCenter">
-          <NavLink
+          <Link
             to="/ecommerce"
             className="flexBox"
             style={{
@@ -23,8 +23,8 @@ const HeaderKit = () => {
             }}
           >
             {'Home'}
-          </NavLink>
-          <NavLink
+          </Link>
+          <Link
             to="/ecommerce/products"
             className="flexBox"
             style={{
@@ -33,8 +33,8 @@ const HeaderKit = () => {
             onClick={() => setCategoryFilter('')}
           >
             {'All Products'}
-          </NavLink>
-          <NavLink
+          </Link>
+          <Link
             to="/ecommerce/headphones"
             className="flexBox"
             style={{
@@ -43,8 +43,8 @@ const HeaderKit = () => {
             onClick={() => setCategoryFilter('headphone')}
           >
             {'Headphones'}
-          </NavLink>
-          <NavLink
+          </Link>
+          <Link
             to="/ecommerce/amps-dacs"
             className="flexBox"
             style={{
@@ -53,8 +53,8 @@ const HeaderKit = () => {
             onClick={() => setCategoryFilter('amp', 'dac')}
           >
             {'Amps & Dacs'}
-          </NavLink>
-          <NavLink
+          </Link>
+          <Link
             to="/ecommerce/microphones"
             className="flexBox"
             style={{
@@ -63,8 +63,8 @@ const HeaderKit = () => {
             onClick={() => setCategoryFilter('microphone')}
           >
             {'Microphones'}
-          </NavLink>
-          <NavLink
+          </Link>
+          <Link
             to="/ecommerce/interfaces"
             className="flexBox"
             style={{
@@ -73,7 +73,7 @@ const HeaderKit = () => {
             onClick={() => setCategoryFilter('interface')}
           >
             {'Interfaces'}
-          </NavLink>
+          </Link>
         </span>
       </span>
     </>

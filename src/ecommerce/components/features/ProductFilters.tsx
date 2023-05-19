@@ -42,23 +42,6 @@ const useCompanies = () => {
 };
 
 const ProductFilters = () => {
-  const [filterName, setFilterName] = useState('Filter by Brand');
-
-  useEffect(() => {
-    const companyButton = document.querySelectorAll('.selectMenu__menu--option button')!;
-
-    const useFilterNameState = (event: any) => {
-      const getElemId: string = event.target.getAttribute('id');
-      getElemId === null ? null : setFilterName(getElemId);
-    };
-
-    companyButton.forEach((...company) => addEventListener('click', useFilterNameState));
-
-    return () => {
-      companyButton.forEach((...company) => removeEventListener('click', useFilterNameState));
-    };
-  }, []);
-
   useEffect(() => {
     const selectMenu = document.querySelector('.selectMenu')!;
     const menu = document.querySelector('.selectMenu__menu')!;
@@ -96,7 +79,7 @@ const ProductFilters = () => {
         <div className="selectMenu">
           <div className="selectMenu__selection">
             <span className="selectMenu__selection__indicator">
-              <span className="selectMenu__selection__indicator--area">{filterName}</span>
+              <span className="selectMenu__selection__indicator--area">Filter by Brand</span>
               <span className="selectMenu__selection__indicator--area">
                 <i className="fa-solid fa-sort"></i>
               </span>

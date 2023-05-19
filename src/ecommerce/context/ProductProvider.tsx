@@ -13,12 +13,12 @@ export type ProductType = {
 };
 
 export const companyList = [...new Set(ProductDatabase.map((product) => product.company))];
+export const formatCurrency = Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' });
 
 const ProductProvider = () => {
   // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
   // @ts-ignore:
   const { categoryFilter } = useCategoryFilterContext();
-  const formatCurrency = Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' });
 
   function handleProductFilter() {
     if (companyList.includes(categoryFilter)) {

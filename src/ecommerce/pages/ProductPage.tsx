@@ -5,7 +5,7 @@ import Footer from '../layouts/navigation/Footer';
 import NotFound from '../../shared/pages/NotFound';
 
 import { ProductDatabase } from '../data/ProductDatabase';
-import { ProductType } from '../context/ProductProvider';
+import { ProductType, formatCurrency } from '../context/ProductProvider';
 
 const getProductBySku = () => {
   const { paramId } = useParams() as { paramId: string };
@@ -14,47 +14,63 @@ const getProductBySku = () => {
   if (!findProduct) {
     return (
       <>
-        <h1>test</h1>
-        {/* <NotFound /> */}
+        <NotFound />
       </>
     );
   } else {
     return (
       <>
         <Header />
-        <div className="productPage flexBox" key={findProduct.sku}>
-          <section className="productPhotos flexBox justifyCenter">
-            <button>
-              <picture data-status="active">
-                <img src={findProduct.srcset} alt={`${findProduct.company} ${findProduct.unit} `} loading="lazy" decoding="async" fetchpriority="high" />
-              </picture>
-            </button>
-          </section>
-          <section className="activeProductPhoto flexBox justifyCenter">
+
+        <section className="skuPage">
+          <section className="skuPage__imgBlock">
             <picture>
-              <img src={findProduct.srcset} alt={`${findProduct.company} ${findProduct.unit} `} loading="lazy" decoding="async" fetchpriority="high" />
+              <img
+                src={findProduct.srcset}
+                alt={`${findProduct.company} ${findProduct.unit} `}
+                role="presentation"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </picture>
+            <picture>
+              <img
+                src={findProduct.srcset}
+                alt={`${findProduct.company} ${findProduct.unit} `}
+                role="presentation"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </picture>
+            <picture>
+              <img
+                src={findProduct.srcset}
+                alt={`${findProduct.company} ${findProduct.unit} `}
+                role="presentation"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="high"
+              />
             </picture>
           </section>
-          <main className="productPlate flexBox flexColumn alignUnset">
-            <span>
-              <h1>
-                {findProduct.company}
-                {findProduct.unit}
-              </h1>
-            </span>
+          <main className="skuPage__details">
             <ul>
               <li>
-                <h2>About {findProduct.unit}</h2>
+                <h1>
+                  {findProduct.company} {findProduct.unit}
+                </h1>
               </li>
               <li>
                 <p>{findProduct.description}</p>
               </li>
-              <li className="linebreak" />
-              <li>{findProduct.price}</li>
+              <li>{formatCurrency.format(findProduct.price)}</li>
               <li>ADD TO CART</li>
             </ul>
           </main>
-        </div>
+        </section>
+
         <Footer />
       </>
     );

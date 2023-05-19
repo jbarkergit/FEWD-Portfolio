@@ -288,108 +288,108 @@ export const ProductDatabase: ProductType[] = [
     unit: 'T5',
     description: 'High-end Tesla Headphones (3rd Generation) closed',
     price: 899.0,
-    srcset: 'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-t5-perspective_transparent.png',
-    //, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_perspective_v1.png.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_side_v1.png.jpg
+    srcset:
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-t5-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_perspective_v1.png.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_side_v1.png.jpg',
   },
   {
     category: 'headphone',
     sku: 'beyerdynamic-t1',
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-t1-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t1-3rd-generation_20-03_perspective_v1.png.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t1-3rd-generation_20-03_front_v1.png.jpg',
     company: 'Beyerdynamic',
     unit: 'T1',
     description: 'High-end Tesla headphones (3rd generation) open',
     price: 899.0,
+    srcset:
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-t1-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t1-3rd-generation_20-03_perspective_v1.png.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t1-3rd-generation_20-03_front_v1.png.jpg',
   },
   {
     category: 'headphone',
     sku: 'beyerdynamic-dt-900-pro-x',
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-900-pro-x-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-side.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-front.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-front.jpg',
     company: 'Beyerdynamic',
     unit: 'DT 900 PRO X',
     description: 'Studio headphones for critical listening, mixing & mastering (open-back)',
-    price: 259.0,
+    price: 349.0,
+    srcset:
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-900-pro-x-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-side.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-front.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-front.jpg',
   },
   {
     category: 'headphone',
     sku: 'beyerdynamic-dt-700-pro-x',
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-900-pro-x-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-side.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-front.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-perspective-1_2.jpg',
     company: 'Beyerdynamic',
     unit: 'DT 700 PRO X',
     description: 'Studio headphones for recording & monitoring (closed)',
     price: 259.0,
+    srcset:
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-900-pro-x-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-side.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-front.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-perspective-1_2.jpg',
   },
   {
     category: 'headphone',
     sku: 'beyerdynamic-dt-1990-pro',
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-1990-pro-perspective_transparent_1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1990pro_16-05_perspective_v1-webartikel_1.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1990pro_16-05_front_v1-webartikel_1.png',
     company: 'Beyerdynamic',
     unit: 'DT 1990 PRO',
     description: 'Tesla studio reference headphones for mixing and mastering (open)',
     price: 499.0,
+    srcset:
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-1990-pro-perspective_transparent_1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1990pro_16-05_perspective_v1-webartikel_1.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1990pro_16-05_front_v1-webartikel_1.png',
   },
   {
     category: 'headphone',
     sku: 'beyerdynamic-dt-1770-pro',
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-1770-pro-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1770pro_15-07_perspective_v1-webartikel_1.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1770pro_15-07_side_v1-webartikel.jpg',
     company: 'Beyerdynamic',
     unit: 'DT 1770 PRO',
     description: 'Tesla studio reference headphones for mixing, mastering, monitoring (closed)',
     price: 499.0,
+    srcset:
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-1770-pro-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1770pro_15-07_perspective_v1-webartikel_1.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1770pro_15-07_side_v1-webartikel.jpg',
   },
   {
     category: 'headphone',
     sku: 'beyerdynamic-dt-990-black-se',
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-990-black-special-edition-perspective_transparent_1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt_990_black_special_edition_perspektive.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt_990_black_special_edition_seite.png',
     company: 'Beyerdynamic',
     unit: 'DT 990 Black Special Edition',
     description: 'Hi-fi headphones (open)',
     price: 159.0,
+    srcset:
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-990-black-special-edition-perspective_transparent_1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt_990_black_special_edition_perspektive.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt_990_black_special_edition_seite.png',
   },
   {
     category: 'headphone',
     sku: 'beyerdynamic-dt-990-pro',
-    srcset:
-      'src/ecommerce/assets/images/Beyerdynamic/beyerdynamic-dt-990-pro-perspective.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-pro-perspective.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-pro-side.png',
     company: 'Beyerdynamic',
     unit: 'DT 990 PRO',
     description: 'Studio headphones for mixing and mastering (open)',
     price: 159.0,
+    srcset:
+      'src/ecommerce/assets/images/Beyerdynamic/beyerdynamic-dt-990-pro-perspective.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-pro-perspective.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-pro-side.png',
   },
   {
     category: 'headphone',
     sku: 'beyerdynamic-dt-880-pro',
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-880-pro-perspective_transparent-3.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-880-pro-perspective-1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-880-pro-front-1.png',
     company: 'Beyerdynamic',
     unit: 'DT 880 PRO',
     description: 'Studio headphones for mixing and mastering (semi-open)',
     price: 199.0,
+    srcset:
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-880-pro-perspective_transparent-3.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-880-pro-perspective-1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-880-pro-front-1.png',
   },
   {
     category: 'headphone',
     sku: 'beyerdynamic-dt-770-pro',
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt-770-pro-headphones-beyerdynamic-perspective_transparent_1.png',
     company: 'Beyerdynamic',
     unit: 'DT 770 PRO',
     description: 'Reference headphones for control and monitoring purpose',
     price: 159.0,
+    srcset:
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt-770-pro-headphones-beyerdynamic-perspective_transparent_1.png',
   },
   {
     category: 'headphone',
     sku: 'beyerdynamic-dt-990-e',
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-perspective_transparent_2.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-perspective_transparent_2.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-side_1.png',
     company: 'Beyerdynamic',
     unit: 'DT 990 Edition',
     description: 'Hi-fi headphones (open)',
     price: 175.0,
+    srcset:
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-perspective_transparent_2.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-perspective_transparent_2.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-side_1.png',
   },
   {
     category: 'interface',
@@ -502,72 +502,72 @@ export const ProductDatabase: ProductType[] = [
   {
     category: 'microphone',
     sku: 'Electro-Voice-RE20-BLACK',
-    srcset:
-      'https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_Front.png&width=997&height=512, https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_309A_NoCable.png, https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_309A_wCable.png',
     company: 'Electro-Voice',
     unit: 'RE20-BLACK',
     description: "Broadcast announcer's microphone with Variable‑D",
     price: 498.0,
+    srcset:
+      'https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_Front.png&width=997&height=512, https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_309A_NoCable.png, https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_309A_wCable.png',
   },
   {
     category: 'microphone',
     sku: 'Electro-Voice-RE20',
-    srcset:
-      'https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_Front.png&width=998&height=512, https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_309A_NoCable.png, https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_309A_wCable.png',
     company: 'Electro-Voice',
     unit: 'RE20',
     description: "Broadcast announcer's microphone with Variable‑D",
     price: 498.0,
+    srcset:
+      'https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_Front.png&width=998&height=512, https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_309A_NoCable.png, https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_309A_wCable.png',
   },
   {
     category: 'microphone',
     sku: 'Shure-SM7B',
-    srcset:
-      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/614/548/0a-/header_transparent/b40288cd0b085f70f2bf067c3658cc8c.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/46b/e9a/f9-/header_transparent/a8b067c287d7e46bf10821c653e8449c.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/170/99d/38-/header_transparent/1beff88dd84a9d67d82cf0449e93dbc0.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/5d7/cae/9d-/header_transparent/2140e6b3255a02c1671635465b5c46f6.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/f4c/fe7/75-/header_transparent/8bda20c57483ef023664ba14b35deabe.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/6fe/805/7b-/header_transparent/3ea1206a7192e05a95e4869c443ae0b1.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/239/f57/ba-/header_transparent/a2477a5c6eb6c9b115ed9805f5b81702.png',
     company: 'Shure',
     unit: 'SM7B',
     description: 'Vocal Microphone',
     price: 399.0,
+    srcset:
+      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/614/548/0a-/header_transparent/b40288cd0b085f70f2bf067c3658cc8c.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/46b/e9a/f9-/header_transparent/a8b067c287d7e46bf10821c653e8449c.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/170/99d/38-/header_transparent/1beff88dd84a9d67d82cf0449e93dbc0.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/5d7/cae/9d-/header_transparent/2140e6b3255a02c1671635465b5c46f6.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/f4c/fe7/75-/header_transparent/8bda20c57483ef023664ba14b35deabe.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/6fe/805/7b-/header_transparent/3ea1206a7192e05a95e4869c443ae0b1.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/239/f57/ba-/header_transparent/a2477a5c6eb6c9b115ed9805f5b81702.png',
   },
   {
     category: 'microphone',
     sku: 'Shure-SM58',
-    srcset:
-      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_main_images/files/cf1/51c/44-/header_transparent/9d3d409a77477acd4ec290b0c05164e1.png, https://products.shureweb.eu/cdn-cgi/image/width=144,height=144,format=auto/shure_product_db/product_images/files/71b/499/a5-/thumb_transparent/4f55b243f4b08edd89ed489129092be3.png',
     company: 'Shure',
     unit: 'SM58',
     description: 'Vocal Microphone',
     price: 99.0,
+    srcset:
+      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_main_images/files/cf1/51c/44-/header_transparent/9d3d409a77477acd4ec290b0c05164e1.png, https://products.shureweb.eu/cdn-cgi/image/width=144,height=144,format=auto/shure_product_db/product_images/files/71b/499/a5-/thumb_transparent/4f55b243f4b08edd89ed489129092be3.png',
   },
   {
     category: 'microphone',
     sku: 'Rode-NT1',
-    srcset:
-      'https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_KIT_3-QUARTER_LEFT_FRONT_1080x1080.png, https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_KIT_FRONT_1080x1080.png, https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_KIT_SM6_NO_POPSHIELD_FRONT_1080x1080.png, https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_PROFILE_PACKAGING_1080x1080.png',
     company: 'Rode',
     unit: 'NT1',
     description: 'Large-diaphragm Cardioid Condenser Microphone',
     price: 269.0,
+    srcset:
+      'https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_KIT_3-QUARTER_LEFT_FRONT_1080x1080.png, https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_KIT_FRONT_1080x1080.png, https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_KIT_SM6_NO_POPSHIELD_FRONT_1080x1080.png, https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_PROFILE_PACKAGING_1080x1080.png',
   },
   {
     category: 'microphone',
     sku: 'Rode-NT1-A',
-    srcset:
-      'https://edge.rode.com/images/page/200/modules/631/RØDE_NT1-A_FRONT_1080x1080..png, https://edge.rode.com/images/page/200/modules/631/RØDE_NT1-A_BACK_1080x1080.png',
     company: 'Rode',
     unit: 'NT1-A',
     description: 'Large-diaphragm Cardioid Condenser Microphone',
     price: 199.0,
+    srcset:
+      'https://edge.rode.com/images/page/200/modules/631/RØDE_NT1-A_FRONT_1080x1080..png, https://edge.rode.com/images/page/200/modules/631/RØDE_NT1-A_BACK_1080x1080.png',
   },
   {
     category: 'microphone',
     sku: 'Rode-PodMic',
-    srcset:
-      'https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_3_QUARTER_LEFT_FRONT_1080x1080.png, https://edge.rode.com/images/page/1869/modules/4583/RODE_PodMic_LAYING_DOWN_3_QUARTER_RIGHT_FRONT_1000x1000.png, https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_FRONT_1080x1080.png, https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_BOTTOM_1080x1080.png',
     company: 'Rode',
     unit: 'PodMic',
     description: 'Dynamic Broadcast Microphone',
     price: 99.0,
+    srcset:
+      'https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_3_QUARTER_LEFT_FRONT_1080x1080.png, https://edge.rode.com/images/page/1869/modules/4583/RODE_PodMic_LAYING_DOWN_3_QUARTER_RIGHT_FRONT_1000x1000.png, https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_FRONT_1080x1080.png, https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_BOTTOM_1080x1080.png',
   },
   {
     category: 'microphone',
