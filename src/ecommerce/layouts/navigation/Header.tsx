@@ -6,20 +6,18 @@ import ShoppingCart from '../../components/features/ShoppingCart';
 
 const PrimaryNav = () => {
   const [viewCart, setViewCart] = useState<boolean>(false);
-  const pageContent = viewCart ? null : <ShoppingCart />;
+  const pageContent = viewCart ? <ShoppingCart /> : null;
   return (
-    <section>
-      <header className="flexBox justifyCenter">
-        <nav
-          className="navkit flexBox"
-          style={{
-            position: useLocation().pathname === '/ecommerce' ? 'absolute' : 'relative',
-          }}
-        >
-          <HeaderKit />
-          <UserInteractions viewCart={viewCart} setViewCart={setViewCart} />
-          {pageContent}
-        </nav>
+    <section
+      className="navkit"
+      style={{
+        position: useLocation().pathname === '/ecommerce' ? 'absolute' : 'relative',
+      }}
+    >
+      <header className="navkit__header">
+        <HeaderKit />
+        <UserInteractions viewCart={viewCart} setViewCart={setViewCart} />
+        {pageContent}
       </header>
     </section>
   );

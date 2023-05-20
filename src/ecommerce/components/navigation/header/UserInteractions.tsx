@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import SearchBar from '../../features/SearchBar';
 
 type PropsType = {
   viewCart: boolean;
@@ -8,7 +9,7 @@ type PropsType = {
 const UserInteractions = ({ viewCart, setViewCart }: PropsType) => {
   const viewCartButton = viewCart ? (
     <button
-      className="navkit__cta--btn --ctaBtn flexBox"
+      className="navkit__header__cta--btn --ctaBtn flexBox"
       id="shoppingCartBtn"
       style={{
         backgroundColor: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -20,7 +21,7 @@ const UserInteractions = ({ viewCart, setViewCart }: PropsType) => {
     </button>
   ) : (
     <button
-      className="navkit__cta--btn --ctaBtn flexBox"
+      className="navkit__header__cta--btn --ctaBtn flexBox"
       id="shoppingCartBtn"
       style={{
         backgroundColor: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -33,9 +34,10 @@ const UserInteractions = ({ viewCart, setViewCart }: PropsType) => {
   );
 
   return (
-    <span className="navkit__cta flexBox justifyEnd">
+    <section className="navkit__header__cta">
+      <SearchBar />
       <button
-        className="navkit__cta--btn --ctaBtn flexBox"
+        className="navkit__header__cta--btn --ctaBtn flexBox"
         id="myAccountBtn"
         style={{
           color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -46,7 +48,7 @@ const UserInteractions = ({ viewCart, setViewCart }: PropsType) => {
         <h4>Account</h4>
       </button>
       {viewCartButton}
-    </span>
+    </section>
   );
 };
 
