@@ -9,7 +9,7 @@ export type ProductType = {
   unit: string;
   description: string;
   price: number;
-  srcset: string;
+  images: string[];
 };
 
 export const companyList = [...new Set(ProductDatabase.map((product) => product.company))];
@@ -36,7 +36,7 @@ const ProductProvider = () => {
             <Link to={`/ecommerce/product/${ProductData.sku}`}>
               <span className="productGrid__product--containedHover">
                 <picture>
-                  <img srcSet={ProductData.srcset} alt={ProductData.unit} loading="lazy" decoding="async" fetchpriority="high" />
+                  <img src={ProductData.images[0]} alt={ProductData.unit} loading="lazy" decoding="async" fetchpriority="high" />
                 </picture>
               </span>
             </Link>

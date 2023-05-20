@@ -9,7 +9,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Asgard 3 is a highly powerful, highly affordable, modular headphone amp and preamp that gives you a complete, single-box solution for all your desktop needs. It’s a re-thinking of the headphone amp that started it all (for Schiit, anyway—the original Asgard, introduced in June 2010, was our first product.) Asgard 3 features our unique Continuity™ topology that extends the benefits of Class A output, and accepts all the same modules as Jotunheim and Lyr 3.   The Strong, Silent Type Asgard 3’s all-new Continuity output stage delivers 3.5W into 32 ohms—a whopping 3.5X more than any previous Asgard—while also running 500mW of Class A bias. What this means is you have tons of power for virtually any headphone—and, since full power is delivered to the ¼” jack, you don’t need balanced headphone cables to take advantage of it. At the same time, Asgard 3’s low noise floor means you are ready for the most sensitive IEMs. A Complete Desktop Control Center Select from the internal card or rear-panel analog input, and pick high or low gain with convenient front switches. Connect the preamp output to your powered monitors for a complete desktop system—or use it as a front end to your speaker power amplifier. Asgard 3 provides all the flexibility you need. Customize to Your Specific Needs Want more than an amp, without a bunch of boxes on your desk? Choose the ES9028 module with Unison USB™ for a world-class delta-sigma DAC for $100 more. Plus, this unique modular design means Asgard 3 won’t be dumpster-fodder when technology changes—just swap a card! Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Asgard 3—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal. Our transformers are also made in California. You get the picture. 5-Year Warranty and Easy Return Policy Asgard 3 is covered by a 5-year limited warranty that covers parts and labor. And if you don’t like your Asgard 3, you can send it back for a refund, minus 5% restocking fee, within 15 days of receiving it. ',
     price: 249.0,
-    srcset: 'https://www.schiit.com/public/upload/images/asgard%203%20blk%20frt%202022%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/asgard%203%20blk%20frt%202022%201920.jpg'],
   },
   {
     category: 'amp',
@@ -19,7 +19,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Unique technology, unrivalled flexibility, and modular design—the Jotunheim 2 sets the standard for balanced headphone amps and preamps. It’s ready for any headphone—and fully enabled to be the centerpiece of a complete desktop system.  The Best $2400 Headphone Amp—For $400? If you’re talking fully discrete, truly balanced headphone amps, you’re usually talking big, big money. Not with Jotunheim 2. It meets—or even exceeds—the insane parts and build quality of boutique amps. A true balanced, 4-gang, silky-smooth Alps RK27114 potentiometer and 1% “supermatched” JFET inputs, 10% matched, paired BJT gain stage and output devices, and zero capacitors in the signal path is just a start. Jotunheim 2 also features our exclusive Nexus™ current-feedback, inherently differential, input/output agnostic topology. It also includes our Continuity S™ output stage for exceptional linearity and efficiency at high output. Or, in English, Jotunheim 2 connects seamlessly to all your sources without compromise, puts out an incredible amount of power, and is whisper-quiet on even the most sensitive IEMs. Total. Desktop. Control. Jotunheim 2 provides all the connections and control for your entire desktop. Choose balanced, single-ended, or an internal card source with one front panel switch. Enjoy all your headphones, from the most power-hungry to the most sensitive. Hook up to powered monitors or speaker power amps via the balanced and single-ended preamp outputs. And, enable or disable the preamp outputs with a convenient switch. Jotunheim is all you need for a state-of-the-art desktop. Modularity: Tailored To Your Needs, Ready For the Future Jotunheim 2 is the only modular, affordable balanced headphone amp available today. This means it’s the only amp that lets you tailor it perfectly to your needs. Choose from one of two optional modules: ES9028 DAC. Choose the ES9028 module with Unison USB™ for a world-class delta-sigma DAC for $100. MM Phono. Or, choose the MM phono input module, for 42dB of gain and passive RIAA, for great phono sound, for $100. Also, Jotunheim 2’s modular design means you’re ready for the future. You won’t get stuck with dumpster fodder if DAC technology changes—just swap the module. And, you won’t get stuck with an amp that doesn’t work for you—change the module to meet your changing needs.   Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Jotunheim 2—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us. Our transformers are made in NorCal. You get the picture. 5-Year Warranty and Easy Return Policy Jotunheim 2 is covered by a 5-year limited warranty that covers parts and labor. And if you don’t like your Jotunheim 2, you can send it back for a refund, minus 5% restocking fee, within 15 days of receiving it.   ',
     price: 399.0,
-    srcset: 'https://www.schiit.com/public/upload/images/jotunheim%202%20frt%20blk%202022%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/jotunheim%202%20frt%20blk%202022%201920.jpg'],
   },
   {
     category: 'ampdac',
@@ -29,7 +29,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Fulla E is pretty much the answer to the question, “What’s the most affordable way I can get into great sound for gaming…or music…or even remote office work?” Because Fulla E is a great DAC/amp with top-shelf components—that also has a very nice microphone input, too.  Total Flexibility for Gaming, Music, and Communications Plug Fulla E into virtually any USB port, connect your headphones and microphone, and you’re set for amazing sound. But that’s only the start: Use it for gaming. Fulla E works seamlessly with many popular consoles like PS4, PS5, and Switch, as well as PCs, Macs, and tablets.  Use it for working at home. It\'s ideal for use with a headset for remote office environments— the audio quality of both the headphone and mic provide crystal-clear communications. Use it for music or movies. You don’t need to be a gamer to appreciate the quality of Fulla E—use it just to listen to music, or connect to virtually any smart TV with the included optical port. Use it as a DAC/preamp. Connect to powered monitors or speaker amps using the preamp output, to create a complete system. Use it with phones, tablets, or computers with low-powered USB ports. We’ve included a second USB port for power input. Plug in your phone charger (or any other 5V DC source with micro-USB output) and Fulla E tells your source it doesn’t need any power. Top-Shelf Components Fulla E is based on the ESS ES9018 D/A converter, coupled with an Alps RK09 potentiometer, high-quality filter and amp stages from Texas Instruments, and well as precision thin-film resistors and film capacitors. Fulla E delivers performance far beyond its modest price. Plenty of Headphone Power Fulla E delivers a super punch, up to 300mW into 16 ohms, together with a vanishingly low noise floor and low output impedance. Or, in English, this means it’s a great match for virtually any headphone. Amazing Mic Input Your friends may think you’ve started your own podcast when they hear Fulla E’s 24-bit microphone input with TI analog-to-digital converter. And, automatic gain control makes the mic adjustment-free and super simple to use. Built in Texas, 2-Year Warranty, Easy Returns By “built in Texas," this is what we mean: the vast majority of the total production cost of Fulla E—chassis, boards, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made in California. Our PCBs are made in Nevada, and it all comes together in our Corpus Christi, Texas facility. 2-Year Warranty, Easy Returns Fulla E is also covered by a 2-year limited warranty that covers parts and labor. And if you don’t like your Fulla, you can send it back for a refund, minus 15% restocking fee, within 15 days of receiving it. ',
     price: 109.0,
-    srcset: 'https://www.schiit.com/public/upload/images/Fulla4-front-1920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/Fulla4-front-1920.jpg'],
   },
   {
     category: 'ampdac',
@@ -39,7 +39,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Hel 2E is the latest generation of our super-popular, super-power transportable DAC/amp. A lot of people think Hel 2E is just for gamers, but it’s really much more than that. It’s so powerful and versatile you may find Hel 2E is everything you need—in one single box. If You’re a Gamer Just plug Hel 2E in to any PC, Mac, PS4, PS5, or Switch, and you’ll get tremendous sound…and you’ll also sound amazing to all of your friends. Super-high-quality headphone audio, combined with a podcast-quality microphone input, means you are going to hear every detail…and sound great while doing so.   If You’re a Keyboard Warrior Hel 2E seriously ups your game in the office or home office. Your voice will stand out on Zoom calls with 24-bit TI analog-to-digital conversion,  and you’ll enjoy headphone audio with much higher power and lower distortion than any PC.  If You Just Want To Listen Hel 2E is also an amazing DAC/amp, with incredible flexibility. The high-end ES9018 digital-to-analog converter delivers exceptional sound. Connect to your computer via USB, your TV via optical, and create an entire system with powerful headphone output and versatile preamp output for powered monitors or external speaker amplifiers. Top-Shelf Components Like DACs costing many times its price, Hel uses the ESS ES9018 D/A converter. Coupled with an Alps RK09 potentiometer, high-quality filter and amp stages from Texas Instruments, a sophisticated bipolar +/-12V supply, and precision thin-film resistors and film capacitors, Hel delivers amazing performance for its price. Designed in California, Built in Texas By “designed in California, built in Texas" this is what we mean: the vast majority of the total production cost of Hel—chassis, boards, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made in California. Our PCBs are made in Utah or Nevada, and it all comes together in Texas. 2-Year Warranty, Easy Returns Hel is also covered by a 2-year limited warranty that covers parts and labor. And if you don’t like your Hel 2E, you can send it back for a refund, minus 15% restocking fee, within 15 days of receiving it. ',
     price: 199.0,
-    srcset: 'https://www.schiit.com/public/upload/images/Hel2-front-1920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/Hel2-front-1920.jpg'],
   },
   {
     category: 'amp',
@@ -49,7 +49,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Ten years ago, we introduced the first Magni. Since then, we’ve been refining and improving the line, to the point where Magni is now the only affordable, true no-excuses headphone amp and preamp. It’s literally the only headphone amp you’ll ever need.  No Excuses—Across the Board  No excuses. Not in design, with discrete and advanced op-amp designs on the table. Not in parts, from its high-spec, sorted potentiometer to high-end thin-film resistors and silicon capacitors. Not in looks, with an all-new steel chassis using advanced stamping techniques. Not in safety, with new protection systems help protect your best headphones. And not even in manufacturing, with USA suppliers and Corpus Christi, Texas production.  Exotic Discrete Design…or Insane Measured Performance Magni+ is the only affordable headphone amp that offers a exotic, current-feedback, all-discrete design—for the same price as our Magni Heretic, an op-amp design with a unique topology that gives you even more insane measured performance. Choose Magni+ for the ultimate expression of an affordable all-discrete headphone amp—for hundreds less than other discrete designs (including our own!) Choose Magni Heretic for insanely great measurements from a unique op-amp topology that includes no overall feedback and a massively paralleled feedforward output stage. Or if you like red--Magni Heretic has a red bottom chassis. Total Confidence for All Headphones Both Magni models offer three gain levels, including negative gain, to span all of your headphone needs. Use power-hungry planars…or super-sensitive IEMs. We’ve also incorporated a decade of learning in protection systems. Don’t worry about plugging your favorite headphones into Magni—included overcurrent and DC protection help ensure they’re totally safe. Create a Complete Desktop System All Magnis include preamp outputs. This means you can connect any Magni to your desktop powered monitors for a complete system—or even connect it to a speaker power amp and use it as a preamp.  Designed and Built in Texas By “designed and built in Texas" this is what we mean: the vast majority of the total production cost of Magni—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. In the case of the Magni family, the chassis are made in California, the PCBs are made in Nevada, and it all comes together at our Corpus Christi, TX facility. 2-Year Warranty and 15-Day Return Policy All Magnis are covered by a 2-year parts and labor warranty. And, if you don’t like your Magni, you can still send it back for a refund, minus 15% restocking fee, within 15 days of receiving your amp.    ',
     price: 109.0,
-    srcset: 'https://www.schiit.com/public/upload/images/magni%20plus%20black%201920-2.jpg',
+    images: ['https://www.schiit.com/public/upload/images/magni%20plus%20black%201920-2.jpg'],
   },
   {
     category: 'amp',
@@ -59,7 +59,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Want to play in the tube pool without going full boat crazy? Well, have we got an amp for you! Welcome to Vali 2++, the most affordable and versatile tube hybrid amp on the planet. Tube Your Entire Desktop Vali 2++ delivers plenty of power for hard-to-drive headphones—and also provides the low noise you need for sensitive cans. Plus, it covers all your needs with preamp outputs for your powered monitors or speaker power amp…and it stacks perfectly with our Modi DACs or Loki Mini equalizer to create a complete desktop system.   Serious Tube Design  Vali 2++ uses a unique, class-leading power supply that gives us 60V on the plate. Combined with our unique Coherence™ topology—the only fully discrete, current-mode noninverting hybrid topology in any amp near this price—Vali 2++ redefines what you can expect from an affordable tube amp.  Roll Your Own Sound  Vali 2++ was designed with a single tube, so you can easily swap out the supplied 6N3P tube for a wide variety of interesting options, including 5670, 2C51, 6ECC42 and even WE396A! Stick to the great stock sound, or find the perfect tube for you!  Measurements Schmeasurements If you want measurements, we got measurements—Magni Heresy, Magnius, Modi, and Modius got you covered. But if you’re ready to have some fun with something completely different, Vali 2++ is for you. Enjoy tube sound without tons of noise, play with different tubes without having to get a second mortgage for a matched quad, and see what this whole tube thing is all about!   Designed and Built in California By “designed and built in Texas" this is what we mean: the vast majority of the total production cost of Vali 2++—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done in Nevada, Utah, or California. Yes, the wall-warts are made in China, but there\'s some give and take at this price point. 2-Year Warranty and Easy Returns Vali 2++ is covered by a limited warranty that covers parts and labor for 2 years, and 90 days on the tubes. That’s 2x the coverage of most amps in this price range. And, if you don’t like your Vali 2+, you can still send it back for a refund, minus 15% restocking fee, within 15 days of receiving your amp. ',
     price: 149.0,
-    srcset: 'https://www.schiit.com/public/upload/images/Vali%202plusBlack-front-1920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/Vali%202plusBlack-front-1920.jpg'],
   },
   {
     category: 'amp',
@@ -69,7 +69,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Magnius simply blows up the value equation in balanced headamps: high power, superb measurements, best volume control, designed and built right here in Texas—unlike other measurement-focused amps that cost 50-150% more. Boom.   No-Compromise Power, Precision, and Control Have hard-to-handle headphones? No problem. Super-sensitive IEMs that demand a vanishingly low noise floor? Yep, you’re good. Want a volume control that delivers great matching all the way down? You got it. In technical terms, Magnius delivers 5000mW from its balanced headphone output at 32 ohms, with THD+N approaching -120dB, and it’s huge Alps 4-gang balanced pot gives you fine control and excellent tracking small potentiometers simply can’t match. The Most Magnificent Pot Many amps at and above this price use small 9mm potentiometers. But an Alps RK27114 27mm “Blue Velvet” potentiometer is a completely different experience. Get ready for excellent channel matching at all potentiometer positions, as well as a smooth, gradual action that lets you find exactly the right volume. We chose the RK27114 because it’s one of the most important components of the amp, the one you interact with all the time.   Composite Integrated Technology Magnius uses a handful of very high-end integrated circuits, including buffers with feedforward, exotic fully differential op-amps, and powerful current-feedback outputs in a composite configuration to reduce THD and noise to vanishingly low levels. If you’re looking for measurements, Magnius is our best-measuring amp. And it out-measures a whole lot of other gear out there, at much higher prices.   Flexibility for Your Entire Desktop Magnius isn’t just a headphone amp. It also has balanced and single-ended preamp outputs, so you can connect to powered monitors for a complete system. It also has both balanced and single-ended inputs, and two gain levels. And all these connections use best-in-class Neutrik connectors, together with Alps signal switches, for ultimate integrity and reliability.   Perfect Pair With Modius If you’re looking for a great-sounding, great-measuring balanced DAC to pair with Magnius, look no farther than Modius to create an end-game desktop stack. These two components were developed together, are exactly the same size, and stack perfectly on a desktop. Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Magnius—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us. Yes, the wall-warts are made in Taiwan, but there\'s some give and take at this price point. 2-Year Warranty and 15-Day Return Policy Magnius is covered by a limited warranty that covers parts and labor for two years. And, if you don’t like your Magnius, you can still send it back for a refund, minus 15% restocking fee, within 15 days of receiving your amp.  ',
     price: 199.0,
-    srcset: 'https://www.schiit.com/public/upload/images/magnius%20front%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/magnius%20front%201920.jpg'],
   },
   {
     category: 'amp',
@@ -79,7 +79,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Go ahead. Do things with Valhalla 2 that you’d never attempt with other OTL tube amps. Run low-impedance headphones. Use IEMs. Valhalla 2 is a very flexible tube amp! Tubes Made Flexible While most tube OTL amps are really only designed for 300 ohm Senns and 600 ohm Beyers, Valhalla 2 stretches to include headphones that you’d never expect to use with a tube amp. Many people use Valhalla 2 with sensitive, lower-impedance headphones as well.   A Complete Desktop Preamp Valhalla 2 also has preamp outs and a gain switch. Preamp outs let you connect your powered monitors, to give them some of what some people call “tube magic.” The gain switch gives you better control of both output level and impedance, for better matching to your headphones. It\'s easy to build a complete desktop system around the Valhalla.   Not Your Father’s Tube Amp If you’re expecting syrupy, tubby, euphonically colored tube sound, you’re in for a shock. Valhalla 2 is exceptionally accurate, neutral, and resolving, without being strident or etched.  Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Valhalla 2—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal. Our transformers are also made in California. You get the picture.    5-Year Warranty Valhalla 2 is covered by a limited warranty that covers parts and labor for five years. That’s 5 years. Yes. FIVE. Which is up to 5X that of our competition, if you weren’t so hot at math. Note the marketing weasel-wording “up to.” One exception: the tubes. Those we cover for 3 months.   15-Day Satisfaction Guarantee Try Valhalla in your own house for 15 days. If you don’t like it, simply send it back for a refund, minus a 5% transaction fee. Try spending 15 days in an audio store. They’ll kick you out. Unless you buy them donuts. Maybe.   ',
     price: 399.0,
-    srcset: 'https://www.schiit.com/public/upload/images/valhalla%20black%20front%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/valhalla%20black%20front%201920.jpg'],
   },
   {
     category: 'amp',
@@ -89,7 +89,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Want a super-high-end, super-powerful, tube hybrid headphone amp and preamp—but also want the comfort of a pure solid state design? Then Lyr+ is for you! It’s the only headamp in the world that goes seamlessly from tube to solid state, using our exclusive Fusion Architecture™. I Can Live…With or Without Tube Don’t want to use a tube? Then don’t plug one in. Lyr+ switches seamlessly to its internal solid state gain stage, based on exotic depletion-mode MOSFETs. Want tube gain? Then plug in any 6SN7-type tube, and Lyr+ switches over to 100% tube voltage gain with the MOSFETs completely out of the picture. That’s the magic of Fusion Architecture. Technological Tour De Force Lyr+ is our first compact headamp that gives you relay ladder volume control, for ultimate transparency and perfect channel matching, from the lowest to highest volumes. Coupled with a powerful Continuity™ bipolar output stage, full DC coupling throughout, separate regulated high-voltage and low-voltage supplies, the convenience of remote control (in case you want to use it, say, off the desktop), and microprocessor oversight, Lyr+ is a small marvel.  Power and Safety in One Lyr+ delivers up to 6W RMS per channel through the standard ¼” headphone jack, so there’s no need for balanced headphones to take advantage of all that power. But, at the same time, advanced oversight ensures Lyr+ is safe for every headphone. DC, overcurrent, and tube sensing means this is a fully modern tube amp.  The Heart of a Complete, Compact System Add Bifrost 2 or Modius for digital duties, and a Vidar or Aegir as a speaker amp, and Lyr+ is the heart of a full system, ready for headphones, speakers, and both analog and digital sources. You can even turn off Lyr+’s preamp outs, if you just want to listen to headphones. Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Lyr+—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal. Our transformers are also made in California. You get the picture.  5-Year Warranty and Easy Return Policy Lyr+ is covered by a 5-year limited warranty that covers parts and labor. And if you don’t like your Lyr+, you can send it back for a refund, minus 5% restocking fee, within 15 days of receiving it. ',
     price: 599.0,
-    srcset: 'https://www.schiit.com/public/upload/images/lyrplus-black-front-1920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/lyrplus-black-front-1920.jpg'],
   },
   {
     category: 'amp',
@@ -99,7 +99,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Here’s your ultra-high-end amplifier, without the ultra-high-end price. Vidar 2 is nothing less than an all-out, exotic-topology, Class-AB, linear-supply, microprocessor-controlled, power-doubling, dual-mono-ish, intelligently-managed, drives-almost-anything power amp that you’ll be happy with for a long, long time. Maybe forever!   Totally Modern Convenience… Vidar has all the modern conveniences you expect, including a compact form factor, a convenient front-panel standby switch to save tons of power, and an intelligent microprocessor-driven oversight system that ensures the amp is operating optimally at all times—and protects your treasured speakers from harm. …with Old Skool Quality At the same time, don’t let the features fool you. Pick up Vidar 2 to get a real feeling for the beefy 600VA transformer inside. No Class D, no switching supplies, no fans…just powerhouse performance, delivering 100W per channel into 8 ohms, doubling to 200W per channel into 4 ohms.   Stereo or Mono Flexibility Combine Vidar 2 with a single-ended preamp like Saga S or Saga+ for an insanely affordable, insanely high performance system. Crazy? Want more? Run two Vidar 2s from a balanced preamp like Freya S or Freya+ for true monoblock performance and 400 watts per channel into 8 ohms.    Designed and Built in California—For Real By “designed and built in California" this is what we mean: the vast majority of the total production cost of Vidar—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our California factory. Our PCBs are done just over the hill from us, or in NorCal. Our transformers are also made in California. You get the picture. 5-Year Warranty and Easy Return Policy Vidar is covered by a 5-year limited warranty that covers parts and labor. And if you don’t like your Vidar, you can send it back for a refund, minus 5% restocking fee, within 15 days of receiving it. ',
     price: 799.0,
-    srcset: 'https://www.schiit.com/public/upload/images/vidar%202%20front%20blk%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/vidar%202%20front%20blk%201920.jpg'],
   },
   {
     category: 'amp',
@@ -109,7 +109,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'What if we made a Class A version of the Vidar? No, wait, strike that. What if we made a better-than-Class-A-in-many-respects version of the Vidar? Well, here you go. Meet Aegir.   Continuity™: Benefits Beyond Class A Aegir is our first Continuity speaker amplifier. Technically, Continuity is a way to eliminate transconductance droop outside of the Class A bias region, and extend the benefits of Class A biasing. It also solves the NPN and PNP device mismatch problem, since it uses both NPN and PNP devices on both rails. It’s still a very hot-running amp, though, with over 10W of Class A standing bias.   A True All-Out Design Like Vidar, Aegir uses an exotic current-feedback topology, as well as a 100% linear power supply (with 7 separate voltage rails and 600VA transformer) and microprocessor oversight to eliminate capacitors and DC servos in the signal path. No Class D, no switching supplies, no fans, no compromises, nothing in the signal path but music—for a three-figure price tag.   Power That Scales Aegir provides 20W into 8 ohms, doubling to 40W into 4 ohms. Run mono, and you’ll see 80W into 8 ohms. Best of all, Continuity ensures you see Class-A-like performance at all these power outputs.     Convenient Standby Mode On Aegir, we’ve added a front-panel button to put the amp into Standby mode. This de-biases the output stage completely and reduces standing power consumption significantly. This keeps the rest of the amp up and running, without massive heat output.   Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Aegir—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal. Our transformers are also made in California. You get the picture. 5-Year Warranty and Easy Return Policy Aegir is covered by a 5-year limited warranty that covers parts and labor. And if you don’t like your Aegir, you can send it back for a refund, minus 5% restocking fee, within 15 days of receiving it.   ',
     price: 799.0,
-    srcset: 'https://www.schiit.com/public/upload/images/aegir%20black%20front%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/aegir%20black%20front%201920.jpg'],
   },
   {
     category: 'amp',
@@ -119,7 +119,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Ragnarok 2 is the only modular, remote-controlled integrated amp that’s a great match for both speakers and headphones. Delivering full speaker power to the balanced headphone outputs, and debuting our all-new Nexus™ differential gain stage, Ragnarok delivers performance that completely befits its name—in Norse legend, Ragnarok was the “end of the world.” Modular Flexibility, Remote Convenience Ragnarok 2 has two module slots that accept the same modules that many of our other products use, for flexibility and future upgradability. You can order Ragnarok 2 in one of two ways to suit your needs: Just An Amp: with two RCA input modules installed, for a total of two balanced inputs and three RCA inputs, ready for you to add all your line-level sources Fully Loaded: with a MM phono preamp and a ES9028 DAC, for a total of two balanced inputs, one RCA line-level input, one RCA phono input, and one USB DAC input—a single integrated solution for a variety of analog and digital needs Both versions come with a standard milled aluminum remote control that allows you to select source, control volume, select headphone or speaker output, mute, and set gain. Nexus™: One Stage To Rule Them Ragnarok 2 debuts our unique differential Nexus™ gain stage for seamless interaction between single-ended and balanced sources. Nexus converts single-ended inputs to balanced outputs, and balanced inputs to single-ended outputs—in a single gain discrete gain stage, without gain differences between modes, and with good performance in all modes. Power and Control for Speakers and Headphones Ragnarok 2 delivers 60W into 8 ohms and 100W into 4 ohms, for excellent performance with most speakers. It also delivers full power through the balanced headphone jack (24W into 32 ohms) and quarter-power output from the single-ended headphone jack (6W into 32 ohms). With selectable gains of 1, 8, and 25, it’s compatible with a wide range of speakers and headphones.   Easiest 128-Step Relay-Switched Volume, Ever The benefits of a relay-switched stepped attenuator for volume are clear. Compared to a potentiometer, they give you essentially perfect channel matching and near-unmeasurable distortion. However, some preamps with relay-stepped attenuators confuse you with buttons and screens. Not Ragnarok 2. Ragnarok 2 has a volume knob that works just like a volume knob—just grab and turn. And if you use the remote control, the motorized potentiometer changes to match the remote setting.      Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Ragnarok 2—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal. Our transformers are also made in California. You get the picture. 5-Year Warranty and Easy Return Policy Ragnarok 2 is covered by a 5-year limited warranty that covers parts and labor. And if you don’t like your Ragnarok 2, you can send it back for a refund, minus 5% restocking fee, within 15 days of receiving it. ',
     price: 1499.0,
-    srcset: 'https://www.schiit.com/public/upload/images/ragnarok%202%20black%20front%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/ragnarok%202%20black%20front%201920.jpg'],
   },
   {
     category: 'amp',
@@ -129,7 +129,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Forget the technobabble and buzzword bingo for a sec. Here’s what Tyr is: a monstrous, old-skool, crazy heavy, over-the-top mono speaker amplifier. It uses the best of today’s and yesterday’s technologies to create something totally unique—and It has enough power to run almost anything.   Please note: "mono" means "one channel." You need two Tyrs for stereo.  Beyond Overbuilt 55 lbs. 12 lb choke. 160,000uf filter capacitance. 24 150W Toshiba output devices. 7 internal power supply rails, including HV boost rails that uses unique discrete CFP regulators. Sounds like overkill? It is. Tyr is our most insane amplifier ever, designed for driving difficult speakers without breaking a sweat.   Unique Nexus™ and Continuity™ Topology Tyr is the ultimate expression of both Nexus and Continuity. In other words, this is a balanced, differential amplifier with a unique discrete, current-feedback gain stage, coupled with Continuity™ output topology that eliminates transconductance droop. In Tyr, we’ve refined Continuity even further, resulting in a cooler-running amplifier.   Back to the Past One of the keys to Tyr’s performance is it’s huge inductor—literally the same size as the power transformer. This custom-made inductor is the “choke” in the “choke-input power supply.” This is a super old-skool technique you don’t see anymore, because chokes cost a mint and some people think banks of capacitors are more visually impressive.  Intelligent Oversight and Convenience Like all of our amplifiers, Tyr is managed by a microprocessor running custom firmware. It monitors all operational parameters, from bias to temperature to DC, and protects the amplifier in case of any fault, for near-bulletproof reliability. Add the ability to put the amplifier into low-power “standby” mode on the front panel and switchable balanced and SE inputs, and Tyr is our most convenient amp ever.   Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Tyr—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us. Our transformers are also made in California. All of this comes together in our Valencia, California facility, where each Tyr is assembled, tested, burned in for 3 days, and then listen-tested again. 5-Year Warranty Tyr is covered by a limited warranty that covers parts and labor for five years. That’s 5 years. Yes. FIVE. Which is up to 5X that of our competition, if you weren’t so hot at math. Note the marketing weasel-wording “up to.”   15-Day Satisfaction Guarantee Try Tyr in your own house for 15 days. If you don’t like them, simply send them back for a refund, minus a 5% transaction fee. Try spending 15 days in an audio store. They’ll kick you out. Unless you buy them donuts. Maybe. ',
     price: 1599.0,
-    srcset: 'https://www.schiit.com/public/upload/images/tyr-black-main-1920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/tyr-black-main-1920.jpg'],
   },
   {
     category: 'dac',
@@ -139,7 +139,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Ten years ago, we introduced the first Modi. Now, we’ve pushed the limits of what you can expect from a small, affordable DAC, to the point where Modi+ is a true no-excuses device. Whether you want better sound from your computer, TV, streamer, tablet, CD player, or many other sources, Modi+ delivers. No Excuses, Period No matter how you look at it—performance, measurements, features, design, or sound—Modi+ delivers above and beyond your expectations. Using the same high-quality components as products that cost hundreds and thousands more, in a clean, seamless chassis design, with sound tuned by obsessive digital engineers, Modi+ is the affordable DAC to beat. One DAC for All Your Needs Plug Modi+ into virtually any computer, streamer, tablet, or phone and you’re ready to go, complete with the best USB interface available: Schiit’s own Unison USB™. Or, choose an optical or coaxial digital source with the included wall power supply. Modi+ is the only DAC you need. Build a Custom System Modi+ stacks seamlessly with a wide range of products to let you build your perfect system. Add Magni or Vali for headphone amp and preamp duties, Loki for equalization, and Mani for phono inputs. Or just add a SYS Passive Preamp for analog volume control. It’s your choice—customize as you want! Designed and Built in Texas By “designed and built in Texas" this is what we mean: the vast majority of the total production cost of Modi+—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made from Texas steel in California (yeah, we know, weird), and the PCBs are done in Nevada and Utah. Who needs global trade when you have statal trade? (Just kidding, of course…it is still a global economy. But you get the picture.) 2-Year Warranty and 15-Day Returns Modi+ is covered by a limited warranty that covers parts and labor for two years. And, if you don’t like your Modi, you can still send it back for a refund, minus 15% restocking fee, within 15 days of receiving your DAC. ',
     price: 129.0,
-    srcset: 'https://www.schiit.com/public/upload/images/modi%20plus%20black%20front%20alt%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/modi%20plus%20black%20front%20alt%201920.jpg'],
   },
   {
     category: 'dac',
@@ -149,7 +149,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Want a multibit DAC with a modern architecture, top-of-class USB input, and the flexibility to be the centerpiece of your entire system—without breaking the bank? Modi Multibit 2 delivers exactly what you need. True Multibit for the Masses Modi Multibit 2 takes our bespoke True Multibit™ architecture from our more expensive DACs. This includes a unique time- and frequency-domain optimized digital filter, implemented on an Analog Devices DSP, together with a medical/defense grade Analog Devices AD5547 D/A converter. It even includes our proprietary Unison USB™ digital input, for superb performance. Features and Flexibility You Need Modi Multibit 2 isn’t a stripped-down DAC. In addition to USB, you also get coaxial and optical inputs. And, we’ve included NOS (non-oversampling) mode, to give you even more flexibility in system matching.  Centerpiece of a Compact System It’s easy to build a complete system around Modi Multibit 2. Its size and aesthetics match many of our other products—Magni or Vali for headphone and preamp duties, Loki for EQ, Mani for your turntable, and more. Or forget size and use it as a DAC for your largest system. It’s that good! Designed and Built in California and Texas By “designed and built in California and Texas" this is what we mean: we manufacture in Valencia, CA and Corpus Christi, Texas, and the vast majority of the total production cost of Modi Multibit 2—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US.  2-Year Warranty and 15-Day Returns Modi Multibit 2 is covered by a limited warranty that covers parts and labor for two years. And, if you don’t like your Modi, you can still send it back for a refund, minus 15% restocking fee, within 15 days of receiving your DAC. ',
     price: 299.0,
-    srcset: 'https://www.schiit.com/public/upload/images/modi%20multibit%202%20front%20blk%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/modi%20multibit%202%20front%20blk%201920.jpg'],
   },
   {
     category: 'dac',
@@ -159,7 +159,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Modius? Yes, as in “Modius Maximus,” a bigger, balanced-output Modi with super-high performance—and even better versatility. Connect to any computer or streamer—or tablet, TV, CD player, or many other sources—and Modius delivers exceptional sound. High Performance DAC and USB Modius E features Schiit’s exclusive Unison USB™ interface, which provides plug-and-play compatibility with virtually any modern device. Combined with the ESS ES9028 D/A converter and dedicated balanced and single-ended output stages with DC-coupled output, Modius provides exceptional performance for a very low price. Class-Leading Versatility Plug Modius E into virtually any computer or streamer with the included USB A-C cable and you’re ready to go. Or, choose optical, coaxial, or AES digital sources and use the included wall power supply. Or, if you want to connect your phone or tablet—something that needs very low power draw—again, use the included wall power supply to eliminate dreaded “draws too much power” errors. That’s right—Modius accepts pretty much any input you can throw at it!  Perfect Stack with Asgard, Jotunheim, and Lyr Modius E  has exactly the same footprint as our popular mid-sized amp series. If you’re looking for more connectivity than the internal cards provide, Modius is a perfect pair. Don’t have one of our amps? No worries, Modius works great with virtually anything! Designed and Built in Texas By “designed and built in Texas" this is what we mean: the vast majority of the total production cost of Modius E—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are actually made in California (though the metal comes from Texas). Our PCBs are done in Nevada, Utah, or California. Yes, the wall-warts are from Taiwan, but there\'s some give and take at this price point.  2-Year Warranty and 15-Day Returns Modius E is covered by a limited warranty that covers parts and labor for two years. And, if you don’t like your Modius, you can still send it back for a refund, minus 15% restocking fee, within 15 days of receiving your DAC. ',
     price: 229.0,
-    srcset: 'https://www.schiit.com/public/upload/images/modius%20black%20front%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/modius%20black%20front%201920.jpg'],
   },
   {
     category: 'dac',
@@ -169,7 +169,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Bifrost 2/64 is a complete re-thinking of what an accessible DAC can be. With full hardware-balanced topology, balanced and single-ended outputs, remote control, Schiit’s unique True Multibit™ architecture with a time-and frequency-domain optimized digital filter, NOS mode, and our own Unison USB™ input and easy-to-upgrade Autonomy™ platform, Bifrost sets all the standards.   Top-Of-Class Hardware Balanced Design Just like our range-topping Yggdrasil, the Bifrost 2/64 features a fully hardware balanced architecture. This means four 16-bit DACs total, with one DAC for each phase. You can expect the same stellar performance from both the XLR and RCA outputs, so Bifrost 2/64 works seamlessly with your system.   Featuring Schiit\'s Unique True Multibit™ — and NOS Like all Schiit True Multibit products, Bifrost 2/64 uses completely unique D/A converters and our proprietary time- and frequency-domain optimized digital filter. In the case of Bifrost 2/64, four DAC8812 D/A converters—the same basic chip used in Yggdrasil Less is More—do the conversion, while the digital filter is implemented on an Analog Devices SHARC DSP. You can also choose non-oversampling mode (NOS) to bypass the digital filter entirely.   Unison USB™ is USB, Elevated Bifrost 2/64 features Unison USB, our own USB input based on a general-purpose PIC32 microprocessor, using precision local clocks and complete electromagnetic and electrostatic isolation. No more off-the-shelf USB—this unique, UAC2-compliant input provides the highest performance and lowest power draw of any USB input we’ve offered to date. Easy Upgrades with Autonomy™ Architecture Slide-in hardware modules and a MicroSD card slot means this DAC never has to come back to Schiit for upgrades. Compare this to other DACs, even DACs costing many times more—only Bifrost 2/64 provides complete hardware and firmware upgradability. All original Bifrost 2s can be upgraded to 2/64 with a new card and firmware, available on our Upgrades page.   Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Bifrost 2/64—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us. Our transformers are also made in California. We ain’t just putting in the last screws and calling it done.  5-Year Warranty and Easy Return Policy Bifrost 2/64 is covered by a 5-year limited warranty that covers parts and labor. And if you don’t like your Bifrost 2, you can send it back for a refund, minus 5% restocking fee, within 15 days of receiving it.    ',
     price: 799.0,
-    srcset: 'https://www.schiit.com/public/upload/images/bifrost%202%20black%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/bifrost%202%20black%201920.jpg'],
   },
   {
     category: 'dac',
@@ -179,7 +179,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Gungnir brings Schiit’s own True Multibit architecture with medical-grade D/A converters and a unique time- and frequency-domain optimized digital filter to a price point about half that of Yggdrasil—as well as the comfort of completely upgradable, modular design. Gungnir: Above and Beyond With Gungnir, you get the same proprietary DSP-based digital filter as Yggdrasil, coupled to four precision Analog Devices AD5781BRUZ digital to analog converters for true hardware balancing and 19 effective bits of resolution. VCO-based clock regeneration ensures excellent jitter performance with all sources. The analog section is completed with discrete JFET buffers and summers, the same as Yggdrasil. USB, Elevated: Unison USB™ Gungnir now includes Unison USB, our own USB input based on a general-purpose PIC32 microprocessor, using precision local clocks and complete electromagnetic and electrostatic isolation. No more off-the-shelf USB for us—this unique, UAC2-compliant input provides the highest performance and lowest power draw of any USB input we’ve offered to date.  Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Gungnir—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal. Our transformers are also made in California. You get the picture.  5-Year Warranty Gungnir is covered by a limited warranty that covers parts and labor for five years. That’s 5 years. Yes. FIVE. Which is up to 5X that of our competition, if you weren’t so hot at math. Note the marketing weasel-wording “up to.” 15-Day Satisfaction Guarantee Try Gungnir in your own house for 15 days. If you don’t like it, simply send it back for a refund, minus a 5% transaction fee. Try spending 15 days in an audio store. They’ll kick you out. Unless you buy them donuts. Maybe. ',
     price: 1199.0,
-    srcset: 'https://www.schiit.com/public/upload/images/Gungnir%20blk%20front%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/Gungnir%20blk%20front%201920.jpg'],
   },
   {
     category: 'dac',
@@ -189,7 +189,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Forget everything you know about DACs. Yggdrasil+\'s unique True Multibit™ architecture combines integrated multibit D/A converters with a proprietary time- and frequency-domain optimized digital filter. Together with the convenience of remote control, switchable NOS mode, and a fully modular platform, Yggdrasil+ gives you the best performance now—and in the future. Choose From Three Flavors Yggdrasil+ is available in three different flavors, including one that costs the same as the original 2014 Yggdrasil—and provides higher performance, additional features, and remote control. Progress--without the price! Yggdrasil Less is More. Even better performance for lower cost than the original Yggdrasil. The most affordable Yggdrasil uses four TI DAC8812 16-bit D/A converters. Many think this is the best sounding flavor, hence less bits, more better…less is more. Yggdrasil More is Less. The best-measuring integrated multibit DAC, ever. This Yggy uses four TI DAC11001 20-bit D/A converters. If you’re one who thinks multibit DACs can’t measure well, this one’s for you—approaching -120dB THD+N.  Yggdrasil OG. The Yggdrasil you’ve loved for years, same as it ever was. The original Yggdrasil with four AD5791 20-bit D/A converters remains in the line, because it provides an exceptionally engaging performance. Unique True Multibit™ Performance All Yggdrasil+ versions use our True Multibit architecture, a unique combination of our proprietary time- and frequency-domain optimized digital filter and integrated, medical/defense grade multibit D/A converters. Yggdrasil’s DSP-based digital filter has a closed-form solution—it retains the original samples, performing a true interpolation. Only this digital filter gives you the best of both NOS and upsampling designs.  Convenience and Flexibility, Included  Yggdrasil+ isn’t just about ultimate performance. At the same time, we’ve included 5 digital inputs, including our own Unison USB™ interface with complete electromagnetic and electrostatic isolation. Ease of access is assured with standard remote control, and we’ve provided features like absolute phase inversion and NOS mode so you can optimize for your individual system and recordings. Fully Modular Architecture—Ready for the Future Only Yggdrasil+ offers the flexibility and assurance of a truly modular architecture, both hardware and firmware. Literally every board—from input to output—is easily replaceable, with its uniquely reconfigurable chassis provides for future expandability. This unique upgradability gives you great performance now, and assurance for tomorrow. Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Yggdrasil—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us. Our transformers are also made in California. All of this comes together in our Valencia, California facility, where each Yggdrasil is assembled, tested, burned in for 3 days, and then listen-tested again.  5-Year Warranty Yggdrasil+ is covered by a limited warranty that covers parts and labor for five years. That’s 5 years. Yes. FIVE. Which is up to 5X that of our competition, if you weren’t so hot at math. Note the marketing weasel-wording “up to.” 15-Day Satisfaction Guarantee Try Yggdrasil+ in your own house for 15 days. If you don’t like it, simply send it back for a refund, minus a 5% transaction fee. Try spending 15 days in an audio store. They’ll kick you out. Unless you buy them donuts. Maybe. ',
     price: 2299.0,
-    srcset: 'https://www.schiit.com/public/upload/images/yggyplus-black-front-1920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/yggyplus-black-front-1920.jpg'],
   },
   {
     category: 'amp',
@@ -199,7 +199,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'SYS stands for "switch your, er...schtuff." Sys is a simple, 2-input passive preamp. No electronics. No power. No distortion. Just a 2-way switch and a potentiometer. Huh? Why would you want such a thing? Well, if you\'ve ever wanted to use one of our DACs with powered monitors, Sys puts the volume control right at hand. Same goes for using two sources with one of our headphone amps—use Sys to switch between a DAC and a phono preamp, for example. And, you don\'t have to use Sys with our gear at all. It\'s a simple, high-quality, passive preamp that works with pretty much any line-level source. Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of SYS—chassis, boards, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal. You get the picture. 2-Year Warranty and 15-Day Return Policy SYS is covered by a limited warranty that covers parts and labor for two years. That’s 2x the warranty of most of the products in this price range. If you don’t like your SYS, you can send it back for a refund, minus 15% restocking fee, within 15 days of receiving it. ',
     price: 49.0,
-    srcset: 'https://www.schiit.com/public/upload/general/sys-front.jpg',
+    images: ['https://www.schiit.com/public/upload/general/sys-front.jpg'],
   },
   {
     category: 'amp',
@@ -209,7 +209,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       "Mani 2 is simply the highest-performance affordable phono preamp, period. With super low noise and high RIAA accuracy, plus flexibility for pretty much any cartridge, MM, MC, or MI, it sets the standard for performance and capability in an affordable phono stage.   Simply Stunning Performance Mani 2 provides super low-noise performance that’s usually only seen in much more expensive phono preamps. Combining TI’s low-noise OPA1612 with a passive RIAA network with 2% precision film capacitors and 0.1% thin-film resistors in a DC-coupled topology, with advanced dual-filtered power supply and +/-16V rails, as well as switchable 1- or 2-pole passive LF filter, provides exceptional transparency and accuracy, as well as high overload margin, in an affordable phono preamp.   Ultimate Flexibility—Loading, Gain, and LF Filtering Mani 2 doesn’t sacrifice flexibility for low-cost, either. In fact, Mani 2 is the most flexible, capable affordable phono preamp, period. You have total control over: Gain: Choose 33, 42, 48, or 60dB of gain, for virtually any cartridge from Decca to low-output MC and MI models. Loading: Choose 47KΩ, 200Ω, 47Ω, or 38Ω, and 47pF, 100pF, 150pF, or 200pF for virtually any MM, MC, or MI cartridge LF Filter: Choose 6dB/octave or 12dB/octave of purely passive low-frequency filtering to help with warped records or other subsonic problems. Designed and Built in Texas By “designed and built in Texas,” this is what we mean: Mani 2 was designed and built at our Corpus Christi, Texas facility, and the vast majority of the total production cost of Mani 2—chassis, boards, assembly, etc—goes to US companies manufacturing in the USA. Our chassis are made in California. Our PCBs are done in Nevada. Yes, the wall-warts are made in Taiwan, but there's some give and take at this price point. 2-Year Warranty and 15-Day Returns Mani 2 is covered by a limited warranty that covers parts and labor for two years. That’s 2x the coverage of most amps in this price range. And, if you don’t like Mani 2, you can send it back for a refund, minus 15% restocking fee, within 15 days of receiving your product.  ",
     price: 149.0,
-    srcset: 'https://www.schiit.com/public/upload/images/mani%202%20blk%20frt%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/mani%202%20blk%20frt%201920.jpg'],
   },
   {
     category: 'amp',
@@ -219,7 +219,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Saga S is just like Saga+—without the tube. Like Saga+, Saga S gives you all the uber-high-end, no-compromises features you need in a preamp, including a real relay-switched volume control, a switchable DC-coupled discrete JFET buffer, and a custom remote control.  Saga S: The Solid-State Saga What is Saga S? It’s simple—it’s basically a Saga+ with a discrete JFET buffer stage in place of the tube stage. We understand some people don’t want to deal with tubes, so we went ahead and made one that was 100% solid state.  It’s Your Choice: Passive or Active Go ahead. Run Saga S in passive mode for a convenient remote-controlled passive preamp that’s ideal for many systems. If you need to drive long cables, switch it to the discrete, DC-coupled JFET buffer mode.   Easiest Relay-Switched Volume, Ever The benefits of a relay-switched stepped attenuator for volume are clear. Compared to a potentiometer, they give you essentially perfect channel matching and near-unmeasurable distortion. However, some preamps with relay-stepped attenuators confuse you with buttons and screens. Not Saga S. Saga S has a volume knob that works just like a volume knob—just grab and turn. And if you use the remote control, the motorized potentiometer changes to match the remote setting.      Perfect Companion to Our DACs Want a remote-controlled system to interface your digital gear with the rest of your system? Stack Saga S and Bifrost (or any other of our DACs) for a true no-compromise remote-controlled system.   Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Saga S—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal.  5-Year Warranty and Easy Return Policy Saga S is covered by a 5-year limited warranty that covers parts and labor. And if you don’t like your Saga, you can send it back for a refund, minus 5% restocking fee, within 15 days of receiving it.  ',
     price: 299.0,
-    srcset: 'https://www.schiit.com/public/upload/images/Saga%20S%20Black-front-1920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/Saga%20S%20Black-front-1920.jpg'],
   },
   {
     category: 'amp',
@@ -229,7 +229,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Saga+ gives you all the uber-high-end, no-compromises features you need in a preamp—without the insane price. Saga+ brings you a real relay-switched volume control, which you can use in pure passive mode, or run it through a 6N8S hybrid tube buffer. Saga+ even includes a custom remote control. Saga+: Easiest Relay-Switched Volume, Ever The benefits of a relay-switched stepped attenuator for volume are clear. Compared to a potentiometer, they give you essentially perfect channel matching and near-unmeasurable distortion. However, some preamps with relay-stepped attenuators confuse you with buttons and screens. Not Saga+. Saga+ has a volume knob that works just like a volume knob—just grab and turn. And if you use the remote control, the motorized potentiometer changes to match the remote setting. It’s Your Choice: Passive or Active Go ahead. Run Saga+ in passive mode for a convenient remote-controlled passive preamp that’s ideal for many systems. If you need to drive long cables, switch it to the hybrid tube buffer—a serious buffer running on 200V rails with vanishingly low distortion.     Perfect Companion to Our DACs Want a remote-controlled system to interface your digital gear with the rest of your system? Stack Saga+ and Bifrost (or any other of our DACs) for a true no-compromise remote-controlled system.   Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Saga+—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal.  5-Year Warranty and Easy Return Policy Saga+ is covered by a 5-year limited warranty that covers parts and labor. One exception: the tubes. Those we cover for 3 months. And if you don’t like your Saga, you can send it back for a refund, minus 5% restocking fee, within 15 days of receiving it.   ',
     price: 399.0,
-    srcset: 'https://www.schiit.com/public/upload/images/sagaplus%20blk%20frt%202022%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/sagaplus%20blk%20frt%202022%201920.jpg'],
   },
   {
     category: 'amp',
@@ -239,7 +239,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Freya S is, quite simply, a solid-state Freya+. Like Freya+, it’s a true high-end, balanced, remote-control preamp! Switch between passive mode and Nexus™ differential gain stage, enjoy the fine control of a 128-step relay-switched stepped attenuator volume control with perfect channel matching, and control it all from the comfort of your favorite chair. Nexus™—The Seamless Discrete, Differential Gain Stage Freya S brings our unique Nexus™ gain stage to a preamp—meaning you get seamless handling of all of your sources, whether balanced or single-ended. Nexus seamlessly converts single-ended to balanced and balanced to single-ended, in a single, discrete, current-feedback gain stage. In Freya, the Nexus gain stage offers two different gain levels—a gain of 1, so it behaves like a differential buffer, and a gain of 4, for systems that need more volume.   Easiest 128-Step Relay-Switched Volume, Ever The benefits of a relay-switched stepped attenuator for volume are clear. Compared to a potentiometer, they give you essentially perfect channel matching and near-unmeasurable distortion. However, some preamps with relay-stepped attenuators confuse you with buttons and screens. Not Freya S. Freya S has a volume knob that works just like a volume knob—just grab and turn. And if you use the remote control, the motorized potentiometer changes to match the remote setting. Yes, Remote Control Included When you’re talking about gear that doesn’t sit on your desktop (like our headphone amps), you need the convenience of remote control for volume, input switching, output switching, and muting. Freya S includes a custom remote control, standard.   Perfect Companion to Our DACs Want a remote-controlled system to interface your digital gear with the rest of your system? Stack Freya S and Gungnir Multibit or Freya S and Yggdrasil (or any other of our DACs) for a true no-compromise remote-controlled system.   Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Freya S—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal. 5-Year Warranty and Easy Return Policy Freya S is covered by a 5-year limited warranty that covers parts and labor. And if you don’t like your Freya S, you can send it back for a refund, minus 5% restocking fee, within 15 days of receiving it. ',
     price: 599.0,
-    srcset: 'https://www.schiit.com/public/upload/images/Freya%20S%20Black-front-1920-2.jpg',
+    images: ['https://www.schiit.com/public/upload/images/Freya%20S%20Black-front-1920-2.jpg'],
   },
   {
     category: 'amp',
@@ -249,7 +249,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Freya+ is a true high-end, balanced, remote-control preamp. Switch between passive, differential buffer, and differential tube gain modes, enjoy the fine control of a 128-step relay-switched stepped attenuator volume control with perfect channel matching, and control it all from the comfort of your favorite chair.   Whisper-Silent Tube Stage—With Tube Shutdown Now, you can enjoy a tube preamp without the hiss and hum of classic designs. Freya+ offers super-quiet tube modes with DC heaters and semi-circlotron, noise-cancelling output stages. Better yet, the tubes turn off when you’re not using them! That’s right, both the tube heater and high voltage rails go away when not in use, so you can preserve lifetime of costly tubes. Choose Tubes...Or No Tubes Freya+ ships with your choice of no tubes (if you\'re planning to use your own), matched NOS 6N8S, matched new production premium 6SN7 tubes...or choose our LISST "solid state tubes" that are super-reliable and last virtually forever (so you always have a tube backup).   Easiest 128-Step Relay-Switched Volume, Ever The benefits of a relay-switched stepped attenuator for volume are clear. Compared to a potentiometer, they give you essentially perfect channel matching and near-unmeasurable distortion. However, some preamps with relay-stepped attenuators confuse you with buttons and screens. Not Freya+. Freya+ has a volume knob that works just like a volume knob—just grab and turn. And if you use the remote control, the motorized potentiometer changes to match the remote setting. Yes, Remote Control Included When you’re talking about gear that doesn’t sit on your desktop (like our headphone amps), you need the convenience of remote control for volume, input switching, output switching, and muting. Freya+ includes a custom remote control, standard.   Perfect Companion to Our DACs Want a remote-controlled system to interface your digital gear with the rest of your system? Stack Freya+ and Gungnir Multibit or Freya+ and Yggdrasil+ (or any other of our DACs) for a true no-compromise remote-controlled system.   Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of either Freya—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal. 5-Year Warranty and Easy Return Policy Freya+ is covered by a 5-year limited warranty that covers parts and labor. One exception: the tubes. Those we cover for 3 months. And if you don’t like your Freya, you can send it back for a refund, minus 5% restocking fee, within 15 days of receiving it.  ',
     price: 849.0,
-    srcset: 'https://www.schiit.com/public/upload/images/freyaplus-LISST-front-1920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/freyaplus-LISST-front-1920.jpg'],
   },
   {
     category: 'equalizer',
@@ -259,7 +259,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Yes, tone control. As in, equalizer. And yeah, we know that tone controls have kinda fallen off the planet for the last few decades. But we decided to bring them back with the original Loki Mini. And now, with the Loki Mini+, we’ve boosted the performance—pushing the boundaries super-high-fidelity, low noise, single-discrete-gain-stage, LC-filtered, affordable equalizers even further.  Making Imperfect Recordings Sound…A Whole Heckuva Lot Better Let’s face it. Is everything you listen to recorded perfectly? Of course not. Some recordings aren’t paragons of tonal purity. And your system…let’s be honest. Some speakers and headphones are a bit bright or a bit dark. Loki Mini+ lets you adjust for these imperfections. It’s OK to Want Forget correcting for bad recordings or imperfect systems. Go ahead and make your system sound exactly the way you want it. Pounding bass? Sure. Crystalline highs? Absolutely. Don’t spend thousands on cables and tube amps—just turn a knob and make your system sound exactly the way you want it. The Silent and Transparent Companion Loki Mini+ transforms your system without getting in the way, or making itself known. Forget noisy, bad-sounding equalizers you may have used in the past. Loki Mini+ uses a single, discrete, current-feedback gain stage, coupled to passive LC filters for 3 bands, plus a gyrator for the bass. It also uses sealed Alps potentiometers with rational adjustment ranges to allow for fine control. Coupled with a 100% passive bypass setting, Loki Mini+ offers the transparency and flexibility you need.   Designed and Built in California By “designed and built in California" this is what we mean: the vast majority of the total production cost of Loki Mini+—chassis, boards, transformers, assembly, etc—goes to US companies manufacturing in the US. Our chassis are made minutes from our facility. Our PCBs are done just over the hill from us, or done in NorCal. Yes, the wall-warts are made in China, but there\'s some give and take at this price point. 2-Year Warranty and 15-Day Return Policy Loki Mini+ is covered by a limited warranty that covers parts and labor for two years. That’s 2x the coverage of most amps in this price range. And, if you don’t like your Loki, you can still send it back for a refund, minus 15% restocking fee, within 15 days of receiving your product.  ',
     price: 149.0,
-    srcset: 'https://www.schiit.com/public/upload/images/loki-mini-plus-blk-front-1920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/loki-mini-plus-blk-front-1920.jpg'],
   },
   {
     category: 'equalizer',
@@ -269,7 +269,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Yes, tone control. As in, equalizer. Just like a Loki Mini+, but with 2 more bands and balanced inputs and outputs. And yeah, we know you can get a surgical software EQ, but the 6 knobs here just sit on your desk and beckon. No apps, no graphic confusion with mice or styli. Just tweak the sound to your exact preference, with a super-high-performance, discrete, single-gain-stage, LC-filtered equalizer at your fingertips. More Bands, More Inputs, Total Flexibility Lokius has 6 bands of equalization on tap, together with both balanced and single-ended inputs and outputs. Select the input with a convenient front-panel switch. Choose equalized output, or complete bypass—nothing in the signal path except a relay and a resistor. Lokius integrates with any system, large or small, speaker or headphone, balanced or single-ended, for complete flexibility.   Save an Imperfect Recording—or Make it Better Is everything you listen to recorded perfectly? Of course not. Some recordings aren’t great. And some speakers and headphones are a bit bright or a bit dark. Lokius lets you adjust for these imperfections. But more than that, you can make your system sound the way you want. Deep bass? Absolutely. Sparkling highs? Yes again! Go ahead—treat yourself to your perfect sound.   Enjoy True Transparency Lokius uses Schiit’s own two-stage load-invariant “superbuffer” topology to drive a single discrete current-feedback gain stage, with a passive inductor-capacitor and gyrator-capacitor network in-between. Lokius features super-high-quality parts, including sealed Alps potentiometers, Wima and Panasonic film capacitors, dual-stage regulation with HF smoothing, 0.5% thin-film resistors, and quality Neutrik connectors. The translation of this tech-speak is that you can forget noisy, veiled equalizers you may have used in the past. Lokius transforms your system without getting in the way, or making itself known. Designed and Built in Texas By “designed and built in Texas" this is what we mean: we design, assemble, test, and QC Lokius in our Corpus Christi, Texas facility. And the vast majority of the total production cost of Lokius—chassis, boards, etc—goes to US companies manufacturing in the US. Our chassis are made in California. Our PCBs are done in Nevada. Yes, the wall-warts are made in Taiwan, but there\'s some give and take at this price point. 2-Year Warranty and 15-Day Return Policy Lokius is covered by a limited warranty that covers parts and labor for two years. And, if you don’t like your Lokius, you can still send it back for a refund, minus 15% restocking fee, within 15 days of receiving it.  ',
     price: 299.0,
-    srcset: 'https://www.schiit.com/public/upload/images/lokius%20black%20front%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/lokius%20black%20front%201920.jpg'],
   },
   {
     category: 'equalizer',
@@ -279,7 +279,7 @@ export const ProductDatabase: ProductType[] = [
     description:
       'Yes, remote control. As in, you can adjust the frequency response of your system from your listening chair—and save presets. And this thing is as crazy as you can get—relay potentiometers for precision matching between channels and repeatable settings. All discrete, with no ICs in the signal path, including our own Nexus™ balanced differential topology. And pure LC—inductor-capacitor filtering from the highest to the lowest band, including 4 custom 80% nickel-core inductors as big as 1.5 Henries.  Or, in English, this is our shot at making the best EQ possible, with maximum transparency and minimum compromise. It’s an EQ that can look straight at the storied EQs of yesteryear and say, “Yeah, we got that…and remote control.”   Remote Control—and Relay Potentiometers Go ahead. Try to find another remote control equalizer. If you succeed, look at what kind of potentiometers it’s using. They’ll probably be motorized slide pots. We decided to go all-out with Loki Max, though, and create our own 31-step precision relay potentiometers using 0.5% thin-film resistors and 60 relays, together with custom firmware. These aren’t just relay attenuators—these are relay pots, a very different thing. What relay pots buy you are 15 perfectly defined steps on either side of the knob, for precise control of your EQ settings, as well as perfect matching between channels. Pure LC Equalization On our more affordable tone controls like Loki Mini and Lokius, we use gyrators to simulate an inductor on the lower frequency bands. This is because big inductors—and we’re talking 0.5H and 1.5H in Loki Max—are physically large and expensive. To get the performance we needed, we had to specify 80% nickel cores, making things even more exotic. But the result is that every band of Loki Max—from 20Hz to 16kHz—uses nothing but LC filtering.   Fully Discrete, Nexus™ Topology For Loki Max, every stage is fully discrete—from the dual-stage superbuffers and balanced summers, to the current-feedback gain stage and Nexus™ balanced output. These stages are fed by a 4-stage power supply with two rail levels, up to +/-32V. This allows us the large output voltage swing necessary for an equalizer with lots of gain. You’ll never need to worry about overloading Loki Max with any standard source.   Ease of Use and Fingertip Control Forget complicated UIs and indecipherable screens. To adjust Loki Max, just twist a knob…or press a button on the remote. All bands are independently accessible on the front panel and on the remote. You can define your presets from the front panel or the remote, select from balanced and single-ended inputs, and bypass the EQ completely (as in, just a relay and resistor in the signal path, no active stages). Enjoy adjusting your EQ from your listening chair—no need to go back and forth to the rack.   Designed and Built in California By “designed and built in California" this is what we mean: we design, assemble, test, and QC Loki Max in our Valencia, California facility. And the vast majority of the total production cost of Loki Max—chassis, transformers, inductors, PC boards, etc—goes to US companies manufacturing in the US. Our chassis are made in California. Transformers and chokes are done in NorCal. Our PCBs are done in Simi Valley. You get the picture—this is not just a “put the final screw in it in California” product. 5-Year Warranty and 15-Day Return Policy Loki Max is covered by a limited warranty that covers parts and labor for 5 years. And, if you don’t like your Loki Max, you can still send it back for a refund, minus 5% restocking fee, within 15 days of receiving it. ',
     price: 1499.0,
-    srcset: 'https://www.schiit.com/public/upload/images/loki%20max%20front%201920.jpg',
+    images: ['https://www.schiit.com/public/upload/images/loki%20max%20front%201920.jpg'],
   },
   {
     category: 'headphone',
@@ -288,8 +288,11 @@ export const ProductDatabase: ProductType[] = [
     unit: 'T5',
     description: 'High-end Tesla Headphones (3rd Generation) closed',
     price: 899.0,
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-t5-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_perspective_v1.png.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_side_v1.png.jpg',
+    images: [
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-t5-perspective_transparent.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_perspective_v1.png.jpg',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t5-3rd-generation_20-03_side_v1.png.jpg',
+    ],
   },
   {
     category: 'headphone',
@@ -298,8 +301,11 @@ export const ProductDatabase: ProductType[] = [
     unit: 'T1',
     description: 'High-end Tesla headphones (3rd generation) open',
     price: 899.0,
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-t1-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t1-3rd-generation_20-03_perspective_v1.png.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t1-3rd-generation_20-03_front_v1.png.jpg',
+    images: [
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-t1-perspective_transparent.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t1-3rd-generation_20-03_perspective_v1.png.jpg',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_t1-3rd-generation_20-03_front_v1.png.jpg',
+    ],
   },
   {
     category: 'headphone',
@@ -308,8 +314,12 @@ export const ProductDatabase: ProductType[] = [
     unit: 'DT 900 PRO X',
     description: 'Studio headphones for critical listening, mixing & mastering (open-back)',
     price: 349.0,
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-900-pro-x-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-side.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-front.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-front.jpg',
+    images: [
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-900-pro-x-perspective_transparent.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-side.jpg',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-front.jpg',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-900-pro-x-front.jpg',
+    ],
   },
   {
     category: 'headphone',
@@ -318,8 +328,12 @@ export const ProductDatabase: ProductType[] = [
     unit: 'DT 700 PRO X',
     description: 'Studio headphones for recording & monitoring (closed)',
     price: 259.0,
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-900-pro-x-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-side.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-front.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-perspective-1_2.jpg',
+    images: [
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-900-pro-x-perspective_transparent.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-side.jpg',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-front.jpg',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-700-pro-x-perspective-1_2.jpg',
+    ],
   },
   {
     category: 'headphone',
@@ -328,8 +342,11 @@ export const ProductDatabase: ProductType[] = [
     unit: 'DT 1990 PRO',
     description: 'Tesla studio reference headphones for mixing and mastering (open)',
     price: 499.0,
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-1990-pro-perspective_transparent_1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1990pro_16-05_perspective_v1-webartikel_1.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1990pro_16-05_front_v1-webartikel_1.png',
+    images: [
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-1990-pro-perspective_transparent_1.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1990pro_16-05_perspective_v1-webartikel_1.jpg',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1990pro_16-05_front_v1-webartikel_1.png',
+    ],
   },
   {
     category: 'headphone',
@@ -338,8 +355,11 @@ export const ProductDatabase: ProductType[] = [
     unit: 'DT 1770 PRO',
     description: 'Tesla studio reference headphones for mixing, mastering, monitoring (closed)',
     price: 499.0,
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-1770-pro-perspective_transparent.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1770pro_15-07_perspective_v1-webartikel_1.jpg, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1770pro_15-07_side_v1-webartikel.jpg',
+    images: [
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/b/e/beyerdynamic-dt-1770-pro-perspective_transparent.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1770pro_15-07_perspective_v1-webartikel_1.jpg',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/p/i/pic_dt1770pro_15-07_side_v1-webartikel.jpg',
+    ],
   },
   {
     category: 'headphone',
@@ -348,8 +368,11 @@ export const ProductDatabase: ProductType[] = [
     unit: 'DT 990 Black Special Edition',
     description: 'Hi-fi headphones (open)',
     price: 159.0,
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-990-black-special-edition-perspective_transparent_1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt_990_black_special_edition_perspektive.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt_990_black_special_edition_seite.png',
+    images: [
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-990-black-special-edition-perspective_transparent_1.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt_990_black_special_edition_perspektive.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt_990_black_special_edition_seite.png',
+    ],
   },
   {
     category: 'headphone',
@@ -358,8 +381,11 @@ export const ProductDatabase: ProductType[] = [
     unit: 'DT 990 PRO',
     description: 'Studio headphones for mixing and mastering (open)',
     price: 159.0,
-    srcset:
-      'src/ecommerce/assets/images/Beyerdynamic/beyerdynamic-dt-990-pro-perspective.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-pro-perspective.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-pro-side.png',
+    images: [
+      'src/ecommerce/assets/images/Beyerdynamic/beyerdynamic-dt-990-pro-perspective.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-pro-perspective.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-pro-side.png',
+    ],
   },
   {
     category: 'headphone',
@@ -368,8 +394,11 @@ export const ProductDatabase: ProductType[] = [
     unit: 'DT 880 PRO',
     description: 'Studio headphones for mixing and mastering (semi-open)',
     price: 199.0,
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-880-pro-perspective_transparent-3.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-880-pro-perspective-1.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-880-pro-front-1.png',
+    images: [
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/4e43be6473b95506a7fac9bcfd934bc6/b/e/beyerdynamic-dt-880-pro-perspective_transparent-3.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-880-pro-perspective-1.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-880-pro-front-1.png',
+    ],
   },
   {
     category: 'headphone',
@@ -378,8 +407,9 @@ export const ProductDatabase: ProductType[] = [
     unit: 'DT 770 PRO',
     description: 'Reference headphones for control and monitoring purpose',
     price: 159.0,
-    srcset:
+    images: [
       'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/d/t/dt-770-pro-headphones-beyerdynamic-perspective_transparent_1.png',
+    ],
   },
   {
     category: 'headphone',
@@ -388,8 +418,11 @@ export const ProductDatabase: ProductType[] = [
     unit: 'DT 990 Edition',
     description: 'Hi-fi headphones (open)',
     price: 175.0,
-    srcset:
-      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-perspective_transparent_2.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-perspective_transparent_2.png, https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-side_1.png',
+    images: [
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-perspective_transparent_2.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-perspective_transparent_2.png',
+      'https://d33p2k2w4zpozf.cloudfront.net/media/catalog/product/cache/ad749deec4a285f568434538fd53bd61/b/e/beyerdynamic-dt-990-edition-side_1.png',
+    ],
   },
   {
     category: 'interface',
@@ -398,7 +431,7 @@ export const ProductDatabase: ProductType[] = [
     unit: '4',
     description: '2in | 2out Audio Interface',
     price: 129.0,
-    srcset: 'https://evo.audio/wp-content/uploads/2022/05/Artboard-4.png',
+    images: ['https://evo.audio/wp-content/uploads/2022/05/Artboard-4.png'],
   },
   {
     category: 'interface',
@@ -407,7 +440,7 @@ export const ProductDatabase: ProductType[] = [
     unit: '8',
     description: '4in | 4out Audio Interface',
     price: 199.0,
-    srcset: 'https://evo.audio/wp-content/uploads/2022/05/Artboard-3.png',
+    images: ['https://evo.audio/wp-content/uploads/2022/05/Artboard-3.png'],
   },
   {
     category: 'interface',
@@ -416,7 +449,7 @@ export const ProductDatabase: ProductType[] = [
     unit: '16',
     description: '24in | 24out Audio Interface',
     price: 499.0,
-    srcset: 'https://evo.audio/wp-content/uploads/2022/05/Artboard-2.png',
+    images: ['https://evo.audio/wp-content/uploads/2022/05/Artboard-2.png'],
   },
   {
     category: 'interface',
@@ -425,7 +458,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'SP8',
     description: '8 Channel Smart Preamp with AD/DA',
     price: 499.0,
-    srcset: 'https://evo.audio/wp-content/uploads/2023/01/EVO-SP8-Carousel.png',
+    images: ['https://evo.audio/wp-content/uploads/2023/01/EVO-SP8-Carousel.png'],
   },
   {
     category: 'interface',
@@ -434,7 +467,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'iD4',
     description: '2in | 2out Audio Interface',
     price: 199.0,
-    srcset: 'https://audient.com/wp-content/uploads/2020/12/iD4-Top-Image.png',
+    images: ['https://audient.com/wp-content/uploads/2020/12/iD4-Top-Image.png'],
   },
   {
     category: 'interface',
@@ -443,7 +476,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'iD14',
     description: '10in | 6out Audio Interface',
     price: 298.99,
-    srcset: 'https://audient.com/wp-content/uploads/2020/11/iD14-Top-Ortho@0.75x-e1605788290930-1536x1145-1-800x596.png',
+    images: ['https://audient.com/wp-content/uploads/2020/11/iD14-Top-Ortho@0.75x-e1605788290930-1536x1145-1-800x596.png'],
   },
   {
     category: 'interface',
@@ -452,7 +485,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'iD22',
     description: '10in | 14out audio interface',
     price: 499.99,
-    srcset: 'https://audient.com/wp-content/uploads/2020/12/iD22-Top-800x671.png',
+    images: ['https://audient.com/wp-content/uploads/2020/12/iD22-Top-800x671.png'],
   },
   {
     category: 'interface',
@@ -461,7 +494,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'iD24',
     description: '10in | 14out Audio Interface',
     price: 399.0,
-    srcset: 'https://audient.com/wp-content/uploads/2023/02/Audient-iD24-Top-Ortho-Tight-Crop.png',
+    images: ['https://audient.com/wp-content/uploads/2023/02/Audient-iD24-Top-Ortho-Tight-Crop.png'],
   },
   {
     category: 'interface',
@@ -470,7 +503,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'iD44',
     description: '20in | 24out Audio Interface',
     price: 699.0,
-    srcset: 'https://audient.com/wp-content/uploads/2021/10/iD44-Top-Ortho-Top.png',
+    images: ['https://audient.com/wp-content/uploads/2021/10/iD44-Top-Ortho-Top.png'],
   },
   {
     category: 'interface',
@@ -479,7 +512,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'SSL2',
     description: '2in | 2out USB-C Audio Interface',
     price: 179.99,
-    srcset: 'https://static.bhphoto.com/images/multiple_images/images500x500/1669905606_IMG_1301151.jpg',
+    images: ['https://static.bhphoto.com/images/multiple_images/images500x500/1669905606_IMG_1301151.jpg'],
   },
   {
     category: 'interface',
@@ -488,7 +521,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'SSL 2+',
     description: '2in | 4out USB-C Audio Interface',
     price: 229.99,
-    srcset: 'https://static.bhphoto.com/images/multiple_images/images500x500/1578908758_IMG_1301154.jpg',
+    images: ['https://static.bhphoto.com/images/multiple_images/images500x500/1578908758_IMG_1301154.jpg'],
   },
   {
     category: 'interface',
@@ -497,7 +530,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'SSL 12',
     description: '12in | 8out USB-C Audio Interface',
     price: 499.99,
-    srcset: 'https://static.bhphoto.com/images/multiple_images/images500x500/1669853727_IMG_1876463.jpg',
+    images: ['https://static.bhphoto.com/images/multiple_images/images500x500/1669853727_IMG_1876463.jpg'],
   },
   {
     category: 'microphone',
@@ -506,8 +539,11 @@ export const ProductDatabase: ProductType[] = [
     unit: 'RE20-BLACK',
     description: "Broadcast announcer's microphone with Variable‑D",
     price: 498.0,
-    srcset:
-      'https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_Front.png&width=997&height=512, https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_309A_NoCable.png, https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_309A_wCable.png',
+    images: [
+      'https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_Front.png&width=997&height=512',
+      'https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_309A_NoCable.png',
+      'https://products.electrovoice.com//binary/global/image.php?image=/binary/EV_RE20_Black_309A_wCable.png',
+    ],
   },
   {
     category: 'microphone',
@@ -516,8 +552,11 @@ export const ProductDatabase: ProductType[] = [
     unit: 'RE20',
     description: "Broadcast announcer's microphone with Variable‑D",
     price: 498.0,
-    srcset:
-      'https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_Front.png&width=998&height=512, https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_309A_NoCable.png, https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_309A_wCable.png',
+    images: [
+      'https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_Front.png&width=998&height=512',
+      'https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_309A_NoCable.png',
+      'https://products.electrovoice.com//binary/global/image.php?image=/binary/RE20_Classic_309A_wCable.png',
+    ],
   },
   {
     category: 'microphone',
@@ -526,8 +565,15 @@ export const ProductDatabase: ProductType[] = [
     unit: 'SM7B',
     description: 'Vocal Microphone',
     price: 399.0,
-    srcset:
-      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/614/548/0a-/header_transparent/b40288cd0b085f70f2bf067c3658cc8c.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/46b/e9a/f9-/header_transparent/a8b067c287d7e46bf10821c653e8449c.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/170/99d/38-/header_transparent/1beff88dd84a9d67d82cf0449e93dbc0.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/5d7/cae/9d-/header_transparent/2140e6b3255a02c1671635465b5c46f6.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/f4c/fe7/75-/header_transparent/8bda20c57483ef023664ba14b35deabe.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/6fe/805/7b-/header_transparent/3ea1206a7192e05a95e4869c443ae0b1.png, https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/239/f57/ba-/header_transparent/a2477a5c6eb6c9b115ed9805f5b81702.png',
+    images: [
+      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/614/548/0a-/header_transparent/b40288cd0b085f70f2bf067c3658cc8c.png',
+      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/46b/e9a/f9-/header_transparent/a8b067c287d7e46bf10821c653e8449c.png',
+      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/170/99d/38-/header_transparent/1beff88dd84a9d67d82cf0449e93dbc0.png',
+      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/5d7/cae/9d-/header_transparent/2140e6b3255a02c1671635465b5c46f6.png',
+      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/f4c/fe7/75-/header_transparent/8bda20c57483ef023664ba14b35deabe.png',
+      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/6fe/805/7b-/header_transparent/3ea1206a7192e05a95e4869c443ae0b1.png',
+      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_images/files/239/f57/ba-/header_transparent/a2477a5c6eb6c9b115ed9805f5b81702.png',
+    ],
   },
   {
     category: 'microphone',
@@ -536,8 +582,10 @@ export const ProductDatabase: ProductType[] = [
     unit: 'SM58',
     description: 'Vocal Microphone',
     price: 99.0,
-    srcset:
-      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_main_images/files/cf1/51c/44-/header_transparent/9d3d409a77477acd4ec290b0c05164e1.png, https://products.shureweb.eu/cdn-cgi/image/width=144,height=144,format=auto/shure_product_db/product_images/files/71b/499/a5-/thumb_transparent/4f55b243f4b08edd89ed489129092be3.png',
+    images: [
+      'https://products.shureweb.eu/cdn-cgi/image/width=770,height=1400,format=auto/shure_product_db/product_main_images/files/cf1/51c/44-/header_transparent/9d3d409a77477acd4ec290b0c05164e1.png',
+      'https://products.shureweb.eu/cdn-cgi/image/width=144,height=144,format=auto/shure_product_db/product_images/files/71b/499/a5-/thumb_transparent/4f55b243f4b08edd89ed489129092be3.png',
+    ],
   },
   {
     category: 'microphone',
@@ -546,8 +594,12 @@ export const ProductDatabase: ProductType[] = [
     unit: 'NT1',
     description: 'Large-diaphragm Cardioid Condenser Microphone',
     price: 269.0,
-    srcset:
-      'https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_KIT_3-QUARTER_LEFT_FRONT_1080x1080.png, https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_KIT_FRONT_1080x1080.png, https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_KIT_SM6_NO_POPSHIELD_FRONT_1080x1080.png, https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_PROFILE_PACKAGING_1080x1080.png',
+    images: [
+      'https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_KIT_3-QUARTER_LEFT_FRONT_1080x1080.png',
+      'https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_KIT_FRONT_1080x1080.png',
+      'https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_KIT_SM6_NO_POPSHIELD_FRONT_1080x1080.png',
+      'https://edge.rode.com/images/page/1856/modules/4368/RØDE_NT1_SM6_PROFILE_PACKAGING_1080x1080.png',
+    ],
   },
   {
     category: 'microphone',
@@ -556,8 +608,10 @@ export const ProductDatabase: ProductType[] = [
     unit: 'NT1-A',
     description: 'Large-diaphragm Cardioid Condenser Microphone',
     price: 199.0,
-    srcset:
-      'https://edge.rode.com/images/page/200/modules/631/RØDE_NT1-A_FRONT_1080x1080..png, https://edge.rode.com/images/page/200/modules/631/RØDE_NT1-A_BACK_1080x1080.png',
+    images: [
+      'https://edge.rode.com/images/page/200/modules/631/RØDE_NT1-A_FRONT_1080x1080..png',
+      'https://edge.rode.com/images/page/200/modules/631/RØDE_NT1-A_BACK_1080x1080.png',
+    ],
   },
   {
     category: 'microphone',
@@ -566,8 +620,12 @@ export const ProductDatabase: ProductType[] = [
     unit: 'PodMic',
     description: 'Dynamic Broadcast Microphone',
     price: 99.0,
-    srcset:
-      'https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_3_QUARTER_LEFT_FRONT_1080x1080.png, https://edge.rode.com/images/page/1869/modules/4583/RODE_PodMic_LAYING_DOWN_3_QUARTER_RIGHT_FRONT_1000x1000.png, https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_FRONT_1080x1080.png, https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_BOTTOM_1080x1080.png',
+    images: [
+      'https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_3_QUARTER_LEFT_FRONT_1080x1080.png',
+      'https://edge.rode.com/images/page/1869/modules/4583/RODE_PodMic_LAYING_DOWN_3_QUARTER_RIGHT_FRONT_1000x1000.png',
+      'https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_FRONT_1080x1080.png',
+      'https://edge.rode.com/images/page/1869/modules/4583/RØDE_PodMic_BOTTOM_1080x1080.png',
+    ],
   },
   {
     category: 'microphone',
@@ -576,7 +634,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'TLM 107 BK Studio Set',
     description: 'Extremely versatile and surprisingly affordable!',
     price: 1550.0,
-    srcset: 'https://static-neumann.s3.amazonaws.com/img/502/product_detail_x2_desktop_TLM-107-bk-with-EA4_Neumann-Studio-Microphone_M.png',
+    images: ['https://static-neumann.s3.amazonaws.com/img/502/product_detail_x2_desktop_TLM-107-bk-with-EA4_Neumann-Studio-Microphone_M.png'],
   },
   {
     category: 'microphone',
@@ -585,7 +643,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'TLM 107 Studio Set',
     description: 'Extremely versatile and surprisingly affordable!',
     price: 1550.0,
-    srcset: 'https://static-neumann.s3.amazonaws.com/img/501/product_detail_x2_desktop_TLM-107-with-EA4_Neumann-Studio-Microphone_M.png',
+    images: ['https://static-neumann.s3.amazonaws.com/img/501/product_detail_x2_desktop_TLM-107-with-EA4_Neumann-Studio-Microphone_M.png'],
   },
   {
     category: 'microphone',
@@ -594,7 +652,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'TLM 107 BK',
     description: 'Extremely versatile and surprisingly affordable!',
     price: 1450.0,
-    srcset: 'https://static-neumann.s3.amazonaws.com/img/500/product_detail_x2_desktop_TLM-107-bk-with-SG02_Neumann-Studio-Microphone_M.png',
+    images: ['https://static-neumann.s3.amazonaws.com/img/500/product_detail_x2_desktop_TLM-107-bk-with-SG02_Neumann-Studio-Microphone_M.png'],
   },
   {
     category: 'microphone',
@@ -603,6 +661,6 @@ export const ProductDatabase: ProductType[] = [
     unit: 'TLM 107',
     description: 'Extremely versatile and surprisingly affordable!',
     price: 1450.0,
-    srcset: 'https://static-neumann.s3.amazonaws.com/img/499/product_detail_x2_desktop_TLM-107-with-SG02_Neumann-Studio-Microphone_M.png',
+    images: ['https://static-neumann.s3.amazonaws.com/img/499/product_detail_x2_desktop_TLM-107-with-SG02_Neumann-Studio-Microphone_M.png'],
   },
 ];

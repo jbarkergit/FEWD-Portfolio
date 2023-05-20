@@ -1,11 +1,10 @@
 import CarouselProps from '../../components/props/home/CarouselProps';
 
-const CarouselNavigateLeft = () => {
-  const CarouselTrack = document.querySelector('.carousel .carousel__track') as HTMLElement;
-  CarouselTrack.style.transform = 'translateX(50%)';
+const CarouselNavigation = (event: any) => {
+  const CarouselTrack = document.querySelector('.carousel__track') as HTMLElement;
+  const getElemId: string = event.target.getAttribute('id');
+  getElemId === 'right' ? (CarouselTrack.style.transform = 'translateX(50%)') : (CarouselTrack.style.transform = 'translateX(-50%)');
 };
-
-const CarouselNavigateRight = () => {};
 
 const Carousel = () => {
   return (
@@ -26,16 +25,8 @@ const Carousel = () => {
             carouselPost=""
             link=""
           />
-          <CarouselProps
-            carouselImg="https://www.schiit.com/public/upload/images/magni%20plus%20stack%201920-2.jpg"
-            carouselPost=""
-            link=""
-          />
-          <CarouselProps
-            carouselImg="https://www.schiit.com/public/upload/images/asgard 3 bifrost 2 insitu-2.jpg"
-            carouselPost=""
-            link=""
-          />
+          <CarouselProps carouselImg="https://www.schiit.com/public/upload/images/magni%20plus%20stack%201920-2.jpg" carouselPost="" link="" />
+          <CarouselProps carouselImg="https://www.schiit.com/public/upload/images/asgard 3 bifrost 2 insitu-2.jpg" carouselPost="" link="" />
           <CarouselProps
             carouselImg="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
             carouselPost=""
@@ -48,18 +39,10 @@ const Carousel = () => {
           />
         </picture>
         <span className="carousel__navigation">
-          <button
-            className="carousel__navigation--button flexBox justifyCenter"
-            role="button"
-            onClick={CarouselNavigateLeft}
-          >
+          <button className="carousel__navigation--button flexBox justifyCenter" id="left" role="button" onClick={CarouselNavigation}>
             <i className="fa-solid fa-circle-chevron-left"></i>
           </button>
-          <button
-            className="carousel__navigation--button flexBox justifyCenter"
-            role="button"
-            onClick={CarouselNavigateRight}
-          >
+          <button className="carousel__navigation--button flexBox justifyCenter" id="right" role="button" onClick={CarouselNavigation}>
             <i className="fa-solid fa-circle-chevron-right"></i>
           </button>
         </span>

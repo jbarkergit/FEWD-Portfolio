@@ -9,7 +9,19 @@ import { ProductType, formatCurrency } from '../context/ProductProvider';
 
 const getProductBySku = () => {
   const { paramId } = useParams() as { paramId: string };
-  const findProduct = ProductDatabase.find((product: ProductType) => product.sku === paramId);
+  const findProduct = ProductDatabase.find((product: ProductType) => product.sku === paramId)!;
+
+  const useProductImages = () => {
+    return (
+      <>
+        {findProduct.images.map((image) => (
+          <picture>
+            <img src={image} alt={`${findProduct.company} ${findProduct.unit}`} role="presentation" loading="lazy" decoding="async" fetchpriority="high" />
+          </picture>
+        ))}
+      </>
+    );
+  };
 
   if (!findProduct) {
     return (
@@ -23,38 +35,7 @@ const getProductBySku = () => {
         <Header />
 
         <section className="skuPage">
-          <section className="skuPage__imgBlock">
-            <picture>
-              <img
-                src={findProduct.srcset}
-                alt={`${findProduct.company} ${findProduct.unit} `}
-                role="presentation"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="high"
-              />
-            </picture>
-            <picture>
-              <img
-                src={findProduct.srcset}
-                alt={`${findProduct.company} ${findProduct.unit} `}
-                role="presentation"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="high"
-              />
-            </picture>
-            <picture>
-              <img
-                src={findProduct.srcset}
-                alt={`${findProduct.company} ${findProduct.unit} `}
-                role="presentation"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="high"
-              />
-            </picture>
-          </section>
+          <section className="skuPage__imgBlock">{useProductImages()}</section>
           <main className="skuPage__details">
             <ul>
               <li>
