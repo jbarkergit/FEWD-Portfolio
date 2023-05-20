@@ -8,6 +8,10 @@ export type ProductType = {
   company: string;
   unit: string;
   description: string;
+  operation?: string;
+  soundinfo?: string;
+  cable?: string;
+  impedance?: string;
   price: number;
   images: string[];
 };
