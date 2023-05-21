@@ -69,6 +69,18 @@ const Navigation = () => {
           </li>
           <li className="navkit__header__nav__block__links--link">
             <Link
+              to="/ecommerce/equalizers"
+              className="flexBox"
+              style={{
+                color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
+              }}
+              onClick={() => setCategoryFilter('equalizer')}
+            >
+              {'Equalizers'}
+            </Link>
+          </li>
+          <li className="navkit__header__nav__block__links--link">
+            <Link
               to="/ecommerce/microphones"
               className="flexBox"
               style={{
