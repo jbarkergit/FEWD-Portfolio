@@ -1,11 +1,9 @@
 import { useState, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ProductDatabase } from '../../data/ProductDatabase';
-import { ProductType } from '../../context/ProductProvider';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchData, setSearchData] = useState<ProductType[]>([]);
 
   const searchResults = ProductDatabase.filter((product) => {
     return product.sku.toLowerCase().includes(searchTerm.toLowerCase());
@@ -22,7 +20,6 @@ const SearchBar = () => {
 
   function clearInputField() {
     setSearchTerm('');
-    setSearchData([]);
   }
 
   return (
