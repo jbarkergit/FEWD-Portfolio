@@ -9,7 +9,7 @@ type PropsType = {
 const UserInteractions = ({ viewCart, setViewCart }: PropsType) => {
   const viewCartButton = viewCart ? (
     <button
-      className="navkit__header__cta--btn --ctaBtn flexBox"
+      className="navkit__header__section__ui--btn --ctaBtn"
       id="shoppingCartBtn"
       style={{
         backgroundColor: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -21,7 +21,7 @@ const UserInteractions = ({ viewCart, setViewCart }: PropsType) => {
     </button>
   ) : (
     <button
-      className="navkit__header__cta--btn --ctaBtn flexBox"
+      className="navkit__header__section__ui--btn --ctaBtn"
       id="shoppingCartBtn"
       style={{
         backgroundColor: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
@@ -34,20 +34,22 @@ const UserInteractions = ({ viewCart, setViewCart }: PropsType) => {
   );
 
   return (
-    <section className="navkit__header__cta">
+    <section className="navkit__header__section">
       <SearchBar />
-      <button
-        className="navkit__header__cta--btn --ctaBtn flexBox"
-        id="myAccountBtn"
-        style={{
-          color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
-          border: useLocation().pathname === '/ecommerce' ? '1px solid white' : '',
-        }}
-      >
-        <i className="fa-solid fa-gear"></i>
-        <h4>Account</h4>
-      </button>
-      {viewCartButton}
+      <div className="navkit__header__section__ui">
+        <button
+          className="navkit__header__section__ui--btn --ctaBtn"
+          id="myAccountBtn"
+          style={{
+            color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
+            border: useLocation().pathname === '/ecommerce' ? '1px solid white' : '',
+          }}
+        >
+          <i className="fa-solid fa-gear"></i>
+          <h4>Account</h4>
+        </button>
+      </div>
+      <div className="navkit__header__section__ui">{viewCartButton}</div>
     </section>
   );
 };

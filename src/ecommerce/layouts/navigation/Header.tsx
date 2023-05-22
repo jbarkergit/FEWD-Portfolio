@@ -17,7 +17,7 @@ const PrimaryNav = () => {
       <header className="navkit__header">
         <HeaderKit />
         <UserInteractions viewCart={viewCart} setViewCart={setViewCart} />
-        {pageContent}
+        {/* {pageContent} */}
       </header>
     </section>
   );
