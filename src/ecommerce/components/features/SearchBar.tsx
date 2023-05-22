@@ -1,25 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ProductDatabase } from '../../data/ProductDatabase';
 import { ProductType } from '../../context/ProductProvider';
 
 const SearchBar = () => {
-  const [filteredData, setFilteredData] = useState([]);
-  const [filterWord, setFilterWord] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchData, setSearchData] = useState<ProductType[]>([]);
 
-  function useSearchFilter(event: any) {
-    const searchWord = event?.target.value;
-    setFilterWord(searchWord);
-    const filteredProducts: any = ProductDatabase.filter((product) => {
-      return product.sku.toLowerCase().includes(searchWord.toLowerCase());
-    });
+  const searchResults = ProductDatabase.filter((product) => {
+    return product.sku.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
-    searchWord === '' ? setFilteredData([]) : setFilteredData(filteredProducts);
-  }
+  const getFilteredItems = () => {
+    if (!searchTerm) {
+      null;
+    }
+    return searchResults;
+  };
+
+  const filteredItems = getFilteredItems();
 
   function clearInputField() {
-    setFilteredData([]);
-    setFilterWord('');
+    setSearchTerm('');
+    setSearchData([]);
   }
 
   return (
@@ -29,12 +32,12 @@ const SearchBar = () => {
           className="searchBar__input--input"
           type="text"
           placeholder="Search..."
-          value={filterWord}
+          value={searchTerm}
           autoCapitalize="none"
           autoComplete="none"
           autoCorrect="off"
           spellCheck="false"
-          onChange={useSearchFilter}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => setSearchTerm(event?.target.value)}
           style={{
             background: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
             color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : 'white',
@@ -46,14 +49,14 @@ const SearchBar = () => {
             color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : 'white',
           }}
         >
-          {filterWord.length === 0 ? (
+          {searchTerm.length === 0 ? (
             <i className="fa-solid fa-magnifying-glass"></i>
           ) : (
             <i className="fa-solid fa-xmark" id="clearInput" onClick={clearInputField}></i>
           )}
         </span>
       </div>
-      {filteredData.length != 0 && (
+      {searchTerm.length != 0 && (
         <div className="searchBar__return">
           <ul
             className="searchBar__return__products"
@@ -62,9 +65,9 @@ const SearchBar = () => {
               color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : 'white',
             }}
           >
-            {filteredData.slice(0, 10).map((product: ProductType, key) => {
+            {filteredItems.slice(0, 10).map((product, key) => {
               return (
-                <li className="searchBar__return__products__return">
+                <li className="searchBar__return__products__return" key={key}>
                   <a href={`/ecommerce/product/${product.sku}`}>
                     <span>
                       {product.company} {product.unit}
