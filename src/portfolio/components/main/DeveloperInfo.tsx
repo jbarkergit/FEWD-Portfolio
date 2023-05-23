@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Skills from '../../data/Skills';
+import Skills from '../../assets/data/Skills';
 
 let activeIndex: number = 0; //document.getElementsByClassName('skills__wrapper__icon')[0];
 
