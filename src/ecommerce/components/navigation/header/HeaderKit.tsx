@@ -48,7 +48,7 @@ const HeaderKit = () => {
 
   const AudibleDropdown = () => {
     return (
-      <li className="navkit__header__section--dropdown">
+      <li className="navkit__header__section__dropMenu">
         <div>
           Audible <i className="fa-solid fa-angle-down"></i>
         </div>
@@ -65,7 +65,7 @@ const HeaderKit = () => {
               >
                 {'Headphones'}
               </Link>
-            </li>{' '}
+            </li>
             <li className="navkit__headersection__links--link">
               <Link
                 to="/ecommerce/amps-dacs"
@@ -77,7 +77,7 @@ const HeaderKit = () => {
               >
                 {'Amps & Dacs'}
               </Link>
-            </li>{' '}
+            </li>
             <li className="navkit__headersection__links--link">
               <Link
                 to="/ecommerce/equalizers"

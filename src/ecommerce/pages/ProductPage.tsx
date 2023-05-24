@@ -4,7 +4,7 @@ import Header from '../layouts/navigation/Header';
 import Footer from '../layouts/navigation/Footer';
 import NotFound from '../../shared/pages/NotFound';
 
-import { ProductDatabase } from '../data/ProductDatabase';
+import { ProductDatabase } from '../assets/data/ProductDatabase';
 import { ProductType, formatCurrency } from '../context/ProductProvider';
 
 const getProductBySku = () => {
