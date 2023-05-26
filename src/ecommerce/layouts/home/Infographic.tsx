@@ -1,4 +1,4 @@
-import InfographicProps from '../../components/props/home/InfographicProps';
+import InfographicProps from '../../components/home/props/InfographicProps';
 
 const Infographic = () => {
   return (

@@ -1,4 +1,4 @@
-import CarouselProps from '../../components/props/home/CarouselProps';
+import CarouselProps from '../../components/home/props/CarouselProps';
 
 const CarouselNavigation = (event: any) => {
   const CarouselTrack = document.querySelector('.carousel__track') as HTMLElement;
