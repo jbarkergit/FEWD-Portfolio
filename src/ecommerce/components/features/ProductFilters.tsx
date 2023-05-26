@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../context/StateProvider';
 import { companyList } from '../../context/ProductProvider';

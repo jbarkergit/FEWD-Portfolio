@@ -3,7 +3,7 @@ import Footer from '../layouts/navigation/Footer';
 import Infographic from '../layouts/home/Infographic';
 import Carousel from '../layouts/home/Carousel';
 import SideBySide from '../layouts/home/SideBySide';
-import ProductCarousel from '../layouts/home/ProductCarousel';
+import ProductShowcase from '../components/home/ProductShowcase';
 
 const Home = () => {
   return (
@@ -12,8 +12,7 @@ const Home = () => {
       <Infographic />
       <Carousel />
       <SideBySide />
-      <ProductCarousel />
-      <ProductCarousel />
+      <ProductShowcase />
       <Footer />
     </>
   );

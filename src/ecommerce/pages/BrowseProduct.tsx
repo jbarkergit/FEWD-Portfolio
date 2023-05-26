@@ -7,7 +7,7 @@ const BrowseProduct = () => {
   return (
     <>
       <Header />
-      <section className="browseProducts flexBox flexColumn justifyCenter alignUnset">
+      <section className="browseProduct flexBox flexColumn justifyCenter alignUnset">
         <ProductFilters />
         <main>
           <ul className="productGrid">

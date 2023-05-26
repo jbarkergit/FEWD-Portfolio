@@ -14,6 +14,7 @@ export type ProductType = {
   impedance?: string;
   price: number;
   images: string[];
+  productshowcase?: boolean;
 };
 
 export const companyList = [...new Set(ProductDatabase.map((product) => product.company))];
