@@ -2,7 +2,7 @@ import { useResumeFade } from '../../hooks/useResumeFade';
 
 const PortfolioResume = () => {
   return (
-    <section className="flexBox" id="resume">
+    <section>
       <section className="resume flexColumn">
         <article className="resume__block">
           <span className="resume__block--header flexBox">
