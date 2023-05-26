@@ -2,17 +2,6 @@ import DemoPreview from '../components/main/DemoPreview';
 import DeveloperInfo from '../components/main/DeveloperInfo';
 import SidebarProps from '../components/props/main/SidebarProps';
 
-const DevDemo = () => {
-  return (
-    <main className="developmentDemo">
-      <DeveloperInformation dataIndex={0} dataStatus="active" />
-      <EcommerceDemo dataIndex={1} dataStatus="inactive" />
-    </main>
-  );
-};
-
-export default DevDemo;
-
 type FooterNavPropsType = {
   dataIndex: number;
   dataStatus: string;
@@ -39,3 +28,16 @@ const EcommerceDemo = ({ dataIndex, dataStatus }: FooterNavPropsType) => {
     </section>
   );
 };
+
+const DevDemo = () => {
+  return (
+    <section>
+      <main className="developmentDemo">
+        <DeveloperInformation dataIndex={0} dataStatus="active" />
+        <EcommerceDemo dataIndex={1} dataStatus="inactive" />
+      </main>
+    </section>
+  );
+};
+
+export default DevDemo;
