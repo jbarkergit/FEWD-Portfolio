@@ -1,8 +1,6 @@
-import { useResumeFade } from '../../hooks/useResumeFade';
-
 const PortfolioResume = () => {
   return (
-    <section>
+    <section className="toggleResume" data-activity="inactive">
       <section className="resume flexColumn">
         <article className="resume__block">
           <span className="resume__block--header flexBox">
@@ -32,7 +30,7 @@ const PortfolioResume = () => {
           </span>
         </article>
         <div className="resume__navigation flexBox">
-          <button className="resume__navigation--button" onClick={useResumeFade}>
+          <button className="resume__navigation--button">
             <i className="fa-solid fa-chevron-left"></i>
           </button>
           <button className="resume__navigation--button">

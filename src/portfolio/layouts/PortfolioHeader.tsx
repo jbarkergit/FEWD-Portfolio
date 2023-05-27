@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useResumeFade } from '../hooks/useResumeFade';
 
 const PortfolioHeader = () => {
-  const formContact = document.querySelector('.contact')!;
-
   return (
     <section>
       <header className="portNav" aria-label="Primary Navigation">
@@ -15,7 +12,17 @@ const PortfolioHeader = () => {
           </button>
         </section>
         <section className="portNav__block">
-          <button type="button" role="tab" tab-index={2} onClick={useResumeFade} aria-label="View Resume Button">
+          <button
+            type="button"
+            role="tab"
+            tab-index={2}
+            onClick={() =>
+              document.querySelector('.toggleResume')!.getAttribute('data-activity') === 'inactive'
+                ? document.querySelector('.toggleResume')!.setAttribute('data-activity', 'active')
+                : document.querySelector('.toggleResume')!.setAttribute('data-activity', 'inactive')
+            }
+            aria-label="View Resume Button"
+          >
             <span className="portNav__block__inline">
               <h4>Resume</h4>
             </span>
@@ -27,9 +34,9 @@ const PortfolioHeader = () => {
             role="tab"
             tab-index={3}
             onClick={() =>
-              formContact.getAttribute('data-activity') === 'inactive'
-                ? formContact.setAttribute('data-activity', 'active')
-                : formContact.setAttribute('data-activity', 'inactive')
+              document.querySelector('.contact')!.getAttribute('data-activity') === 'inactive'
+                ? document.querySelector('.contact')!.setAttribute('data-activity', 'active')
+                : document.querySelector('.contact')!.setAttribute('data-activity', 'inactive')
             }
             aria-label="View Contact Form Button"
           >
