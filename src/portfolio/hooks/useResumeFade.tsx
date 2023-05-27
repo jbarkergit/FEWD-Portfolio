@@ -15,21 +15,3 @@ export function useResumeFade() {
     button.classList.contains('fadeIn') ? button.classList.toggle('fadeOut') : button.classList.toggle('fadeIn');
   }
 }
-
-/*
-
-  for (const block of resumeBlocks) {
-    if (block.classList.contains('fadeIn')) {
-      block.classList.toggle('fadeOut');
-    } else if (block.classList.contains('fadeOut')) {
-      block.classList.toggle('fadeIn');
-    } else if (block.classList.contains('fadeIn' && 'fadeOut')) {
-      block.classList.toggle('fadeOut') && block.classList.toggle('fadeIn');
-    } else if (block.classList.contains('fadeIn') === false) {
-      block.classList.toggle('fadeIn');
-    } else {
-      throw new Error();
-    }
-  }
-
-*/

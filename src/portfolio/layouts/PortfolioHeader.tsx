@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useResumeFade } from '../hooks/useResumeFade';
-import { useFormContact } from '../hooks/useFormContact';
 
 const PortfolioHeader = () => {
+  const formContact = document.querySelector('.contact')!;
+
   return (
     <section>
       <header className="portNav" aria-label="Primary Navigation">
@@ -21,7 +22,17 @@ const PortfolioHeader = () => {
           </button>
         </section>
         <section className="portNav__block">
-          <button type="button" role="tab" tab-index={3} onClick={useFormContact} aria-label="View Contact Form Button">
+          <button
+            type="button"
+            role="tab"
+            tab-index={3}
+            onClick={() =>
+              formContact.getAttribute('data-activity') === 'inactive'
+                ? formContact.setAttribute('data-activity', 'active')
+                : formContact.setAttribute('data-activity', 'inactive')
+            }
+            aria-label="View Contact Form Button"
+          >
             <span className="portNav__block__inline">
               <h4>Contact</h4>
             </span>
