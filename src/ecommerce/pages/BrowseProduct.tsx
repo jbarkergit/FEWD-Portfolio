@@ -1,7 +1,7 @@
 import Header from '../layouts/navigation/Header';
 import Footer from '../layouts/navigation/Footer';
-import ProductFilters from '../components/features/ProductFilters';
-import ProductProvider from '../context/ProductProvider';
+import ProductFilters from '../components/features/filters/ProductFilters';
+import ProductProvider from '../context/products/ProductProvider';
 
 const BrowseProduct = () => {
   return (

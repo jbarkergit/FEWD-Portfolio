@@ -1,24 +1,8 @@
 import { Link } from 'react-router-dom';
-import { ProductDatabase } from '../assets/data/ProductDatabase';
+import { ProductDatabase } from '../../assets/data/ProductDatabase';
 import { useCategoryFilterContext } from './StateProvider';
-
-export type ProductType = {
-  category: string;
-  sku: string;
-  company: string;
-  unit: string;
-  description: string;
-  operation?: string;
-  soundinfo?: string;
-  cable?: string;
-  impedance?: string;
-  price: number;
-  images: string[];
-  productshowcase?: boolean;
-};
-
-export const companyList = [...new Set(ProductDatabase.map((product) => product.company))];
-export const formatCurrency = Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' });
+import { ProductType } from '../exports/types';
+import { companyList, formatCurrency } from '../exports/vars';
 
 const ProductProvider = () => {
   // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider

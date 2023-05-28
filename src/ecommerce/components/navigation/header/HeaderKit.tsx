@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../context/StateProvider';
+import { useCategoryFilterContext } from '../../../context/products/StateProvider';
 import { useRef } from 'react';
 
 const HeaderKit = () => {

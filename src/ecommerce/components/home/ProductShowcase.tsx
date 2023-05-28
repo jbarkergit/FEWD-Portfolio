@@ -1,4 +1,4 @@
-import { ProductType } from '../../context/ProductProvider';
+import { ProductType } from '../../context/exports/types';
 import { ProductDatabase } from '../../assets/data/ProductDatabase';
 
 const ProductShowcase = () => {

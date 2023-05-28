@@ -5,7 +5,7 @@ import Footer from '../layouts/navigation/Footer';
 import NotFound from '../../shared/pages/NotFound';
 
 import { ProductDatabase } from '../assets/data/ProductDatabase';
-import { ProductType, formatCurrency } from '../context/ProductProvider';
+import { ProductType, formatCurrency } from '../context/products/ProductProvider';
 
 const getProductBySku = () => {
   const { paramId } = useParams() as { paramId: string };

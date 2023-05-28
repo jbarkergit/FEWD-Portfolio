@@ -1,4 +1,4 @@
-import SideBySideProps from '../../components/home/props/SideBySideProps';
+import SideBySideProps from '../../components/home/SideBySideProps';
 
 const SideBySide = () => {
   return (

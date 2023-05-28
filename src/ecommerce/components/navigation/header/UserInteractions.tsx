@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import SearchBar from '../../features/SearchBar';
+import SearchBar from '../../features/search/SearchBar';
 
 type PropsType = {
   viewCart: boolean;
