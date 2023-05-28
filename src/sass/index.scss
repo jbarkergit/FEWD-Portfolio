@@ -1,0 +1,38 @@
+/** Base **/
+@forward './base/typography';
+@forward './base/boilerplate';
+@forward './base/bem';
+@forward './base/interaction';
+
+/** Styles **/
+@forward './styles/root';
+
+/** Shared **/
+@forward './shared/suspenseloader';
+@forward './shared/notfound';
+
+/** Portfolio **/
+@forward './portfolio/layouts/layouts';
+@forward './portfolio/navigation/portnav';
+@forward './portfolio/main/developmentDemo';
+@forward './portfolio/main/sidebar';
+@forward './portfolio/features/resume';
+@forward './portfolio/features/formContact';
+
+/** Ecommerce **/
+@forward './ecommerce/components/navigation/header';
+@forward './ecommerce/components/navigation/footer';
+
+@forward './ecommerce/components/features/searchBar';
+@forward './ecommerce/components/features/shoppingCart';
+
+@forward './ecommerce/home/infographic';
+@forward './ecommerce/home/carousel';
+@forward './ecommerce/home/sideBySide';
+@forward './ecommerce/home/productShowcase';
+
+@forward './ecommerce/components/features/productFilters';
+@forward './ecommerce/components/products/productProps';
+@forward './ecommerce/components/products/productPages';
+
+@forward './ecommerce/layouts/layouts';

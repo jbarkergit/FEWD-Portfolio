@@ -1,0 +1,40 @@
+@use '../../../util/functions' as u;
+@use '../../../styles/mixins' as i;
+
+.skuPage {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 7%;
+  max-width: u.rem(1600);
+  &__imgBlock {
+    display: grid;
+    grid-auto-rows: auto;
+    grid-template-columns: repeat(2, 1fr);
+    gap: u.rem(25);
+    overflow: hidden;
+    & picture {
+      max-height: u.rem(425);
+      @include i.productPhoto;
+      border-radius: u.rem(16);
+      background-color: white;
+      transition: ease-in-out 0.35s;
+      & img {
+        padding: u.rem(15);
+        object-fit: scale-down;
+        mix-blend-mode: darken;
+        @include i.photoFilters;
+      }
+    }
+  }
+  &__details {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    & p {
+      max-width: 38ch;
+      font-size: clamp(u.rem(14), u.rem(12) + 0.5vw, u.rem(18));
+      font-weight: 400;
+      line-height: 1.3rem;
+    }
+  }
+}

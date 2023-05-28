@@ -1,0 +1,25 @@
+@use '../util/functions' as u;
+
+.notfound {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: hsl(0, 0%, 95%);
+  &__container {
+    max-width: 45ch;
+    & h1 {
+      min-height: u.rem(50);
+      font-weight: 800;
+    }
+    & p {
+      font-weight: 400;
+      max-width: 45ch;
+    }
+  }
+}
+.fa-person-walking-arrow-loop-left {
+  font-size: u.rem(40);
+}

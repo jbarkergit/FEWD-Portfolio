@@ -1,0 +1,106 @@
+@use '../../../util/functions' as u;
+@use '../../../styles/mixins' as i;
+
+.navkit {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 11rem;
+  z-index: 10;
+  top: 0;
+  &__header {
+    display: flex;
+    width: 100%;
+    max-width: u.rem(1584);
+    &__section {
+      display: flex;
+      align-items: center;
+      gap: 5%;
+      height: 100%;
+      &:nth-of-type(2) {
+        justify-content: flex-end;
+      }
+      &--nav {
+        width: 100%;
+      }
+      &__links {
+        display: flex;
+        gap: 5%;
+        align-items: center;
+        width: 100%;
+        &--link a {
+          color: hsl(0, 0%, 20%);
+          font-size: clamp(u.rem(16), u.rem(10) + 0.5vw, u.rem(28));
+          font-weight: 500;
+          white-space: nowrap;
+        }
+        &--logo {
+          margin-right: 10%;
+          white-space: nowrap;
+          & a {
+            color: rgb(50, 50, 50);
+            font-size: clamp(u.rem(18), u.rem(12) + 0.5vw, u.rem(30));
+            font-weight: 700;
+            text-transform: capitalize;
+          }
+        }
+      }
+      &__ui {
+        &--btn {
+          display: flex;
+          align-items: center;
+          height: u.rem(42);
+          @include i.ecommerceBtn;
+          @include i.BtnShadow;
+          &:nth-of-type(1) {
+            background-color: transparent;
+          }
+          & h4 {
+            font-size: u.rem(12);
+            font-weight: 700;
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+  }
+}
+.dropMenu {
+  position: relative;
+  &__indicator {
+    cursor: pointer;
+    &--interior {
+      display: flex;
+      align-items: center;
+      gap: u.rem(5);
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      font-size: clamp(u.rem(16), u.rem(10) + 0.5vw, u.rem(28));
+      font-weight: 500;
+      & i {
+        margin-top: u.rem(5);
+        font-size: u.rem(14);
+      }
+    }
+  }
+  &__links {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    top: 125%;
+    &__link {
+      padding-bottom: u.rem(6);
+      & a {
+        color: black;
+        font-size: clamp(u.rem(12), u.rem(6) + 0.5vw, u.rem(20));
+        font-weight: 400;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+.fa-gear,
+.fa-cart-shopping {
+  padding-right: u.rem(6);
+  font-size: u.rem(14);
+}
