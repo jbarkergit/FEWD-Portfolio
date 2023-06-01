@@ -8,12 +8,12 @@ export type ProductType = {
   sku: string;
   company: string;
   unit: string;
-  description: string;
+  description?: string;
   operation?: string;
   soundinfo?: string;
   cable?: string;
   impedance?: string;
   price: number;
-  images: string[];
+  images?: string[];
   productshowcase?: boolean;
 };
