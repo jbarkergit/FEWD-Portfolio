@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../../context/products/StateProvider';
-import { companyList } from '../../../context/products/ProductProvider';
+import { ProductDatabase } from '../../../assets/data/ProductDatabase';
 
 const useBreadcrumbs = () => {
   const location = useLocation();
@@ -28,7 +28,7 @@ const useCompanies = () => {
 
   return (
     <>
-      {companyList
+      {[...new Set(ProductDatabase.map((product) => product.company))]
         .sort((a, b) => (a > b ? 1 : -1))
         .map((company) => (
           <li className="selectMenu__menu--option" key={company}>

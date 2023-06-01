@@ -5,7 +5,7 @@ import Footer from '../layouts/navigation/Footer';
 import NotFound from '../../shared/pages/NotFound';
 
 import { ProductDatabase } from '../assets/data/ProductDatabase';
-import { ProductType, formatCurrency } from '../context/products/ProductProvider';
+import { ProductType } from '../context/exports/types';
 
 const getProductBySku = () => {
   const { paramId } = useParams() as { paramId: string };
@@ -46,7 +46,7 @@ const getProductBySku = () => {
               <li>
                 <p>{findProduct.description}</p>
               </li>
-              <li>{formatCurrency.format(findProduct.price)}</li>
+              <li>{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(findProduct.price)}</li>
               <li>ADD TO CART</li>
             </ul>
           </main>

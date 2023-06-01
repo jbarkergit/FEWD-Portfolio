@@ -1,46 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import SearchBar from '../../features/search/SearchBar';
 
-type PropsType = {
-  viewCart: boolean;
-  setViewCart: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const UserInteractions = ({ viewCart, setViewCart }: PropsType) => {
-  const viewCartButton = viewCart ? (
-    <button
-      className="navkit__header__section__ui--btn --ctaBtn"
-      id="shoppingCartBtn"
-      style={{
-        backgroundColor: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
-        boxShadow:
-          useLocation().pathname === '/ecommerce'
-            ? 'rgb(255, 255, 255) -1px -1px 20px 0px, rgb(57, 57, 57) -4px -4px 5px 0px, rgba(98, 98, 98, 0.4) 7px 7px 20px 0px, rgba(0, 0, 0, 0.3) 4px 4px 5px 0px'
-            : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
-      }}
-      onClick={() => setViewCart(false)}
-    >
-      <i className="fa-solid fa-cart-shopping" style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}></i>
-      <h4 style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}>Close Cart</h4>
-    </button>
-  ) : (
-    <button
-      className="navkit__header__section__ui--btn --ctaBtn"
-      id="shoppingCartBtn"
-      style={{
-        backgroundColor: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
-        boxShadow:
-          useLocation().pathname === '/ecommerce'
-            ? 'rgb(255, 255, 255) -1px -1px 20px 0px, rgb(57, 57, 57) -4px -4px 5px 0px, rgba(98, 98, 98, 0.4) 7px 7px 20px 0px, rgba(0, 0, 0, 0.3) 4px 4px 5px 0px'
-            : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
-      }}
-      onClick={() => setViewCart(true)}
-    >
-      <i className="fa-solid fa-cart-shopping" style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}></i>
-      <h4 style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}>View Cart</h4>
-    </button>
-  );
-
+const UserInteractions = () => {
   return (
     <section className="navkit__header__section">
       <SearchBar />
@@ -61,7 +22,21 @@ const UserInteractions = ({ viewCart, setViewCart }: PropsType) => {
           <h4>Account</h4>
         </button>
       </div>
-      <div className="navkit__header__section__ui">{viewCartButton}</div>
+      <div className="navkit__header__section__ui">
+        <button
+          className="navkit__header__section__ui--btn --ctaBtn"
+          style={{
+            backgroundColor: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
+            boxShadow:
+              useLocation().pathname === '/ecommerce'
+                ? 'rgb(255, 255, 255) -1px -1px 20px 0px, rgb(57, 57, 57) -4px -4px 5px 0px, rgba(98, 98, 98, 0.4) 7px 7px 20px 0px, rgba(0, 0, 0, 0.3) 4px 4px 5px 0px'
+                : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
+          }}
+        >
+          <i className="fa-solid fa-cart-shopping" style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}></i>
+          <h4 style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}>placeholder</h4>
+        </button>
+      </div>
     </section>
   );
 };

@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { ProductDatabase } from '../../assets/data/ProductDatabase';
 import { useCategoryFilterContext } from './StateProvider';
 import { ProductType } from '../exports/types';
-import { companyList, formatCurrency } from '../exports/vars';
 
 const ProductProvider = () => {
   // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
@@ -10,7 +9,7 @@ const ProductProvider = () => {
   const { categoryFilter } = useCategoryFilterContext();
 
   function handleProductFilter() {
-    if (companyList.includes(categoryFilter)) {
+    if ([...new Set(ProductDatabase.map((product) => product.company))].includes(categoryFilter)) {
       return ProductDatabase.filter((product) => product.company.includes(categoryFilter));
     } else return ProductDatabase.filter((product) => product.category.includes(categoryFilter));
   }
@@ -38,7 +37,7 @@ const ProductProvider = () => {
               <p>{ProductData.description}</p>
               <div className="productGrid__product__advanced">
                 <span>
-                  <h4>{formatCurrency.format(ProductData.price)}</h4>
+                  <h4>{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(ProductData.price)}</h4>
                 </span>
                 <span>
                   <button>

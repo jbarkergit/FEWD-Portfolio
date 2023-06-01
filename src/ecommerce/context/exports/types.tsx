@@ -1,5 +1,7 @@
 import { ReactElement } from 'react';
 
+export type ChildrenType = { children?: ReactElement | ReactElement[] };
+
 export type ProductType = {
   quantity: number;
   category: string;
@@ -15,5 +17,3 @@ export type ProductType = {
   images: string[];
   productshowcase?: boolean;
 };
-
-export type ChildrenType = { children?: ReactElement | ReactElement[] };
