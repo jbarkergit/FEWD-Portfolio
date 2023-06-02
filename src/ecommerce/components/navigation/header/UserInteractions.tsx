@@ -2,12 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import SearchBar from '../../features/search/SearchBar';
 
-type PropsType = {
-  viewCart: boolean;
-  setViewCart: Dispatch<SetStateAction<boolean>>;
-};
-
-const UserInteractions = ({ viewCart, setViewCart }: PropsType) => {
+const UserInteractions = () => {
   const [namedCart, setNamedCart] = useState('View Cart');
 
   return (
@@ -39,10 +34,6 @@ const UserInteractions = ({ viewCart, setViewCart }: PropsType) => {
               useLocation().pathname === '/ecommerce'
                 ? 'rgb(255, 255, 255) -1px -1px 20px 0px, rgb(57, 57, 57) -4px -4px 5px 0px, rgba(98, 98, 98, 0.4) 7px 7px 20px 0px, rgba(0, 0, 0, 0.3) 4px 4px 5px 0px'
                 : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
-          }}
-          onClick={() => {
-            namedCart === 'View Cart' ? setNamedCart('Close Cart') : setNamedCart('View Cart');
-            viewCart === false ? setViewCart(true) : setViewCart(false);
           }}
         >
           <i className="fa-solid fa-cart-shopping" style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}></i>
