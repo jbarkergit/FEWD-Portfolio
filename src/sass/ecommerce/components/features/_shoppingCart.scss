@@ -7,31 +7,26 @@
   max-width: u.rem(1584);
   height: 100vh;
   pointer-events: none;
-}
-.shoppingCart {
-  position: absolute;
-  // display: none;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  max-height: u.rem(720);
-  aspect-ratio: 3/4;
-  z-index: 10;
-  top: 15%;
-  right: 0;
-  padding: 2% 3%;
-  border-radius: u.rem(32);
-  background-color: hsl(0, 0%, 20%);
-  box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
-  pointer-events: all;
-  color: white;
-  // opacity: 0;
-  // transform: translateX(200%);
-  // color: white;
-  // &[data-activity='active'] {
-  //   display: flex;
-  //   opacity: 1;
-  //   transform: translateX(0%);
-  //   transition: all 0.45s;
-  // }
+  transform: translateX(100%);
+  transition: all 0.45s ease-in-out;
+  &[data-activity='active'] {
+    transform: translateX(0%);
+  }
+  .shoppingCart {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: u.rem(720);
+    aspect-ratio: 3/4;
+    z-index: 10;
+    top: 15%;
+    right: 0;
+    padding: 2% 3%;
+    border-radius: u.rem(32);
+    background-color: hsl(0, 0%, 20%);
+    box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+    pointer-events: all;
+    color: white;
+  }
 }
