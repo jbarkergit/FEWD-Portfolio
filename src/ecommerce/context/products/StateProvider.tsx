@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import { ChildrenType } from '../exports/types';
 
 interface CategoryFilterContextType {
   categoryFilter: string | null;
@@ -8,11 +9,7 @@ interface CategoryFilterContextType {
 // GUARD: Throws intentional error for Application Context Provider
 const CategoryFilterContext = createContext<CategoryFilterContextType | undefined>(undefined);
 
-// Modern dependencies altered the children parameter, creating numerous Type errors: { children } param: interface & React.FunctionalComponent.
-// The following packages can be downgraded to bypass Type errors, or the errors can be ignored manually.
-// "@types/react": => "17.0.2", // "@types/react-dom": => "17.0.2",
-//@ts-ignore:
-export const CategoryFilterProvider: React.FunctionComponent = ({ children }): JSX.Element => {
+export const CategoryFilterProvider: React.FunctionComponent = ({ children }: ChildrenType): JSX.Element => {
   const [categoryFilter, setCategoryFilter] = useState<string | null>('');
   return <CategoryFilterContext.Provider value={{ categoryFilter, setCategoryFilter }}>{children}</CategoryFilterContext.Provider>;
 };

@@ -23,6 +23,8 @@
   border-radius: u.rem(32);
   background-color: hsl(0, 0%, 20%);
   box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+  pointer-events: all;
+  color: white;
   // opacity: 0;
   // transform: translateX(200%);
   // color: white;

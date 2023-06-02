@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { ProductDatabase } from '../../assets/data/ProductDatabase';
 import { useCategoryFilterContext } from './StateProvider';
-import { ProductType } from '../exports/types';
+import { CartProductType, ProductType } from '../exports/types';
+import { ReactElement } from 'react';
 
-const ProductProvider = () => {
-  // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
+const ProductProvider = (): ReactElement => {
   // @ts-ignore:
-  const { categoryFilter } = useCategoryFilterContext();
+  const { categoryFilter } = useCategoryFilterContext(); // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
 
   function handleProductFilter() {
     if ([...new Set(ProductDatabase.map((product) => product.company))].includes(categoryFilter)) {

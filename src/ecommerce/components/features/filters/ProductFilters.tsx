@@ -22,9 +22,8 @@ const useBreadcrumbs = () => {
 };
 
 const useCompanies = () => {
-  // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
   // @ts-ignore:
-  const { setCategoryFilter } = useCategoryFilterContext();
+  const { setCategoryFilter } = useCategoryFilterContext(); // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
 
   return (
     <>
