@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ProductDatabase } from '../../assets/data/ProductDatabase';
-import { useCategoryFilterContext } from './StateProvider';
-import { CartProductType, ProductType } from '../exports/types';
+import { useCategoryFilterContext } from './categoryFilterProvider';
+import { ProductType } from '../exports/types';
 import { ReactElement } from 'react';
 
 const ProductProvider = (): ReactElement => {

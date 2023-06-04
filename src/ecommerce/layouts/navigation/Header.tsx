@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import HeaderKit from '../../components/navigation/header/HeaderKit';
 import UserInteractions from '../../components/navigation/header/UserInteractions';
-import Cart from '../../components/features/cart/Cart';
+import ShoppingCart from '../../components/features/cart/ShoppingCart';
 
 const PrimaryNav = () => {
   return (
@@ -14,7 +14,8 @@ const PrimaryNav = () => {
       <header className="navkit__header">
         <HeaderKit />
         <UserInteractions />
-        <Cart />
+
+        <ShoppingCart />
       </header>
     </section>
   );

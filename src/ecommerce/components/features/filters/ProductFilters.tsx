@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../context/products/StateProvider';
+import { useCategoryFilterContext } from '../../../context/products/categoryFilterProvider';
 import { ProductDatabase } from '../../../assets/data/ProductDatabase';
 
 const useBreadcrumbs = () => {
