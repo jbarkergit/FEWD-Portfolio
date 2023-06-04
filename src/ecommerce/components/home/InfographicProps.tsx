@@ -32,7 +32,7 @@ const InfographicProps = ({ bannerImg, imgAlt, companyName, companyMissionStatem
               <h4>{ctaBtn2Name}</h4>
             </Link>
           </span>
-          <picture className="infographic__information__logos flexBox">
+          <picture className="infographic__information__logos">
             <img src="https://audient.com/wp-content/themes/sydney-audient/logowhite.svg" loading="lazy" decoding="async" fetchpriority="high" />
             <img
               src="https://d33p2k2w4zpozf.cloudfront.net/static/version1680503554/frontend/Flagbit/beyerdynamic/de_DE/images/logo.svg"

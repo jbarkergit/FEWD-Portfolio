@@ -45,22 +45,20 @@
     align-items: baseline;
     height: 100vh;
     z-index: 2;
-    padding-left: 8vw;
+    padding: 0 8vw;
     & h1 {
       font-size: u.rem(16);
       font-weight: 600;
       margin-bottom: u.rem(10);
     }
     h2 {
-      width: 25ch;
+      max-width: 25ch;
       font-style: italic;
-      font-size: u.rem(40);
-      line-height: 115%;
       font-weight: 800;
       margin-bottom: u.rem(15);
     }
     p {
-      width: 40ch;
+      max-width: 40ch;
       font-weight: 500;
       margin-bottom: u.rem(15);
     }
@@ -72,6 +70,7 @@
     }
     &__ctaBtns {
       gap: u.rem(20);
+      flex-wrap: wrap;
       & a {
         height: u.rem(42);
         max-width: fit-content;
@@ -87,12 +86,18 @@
     }
     &__logos {
       position: absolute;
+      display: flex;
+      flex-wrap: wrap;
       gap: u.rem(25);
-      width: 100%;
       height: auto;
+      padding-right: 8vw;
       bottom: 12%;
+
       & img {
-        max-width: u.rem(200);
+        width: clamp(u.rem(50), u.rem(150), u.rem(200));
+        @media (width <= 542px) {
+          width: clamp(u.rem(50), u.rem(150), u.rem(100));
+        }
         &:nth-of-type(2) {
           filter: invert(100%);
         }

@@ -2,8 +2,8 @@ type SideBySidePropTypes = { h4: string; h2: string; p: string; videoAriaLabel: 
 
 function SideBySideProps({ h4, h2, p, videoAriaLabel, videoSrc }: SideBySidePropTypes) {
   return (
-    <section className="sideBySide flexBox">
-      <article className="sideBySide__information flexBox flexColumn">
+    <section className="sideBySide">
+      <article className="sideBySide__information">
         <h4>{h4}</h4>
         <h2>{h2}</h2>
         <p>{p}</p>

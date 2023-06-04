@@ -25,6 +25,10 @@
       background: url('/src/ecommerce/assets/images/magnifying-glass-solid.svg') no-repeat center center;
       background-size: u.rem(18);
       transition: all 0.45s cubic-bezier(0, 0, 0.5, 1.5);
+      @media (width <= 1200px) {
+        width: 100%;
+        background-position: u.rem(13) center;
+      }
       &:focus {
         width: 100%;
         background-position: u.rem(13) center;

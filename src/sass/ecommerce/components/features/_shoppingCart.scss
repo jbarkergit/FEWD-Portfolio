@@ -9,8 +9,12 @@
   pointer-events: none;
   transform: translateX(100%);
   transition: all 0.45s ease-in-out;
+  &[data-activity='inactive'] {
+    display: none;
+  }
   &[data-activity='active'] {
     transform: translateX(0%);
+    display: block;
   }
   .shoppingCart {
     position: absolute;

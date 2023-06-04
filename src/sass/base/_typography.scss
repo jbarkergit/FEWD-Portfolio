@@ -34,7 +34,7 @@ h1 {
   line-height: 1;
 }
 h2 {
-  font-size: clamp(u.rem(22), u.rem(14) + 0.5vw, u.rem(36));
+  font-size: clamp(u.rem(22), u.rem(14) + 1.5vw, u.rem(36));
   font-weight: 500;
 }
 h3 {
@@ -55,8 +55,8 @@ h6 {
 }
 p,
 article {
-  //width: clamp(45ch, 50%, 75ch);
-  font-size: clamp(u.rem(18), u.rem(15) + 0.25vw, u.rem(32));
+  // width: clamp(45ch, 50%, 75ch);
+  font-size: clamp(u.rem(12), u.rem(15) + 0.25vw, u.rem(32));
   font-weight: 400;
 }
 article {

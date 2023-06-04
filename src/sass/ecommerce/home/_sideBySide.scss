@@ -3,9 +3,13 @@
 
 .sideBySide {
   position: relative;
+  display: flex;
   width: 100%;
   height: calc(100% + u.rem(32));
-  padding: u.rem(50) u.rem(50) u.rem(115) u.rem(50);
+  padding: 8vh 12vh;
+  @media (width <= 600px) {
+    padding: 5vw;
+  }
   &:after {
     content: '';
     position: absolute;
@@ -23,8 +27,9 @@
     width: 50%;
   }
   &__information {
-    align-items: start;
-    padding: 0 u.rem(65);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     h4,
     h2,
     p {
@@ -50,9 +55,14 @@
     }
   }
   &__video {
+    @media (width <= 1375) {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
     & video {
       aspect-ratio: 4/5;
-      height: 90vh;
+      min-height: 90vh;
       border-radius: u.rem(40);
       pointer-events: unset;
       -o-object-fit: cover;

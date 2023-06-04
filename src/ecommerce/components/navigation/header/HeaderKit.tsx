@@ -1,5 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../../context/products/categoryFilterProvider';
+import SearchBar from '../../features/search/SearchBar';
+import { useState } from 'react';
 
 const HeaderKit = () => {
   // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
@@ -156,9 +158,47 @@ const HeaderKit = () => {
     );
   };
 
+  const MobileMenu = () => {
+    return (
+      <div className="mobileMenu">
+        <div className="mobileMenu__logo">
+          <Link to="/ecommerce" style={{ color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)' }}>
+            Dynamic Audio
+          </Link>
+        </div>
+        <div className="mobileMenu__menu">
+          <button
+            className="mobileMenu__menu__indicator"
+            style={{
+              color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
+            }}
+            onClick={() =>
+              document.querySelector('.mobileMenu__menu__slideIn')?.getAttribute('data-activity') === 'inactive'
+                ? document.querySelector('.mobileMenu__menu__slideIn')?.setAttribute('data-activity', 'active')
+                : document.querySelector('.mobileMenu__menu__slideIn')?.setAttribute('data-activity', 'inactive')
+            }
+          >
+            <i className="fa-solid fa-bars"></i>
+          </button>
+          <div className="mobileMenu__menu__slideIn" data-activity="inactive">
+            <ul>
+              <li>placeholder</li>
+              <li>placeholder</li>
+              <li>placeholder</li>
+              <li>placeholder</li>
+              <li>placeholder</li>
+              <li>placeholder</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <section className="navkit__header__section">
       <nav className="navkit__header__section--nav">
+        <MobileMenu />
         <ul className="navkit__header__section__links">
           <Logo />
           <SingleNavigation />

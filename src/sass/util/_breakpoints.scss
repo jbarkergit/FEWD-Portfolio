@@ -1,10 +1,9 @@
 @use '../util/functions' as f;
 
 $breakpoints-up: (
-  'portfolioTablet': f.em(1039),
   'mobile': f.em(700),
   'tablet': f.em(900),
-  'desktop': f.em(1440),
+  'portfolioTablet': f.em(1039),
 );
 
 @mixin breakpoint($size) {
@@ -14,13 +13,9 @@ $breakpoints-up: (
 }
 
 $breakpoints-down: (
-  'portfolioTablet': f.em(1038.98),
   'mobile': f.em(699.98),
   'tablet': f.em(899.98),
-  //'hd': f.em(720),
-  //'fhd': f.em(1920),
-  'qhd': f.em(2560),
-  'uhd': f.em(3840),
+  'portfolioTablet': f.em(1038.98),
 );
 
 @mixin breakpoint-down($size) {

@@ -14,7 +14,6 @@ const PrimaryNav = () => {
       <header className="navkit__header">
         <HeaderKit />
         <UserInteractions />
-
         <ShoppingCart />
       </header>
     </section>

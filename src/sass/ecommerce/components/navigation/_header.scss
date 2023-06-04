@@ -10,16 +10,37 @@
   top: 0;
   &__header {
     display: flex;
+    place-items: center;
     width: 100%;
     max-width: u.rem(1584);
+    margin: 0 5vw;
+    @media (width <= 1200px) {
+      flex-direction: column;
+      flex-wrap: wrap;
+    }
     &__section {
       display: flex;
       align-items: center;
       gap: 5%;
-      height: 100%;
+      width: 60%;
+      height: 50%;
+      @media (width <= 1200px) {
+        width: 100%;
+      }
+
       &:nth-of-type(2) {
         justify-content: flex-end;
+        width: 40%;
+        @media (width <= 1200px) {
+          justify-content: flex-start;
+          align-items: flex-start;
+          width: 100%;
+        }
+        @media (width <= 650px) {
+          display: none;
+        }
       }
+
       &--nav {
         width: 100%;
       }
@@ -28,6 +49,9 @@
         gap: 5%;
         align-items: center;
         width: 100%;
+        @media (width <= 650px) {
+          display: none;
+        }
         &--link a {
           color: hsl(0, 0%, 20%);
           font-size: clamp(u.rem(16), u.rem(10) + 0.5vw, u.rem(28));
@@ -35,8 +59,11 @@
           white-space: nowrap;
         }
         &--logo {
-          margin-right: 10%;
+          margin-right: 3vw;
           white-space: nowrap;
+          @media (width <= 650px) {
+            display: none;
+          }
           & a {
             color: rgb(50, 50, 50);
             font-size: clamp(u.rem(18), u.rem(12) + 0.5vw, u.rem(30));
@@ -67,6 +94,9 @@
 }
 .dropMenu {
   position: relative;
+  @media (width <= 650px) {
+    display: none;
+  }
   &__indicator {
     cursor: pointer;
     &--interior {
@@ -103,4 +133,50 @@
 .fa-cart-shopping {
   padding-right: u.rem(6);
   font-size: u.rem(14);
+}
+.fa-bars {
+  color: white;
+}
+.mobileMenu {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  @media (width > 650px) {
+    display: none;
+  }
+  &__logo {
+    width: 50%;
+    white-space: nowrap;
+    & a {
+      color: rgb(50, 50, 50);
+      font-size: clamp(u.rem(18), u.rem(12) + 1.5vw, u.rem(30));
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+  }
+  &__menu {
+    display: flex;
+    justify-content: flex-end;
+    width: 50%;
+    &__indicator {
+      @include i.ecommerceBtn;
+      font-size: clamp(u.rem(18), u.rem(12) + 1.5vw, u.rem(32));
+    }
+    &__slideIn {
+      position: absolute;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(6, 1fr);
+      grid-column-gap: 0px;
+      grid-row-gap: 0px;
+      width: 55vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      background-color: red;
+      &[data-activity='inactive'] {
+        display: none;
+      }
+    }
+  }
 }
