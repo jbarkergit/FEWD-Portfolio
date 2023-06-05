@@ -9,7 +9,7 @@ function SideBySideProps({ h4, h2, p, videoAriaLabel, videoSrc }: SideBySideProp
         <p>{p}</p>
       </article>
       <aside className="sideBySide__video flexBox justifyCenter" aria-label={videoAriaLabel}>
-        <video id="projects__demo-1" autoPlay loop muted src={videoSrc}></video>
+        <video id="projects__demo-1" autoPlay loop muted src={videoSrc} />
       </aside>
     </section>
   );
