@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { ProductDatabase } from '../../../assets/data/ProductDatabase';
 
 const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const searchResults = ProductDatabase.filter((product) => {
     return product.sku.toLowerCase().includes(searchTerm.toLowerCase());

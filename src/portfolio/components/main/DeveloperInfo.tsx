@@ -4,10 +4,10 @@ import Skills from '../../assets/data/Skills';
 let activeIndex: number = 0; //document.getElementsByClassName('skills__wrapper__icon')[0];
 
 const DevInfo = () => {
-  const [detail, setDetail]: any = useState('My name is');
-  let [name, setName]: any = useState('Justin Barker');
+  const [detail, setDetail]: any = useState<string>('My name is');
+  let [name, setName]: any = useState<string>('Justin Barker');
   const [description, setDescription]: any =
-    useState(`I'm a front end web developer. I build dynamic, responsive and feature rich web applications that handle complex
+    useState<string>(`I'm a front end web developer. I build dynamic, responsive and feature rich web applications that handle complex
         interpersonal data and interactions for the end user.`);
 
   const getSkill = (event: {

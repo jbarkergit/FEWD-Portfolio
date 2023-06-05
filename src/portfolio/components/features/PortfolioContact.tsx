@@ -2,10 +2,10 @@ import { useState } from 'react';
 
 const PortfolioContact = () => {
   //form states
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
-  const [message, setMessage] = useState('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [emailAddress, setEmailAddress] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
 
   //form submit
   function handleSubmit(event: any) {
