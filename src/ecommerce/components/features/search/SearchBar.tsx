@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ProductDatabase } from '../../../assets/data/ProductDatabase';
 
@@ -18,24 +18,24 @@ const SearchBar = () => {
 
   const filteredItems = getFilteredItems();
 
-  useEffect(() => {
-    const searchBar = document.querySelector('.searchBar')!;
+  const searchBarRef = useRef<HTMLDivElement>(null!);
 
+  useEffect(() => {
     const useSearchBar = (event: any) => {
-      !searchBar.contains(event.target) ? setSearchTerm('') : null;
+      !searchBarRef.current?.contains(event.target) ? setSearchTerm('') : null;
     };
 
-    searchBar.addEventListener('click', useSearchBar);
+    searchBarRef.current?.addEventListener('click', useSearchBar);
     document.body.addEventListener('click', useSearchBar, true);
 
     return () => {
-      searchBar.removeEventListener('click', useSearchBar);
+      searchBarRef.current?.removeEventListener('click', useSearchBar);
       document.body.removeEventListener('click', useSearchBar);
     };
   }, []);
 
   return (
-    <div className="searchBar">
+    <div className="searchBar" ref={searchBarRef}>
       <div className="searchBar__input">
         <label htmlFor="searchBar__input--input">Search</label>
         <input
