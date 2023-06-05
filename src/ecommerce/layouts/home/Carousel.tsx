@@ -1,12 +1,14 @@
+import { useRef } from 'react';
 import CarouselProps from '../../components/home/CarouselProps';
 
-const CarouselNavigation = (event: any) => {
-  const CarouselTrack = document.querySelector('.carousel__track') as HTMLElement;
-  const getElemId: string = event.target.getAttribute('id');
-  getElemId === 'right' ? (CarouselTrack.style.transform = 'translateX(50%)') : (CarouselTrack.style.transform = 'translateX(-50%)');
-};
-
 const Carousel = () => {
+  const CarouselTrack = useRef<HTMLPictureElement>(null!);
+
+  const CarouselNavigation = (event: any) => {
+    const getElemId: string = event.target.getAttribute('id');
+    getElemId === 'right' ? (CarouselTrack.current.style.transform = 'translateX(50%)') : (CarouselTrack.current.style.transform = 'translateX(-50%)');
+  };
+
   return (
     <section>
       <div className="sectionHeading flexBox">
@@ -14,7 +16,7 @@ const Carousel = () => {
         <h2>Ecommerce built for consumers, by consumers</h2>
       </div>
       <div className="carousel">
-        <picture className="carousel__track flexBox">
+        <picture className="carousel__track flexBox" ref={CarouselTrack}>
           <CarouselProps
             carouselImg="https://images.unsplash.com/photo-1633933703119-5d25460ad829?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
             carouselPost=""

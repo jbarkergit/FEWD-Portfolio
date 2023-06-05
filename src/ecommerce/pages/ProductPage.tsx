@@ -33,7 +33,6 @@ const getProductBySku = () => {
     return (
       <>
         <Header />
-
         <section className="skuPage">
           <section className="skuPage__imgBlock">{useProductImages()}</section>
           <main className="skuPage__details">
@@ -51,7 +50,6 @@ const getProductBySku = () => {
             </ul>
           </main>
         </section>
-
         <Footer />
       </>
     );
