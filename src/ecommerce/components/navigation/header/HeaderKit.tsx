@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../../context/products/categoryFilterProvider';
 import SearchBar from '../../features/search/SearchBar';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 const HeaderKit = () => {
   // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
@@ -52,7 +52,7 @@ const HeaderKit = () => {
     const audibleDropdownRef = useRef<HTMLUListElement>(null!);
 
     function useAudibleDropdown() {
-      audibleDropdownRef.current.getAttribute('data-activity') == 'none'
+      audibleDropdownRef.current.getAttribute('data-activity') == 'inactive'
         ? audibleDropdownRef.current.setAttribute('data-activity', 'active')
         : audibleDropdownRef.current.setAttribute('data-activity', 'inactive');
     }
@@ -117,7 +117,7 @@ const HeaderKit = () => {
     const vocalDropdownRef = useRef<HTMLUListElement>(null!);
 
     function useVocalDropdown() {
-      vocalDropdownRef.current.getAttribute('data-activity') == 'none'
+      vocalDropdownRef.current.getAttribute('data-activity') == 'inactive'
         ? vocalDropdownRef.current.setAttribute('data-activity', 'active')
         : vocalDropdownRef.current.setAttribute('data-activity', 'inactive');
     }

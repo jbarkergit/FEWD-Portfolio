@@ -124,9 +124,9 @@
     &__link {
       padding-bottom: u.rem(6);
       & a {
-        color: black;
-        font-size: clamp(u.rem(12), u.rem(6) + 0.5vw, u.rem(20));
-        font-weight: 400;
+        color: hsl(0, 0%, 20%);
+        font-size: clamp(u.rem(12), u.rem(6) + 0.5vw, u.rem(18));
+        font-weight: 500;
         white-space: nowrap;
       }
     }
