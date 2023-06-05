@@ -169,9 +169,6 @@ const HeaderKit = () => {
         <div className="mobileMenu__menu">
           <button
             className="mobileMenu__menu__indicator"
-            style={{
-              color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
-            }}
             onClick={() =>
               document.querySelector('.mobileMenu__menu__slideIn')?.getAttribute('data-activity') === 'inactive'
                 ? document.querySelector('.mobileMenu__menu__slideIn')?.setAttribute('data-activity', 'active')
@@ -180,15 +177,44 @@ const HeaderKit = () => {
           >
             <i className="fa-solid fa-bars"></i>
           </button>
-          <div className="mobileMenu__menu__slideIn" data-activity="inactive">
-            <ul>
-              <li>placeholder</li>
-              <li>placeholder</li>
-              <li>placeholder</li>
-              <li>placeholder</li>
-              <li>placeholder</li>
-              <li>placeholder</li>
-            </ul>
+          <div className="mobileMenu__menu__slideTrack">
+            <div className="mobileMenu__menu__slideIn" data-activity="inactive">
+              <ul>
+                <li>
+                  <Link to="/ecommerce">{'Home'}</Link>
+                </li>
+                <li>
+                  <Link to="/ecommerce/products" onClick={() => setCategoryFilter('')}>
+                    {'All Products'}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/ecommerce/headphones" onClick={() => setCategoryFilter('headphone')}>
+                    {'Headphones'}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/ecommerce/amps-dacs" onClick={() => setCategoryFilter('amp', 'dac')}>
+                    {'Amps & Dacs'}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/ecommerce/equalizers" onClick={() => setCategoryFilter('equalizer')}>
+                    {'Equalizers'}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/ecommerce/microphones" onClick={() => setCategoryFilter('microphone')}>
+                    {'Microphones'}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/ecommerce/interfaces" onClick={() => setCategoryFilter('interface')}>
+                    {'Interfaces'}
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
