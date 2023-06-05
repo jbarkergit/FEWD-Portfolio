@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../../context/products/categoryFilterProvider';
 import { ProductDatabase } from '../../../assets/data/ProductDatabase';
 
 const useBreadcrumbs = () => {
   const location = useLocation();
-  let currentLocation: string = '';
+  let [currentLocation] = useState<string>('');
   const breadcrumbs = location.pathname
     .replaceAll('/', '')
     .replaceAll('-', ' ')
