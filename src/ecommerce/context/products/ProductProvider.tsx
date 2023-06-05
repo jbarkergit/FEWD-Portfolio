@@ -11,7 +11,7 @@ const ProductProvider = (): ReactElement => {
   function handleProductFilter() {
     if ([...new Set(ProductDatabase.map((product) => product.company))].includes(categoryFilter)) {
       return ProductDatabase.filter((product) => product.company.includes(categoryFilter));
-    } else return ProductDatabase.filter((product) => product.category.includes(categoryFilter));
+    } else return ProductDatabase.filter((product) => product.category?.includes(categoryFilter));
   }
 
   return (
