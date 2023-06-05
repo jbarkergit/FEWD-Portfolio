@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../../context/products/categoryFilterProvider';
 import SearchBar from '../../features/search/SearchBar';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const HeaderKit = () => {
   // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
@@ -49,9 +49,12 @@ const HeaderKit = () => {
   };
 
   const AudibleDropdown = () => {
+    const audibleDropdownRef = useRef<HTMLUListElement>(null!);
+
     function useAudibleDropdown() {
-      const audibleDropdown: HTMLElement = document.getElementById('audible')!;
-      audibleDropdown.style.display == 'none' ? (audibleDropdown.style.display = 'flex') : (audibleDropdown.style.display = 'none');
+      audibleDropdownRef.current.getAttribute('data-activity') == 'none'
+        ? audibleDropdownRef.current.setAttribute('data-activity', 'active')
+        : audibleDropdownRef.current.setAttribute('data-activity', 'inactive');
     }
 
     return (
@@ -67,7 +70,7 @@ const HeaderKit = () => {
           </span>
         </div>
         <div>
-          <ul className="dropMenu__links" id="audible">
+          <ul className="dropMenu__links" data-activity="inactive" ref={audibleDropdownRef}>
             <li className="dropMenu__links__link">
               <Link
                 to="/ecommerce/headphones"
@@ -111,9 +114,12 @@ const HeaderKit = () => {
   };
 
   const VocalDropdown = () => {
+    const vocalDropdownRef = useRef<HTMLUListElement>(null!);
+
     function useVocalDropdown() {
-      const vocalDropdown: HTMLElement = document.getElementById('vocal')!;
-      vocalDropdown.style.display == 'none' ? (vocalDropdown.style.display = 'flex') : (vocalDropdown.style.display = 'none');
+      vocalDropdownRef.current.getAttribute('data-activity') == 'none'
+        ? vocalDropdownRef.current.setAttribute('data-activity', 'active')
+        : vocalDropdownRef.current.setAttribute('data-activity', 'inactive');
     }
 
     return (
@@ -128,7 +134,7 @@ const HeaderKit = () => {
             Vocal <i className="fa-solid fa-angle-down"></i>
           </span>
         </div>
-        <ul className="dropMenu__links" id="vocal">
+        <ul className="dropMenu__links" data-activity="inactive" ref={vocalDropdownRef}>
           <li className="dropMenu__links__link">
             <Link
               to="/ecommerce/microphones"
@@ -159,6 +165,7 @@ const HeaderKit = () => {
   };
 
   const MobileMenu = () => {
+    const slideContainerRef = useRef<HTMLDivElement>(null!);
     return (
       <div className="mobileMenu">
         <div className="mobileMenu__logo">
@@ -170,14 +177,14 @@ const HeaderKit = () => {
           <button
             className="mobileMenu__menu__indicator"
             onClick={() =>
-              document.querySelector('.mobileMenu__menu__slideContainer')?.getAttribute('data-activity') === 'inactive'
-                ? document.querySelector('.mobileMenu__menu__slideContainer')?.setAttribute('data-activity', 'active')
-                : document.querySelector('.mobileMenu__menu__slideContainer')?.setAttribute('data-activity', 'inactive')
+              slideContainerRef.current.getAttribute('data-activity') === 'inactive'
+                ? slideContainerRef.current.setAttribute('data-activity', 'active')
+                : slideContainerRef.current.setAttribute('data-activity', 'inactive')
             }
           >
             <i className="fa-solid fa-bars"></i>
           </button>
-          <div className="mobileMenu__menu__slideContainer" data-activity="inactive">
+          <div className="mobileMenu__menu__slideContainer" data-activity="inactive" ref={slideContainerRef}>
             <div className="mobileMenu__menu__slideIn">
               <span className="mobileMenu__logo">
                 <Link to="/ecommerce">Dynamic Audio</Link>

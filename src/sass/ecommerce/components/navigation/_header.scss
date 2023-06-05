@@ -115,9 +115,12 @@
   }
   &__links {
     position: absolute;
-    display: none;
+    display: flex;
     flex-direction: column;
     top: 125%;
+    &[data-activity='inactive'] {
+      display: none;
+    }
     &__link {
       padding-bottom: u.rem(6);
       & a {
