@@ -3,15 +3,15 @@ import { useLocation } from 'react-router-dom';
 import SearchBar from '../../features/search/SearchBar';
 
 const UserInteractions = () => {
-  const [cartStatus, setCartStatus] = useState('View Cart');
+  const [cartStatus, setCartStatus] = useState<string>('View Cart');
 
   function useCart() {
     cartStatus === 'View Cart' ? setCartStatus('Close Cart') : setCartStatus('View Cart');
+    const ShoppingModal = document.querySelector('.shoppingModal')!; //Until React adds support for forwardRef to FunctionalComponents, I'm using querySelector. Wasted hours on this.
 
-    const shoppingModal = document.querySelector('.shoppingModal');
-    shoppingModal?.getAttribute('data-activity') === 'inactive'
-      ? shoppingModal.setAttribute('data-activity', 'active')
-      : shoppingModal?.setAttribute('data-activity', 'inactive');
+    ShoppingModal.getAttribute('data-activity') === 'inactive'
+      ? ShoppingModal.setAttribute('data-activity', 'active')
+      : ShoppingModal.setAttribute('data-activity', 'inactive');
   }
 
   return (
