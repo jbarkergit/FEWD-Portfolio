@@ -170,15 +170,19 @@ const HeaderKit = () => {
           <button
             className="mobileMenu__menu__indicator"
             onClick={() =>
-              document.querySelector('.mobileMenu__menu__slideIn')?.getAttribute('data-activity') === 'inactive'
-                ? document.querySelector('.mobileMenu__menu__slideIn')?.setAttribute('data-activity', 'active')
-                : document.querySelector('.mobileMenu__menu__slideIn')?.setAttribute('data-activity', 'inactive')
+              document.querySelector('.mobileMenu__menu__slideContainer')?.getAttribute('data-activity') === 'inactive'
+                ? document.querySelector('.mobileMenu__menu__slideContainer')?.setAttribute('data-activity', 'active')
+                : document.querySelector('.mobileMenu__menu__slideContainer')?.setAttribute('data-activity', 'inactive')
             }
           >
             <i className="fa-solid fa-bars"></i>
           </button>
-          <div className="mobileMenu__menu__slideTrack">
-            <div className="mobileMenu__menu__slideIn" data-activity="inactive">
+          <div className="mobileMenu__menu__slideContainer" data-activity="inactive">
+            <div className="mobileMenu__menu__slideIn">
+              <span className="mobileMenu__logo">
+                <Link to="/ecommerce">Dynamic Audio</Link>
+              </span>
+              <SearchBar />
               <ul>
                 <li>
                   <Link to="/ecommerce">{'Home'}</Link>
@@ -212,6 +216,14 @@ const HeaderKit = () => {
                   <Link to="/ecommerce/interfaces" onClick={() => setCategoryFilter('interface')}>
                     {'Interfaces'}
                   </Link>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  <Link to="">{'Account'}</Link>
+                </li>
+                <li>
+                  <Link to="">{'Support'}</Link>
                 </li>
               </ul>
             </div>

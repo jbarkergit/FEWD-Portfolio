@@ -16,7 +16,9 @@ const UserInteractions = () => {
 
   return (
     <section className="navkit__header__section">
-      <SearchBar />
+      <div className="navkit__header__section__ui">
+        <SearchBar />
+      </div>
       <div className="navkit__header__section__ui">
         <button
           className="navkit__header__section__ui--btn --ctaBtn"
