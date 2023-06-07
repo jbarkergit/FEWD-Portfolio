@@ -81,6 +81,10 @@
         line-height: 1.3rem;
         font-size: clamp(u.rem(14), u.rem(12) + 0.5vw, u.rem(18));
         font-weight: 400;
+        @media (width >= 1570px) {
+          -webkit-line-clamp: 5;
+          height: u.rem(108);
+        }
         @media (width <= 1226px) {
           -webkit-line-clamp: 2;
           height: u.rem(44);
