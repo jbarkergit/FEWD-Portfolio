@@ -16,7 +16,7 @@ const InfographicProps = ({ bannerImg, imgAlt, companyName, companyMissionStatem
       <main className="infographic">
         <picture className="infographic__graphic">
           <span className="imgFadeGradient" />
-          <img srcSet={bannerImg} alt={imgAlt} loading="lazy" decoding="async" fetchpriority="high" />
+          <img srcSet={bannerImg} alt={imgAlt} decoding="async" fetchpriority="high" />
         </picture>
         <article className="infographic__information flexBox flexColumn">
           <h1>
@@ -33,16 +33,11 @@ const InfographicProps = ({ bannerImg, imgAlt, companyName, companyMissionStatem
             </Link>
           </span>
           <picture className="infographic__information__logos">
-            <img src="src/ecommerce/assets/production-images/compressed-company-logos/audientLogo.svg" loading="lazy" decoding="async" fetchpriority="high" />
-            <img src="src/ecommerce/assets/production-images/compressed-company-logos/beyerdynamicLogo.svg" loading="lazy" decoding="async" fetchpriority="high" />
-            <img src="src/ecommerce/assets/production-images/compressed-company-logos/neumannLogo.webp" loading="lazy" decoding="async" fetchpriority="high" />
-            <img src="src/ecommerce/assets/production-images/compressed-company-logos/shureLogo.svg" loading="lazy" decoding="async" fetchpriority="high" />
-            <img
-              src="src/ecommerce/assets/production-images/compressed-company-logos/solidStateLogicLogo.svg"
-              loading="lazy"
-              decoding="async"
-              fetchpriority="high"
-            />
+            <img src="src/ecommerce/assets/production-images/compressed-company-logos/audientLogo.svg" decoding="async" fetchpriority="high" />
+            <img src="src/ecommerce/assets/production-images/compressed-company-logos/beyerdynamicLogo.svg" decoding="async" fetchpriority="high" />
+            <img src="src/ecommerce/assets/production-images/compressed-company-logos/neumannLogo.webp" decoding="async" fetchpriority="high" />
+            <img src="src/ecommerce/assets/production-images/compressed-company-logos/shureLogo.svg" decoding="async" fetchpriority="high" />
+            <img src="src/ecommerce/assets/production-images/compressed-company-logos/solidStateLogicLogo.svg" decoding="async" fetchpriority="high" />
           </picture>
         </article>
       </main>
