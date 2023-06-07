@@ -4,7 +4,7 @@ import Header from '../layouts/navigation/Header';
 import Footer from '../layouts/navigation/Footer';
 import NotFound from '../../shared/pages/NotFound';
 
-import { ProductDatabase } from '../assets/data/ProductDatabase';
+import { ProductDatabase } from '../assets/production-data/ProductDatabase';
 import { ProductType } from '../context/exports/types';
 
 const getProductBySku = () => {
@@ -14,7 +14,7 @@ const getProductBySku = () => {
   const useProductImages = () => {
     return (
       <>
-        {findProduct.images.map((image) => (
+        {findProduct.images!.map((image) => (
           <picture>
             <img src={image} alt={`${findProduct.company} ${findProduct.unit}`} role="presentation" loading="lazy" decoding="async" fetchpriority="high" />
           </picture>
