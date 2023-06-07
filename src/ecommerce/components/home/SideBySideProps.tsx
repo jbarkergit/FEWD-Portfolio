@@ -1,6 +1,6 @@
 type SideBySidePropTypes = { h4: string; h2: string; p: string; videoAriaLabel: string; videoSrc: string };
 
-function SideBySideProps({ h4, h2, p, videoAriaLabel, videoSrc }: SideBySidePropTypes) {
+const SideBySideProps = ({ h4, h2, p, videoAriaLabel, videoSrc }: SideBySidePropTypes) => {
   return (
     <section className="sideBySide">
       <article className="sideBySide__information">
@@ -13,6 +13,6 @@ function SideBySideProps({ h4, h2, p, videoAriaLabel, videoSrc }: SideBySideProp
       </aside>
     </section>
   );
-}
+};
 
 export default SideBySideProps;
