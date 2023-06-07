@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ProductDatabase } from '../../assets/data/ProductDatabase';
+import { ProductDatabase } from '../../assets/production-data/ProductDatabase';
 import { useCategoryFilterContext } from './categoryFilterProvider';
 import { ProductType } from '../exports/types';
 import { ReactElement } from 'react';

@@ -33,16 +33,16 @@ const InfographicProps = ({ bannerImg, imgAlt, companyName, companyMissionStatem
             </Link>
           </span>
           <picture className="infographic__information__logos">
-            <img src="https://audient.com/wp-content/themes/sydney-audient/logowhite.svg" loading="lazy" decoding="async" fetchpriority="high" />
+            <img src="src/ecommerce/assets/production-images/compressed-company-logos/audientLogo.svg" loading="lazy" decoding="async" fetchpriority="high" />
+            <img src="src/ecommerce/assets/production-images/compressed-company-logos/beyerdynamicLogo.svg" loading="lazy" decoding="async" fetchpriority="high" />
+            <img src="src/ecommerce/assets/production-images/compressed-company-logos/neumannLogo.webp" loading="lazy" decoding="async" fetchpriority="high" />
+            <img src="src/ecommerce/assets/production-images/compressed-company-logos/shureLogo.svg" loading="lazy" decoding="async" fetchpriority="high" />
             <img
-              src="https://d33p2k2w4zpozf.cloudfront.net/static/version1680503554/frontend/Flagbit/beyerdynamic/de_DE/images/logo.svg"
+              src="src/ecommerce/assets/production-images/compressed-company-logos/solidStateLogicLogo.svg"
               loading="lazy"
               decoding="async"
               fetchpriority="high"
             />
-            <img src="https://www.neumann.com/dist/images/logo.png" loading="lazy" decoding="async" fetchpriority="high" />
-            <img src="https://www.shure.com/packs/media/images/shure_branding_clean-5f036c9a.svg" loading="lazy" decoding="async" fetchpriority="high" />
-            <img src="https://www.solidstatelogic.com/assets/template/images/solid-state-logic-logo.svg" loading="lazy" decoding="async" fetchpriority="high" />
           </picture>
         </article>
       </main>

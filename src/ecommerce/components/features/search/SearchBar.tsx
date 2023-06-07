@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ProductDatabase } from '../../../assets/data/ProductDatabase';
+import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
