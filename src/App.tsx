@@ -27,7 +27,6 @@ function App() {
             <Route path="/ecommerce/products" element={<BrowseProduct />} />
             <Route path="/ecommerce/headphones" element={<BrowseProduct />} />
             <Route path="/ecommerce/amps-dacs" element={<BrowseProduct />} />
-            <Route path="/ecommerce/equalizers" element={<BrowseProduct />} />
             <Route path="/ecommerce/microphones" element={<BrowseProduct />} />
             <Route path="/ecommerce/interfaces" element={<BrowseProduct />} />
             <Route path="/ecommerce/product/:paramId" element={<ProductPage />} />

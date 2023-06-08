@@ -210,11 +210,6 @@ const HeaderKit = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/ecommerce/equalizers" onClick={() => setCategoryFilter('equalizer')}>
-                    {'Equalizers'}
-                  </Link>
-                </li>
-                <li>
                   <Link to="/ecommerce/microphones" onClick={() => setCategoryFilter('microphone')}>
                     {'Microphones'}
                   </Link>
