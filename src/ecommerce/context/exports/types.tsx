@@ -3,17 +3,13 @@ import { ReactElement } from 'react';
 export type ChildrenType = { children?: ReactElement | ReactElement[] };
 
 export type ProductType = {
-  quantity: number;
-  category?: string;
   sku: string;
+  quantity: number;
   company: string;
   unit: string;
   description?: string;
-  operation?: string;
-  soundinfo?: string;
-  cable?: string;
-  impedance?: string;
   price: number;
-  images?: string[];
+  category?: string;
   productshowcase?: boolean;
+  images?: string[];
 };
