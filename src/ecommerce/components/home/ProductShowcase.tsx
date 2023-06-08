@@ -7,7 +7,7 @@ const ProductShowcase = () => {
       {ProductDatabase.filter((product) => product.productshowcase === true).map((ProductData: ProductType) => (
         <article className="productShowcase__product" key={ProductData.unit}>
           <picture className="productShowcase__product__image">
-            <img src={ProductData.images![0]} alt={`${ProductData.company} ${ProductData.unit}`} loading="lazy" decoding="async" fetchpriority="high"></img>
+            <img src={ProductData.images![0]} alt={`${ProductData.company} ${ProductData.unit}`} loading="lazy" decoding="async" fetchpriority="low"></img>
           </picture>
           <div className="productShowcase__product__overlay">
             <span className="productShowcase__product__overlay--quarter">{ProductData.unit}</span>
