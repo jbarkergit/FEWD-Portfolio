@@ -77,7 +77,7 @@
   cursor: pointer;
 }
 @mixin photoFilters {
-  filter: brightness(108%) contrast(103%) drop-shadow(0.25rem 0.2rem 1rem hsl(0, 0%, 97%));
+  filter: contrast(103%) drop-shadow(0.25rem 0.2rem 1rem hsl(0, 0%, 97%));
 }
 @mixin BtnShadow {
   box-shadow: -1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4),
