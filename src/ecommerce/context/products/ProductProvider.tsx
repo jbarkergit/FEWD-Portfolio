@@ -9,7 +9,7 @@ const ProductProvider = (): ReactElement => {
   const { categoryFilter } = useCategoryFilterContext(); // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
 
   function handleProductFilter() {
-    if ([...new Set(ProductDatabase.map((product) => product.company))].includes(categoryFilter)) {
+    if (ProductDatabase.map((product) => product.company).includes(categoryFilter)) {
       return ProductDatabase.filter((product) => product.company.includes(categoryFilter));
     } else return ProductDatabase.filter((product) => product.category?.includes(categoryFilter));
   }
