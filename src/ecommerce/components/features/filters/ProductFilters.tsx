@@ -76,6 +76,34 @@ const ProductFilters = () => {
     };
   }, []);
 
+  const useStyleFilter = () => {
+    if (useLocation().pathname.includes('/ecommerce/headphones')) {
+      return (
+        <div className="selectMenu" ref={styleFilterSelectMenu} key="styleFilter">
+          <div className="selectMenu__selection">
+            <span className="selectMenu__selection__indicator">
+              <span className="selectMenu__selection__indicator--area">Filter by Style</span>
+              <span className="selectMenu__selection__indicator--area">
+                <i className="fa-solid fa-sort"></i>
+              </span>
+            </span>
+            <div className="selectMenu--divider"></div>
+          </div>
+          <ul className="selectMenu__menu" data-activity="inactive" ref={styleFilterMenu}>
+            <li className="selectMenu__menu--option" key="openbackheadphone">
+              <button onClick={() => setCategoryFilter('openbackheadphone')}>{'Open-Back'}</button>
+            </li>
+            <li className="selectMenu__menu--option" key="closedbackheadphone">
+              <button onClick={() => setCategoryFilter('closedbackheadphone')}>{'Closed-Back'}</button>
+            </li>
+          </ul>
+        </div>
+      );
+    } else {
+      null;
+    }
+  };
+
   useEffect(() => {
     const useSelectMenu = (event: any) => {
       if (styleFilterMenu?.current?.getAttribute('data-activity') === 'active' && !styleFilterSelectMenu?.current?.contains(event.target)) {
@@ -102,29 +130,12 @@ const ProductFilters = () => {
     };
   }, []);
 
+  console.log(location);
   return (
     <section className="productFilters flexBox">
       <div className="productFilters__panel">{useBreadcrumbs()}</div>
       <div className="productFilters__panel">
-        <div className="selectMenu" ref={styleFilterSelectMenu} key="styleFilter">
-          <div className="selectMenu__selection">
-            <span className="selectMenu__selection__indicator">
-              <span className="selectMenu__selection__indicator--area">Filter by Style</span>
-              <span className="selectMenu__selection__indicator--area">
-                <i className="fa-solid fa-sort"></i>
-              </span>
-            </span>
-            <div className="selectMenu--divider"></div>
-          </div>
-          <ul className="selectMenu__menu" data-activity="inactive" ref={styleFilterMenu}>
-            <li className="selectMenu__menu--option" key="openbackheadphone">
-              <button onClick={() => setCategoryFilter('openbackheadphone')}>{'Open-Back'}</button>
-            </li>
-            <li className="selectMenu__menu--option" key="closedbackheadphone">
-              <button onClick={() => setCategoryFilter('closedbackheadphone')}>{'Closed-Back'}</button>
-            </li>
-          </ul>
-        </div>
+        {useStyleFilter()}
         <div className="selectMenu" ref={selectMenu} key="brandFilter">
           <div className="selectMenu__selection">
             <span className="selectMenu__selection__indicator">
