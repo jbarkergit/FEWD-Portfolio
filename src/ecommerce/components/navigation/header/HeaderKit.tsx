@@ -95,18 +95,6 @@ const HeaderKit = () => {
                 {'Amps & Dacs'}
               </Link>
             </li>
-            <li className="dropMenu__links__link">
-              <Link
-                to="/ecommerce/equalizers"
-                className="flexBox"
-                style={{
-                  color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
-                }}
-                onClick={() => setCategoryFilter('equalizer')}
-              >
-                {'Equalizers'}
-              </Link>
-            </li>
           </ul>
         </div>
       </li>
