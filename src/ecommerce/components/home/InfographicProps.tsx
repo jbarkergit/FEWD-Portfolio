@@ -16,7 +16,7 @@ const InfographicProps = ({ bannerImg, imgAlt, companyName, companyMissionStatem
       <main className="infographic">
         <picture className="infographic__graphic">
           <span className="imgFadeGradient" />
-          <img srcSet={bannerImg} alt={imgAlt} decoding="async" fetchpriority="high" />
+          <img src={bannerImg} alt={imgAlt} decoding="async" fetchpriority="high" />
         </picture>
         <article className="infographic__information flexBox flexColumn">
           <h1>
