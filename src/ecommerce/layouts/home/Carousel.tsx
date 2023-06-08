@@ -10,24 +10,16 @@ const Carousel = () => {
       </div>
       <div className="carousel">
         <div className="carousel__track">
+          <CarouselProps carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/bernin-uben-tioYUDleMjg-unsplash.jpg" carouselAlt="" />
+          <CarouselProps carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/blocks-T3mKJXfdims-unsplash.jpg" carouselAlt="" />
+          <CarouselProps carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/erwi-AJ3r-NL28PI-unsplash.jpg" carouselAlt="" />
+          <CarouselProps carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/jukka-aalho-OaPksPcVp50-unsplash.jpg" carouselAlt="" />
+          <CarouselProps carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/norman-hermle-1Zfo0Aj3OZI-unsplash.jpg" carouselAlt="" />
           <CarouselProps
-            carouselImg="https://images.unsplash.com/photo-1633933703119-5d25460ad829?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+            carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/obafemi-moyosade-zndslHAXhAw-unsplash.jpg"
             carouselAlt=""
           />
-          <CarouselProps
-            carouselImg="https://images.unsplash.com/photo-1669892689930-dda996c7e5b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
-            carouselAlt=""
-          />
-          <CarouselProps carouselImg="https://www.schiit.com/public/upload/images/magni%20plus%20stack%201920-2.jpg" carouselAlt="" />
-          <CarouselProps carouselImg="https://www.schiit.com/public/upload/images/asgard 3 bifrost 2 insitu-2.jpg" carouselAlt="" />
-          <CarouselProps
-            carouselImg="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
-            carouselAlt=""
-          />
-          <CarouselProps
-            carouselImg="https://images.unsplash.com/photo-1626126525119-638de4e1032a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
-            carouselAlt=""
-          />
+          <CarouselProps carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/zac-bromell-e2ETjLSj940-unsplash.jpg" carouselAlt="" />
         </div>
         <div className="carousel__navigation">
           <button className="carousel__navigation--button flexBox justifyCenter" role="button">
