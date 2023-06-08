@@ -10,6 +10,7 @@ export type ProductType = {
   description?: string;
   price: number;
   category?: string;
+  wearStyle?: string;
   productshowcase?: boolean;
   images?: string[];
 };

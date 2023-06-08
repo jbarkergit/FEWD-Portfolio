@@ -88,16 +88,20 @@ const ProductFilters = () => {
   };
 
   const useStyleFilter = () => {
+    const [styleFilterStatus, setStyleFilterStatus] = useState<boolean>(false); // Utilizing useState to track changes to resolve conditional rendering breaking button functionality
     const styleFilterSelectMenu = useRef<HTMLDivElement>(null!);
     const styleFilterMenu = useRef<HTMLUListElement>(null!);
 
+    console.log(styleFilterStatus);
+
     useEffect(() => {
       function toggleStyleFilter(event: any) {
-        if (styleFilterMenu?.current?.getAttribute('data-activity') === 'active' && !styleFilterSelectMenu?.current?.contains(event.target)) {
+        if (styleFilterStatus === true && !styleFilterSelectMenu?.current?.contains(event.target)) {
           styleFilterMenu?.current?.setAttribute('data-activity', 'inactive');
-        } else if (styleFilterMenu?.current?.getAttribute('data-activity') === 'active' && styleFilterSelectMenu?.current?.contains(event.target)) {
+          setStyleFilterStatus(false);
+        } else if (styleFilterStatus === true && styleFilterSelectMenu?.current?.contains(event.target)) {
           styleFilterMenu?.current?.setAttribute('data-activity', 'inactive');
-        } else if (styleFilterMenu?.current?.getAttribute('data-activity') === 'inactive' && styleFilterSelectMenu?.current?.contains(event.target)) {
+        } else if (styleFilterStatus === false && styleFilterSelectMenu?.current?.contains(event.target)) {
           styleFilterMenu?.current?.setAttribute('data-activity', 'active');
         } else {
           null;
@@ -111,11 +115,18 @@ const ProductFilters = () => {
         styleFilterSelectMenu?.current?.removeEventListener('click', toggleStyleFilter);
         document.body.removeEventListener('click', toggleStyleFilter);
       };
-    }, []);
+    }, [styleFilterStatus]);
 
-    if (useLocation().pathname.includes('/ecommerce/headphones')) {
+    if (useLocation().pathname.includes('/ecommerce/headphones') || useLocation().pathname.includes('/ecommerce/products')) {
       return (
-        <div className="selectMenu" ref={styleFilterSelectMenu} key="styleFilter">
+        <div
+          className="selectMenu"
+          ref={styleFilterSelectMenu}
+          key="styleFilter"
+          onClick={() => {
+            styleFilterStatus === false ? setStyleFilterStatus(true) : setStyleFilterStatus(false);
+          }}
+        >
           <div className="selectMenu__selection">
             <span className="selectMenu__selection__indicator">
               <span className="selectMenu__selection__indicator--area">Filter by Style</span>

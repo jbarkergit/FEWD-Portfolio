@@ -13,7 +13,7 @@ const ProductProvider = (): ReactElement => {
       return ProductDatabase.filter((product) => product.company.includes(categoryFilter));
     } else return ProductDatabase.filter((product) => product.category?.includes(categoryFilter));
   }
-
+  console.log(ProductDatabase.filter((product) => product.category?.includes(categoryFilter)));
   return (
     <>
       {/* Filters ProductDatabase with useState(category) as conditional param, Sorts filteredData alphabetically A-Z, Maps filtered and sorted array of objects */}
