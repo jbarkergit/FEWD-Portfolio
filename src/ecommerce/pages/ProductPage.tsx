@@ -36,18 +36,20 @@ const getProductBySku = () => {
         <section className="skuPage">
           <section className="skuPage__imgBlock">{useProductImages()}</section>
           <main className="skuPage__details">
-            <ul>
-              <li>
-                <h1>
-                  {findProduct.company} {findProduct.unit}
-                </h1>
-              </li>
-              <li>
-                <p>{findProduct.description}</p>
-              </li>
-              <li>{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(findProduct.price)}</li>
-              <li>ADD TO CART</li>
-            </ul>
+            <span>
+              <h1>
+                {findProduct.company} {findProduct.unit}
+              </h1>
+            </span>
+            <span>
+              <p>{findProduct.description}</p>
+            </span>
+            <span className="skuPage__details--price">{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(findProduct.price)}</span>
+            <span>
+              <button className="skuPage__details--quickAdd">
+                <i className="fa-solid fa-cart-plus"></i>
+              </button>
+            </span>
           </main>
         </section>
         <Footer />

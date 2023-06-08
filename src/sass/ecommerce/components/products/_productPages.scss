@@ -5,15 +5,15 @@
   display: grid;
   grid-template-columns: 60% 40%;
   gap: 7%;
-  max-width: u.rem(1600);
+  padding: 3vh 9vw 3vh 6vw;
   &__imgBlock {
     display: grid;
     grid-auto-rows: auto;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(48%, 1fr));
     gap: u.rem(25);
     overflow: hidden;
     & picture {
-      max-height: u.rem(425);
+      max-height: u.rem(650);
       @include i.productPhoto;
       border-radius: u.rem(16);
       background-color: white;
@@ -30,11 +30,20 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
+    & h1 {
+      margin-bottom: 3vh;
+    }
     & p {
+      margin-bottom: 5vh;
       max-width: 38ch;
       font-size: clamp(u.rem(14), u.rem(12) + 0.5vw, u.rem(18));
       font-weight: 400;
       line-height: 1.3rem;
+    }
+    &--price {
+      margin-bottom: 7vh;
+    }
+    &--quickAdd {
     }
   }
 }
