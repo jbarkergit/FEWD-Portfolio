@@ -141,7 +141,7 @@ const ProductFilters = () => {
             <li className="selectMenu__menu--option" key="openbackheadphone">
               <button onClick={() => setCategoryFilter('openbackheadphone')}>{'Open-Back'}</button>
             </li>
-            <li className="selectMenu__menu--option" key="closedbackheadphone">
+            <li className="selectMenu__menu--option" key="semiopenheadphone">
               <button onClick={() => setCategoryFilter('semiopenheadphone')}>{'Semi-Open'}</button>
             </li>
             <li className="selectMenu__menu--option" key="closedbackheadphone">
