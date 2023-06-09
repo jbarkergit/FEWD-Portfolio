@@ -6,40 +6,38 @@ import { ReactElement } from 'react';
 
 const ProductProvider = (): ReactElement => {
   // @ts-ignore:
-  const { categoryFilter } = useCategoryFilterContext(); // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
+  const { categoryFilter } = useCategoryFilterContext(); // Application Context Provider Guard
   // @ts-ignore:
-  const { setStyleFilter } = useCategoryFilterContext(); // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
+  const { setStyleFilter } = useCategoryFilterContext(); // Application Context Provider Guard
 
   const useProductFilter = () => {
-    const categoryProducts = ProductDatabase.filter((product: ProductType) => product.category?.includes(categoryFilter)); // Products including categoryFilter in ProductType: Category
     const companyProducts = ProductDatabase.filter((product: ProductType) => product.company?.includes(categoryFilter)); // Products including categoryFilter in ProductType: Company
-    const headphoneFilter = ProductDatabase.filter((product: ProductType) => product.wearStyle?.includes(categoryFilter)); // Products including categoryFilter in ProductType: wearStyle
-    const categoryHeadphones = categoryProducts.filter((product) => product.wearStyle?.includes(headphoneStyles)); // Do products with Category name include headphoneStyles?
     const companyHeadphones = companyProducts.filter((product) => product.wearStyle?.includes(headphoneStyles)); // Do products with Company name include headphoneStyles?
 
-    categoryHeadphones.length > 0 || companyHeadphones.length > 0 || headphoneFilter.length > 0 ? setStyleFilter(true) : setStyleFilter(false);
-
-    if (categoryFilter === '') console.log('1');
-    else if (companyHeadphones.length > 0) console.log('2');
-    else if (categoryHeadphones.length > 0) console.log('3');
-    else if (companyProducts.length > 0) console.log('4');
-    else if (categoryProducts.length > 0) console.log('5');
-    else if (categoryHeadphones) console.log('6');
-    else console.log('7');
-
-    if (categoryFilter === '') return categoryProducts;
-    else if (categoryFilter === 'headphone') return categoryProducts;
-    else if (companyHeadphones.length > 0) return companyHeadphones;
-    else if (categoryHeadphones.length > 0) return categoryHeadphones;
-    else if (companyProducts.length > 0) return companyProducts;
-    else if (categoryProducts.length > 0) return categoryProducts;
-    else if (categoryHeadphones) return headphoneFilter;
-    else return ProductDatabase;
+    switch (categoryFilter) {
+      case '':
+      case 'amp':
+      case 'dac':
+      case 'microphone':
+      case 'interface':
+        setStyleFilter(false);
+        return ProductDatabase.filter((product: ProductType) => product.category?.includes(categoryFilter));
+      case 'headphone':
+      case 'openbackheadphone':
+      case 'semiopenheadphone':
+      case 'closedbackheadphone':
+        setStyleFilter(true);
+        return ProductDatabase.filter((product: ProductType) => product.wearStyle?.includes(categoryFilter));
+      default:
+        setStyleFilter(false);
+        if (companyProducts.length > 0) return companyProducts;
+        else if (companyHeadphones.length > 0) return companyHeadphones;
+        else return ProductDatabase;
+    }
   };
 
   return (
     <>
-      {/* Filters ProductDatabase with useState(category) as conditional param, Sorts filteredData alphabetically A-Z, Maps filtered and sorted array of objects */}
       {useProductFilter()
         .sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1))
         .map((product: ProductType) => (
