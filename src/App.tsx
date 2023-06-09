@@ -5,7 +5,7 @@ import SuspenseLoader from './shared/pages/SuspenseLoader';
 const NotFound = lazy(() => import('./shared/pages/NotFound'));
 
 import Portfolio from './portfolio/pages/Portfolio';
-import { CategoryFilterProvider } from './ecommerce/context/products/categoryFilterProvider';
+import { CategoryFilterProvider } from './ecommerce/context/exports/stateProvider';
 
 const Ecommerce = lazy(() => import('./ecommerce/pages/Home'));
 const BrowseProduct = lazy(() => import('./ecommerce/pages/BrowseProduct'));

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../context/products/categoryFilterProvider';
+import { useCategoryFilterContext } from '../../../context/exports/stateProvider';
 import SearchBar from '../../features/search/SearchBar';
 import { useRef } from 'react';
 

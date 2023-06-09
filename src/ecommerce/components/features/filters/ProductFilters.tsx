@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../context/products/categoryFilterProvider';
+import { useCategoryFilterContext } from '../../../context/exports/stateProvider';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 import { ProductType } from '../../../context/exports/types';
 
@@ -25,7 +25,7 @@ const useBreadcrumbs = () => {
 
 const ProductFilters = () => {
   // @ts-ignore:
-  const { setCategoryFilter } = useCategoryFilterContext(); // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
+  const { categoryFilter, setCategoryFilter } = useCategoryFilterContext(); // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
 
   const useCompanies = () => {
     return (
@@ -92,7 +92,8 @@ const ProductFilters = () => {
     const styleFilterSelectMenu = useRef<HTMLDivElement>(null!);
     const styleFilterMenu = useRef<HTMLUListElement>(null!);
 
-    console.log(styleFilterStatus);
+    // @ts-ignore:
+    const { styleFilter } = useCategoryFilterContext(); // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
 
     useEffect(() => {
       function toggleStyleFilter(event: any) {
@@ -117,7 +118,7 @@ const ProductFilters = () => {
       };
     }, [styleFilterStatus]);
 
-    if (useLocation().pathname.includes('/ecommerce/headphones') || useLocation().pathname.includes('/ecommerce/products')) {
+    if (styleFilter === true) {
       return (
         <div
           className="selectMenu"
@@ -139,6 +140,9 @@ const ProductFilters = () => {
           <ul className="selectMenu__menu" data-activity="inactive" ref={styleFilterMenu}>
             <li className="selectMenu__menu--option" key="openbackheadphone">
               <button onClick={() => setCategoryFilter('openbackheadphone')}>{'Open-Back'}</button>
+            </li>
+            <li className="selectMenu__menu--option" key="closedbackheadphone">
+              <button onClick={() => setCategoryFilter('semiopenheadphone')}>{'Semi-Open'}</button>
             </li>
             <li className="selectMenu__menu--option" key="closedbackheadphone">
               <button onClick={() => setCategoryFilter('closedbackheadphone')}>{'Closed-Back'}</button>

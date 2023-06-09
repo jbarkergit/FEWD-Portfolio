@@ -14,3 +14,5 @@ export type ProductType = {
   productshowcase?: boolean;
   images?: string[];
 };
+
+export const headphoneStyles: string = 'openbackheadphone' || 'semiopenheadphone' || 'closedbackheadphone'; // Conditionals
