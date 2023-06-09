@@ -19,7 +19,16 @@ const ProductProvider = (): ReactElement => {
 
     categoryHeadphones.length > 0 || companyHeadphones.length > 0 || headphoneFilter.length > 0 ? setStyleFilter(true) : setStyleFilter(false);
 
+    if (categoryFilter === '') console.log('1');
+    else if (companyHeadphones.length > 0) console.log('2');
+    else if (categoryHeadphones.length > 0) console.log('3');
+    else if (companyProducts.length > 0) console.log('4');
+    else if (categoryProducts.length > 0) console.log('5');
+    else if (categoryHeadphones) console.log('6');
+    else console.log('7');
+
     if (categoryFilter === '') return categoryProducts;
+    else if (categoryFilter === 'headphone') return categoryProducts;
     else if (companyHeadphones.length > 0) return companyHeadphones;
     else if (categoryHeadphones.length > 0) return categoryHeadphones;
     else if (companyProducts.length > 0) return companyProducts;
