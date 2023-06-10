@@ -2,17 +2,14 @@ import { Link } from 'react-router-dom';
 import { ProductDatabase } from '../../assets/production-data/ProductDatabase';
 import { useCategoryFilterContext } from '../exports/stateProvider';
 import { ProductType, headphoneStyles } from '../exports/types';
-import { ReactElement } from 'react';
 
-const ProductProvider = (): ReactElement => {
+const ProductProvider = () => {
   // @ts-ignore:
-  const { categoryFilter } = useCategoryFilterContext(); // Application Context Provider Guard
-  // @ts-ignore:
-  const { setStyleFilter } = useCategoryFilterContext(); // Application Context Provider Guard
+  const { categoryFilter } = useCategoryFilterContext();
 
   const useProductFilter = () => {
-    const companyProducts = ProductDatabase.filter((product: ProductType) => product.company?.includes(categoryFilter)); // Products including categoryFilter in ProductType: Company
-    const companyHeadphones = companyProducts.filter((product) => product.wearStyle?.includes(headphoneStyles)); // Do products with Company name include headphoneStyles?
+    const companyProducts = ProductDatabase.filter((product: ProductType) => product.company?.includes(categoryFilter));
+    const companyHeadphones = companyProducts.filter((product) => product.wearStyle?.includes(headphoneStyles));
 
     switch (categoryFilter) {
       case '':
@@ -20,16 +17,13 @@ const ProductProvider = (): ReactElement => {
       case 'dac':
       case 'microphone':
       case 'interface':
-        setStyleFilter(false);
         return ProductDatabase.filter((product: ProductType) => product.category?.includes(categoryFilter));
       case 'headphone':
       case 'openbackheadphone':
       case 'semiopenheadphone':
       case 'closedbackheadphone':
-        setStyleFilter(true);
         return ProductDatabase.filter((product: ProductType) => product.wearStyle?.includes(categoryFilter));
       default:
-        setStyleFilter(false);
         if (companyProducts.length > 0) return companyProducts;
         else if (companyHeadphones.length > 0) return companyHeadphones;
         else return ProductDatabase;

@@ -25,7 +25,7 @@ const useBreadcrumbs = () => {
 
 const ProductFilters = () => {
   // @ts-ignore:
-  const { categoryFilter, setCategoryFilter } = useCategoryFilterContext(); // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
+  const { setCategoryFilter } = useCategoryFilterContext();
 
   const useCompanies = () => {
     return (
@@ -88,12 +88,9 @@ const ProductFilters = () => {
   };
 
   const useStyleFilter = () => {
-    const [styleFilterStatus, setStyleFilterStatus] = useState<boolean>(false); // Utilizing useState to track changes to resolve conditional rendering breaking button functionality
+    const [styleFilterStatus, setStyleFilterStatus] = useState<boolean>(false);
     const styleFilterSelectMenu = useRef<HTMLDivElement>(null!);
     const styleFilterMenu = useRef<HTMLUListElement>(null!);
-
-    // @ts-ignore:
-    const { styleFilter } = useCategoryFilterContext(); // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
 
     useEffect(() => {
       function toggleStyleFilter(event: any) {
@@ -118,7 +115,7 @@ const ProductFilters = () => {
       };
     }, [styleFilterStatus]);
 
-    if (styleFilter === true) {
+    if (useLocation().pathname === '/ecommerce/headphones') {
       return (
         <div
           className="selectMenu"
