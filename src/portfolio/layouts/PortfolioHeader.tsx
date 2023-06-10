@@ -1,11 +1,22 @@
 import { Link } from 'react-router-dom';
+import useLocalStorage from '../../shared/hooks/useLocalStorage';
 
 const PortfolioHeader = () => {
+  const [theme, setTheme] = useLocalStorage('theme', '' ? 'neumorphicDark' : 'neumorphicLight');
   return (
     <section>
       <header className="portNav" aria-label="Primary Navigation">
         <section className="portNav__block">
-          <button id="themeToggler" type="button" role="tab" tab-index={1} aria-label="Theme Toggle Button">
+          <button
+            id="themeToggler"
+            type="button"
+            role="tab"
+            tab-index={1}
+            aria-label="Theme Toggle Button"
+            onClick={() => {
+              theme === 'neumorphicLight' ? setTheme('neumorphicDark') : setTheme('neumorphicLight');
+            }}
+          >
             <span className="portNav__block__inline flexColumn">
               <h4>theme</h4>
             </span>

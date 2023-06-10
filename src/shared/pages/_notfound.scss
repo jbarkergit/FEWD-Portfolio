@@ -1,4 +1,4 @@
-@use '../util/functions' as u;
+@use '../../sass/util/functions' as f;
 
 .notfound {
   display: flex;
@@ -11,7 +11,7 @@
   &__container {
     max-width: 45ch;
     & h1 {
-      min-height: u.rem(50);
+      min-height: f.rem(50);
       font-weight: 800;
     }
     & p {
@@ -21,5 +21,5 @@
   }
 }
 .fa-person-walking-arrow-loop-left {
-  font-size: u.rem(40);
+  font-size: f.rem(40);
 }

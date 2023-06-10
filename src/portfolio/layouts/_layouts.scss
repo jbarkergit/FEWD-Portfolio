@@ -16,17 +16,9 @@
 }
 .invalidShakeAnimation {
   animation-name: invalidShakeAnimation;
-  -ms-animation-name: invalidShakeAnimation;
-  -webkit-animation-name: invalidShakeAnimation;
   animation-duration: 150ms;
-  -ms-animation-duration: 150ms;
-  -webkit-animation-duration: 150ms;
   animation-iteration-count: infinite;
-  -ms-animation-iteration-count: infinite;
-  -webkit-animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
-  -ms-animation-timing-function: ease-in-out;
-  -webkit-animation-timing-function: ease-in-out;
 }
 @keyframes invalidShakeAnimation {
   0% {
@@ -64,84 +56,6 @@
   }
   100% {
     transform: translate(0px, 0px) rotate(0deg);
-    filter: blur(0px);
-  }
-}
-@-ms-keyframes invalidShakeAnimation {
-  0% {
-    -ms-transform: translate(0px, 0px) rotate(0deg);
-    filter: blur(0px);
-  }
-  10% {
-    -ms-transform: translate(-1.5px, -0.5px) rotate(-1.5deg);
-  }
-  20% {
-    -ms-transform: translate(-1.5px, 0.5px) rotate(-0.5deg);
-  }
-  30% {
-    -ms-transform: translate(-0.5px, 0.5px) rotate(-0.5deg);
-    filter: blur(2px);
-  }
-  40% {
-    -ms-transform: translate(1.5px, -1.5px) rotate(0.5deg);
-  }
-  50% {
-    -ms-transform: translate(-0.5px, -0.5px) rotate(-0.5deg);
-  }
-  60% {
-    -ms-transform: translate(-0.5px, -1.5px) rotate(0.5deg);
-  }
-  70% {
-    -ms-transform: translate(-1.5px, -2.5px) rotate(-1.5deg);
-    filter: blur(2px);
-  }
-  80% {
-    -ms-transform: translate(-1.5px, -0.5px) rotate(-1.5deg);
-  }
-  90% {
-    -ms-transform: translate(-1.5px, -1.5px) rotate(-1.5deg);
-  }
-  100% {
-    -ms-transform: translate(0px, 0px) rotate(0deg);
-    filter: blur(0px);
-  }
-}
-@-webkit-keyframes invalidShakeAnimation {
-  0% {
-    -webkit-transform: translate(0px, 0px) rotate(0deg);
-    filter: blur(0px);
-  }
-  10% {
-    -webkit-transform: translate(1.5px, -1.5px) rotate(-0.5deg);
-  }
-  20% {
-    -webkit-transform: translate(1.5px, -0.5px) rotate(0.5deg);
-  }
-  30% {
-    -webkit-transform: translate(-0.5px, -0.5px) rotate(-1.5deg);
-    filter: blur(2px);
-  }
-  40% {
-    -webkit-transform: translate(-2.5px, 0.5px) rotate(-0.5deg);
-  }
-  50% {
-    -webkit-transform: translate(1.5px, 1.5px) rotate(-1.5deg);
-  }
-  60% {
-    -webkit-transform: translate(-0.5px, -1.5px) rotate(-0.5deg);
-  }
-  70% {
-    -webkit-transform: translate(0.5px, -2.5px) rotate(-1.5deg);
-    filter: blur(2px);
-  }
-  80% {
-    -webkit-transform: translate(-0.5px, 0.5px) rotate(0.5deg);
-  }
-  90% {
-    -webkit-transform: translate(-0.5px, -0.5px) rotate(-1.5deg);
-  }
-  100% {
-    -webkit-transform: translate(0px, 0px) rotate(0deg);
     filter: blur(0px);
   }
 }

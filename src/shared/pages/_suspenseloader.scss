@@ -1,0 +1,80 @@
+//https://codepen.io/caesura/pen/WNQGMxy
+
+$base: #efeeee;
+$loaderSize: 300px;
+$animationDuration: 2.2s;
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background-color: $base;
+}
+
+.loader {
+  $posOffset: 6px;
+  $negOffset: -$posOffset;
+  $blur: 16px;
+
+  width: $loaderSize;
+  height: $loaderSize;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 100%;
+  border: 1px solid rgba(#fff, 0.2);
+  background-color: $base;
+  box-shadow: $negOffset $negOffset $blur rgba(#fff, 0.5), $posOffset $posOffset $blur rgba(#d1cdc7, 0.5);
+  animation: tiny-pulse ($animationDuration / 2) ease-out infinite;
+
+  &:before,
+  &:after {
+    content: '';
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: inherit;
+    border-radius: inherit;
+    border: inherit;
+    background-color: transparent;
+    box-shadow: inherit;
+    animation: pulse $animationDuration ease-out infinite;
+  }
+
+  &:after {
+    animation-delay: $animationDuration / 2;
+  }
+}
+
+@keyframes tiny-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale3d(1, 1, 1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale3d(1.05, 1.05, 1.05);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale3d(1, 1, 1);
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+  to {
+    opacity: 0;
+    transform: scale3d(4, 4, 4);
+  }
+}

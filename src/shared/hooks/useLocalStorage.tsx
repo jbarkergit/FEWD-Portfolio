@@ -1,4 +1,3 @@
-/*
 import { useState, useEffect } from 'react';
 
 function getSavedValue(key: string, initialValue: () => any) {
@@ -21,4 +20,3 @@ export default function useLocalStorage(key: string, initialValue: any) {
 
   return [value, setValue];
 }
-*/

@@ -8,8 +8,8 @@
 @forward './styles/root';
 
 /** Shared **/
-@forward './shared/suspenseloader';
-@forward './shared/notfound';
+@forward '../shared/pages/notfound';
+@forward '../shared/pages/suspenseloader';
 
 /** Portfolio **/
 @forward '../portfolio/layouts/layouts';
