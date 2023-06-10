@@ -48,7 +48,7 @@ const PortfolioHeader = () => {
         <section className="portNav__block">
           <Link to="https://github.com/jbarkergit?tab=repositories" target="_blank" role="tab" tab-index={4} aria-label="GitHub Redirect Button">
             <span className="portNav__block__inline">
-              <i className="fa-brands fa-github"></i>
+              <img className="fa-square-github" src="src/portfolio/assets/images/fontawesome/skills/fa-square-github.svg" alt="GitHub" />
             </span>
           </Link>
         </section>

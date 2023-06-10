@@ -111,35 +111,22 @@
       &[data-status='active'] {
         @include m.portBtnActive;
       }
+      & img {
+        position: relative;
+        filter: var(--faColor);
+        padding: 0.4rem 0.5rem;
+      }
     }
   }
 }
-.fa-dev,
-.fa-html5,
-.fa-css3-alt,
-.fa-sass,
-.fa-square-js,
-.fa-node,
-.fa-npm,
-.fa-react,
-.fa-square-github,
-.fa-stack-overflow {
-  position: relative;
-  color: var(--faColor);
-  padding: f.rem(6.4) f.rem(12.8);
-}
-.skillTypescript {
-  border-radius: f.rem(4);
-}
-.--vite {
-  padding: f.rem(6.4) f.rem(10);
-}
-.--vitest {
-  padding: f.rem(6.4) f.rem(7);
+.--sass,
+.--node,
+.--npm {
+  padding: 0.3rem 0.4rem !important;
 }
 .--vite,
 .--vitest {
-  filter: grayscale(100%);
+  filter: saturate(0%) !important;
 }
 .highlight {
   background: var(--highlight);

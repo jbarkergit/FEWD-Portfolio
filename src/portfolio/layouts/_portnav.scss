@@ -32,21 +32,22 @@
       justify-content: center;
       align-items: center;
       height: 100%;
-      & i {
+      & img {
         padding-right: f.rem(8);
-        color: var(--textPrimary);
+        filter: invert(99%) sepia(0%) saturate(3239%) hue-rotate(294deg) brightness(116%) contrast(100%);
+        max-width: f.rem(65);
       }
     }
   }
 }
+
 .fa-paper-plane {
   color: var(--textPrimary);
   text-shadow: var(--btnBoxShadow);
   font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
 }
 .fa-angles-left,
-.fa-angles-right,
-.fa-github {
+.fa-angles-right {
   color: var(--textPrimary);
   text-shadow: var(--btnBoxShadow);
   font-size: clamp(f.rem(22), f.rem(12) + 2vw, f.rem(36));

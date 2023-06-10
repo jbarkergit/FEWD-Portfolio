@@ -54,7 +54,7 @@ const PortfolioFooter = () => {
           <section className="portNav__block">
             <button type="button" role="tab" tab-index={6} onClick={useLeftNav} aria-label="Navigate to Previous Project">
               <span className="portNav__block__inline">
-                <i className="fa-solid fa-angles-left"></i>
+                <img src="src/portfolio/assets/images/fontawesome/miscellaneous/fa-angles-left.svg" />
               </span>
             </button>
           </section>
@@ -66,14 +66,13 @@ const PortfolioFooter = () => {
           <section className="portNav__block">
             <button type="button" role="tab" tab-index={10} onClick={useRightNav} aria-label="Navigate to Next Project">
               <span className="portNav__block__inline">
-                <i className="fa-solid fa-angles-right"></i>
+                <img src="src/portfolio/assets/images/fontawesome/miscellaneous/fa-angles-right.svg" />
               </span>
             </button>
           </section>
           <section className="portNav__block">
             <button role="tab" tab-index={11} onClick={useActiveDemo} aria-label="Navigate to Current Project">
               <span className="portNav__block__inline" id="activeDemoInline">
-                <i className="fa-solid fa-expand"></i>
                 <h4>Live Demo</h4>
               </span>
             </button>
