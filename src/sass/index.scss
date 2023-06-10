@@ -12,12 +12,12 @@
 @forward './shared/notfound';
 
 /** Portfolio **/
-@forward './portfolio/layouts/layouts';
-@forward './portfolio/navigation/portnav';
-@forward './portfolio/main/developmentDemo';
-@forward './portfolio/main/sidebar';
-@forward './portfolio/features/resume';
-@forward './portfolio/features/formContact';
+@forward '../portfolio/layouts/layouts';
+@forward '../portfolio/layouts/portnav';
+@forward '../portfolio/components/main/developmentDemo';
+@forward '../portfolio/components/main/sidebar';
+@forward '../portfolio/components/features/resume';
+@forward '../portfolio/components/features/formContact';
 
 /** Ecommerce **/
 @forward '../ecommerce/components/navigation/header/header';

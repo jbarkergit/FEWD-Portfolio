@@ -1,6 +1,6 @@
-@use '../../util/functions' as u;
-@use '../../styles/mixins' as i;
-@use '../../util/breakpoints' as b;
+@use '../../../sass/util/functions' as f;
+@use '../../../sass/styles/mixins' as m;
+@use '../../../sass/util/breakpoints' as b;
 
 .demoSection {
   flex-direction: column;
@@ -49,7 +49,7 @@
         flex-basis: 75%;
         flex-grow: 1;
         box-shadow: 0;
-        @include i.portElement;
+        @include m.portElement;
       }
       & video {
         aspect-ratio: 16/9;
@@ -67,49 +67,49 @@
   flex-basis: 75%;
   align-items: start;
   padding: 0 10vw;
-  @include i.portElement;
+  @include m.portElement;
   & h2 {
-    margin: 0 0 u.rem(10) 0;
-    font: italic 800 u.rem(50) / 85% 'Plus Jakarta Sans';
+    margin: 0 0 f.rem(10) 0;
+    font: italic 800 f.rem(50) / 85% 'Plus Jakarta Sans';
     color: var(--textPrimary);
   }
   & h4 {
-    margin: 0 0 u.rem(5) 0;
-    font: italic 800 u.rem(50) / 85% 'Plus Jakarta Sans';
+    margin: 0 0 f.rem(5) 0;
+    font: italic 800 f.rem(50) / 85% 'Plus Jakarta Sans';
     color: var(--textSecondary);
   }
   & p {
     max-width: 45ch;
     width: auto;
-    min-height: u.rem(57);
-    margin: 0 0 u.rem(10) 0;
+    min-height: f.rem(57);
+    margin: 0 0 f.rem(10) 0;
     color: var(--textSecondary);
   }
 }
 .skills {
-  gap: u.rem(0.5);
+  gap: f.rem(0.5);
   &__wrapper {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: clamp(u.rem(60), u.rem(60), u.rem(100));
-    height: clamp(u.rem(60), u.rem(60), u.rem(100));
+    width: clamp(f.rem(60), f.rem(60), f.rem(100));
+    height: clamp(f.rem(60), f.rem(60), f.rem(100));
     &__icon {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 45px;
       height: 45px;
-      font-size: u.rem(28);
+      font-size: f.rem(28);
       background-color: var(--iconBg);
-      @include i.portBtn;
+      @include m.portBtn;
       cursor: pointer;
       transition: all 0.45s ease-in-out;
       &[data-status='inactive'] {
-        @include i.portBtn;
+        @include m.portBtn;
       }
       &[data-status='active'] {
-        @include i.portBtnActive;
+        @include m.portBtnActive;
       }
     }
   }
@@ -126,16 +126,16 @@
 .fa-stack-overflow {
   position: relative;
   color: var(--faColor);
-  padding: u.rem(6.4) u.rem(12.8);
+  padding: f.rem(6.4) f.rem(12.8);
 }
 .skillTypescript {
-  border-radius: u.rem(4);
+  border-radius: f.rem(4);
 }
 .--vite {
-  padding: u.rem(6.4) u.rem(10);
+  padding: f.rem(6.4) f.rem(10);
 }
 .--vitest {
-  padding: u.rem(6.4) u.rem(7);
+  padding: f.rem(6.4) f.rem(7);
 }
 .--vite,
 .--vitest {

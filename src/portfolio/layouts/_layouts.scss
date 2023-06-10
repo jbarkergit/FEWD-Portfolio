@@ -1,6 +1,6 @@
-@use '../../util/functions' as u;
-@use '../../styles/mixins' as i;
-@use '../../util/breakpoints' as b;
+@use '../../sass/util/functions' as f;
+@use '../../sass/styles/mixins' as m;
+@use '../../sass/util/breakpoints' as b;
 
 .portfolio {
   position: relative;

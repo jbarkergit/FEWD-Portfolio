@@ -1,6 +1,6 @@
-@use '../../util/functions' as u;
-@use '../../styles/mixins' as i;
-@use '../../util/breakpoints' as b;
+@use '../../../sass/util/functions' as f;
+@use '../../../sass/styles/mixins' as m;
+@use '../../../sass/util/breakpoints' as b;
 
 .toggleResume {
   position: absolute;
@@ -20,7 +20,7 @@
 .resume {
   position: relative;
   display: flex;
-  gap: u.rem(50);
+  gap: f.rem(50);
   height: 100vh;
   &:nth-of-type(1) {
     width: 35%;
@@ -29,7 +29,7 @@
   }
   &:nth-of-type(2) {
     width: 65%;
-    padding: 5% 10% 18% u.rem(50);
+    padding: 5% 10% 18% f.rem(50);
     overflow-y: scroll;
   }
   &__block {
@@ -37,27 +37,27 @@
     width: 100%;
     padding: 6% 8%;
     background-color: hsl(215, 46%, 93%);
-    @include i.portBtn;
+    @include m.portBtn;
     &--header {
       flex-wrap: nowrap;
-      gap: u.rem(10);
+      gap: f.rem(10);
     }
     & ol {
-      padding-left: u.rem(10);
+      padding-left: f.rem(10);
       & li {
         list-style: disc;
       }
     }
   }
   &__navigation {
-    gap: u.rem(50);
+    gap: f.rem(50);
     & button {
       aspect-ratio: 1/1;
       width: calc(100% / 3);
       background-color: hsl(215, 46%, 93%);
-      @include i.portBtn;
+      @include m.portBtn;
       & i {
-        font-size: clamp(u.rem(26), u.rem(16) + 2vw, u.rem(40));
+        font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
         font-weight: 700;
         line-height: 1;
         color: white;
