@@ -1,13 +1,13 @@
-@use '../../../util/functions' as u;
-@use '../../../styles/mixins' as i;
+@use '../../../../sass/styles/mixins' as m;
+@use '../../../../sass/util/functions' as f;
 
 .productFilters {
   width: 100%;
   height: fit-content;
-  padding: 0 u.rem(25) u.rem(50) u.rem(25);
+  padding: 0 f.rem(25) f.rem(50) f.rem(25);
   &__panel {
     display: flex;
-    gap: u.rem(25);
+    gap: f.rem(25);
     width: 50%;
     height: inherit;
     &:nth-of-type(2) {
@@ -30,9 +30,9 @@
     align-items: center;
     z-index: 5;
     padding: 1em;
-    border-radius: u.rem(8);
+    border-radius: f.rem(8);
     background: hsl(0, 0%, 20%);
-    @include i.BtnShadow;
+    @include m.BtnShadow;
     cursor: pointer;
     color: white;
     &__indicator {
@@ -60,8 +60,8 @@
     left: 50%;
     transform: translateX(-50%);
     padding: 0.3em 0.5em 0.6em 0.5em;
-    border-bottom-right-radius: u.rem(8);
-    border-bottom-left-radius: u.rem(8);
+    border-bottom-right-radius: f.rem(8);
+    border-bottom-left-radius: f.rem(8);
     background: hsl(0, 0%, 20%);
     opacity: 0;
     &[data-activity='active'] {

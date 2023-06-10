@@ -20,23 +20,23 @@
 @forward './portfolio/features/formContact';
 
 /** Ecommerce **/
-@forward './ecommerce/components/navigation/header';
-@forward './ecommerce/components/navigation/footer';
+@forward '../ecommerce/components/navigation/header/header';
+@forward '../ecommerce/components/navigation/footer/footer';
 
-@forward './ecommerce/account/accountSignIn';
-@forward './ecommerce/account/accountSignUp';
-@forward './ecommerce/account/accountDashboard';
+@forward '../ecommerce/components/account/accountSignIn';
+@forward '../ecommerce/components/account/accountSignUp';
+@forward '../ecommerce/components/account/accountDashboard';
 
-@forward './ecommerce/components/features/searchBar';
-@forward './ecommerce/components/features/shoppingCart';
+@forward '../ecommerce/components/features/cart/shoppingCart';
+@forward '../ecommerce/components/features/filters/productFilters';
+@forward '../ecommerce/components/features/search/searchBar';
 
-@forward './ecommerce/home/infographic';
-@forward './ecommerce/home/carousel';
-@forward './ecommerce/home/sideBySide';
-@forward './ecommerce/home/productShowcase';
+@forward '../ecommerce/components/home/infographic';
+@forward '../ecommerce/components/home/carousel';
+@forward '../ecommerce/components/home/sideBySide';
+@forward '../ecommerce/components/home/productShowcase';
 
-@forward './ecommerce/components/features/productFilters';
-@forward './ecommerce/components/products/productProps';
-@forward './ecommerce/components/products/productPages';
+@forward '../ecommerce/pages/productProps';
+@forward '../ecommerce/pages/productPages';
 
-@forward './ecommerce/layouts/layouts';
+@forward '../ecommerce/layouts/layouts';

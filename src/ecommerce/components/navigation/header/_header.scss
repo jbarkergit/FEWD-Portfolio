@@ -1,5 +1,5 @@
-@use '../../../util/functions' as u;
-@use '../../../styles/mixins' as i;
+@use '../../../../sass/styles/mixins' as m;
+@use '../../../../sass/util/functions' as f;
 
 .navkit {
   position: relative;
@@ -12,7 +12,7 @@
     display: flex;
     place-items: center;
     width: 100%;
-    max-width: u.rem(1584);
+    max-width: f.rem(1584);
     margin: 0 5vw;
     @media (width <= 1200px) {
       flex-direction: column;
@@ -54,7 +54,7 @@
         }
         &--link a {
           color: hsl(0, 0%, 20%);
-          font-size: clamp(u.rem(16), u.rem(10) + 0.5vw, u.rem(28));
+          font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
           font-weight: 500;
           white-space: nowrap;
         }
@@ -66,7 +66,7 @@
           }
           & a {
             color: rgb(50, 50, 50);
-            font-size: clamp(u.rem(18), u.rem(12) + 0.5vw, u.rem(30));
+            font-size: clamp(f.rem(18), f.rem(12) + 0.5vw, f.rem(30));
             font-weight: 700;
             text-transform: capitalize;
           }
@@ -76,14 +76,14 @@
         &--btn {
           display: flex;
           align-items: center;
-          height: u.rem(42);
-          @include i.ecommerceBtn;
-          @include i.BtnShadow;
+          height: f.rem(42);
+          @include m.ecommerceBtn;
+          @include m.BtnShadow;
           &:nth-of-type(1) {
             background-color: transparent;
           }
           & h4 {
-            font-size: u.rem(12);
+            font-size: f.rem(12);
             font-weight: 700;
             text-transform: uppercase;
           }
@@ -102,14 +102,14 @@
     &--interior {
       display: flex;
       align-items: center;
-      gap: u.rem(5);
+      gap: f.rem(5);
       flex-wrap: nowrap;
       white-space: nowrap;
-      font-size: clamp(u.rem(16), u.rem(10) + 0.5vw, u.rem(28));
+      font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
       font-weight: 500;
       & i {
-        margin-top: u.rem(5);
-        font-size: u.rem(14);
+        margin-top: f.rem(5);
+        font-size: f.rem(14);
       }
     }
   }
@@ -122,10 +122,10 @@
       display: none;
     }
     &__link {
-      padding-bottom: u.rem(6);
+      padding-bottom: f.rem(6);
       & a {
         color: hsl(0, 0%, 20%);
-        font-size: clamp(u.rem(12), u.rem(6) + 0.5vw, u.rem(18));
+        font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(18));
         font-weight: 500;
         white-space: nowrap;
       }
@@ -134,8 +134,8 @@
 }
 .fa-gear,
 .fa-cart-shopping {
-  padding-right: u.rem(6);
-  font-size: u.rem(14);
+  padding-right: f.rem(6);
+  font-size: f.rem(14);
 }
 .fa-bars {
   color: white;
@@ -152,7 +152,7 @@
     white-space: nowrap;
     & a {
       color: rgb(50, 50, 50);
-      font-size: clamp(u.rem(18), u.rem(12) + 1.5vw, u.rem(30));
+      font-size: clamp(f.rem(18), f.rem(12) + 1.5vw, f.rem(30));
       font-weight: 700;
       text-transform: capitalize;
     }
@@ -162,8 +162,8 @@
     justify-content: flex-end;
     width: 50%;
     &__indicator {
-      @include i.ecommerceBtn;
-      font-size: clamp(u.rem(18), u.rem(12) + 1.5vw, u.rem(32));
+      @include m.ecommerceBtn;
+      font-size: clamp(f.rem(18), f.rem(12) + 1.5vw, f.rem(32));
     }
     &__slideContainer {
       position: absolute;
@@ -188,19 +188,19 @@
       z-index: 10;
       padding: 5vh 8vw;
       margin: 2vh 5vw;
-      border-radius: u.rem(16);
+      border-radius: f.rem(16);
       background-color: hsl(0, 0%, 97%);
       pointer-events: all;
       & ul {
         display: flex;
         flex-direction: column;
-        gap: u.rem(10);
+        gap: f.rem(10);
         &:nth-of-type(2) {
           position: absolute;
           bottom: 4vh;
         }
         & li a {
-          font-size: clamp(u.rem(16), u.rem(10) + 0.5vw, u.rem(28));
+          font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
           font-weight: 500;
           color: hsl(0, 0%, 19.607843137254903%);
         }

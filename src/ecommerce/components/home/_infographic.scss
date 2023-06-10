@@ -1,20 +1,20 @@
-@use '../../util/functions' as u;
-@use '../../styles/mixins' as i;
+@use '../../../sass/styles/mixins' as m;
+@use '../../../sass/util/functions' as f;
 
 .infographic {
   position: relative;
   width: 100%;
-  height: calc(100vh + u.rem(32));
+  height: calc(100vh + f.rem(32));
   margin: 0 auto;
   &:after {
     content: '';
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: u.rem(32);
+    height: f.rem(32);
     z-index: 10;
-    border-top-right-radius: u.rem(64);
-    border-top-left-radius: u.rem(64);
+    border-top-right-radius: f.rem(64);
+    border-top-left-radius: f.rem(64);
     background-color: hsl(0, 0%, 96%);
   }
   &__graphic {
@@ -47,20 +47,20 @@
     z-index: 2;
     padding: 0 8vw;
     & h1 {
-      font-size: u.rem(16);
+      font-size: f.rem(16);
       font-weight: 600;
-      margin-bottom: u.rem(10);
+      margin-bottom: f.rem(10);
     }
     h2 {
       max-width: 25ch;
       font-style: italic;
       font-weight: 800;
-      margin-bottom: u.rem(15);
+      margin-bottom: f.rem(15);
     }
     p {
       max-width: 40ch;
       font-weight: 500;
-      margin-bottom: u.rem(15);
+      margin-bottom: f.rem(15);
     }
     & h1,
     h2,
@@ -69,16 +69,16 @@
       color: white;
     }
     &__ctaBtns {
-      gap: u.rem(20);
+      gap: f.rem(20);
       flex-wrap: wrap;
       & a {
-        height: u.rem(42);
+        height: f.rem(42);
         max-width: fit-content;
-        @include i.ecommerceBtn;
+        @include m.ecommerceBtn;
         background-color: white;
         & h4 {
           color: rgb(50, 50, 50);
-          font-size: u.rem(12);
+          font-size: f.rem(12);
           font-weight: 700;
           text-transform: uppercase;
         }
@@ -88,15 +88,15 @@
       position: absolute;
       display: flex;
       flex-wrap: wrap;
-      gap: u.rem(25);
+      gap: f.rem(25);
       height: auto;
       padding-right: 8vw;
       bottom: 12%;
 
       & img {
-        width: clamp(u.rem(50), u.rem(150), u.rem(200));
+        width: clamp(f.rem(50), f.rem(150), f.rem(200));
         @media (width <= 542px) {
-          width: clamp(u.rem(50), u.rem(150), u.rem(100));
+          width: clamp(f.rem(50), f.rem(150), f.rem(100));
         }
         &:nth-of-type(2) {
           filter: invert(100%);

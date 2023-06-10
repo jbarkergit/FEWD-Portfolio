@@ -1,12 +1,12 @@
-@use '../../../util/functions' as u;
-@use '../../../styles/mixins' as i;
+@use '../../../../sass/styles/mixins' as m;
+@use '../../../../sass/util/functions' as f;
 
 .searchBar {
   position: relative;
   display: flex;
-  height: u.rem(42);
-  min-width: u.rem(35);
-  max-width: u.rem(260);
+  height: f.rem(42);
+  min-width: f.rem(35);
+  max-width: f.rem(260);
   &__input {
     position: relative;
     display: flex;
@@ -19,19 +19,19 @@
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
-      width: u.rem(35);
-      padding: 0 u.rem(26) 0 u.rem(45);
-      border-radius: u.rem(10);
+      width: f.rem(35);
+      padding: 0 f.rem(26) 0 f.rem(45);
+      border-radius: f.rem(10);
       background: url('/src/ecommerce/assets/production-images/svg/magnifying-glass-solid.svg') no-repeat center center;
-      background-size: u.rem(18);
+      background-size: f.rem(18);
       transition: all 0.45s cubic-bezier(0, 0, 0.5, 1.5);
       @media (width <= 1200px) {
         width: 100%;
-        background-position: u.rem(13) center;
+        background-position: f.rem(13) center;
       }
       &:focus {
         width: 100%;
-        background-position: u.rem(13) center;
+        background-position: f.rem(13) center;
       }
     }
   }
@@ -39,17 +39,17 @@
     position: absolute;
     top: 125%;
     width: 100%;
-    max-width: u.rem(260);
+    max-width: f.rem(260);
     z-index: 7;
-    border-bottom-left-radius: u.rem(8);
-    border-top-left-radius: u.rem(8);
+    border-bottom-left-radius: f.rem(8);
+    border-top-left-radius: f.rem(8);
     background-color: hsl(0, 0%, 96%);
     &__products {
       display: flex;
       flex-direction: column;
-      max-height: u.rem(400);
-      border-bottom-left-radius: u.rem(8);
-      border-bottom-right-radius: u.rem(8);
+      max-height: f.rem(400);
+      border-bottom-left-radius: f.rem(8);
+      border-bottom-right-radius: f.rem(8);
       overflow-y: auto;
       &__return {
         width: 100%;

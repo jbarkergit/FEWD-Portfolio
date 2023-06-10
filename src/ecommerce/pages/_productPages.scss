@@ -1,5 +1,5 @@
-@use '../../../util/functions' as u;
-@use '../../../styles/mixins' as i;
+@use '../../sass/styles/mixins' as m;
+@use '../../sass/util/functions' as f;
 
 .skuPage {
   display: grid;
@@ -10,19 +10,19 @@
     display: grid;
     grid-auto-rows: auto;
     grid-template-columns: repeat(auto-fit, minmax(48%, 1fr));
-    gap: u.rem(25);
+    gap: f.rem(25);
     overflow: hidden;
     & picture {
-      max-height: u.rem(650);
-      @include i.productPhoto;
-      border-radius: u.rem(16);
+      max-height: f.rem(650);
+      @include m.productPhoto;
+      border-radius: f.rem(16);
       background-color: white;
       transition: ease-in-out 0.35s;
       & img {
-        padding: u.rem(15);
+        padding: f.rem(15);
         object-fit: scale-down;
         mix-blend-mode: darken;
-        @include i.photoFilters;
+        @include m.photoFilters;
       }
     }
   }
@@ -36,7 +36,7 @@
     & p {
       margin-bottom: 5vh;
       max-width: 38ch;
-      font-size: clamp(u.rem(14), u.rem(12) + 0.5vw, u.rem(18));
+      font-size: clamp(f.rem(14), f.rem(12) + 0.5vw, f.rem(18));
       font-weight: 400;
       line-height: 1.3rem;
     }
