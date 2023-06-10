@@ -8,6 +8,7 @@ import Portfolio from './portfolio/pages/Portfolio';
 import { CategoryFilterProvider } from './ecommerce/context/exports/stateProvider';
 
 const Ecommerce = lazy(() => import('./ecommerce/pages/Home'));
+const AccountPage = lazy(() => import('./ecommerce/pages/AccountPage'));
 const BrowseProduct = lazy(() => import('./ecommerce/pages/BrowseProduct'));
 const ProductPage = lazy(() => import('./ecommerce/pages/ProductPage'));
 
@@ -24,6 +25,7 @@ function App() {
             <Route path="/" element={<Portfolio />} />
 
             <Route path="/ecommerce" element={<Ecommerce />} />
+            <Route path="/ecommerce/account" element={<AccountPage />} />
             <Route path="/ecommerce/products" element={<BrowseProduct />} />
             <Route path="/ecommerce/headphones" element={<BrowseProduct />} />
             <Route path="/ecommerce/amps-dacs" element={<BrowseProduct />} />

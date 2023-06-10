@@ -23,6 +23,10 @@
 @forward './ecommerce/components/navigation/header';
 @forward './ecommerce/components/navigation/footer';
 
+@forward './ecommerce/account/accountSignIn';
+@forward './ecommerce/account/accountSignUp';
+@forward './ecommerce/account/accountDashboard';
+
 @forward './ecommerce/components/features/searchBar';
 @forward './ecommerce/components/features/shoppingCart';
 

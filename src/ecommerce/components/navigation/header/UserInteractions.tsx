@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SearchBar from '../../features/search/SearchBar';
 
 const UserInteractions = () => {
@@ -20,7 +20,8 @@ const UserInteractions = () => {
         <SearchBar />
       </div>
       <div className="navkit__header__section__ui">
-        <button
+        <Link
+          to="/ecommerce/account"
           className="navkit__header__section__ui--btn --ctaBtn"
           id="myAccountBtn"
           style={{
@@ -34,7 +35,7 @@ const UserInteractions = () => {
         >
           <i className="fa-solid fa-gear"></i>
           <h4>Account</h4>
-        </button>
+        </Link>
       </div>
       <div className="navkit__header__section__ui">
         <button

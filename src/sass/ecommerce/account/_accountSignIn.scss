@@ -1,0 +1,77 @@
+@use '../../util/functions' as u;
+@use '../../styles/mixins' as i;
+
+.account {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - u.rem(11) - 20vh);
+  margin: 10vh 0;
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    max-height: u.rem(720);
+    aspect-ratio: 3/4;
+    padding: 2% 4%;
+    border-radius: u.rem(32);
+    background-color: #f5f5f5;
+    box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+    &__heading {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      min-height: u.rem(50);
+      margin-bottom: 2.5%;
+      &--part {
+        width: 50%;
+        height: 100%;
+        & button {
+          display: flex;
+          justify-content: end;
+        }
+      }
+    }
+    &__inputs,
+    &__address,
+    &__message,
+    &__country {
+      min-height: u.rem(50);
+      margin-bottom: 2.5%;
+      @include i.formField;
+    }
+    &__inputs {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: u.rem(10);
+      & label {
+        width: 50%;
+      }
+    }
+    &__message {
+      padding: 2.5% 0 0 2.5%;
+      resize: vertical;
+    }
+    &--formBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2.5%;
+      @include i.formField;
+      cursor: pointer;
+      & h4 {
+        padding: 2.5%;
+        text-transform: capitalize;
+        font-weight: 500;
+        letter-spacing: u.rem(0.4);
+      }
+    }
+  }
+}
+.contact__form__inputs,
+.contact__form__address {
+  padding-left: 2.5%;
+}
