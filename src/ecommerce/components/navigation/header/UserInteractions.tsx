@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import SearchBar from '../../features/search/SearchBar';
 
 const UserInteractions = () => {
@@ -7,7 +7,7 @@ const UserInteractions = () => {
 
   function useCart() {
     cartStatus === 'View Cart' ? setCartStatus('Close Cart') : setCartStatus('View Cart');
-    const ShoppingModal = document.querySelector('.shoppingModal')!; //Until React adds support for forwardRef to FunctionalComponents, I'm using querySelector. Wasted hours on this.
+    const ShoppingModal = document.querySelector('.shoppingModal')!; //Until React adds support for forwardRef to FunctionalComponents, I'm using querySelector.
 
     ShoppingModal.getAttribute('data-activity') === 'inactive'
       ? ShoppingModal.setAttribute('data-activity', 'active')
@@ -20,8 +20,7 @@ const UserInteractions = () => {
         <SearchBar />
       </div>
       <div className="navkit__header__section__ui">
-        <Link
-          to="/ecommerce/account"
+        <button
           className="navkit__header__section__ui--btn --ctaBtn"
           id="myAccountBtn"
           style={{
@@ -32,10 +31,15 @@ const UserInteractions = () => {
                 ? 'rgb(255, 255, 255) -1px -1px 20px 0px, rgb(57, 57, 57) -4px -4px 5px 0px, rgba(98, 98, 98, 0.4) 7px 7px 20px 0px, rgba(0, 0, 0, 0.3) 4px 4px 5px 0px'
                 : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
           }}
+          onClick={() => {
+            document.querySelector('.modal')?.getAttribute('data-activity') === 'active'
+              ? document.querySelector('.modal')?.setAttribute('data-activity', 'inactive')
+              : document.querySelector('.modal')?.setAttribute('data-activity', 'active');
+          }}
         >
           <i className="fa-solid fa-gear"></i>
           <h4>Account</h4>
-        </Link>
+        </button>
       </div>
       <div className="navkit__header__section__ui">
         <button

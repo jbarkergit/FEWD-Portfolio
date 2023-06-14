@@ -23,9 +23,8 @@
 @forward '../ecommerce/components/navigation/header/header';
 @forward '../ecommerce/components/navigation/footer/footer';
 
-@forward '../ecommerce/components/account/accountSignIn';
-@forward '../ecommerce/components/account/accountSignUp';
-@forward '../ecommerce/components/account/accountDashboard';
+@forward '../ecommerce/components/features/account/accountModal';
+@forward '../ecommerce/components/features/account/accountDashboard';
 
 @forward '../ecommerce/components/features/cart/shoppingCart';
 @forward '../ecommerce/components/features/filters/productFilters';
