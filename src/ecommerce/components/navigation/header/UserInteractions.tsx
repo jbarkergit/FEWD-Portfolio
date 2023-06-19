@@ -9,7 +9,7 @@ const UserInteractions = () => {
     cartStatus === 'View Cart' ? setCartStatus('Close Cart') : setCartStatus('View Cart');
     const ShoppingModal = document.querySelector('.shoppingModal')!; //Until React adds support for forwardRef to FunctionalComponents, I'm using querySelector.
 
-    ShoppingModal.getAttribute('data-activity') === 'inactive'
+    ShoppingModal!.getAttribute('data-activity') === 'inactive'
       ? ShoppingModal.setAttribute('data-activity', 'active')
       : ShoppingModal.setAttribute('data-activity', 'inactive');
   }

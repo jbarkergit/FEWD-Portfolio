@@ -16,7 +16,15 @@ const getProductBySku = () => {
       <>
         {findProduct.images!.map((image) => (
           <picture>
-            <img src={image} alt={`${findProduct.company} ${findProduct.unit}`} role="presentation" loading="lazy" decoding="async" fetchpriority="high" />
+            <img
+              src={image}
+              key={findProduct.sku}
+              alt={`${findProduct.company} ${findProduct.unit}`}
+              role="presentation"
+              loading="lazy"
+              decoding="async"
+              fetchpriority="high"
+            />
           </picture>
         ))}
       </>
@@ -41,10 +49,10 @@ const getProductBySku = () => {
                 {findProduct.company} {findProduct.unit}
               </h1>
             </span>
+            <span className="skuPage__details--price">{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(findProduct.price)}</span>
             <span>
               <p>{findProduct.description}</p>
             </span>
-            <span className="skuPage__details--price">{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(findProduct.price)}</span>
             <span>
               <button className="skuPage__details--quickAdd">
                 <i className="fa-solid fa-cart-plus"></i>
