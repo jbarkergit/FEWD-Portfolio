@@ -9,8 +9,7 @@ const useBreadcrumbs = () => {
   let [currentLocation] = useState<string>('');
 
   const breadcrumbs = location.pathname
-    .replaceAll('/', '')
-    .replaceAll('-', ' ')
+    .replace(/[^\w\s]/gi, ' ')
     .split('ecommerce')
     .filter((breadcrumb) => breadcrumb !== '')
     .map((breadcrumb) => {
