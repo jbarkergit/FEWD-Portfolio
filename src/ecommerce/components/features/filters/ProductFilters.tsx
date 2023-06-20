@@ -114,40 +114,48 @@ const ProductFilters = () => {
       };
     }, [styleFilterStatus]);
 
-    if (useLocation().pathname === '/ecommerce/headphones') {
-      return (
-        <div
-          className="selectMenu"
-          ref={styleFilterSelectMenu}
-          key="styleFilter"
-          onClick={() => {
-            styleFilterStatus === false ? setStyleFilterStatus(true) : setStyleFilterStatus(false);
-          }}
-        >
-          <div className="selectMenu__selection">
-            <span className="selectMenu__selection__indicator">
-              <span className="selectMenu__selection__indicator--area">Filter by Style</span>
-              <span className="selectMenu__selection__indicator--area">
-                <i className="fa-solid fa-sort"></i>
+    // @ts-ignore:
+    const { categoryFilter } = useCategoryFilterContext();
+
+    switch (categoryFilter) {
+      case 'headphone':
+      case 'Beyerdynamic':
+      case 'openbackheadphone':
+      case 'semiopenheadphone':
+      case 'closedbackheadphone':
+        return (
+          <div
+            className="selectMenu"
+            ref={styleFilterSelectMenu}
+            key="styleFilter"
+            onClick={() => {
+              styleFilterStatus === false ? setStyleFilterStatus(true) : setStyleFilterStatus(false);
+            }}
+          >
+            <div className="selectMenu__selection">
+              <span className="selectMenu__selection__indicator">
+                <span className="selectMenu__selection__indicator--area">Filter by Style</span>
+                <span className="selectMenu__selection__indicator--area">
+                  <i className="fa-solid fa-sort"></i>
+                </span>
               </span>
-            </span>
-            <div className="selectMenu--divider"></div>
+              <div className="selectMenu--divider"></div>
+            </div>
+            <ul className="selectMenu__menu" data-activity="inactive" ref={styleFilterMenu}>
+              <li className="selectMenu__menu--option" key="openbackheadphone">
+                <button onClick={() => setCategoryFilter('openbackheadphone')}>{'Open-Back'}</button>
+              </li>
+              <li className="selectMenu__menu--option" key="semiopenheadphone">
+                <button onClick={() => setCategoryFilter('semiopenheadphone')}>{'Semi-Open'}</button>
+              </li>
+              <li className="selectMenu__menu--option" key="closedbackheadphone">
+                <button onClick={() => setCategoryFilter('closedbackheadphone')}>{'Closed-Back'}</button>
+              </li>
+            </ul>
           </div>
-          <ul className="selectMenu__menu" data-activity="inactive" ref={styleFilterMenu}>
-            <li className="selectMenu__menu--option" key="openbackheadphone">
-              <button onClick={() => setCategoryFilter('openbackheadphone')}>{'Open-Back'}</button>
-            </li>
-            <li className="selectMenu__menu--option" key="semiopenheadphone">
-              <button onClick={() => setCategoryFilter('semiopenheadphone')}>{'Semi-Open'}</button>
-            </li>
-            <li className="selectMenu__menu--option" key="closedbackheadphone">
-              <button onClick={() => setCategoryFilter('closedbackheadphone')}>{'Closed-Back'}</button>
-            </li>
-          </ul>
-        </div>
-      );
-    } else {
-      null;
+        );
+      default:
+        null;
     }
   };
 
