@@ -1,15 +1,40 @@
 import { Link } from 'react-router-dom';
 import { ProductDatabase } from '../../assets/production-data/ProductDatabase';
 import { useCategoryFilterContext } from '../exports/stateProvider';
-import { ProductType, headphoneStyles } from '../exports/types';
+import { ProductType } from '../exports/types';
 
 const ProductProvider = () => {
-  // @ts-ignore:
-  const { categoryFilter } = useCategoryFilterContext();
-
   const useProductFilter = () => {
-    const companyProducts = ProductDatabase.filter((product: ProductType) => product.company?.includes(categoryFilter));
-    const companyHeadphones = companyProducts.filter((product) => product.wearStyle?.includes(headphoneStyles));
+    // @ts-ignore:
+    const { categoryFilter } = useCategoryFilterContext();
+
+    const useMiscProducts = ProductDatabase.reduce((miscProducts: ProductType[], product: ProductType) => {
+      if (product.category?.includes(categoryFilter)) {
+        miscProducts.push({ ...product });
+      }
+      return miscProducts;
+    }, []);
+
+    const useHeadphones = ProductDatabase.reduce((headphones: ProductType[], product: ProductType) => {
+      if (product.wearStyle?.includes(categoryFilter)) {
+        headphones.push({ ...product });
+      }
+      return headphones;
+    }, []);
+
+    const useCompanyProducts = ProductDatabase.reduce((companyProducts: ProductType[], product: ProductType) => {
+      if (product.company?.includes(categoryFilter)) {
+        companyProducts.push({ ...product });
+      }
+      return companyProducts;
+    }, []);
+
+    const useCompanyHeadphones = ProductDatabase.reduce((companyHeadphones: ProductType[], product: ProductType) => {
+      if (product.company?.includes(categoryFilter)) {
+        companyHeadphones.push({ ...product });
+      }
+      return companyHeadphones;
+    }, []);
 
     switch (categoryFilter) {
       case '':
@@ -17,15 +42,15 @@ const ProductProvider = () => {
       case 'dac':
       case 'microphone':
       case 'interface':
-        return ProductDatabase.filter((product: ProductType) => product.category?.includes(categoryFilter));
+        return useMiscProducts;
       case 'headphone':
       case 'openbackheadphone':
       case 'semiopenheadphone':
       case 'closedbackheadphone':
-        return ProductDatabase.filter((product: ProductType) => product.wearStyle?.includes(categoryFilter));
+        return useHeadphones;
       default:
-        if (companyProducts.length > 0) return companyProducts;
-        else if (companyHeadphones.length > 0) return companyHeadphones;
+        if (useCompanyProducts.length > 0) return useCompanyProducts;
+        else if (useCompanyHeadphones.length > 0) return useCompanyHeadphones;
         else return ProductDatabase;
     }
   };
