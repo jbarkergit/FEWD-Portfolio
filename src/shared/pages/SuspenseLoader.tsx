@@ -1,5 +1,3 @@
-//https://codepen.io/caesura/pen/WNQGMxy
-
 const SuspenseLoader = () => {
   return (
     <main className="suspenseLoader">

@@ -3,6 +3,8 @@ import { ProductDatabase } from '../../assets/production-data/ProductDatabase';
 import { useCategoryFilterContext } from '../exports/stateProvider';
 import { ProductType } from '../exports/types';
 
+import { useInfiniteQuery } from '@tanstack/react-query';
+
 const ProductProvider = () => {
   const useProductFilter = () => {
     // @ts-ignore:
@@ -54,6 +56,12 @@ const ProductProvider = () => {
         else return ProductDatabase;
     }
   };
+
+  // const posts = [
+  //   {id: 1, useProductFilter().sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1)) }
+
+  //   }
+  // ]
 
   return (
     <>

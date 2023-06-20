@@ -18,11 +18,8 @@ function App() {
         {/* @ts-ignore */}
         <CategoryFilterProvider>
           <Routes>
-            <Route path="/suspense-loader" element={<SuspenseLoader />} />
             <Route path="*" element={<NotFound />} />
-
             <Route path="/" element={<Portfolio />} />
-
             <Route path="/ecommerce" element={<Ecommerce />} />
             <Route path="/ecommerce/products" element={<BrowseProduct />} />
             <Route path="/ecommerce/headphones" element={<BrowseProduct />} />
