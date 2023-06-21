@@ -1,6 +1,14 @@
 @use '../../sass/styles/mixins' as m;
 @use '../../sass/util/functions' as f;
 
+.browseProduct {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: unset;
+  max-width: f.rem(1600);
+  margin: 0 auto;
+}
 .productGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, calc(33% - f.rem(75)));
