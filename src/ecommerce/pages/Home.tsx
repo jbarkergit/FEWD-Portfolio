@@ -1,7 +1,7 @@
 import Header from '../layouts/navigation/Header';
 import Footer from '../layouts/navigation/Footer';
 import Infographic from '../layouts/home/Infographic';
-import Carousel from '../layouts/home/Carousel';
+import Carousel from '../components/home/Carousel';
 import SideBySide from '../layouts/home/SideBySide';
 import ProductShowcase from '../components/home/ProductShowcase';
 

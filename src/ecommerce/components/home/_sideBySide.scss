@@ -5,8 +5,9 @@
   position: relative;
   display: flex;
   width: 100%;
+  max-width: 99rem;
   height: calc(100% + f.rem(32));
-  padding: 8vh 12vh;
+  padding: 8vh 0vh;
   @media (width <= 600px) {
     padding: 5vw;
   }
