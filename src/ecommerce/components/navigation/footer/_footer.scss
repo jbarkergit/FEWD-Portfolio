@@ -60,11 +60,13 @@
       position: absolute;
       top: 0;
       right: 0;
+      display: grid;
+      place-items: center;
       height: 100%;
       padding-right: f.rem(13);
       background-color: transparent;
-      & img {
-        width: f.rem(25);
+      & svg {
+        height: f.rem(20);
       }
     }
   }
