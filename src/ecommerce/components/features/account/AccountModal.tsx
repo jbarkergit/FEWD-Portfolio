@@ -3,14 +3,34 @@ import { useState } from 'react';
 const AccountModal = () => {
   const [emailAddress, setEmailAddress] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [userSignedIn, setUserSignedIn] = useState<boolean>(false);
 
   function handleSubmit() {}
 
+  const handleLoggedState = () => {
+    if (!userSignedIn) {
+      return (
+        <>
+          <div>
+            <p>Not a member? Sign up!</p>
+          </div>
+          <button type="submit">Sign in</button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <button type="submit">Sign out</button>
+        </>
+      );
+    }
+  };
+
   return (
-    <section className="modal" data-activity="inactive">
+    <section className="accountModal" data-activity="inactive">
       <form className="account" onSubmit={handleSubmit}>
         <legend>
-          <h1>Account</h1>
+          <h2>Account</h2>
         </legend>
         <fieldset>
           <label htmlFor="emailAddress">
@@ -20,9 +40,7 @@ const AccountModal = () => {
             <input type="text" placeholder="Last Name" value={password} onChange={(event) => setPassword(event.target.value)} />
           </label>
         </fieldset>
-        <button className="account--formSubmit" type="submit">
-          <h4>Submit</h4>
-        </button>
+        {handleLoggedState()}
       </form>
     </section>
   );

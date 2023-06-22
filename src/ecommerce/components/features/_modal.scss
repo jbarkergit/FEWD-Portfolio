@@ -1,42 +1,49 @@
-@use '../../../../sass/styles/mixins' as m;
-@use '../../../../sass/util/functions' as f;
+@use '../../../sass/styles/mixins' as m;
+@use '../../../sass/util/functions' as f;
 
-.modal {
+.accountModal,
+.shoppingModal {
   position: absolute;
-  display: flex;
-  align-items: center;
-  height: 100vh;
   top: 0;
   left: 0;
-  margin-left: 2%;
-  pointer-events: none;
+  height: 100vh;
   background: transparent;
-  &[data-activity='inactive'] {
-    visibility: hidden;
-    transform: translateX(-50%);
-    transition: transform 250ms ease-out;
-    transition-property: visibility;
-    transition-delay: 250ms;
-  }
+  pointer-events: none;
+  visibility: hidden;
   &[data-activity='active'] {
     visibility: visible;
     transition: translate3d(-100%, 0, 0);
     transition: transform 250ms ease-in;
   }
+  &[data-activity='inactive'] {
+    transform: translateX(50%);
+    transition: transform 250ms ease-out;
+    transition-property: visibility;
+    transition-delay: 250ms;
+  }
 }
-.account {
+
+.account,
+.shoppingCart {
   position: absolute;
+  top: 2.5%;
+  right: 2%;
   display: flex;
+  align-items: flex-start;
   flex-direction: column;
-  gap: calc(f.rem(15) * 2);
-  width: f.rem(500);
-  height: 94vh;
-  z-index: 30;
-  padding: 5% 2% 5% 2%;
-  border-radius: f.rem(32);
+  gap: f.rem(10);
+  width: 100%;
+  max-width: f.rem(500);
+  height: fit-content;
+  z-index: 10;
   background-color: #f5f5f5;
-  box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+  padding: f.rem(50) f.rem(50);
+  border-radius: f.rem(32);
   pointer-events: all;
+  // box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+.account {
   & legend {
     display: flex;
     flex-wrap: nowrap;
@@ -79,4 +86,19 @@
 .contact__form__inputs,
 .contact__form__address {
   padding-left: 2.5%;
+}
+
+.shoppingCart {
+  &__heading h2 {
+  }
+  &__products {
+  }
+  &__orderDetails span h3 {
+    &:nth-of-type(1) {
+    }
+    &:nth-of-type(2) {
+    }
+  }
+  &__checkout button {
+  }
 }

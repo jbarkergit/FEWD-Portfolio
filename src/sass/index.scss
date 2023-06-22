@@ -23,12 +23,11 @@
 @forward '../ecommerce/components/navigation/header/header';
 @forward '../ecommerce/components/navigation/footer/footer';
 
-@forward '../ecommerce/components/features/account/accountModal';
-@forward '../ecommerce/components/features/account/accountDashboard';
-
-@forward '../ecommerce/components/features/cart/shoppingCart';
+@forward '../ecommerce/components/features/modal';
 @forward '../ecommerce/components/features/filters/productFilters';
 @forward '../ecommerce/components/features/search/searchBar';
+
+@forward '../ecommerce/components/features/account/accountDashboard';
 
 @forward '../ecommerce/components/home/infographic';
 @forward '../ecommerce/components/home/carousel';
