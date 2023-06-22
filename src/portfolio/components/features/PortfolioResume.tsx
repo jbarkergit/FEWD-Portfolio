@@ -1,9 +1,9 @@
 const PortfolioResume = () => {
   return (
     <section className="toggleResume" data-activity="inactive">
-      <section className="resume flexColumn">
+      <section className="resume">
         <article className="resume__block">
-          <span className="resume__block--header flexBox">
+          <span className="resume__block--header">
             <h5>2015 - 2017</h5>
           </span>
           <span>
@@ -29,7 +29,7 @@ const PortfolioResume = () => {
             </p>
           </span>
         </article>
-        <div className="resume__navigation flexBox">
+        <div className="resume__navigation">
           <button className="resume__navigation--button">
             <i className="fa-solid fa-chevron-left"></i>
           </button>
@@ -42,9 +42,9 @@ const PortfolioResume = () => {
         </div>
       </section>
 
-      <section className="resume flexColumn">
+      <section className="resume">
         <article className="resume__block">
-          <span className="resume__block--header flexBox">
+          <span className="resume__block--header">
             <h5>Mane Juice Co., LLC</h5>
             <h5>2018 - 2021</h5>
           </span>
@@ -61,7 +61,7 @@ const PortfolioResume = () => {
           </span>
         </article>
         <article className="resume__block">
-          <span className="resume__block--header flexBox">
+          <span className="resume__block--header">
             <h5>{'Colonial Claims (FEMA)'}</h5>
             <h5>2018 - Inactive</h5>
           </span>
@@ -73,7 +73,7 @@ const PortfolioResume = () => {
           </span>
         </article>
         <article className="resume__block">
-          <span className="resume__block--header flexBox">
+          <span className="resume__block--header">
             <h5>{'Administrative Strategies (FEMA)'}</h5>
             <h5>2017 - 2018</h5>
           </span>

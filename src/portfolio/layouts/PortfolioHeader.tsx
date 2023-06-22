@@ -17,7 +17,7 @@ const PortfolioHeader = () => {
               theme === 'neumorphicLight' ? setTheme('neumorphicDark') : setTheme('neumorphicLight');
             }}
           >
-            <span className="portNav__block__inline flexColumn">
+            <span className="portNav__block__inline">
               <h4>theme</h4>
             </span>
           </button>

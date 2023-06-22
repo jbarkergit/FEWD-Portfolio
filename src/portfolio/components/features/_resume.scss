@@ -20,6 +20,7 @@
 .resume {
   position: relative;
   display: flex;
+  flex-direction: column;
   gap: f.rem(50);
   height: 100vh;
   &:nth-of-type(1) {
@@ -39,6 +40,7 @@
     background-color: hsl(215, 46%, 93%);
     @include m.portBtn;
     &--header {
+      display: flex;
       flex-wrap: nowrap;
       gap: f.rem(10);
     }
@@ -50,6 +52,7 @@
     }
   }
   &__navigation {
+    display: flex;
     gap: f.rem(50);
     & button {
       aspect-ratio: 1/1;

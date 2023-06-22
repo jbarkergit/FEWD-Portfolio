@@ -8,6 +8,7 @@
   height: 12.5vh;
   z-index: 2;
   &__block {
+    display: flex;
     flex-basis: calc(100% / 3);
     height: inherit;
     @include m.portElement;
@@ -29,6 +30,7 @@
     }
     &__inline {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100%;

@@ -15,14 +15,20 @@
   }
   &__article {
     position: absolute;
-    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     height: 25vh;
+    min-width: 100%;
     padding: 0 10vw;
     @include b.breakpoint(portfolioTablet) {
       height: 75vh;
       padding: calc(f.rem(10) + 1.5625vw);
     }
     &__digest {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       height: fit-content;
       & h2 {
         width: 100%;

@@ -4,8 +4,8 @@ type SidebarPropsType = {
 
 const SidebarProps = ({ description }: SidebarPropsType) => {
   return (
-    <article className="sidebar__article flexBox flexColumn justifyCenter">
-      <span className="sidebar__article__digest flexBoxY">
+    <article className="sidebar__article">
+      <span className="sidebar__article__digest">
         <h2>Information Digest</h2>
         <p>{description}</p>
       </span>

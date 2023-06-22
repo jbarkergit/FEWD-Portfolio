@@ -58,7 +58,7 @@ const PortfolioFooter = () => {
               </span>
             </button>
           </section>
-          <section className="portNav__block --labels flexBox">
+          <section className="portNav__block --labels">
             <NavigationLabel projectLink="" tabIndex={7} ariaLabel="Navigate to Project One" htmlFor="demo-1" id="" />
             <NavigationLabel projectLink="" tabIndex={8} ariaLabel="Navigate to Project Two" htmlFor="demo-2" id="" />
             <NavigationLabel projectLink="" tabIndex={9} ariaLabel="Navigate to Project Three" htmlFor="demo-3" id="" />

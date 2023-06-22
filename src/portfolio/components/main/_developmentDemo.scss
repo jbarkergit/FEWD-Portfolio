@@ -3,6 +3,7 @@
 @use '../../../sass/util/breakpoints' as b;
 
 .demoSection {
+  display: flex;
   flex-direction: column;
   @include b.breakpoint(portfolioTablet) {
     flex-direction: row;
@@ -43,6 +44,9 @@
       transition: none;
     }
     & article {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       width: 100%;
       height: inherit;
       @include b.breakpoint(portfolioTablet) {
@@ -87,7 +91,11 @@
   }
 }
 .skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
   gap: f.rem(0.5);
+  width: 100%;
   &__wrapper {
     display: flex;
     justify-content: flex-start;

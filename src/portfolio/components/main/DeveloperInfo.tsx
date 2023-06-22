@@ -37,7 +37,7 @@ const DevInfo = () => {
   };
 
   return (
-    <article className="flexBox flexColumn justifyCenter" id="developerIntroduction" aria-label="Developer Introduction">
+    <article id="developerIntroduction" aria-label="Developer Introduction">
       <h4 id="introduction__name" aria-label={detail}>
         {detail}
       </h4>
@@ -49,7 +49,7 @@ const DevInfo = () => {
         {description}
       </p>
 
-      <div className="skills flexBoxY justifyStart">
+      <div className="skills">
         <span className="skills__wrapper">
           <button className="skills__wrapper__icon" id="developer" role="tab" tabIndex={6} data-status="active" data-num="0" onClick={getSkill}>
             <img src="src/portfolio/assets/images/fontawesome/skills/fa-dev.svg" alt="Developer" />
