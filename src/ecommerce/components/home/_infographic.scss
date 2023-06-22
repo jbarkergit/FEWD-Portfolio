@@ -41,7 +41,10 @@
   }
   &__information {
     position: relative;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     align-items: baseline;
     height: 100vh;
     z-index: 2;
@@ -68,10 +71,13 @@
     a {
       color: white;
     }
-    &__ctaBtns {
+    &__cta {
+      display: flex;
       gap: f.rem(20);
       flex-wrap: wrap;
       & a {
+        display: grid;
+        place-items: center;
         height: f.rem(42);
         max-width: fit-content;
         @include m.ecommerceBtn;

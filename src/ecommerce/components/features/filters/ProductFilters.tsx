@@ -160,7 +160,7 @@ const ProductFilters = () => {
   };
 
   return (
-    <section className="productFilters flexBox">
+    <section className="productFilters">
       <div className="productFilters__panel">{useBreadcrumbs()}</div>
       <div className="productFilters__panel">
         {useStyleFilter()}

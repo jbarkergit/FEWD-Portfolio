@@ -70,9 +70,9 @@ const ProductProvider = () => {
                 </picture>
               </span>
             </Link>
-            <div className="productGrid__product__information flexBox flexColumn alignUnset">
+            <div className="productGrid__product__information">
               <Link to={`/ecommerce/product/${product.sku}`}>
-                <h2 className="flexBox">
+                <h2>
                   {product.company} {product.unit}
                 </h2>
               </Link>

@@ -21,10 +21,9 @@ const HeaderKit = () => {
   const SingleNavigation = () => {
     return (
       <>
-        <li className="navkit__header__section__links--link">
+        <li>
           <Link
             to="/ecommerce"
-            className="flexBox"
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
             }}
@@ -35,7 +34,6 @@ const HeaderKit = () => {
         <li className="navkit__header__section__links--link">
           <Link
             to="/ecommerce/products"
-            className="flexBox"
             style={{
               color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
             }}
@@ -74,7 +72,6 @@ const HeaderKit = () => {
             <li className="dropMenu__links__link">
               <Link
                 to="/ecommerce/headphones"
-                className="flexBox"
                 style={{
                   color: useLocation().pathname === '/ecommerce' ? 'white' : 'black',
                 }}
@@ -86,7 +83,6 @@ const HeaderKit = () => {
             <li className="dropMenu__links__link">
               <Link
                 to="/ecommerce/amps-dacs"
-                className="flexBox"
                 style={{
                   color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
                 }}
@@ -126,7 +122,6 @@ const HeaderKit = () => {
           <li className="dropMenu__links__link">
             <Link
               to="/ecommerce/microphones"
-              className="flexBox"
               style={{
                 color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
               }}
@@ -138,7 +133,6 @@ const HeaderKit = () => {
           <li className="dropMenu__links__link">
             <Link
               to="/ecommerce/interfaces"
-              className="flexBox"
               style={{
                 color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
               }}

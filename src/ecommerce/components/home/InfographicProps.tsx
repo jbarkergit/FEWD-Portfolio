@@ -18,17 +18,17 @@ const InfographicProps = ({ bannerImg, imgAlt, companyName, companyMissionStatem
           <span className="imgFadeGradient" />
           <img src={bannerImg} alt={imgAlt} decoding="async" fetchpriority="high" />
         </picture>
-        <article className="infographic__information flexBox flexColumn">
+        <article className="infographic__information">
           <h1>
             <i className="fa-solid fa-microphone-lines"></i> {companyName}
           </h1>
           <h2>{companyMissionStatement}</h2>
           <p>{companyValue}</p>
-          <span className="infographic__information__ctaBtns flexBox">
-            <Link to={''} className="flexBox justifyCenter" role="button">
+          <span className="infographic__information__cta">
+            <Link to={''} role="button">
               <h4>{ctaBtnName}</h4>
             </Link>
-            <Link to={''} className="flexBox justifyCenter" role="button">
+            <Link to={''} role="button">
               <h4>{ctaBtn2Name}</h4>
             </Link>
           </span>

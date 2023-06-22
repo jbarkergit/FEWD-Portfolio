@@ -2,6 +2,8 @@
 @use '../../../../sass/util/functions' as f;
 
 .productFilters {
+  display: flex;
+  align-items: center;
   width: 100%;
   height: fit-content;
   padding: 0 f.rem(25) f.rem(50) f.rem(25);

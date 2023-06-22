@@ -50,7 +50,7 @@
         @media (width <= 650px) {
           display: none;
         }
-        &--link a {
+        & li a {
           color: hsl(0, 0%, 20%);
           font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
           font-weight: 500;
