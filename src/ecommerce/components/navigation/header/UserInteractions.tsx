@@ -28,7 +28,7 @@ const UserInteractions = () => {
             border: useLocation().pathname === '/ecommerce' ? '1px solid white' : '',
             boxShadow:
               useLocation().pathname === '/ecommerce'
-                ? 'rgb(255, 255, 255) -1px -1px 20px 0px, rgb(57, 57, 57) -4px -4px 5px 0px, rgba(98, 98, 98, 0.4) 7px 7px 20px 0px, rgba(0, 0, 0, 0.3) 4px 4px 5px 0px'
+                ? 'rgba(255, 255, 255, 0) -1px -1px 20px 0px, rgba(57, 57, 57, 0) -4px -4px 5px 0px, rgba(98, 98, 98, 0) 7px 7px 20px 0px, rgba(0, 0, 0, 0) 4px 4px 5px 0px'
                 : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
           }}
           onClick={() => {
@@ -48,7 +48,7 @@ const UserInteractions = () => {
             backgroundColor: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
             boxShadow:
               useLocation().pathname === '/ecommerce'
-                ? 'rgb(255, 255, 255) -1px -1px 20px 0px, rgb(57, 57, 57) -4px -4px 5px 0px, rgba(98, 98, 98, 0.4) 7px 7px 20px 0px, rgba(0, 0, 0, 0.3) 4px 4px 5px 0px'
+                ? 'rgba(255, 255, 255, 0) -1px -1px 20px 0px, rgba(57, 57, 57, 0) -4px -4px 5px 0px, rgba(98, 98, 98, 0) 7px 7px 20px 0px, rgba(0, 0, 0, 0) 4px 4px 5px 0px'
                 : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
           }}
           onClick={useCart}

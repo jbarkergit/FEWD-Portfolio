@@ -24,7 +24,7 @@
       border-radius: f.rem(10);
       background: url('/src/ecommerce/assets/production-images/svg/magnifying-glass-solid.svg') no-repeat center center;
       background-size: f.rem(18);
-      transition: all 0.45s cubic-bezier(0, 0, 0.5, 1.5);
+      transition: all 0.45s cubic-bezier(0, 0, 0.45, 1);
       @media (width <= 1200px) {
         width: 100%;
         background-position: f.rem(13) center;

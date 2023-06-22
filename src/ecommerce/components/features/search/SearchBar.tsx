@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect, useRef } from 'react';
+import { useState, ChangeEvent, useEffect, useRef, MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 
@@ -17,12 +17,12 @@ const SearchBar = () => {
   };
 
   const filteredItems = getFilteredItems();
-
   const searchBarRef = useRef<HTMLDivElement>(null!);
+  const searchLink = useRef<HTMLAnchorElement>(null!);
 
   useEffect(() => {
-    const useSearchBar = (event: any) => {
-      !searchBarRef.current?.contains(event.target) ? setSearchTerm('') : null;
+    const useSearchBar = (e: any) => {
+      !searchBarRef.current?.contains(e.target) ? setSearchTerm('') : setSearchTerm('');
     };
 
     searchBarRef.current?.addEventListener('click', useSearchBar);
@@ -52,7 +52,7 @@ const SearchBar = () => {
             backgroundColor: useLocation().pathname === '/ecommerce' ? 'white' : 'transparent',
             boxShadow:
               useLocation().pathname === '/ecommerce'
-                ? 'rgb(255, 255, 255) -1px -1px 20px 0px, rgb(57, 57, 57) -4px -4px 5px 0px, rgba(98, 98, 98, 0.4) 7px 7px 20px 0px, rgba(0, 0, 0, 0.3) 4px 4px 5px 0px'
+                ? 'rgba(255, 255, 255, 0) -1px -1px 20px 0px, rgba(57, 57, 57, 0) -4px -4px 5px 0px, rgba(98, 98, 98, 0) 7px 7px 20px 0px, rgba(0, 0, 0, 0) 4px 4px 5px 0px'
                 : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
           }}
         />
@@ -63,7 +63,7 @@ const SearchBar = () => {
             {filteredItems.slice(0, 10).map((product, key) => {
               return (
                 <li className="searchBar__return__products__return" key={key}>
-                  <a href={`/ecommerce/product/${product.sku}`}>
+                  <a href={`/ecommerce/product/${product.sku}`} ref={searchLink}>
                     <span>
                       {product.company} {product.unit}
                     </span>
