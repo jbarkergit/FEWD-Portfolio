@@ -1,14 +1,37 @@
 @use '../../../../sass/styles/mixins' as m;
 @use '../../../../sass/util/functions' as f;
 
-.eFooter {
+.footerKit {
+  display: grid;
+  grid-template-columns: 35% 21% 21% 21%;
   width: 100%;
+  max-width: f.rem(1600);
   height: 65vh;
-  max-width: f.rem(1800);
+  padding: f.rem(50) 0;
   margin: 0 auto;
+  & ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50%;
+    & li {
+      padding-bottom: f.rem(8);
+      & h2 {
+        font-size: clamp(f.rem(22), f.rem(14) + 1.5vw, f.rem(36));
+        font-weight: 700;
+      }
+      & a h3 {
+        font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
+        font-weight: 500;
+      }
+    }
+  }
 }
 .newsletter {
-  flex: 2 1 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   & h2 {
     font-style: italic;
     font-size: f.rem(40);
@@ -16,62 +39,48 @@
     font-weight: 800;
     margin-bottom: f.rem(15);
   }
-  &__input {
-    display: grid;
-    justify-content: center;
-    &__field {
-      padding: f.rem(0) f.rem(13);
-      border: 1px solid hsl(0, 0%, 20%);
-      border-radius: f.rem(5);
-      background-color: #fff;
-      line-height: f.rem(40);
-      cursor: text;
+  &__field {
+    position: relative;
+    display: flex;
+    width: f.rem(270);
+    margin-bottom: f.rem(20);
+    & label {
+      display: flex;
+      justify-content: center;
+      & input {
+        padding: 0 0 0 f.rem(13);
+        border: 1px solid hsl(0, 0%, 20%);
+        border-radius: f.rem(5);
+        background-color: #fff;
+        line-height: f.rem(40);
+        cursor: text;
+      }
+    }
+    & button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      padding-right: f.rem(13);
+      background-color: transparent;
+      & img {
+        width: f.rem(25);
+      }
     }
   }
-  &__submit {
-    @include m.ecommerceBtn;
-    padding: f.rem(13) f.rem(16);
-    margin-left: f.rem(-10);
-    & h6 {
-      text-transform: lowercase;
-    }
-  }
-  &__demoDisclaimer {
+  &__notice {
+    display: flex;
+    flex-direction: column;
+    gap: f.rem(5);
     max-width: 45ch;
-    padding-top: f.rem(50);
     text-align: center;
     pointer-events: none;
+    & mark {
+      padding: f.rem(3) f.rem(10);
+      border-radius: f.rem(8);
+    }
     & h5 {
       max-width: 45ch;
-      & mark {
-        padding: f.rem(3) f.rem(10);
-        border-radius: f.rem(5);
-      }
-    }
-  }
-}
-.navFooterKit {
-  flex: 0 1 50%;
-  max-width: f.rem(1600);
-  height: fit-content;
-  padding: f.rem(50) 0;
-  & div {
-    width: 50%;
-    & ul {
-      margin-bottom: f.rem(20);
-      & li {
-        padding-bottom: f.rem(8);
-        & h2 {
-          font-size: f.rem(32);
-          line-height: 100%;
-          font-weight: 700;
-        }
-        & a {
-          font-size: f.rem(18);
-          line-height: 100%;
-          font-weight: 500;
-        }
-      }
     }
   }
 }
