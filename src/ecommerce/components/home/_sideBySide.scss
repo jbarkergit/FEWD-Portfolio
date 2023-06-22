@@ -6,9 +6,14 @@
   display: flex;
   width: 100%;
   height: calc(100% + f.rem(32));
-  padding: 8vh 20vh;
-  @media (width <= 600px) {
-    padding: 5vw;
+  padding: f.rem(50) 8vw;
+  @media (width <= 1460px) {
+    height: 100vh;
+    padding: 0 0;
+    margin: f.rem(100) 0;
+  }
+  @media (width <= 930px) {
+    flex-direction: column;
   }
   &:after {
     content: '';
@@ -22,51 +27,71 @@
     border-bottom-left-radius: f.rem(64);
     background-color: hsl(0, 0%, 96%);
   }
-  &__information,
-  &__video {
-    width: 50%;
-  }
   &__information {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    h4,
-    h2,
-    p {
-      color: var(--textPrimary);
+    width: 50%;
+    color: var(--textPrimary);
+    @media (width <= 1460px <= 930px) {
+      position: absolute;
+      bottom: 3%;
+      left: 3%;
+      width: fit-content;
+      height: fit-content;
+      z-index: 3;
+      padding: 2.5% 3%;
+      border-radius: f.rem(6);
+      border-top-right-radius: f.rem(24);
+      border-bottom-left-radius: f.rem(24);
+      border: 1px solid white;
+      backdrop-filter: blur(5px);
+      background-color: rgba(0, 0, 0, 0.25);
+      color: white;
+    }
+    @media (width <= 930px) {
+      position: relative;
+      width: 100%;
+      margin-bottom: f.rem(50);
     }
     & h4 {
-      font-size: f.rem(22);
       font-weight: 600;
-      margin-bottom: f.rem(10);
     }
     & h2 {
       width: 25ch;
+      margin-top: f.rem(5);
       font-style: italic;
-      font-size: f.rem(40);
-      line-height: 115%;
+      line-height: 100%;
       font-weight: 800;
-      margin-bottom: f.rem(15);
     }
     & p {
       width: 40ch;
+      margin-top: f.rem(10);
       font-weight: 500;
-      margin-bottom: f.rem(15);
     }
   }
   &__video {
-    @media (width <= 1375) {
+    display: grid;
+    place-items: center;
+    width: 50%;
+    @media (width <= 1460px) {
       position: absolute;
-      left: 0;
-      top: 0;
+      width: 100%;
+    }
+    @media (width <= 930px) {
+      position: relative;
     }
     & video {
       aspect-ratio: 4/5;
       min-height: 90vh;
       border-radius: f.rem(40);
       pointer-events: unset;
-      -o-object-fit: cover;
       object-fit: cover;
+      @media (width <= 1460px) {
+        min-height: 0;
+        max-height: 100vh;
+        width: 100%;
+      }
     }
   }
 }

@@ -57,12 +57,6 @@ const ProductProvider = () => {
     }
   };
 
-  // const posts = [
-  //   {id: 1, useProductFilter().sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1)) }
-
-  //   }
-  // ]
-
   return (
     <>
       {useProductFilter()

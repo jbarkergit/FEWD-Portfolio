@@ -8,7 +8,7 @@ const SideBySideProps = ({ h4, h2, p, videoAriaLabel, videoSrc }: SideBySideProp
         <h2>{h2}</h2>
         <p>{p}</p>
       </article>
-      <aside className="sideBySide__video flexBox justifyCenter" aria-label={videoAriaLabel}>
+      <aside className="sideBySide__video" aria-label={videoAriaLabel}>
         <video id="projects__demo-1" preload="none" autoPlay loop muted src={videoSrc} />
       </aside>
     </section>

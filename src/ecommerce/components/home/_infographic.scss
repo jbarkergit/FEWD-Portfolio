@@ -92,7 +92,6 @@
       height: auto;
       padding-right: 8vw;
       bottom: 12%;
-
       & img {
         width: clamp(f.rem(50), f.rem(150), f.rem(200));
         @media (width <= 542px) {

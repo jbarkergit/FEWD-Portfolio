@@ -97,22 +97,3 @@ kbd,
 samp {
   font-size: u.em(1);
 }
-.sectionHeading {
-  display: flex;
-  width: 100%;
-  padding: u.rem(50) 0 0 u.rem(50);
-  margin: 0 0 u.rem(-25) 0;
-  & h2 {
-    max-width: 26ch;
-    font-size: clamp(u.rem(26), u.rem(16) + 2vw, u.rem(40));
-    font-weight: 800;
-    line-height: 115%;
-    text-transform: uppercase;
-    text-align: end;
-    color: var(--textPrimary);
-  }
-  & p {
-    width: clamp(45ch, 50%, 65ch);
-    color: var(--textPrimary);
-  }
-}

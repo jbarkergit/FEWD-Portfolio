@@ -15,6 +15,22 @@
   display: block;
   height: f.rem(620);
   margin: f.rem(50) 0;
+  &__heading {
+    width: 100%;
+    margin: 2.5% 5% f.rem(-15) 8vw;
+    & h2 {
+      max-width: 26ch;
+      font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
+      font-weight: 800;
+      line-height: 115%;
+      text-transform: uppercase;
+      color: var(--textPrimary);
+    }
+    & p {
+      width: clamp(45ch, 50%, 65ch);
+      color: var(--textPrimary);
+    }
+  }
   &__track {
     position: absolute;
     display: flex;
@@ -56,6 +72,17 @@
         object-fit: cover;
         @include m.photoFilters;
       }
+      @media (width <= 1450px) {
+        flex: 0 0 f.rem(300);
+        aspect-ratio: 2/2;
+      }
+      @media (width <= 1100px) {
+        aspect-ratio: 2/2;
+      }
+      @media (width <= 730px) {
+        max-width: 92vw;
+        aspect-ratio: 2/1;
+      }
     }
   }
   &__navigation {
@@ -93,6 +120,9 @@
 .carousel__track:hover + .carousel__navigation button,
 .carousel__navigation button:hover {
   opacity: 1;
+  @media (width <= 730px) {
+    opacity: 0;
+  }
 }
 .carousel__track__slide.active + .carousel__track__slide.active img {
   // object-fit: contain;

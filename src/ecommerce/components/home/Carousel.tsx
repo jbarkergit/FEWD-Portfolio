@@ -95,12 +95,14 @@ const Carousel = () => {
 
   return (
     <section>
-      <section className="sectionHeading flexBox">
-        <i className="fa-solid fa-circle"></i>
-        <h2>Ecommerce built for consumers, by consumers</h2>
+      <section className="carousel__heading">
+        <h2>
+          Audio equipment for <span className="highlight">every</span> setting and <span className="highlight">every</span> environment
+        </h2>
       </section>
       <section className="carousel" ref={carousel}>
         <div className="carousel__track" ref={carouselTrack}>
+          <CarouselSlides />
           <CarouselSlides />
         </div>
         <div className="carousel__navigation">
