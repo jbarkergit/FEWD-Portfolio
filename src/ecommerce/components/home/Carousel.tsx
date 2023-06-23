@@ -1,14 +1,52 @@
 import { useEffect, useRef } from 'react';
 
 const Carousel = () => {
-  const carouselTrack = useRef<HTMLDivElement>(null!);
-
   const CarouselSlides = () => {
-    type carouselPropTypes = { carouselImg: string; carouselAlt: string };
+    type carouselPropTypes = { carouselImg: string; carouselAlt: string; carouselActivity: string };
 
-    const CarouselProps = ({ carouselImg, carouselAlt }: carouselPropTypes) => {
+    const CarouselProps = ({ carouselImg, carouselAlt, carouselActivity }: carouselPropTypes) => {
+      const trackSlide = useRef<HTMLPictureElement>(null!);
+      let userMouseDown = useRef<boolean>(false),
+        userMouseMove = useRef<boolean>(false);
+
+      useEffect(() => {
+        const onMouseDown = () => {
+          userMouseDown.current = true;
+          userMouseMove.current = false;
+        };
+        const onMouseMove = () => {
+          if (!userMouseDown.current) return;
+          userMouseMove.current = true;
+        };
+        const onMouseLeave = () => {
+          userMouseDown.current = false;
+          userMouseMove.current = false;
+        };
+        const onMouseUp = (e: MouseEvent) => {
+          const target = e.currentTarget as HTMLElement;
+          userMouseDown.current = false;
+          if (!userMouseMove.current)
+            target.classList[1].includes('active') ? target.classList.replace('active', 'disabled') : target.classList.replace('disabled', 'active');
+          return;
+        };
+
+        trackSlide.current?.addEventListener('mousedown', onMouseDown);
+        trackSlide.current?.addEventListener('mousemove', onMouseMove);
+        trackSlide.current?.addEventListener('mouseleave', onMouseLeave);
+        trackSlide.current?.addEventListener('mouseup', onMouseUp);
+
+        const componentWillUnmount = () => {
+          trackSlide.current?.removeEventListener('mousedown', onMouseDown);
+          trackSlide.current?.removeEventListener('mousemove', onMouseMove);
+          trackSlide.current?.removeEventListener('mouseleave', onMouseLeave);
+          trackSlide.current?.removeEventListener('mouseup', onMouseUp);
+        };
+
+        return componentWillUnmount;
+      }, []);
+
       return (
-        <picture className={`carousel__track__slide`} onClick={(e) => {}}>
+        <picture className={`carousel__track__slide ${carouselActivity}`} ref={trackSlide}>
           <img src={carouselImg} alt={carouselAlt} loading="lazy" decoding="async" fetchpriority="low" />
         </picture>
       );
@@ -19,30 +57,43 @@ const Carousel = () => {
         <CarouselProps
           carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/bernin-uben-tioYUDleMjg-unsplash.jpg"
           carouselAlt="Slide A"
+          carouselActivity="active"
         />
-        <CarouselProps carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/blocks-T3mKJXfdims-unsplash.jpg" carouselAlt="Slide B" />
-        <CarouselProps carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/erwi-AJ3r-NL28PI-unsplash.jpg" carouselAlt="Slide C" />
+        <CarouselProps
+          carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/blocks-T3mKJXfdims-unsplash.jpg"
+          carouselAlt="Slide B"
+          carouselActivity="disabled"
+        />
+        <CarouselProps
+          carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/erwi-AJ3r-NL28PI-unsplash.jpg"
+          carouselAlt="Slide C"
+          carouselActivity="disabled"
+        />
         <CarouselProps
           carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/jukka-aalho-OaPksPcVp50-unsplash.jpg"
           carouselAlt="Slide D"
+          carouselActivity="disabled"
         />
         <CarouselProps
           carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/norman-hermle-1Zfo0Aj3OZI-unsplash.jpg"
           carouselAlt="Slide E"
+          carouselActivity="disabled"
         />
         <CarouselProps
           carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/obafemi-moyosade-zndslHAXhAw-unsplash.jpg"
           carouselAlt="Slide F"
+          carouselActivity="disabled"
         />
         <CarouselProps
           carouselImg="/src/ecommerce/assets/production-images/compressed-home-page/carousel/zac-bromell-e2ETjLSj940-unsplash.jpg"
           carouselAlt="Slide G"
+          carouselActivity="disabled"
         />
       </>
     );
   };
-
-  const carousel = useRef<HTMLDivElement>(null!),
+  const carouselTrack = useRef<HTMLDivElement>(null!),
+    carousel = useRef<HTMLDivElement>(null!),
     userMouseDown = useRef<boolean>(false),
     xCoordinates = useRef<{
       initialX: number;
@@ -53,41 +104,35 @@ const Carousel = () => {
     });
 
   useEffect(() => {
-    let ca = carousel.current,
-      cT = carouselTrack.current,
-      uMD = userMouseDown.current,
-      xC = xCoordinates.current;
-
-    if (!cT || !ca) return;
-    const box = cT;
-    const container = ca;
+    if (!carousel.current || !carouselTrack.current) return;
 
     const onMouseDown = (e: MouseEvent) => {
-      uMD = true;
-      xC.initialX = e.clientX;
+      userMouseDown!.current = true;
+      xCoordinates!.current.initialX = e.clientX;
     };
-
-    const onMouseUp = (e: MouseEvent) => {
-      uMD = false;
-      xC.finalX = box.offsetLeft;
-    };
-
     const onMouseMove = (e: MouseEvent) => {
-      if (!uMD) return;
-      const nextX = e.clientX - xC.initialX + xC.finalX;
-      box.style.left = `${nextX}px`;
+      if (!userMouseDown!.current) {
+        return;
+      } else {
+        const nextX = e.clientX - xCoordinates!.current.initialX + xCoordinates!.current.finalX;
+        carouselTrack!.current.style.left = `${nextX}px`;
+      }
+    };
+    const onMouseUp = (e: MouseEvent) => {
+      userMouseDown!.current = false;
+      xCoordinates!.current.finalX = carouselTrack!.current.offsetLeft;
     };
 
-    box.addEventListener('mousedown', onMouseDown);
-    box.addEventListener('mouseup', onMouseUp);
-    container.addEventListener('mousemove', onMouseMove);
-    container.addEventListener('mouseleave', onMouseUp);
+    carouselTrack!.current.addEventListener('mousedown', onMouseDown);
+    carousel!.current.addEventListener('mousemove', onMouseMove);
+    carousel!.current.addEventListener('mouseleave', onMouseUp);
+    carouselTrack!.current.addEventListener('mouseup', onMouseUp);
 
     const componentWillUnmount = () => {
-      box.removeEventListener('mousedown', onMouseDown);
-      box.removeEventListener('mouseup', onMouseUp);
-      container.removeEventListener('mousemove', onMouseMove);
-      container.removeEventListener('mouseleave', onMouseUp);
+      carouselTrack?.current.removeEventListener('mousedown', onMouseDown);
+      carousel!.current.removeEventListener('mouseleave', onMouseUp);
+      carousel!.current.removeEventListener('mousemove', onMouseMove);
+      carouselTrack?.current.removeEventListener('mouseup', onMouseUp);
     };
 
     return componentWillUnmount;
@@ -102,7 +147,6 @@ const Carousel = () => {
       </section>
       <section className="carousel" ref={carousel}>
         <div className="carousel__track" ref={carouselTrack}>
-          <CarouselSlides />
           <CarouselSlides />
         </div>
         <div className="carousel__navigation">

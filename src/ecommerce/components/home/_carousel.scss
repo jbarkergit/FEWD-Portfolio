@@ -6,7 +6,7 @@
     transform: translateX(0);
   }
   to {
-    transform: translateX(-232%);
+    transform: translateX(-100%);
   }
 }
 
@@ -39,11 +39,9 @@
     width: 100%;
     height: inherit;
     z-index: 4;
-    scroll-padding: 1.5rem;
     scrollbar-width: none;
-    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    // animation: 22s CarouselSlide infinite linear;
+    animation: 18s CarouselSlide infinite linear;
     &:hover {
       animation-play-state: paused;
       cursor: grab;
