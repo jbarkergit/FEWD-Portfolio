@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+
 import { useCategoryFilterContext } from '../../../context/exports/stateProvider';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 import { ProductType } from '../../../context/exports/types';
@@ -16,7 +18,7 @@ const useBreadcrumbs = () => {
       currentLocation += `${breadcrumb}`;
     });
   return (
-    <div className="breadcrumb" key={currentLocation} aria-label={currentLocation}>
+    <div className="breadcrumb" key={uuidv4()} aria-label={currentLocation}>
       <h1>{currentLocation}</h1>
     </div>
   );
@@ -32,7 +34,7 @@ const ProductFilters = () => {
         {[...new Set(ProductDatabase.map((product: ProductType) => product.company))]
           .sort((a, b) => (a > b ? 1 : -1))
           .map((company) => (
-            <li className="selectMenu__menu--option" key={company}>
+            <li className="selectMenu__menu--option" key={uuidv4()}>
               <button id={company} onClick={() => setCategoryFilter(`${company}`)}>
                 {company}
               </button>

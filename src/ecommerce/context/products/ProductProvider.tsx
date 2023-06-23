@@ -3,7 +3,7 @@ import { ProductDatabase } from '../../assets/production-data/ProductDatabase';
 import { useCategoryFilterContext } from '../exports/stateProvider';
 import { ProductType } from '../exports/types';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { v4 as uuidv4 } from 'uuid';
 
 const ProductProvider = () => {
   const useProductFilter = () => {
@@ -62,7 +62,7 @@ const ProductProvider = () => {
       {useProductFilter()
         .sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1))
         .map((product: ProductType) => (
-          <li className="productGrid__product" key={product.sku}>
+          <li className="productGrid__product" key={uuidv4()}>
             <Link to={`/ecommerce/product/${product.sku}`}>
               <span className="productGrid__product--containedHover">
                 <picture>

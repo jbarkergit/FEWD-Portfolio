@@ -1,5 +1,7 @@
 import { useState, ChangeEvent, useEffect, useRef, MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 
 const SearchBar = () => {
@@ -60,9 +62,9 @@ const SearchBar = () => {
       {searchTerm.length != 0 && (
         <div className="searchBar__return">
           <ul className="searchBar__return__products">
-            {filteredItems.slice(0, 10).map((product, key) => {
+            {filteredItems.slice(0, 10).map((product) => {
               return (
-                <li className="searchBar__return__products__return" key={key}>
+                <li className="searchBar__return__products__return" key={uuidv4()}>
                   <a href={`/ecommerce/product/${product.sku}`} ref={searchLink}>
                     <span>
                       {product.company} {product.unit}

@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { ProductType } from '../../context/exports/types';
 import { ProductDatabase } from '../../assets/production-data/ProductDatabase';
 
@@ -5,7 +7,7 @@ const ProductShowcase = () => {
   return (
     <section className="productShowcase">
       {ProductDatabase.filter((product) => product.productshowcase === true).map((ProductData: ProductType) => (
-        <article className="productShowcase__product" key={ProductData.unit}>
+        <article className="productShowcase__product" key={uuidv4()}>
           <picture className="productShowcase__product__image">
             <img src={ProductData.images![0]} alt={`${ProductData.company} ${ProductData.unit}`} loading="lazy" decoding="async" fetchpriority="low"></img>
           </picture>
