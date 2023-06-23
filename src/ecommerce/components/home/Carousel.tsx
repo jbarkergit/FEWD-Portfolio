@@ -119,20 +119,20 @@ const Carousel = () => {
       }
     };
     const onMouseUp = (e: MouseEvent) => {
-      userMouseDown!.current = false;
-      xCoordinates!.current.finalX = carouselTrack!.current.offsetLeft;
+      userMouseDown.current = false;
+      xCoordinates.current.finalX = carouselTrack?.current.offsetLeft;
     };
 
-    carouselTrack!.current.addEventListener('mousedown', onMouseDown);
-    carousel!.current.addEventListener('mousemove', onMouseMove);
-    carousel!.current.addEventListener('mouseleave', onMouseUp);
-    carouselTrack!.current.addEventListener('mouseup', onMouseUp);
+    carouselTrack.current?.addEventListener('mousedown', onMouseDown);
+    carousel.current?.addEventListener('mousemove', onMouseMove);
+    carousel.current?.addEventListener('mouseleave', onMouseUp);
+    carouselTrack.current?.addEventListener('mouseup', onMouseUp);
 
     const componentWillUnmount = () => {
-      carouselTrack?.current.removeEventListener('mousedown', onMouseDown);
-      carousel!.current.removeEventListener('mouseleave', onMouseUp);
-      carousel!.current.removeEventListener('mousemove', onMouseMove);
-      carouselTrack?.current.removeEventListener('mouseup', onMouseUp);
+      carouselTrack.current?.removeEventListener('mousedown', onMouseDown);
+      carousel.current?.removeEventListener('mouseleave', onMouseUp);
+      carousel.current?.removeEventListener('mousemove', onMouseMove);
+      carouselTrack.current?.removeEventListener('mouseup', onMouseUp);
     };
 
     return componentWillUnmount;
