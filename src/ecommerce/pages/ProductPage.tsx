@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import Header from '../layouts/navigation/Header';
 import Footer from '../layouts/navigation/Footer';
@@ -12,19 +13,13 @@ const getProductBySku = () => {
   const findProduct = ProductDatabase.find((product: ProductType) => product.sku === paramId)!;
 
   const useProductImages = () => {
+    uuidv4();
+
     return (
       <>
         {findProduct.images!.map((image) => (
-          <picture>
-            <img
-              src={image}
-              key={findProduct.sku}
-              alt={`${findProduct.company} ${findProduct.unit}`}
-              role="presentation"
-              loading="lazy"
-              decoding="async"
-              fetchpriority="high"
-            />
+          <picture key={uuidv4()}>
+            <img src={image} alt={findProduct.company + findProduct.unit} role="presentation" loading="lazy" decoding="async" fetchpriority="high" />
           </picture>
         ))}
       </>
