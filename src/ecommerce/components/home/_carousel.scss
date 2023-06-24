@@ -1,20 +1,17 @@
 @use '../../../sass/styles/mixins' as m;
 @use '../../../sass/util/functions' as f;
 
-@keyframes CarouselSlide {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
-
 .carousel {
   position: relative;
   display: block;
   height: f.rem(620);
   margin: f.rem(50) 0;
+  &:hover {
+    cursor: grab;
+  }
+  &:active {
+    cursor: grabbing;
+  }
   &__heading {
     width: 100%;
     margin: 2.5% 5% f.rem(-15) 8vw;
@@ -39,35 +36,23 @@
     width: 100%;
     height: inherit;
     z-index: 4;
+    margin: 0 f.rem(25);
     scrollbar-width: none;
     scroll-behavior: smooth;
-    animation: 18s CarouselSlide infinite linear;
-    &:hover {
-      animation-play-state: paused;
-      cursor: grab;
-    }
-    &:active {
-      cursor: grabbing;
-    }
     &__slide {
-      position: relative;
+      display: flex;
       flex: 0 0 f.rem(520);
       aspect-ratio: 4/5;
       border-radius: f.rem(40);
       &.active {
         flex: 0 0 f.rem(1154);
-        aspect-ratio: 16/9;
-        border-radius: 0;
+        aspect-ratio: 4/2;
         transition: all 0.45s linear;
       }
       & img {
-        position: absolute;
-        width: inherit;
-        height: inherit;
-        top: 0;
-        left: 0;
         border-radius: f.rem(40);
         object-fit: cover;
+        object-position: center center;
         @include m.photoFilters;
       }
       @media (width <= 1450px) {

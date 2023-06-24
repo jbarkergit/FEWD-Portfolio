@@ -17,6 +17,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [".eslintrc.cjs", "src", "AriaDomAttrbiutes.d.tsx"],
+  "include": [".eslintrc.cjs", "src", "extended-attributes.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
