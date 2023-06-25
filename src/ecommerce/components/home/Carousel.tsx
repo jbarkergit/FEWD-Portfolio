@@ -1,109 +1,34 @@
 import { useEffect, useRef } from 'react';
+import { elInViewport } from '../../../shared/hooks/elementInViewport';
 
-const Carousel = () => {
-  const CarouselSlides = () => {
-    type carouselPropTypes = { carouselImg: string; carouselAlt: string; carouselActivity: string };
+const Carousel = (): JSX.Element => {
+  const carousel = useRef<HTMLDivElement>(null!),
+    carouselTrack = useRef<HTMLDivElement>(null!),
+    carouselTrackSlide = useRef<HTMLPictureElement>(null!),
+    userMouseDown = useRef<boolean>(false),
+    userMouseMove = useRef<boolean>(false);
 
-    const CarouselProps = ({ carouselImg, carouselAlt, carouselActivity }: carouselPropTypes) => {
-      const trackSlide = useRef<HTMLPictureElement>(null!);
-      // let userMouseDown = useRef<boolean>(false),
-      //   userMouseMove = useRef<boolean>(false);
+  type carouselPropTypes = { carouselImg: string; carouselAlt: string; carouselActivity: string };
 
-      // useEffect(() => {
-      //   const onMouseDown = () => {
-      //     userMouseDown.current = true;
-      //     userMouseMove.current = false;
-      //   };
-      //   const onMouseMove = () => {
-      //     if (!userMouseDown.current) return;
-      //     userMouseMove.current = true;
-      //   };
-      //   const onMouseLeave = () => {
-      //     userMouseDown.current = false;
-      //     userMouseMove.current = false;
-      //   };
-      //   const onMouseUp = (e: MouseEvent) => {
-      //     const target = e.currentTarget as HTMLElement;
-      //     userMouseDown.current = false;
-      //     if (!userMouseMove.current)
-      //       target.classList[1].includes('active') ? target.classList.replace('active', 'disabled') : target.classList.replace('disabled', 'active');
-      //     return;
-      //   };
-
-      //   trackSlide.current?.addEventListener('mousedown', onMouseDown);
-      //   trackSlide.current?.addEventListener('mousemove', onMouseMove);
-      //   trackSlide.current?.addEventListener('mouseleave', onMouseLeave);
-      //   trackSlide.current?.addEventListener('mouseup', onMouseUp);
-
-      //   const componentWillUnmount = () => {
-      //     trackSlide.current?.removeEventListener('mousedown', onMouseDown);
-      //     trackSlide.current?.removeEventListener('mousemove', onMouseMove);
-      //     trackSlide.current?.removeEventListener('mouseleave', onMouseLeave);
-      //     trackSlide.current?.removeEventListener('mouseup', onMouseUp);
-      //   };
-
-      //   return componentWillUnmount;
-      // }, []);
-
-      return (
-        <picture className={`carousel__track__slide ${carouselActivity}`} ref={trackSlide}>
-          <img src={carouselImg} alt={carouselAlt} draggable="false" loading="lazy" decoding="async" fetchpriority="low" />
-        </picture>
-      );
-    };
-
+  const CarouselProps = ({ carouselImg, carouselAlt, carouselActivity }: carouselPropTypes): JSX.Element => {
     return (
-      <>
-        <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg"
-          carouselAlt="Slide A"
-          carouselActivity="active"
-        />
-        <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/lena-kudryavtseva-hdODD2TVIlM-unsplash.jpg"
-          carouselAlt="Slide B"
-          carouselActivity="disabled"
-        />
-        <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg"
-          carouselAlt="Slide C"
-          carouselActivity="disabled"
-        />
-        <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/westwind-air-service-LT1WeeVzd6g-unsplash.jpg"
-          carouselAlt="Slide D"
-          carouselActivity="disabled"
-        />
-        <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg"
-          carouselAlt="Slide E"
-          carouselActivity="disabled"
-        />
-        <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg"
-          carouselAlt="Slide F"
-          carouselActivity="disabled"
-        />
-        <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg"
-          carouselAlt="Slide G"
-          carouselActivity="disabled"
-        />
-      </>
+      <picture className={`carousel__track__slide ${carouselActivity}`} ref={carouselTrackSlide}>
+        <img src={carouselImg} alt={carouselAlt} draggable="false" loading="lazy" decoding="async" fetchpriority="low" />
+      </picture>
     );
   };
-
-  const carousel = useRef<HTMLDivElement>(null!),
-    carouselTrack = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {
     if (!carousel || !carouselTrack) return;
 
-    carouselTrack.current.onmousedown = (e: MouseEvent) => {
+    const onMouseDown = (e: MouseEvent): void => {
+      userMouseDown.current = true;
+      userMouseMove.current = false;
       carouselTrack.current.dataset.mouseDownAt = `${e.clientX}`;
     };
 
-    carousel.current.onmousemove = (e: MouseEvent) => {
+    const onMouseMove = (e: MouseEvent): void => {
+      userMouseMove.current = true;
       const mouseDownAt: string = carouselTrack.current?.dataset.mouseDownAt as unknown as string,
         mouseDelta: number = parseFloat(mouseDownAt) - e.clientX,
         maxDelta: number = window.innerWidth / 1.8,
@@ -111,33 +36,71 @@ const Carousel = () => {
         nextPerc: string = carouselTrack.current?.dataset.prevPercentage as unknown as string;
       let nextPercentage: number = parseFloat(nextPerc) + percentage;
 
-      nextPercentage = Math.max(-138, Math.min(0, nextPercentage));
+      console.log(userMouseDown.current);
+      if (!userMouseDown.current) {
+        return;
+      } else {
+        userMouseMove.current = true;
+        nextPercentage = Math.max(-180, Math.min(15, nextPercentage));
+        carouselTrack.current.dataset.percentage = `${nextPercentage}`;
+      }
 
-      carouselTrack.current.dataset.percentage = `${nextPercentage}`;
-
-      if (carouselTrack.current.dataset.mouseDownAt === '0') return;
-      carouselTrack.current.animate(
-        {
-          transform: `translateX(${nextPercentage}%)`,
-        },
-        { duration: 1200, fill: 'forwards' }
-      );
-
-      const arrayOfImages: Element[] = Array.from(carouselTrack.current.children);
-      arrayOfImages.forEach((el) => {
-        el.children[0].animate(
+      if (carouselTrack.current.dataset.mouseDownAt === '0') {
+        return;
+      } else {
+        carouselTrack.current.animate(
           {
-            objectPosition: `${100 + nextPercentage}% center`,
+            transform: `translateX(${nextPercentage}%)`,
           },
           { duration: 1200, fill: 'both' }
         );
-      });
+        const arrayOfImages: Element[] = Array.from(carouselTrack.current.children);
+        [...arrayOfImages].forEach((el: Element) => {
+          if (elInViewport(el, true) == true) {
+            el.children[0].animate(
+              {
+                objectPosition: `${100 + nextPercentage / 2}% 100%`,
+              },
+              { duration: 1200, fill: 'both' }
+            );
+          }
+        });
+      }
     };
 
-    carouselTrack.current.onmouseup = () => {
+    const onMouseLeave = (): void => {
+      userMouseDown.current = false;
+      userMouseMove.current = false;
+    };
+
+    const onMouseUp = (): void => {
+      userMouseDown.current = false;
       carouselTrack.current.dataset.mouseDownAt = '0';
       carouselTrack.current.dataset.prevPercentage = carouselTrack.current.dataset.percentage;
     };
+
+    const UserMouseUp = (e: MouseEvent): void => {
+      const target = e.target as HTMLPictureElement;
+      if (!userMouseMove.current) {
+        target.classList.contains('active') ? target.classList.replace('active', 'disabled') : target.classList.replace('disabled', 'active');
+      }
+    };
+
+    carousel.current?.addEventListener('mousedown', onMouseDown);
+    carouselTrack.current?.addEventListener('mousemove', onMouseMove);
+    carousel.current?.addEventListener('mouseleave', onMouseLeave);
+    carousel.current?.addEventListener('mouseup', onMouseUp);
+    carousel.current?.addEventListener('mouseup', UserMouseUp);
+
+    const listenerUnmount = (): void => {
+      carouselTrack.current?.removeEventListener('mousedown', onMouseDown);
+      carouselTrack.current?.removeEventListener('mousemove', onMouseMove);
+      carouselTrack.current?.removeEventListener('mouseleave', onMouseLeave);
+      carouselTrack.current?.removeEventListener('mouseup', onMouseUp);
+      carousel.current?.removeEventListener('mouseup', UserMouseUp);
+    };
+
+    return listenerUnmount;
   }, []);
 
   return (
@@ -149,7 +112,41 @@ const Carousel = () => {
       </section>
       <section className="carousel" ref={carousel}>
         <div className="carousel__track" ref={carouselTrack} data-mouse-down-at="0" data-prev-percentage="0">
-          <CarouselSlides />
+          <CarouselProps
+            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg"
+            carouselAlt="Slide A"
+            carouselActivity="active"
+          />
+          <CarouselProps
+            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/lena-kudryavtseva-hdODD2TVIlM-unsplash.jpg"
+            carouselAlt="Slide B"
+            carouselActivity="disabled"
+          />
+          <CarouselProps
+            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg"
+            carouselAlt="Slide C"
+            carouselActivity="disabled"
+          />
+          <CarouselProps
+            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/westwind-air-service-LT1WeeVzd6g-unsplash.jpg"
+            carouselAlt="Slide D"
+            carouselActivity="disabled"
+          />
+          <CarouselProps
+            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg"
+            carouselAlt="Slide E"
+            carouselActivity="disabled"
+          />
+          <CarouselProps
+            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg"
+            carouselAlt="Slide F"
+            carouselActivity="disabled"
+          />
+          <CarouselProps
+            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg"
+            carouselAlt="Slide G"
+            carouselActivity="disabled"
+          />
         </div>
         <div className="carousel__navigation">
           <button>

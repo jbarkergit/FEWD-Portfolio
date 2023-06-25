@@ -37,22 +37,25 @@
     height: inherit;
     z-index: 4;
     margin: 0 f.rem(25);
+
     scrollbar-width: none;
     scroll-behavior: smooth;
     &__slide {
-      display: flex;
       flex: 0 0 f.rem(520);
       aspect-ratio: 4/5;
-      border-radius: f.rem(40);
+      border-radius: 6.5rem;
+      box-shadow: 12px 12px 17px #d5d5d5, -12px -12px 17px #ebebeb;
       &.active {
         flex: 0 0 f.rem(1154);
         aspect-ratio: 4/2;
+        border-radius: 6.5rem;
+        box-shadow: 12px 12px 17px #d5d5d5, -12px -12px 17px #ebebeb;
         transition: all 0.45s linear;
       }
       & img {
-        border-radius: f.rem(40);
+        border-radius: 6.5rem;
         object-fit: cover;
-        object-position: center center;
+        object-position: right center;
         @include m.photoFilters;
       }
       @media (width <= 1450px) {
