@@ -36,12 +36,14 @@ const Carousel = (): JSX.Element => {
         nextPerc: string = carouselTrack.current?.dataset.prevPercentage as unknown as string;
       let nextPercentage: number = parseFloat(nextPerc) + percentage;
 
-      console.log(userMouseDown.current);
       if (!userMouseDown.current) {
         return;
       } else {
         userMouseMove.current = true;
-        nextPercentage = Math.max(-180, Math.min(15, nextPercentage));
+        const trackWidthMax: number = (carouselTrack.current.offsetWidth / 64) * -1;
+        console.log(trackWidthMax);
+        nextPercentage = Math.max(trackWidthMax, Math.min(6.5, nextPercentage));
+        // nextPercentage = Math.max(-180, Math.min(15, nextPercentage));
         carouselTrack.current.dataset.percentage = `${nextPercentage}`;
       }
 
