@@ -93,10 +93,10 @@ const Carousel = (): JSX.Element => {
     carousel.current?.addEventListener('mouseup', UserMouseUp);
 
     const listenerUnmount = (): void => {
-      carouselTrack.current?.removeEventListener('mousedown', onMouseDown);
+      carousel.current?.removeEventListener('mousedown', onMouseDown);
       carouselTrack.current?.removeEventListener('mousemove', onMouseMove);
-      carouselTrack.current?.removeEventListener('mouseleave', onMouseLeave);
-      carouselTrack.current?.removeEventListener('mouseup', onMouseUp);
+      carousel.current?.removeEventListener('mouseleave', onMouseLeave);
+      carousel.current?.removeEventListener('mouseup', onMouseUp);
       carousel.current?.removeEventListener('mouseup', UserMouseUp);
     };
 
