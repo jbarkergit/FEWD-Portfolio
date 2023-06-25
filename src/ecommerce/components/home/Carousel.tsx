@@ -43,7 +43,6 @@ const Carousel = (): JSX.Element => {
         const trackWidthMax: number = (carouselTrack.current.offsetWidth / 64) * -1;
         console.log(trackWidthMax);
         nextPercentage = Math.max(trackWidthMax, Math.min(6.5, nextPercentage));
-        // nextPercentage = Math.max(-180, Math.min(15, nextPercentage));
         carouselTrack.current.dataset.percentage = `${nextPercentage}`;
       }
 
@@ -61,7 +60,7 @@ const Carousel = (): JSX.Element => {
           if (elInViewport(el, true) == true) {
             el.children[0].animate(
               {
-                objectPosition: `${100 + nextPercentage / 2}% 100%`,
+                objectPosition: `${85 + nextPercentage / 2}% 100%`,
               },
               { duration: 1200, fill: 'both' }
             );
