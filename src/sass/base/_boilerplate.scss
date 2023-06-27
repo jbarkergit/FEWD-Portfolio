@@ -5,10 +5,6 @@ html {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   font-size: 100%;
-  &:focus-within {
-    //LENIS BY STUDIO FREIGHT (SMOOTH SCROLL LIBRARY)
-    scroll-behavior: initial;
-  }
 }
 body {
   padding: 0;
@@ -19,11 +15,21 @@ body {
   cursor: default;
   overflow-x: hidden;
 }
-html,
-body {
-  //LENIS BY STUDIO FREIGHT (SMOOTH SCROLL LIBRARY)
-  min-height: 100%;
+//LENIS BY STUDIO FREIGHT (SMOOTH SCROLL LIBRARY)
+html.lenis {
   height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 *,
 *::before,

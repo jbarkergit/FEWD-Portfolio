@@ -1,7 +1,9 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Lenis from '@studio-freight/lenis';
 
 import SuspenseLoader from './shared/pages/SuspenseLoader';
+
 const NotFound = lazy(() => import('./shared/pages/NotFound'));
 
 import Portfolio from './portfolio/pages/Portfolio';
@@ -12,6 +14,13 @@ const BrowseProduct = lazy(() => import('./ecommerce/pages/BrowseProduct'));
 const ProductPage = lazy(() => import('./ecommerce/pages/ProductPage'));
 
 function App() {
+  const lenis = new Lenis();
+  function raf(time: any) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
   return (
     <BrowserRouter>
       <Suspense fallback={SuspenseLoader()}>
