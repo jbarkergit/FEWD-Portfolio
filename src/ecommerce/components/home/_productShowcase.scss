@@ -1,84 +1,27 @@
 @use '../../../sass/styles/mixins' as m;
 @use '../../../sass/util/functions' as f;
 
-.productShowcase {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, calc(33% - f.rem(25)));
-  grid-auto-rows: 1fr;
-  gap: f.rem(25);
-  padding: calc(f.rem(115) + f.rem(32)) f.rem(100) f.rem(115) f.rem(100);
+.showcase {
+  display: block;
+  width: 100%;
+  padding: calc(f.rem(50) + f.rem(32)) 0 f.rem(115) 0;
   background-color: hsl(196, 27%, 92%);
-  &__product {
-    position: relative;
-    box-shadow: 2px 3px 7px -1px hsl(0, 0%, 85%);
-    cursor: pointer;
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      z-index: 0;
-      background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), hsla(0, 0%, 20%, 0.3), transparent 75%);
+  &__heading {
+    padding: f.rem(50) 0 f.rem(50) 8vw;
+    & h2 {
+      font-weight: 800;
+      text-transform: uppercase;
     }
-    &__image {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      &:before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        @include m.productPhoto;
-        opacity: 0.5;
-        backdrop-filter: blur(20%);
-      }
-      & img {
-        width: 100%;
-        height: 100%;
-        max-height: f.rem(500);
-        object-fit: scale-down;
-        mix-blend-mode: darken;
-        @include m.photoFilters;
-        &:hover {
-          transform: scale(105%);
-        }
-      }
-    }
-    &__overlay {
-      position: absolute;
+  }
+  &__products {
+    display: grid;
+    place-items: center;
+    max-width: f.rem(1600);
+    & ul {
       display: grid;
-      grid-template-columns: repeat(auto-fit, 50%);
-      grid-auto-rows: 2fr;
+      grid-template-columns: repeat(auto-fit, calc(33% - f.rem(75)));
+      gap: f.rem(25);
       width: 100%;
-      height: 100%;
-      z-index: 3;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      &--quarter {
-        position: relative;
-        padding: f.rem(25);
-        position: absolute;
-        &:nth-of-type(2) {
-          top: 0;
-          right: 0;
-        }
-        &:nth-of-type(3) {
-          bottom: 0;
-          left: 0;
-        }
-        &:nth-of-type(4) {
-          right: 0;
-          bottom: 0;
-        }
-        & .fa-solid.fa-play {
-          font-size: f.rem(40);
-          transform: rotate(50%);
-        }
-      }
     }
   }
 }
