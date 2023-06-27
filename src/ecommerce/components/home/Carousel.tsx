@@ -41,7 +41,6 @@ const Carousel = (): JSX.Element => {
       } else {
         userMouseMove.current = true;
         const trackWidthMax: number = (carouselTrack.current.offsetWidth / 64) * -1;
-        console.log(trackWidthMax);
         nextPercentage = Math.max(trackWidthMax, Math.min(6.5, nextPercentage));
         carouselTrack.current.dataset.percentage = `${nextPercentage}`;
       }
@@ -74,15 +73,14 @@ const Carousel = (): JSX.Element => {
       userMouseMove.current = false;
     };
 
-    const onMouseUp = (): void => {
+    const onMouseUp = (e: MouseEvent): void => {
       userMouseDown.current = false;
       carouselTrack.current.dataset.mouseDownAt = '0';
       carouselTrack.current.dataset.prevPercentage = carouselTrack.current.dataset.percentage;
-    };
 
-    const UserMouseUp = (e: MouseEvent): void => {
       const target = e.target as HTMLPictureElement;
       if (!userMouseMove.current) {
+        [...carouselTrack.current.children].forEach((child) => child.classList.replace('active', 'disabled'));
         target.classList.contains('active') ? target.classList.replace('active', 'disabled') : target.classList.replace('disabled', 'active');
       }
     };
@@ -91,14 +89,12 @@ const Carousel = (): JSX.Element => {
     carouselTrack.current?.addEventListener('mousemove', onMouseMove);
     carousel.current?.addEventListener('mouseleave', onMouseLeave);
     carousel.current?.addEventListener('mouseup', onMouseUp);
-    carousel.current?.addEventListener('mouseup', UserMouseUp);
 
     const listenerUnmount = (): void => {
       carousel.current?.removeEventListener('mousedown', onMouseDown);
       carouselTrack.current?.removeEventListener('mousemove', onMouseMove);
       carousel.current?.removeEventListener('mouseleave', onMouseLeave);
       carousel.current?.removeEventListener('mouseup', onMouseUp);
-      carousel.current?.removeEventListener('mouseup', UserMouseUp);
     };
 
     return listenerUnmount;
@@ -148,14 +144,6 @@ const Carousel = (): JSX.Element => {
             carouselAlt="Slide G"
             carouselActivity="disabled"
           />
-        </div>
-        <div className="carousel__navigation">
-          <button>
-            <i className="fa-solid fa-circle-chevron-left"></i>
-          </button>
-          <button>
-            <i className="fa-solid fa-circle-chevron-right"></i>
-          </button>
         </div>
       </section>
     </section>
