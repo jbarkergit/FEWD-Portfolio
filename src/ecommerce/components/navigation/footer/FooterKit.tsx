@@ -20,8 +20,7 @@ const FooterKit = () => {
             <mark>Privacy notice: for demo purposes only.</mark>
           </h4>
           <h5>
-            This input field is not a tied to a live marketing service. Any information provided will not be saved and/or stored via third party services, nor local
-            databases.
+            This input field is not a tied to a live marketing service. Any information provided will not be stored via third party services, nor local databases.
           </h5>
         </div>
       </form>
@@ -29,72 +28,68 @@ const FooterKit = () => {
   };
   return (
     <nav className="footerKit">
-      <Newsletter />
-      <ul>
-        <li>
-          <h2>Reach Out!</h2>
-        </li>
-        <li>
-          <Link to="">
-            <h3>Contact Form</h3>
-          </Link>
-        </li>
-        <li>
-          <Link to="">
-            <h3>Newsletter</h3>
-          </Link>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <h2>About Your Order</h2>
-        </li>
-        <li>
-          <Link to="">
-            <h3>Cancellation</h3>
-          </Link>
-        </li>
-        <li>
-          <Link to="">
-            <h3>Payment</h3>
-          </Link>
-        </li>
-        <li>
-          <Link to="">
-            <h3>Returns</h3>
-          </Link>
-        </li>
-        <li>
-          <Link to="">
-            <h3>Shipment</h3>
-          </Link>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <h2>Terms of Service</h2>
-        </li>
-        <li>
-          <Link to="">
-            <h3>Data Privacy</h3>
-          </Link>
-        </li>
-        <li>
-          <Link to="">
-            <h3>EULA</h3>
-          </Link>
-        </li>
-        <li>
-          <Link to="">
-            <h3>General Conditions</h3>
-          </Link>
-        </li>
-        <li>
-          <Link to="">
-            <h3>Terms and Conditions</h3>
-          </Link>
-        </li>
-      </ul>
+      <section className="newsCta">
+        <Newsletter />
+      </section>
+      <section className="customerSupport">
+        <ul>
+          <li>
+            <h2>Support</h2>
+          </li>
+          <li>
+            <Link to="">
+              <h3>Contact Form</h3>
+            </Link>
+          </li>
+          <li>
+            <Link to="">
+              <h3>Cancellation</h3>
+            </Link>
+          </li>
+          <li>
+            <Link to="">
+              <h3>Payment</h3>
+            </Link>
+          </li>
+          <li>
+            <Link to="">
+              <h3>Returns</h3>
+            </Link>
+          </li>
+          <li>
+            <Link to="">
+              <h3>Shipment</h3>
+            </Link>
+          </li>
+        </ul>
+      </section>
+      <section className="customerSupport">
+        <ul>
+          <li>
+            <h2>Terms of Service</h2>
+          </li>
+          <li>
+            <Link to="">
+              <h3>Data Privacy</h3>
+            </Link>
+          </li>
+          <li>
+            <Link to="">
+              <h3>EULA</h3>
+            </Link>
+          </li>
+          <li>
+            <Link to="">
+              <h3>General Conditions</h3>
+            </Link>
+          </li>
+          <li>
+            <Link to="">
+              <h3>Terms and Conditions</h3>
+            </Link>
+          </li>
+        </ul>
+      </section>
     </nav>
   );
 };

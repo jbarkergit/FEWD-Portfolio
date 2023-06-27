@@ -1,19 +1,39 @@
 @use '../../../../sass/styles/mixins' as m;
 @use '../../../../sass/util/functions' as f;
 
+.ecomFooter {
+  position: relative;
+  background-color: white;
+  &:after {
+    content: '';
+    position: absolute;
+    top: f.rem(-64);
+    left: 0;
+    width: 100%;
+    height: f.rem(64);
+    z-index: 10;
+    border-top-right-radius: f.rem(64);
+    border-top-left-radius: f.rem(64);
+    background-color: white;
+  }
+}
 .footerKit {
   display: grid;
-  grid-template-columns: 35% 21% 21% 21%;
-  width: 100%;
+  grid-template-columns: 33% 33% 33%;
+  align-items: center;
   max-width: f.rem(1600);
-  height: 65vh;
-  padding: f.rem(50) 0;
+  height: calc(40vh - f.rem(32));
+  padding: calc(f.rem(50) - f.rem(64)) 0 f.rem(50) 0;
   margin: 0 auto;
+}
+.customerSupport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   & ul {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50%;
     & li {
       padding-bottom: f.rem(8);
       & h2 {
@@ -27,6 +47,11 @@
     }
   }
 }
+.newsCta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .newsletter {
   display: flex;
   flex-direction: column;
@@ -37,7 +62,8 @@
     font-size: f.rem(40);
     line-height: 115%;
     font-weight: 800;
-    margin-bottom: f.rem(15);
+    margin-bottom: f.rem(5);
+    z-index: 5;
   }
   &__field {
     position: relative;

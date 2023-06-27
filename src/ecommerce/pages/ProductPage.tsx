@@ -19,7 +19,7 @@ const getProductBySku = () => {
       <>
         {findProduct.images!.map((image) => (
           <picture key={uuidv4()}>
-            <img src={image} alt={findProduct.company + findProduct.unit} role="presentation" loading="lazy" decoding="async" fetchpriority="high" />
+            <img src={image} alt={findProduct.company + findProduct.unit} role="presentation" decoding="async" fetchpriority="high" />
           </picture>
         ))}
       </>

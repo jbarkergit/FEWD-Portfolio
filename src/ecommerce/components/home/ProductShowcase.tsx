@@ -23,27 +23,13 @@ const ProductShowcase = () => {
                   </picture>
                 </span>
               </Link>
-              <div className="productGrid__product__information">
+              {/* <div className="productGrid__product__information">
                 <Link to={`/ecommerce/product/${product.sku}`}>
                   <h2>
                     {product.company} {product.unit}
                   </h2>
                 </Link>
-                <p>{product.description}</p>
-                <div className="productGrid__product__advanced">
-                  <span>
-                    <h4>{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h4>
-                  </span>
-                  <span>
-                    <button>
-                      <i className="fa-solid fa-cart-plus"></i>
-                    </button>
-                    <button>
-                      <i className="fa-solid fa-cart-arrow-down"></i>
-                    </button>
-                  </span>
-                </div>
-              </div>
+              </div> */}
             </li>
           ))}
         </ul>

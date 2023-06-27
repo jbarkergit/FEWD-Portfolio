@@ -40,7 +40,7 @@ const Carousel = (): JSX.Element => {
         return;
       } else {
         userMouseMove.current = true;
-        const trackWidthMax: number = (carouselTrack.current.offsetWidth / 64) * -1;
+        const trackWidthMax: number = (carouselTrack.current.offsetWidth / 32) * -1;
         nextPercentage = Math.max(trackWidthMax, Math.min(6.5, nextPercentage));
         carouselTrack.current.dataset.percentage = `${nextPercentage}`;
       }

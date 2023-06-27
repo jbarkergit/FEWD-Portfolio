@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: unset;
   max-width: f.rem(1600);
-  margin: 0 auto;
+  margin-bottom: calc(f.rem(50) + f.rem(64));
 }
 .productGrid {
   display: grid;
@@ -29,7 +29,7 @@
     position: relative;
     height: 100%;
     aspect-ratio: 4/5;
-    border-radius: f.rem(16);
+    border-radius: f.rem(32);
     box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
     transition: 0.55s ease-in-out;
     @media (width <= 766px) {
@@ -43,14 +43,14 @@
     &--containedHover {
       display: block;
       height: 60%;
-      border-top-left-radius: f.rem(16);
-      border-top-right-radius: f.rem(16);
+      border-top-left-radius: f.rem(32);
+      border-top-right-radius: f.rem(32);
       overflow: hidden;
     }
     & picture {
       position: relative;
-      border-top-left-radius: f.rem(16);
-      border-top-right-radius: f.rem(16);
+      border-top-left-radius: f.rem(32);
+      border-top-right-radius: f.rem(32);
       @include m.productPhoto;
       @include m.productPhotoHover;
       transition: ease-in-out 0.35s;
@@ -68,9 +68,9 @@
       flex-direction: column;
       width: 100%;
       height: 40%;
-      padding: 2vh;
-      border-bottom-left-radius: f.rem(16);
-      border-bottom-right-radius: f.rem(16);
+      padding: 2vh 1.5vw;
+      border-bottom-left-radius: f.rem(32);
+      border-bottom-right-radius: f.rem(32);
       background-color: hsl(0, 0%, 98%);
       & h2,
       h3 {
