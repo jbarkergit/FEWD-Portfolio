@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "eslint-config-airbnb-typescript": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0",
@@ -24,8 +24,8 @@
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "@vitejs/plugin-react": "^4.0.0",
-    "eslint": "^7.2.0",
-    "eslint-config-airbnb": "^18.2.1",
+    "eslint": "^8.43.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
