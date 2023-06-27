@@ -115,18 +115,8 @@ const Carousel = (): JSX.Element => {
             carouselActivity="active"
           />
           <CarouselProps
-            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/lena-kudryavtseva-hdODD2TVIlM-unsplash.jpg"
-            carouselAlt="Slide B"
-            carouselActivity="disabled"
-          />
-          <CarouselProps
             carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg"
             carouselAlt="Slide C"
-            carouselActivity="disabled"
-          />
-          <CarouselProps
-            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/westwind-air-service-LT1WeeVzd6g-unsplash.jpg"
-            carouselAlt="Slide D"
             carouselActivity="disabled"
           />
           <CarouselProps
