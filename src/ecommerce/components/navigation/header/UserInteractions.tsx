@@ -3,7 +3,7 @@ import SearchBar from '../../features/search/SearchBar';
 
 const UserInteractions = () => {
   return (
-    <section className="navkit__header__section">
+    <div className="navkit__header__section">
       <div className="navkit__header__section__ui">
         <SearchBar />
       </div>
@@ -49,7 +49,7 @@ const UserInteractions = () => {
           <h4 style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}>Shopping Cart</h4>
         </button>
       </div>
-    </section>
+    </div>
   );
 };
 

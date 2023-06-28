@@ -1,6 +1,5 @@
 @use '../../sass/util/functions' as f;
 @use '../../sass/styles/mixins' as m;
-@use '../../sass/util/breakpoints' as b;
 
 .portfolio {
   position: relative;
@@ -10,9 +9,9 @@
   max-height: max-content;
   max-width: 100%;
   overflow: hidden;
-  @include b.breakpoint(portfolioTablet) {
-    max-height: 100vh;
-  }
+  // @include b.breakpoint(portfolioTablet) {
+  //   max-height: 100vh;
+  // }
 }
 .invalidShakeAnimation {
   animation-name: invalidShakeAnimation;

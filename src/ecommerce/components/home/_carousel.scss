@@ -1,13 +1,9 @@
 @use '../../../sass/styles/mixins' as m;
 @use '../../../sass/util/functions' as f;
 
-.caro {
-  height: 94vh;
-}
 .carousel {
   position: relative;
   display: block;
-  height: f.rem(620);
   margin: f.rem(50) 0;
   &:hover {
     cursor: grab;
@@ -16,29 +12,21 @@
     cursor: grabbing;
   }
   &__heading {
-    width: 100%;
-    height: 15vh;
-    margin: 2.5% 5% f.rem(-15) 8vw;
-    & h2 {
-      max-width: 26ch;
-      font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
-      font-weight: 800;
-      line-height: 115%;
-      text-transform: uppercase;
-      color: var(--textPrimary);
-    }
-    & p {
-      width: clamp(45ch, 50%, 65ch);
-      color: var(--textPrimary);
-    }
+    max-width: 26ch;
+    margin: 2.5% 5% 2% 8vw;
+    color: var(--textPrimary);
+    font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
+    font-weight: 800;
+    line-height: 115%;
+    text-transform: uppercase;
   }
   &__track {
-    position: absolute;
+    position: relative;
     display: flex;
     flex-wrap: nowrap;
     gap: f.rem(20);
     width: fit-content;
-    height: inherit;
+    height: f.rem(650);
     z-index: 4;
     margin: 0 f.rem(25);
     scrollbar-width: none;

@@ -2,20 +2,20 @@
 @use '../../../sass/util/functions' as f;
 
 .productHighlight {
+  display: grid;
+  place-items: center;
   padding: f.rem(50) 0 f.rem(150) 0;
   background-color: hsl(0, 0%, 81%);
   &__heading {
-    display: grid;
-    place-items: center;
-    margin: f.rem(50) 0;
-    & h2 {
-      max-width: 26ch;
-      font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(60));
-      font-weight: 800;
-      line-height: 115%;
-      text-transform: uppercase;
-      color: white;
-    }
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 2.5% 5% 2% 0;
+    color: var(--textPrimary);
+    font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
+    font-weight: 800;
+    line-height: 115%;
+    text-transform: uppercase;
   }
   & ul {
     display: grid;
@@ -36,9 +36,5 @@
         @include m.photoFilters;
       }
     }
-  }
-  &__products {
-    display: grid;
-    place-items: center;
   }
 }

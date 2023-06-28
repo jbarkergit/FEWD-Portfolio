@@ -6,19 +6,19 @@ import AccountModal from '../../features/account/AccountModal';
 
 const PrimaryNav = () => {
   return (
-    <section
+    <header
       className="navkit"
       style={{
         position: useLocation().pathname === '/ecommerce' ? 'absolute' : 'relative',
       }}
     >
-      <header className="navkit__header">
+      <div className="navkit__header">
         <HeaderKit />
         <UserInteractions />
         <ShoppingCart />
         <AccountModal />
-      </header>
-    </section>
+      </div>
+    </header>
   );
 };
 

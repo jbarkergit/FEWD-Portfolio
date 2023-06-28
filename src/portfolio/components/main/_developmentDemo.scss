@@ -1,13 +1,12 @@
 @use '../../../sass/util/functions' as f;
 @use '../../../sass/styles/mixins' as m;
-@use '../../../sass/util/breakpoints' as b;
 
 .demoSection {
   display: flex;
   flex-direction: column;
-  @include b.breakpoint(portfolioTablet) {
-    flex-direction: row;
-  }
+  // @include b.breakpoint(portfolioTablet) {
+  //   flex-direction: row;
+  // }
 }
 .developmentDemo {
   position: relative;
@@ -49,12 +48,12 @@
       justify-content: center;
       width: 100%;
       height: inherit;
-      @include b.breakpoint(portfolioTablet) {
-        flex-basis: 75%;
-        flex-grow: 1;
-        box-shadow: 0;
-        @include m.portElement;
-      }
+      // @include b.breakpoint(portfolioTablet) {
+      //   flex-basis: 75%;
+      //   flex-grow: 1;
+      //   box-shadow: 0;
+      //   @include m.portElement;
+      // }
       & video {
         aspect-ratio: 16/9;
         width: inherit;

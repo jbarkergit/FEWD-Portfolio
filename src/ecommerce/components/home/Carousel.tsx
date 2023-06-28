@@ -98,41 +98,37 @@ const Carousel = (): JSX.Element => {
   }, []);
 
   return (
-    <section className="caro">
-      <section className="carousel__heading">
-        <h2>
-          Audio equipment for <span className="highlight">every</span> setting and <span className="highlight">every</span> environment
-        </h2>
-      </section>
-      <section className="carousel" ref={carousel}>
-        <div className="carousel__track" ref={carouselTrack} data-mouse-down-at="0" data-prev-percentage="0">
-          <CarouselProps
-            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg"
-            carouselAlt="Slide A"
-            carouselActivity="active"
-          />
-          <CarouselProps
-            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg"
-            carouselAlt="Slide C"
-            carouselActivity="disabled"
-          />
-          <CarouselProps
-            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg"
-            carouselAlt="Slide E"
-            carouselActivity="disabled"
-          />
-          <CarouselProps
-            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg"
-            carouselAlt="Slide F"
-            carouselActivity="disabled"
-          />
-          <CarouselProps
-            carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg"
-            carouselAlt="Slide G"
-            carouselActivity="disabled"
-          />
-        </div>
-      </section>
+    <section className="carousel" ref={carousel}>
+      <h2 className="carousel__heading">
+        Audio equipment for <span className="highlight">every</span> setting and <span className="highlight">every</span> environment
+      </h2>
+      <div className="carousel__track" ref={carouselTrack} data-mouse-down-at="0" data-prev-percentage="0">
+        <CarouselProps
+          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg"
+          carouselAlt="Slide A"
+          carouselActivity="active"
+        />
+        <CarouselProps
+          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg"
+          carouselAlt="Slide C"
+          carouselActivity="disabled"
+        />
+        <CarouselProps
+          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg"
+          carouselAlt="Slide E"
+          carouselActivity="disabled"
+        />
+        <CarouselProps
+          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg"
+          carouselAlt="Slide F"
+          carouselActivity="disabled"
+        />
+        <CarouselProps
+          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg"
+          carouselAlt="Slide G"
+          carouselActivity="disabled"
+        />
+      </div>
     </section>
   );
 };

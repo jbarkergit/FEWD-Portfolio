@@ -4,7 +4,6 @@ import SearchBar from '../../features/search/SearchBar';
 import { useRef } from 'react';
 
 const HeaderKit = () => {
-  // Thrown error is a desired outcome to utilize useState from our context while ALSO offering guard to Application Context Provider
   // @ts-ignore:
   const { setCategoryFilter } = useCategoryFilterContext();
 
@@ -218,7 +217,7 @@ const HeaderKit = () => {
   };
 
   return (
-    <section className="navkit__header__section">
+    <div className="navkit__header__section">
       <nav className="navkit__header__section--nav">
         <MobileMenu />
         <ul className="navkit__header__section__links">
@@ -228,7 +227,7 @@ const HeaderKit = () => {
           <VocalDropdown />
         </ul>
       </nav>
-    </section>
+    </div>
   );
 };
 

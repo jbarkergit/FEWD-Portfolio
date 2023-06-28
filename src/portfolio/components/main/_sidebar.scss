@@ -1,6 +1,5 @@
 @use '../../../sass/util/functions' as f;
 @use '../../../sass/styles/mixins' as m;
-@use '../../../sass/util/breakpoints' as b;
 
 .sidebar {
   position: relative;
@@ -8,11 +7,11 @@
   height: 50vh;
   z-index: 2;
   @include m.portElement;
-  @include b.breakpoint(portfolioTablet) {
-    flex-basis: 25%;
-    flex-grow: 1;
-    height: 75vh;
-  }
+  // @include b.breakpoint(portfolioTablet) {
+  //   flex-basis: 25%;
+  //   flex-grow: 1;
+  //   height: 75vh;
+  // }
   &__article {
     position: absolute;
     display: flex;
@@ -21,10 +20,10 @@
     height: 25vh;
     min-width: 100%;
     padding: 0 10vw;
-    @include b.breakpoint(portfolioTablet) {
-      height: 75vh;
-      padding: calc(f.rem(10) + 1.5625vw);
-    }
+    // @include b.breakpoint(portfolioTablet) {
+    //   height: 75vh;
+    //   padding: calc(f.rem(10) + 1.5625vw);
+    // }
     &__digest {
       display: flex;
       flex-direction: column;

@@ -6,26 +6,24 @@ import { ProductType } from '../../context/exports/types';
 const ProductHighlight = (): JSX.Element => {
   return (
     <section className="productHighlight">
-      <section className="productHighlight__heading">
-        <h2>
+      <h2 className="productHighlight__heading">
+        <span>
           <span className="highlight">New</span> drops available now
-        </h2>
-      </section>
-      <section className="productHighlight__products">
-        <ul>
-          {ProductDatabase.filter((product: ProductType) => product.productshowcase === true).map((product: ProductType) => (
-            <li key={uuidv4()}>
-              <Link to={`/ecommerce/product/${product.sku}`}>
-                <article>
-                  <picture>
-                    <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />
-                  </picture>
-                </article>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+        </span>
+      </h2>
+      <ul>
+        {ProductDatabase.filter((product: ProductType) => product.productshowcase === true).map((product: ProductType) => (
+          <li key={uuidv4()}>
+            <Link to={`/ecommerce/product/${product.sku}`}>
+              <article>
+                <picture>
+                  <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />
+                </picture>
+              </article>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 };

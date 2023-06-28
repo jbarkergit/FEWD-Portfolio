@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 const Newsletter = () => {
   return (
     <form className="newsletter">
-      <h2>Keep in touch</h2>
       <div className="newsletter__field">
         <label>
           <input type="email" name="email" placeholder="Enter email address..." />
@@ -15,12 +14,12 @@ const Newsletter = () => {
         </button>
       </div>
       <div className="newsletter__notice">
-        <h4>
+        <h3>
           <mark>Privacy notice: for demo purposes only.</mark>
-        </h4>
-        <h5>
+        </h3>
+        <h4>
           This input field is not a tied to a live marketing service. Any information provided will not be stored via third party services, nor local databases.
-        </h5>
+        </h4>
       </div>
     </form>
   );
@@ -137,25 +136,26 @@ const Service = () => {
   );
 };
 
-const FooterKit = () => {
+const eFooter = () => {
   return (
-    <nav className="footerKit">
-      <section className="footerKit__newsCta">
+    <footer className="eFooter">
+      <section className="eFooter__newsCta">
+        <h2>Keep in touch</h2>
         <Newsletter />
       </section>
-      <section className="footerKit__customerSupport">
-        <Support />
-      </section>
-      <section className="footerKit__customerSupport">
-        <div>
-          <Service />
-        </div>
-      </section>
-      <section className="footerKit__copyright">
-        <small>2023 Dynamic Audio</small>
-      </section>
-    </nav>
+      <nav className="footerKit">
+        <section className="footerKit__customerSupport">
+          <Support />
+        </section>
+        <section className="footerKit__customerSupport">
+          <div>
+            <Service />
+          </div>
+        </section>
+      </nav>
+      <small>2023 Dynamic Audio</small>
+    </footer>
   );
 };
 
-export default FooterKit;
+export default eFooter;
