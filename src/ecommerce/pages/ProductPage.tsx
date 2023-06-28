@@ -37,23 +37,29 @@ const getProductBySku = () => {
       <>
         <Header />
         <section className="skuPage">
-          <section className="skuPage__imgBlock">{useProductImages()}</section>
-          <main className="skuPage__details">
-            <span>
-              <h1>
-                {findProduct.company} {findProduct.unit}
-              </h1>
-            </span>
-            <span className="skuPage__details--price">{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(findProduct.price)}</span>
-            <span>
-              <p>{findProduct.description}</p>
-            </span>
-            <span>
-              <button className="skuPage__details--quickAdd">
-                <i className="fa-solid fa-cart-plus"></i>
-              </button>
-            </span>
-          </main>
+          <aside>
+            <section className="skuPage__imgBlock">{useProductImages()}</section>
+          </aside>
+          <article>
+            <main className="skuPage__details">
+              <span>
+                <h1>
+                  {findProduct.company} {findProduct.unit}
+                </h1>
+              </span>
+              <span>
+                <h3>{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(findProduct.price)}</h3>
+              </span>
+              <span>
+                <p>{findProduct.description}</p>
+              </span>
+              <span>
+                <button className="skuPage__details--quickAdd">
+                  <i className="fa-solid fa-cart-plus"></i>
+                </button>
+              </span>
+            </main>
+          </article>
         </section>
         <Footer />
       </>

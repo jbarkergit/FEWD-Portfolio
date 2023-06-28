@@ -101,7 +101,7 @@ const Carousel = (): JSX.Element => {
   }, []);
 
   return (
-    <section>
+    <section className="caro">
       <section className="carousel__heading">
         <h2>
           Audio equipment for <span className="highlight">every</span> setting and <span className="highlight">every</span> environment

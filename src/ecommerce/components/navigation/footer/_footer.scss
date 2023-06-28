@@ -1,28 +1,12 @@
 @use '../../../../sass/styles/mixins' as m;
 @use '../../../../sass/util/functions' as f;
 
-.ecomFooter {
-  position: relative;
-  background-color: white;
-  &:after {
-    content: '';
-    position: absolute;
-    top: f.rem(-64);
-    left: 0;
-    width: 100%;
-    height: f.rem(64);
-    z-index: 10;
-    border-top-right-radius: f.rem(64);
-    border-top-left-radius: f.rem(64);
-    background-color: white;
-  }
-}
 .footerKit {
   display: grid;
-  grid-template-columns: 33% 33% 33%;
+  grid-template-columns: 40% 30% 30%;
   align-items: center;
   max-width: f.rem(1600);
-  height: calc(40vh - f.rem(32));
+  height: 65vh;
   padding: calc(f.rem(50) - f.rem(64)) 0 f.rem(50) 0;
   margin: 0 auto;
 }

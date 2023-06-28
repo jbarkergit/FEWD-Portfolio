@@ -34,17 +34,19 @@
     justify-content: start;
     margin-top: 8vh;
     & h1 {
-      margin-bottom: 3vh;
+      margin-bottom: f.rem(25);
     }
     & p {
-      margin-bottom: 5vh;
+      margin-bottom: f.rem(30);
       max-width: 38ch;
       font-size: clamp(f.rem(14), f.rem(12) + 0.5vw, f.rem(18));
       font-weight: 500;
       line-height: 1.4rem;
     }
-    &--price {
-      margin-bottom: 7vh;
+    & h3 {
+      font-weight: 500;
+      font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
+      margin-bottom: f.rem(35);
     }
   }
 }
