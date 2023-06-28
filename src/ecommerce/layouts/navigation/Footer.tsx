@@ -2,7 +2,7 @@ import FooterKit from '../../components/navigation/footer/FooterKit';
 
 function EFooter() {
   return (
-    <section>
+    <section className="eFooter">
       <footer>
         <FooterKit />
       </footer>

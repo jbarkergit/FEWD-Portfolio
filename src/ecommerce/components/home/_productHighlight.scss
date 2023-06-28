@@ -1,0 +1,43 @@
+@use '../../../sass/styles/mixins' as m;
+@use '../../../sass/util/functions' as f;
+
+.productHighlight {
+  padding: f.rem(50) 0 f.rem(150) 0;
+  background-color: hsl(0, 0%, 81%);
+  &__heading {
+    display: grid;
+    place-items: center;
+    margin: f.rem(50) 0;
+    & h2 {
+      max-width: 26ch;
+      font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(60));
+      font-weight: 800;
+      line-height: 115%;
+      text-transform: uppercase;
+      color: white;
+    }
+  }
+  & ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    gap: f.rem(25);
+    max-width: f.rem(1600);
+    & li a picture {
+      max-height: f.rem(500);
+      border-radius: f.rem(40);
+      background-color: white;
+      @include m.productPhoto;
+      & img {
+        object-fit: scale-down;
+        mix-blend-mode: darken;
+        padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
+        @include m.photoFilters;
+      }
+    }
+  }
+  &__products {
+    display: grid;
+    place-items: center;
+  }
+}
