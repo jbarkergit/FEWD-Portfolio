@@ -54,7 +54,6 @@
       @include m.productPhoto;
       @include m.productPhotoHover;
       transition: ease-in-out 0.35s;
-
       & img {
         max-height: f.rem(400);
         padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);

@@ -62,35 +62,37 @@ const ProductProvider = () => {
       {useProductFilter()
         .sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1))
         .map((product: ProductType) => (
-          <li className="productGrid__product" key={uuidv4()}>
-            <Link to={`/ecommerce/product/${product.sku}`}>
-              <span className="productGrid__product--containedHover">
-                <picture>
-                  <img src={product.images![0]} alt={product.unit} loading="lazy" decoding="async" fetchpriority="high" />
-                </picture>
-              </span>
-            </Link>
-            <div className="productGrid__product__information">
+          <li key={uuidv4()}>
+            <article className="productGrid__product">
               <Link to={`/ecommerce/product/${product.sku}`}>
-                <h2>
-                  {product.company} {product.unit}
-                </h2>
+                <span className="productGrid__product--containedHover">
+                  <picture>
+                    <img src={product.images![0]} alt={product.unit} loading="lazy" decoding="async" fetchpriority="high" />
+                  </picture>
+                </span>
               </Link>
-              <p>{product.description}</p>
-              <div className="productGrid__product__advanced">
-                <span>
-                  <h4>{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h4>
-                </span>
-                <span>
-                  <button>
-                    <i className="fa-solid fa-cart-plus"></i>
-                  </button>
-                  <button>
-                    <i className="fa-solid fa-cart-arrow-down"></i>
-                  </button>
-                </span>
+              <div className="productGrid__product__information">
+                <Link to={`/ecommerce/product/${product.sku}`}>
+                  <h2>
+                    {product.company} {product.unit}
+                  </h2>
+                </Link>
+                <p>{product.description}</p>
+                <div className="productGrid__product__advanced">
+                  <span>
+                    <h4>{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h4>
+                  </span>
+                  <span>
+                    <button>
+                      <i className="fa-solid fa-cart-plus"></i>
+                    </button>
+                    <button>
+                      <i className="fa-solid fa-cart-arrow-down"></i>
+                    </button>
+                  </span>
+                </div>
               </div>
-            </div>
+            </article>
           </li>
         ))}
     </>

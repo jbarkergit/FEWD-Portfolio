@@ -120,12 +120,16 @@ const Service = () => {
         </li>
         <li>
           <Link to="">
-            <h3>1800 DAUDIO</h3>
+            <h3>
+              <address>1800 DAUDIO</address>
+            </h3>
           </Link>
         </li>
         <li>
           <Link to="">
-            <h3>support@dynamicaudio.com</h3>
+            <h3>
+              <address>support@dynamicaudio.com</address>
+            </h3>
           </Link>
         </li>
       </ul>

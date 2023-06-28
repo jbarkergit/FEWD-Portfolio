@@ -1,8 +1,8 @@
 import { useLocation } from 'react-router-dom';
-import HeaderKit from '../../components/navigation/header/HeaderKit';
-import UserInteractions from '../../components/navigation/header/UserInteractions';
-import ShoppingCart from '../../components/features/cart/ShoppingCart';
-import AccountModal from '../../components/features/account/AccountModal';
+import HeaderKit from './HeaderKit';
+import UserInteractions from './UserInteractions';
+import ShoppingCart from '../../features/cart/ShoppingCart';
+import AccountModal from '../../features/account/AccountModal';
 
 const PrimaryNav = () => {
   return (

@@ -23,7 +23,7 @@
     grid-template-rows: 1fr;
     gap: f.rem(25);
     max-width: f.rem(1600);
-    & li a picture {
+    & li a article picture {
       max-height: f.rem(500);
       border-radius: f.rem(40);
       background-color: white;

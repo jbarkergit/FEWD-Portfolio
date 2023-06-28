@@ -16,9 +16,11 @@ const ProductHighlight = (): JSX.Element => {
           {ProductDatabase.filter((product: ProductType) => product.productshowcase === true).map((product: ProductType) => (
             <li key={uuidv4()}>
               <Link to={`/ecommerce/product/${product.sku}`}>
-                <picture>
-                  <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />
-                </picture>
+                <article>
+                  <picture>
+                    <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />
+                  </picture>
+                </article>
               </Link>
             </li>
           ))}

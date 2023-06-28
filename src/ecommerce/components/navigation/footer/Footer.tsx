@@ -1,4 +1,4 @@
-import FooterKit from '../../components/navigation/footer/FooterKit';
+import FooterKit from './FooterKit';
 
 function EFooter() {
   return (

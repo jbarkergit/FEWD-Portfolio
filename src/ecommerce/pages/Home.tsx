@@ -1,8 +1,8 @@
-import Header from '../layouts/navigation/Header';
-import Footer from '../layouts/navigation/Footer';
-import Infographic from '../layouts/home/Infographic';
+import Header from '../components/navigation/header/Header';
+import Footer from '../components/navigation/footer/Footer';
+import Infographic from '../components/home/Infographic';
 import Carousel from '../components/home/Carousel';
-import SideBySide from '../layouts/home/SideBySide';
+import SideBySide from '../components/home/SideBySide';
 import ProductHighlight from '../components/home/ProductHighlight';
 
 const Home = () => {
