@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import Header from '../components/navigation/header/Header';
-import Footer from '../components/navigation/footer/Footer';
+import Footer from '../components/navigation/footer/eFooter';
 import NotFound from '../../shared/pages/NotFound';
 
 import { ProductDatabase } from '../assets/production-data/ProductDatabase';

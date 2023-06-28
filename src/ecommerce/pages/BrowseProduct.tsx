@@ -1,5 +1,5 @@
 import Header from '../components/navigation/header/Header';
-import Footer from '../components/navigation/footer/Footer';
+import Footer from '../components/navigation/footer/eFooter';
 import ProductFilters from '../components/features/filters/ProductFilters';
 import ProductProvider from '../context/products/ProductProvider';
 
