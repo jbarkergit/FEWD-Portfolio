@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { elInViewport } from '../../../shared/hooks/elementInViewport';
 
 const Carousel = (): JSX.Element => {
   const carousel = useRef<HTMLDivElement>(null!),
@@ -56,14 +55,12 @@ const Carousel = (): JSX.Element => {
         );
         const arrayOfImages: Element[] = Array.from(carouselTrack.current.children);
         [...arrayOfImages].forEach((el: Element) => {
-          if (elInViewport(el, true) == true) {
-            el.children[0].animate(
-              {
-                objectPosition: `${85 + nextPercentage / 2}% 100%`,
-              },
-              { duration: 1200, fill: 'both' }
-            );
-          }
+          el.children[0].animate(
+            {
+              objectPosition: `${85 + nextPercentage / 2}% 100%`,
+            },
+            { duration: 1200, fill: 'both' }
+          );
         });
       }
     };
