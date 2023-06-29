@@ -11,15 +11,9 @@ const SideBySide = () => {
         </p>
       </div>
       <aside className="sideBySide__video">
-        <video
-          id="projects__demo-1"
-          preload="none"
-          autoPlay
-          loop
-          muted
-          src="src/ecommerce/assets/production-videos/stockfootagesplice.webm"
-          aria-label="Video of joyful people wearing headphones listening to music"
-        />
+        <video preload="metadata" playsInline autoPlay loop muted aria-label="Video of joyful people wearing headphones listening to music">
+          <source src="/src/ecommerce/assets/production-videos/stockfootagesplice.webm" type="video/webm" />
+        </video>
       </aside>
     </article>
   );

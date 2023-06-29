@@ -5,7 +5,7 @@
   display: grid;
   place-items: center;
   padding: f.rem(50) 0 f.rem(150) 0;
-  background-color: hsl(0, 0%, 81%);
+  background-color: hsl(0, 0%, 100%);
   &__heading {
     display: flex;
     justify-content: center;
@@ -18,22 +18,54 @@
     text-transform: uppercase;
   }
   & ul {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
     gap: f.rem(25);
     max-width: f.rem(1600);
-    & li a article picture {
-      height: f.rem(500);
+    & li a article {
+      position: relative;
+      width: f.rem(calc(1600 / 3 - 75));
+      aspect-ratio: 5/3;
       border-radius: f.rem(40);
-      background-color: white;
-      @include m.productPhoto;
-      & img {
-        max-height: inherit;
-        object-fit: scale-down;
-        mix-blend-mode: darken;
-        padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
-        @include m.photoFilters;
+      & picture {
+        position: relative;
+        z-index: 3;
+        border-radius: f.rem(40);
+        background-color: white;
+        @include m.productPhoto;
+        &:hover {
+          opacity: 0;
+          transition: opacity 0.32s linear;
+          & + aside video {
+            filter: brightness(100%) invert(0) blur(0);
+            transition: filter 0.5s;
+          }
+        }
+        & img {
+          max-height: inherit;
+          object-fit: scale-down;
+          object-position: center bottom;
+          mix-blend-mode: darken;
+          padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
+          @include m.photoFilters;
+        }
+      }
+      & aside {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: inherit;
+        aspect-ratio: inherit;
+        & video {
+          width: inherit;
+          aspect-ratio: inherit;
+          border: 2px solid white;
+          border-radius: f.rem(40);
+          object-fit: cover;
+          filter: brightness(0) invert(1) blur(2px);
+        }
       }
     }
   }

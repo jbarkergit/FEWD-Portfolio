@@ -41,7 +41,7 @@ export const ProductDatabase: ProductType[] = [
       'The 2i2 features two upgraded third-generation Scarlett mic preamps: with optional Air setting to reproduce the Air effect of Focusrites original ISA mic preamp, giving your vocal and acoustic recordings a brighter and more open sound. Equipped with high performance 24-bit/192kHz AD-DA converters, Scarlett guarantees the same professional sound quality throughout the third-generation range. The high impedance, high-headroom instrument inputs allow you to record guitar or bass without any clipping or unwanted distortion, while Gain Halo metering makes it easy for you to set the input level. ',
     price: 189.99,
     category: 'interface',
-    productshowcase: false,
+    productshowcase: true,
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-2i2-3rd-gen/scarlett-2i2-3rd-gen-1.png',
       '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-2i2-3rd-gen/scarlett-2i2-3rd-gen-2.jpg',
@@ -512,7 +512,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'RE20 Black Edition',
     description: "Broadcast announcer's microphone with Variable‑D",
     price: 498.0,
-    productshowcase: true,
+    productshowcase: false,
     category: 'microphone',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Electro-Voice/microphone/RE20-BLACK/re20-black-1.png',
@@ -542,7 +542,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'SM7B',
     description: 'Vocal Microphone',
     price: 399.0,
-    productshowcase: false,
+    productshowcase: true,
     category: 'microphone',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM7B/sm7b-1.webp',
@@ -610,7 +610,7 @@ export const ProductDatabase: ProductType[] = [
     unit: 'PodMic',
     description: 'Dynamic Broadcast Microphone',
     price: 99.0,
-    productshowcase: false,
+    productshowcase: true,
     category: 'microphone',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMic/podmic-1.png',

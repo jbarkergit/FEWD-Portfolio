@@ -21,7 +21,7 @@
       box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
       transition: ease-in-out 0.35s;
       & img {
-        padding: f.rem(15);
+        padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
         object-fit: scale-down;
         mix-blend-mode: darken;
         @include m.photoFilters;
