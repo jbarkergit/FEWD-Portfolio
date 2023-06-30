@@ -47,7 +47,7 @@ const ProductHighlight = (): JSX.Element => {
     <section className="productHighlight">
       <h2 className="productHighlight__heading">
         <span>
-          <span className="highlight">New</span> drops available now
+          Available <span className="highlight">Now</span>
         </span>
       </h2>
       <ul>

@@ -12,6 +12,24 @@ const SideBySide = () => {
           gear.
         </p>
       </div>
+      <div className="sideBySide__minis">
+        <picture>
+          <img
+            src="/src/ecommerce/assets/production-images/compressed-home-page/side-by-side/beyerdynamic-tesla-driver.png.jpg"
+            loading="lazy"
+            decoding="async"
+            fetchpriority="low"
+          />
+        </picture>
+        <picture>
+          <img
+            src="/src/ecommerce/assets/production-images/compressed-home-page/side-by-side/beyerdynamic-full-metal-housing.jpg"
+            loading="lazy"
+            decoding="async"
+            fetchpriority="low"
+          />
+        </picture>
+      </div>
       <aside className="sideBySide__video">
         <video preload="metadata" playsInline autoPlay loop muted aria-label="Video of joyful people wearing headphones listening to music">
           <source src="/src/ecommerce/assets/production-videos/stockfootagesplice.webm" type="video/webm" />
