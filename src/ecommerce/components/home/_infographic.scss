@@ -107,5 +107,12 @@
         }
       }
     }
+    &__heading {
+      display: flex;
+      color: white;
+      & i {
+        padding-right: f.rem(8);
+      }
+    }
   }
 }

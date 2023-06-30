@@ -2,7 +2,9 @@ const SideBySide = () => {
   return (
     <article className="sideBySide">
       <div className="sideBySide__information">
-        <h4>Satisfaction Guaranteed</h4>
+        <h4>
+          <span className="highlight">Satisfaction Guaranteed</span>
+        </h4>
         <h2>Superior Audio Backed by Groundbreaking Tech</h2>
         <p>
           From design to manufactoring, our supporting companies offer nothing but the most innovative audio equipment. Lighter membranes, concentrated air gaps,

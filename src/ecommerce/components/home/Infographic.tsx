@@ -1,34 +1,30 @@
 import { Link } from 'react-router-dom';
 
-type InfographicPropsType = {
-  bannerImg: string;
-  imgAlt: string;
-  companyName: string;
-  companyMissionStatement: string;
-  companyValue: string;
-  ctaBtnName: string;
-  ctaBtn2Name: string;
-};
-
-const InfographicProps = ({ bannerImg, imgAlt, companyName, companyMissionStatement, companyValue, ctaBtnName, ctaBtn2Name }: InfographicPropsType) => {
+const Infographic = () => {
   return (
     <main className="infographic">
       <picture className="infographic__graphic">
         <span className="imgFadeGradient" />
-        <img src={bannerImg} alt={imgAlt} decoding="async" fetchpriority="high" />
+        <img
+          src="/src/ecommerce/assets/production-images/compressed-home-page/infographic/img-by-ilias-chebbi-on-unsplash.jpg"
+          alt="Dynamic Audio - Your go-to source for audiophile grade HiFi audio equipment"
+          decoding="async"
+          fetchpriority="high"
+        />
       </picture>
       <article className="infographic__information">
-        <h1>
-          <i className="fa-solid fa-microphone-lines"></i> {companyName}
-        </h1>
-        <h2>{companyMissionStatement}</h2>
-        <p>{companyValue}</p>
+        <span className="infographic__information__heading">
+          <i className="fa-solid fa-microphone-lines"></i>
+          <h1>Dynamic Audio</h1>
+        </span>
+        <h2>Your go-to source for audiophile grade HiFi audio equipment</h2>
+        <p>Reintroducing Beyerdynamic's beloved, world reknown original DT Series, sporting new Tesla technologies for greater sound under the X Series name.</p>
         <span className="infographic__information__cta">
           <Link to={''} role="button">
-            <h4>{ctaBtnName}</h4>
+            <h4>Learn More</h4>
           </Link>
           <Link to={''} role="button">
-            <h4>{ctaBtn2Name}</h4>
+            <h4>Save Up To 25%</h4>
           </Link>
         </span>
         <picture className="infographic__information__logos">
@@ -40,20 +36,6 @@ const InfographicProps = ({ bannerImg, imgAlt, companyName, companyMissionStatem
         </picture>
       </article>
     </main>
-  );
-};
-
-const Infographic = () => {
-  return (
-    <InfographicProps
-      bannerImg="/src/ecommerce/assets/production-images/compressed-home-page/infographic/img-by-ilias-chebbi-on-unsplash.jpg"
-      imgAlt="Dynamic Audio - Your go-to source for audiophile grade HiFi audio equipment"
-      companyName="Dynamic Audio"
-      companyMissionStatement="Your go-to source for audiophile grade HiFi audio equipment"
-      companyValue="Reintroducing Beyerdynamic's beloved, world reknown original DT Series, sporting new Tesla technologies for greater sound under the X Series name."
-      ctaBtnName="Learn More"
-      ctaBtn2Name="Save Up To 25%"
-    />
   );
 };
 
