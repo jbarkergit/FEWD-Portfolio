@@ -49,3 +49,17 @@
   --iconBg: #2b2b2b;
   --iconBoxShadow: -2px -3px 1px hsla(0, 0%, 100%, 0.4), 2px 3px 4px hsl(0, 0%, 78%);
 }
+.highlight {
+  background: var(--highlight);
+  background-clip: text;
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.highlight2 {
+  background: linear-gradient(180deg, #ffb6ff, #b344ff);
+  background-clip: text;
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

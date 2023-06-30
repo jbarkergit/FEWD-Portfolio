@@ -55,6 +55,7 @@ const ProductHighlight = (): JSX.Element => {
           <li key={uuidv4()}>
             <Link to={`/ecommerce/product/${product.sku}`}>
               <article>
+                <h2 className="productDetails">{product.unit}</h2>
                 <picture ref={addToRefs}>
                   <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />
                 </picture>
