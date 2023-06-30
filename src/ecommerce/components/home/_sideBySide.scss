@@ -82,9 +82,9 @@
       position: relative;
     }
     & video {
-      aspect-ratio: 4/5;
+      aspect-ratio: 0.8/1;
       min-height: 90vh;
-      border-radius: f.rem(40);
+      border-radius: f.rem(26);
       pointer-events: unset;
       object-fit: cover;
       @media (width <= 1460px) {

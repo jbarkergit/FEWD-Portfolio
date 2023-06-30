@@ -34,13 +34,13 @@
     &__slide {
       width: min(27.5vw, 34.375rem);
       aspect-ratio: 5/3;
-      border-radius: f.rem(40);
+      border-radius: f.rem(26);
       &.active {
         flex: 0 0 f.rem(1154);
         transition: flex 0.85s ease-in-out;
       }
       & img {
-        border-radius: f.rem(40);
+        border-radius: f.rem(26);
         object-fit: cover;
         object-position: right center;
         @include m.photoFilters;
