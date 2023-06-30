@@ -55,7 +55,6 @@ const ProductHighlight = (): JSX.Element => {
           <li key={uuidv4()}>
             <Link to={`/ecommerce/product/${product.sku}`}>
               <article>
-                <h2 className="productDetails">{product.unit}</h2>
                 <picture ref={addToRefs}>
                   <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />
                 </picture>
@@ -64,6 +63,11 @@ const ProductHighlight = (): JSX.Element => {
                     <source src="/src/ecommerce/assets/production-videos/stockfootagesplice.webm" type="video/webm" />
                   </video>
                 </aside>
+                <div id="productHighlightInfo">
+                  <h3>{product.company}</h3>
+                  <h2>{product.unit}</h2>
+                  <h4>Starting at {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h4>
+                </div>
               </article>
             </Link>
           </li>

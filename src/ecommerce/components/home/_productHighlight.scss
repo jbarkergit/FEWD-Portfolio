@@ -26,30 +26,55 @@
     max-width: f.rem(1600);
     & li a article {
       position: relative;
-      aspect-ratio: 3/4;
-      border-radius: f.rem(40);
+      flex: 0 0 calc(1600 / 4 - 100);
+      aspect-ratio: 0.8/1;
+      border-radius: f.rem(26);
       overflow: hidden;
-      & h2 {
+      box-shadow: -1px -1px 20px 0px #ececec, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+      & div {
         position: absolute;
-        inset: 0;
+        inset: -65% 0 0 0;
         margin: auto;
+        width: fit-content;
+        height: fit-content;
         z-index: 4;
-        font-size: clamp(f.rem(22), f.rem(14) + 1.5vw, f.rem(36));
-        font-weight: 500;
         pointer-events: none;
+        & h3 {
+          font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
+          font-weight: 500;
+        }
+        & h2 {
+          font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(36));
+          font-weight: 700;
+        }
+        & h4 {
+          font-weight: 500;
+        }
       }
       & picture {
         position: relative;
         z-index: 3;
-        border-radius: f.rem(40);
-        background-color: white;
+        border-radius: f.rem(26);
         @include m.productPhoto;
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: f.rem(26);
+          background-color: hsl(0, 0%, 100%);
+          opacity: 0.8;
+        }
         &:hover {
           opacity: 0;
-          transition: opacity 0.32s linear;
+          filter: blur(4px);
+          transition: all 0.22s linear;
           & + aside video {
             filter: brightness(100%) invert(0) blur(0);
-            transition: filter 0.5s;
+            transition: filter 0.44s;
+          }
+          & ~ #productHighlightInfo {
+            opacity: 0;
+            transition: opacity 0.22s;
           }
         }
         & img {
@@ -68,9 +93,9 @@
         & video {
           aspect-ratio: inherit;
           border: 2px solid white;
-          border-radius: f.rem(40);
+          border-radius: f.rem(26);
           object-fit: cover;
-          filter: brightness(0) invert(1) blur(2px);
+          filter: brightness(0) invert(1) blur(4px);
         }
       }
     }
