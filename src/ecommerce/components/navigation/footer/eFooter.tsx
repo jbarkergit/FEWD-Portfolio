@@ -35,7 +35,7 @@ const Support = () => {
         <Link to="">
           <h3>My Account</h3>
         </Link>
-      </li>{' '}
+      </li>
       <li>
         <Link to="">
           <h3>Dynamic Rewards</h3>
