@@ -18,7 +18,10 @@ const Infographic = () => {
           <h1>Dynamic Audio</h1>
         </span>
         <h2>Your go-to source for audiophile grade HiFi audio equipment</h2>
-        <p>Reintroducing Beyerdynamic's beloved, world reknown original DT Series, sporting new Tesla technologies for greater sound under the X Series name.</p>
+        <p>
+          Unparalleled HiFi audio & superior manufacturing - crystal-clear sound, premium materials, meticulous craftsmanship, and lasting durability for discerning
+          audiophiles.
+        </p>
         <span className="infographic__information__cta">
           <Link to={''} role="button">
             <h4>Learn More</h4>

@@ -85,7 +85,7 @@ const Service = () => {
     <>
       <ul>
         <li>
-          <h2>Terms of Service</h2>
+          <h2>Service Terms</h2>
         </li>
         <li>
           <Link to="">
