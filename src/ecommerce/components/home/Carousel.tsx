@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const Carousel = (): JSX.Element => {
   const carousel = useRef<HTMLDivElement>(null!),
@@ -7,13 +8,16 @@ const Carousel = (): JSX.Element => {
     userMouseDown = useRef<boolean>(false),
     userMouseMove = useRef<boolean>(false);
 
-  type carouselPropTypes = { carouselImg: string; carouselAlt: string; carouselActivity: string };
+  type carouselPropTypes = { carouselImg: string; carouselAlt: string; carouselActivity: string; navCat: string };
 
-  const CarouselProps = ({ carouselImg, carouselAlt, carouselActivity }: carouselPropTypes): JSX.Element => {
+  const CarouselProps = ({ carouselImg, carouselAlt, carouselActivity, navCat }: carouselPropTypes): JSX.Element => {
     return (
-      <picture className={`carousel__track__slide ${carouselActivity}`} ref={carouselTrackSlide}>
-        <img src={carouselImg} alt={carouselAlt} draggable="false" loading="lazy" decoding="async" fetchpriority="low" />
-      </picture>
+      <div className="carousel__track__slider">
+        <picture className={`carousel__track__slide ${carouselActivity}`} ref={carouselTrackSlide}>
+          <img src={carouselImg} alt={carouselAlt} draggable="false" loading="lazy" decoding="async" fetchpriority="low" />
+        </picture>
+        <Link to="">{navCat}</Link>
+      </div>
     );
   };
 
@@ -107,26 +111,31 @@ const Carousel = (): JSX.Element => {
           carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg"
           carouselAlt="Slide A"
           carouselActivity="active"
+          navCat="Speakers"
         />
         <CarouselProps
           carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg"
           carouselAlt="Slide C"
           carouselActivity="disabled"
+          navCat="Mixing Consoles"
         />
         <CarouselProps
           carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg"
           carouselAlt="Slide E"
           carouselActivity="disabled"
+          navCat="Headphones"
         />
         <CarouselProps
           carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg"
           carouselAlt="Slide F"
           carouselActivity="disabled"
+          navCat="Dacs & Amps"
         />
         <CarouselProps
           carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg"
           carouselAlt="Slide G"
           carouselActivity="disabled"
+          navCat="Microphones"
         />
       </div>
     </section>

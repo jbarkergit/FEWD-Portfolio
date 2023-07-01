@@ -31,13 +31,31 @@
     margin: 0 f.rem(25);
     scrollbar-width: none;
     scroll-behavior: smooth;
-    &__slide {
+    &__slider {
+      position: relative;
       width: min(27.5vw, 34.375rem);
       aspect-ratio: 5/3;
       border-radius: f.rem(26);
       &.active {
         flex: 0 0 f.rem(1154);
         transition: flex 0.85s ease-in-out;
+      }
+      & a {
+        position: absolute;
+        bottom: 7.5%;
+        left: 7.5%;
+        z-index: 4;
+        display: grid;
+        place-items: center;
+        height: f.rem(42);
+        @include m.ecommerceBtn;
+        background-color: white;
+        color: rgb(34, 34, 34);
+        border-radius: f.rem(8);
+        font-size: f.rem(13);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: f.rem(0.5);
       }
       & img {
         border-radius: f.rem(26);
