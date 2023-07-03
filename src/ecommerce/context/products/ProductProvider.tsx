@@ -10,7 +10,7 @@ type addToCartType = {
 };
 
 const ProductProvider = ({ uniqueKey, product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX.Element => {
-  const addToCart = () => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, quantity: 1 } });
+  const addToCart = () => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, stock: 1 } });
   return (
     <li key={uniqueKey}>
       <article className="productGrid__product">
