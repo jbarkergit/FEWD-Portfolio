@@ -1,7 +1,11 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import Header from '../components/navigation/header/Header';
 import Footer from '../components/navigation/footer/eFooter';
+
 import ProductFilters from '../components/features/filters/ProductFilters';
 import ProductProvider from '../context/products/ProductProvider';
+
 import useCart from '../hooks/useCart';
 import { ProductType } from '../context/types';
 import { ProductDatabase } from '../assets/production-data/ProductDatabase';
@@ -70,7 +74,7 @@ const BrowseProduct = (): JSX.Element => {
             {useProductFilter()
               .sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1))
               .map((product: ProductType) => (
-                <ProductProvider product={product} dispatch={dispatch} REDUCER_ACTIONS={REDUCER_ACTIONS} />
+                <ProductProvider uniqueKey={uuidv4()} product={product} dispatch={dispatch} REDUCER_ACTIONS={REDUCER_ACTIONS} />
               ))}
           </ul>
         </main>
