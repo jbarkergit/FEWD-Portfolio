@@ -4,7 +4,7 @@ export type ChildrenType = { children?: ReactElement | ReactElement[] };
 
 export type ProductType = {
   sku: string;
-  quantity: number;
+  stock: number;
   company: string;
   unit: string;
   description?: string;
