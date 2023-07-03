@@ -1,18 +1,18 @@
 import { Link } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import { ReducerAction, ReducerActionType } from '../cart/CartContext';
-import { ProductType } from '../exports/types';
+import { ProductType } from '../types';
 
 type addToCartType = {
+  key: any;
   product: ProductType;
   dispatch: React.Dispatch<ReducerAction>;
   REDUCER_ACTIONS: ReducerActionType;
 };
 
-const ProductProvider = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX.Element => {
+const ProductProvider = ({ key, product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX.Element => {
   const addToCart = () => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, quantity: 1 } });
   return (
-    <li key={uuidv4()}>
+    <li key={key}>
       <article className="productGrid__product">
         <Link to={`/ecommerce/product/${product.sku}`}>
           <span className="productGrid__product--containedHover">

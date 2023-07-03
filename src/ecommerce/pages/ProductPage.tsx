@@ -6,7 +6,7 @@ import Footer from '../components/navigation/footer/eFooter';
 import NotFound from '../../shared/pages/NotFound';
 
 import { ProductDatabase } from '../assets/production-data/ProductDatabase';
-import { ProductType } from '../context/exports/types';
+import { ProductType } from '../context/types';
 
 const getProductBySku = () => {
   const { paramId } = useParams() as { paramId: string };

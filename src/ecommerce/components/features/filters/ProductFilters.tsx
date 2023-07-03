@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import { useCategoryFilterContext } from '../../../context/exports/stateProvider';
+import { useCategoryFilterContext } from '../../../context/products/CategoryFilterContext';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
-import { ProductType } from '../../../context/exports/types';
+import { ProductType } from '../../../context/types';
 
 const useBreadcrumbs = () => {
   const location = useLocation();

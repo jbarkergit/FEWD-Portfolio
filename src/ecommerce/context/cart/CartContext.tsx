@@ -1,5 +1,5 @@
 import { ReactElement, createContext, useMemo, useReducer } from 'react';
-import { ChildrenType, ProductType } from '../exports/types';
+import { ChildrenType, ProductType } from '../types';
 
 type CartStateType = { cart: ProductType[] };
 

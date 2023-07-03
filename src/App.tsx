@@ -8,7 +8,7 @@ const NotFound = lazy(() => import('./shared/pages/NotFound'));
 
 import Portfolio from './portfolio/pages/Portfolio';
 
-import { CategoryFilterProvider } from './ecommerce/context/exports/stateProvider';
+import { CategoryFilterProvider } from './ecommerce/context/products/CategoryFilterContext';
 import { CartProvider } from './ecommerce/context/cart/CartContext';
 const Ecommerce = lazy(() => import('./ecommerce/pages/Home'));
 const BrowseProduct = lazy(() => import('./ecommerce/pages/BrowseProduct'));

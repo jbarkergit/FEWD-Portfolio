@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { ChildrenType } from './types';
+import { ChildrenType } from '../types';
 
 const categoryFilterSessionState = JSON.parse(sessionStorage.getItem('categoryFilter') || '[]');
 

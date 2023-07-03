@@ -1,9 +1,9 @@
-import { ProductType } from '../../context/exports/types';
+import { ProductType } from '../../context/types';
 
 export const ProductDatabase: ProductType[] = [
   {
     sku: 'Avid-MBOX-Studio',
-    quantity: 2,
+    stock: 2,
     company: 'Avid',
     unit: 'MBOX Studio',
     description:
@@ -15,7 +15,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'focusrite-scarlett-solo-3rd-gen',
-    quantity: 2,
+    stock: 2,
     company: 'Focusrite',
     unit: 'Scarlett Solo 3rd Gen',
     description:
@@ -34,7 +34,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'focusrite-scarlett-2i2-3rd-gen',
-    quantity: 2,
+    stock: 2,
     company: 'Focusrite',
     unit: 'Scarlett 2i2 3rd Gen',
     description:
@@ -53,7 +53,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'uaudio-apollo-solo',
-    quantity: 2,
+    stock: 2,
     company: 'UAudio',
     unit: 'Solo',
     description:
@@ -69,7 +69,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'uaudio-apollo-twin-mk-ii',
-    quantity: 2,
+    stock: 2,
     company: 'UAudio',
     unit: 'Twin Mk II',
     description:
@@ -85,7 +85,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'uaudio-apollo-twin-x',
-    quantity: 2,
+    stock: 2,
     company: 'UAudio',
     unit: 'Apollo Twin X',
     description:
@@ -101,7 +101,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'uaudio-apollo-x4',
-    quantity: 2,
+    stock: 2,
     company: 'UAudio',
     unit: 'Apollo X4',
     description:
@@ -117,7 +117,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'uaudio-volt-1',
-    quantity: 2,
+    stock: 2,
     company: 'UAudio',
     unit: 'Volt 1',
     description:
@@ -132,7 +132,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'uaudio-volt-2',
-    quantity: 2,
+    stock: 2,
     company: 'UAudio',
     unit: 'Volt 2',
     description:
@@ -147,7 +147,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'uaudio-volt-4',
-    quantity: 2,
+    stock: 2,
     company: 'UAudio',
     unit: 'Volt 4',
     description:
@@ -162,7 +162,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'beyerdynamic-t5',
-    quantity: 2,
+    stock: 2,
     company: 'Beyerdynamic',
     unit: 'T5',
     description: 'High-end Tesla Headphones (3rd Generation) closed',
@@ -178,7 +178,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'beyerdynamic-t1',
-    quantity: 2,
+    stock: 2,
     company: 'Beyerdynamic',
     unit: 'T1',
     description: 'High-end Tesla headphones (3rd generation) open',
@@ -194,7 +194,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'beyerdynamic-dt-900-pro-x',
-    quantity: 2,
+    stock: 2,
     company: 'Beyerdynamic',
     unit: 'DT 900 PRO X',
     description: 'Studio headphones for critical listening, mixing & mastering (open-back)',
@@ -210,7 +210,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'beyerdynamic-dt-700-pro-x',
-    quantity: 2,
+    stock: 2,
     company: 'Beyerdynamic',
     unit: 'DT 700 PRO X',
     description: 'Studio headphones for recording & monitoring (closed)',
@@ -226,7 +226,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'beyerdynamic-dt-1990-pro',
-    quantity: 2,
+    stock: 2,
     company: 'Beyerdynamic',
     unit: 'DT 1990 PRO',
     description: 'Tesla studio reference headphones for mixing and mastering (open)',
@@ -242,7 +242,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'beyerdynamic-dt-1770-pro',
-    quantity: 2,
+    stock: 2,
     company: 'Beyerdynamic',
     unit: 'DT 1770 PRO',
     description: 'Tesla studio reference headphones for mixing, mastering, monitoring (closed)',
@@ -258,7 +258,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'beyerdynamic-dt-990-black-se',
-    quantity: 2,
+    stock: 2,
     company: 'Beyerdynamic',
     unit: 'DT 990 Black Special Edition',
     description: 'Hi-fi headphones (open)',
@@ -274,7 +274,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'beyerdynamic-dt-990-pro',
-    quantity: 2,
+    stock: 2,
     company: 'Beyerdynamic',
     unit: 'DT 990 PRO',
     description: 'Studio headphones for mixing and mastering (open)',
@@ -290,7 +290,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'beyerdynamic-dt-880-pro',
-    quantity: 2,
+    stock: 2,
     company: 'Beyerdynamic',
     unit: 'DT 880 PRO',
     description: 'Studio headphones for mixing and mastering (semi-open)',
@@ -306,7 +306,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'beyerdynamic-dt-770-pro',
-    quantity: 2,
+    stock: 2,
     company: 'Beyerdynamic',
     unit: 'DT 770 PRO',
     description: 'Reference headphones for control and monitoring purpose (closed)',
@@ -318,7 +318,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'beyerdynamic-dt-990-e',
-    quantity: 2,
+    stock: 2,
     company: 'Beyerdynamic',
     unit: 'DT 990 Edition',
     description: 'Hi-fi headphones (open)',
@@ -334,7 +334,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'evo-4',
-    quantity: 2,
+    stock: 2,
     company: 'Evo',
     unit: '4',
     description: '2in | 2out Audio Interface',
@@ -352,7 +352,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'evo-8',
-    quantity: 2,
+    stock: 2,
     company: 'Evo',
     unit: '8',
     description: '4in | 4out Audio Interface',
@@ -370,7 +370,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'evo-16',
-    quantity: 2,
+    stock: 2,
     company: 'Evo',
     unit: '16',
     description: '24in | 24out Audio Interface',
@@ -387,7 +387,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'evo-sp8',
-    quantity: 2,
+    stock: 2,
     company: 'Evo',
     unit: 'SP8',
     description: '8 Channel Smart Preamp with AD/DA',
@@ -404,7 +404,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'audient-id4',
-    quantity: 2,
+    stock: 2,
     company: 'Audient',
     unit: 'iD4',
     description: '2in | 2out Audio Interface',
@@ -415,7 +415,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'audient-id14',
-    quantity: 2,
+    stock: 2,
     company: 'Audient',
     unit: 'iD14',
     description: '10in | 6out Audio Interface',
@@ -426,7 +426,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'audient-id22',
-    quantity: 2,
+    stock: 2,
     company: 'Audient',
     unit: 'iD22',
     description: '10in | 14out audio interface',
@@ -437,7 +437,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'audient-id24',
-    quantity: 2,
+    stock: 2,
     company: 'Audient',
     unit: 'iD24',
     description: '10in | 14out Audio Interface',
@@ -448,7 +448,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'audient-id44',
-    quantity: 2,
+    stock: 2,
     company: 'Audient',
     unit: 'iD44',
     description: '20in | 24out Audio Interface',
@@ -459,7 +459,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'solid-state-logic-ssl2',
-    quantity: 2,
+    stock: 2,
     company: 'Solid State Logic',
     unit: 'SSL2',
     description: '2in | 2out USB-C Audio Interface',
@@ -475,7 +475,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'solid-state-logic-ssl2+',
-    quantity: 2,
+    stock: 2,
     company: 'Solid State Logic',
     unit: 'SSL 2+',
     description: '2in | 4out USB-C Audio Interface',
@@ -490,7 +490,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'solid-state-logic-ssl12',
-    quantity: 2,
+    stock: 2,
     company: 'Solid State Logic',
     unit: 'SSL 12',
     description: '12in | 8out USB-C Audio Interface',
@@ -507,7 +507,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Electro-Voice-RE20-BLACK-EDITION',
-    quantity: 2,
+    stock: 2,
     company: 'Electro-Voice',
     unit: 'RE20 Black Edition',
     description: "Broadcast announcer's microphone with Variable‑D",
@@ -522,7 +522,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Electro-Voice-RE20',
-    quantity: 2,
+    stock: 2,
     company: 'Electro-Voice',
     unit: 'RE20',
     description: "Broadcast announcer's microphone with Variable‑D",
@@ -537,7 +537,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Shure-SM7B',
-    quantity: 2,
+    stock: 2,
     company: 'Shure',
     unit: 'SM7B',
     description: 'Vocal Microphone',
@@ -557,7 +557,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Shure-SM58',
-    quantity: 2,
+    stock: 2,
     company: 'Shure',
     unit: 'SM58',
     description: 'Vocal Microphone',
@@ -575,7 +575,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Rode-NT1',
-    quantity: 2,
+    stock: 2,
     company: 'Rode',
     unit: 'NT1',
     description: 'Large-diaphragm Cardioid Condenser Microphone',
@@ -591,7 +591,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Rode-NT1-A',
-    quantity: 2,
+    stock: 2,
     company: 'Rode',
     unit: 'NT1-A',
     description: 'Large-diaphragm Cardioid Condenser Microphone',
@@ -605,7 +605,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Rode-PodMic',
-    quantity: 2,
+    stock: 2,
     company: 'Rode',
     unit: 'PodMic',
     description: 'Dynamic Broadcast Microphone',
@@ -623,7 +623,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Rode-PodMic-USB',
-    quantity: 2,
+    stock: 2,
     company: 'Rode',
     unit: 'PodMic USB',
     description: 'Dynamic Broadcast Microphone',
@@ -642,7 +642,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Neumann-TLM-107-BK-Studio-Set',
-    quantity: 2,
+    stock: 2,
     company: 'Neumann',
     unit: 'TLM 107 BK Studio Set',
     description: 'Extremely versatile and surprisingly affordable!',
@@ -653,7 +653,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Neumann-TLM-107-Studio-Set',
-    quantity: 2,
+    stock: 2,
     company: 'Neumann',
     unit: 'TLM 107 Studio Set',
     description: 'Extremely versatile and surprisingly affordable!',
@@ -664,7 +664,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Neumann-TLM-107-BK',
-    quantity: 2,
+    stock: 2,
     company: 'Neumann',
     unit: 'TLM 107 BK',
     description: 'Extremely versatile and surprisingly affordable!',
@@ -675,7 +675,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'Neumann-TLM-107',
-    quantity: 2,
+    stock: 2,
     company: 'Neumann',
     unit: 'TLM 107',
     description: 'Extremely versatile and surprisingly affordable!',
@@ -686,7 +686,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'schiit-fulla',
-    quantity: 2,
+    stock: 2,
     company: 'Schiit',
     unit: 'Fulla',
     description: 'Fulla E is a great DAC/amp with top-shelf components—that also has a very nice microphone input, too. ',
@@ -701,7 +701,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'schiit-hel',
-    quantity: 2,
+    stock: 2,
     company: 'Schiit',
     unit: 'Hel',
     description: 'Plug Hel 2E in to any PC, Mac, PS4, PS5, or Switch, and you’ll get tremendous sound…and you’ll also sound amazing to all of your friends.',
@@ -719,7 +719,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'schiit-magni+-black',
-    quantity: 2,
+    stock: 2,
     company: 'Schiit',
     unit: 'Magni+ (Black)',
     description: 'Magni+: Exotic, current-feedback, all-discrete design, high-spec sorted potentiometer, high-end thin-film resistors, silicon capacitors. ',
@@ -733,7 +733,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'schiit-magni+-silver',
-    quantity: 2,
+    stock: 2,
     company: 'Schiit',
     unit: 'Magni+ (Silver)',
     description: 'Magni+: Exotic, current-feedback, all-discrete design, high-spec sorted potentiometer, high-end thin-film resistors, silicon capacitors. ',
@@ -747,7 +747,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'schiit-magnius',
-    quantity: 2,
+    stock: 2,
     company: 'Schiit',
     unit: 'Magnius',
     description: 'Magnius delivers high power, superb measurements, and best volume control in its price class. It is also designed and built in California, USA. ',
@@ -762,7 +762,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'apos-topping-a90-discrete-black',
-    quantity: 2,
+    stock: 2,
     company: 'Apos',
     unit: 'Topping A90 Discrete (Black)',
     description:
@@ -774,7 +774,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 'apos-topping-dx3-pro+',
-    quantity: 2,
+    stock: 2,
     company: 'Apos',
     unit: 'Topping DX3 Pro+',
     description:
@@ -786,7 +786,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 's.m.s.l-sh-6-black',
-    quantity: 2,
+    stock: 2,
     company: 'S.M.S.L',
     unit: 'SH-6 (Black)',
     description: 'Ultra-low distortion precision feedback circuit, distortion as low as 0.00006%! ',
@@ -801,7 +801,7 @@ export const ProductDatabase: ProductType[] = [
   },
   {
     sku: 's.m.s.l-sh-6-silver',
-    quantity: 2,
+    stock: 2,
     company: 'S.M.S.L',
     unit: 'SH-6 (Silver)',
     description: 'Ultra-low distortion precision feedback circuit, distortion as low as 0.00006%! ',
