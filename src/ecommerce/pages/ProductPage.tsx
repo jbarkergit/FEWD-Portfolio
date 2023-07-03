@@ -8,13 +8,11 @@ import NotFound from '../../shared/pages/NotFound';
 import { ProductDatabase } from '../assets/production-data/ProductDatabase';
 import { ProductType } from '../context/types';
 
-const getProductBySku = () => {
+const getProductBySku = (): JSX.Element => {
   const { paramId } = useParams() as { paramId: string };
   const findProduct = ProductDatabase.find((product: ProductType) => product.sku === paramId)!;
 
-  const useProductImages = () => {
-    uuidv4();
-
+  const useProductImages = (): JSX.Element => {
     return (
       <>
         {findProduct.images!.map((image) => (
@@ -63,7 +61,7 @@ const getProductBySku = () => {
   }
 };
 
-const ProductPage = () => {
+const ProductPage = (): JSX.Element => {
   return <>{getProductBySku()}</>;
 };
 

@@ -3,7 +3,7 @@ import { useCategoryFilterContext } from '../../../context/products/CategoryFilt
 import SearchBar from '../../features/search/SearchBar';
 import { useRef } from 'react';
 
-const HeaderKit = () => {
+const HeaderKit = (): JSX.Element => {
   // @ts-ignore:
   const { setCategoryFilter } = useCategoryFilterContext();
 
@@ -17,7 +17,7 @@ const HeaderKit = () => {
     );
   };
 
-  const SingleNavigation = () => {
+  const SingleNavigation = (): JSX.Element => {
     return (
       <>
         <li>
@@ -45,10 +45,10 @@ const HeaderKit = () => {
     );
   };
 
-  const AudibleDropdown = () => {
+  const AudibleDropdown = (): JSX.Element => {
     const audibleDropdownRef = useRef<HTMLUListElement>(null!);
 
-    function useAudibleDropdown() {
+    function useAudibleDropdown(): void {
       audibleDropdownRef.current.getAttribute('data-activity') == 'inactive'
         ? audibleDropdownRef.current.setAttribute('data-activity', 'active')
         : audibleDropdownRef.current.setAttribute('data-activity', 'inactive');
@@ -96,10 +96,10 @@ const HeaderKit = () => {
     );
   };
 
-  const VocalDropdown = () => {
+  const VocalDropdown = (): JSX.Element => {
     const vocalDropdownRef = useRef<HTMLUListElement>(null!);
 
-    function useVocalDropdown() {
+    function useVocalDropdown(): void {
       vocalDropdownRef.current.getAttribute('data-activity') == 'inactive'
         ? vocalDropdownRef.current.setAttribute('data-activity', 'active')
         : vocalDropdownRef.current.setAttribute('data-activity', 'inactive');
@@ -145,7 +145,7 @@ const HeaderKit = () => {
     );
   };
 
-  const MobileMenu = () => {
+  const MobileMenu = (): JSX.Element => {
     const slideContainerRef = useRef<HTMLDivElement>(null!);
     return (
       <div className="mobileMenu">

@@ -1,4 +1,4 @@
-const SideBySide = () => {
+const SideBySide = (): JSX.Element => {
   return (
     <article className="sideBySide">
       <div className="sideBySide__textArea">

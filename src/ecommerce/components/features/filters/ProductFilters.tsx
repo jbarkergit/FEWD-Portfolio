@@ -6,7 +6,7 @@ import { useCategoryFilterContext } from '../../../context/products/CategoryFilt
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 import { ProductType } from '../../../context/types';
 
-const useBreadcrumbs = () => {
+const useBreadcrumbs = (): JSX.Element => {
   const location = useLocation();
   let [currentLocation] = useState<string>('');
 
@@ -24,7 +24,7 @@ const useBreadcrumbs = () => {
   );
 };
 
-const ProductFilters = () => {
+const ProductFilters = (): JSX.Element => {
   // @ts-ignore:
   const { setCategoryFilter } = useCategoryFilterContext();
 
@@ -44,7 +44,7 @@ const ProductFilters = () => {
     );
   };
 
-  const useBrandFilter = () => {
+  const useBrandFilter = (): JSX.Element => {
     const selectMenu = useRef<HTMLDivElement>(null!);
     const menu = useRef<HTMLUListElement>(null!);
 
@@ -88,7 +88,7 @@ const ProductFilters = () => {
     );
   };
 
-  const useStyleFilter = () => {
+  const useStyleFilter = (): JSX.Element | undefined => {
     const [styleFilterStatus, setStyleFilterStatus] = useState<boolean>(false);
     const styleFilterSelectMenu = useRef<HTMLDivElement>(null!);
     const styleFilterMenu = useRef<HTMLUListElement>(null!);

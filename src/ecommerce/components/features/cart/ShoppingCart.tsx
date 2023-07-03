@@ -2,11 +2,11 @@ import { v4 as uuidv4 } from 'uuid';
 import useCart from '../../../hooks/useCart';
 import { useState } from 'react';
 
-const ShoppingCart = () => {
+const ShoppingCart = (): JSX.Element => {
   const { cartQuantity, cartSubtotal, cart, dispatch, REDUCER_ACTIONS } = useCart(),
     [confirmation, setConfirmation] = useState<boolean>(false);
 
-  const CartProducts = () => {
+  const CartProducts = (): JSX.Element[] => {
     return cart.map((product) => {
       return (
         <li key={uuidv4()}>
@@ -34,7 +34,7 @@ const ShoppingCart = () => {
     });
   };
 
-  const submitOrder = () => {
+  const submitOrder = (): void => {
     dispatch({ type: REDUCER_ACTIONS.SUBMIT });
     setConfirmation(true);
   };

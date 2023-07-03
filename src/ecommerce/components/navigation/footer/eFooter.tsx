@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const Newsletter = () => {
+const Newsletter = (): JSX.Element => {
   return (
     <form className="newsletter">
       <div className="newsletter__field">
@@ -25,7 +25,7 @@ const Newsletter = () => {
   );
 };
 
-const Support = () => {
+const Support = (): JSX.Element => {
   return (
     <ul>
       <li>
@@ -80,7 +80,7 @@ const Support = () => {
   );
 };
 
-const Service = () => {
+const Service = (): JSX.Element => {
   return (
     <>
       <ul>
@@ -136,7 +136,7 @@ const Service = () => {
   );
 };
 
-const eFooter = () => {
+const eFooter = (): JSX.Element => {
   return (
     <footer className="eFooter">
       <section className="eFooter__newsCta">

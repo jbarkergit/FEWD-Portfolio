@@ -5,7 +5,7 @@ import Carousel from '../components/home/Carousel';
 import SideBySide from '../components/home/SideBySide';
 import ProductHighlight from '../components/home/ProductHighlight';
 
-const Home = () => {
+const Home = (): JSX.Element => {
   return (
     <>
       <Header />

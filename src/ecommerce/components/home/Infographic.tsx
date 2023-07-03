@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const Infographic = () => {
+const Infographic = (): JSX.Element => {
   return (
     <main className="infographic">
       <picture className="infographic__graphic">

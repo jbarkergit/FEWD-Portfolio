@@ -21,7 +21,7 @@ export const CategoryFilterProvider: React.FunctionComponent = ({ children }: Ch
   return <CategoryFilterContext.Provider value={{ categoryFilter, setCategoryFilter }}>{children}</CategoryFilterContext.Provider>;
 };
 
-export const useCategoryFilterContext = () => {
+export const useCategoryFilterContext = (): CategoryFilterContextType | undefined => {
   const categoryFilterContext = useContext(CategoryFilterContext);
   if (categoryFilterContext === undefined) {
     console.log('Category Context Hook must be placed inside of a provider.');

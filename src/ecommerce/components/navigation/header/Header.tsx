@@ -4,7 +4,7 @@ import SearchBar from '../../features/search/SearchBar';
 import ShoppingCart from '../../features/cart/ShoppingCart';
 import AccountModal from '../../features/account/AccountModal';
 
-const UserInteractions = () => {
+const UserInteractions = (): JSX.Element => {
   return (
     <div className="navkit__header__section">
       <div className="navkit__header__section__ui">
@@ -56,7 +56,7 @@ const UserInteractions = () => {
   );
 };
 
-const PrimaryNav = () => {
+const PrimaryNav = (): JSX.Element => {
   return (
     <header
       className="navkit"
