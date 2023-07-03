@@ -6,7 +6,6 @@ import useCart from '../hooks/useCart';
 import { ProductType } from '../context/types';
 import { ProductDatabase } from '../assets/production-data/ProductDatabase';
 import { useCategoryFilterContext } from '../context/products/CategoryFilterContext';
-import { v4 as uuidv4 } from 'uuid';
 
 const useProductFilter = (): ProductType[] => {
   // @ts-ignore:
@@ -71,7 +70,7 @@ const BrowseProduct = (): JSX.Element => {
             {useProductFilter()
               .sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1))
               .map((product: ProductType) => (
-                <ProductProvider key={uuidv4()} product={product} dispatch={dispatch} REDUCER_ACTIONS={REDUCER_ACTIONS} />
+                <ProductProvider product={product} dispatch={dispatch} REDUCER_ACTIONS={REDUCER_ACTIONS} />
               ))}
           </ul>
         </main>
