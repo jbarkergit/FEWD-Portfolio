@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect, useRef, MouseEvent } from 'react';
+import { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,20 +11,13 @@ const SearchBar = (): JSX.Element => {
     return product.sku.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  const getFilteredItems = () => {
-    if (!searchTerm) {
-      null;
-    }
-    return searchResults;
-  };
-
-  const filteredItems = getFilteredItems();
   const searchBarRef = useRef<HTMLDivElement>(null!);
   const searchLink = useRef<HTMLAnchorElement>(null!);
 
   useEffect(() => {
-    const useSearchBar = (e: any) => {
-      !searchBarRef.current?.contains(e.target) ? setSearchTerm('') : setSearchTerm('');
+    const useSearchBar = (e: MouseEvent): void => {
+      const target = e.target as unknown as HTMLElement;
+      !searchBarRef.current?.contains(target) ? setSearchTerm('') : setSearchTerm('');
     };
 
     searchBarRef.current?.addEventListener('click', useSearchBar);
@@ -62,17 +55,19 @@ const SearchBar = (): JSX.Element => {
       {searchTerm.length != 0 && (
         <div className="searchBar__return">
           <ul className="searchBar__return__products">
-            {filteredItems.slice(0, 10).map((product) => {
-              return (
-                <li className="searchBar__return__products__return" key={uuidv4()}>
-                  <a href={`/ecommerce/product/${product.sku}`} ref={searchLink}>
-                    <span>
-                      {product.company} {product.unit}
-                    </span>
-                  </a>
-                </li>
-              );
-            })}
+            {!searchTerm
+              ? null
+              : searchResults.slice(0, 10).map((product) => {
+                  return (
+                    <li className="searchBar__return__products__return" key={uuidv4()}>
+                      <a href={`/ecommerce/product/${product.sku}`} ref={searchLink}>
+                        <span>
+                          {product.company} {product.unit}
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
           </ul>
         </div>
       )}

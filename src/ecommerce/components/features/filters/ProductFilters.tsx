@@ -49,12 +49,13 @@ const ProductFilters = (): JSX.Element => {
     const menu = useRef<HTMLUListElement>(null!);
 
     useEffect(() => {
-      function toggleBrandFilter(event: any) {
-        if (menu?.current?.getAttribute('data-activity') === 'active' && !selectMenu?.current?.contains(event.target)) {
+      function toggleBrandFilter(e: MouseEvent) {
+        const target = e.target as unknown as HTMLElement;
+        if (menu?.current?.getAttribute('data-activity') === 'active' && !selectMenu?.current?.contains(target)) {
           menu?.current?.setAttribute('data-activity', 'inactive');
-        } else if (menu?.current?.getAttribute('data-activity') === 'active' && selectMenu?.current?.contains(event.target)) {
+        } else if (menu?.current?.getAttribute('data-activity') === 'active' && selectMenu?.current?.contains(target)) {
           menu?.current?.setAttribute('data-activity', 'inactive');
-        } else if (menu?.current?.getAttribute('data-activity') === 'inactive' && selectMenu?.current?.contains(event.target)) {
+        } else if (menu?.current?.getAttribute('data-activity') === 'inactive' && selectMenu?.current?.contains(target)) {
           menu?.current?.setAttribute('data-activity', 'active');
         } else {
           null;
@@ -94,13 +95,14 @@ const ProductFilters = (): JSX.Element => {
     const styleFilterMenu = useRef<HTMLUListElement>(null!);
 
     useEffect(() => {
-      function toggleStyleFilter(event: any) {
-        if (styleFilterStatus === true && !styleFilterSelectMenu?.current?.contains(event.target)) {
+      function toggleStyleFilter(e: MouseEvent) {
+        const target = e.target as unknown as HTMLElement;
+        if (styleFilterStatus === true && !styleFilterSelectMenu?.current?.contains(target)) {
           styleFilterMenu?.current?.setAttribute('data-activity', 'inactive');
           setStyleFilterStatus(false);
-        } else if (styleFilterStatus === true && styleFilterSelectMenu?.current?.contains(event.target)) {
+        } else if (styleFilterStatus === true && styleFilterSelectMenu?.current?.contains(target)) {
           styleFilterMenu?.current?.setAttribute('data-activity', 'inactive');
-        } else if (styleFilterStatus === false && styleFilterSelectMenu?.current?.contains(event.target)) {
+        } else if (styleFilterStatus === false && styleFilterSelectMenu?.current?.contains(target)) {
           styleFilterMenu?.current?.setAttribute('data-activity', 'active');
         } else {
           null;
