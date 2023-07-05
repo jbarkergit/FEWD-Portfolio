@@ -21,11 +21,11 @@ export type ReducerAction = {
 const reducer = (state: CartStateType, action: ReducerAction): CartStateType => {
   switch (action.type) {
     case REDUCER_ACTION_TYPE.QUANTITY: {
-      if (!action.payload) throw new Error('Action Failure: action.payload is missing in Reducer Action Type QUANTITY');
+      if (!action.payload) throw new Error('ERROR: action.payload is missing in Reducer Action Type QUANTITY');
       const { sku, stock } = action.payload,
         productExists: ProductType | undefined = state.cart.find((product) => product.sku === sku);
 
-      if (!productExists) throw new Error('Action Failure: Cannot update quantity, product does not exist');
+      if (!productExists) throw new Error('ERROR: Cannot update quantity, product does not exist');
       const updatedProduct: ProductType = { ...productExists, stock },
         filteredCart: ProductType[] = state.cart.filter((product) => product.sku !== sku);
 
@@ -33,11 +33,11 @@ const reducer = (state: CartStateType, action: ReducerAction): CartStateType => 
     }
 
     case REDUCER_ACTION_TYPE.ADD: {
-      if (!action.payload) throw new Error('Action Failure: action.payload is missing in Reducer Action Type ADD');
-      const { sku, stock, company, unit, price, images } = action.payload,
+      if (!action.payload) throw new Error('ERROR: action.payload is missing in Reducer Action Type ADD');
+      const { sku, company, unit, price, images } = action.payload,
         filteredCart: ProductType[] = state.cart.filter((product) => product.sku !== sku),
         productExists: ProductType | undefined = state.cart.find((product) => product.sku === sku),
-        quantity: number = productExists ? productExists.stock + 1 : 1;
+        stock: number = productExists ? productExists.stock + 1 : 1;
 
       return {
         ...state,
@@ -46,7 +46,7 @@ const reducer = (state: CartStateType, action: ReducerAction): CartStateType => 
     }
 
     case REDUCER_ACTION_TYPE.REMOVE: {
-      if (!action.payload) throw new Error('Action Failure: action.payload is missing in Reducer Action Type REMOVE');
+      if (!action.payload) throw new Error('ERROR: action.payload is missing in Reducer Action Type REMOVE');
       const { sku } = action.payload,
         filteredCart: ProductType[] = state.cart.filter((product) => product.sku !== sku);
 
@@ -61,7 +61,7 @@ const reducer = (state: CartStateType, action: ReducerAction): CartStateType => 
       return { ...state, cart: [] };
     }
     default:
-      throw new Error('Action Failure: Reducer Action Type may be undefined');
+      throw new Error('ERROR: Reducer Action Type may be undefined');
   }
 };
 
