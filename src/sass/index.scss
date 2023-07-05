@@ -11,12 +11,10 @@
 @forward '../shared/pages/suspenseloader';
 
 /** Portfolio **/
-@forward '../portfolio/layouts/layouts';
-@forward '../portfolio/layouts/portnav';
-@forward '../portfolio/components/main/developmentDemo';
-@forward '../portfolio/components/main/sidebar';
-@forward '../portfolio/components/features/resume';
-@forward '../portfolio/components/features/formContact';
+@forward '../portfolio/pages/portfolio';
+@forward '../portfolio/components/navigation/header/portHeader';
+@forward '../portfolio/components/main/main';
+@forward '../portfolio/components/navigation/footer/portFooter';
 
 /** Ecommerce **/
 @forward '../ecommerce/components/navigation/header/header';
