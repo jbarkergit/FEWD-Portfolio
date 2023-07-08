@@ -1,28 +1,14 @@
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import CarouselProps from './CarouselProps';
 
 const Carousel = (): JSX.Element => {
   const carousel = useRef<HTMLDivElement>(null!),
     carouselTrack = useRef<HTMLDivElement>(null!),
-    carouselTrackSlide = useRef<HTMLPictureElement>(null!),
     userMouseDown = useRef<boolean>(false),
     userMouseMove = useRef<boolean>(false);
 
-  type carouselPropTypes = { carouselImg: string; carouselAlt: string; carouselActivity: string; navCat: string };
-
-  const CarouselProps = ({ carouselImg, carouselAlt, carouselActivity, navCat }: carouselPropTypes): JSX.Element => {
-    return (
-      <div className="carousel__track__slider">
-        <picture className={`carousel__track__slide ${carouselActivity}`} ref={carouselTrackSlide}>
-          <img src={carouselImg} alt={carouselAlt} draggable="false" loading="lazy" decoding="async" fetchpriority="low" />
-        </picture>
-        <Link to="">{navCat}</Link>
-      </div>
-    );
-  };
-
   useEffect(() => {
-    if (!carousel || !carouselTrack) return;
+    if (!carousel?.current || !carouselTrack?.current) null;
 
     const onMouseDown = (e: MouseEvent): void => {
       userMouseDown.current = true;
