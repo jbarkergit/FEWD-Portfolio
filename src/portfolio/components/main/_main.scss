@@ -1,0 +1,46 @@
+@use '../../../sass/util/functions' as f;
+
+.projectSlider {
+  position: relative;
+  display: block;
+  height: 100vh;
+  &__projectPreview {
+    height: inherit;
+    &__data {
+      position: absolute;
+      top: 30%;
+      display: flex;
+      flex-direction: column;
+      height: fit-content;
+      margin: 0 0 0 f.rem(80);
+      z-index: 2;
+      & hgroup {
+        display: flex;
+        flex-direction: column;
+        margin: 0 0 f.rem(15) 0;
+        & h3 {
+          font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
+        }
+        & h2 {
+        }
+        & p {
+          width: clamp(45ch, 50%, 65ch);
+          font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
+        }
+      }
+    }
+    & picture {
+      position: absolute;
+      inset: 0;
+      height: 100vh;
+      & img {
+        position: relative;
+        object-fit: cover;
+        filter: brightness(75%);
+        &:nth-child(1) {
+          transform: scaleX(-1);
+        }
+      }
+    }
+  }
+}
