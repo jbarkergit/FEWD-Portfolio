@@ -6,12 +6,12 @@ import Lenis from '@studio-freight/lenis';
 import SuspenseLoader from './shared/pages/SuspenseLoader';
 const NotFound = lazy(() => import('./shared/pages/NotFound'));
 
-import Portfolio from './portfolio/pages/Portfolio';
+const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
 
 import { CategoryFilterProvider } from './ecommerce/context/products/CategoryFilterContext';
 import { CartProvider } from './ecommerce/context/cart/CartContext';
 const Ecommerce = lazy(() => import('./ecommerce/pages/Home'));
-const BrowseProduct = lazy(() => import('./ecommerce/pages/BrowseProduct'));
+import BrowseProduct from './ecommerce/pages/BrowseProduct';
 const ProductPage = lazy(() => import('./ecommerce/pages/ProductPage'));
 
 function App() {
