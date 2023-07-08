@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 
-type ProjectNavPropsType = {
+type ProjectNavPropType = {
   linkTo: string;
   imgSrc: string;
   projectName: string;
   projectType: string;
 };
 
-const ProjectNavProps = ({ linkTo, imgSrc, projectName, projectType }: ProjectNavPropsType): JSX.Element => {
+const ProjectNavProp = ({ linkTo, imgSrc, projectName, projectType }: ProjectNavPropType): JSX.Element => {
   return (
     <Link to={linkTo} className="portFooter__projects">
       <article>
@@ -23,4 +23,4 @@ const ProjectNavProps = ({ linkTo, imgSrc, projectName, projectType }: ProjectNa
   );
 };
 
-export default ProjectNavProps;
+export default ProjectNavProp;

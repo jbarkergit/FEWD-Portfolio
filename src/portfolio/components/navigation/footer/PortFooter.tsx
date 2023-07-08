@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react';
-import ProjectNavProps from './ProjectNavProps';
+import ProjectNavProps from './ProjectNavProp';
 
 type initStateType = {
   mouseDown: boolean;

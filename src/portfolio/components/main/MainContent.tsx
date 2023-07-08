@@ -1,30 +1,4 @@
-import { Link } from 'react-router-dom';
-
-type ProjectPreviewPropType = {
-  h2: string;
-  h3: string;
-  p: string;
-  linkTo: string;
-  imgSrc: string;
-};
-
-const ProjectPreviewProp = ({ h2, h3, p, linkTo, imgSrc }: ProjectPreviewPropType): JSX.Element => {
-  return (
-    <article className="projectSlider__projectPreview">
-      <div className="projectSlider__projectPreview__data">
-        <hgroup>
-          <h3>{h3}</h3>
-          <h2>{h2}</h2>
-          <p>{p}</p>
-        </hgroup>
-        <Link to={linkTo}>LIVE DEMO</Link>
-      </div>
-      <picture>
-        <img src={imgSrc} draggable="false" loading="lazy" decoding="async" fetchpriority="high" />
-      </picture>
-    </article>
-  );
-};
+import ProjectPreviewProp from './ProjectPreviewProp';
 
 const MainContent = (): JSX.Element => {
   return (
