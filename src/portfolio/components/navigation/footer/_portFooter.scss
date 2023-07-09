@@ -6,7 +6,14 @@
   display: block;
   width: 100%;
   z-index: 9;
-  padding: f.rem(50) f.rem(80);
+  padding: f.rem(50) 0;
+  overflow: hidden;
+  &:hover {
+    cursor: grab;
+  }
+  &:active {
+    cursor: grabbing;
+  }
   &__nav {
     position: relative;
     display: flex;
@@ -15,15 +22,21 @@
     gap: f.rem(50);
     width: fit-content;
     z-index: 10;
-    overflow: hidden;
-    scrollbar-width: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    &:hover {
-      cursor: grab;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    white-space: nowrap;
+    padding-inline-start: f.rem(80);
+    padding-inline-end: f.rem(80);
+    & > * {
+      scroll-snap-align: center;
+      display: inline-block;
+      width: 100%;
+      white-space: normal;
     }
-    &:active {
-      cursor: grabbing;
-    }
+
     & a {
       content: '';
       article {
