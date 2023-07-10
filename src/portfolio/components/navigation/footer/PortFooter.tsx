@@ -6,6 +6,7 @@ type initStateType = {
   initX: number;
   clientX: number;
   trackPos: number;
+  prevTrackPos: number;
   style: React.CSSProperties;
 };
 
@@ -14,6 +15,7 @@ const initState: initStateType = {
   initX: 0,
   clientX: 0,
   trackPos: 0,
+  prevTrackPos: 0,
   style: { transform: `translateX(0px)` },
 };
 
@@ -38,23 +40,24 @@ const PortFooter = (): JSX.Element => {
           return state;
         } else {
           const { initX, clientX } = action,
-            travelDistance: number = Math.floor((clientX - initX) / 40),
-            latestTrackPosition: number = Math.floor(state.trackPos + travelDistance);
+            targetElementTravelDistance: number = clientX - initX,
+            latestTrackPosition: number = state.prevTrackPos + targetElementTravelDistance;
+
           const targetElementWidth: number = targetElement?.offsetWidth as number;
           const targetElementChildrenArray: number[] = Array.from(targetElement?.children!).map((child) => (child as HTMLElement).offsetWidth),
             targetElementChildrenMedianWidth: number = targetElementChildrenArray.sort((a, b) => a - b)[Math.floor(targetElementChildrenArray.length / 2)];
           const targetElementChildrenComputedStyle: CSSStyleDeclaration = window.getComputedStyle(targetElement!),
             targetElementChildrenComputedStyleGap: number = parseInt(targetElementChildrenComputedStyle.gap) as number,
             targetElementChildrenComputedStyleGapSum: number = targetElementChildrenComputedStyleGap * targetElementChildrenArray.length;
-          const maximumDelta: number = targetElementChildrenMedianWidth - targetElementWidth + targetElementChildrenComputedStyleGapSum;
-          const clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta),
-            newTrackPosition: number = Math.floor(state.trackPos + (clampedTrackPosition - state.trackPos) * 1);
+          const maximumDelta: number = (targetElementWidth - targetElementChildrenMedianWidth - targetElementChildrenComputedStyleGapSum) * -1;
 
-          return { ...state, trackPos: newTrackPosition, style: { transform: `translateX(${newTrackPosition}px)` } };
+          const clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
+
+          return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
         }
       case 'MOUSE_LEAVE':
       case 'MOUSE_UP':
-        return { ...state, mouseDown: false };
+        return { ...state, mouseDown: false, prevTrackPos: state.trackPos };
       default:
         throw new Error('FAILURE: Action Type may be missing or returning null');
     }
@@ -92,7 +95,7 @@ const PortFooter = (): JSX.Element => {
       targetElement?.removeEventListener('mouseleave', userMouseLeave);
       targetElement?.removeEventListener('mouseup', userMouseUp);
     };
-  }, [state.initX]);
+  }, [state.mouseDown]);
 
   return (
     <footer className="portFooter">
