@@ -48,7 +48,7 @@ const PortFooter = (): JSX.Element => {
             targetElementChildrenComputedStyleGapSum: number = targetElementChildrenComputedStyleGap * targetElementChildrenArray.length;
           const maximumDelta: number = targetElementChildrenMedianWidth - targetElementWidth + targetElementChildrenComputedStyleGapSum;
           const clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta),
-            newTrackPosition: number = Math.floor(state.trackPos + (clampedTrackPosition - state.trackPos) * 0.8);
+            newTrackPosition: number = Math.floor(state.trackPos + (clampedTrackPosition - state.trackPos) * 1);
 
           return { ...state, trackPos: newTrackPosition, style: { transform: `translateX(${newTrackPosition}px)` } };
         }
