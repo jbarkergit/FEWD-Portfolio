@@ -39,11 +39,11 @@
 
     & a {
       content: '';
+      pointer-events: none;
       article {
         position: relative;
         display: flex;
         flex: 0 0 f.rem(250);
-        pointer-events: none;
         & picture {
           width: min(27.5vw, 34.375rem);
           max-height: f.rem(280);

@@ -1,19 +1,19 @@
-import { useCallback, useEffect, useReducer, useRef } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import ProjectNavProp from './ProjectNavProp';
 
 type initStateType = {
   mouseDown: boolean;
   initX: number;
-  trackPos: number;
   clientX: number;
+  trackPos: number;
   style: React.CSSProperties;
 };
 
 const initState: initStateType = {
   mouseDown: false,
   initX: 0,
-  trackPos: 0,
   clientX: 0,
+  trackPos: 0,
   style: { transform: `translateX(0px)` },
 };
 
@@ -32,32 +32,25 @@ const PortFooter = (): JSX.Element => {
 
     switch (action.type) {
       case 'MOUSE_DOWN':
-        return {
-          ...state,
-          mouseDown: true,
-          initX: action.initX,
-          clientX: action.clientX,
-        };
+        return { ...state, mouseDown: true, initX: action.initX, clientX: action.clientX };
       case 'MOUSE_MOVE':
         if (state.mouseDown === false) {
           return state;
         } else {
-          const { initX, clientX } = action;
-          const travelDistance: number = (clientX - initX) / 64,
-            newTrackPos: number = Math.floor(state.trackPos + travelDistance);
-          const targetWidth: number = targetElement?.offsetWidth as number,
-            slideWidth: number = targetElement?.children[0].scrollWidth as number,
-            slidesGap: number = (targetElement?.children.length as number) * 50,
-            minPos: number = 0,
-            maxPos: number = slideWidth - targetWidth + slidesGap;
-          const dampingFactor: number = 0.2;
-          const clampedTrackPos: number = Math.max(Math.min(newTrackPos, minPos), maxPos),
-            adjustedTrackPos: number = state.trackPos + (clampedTrackPos - state.trackPos) * dampingFactor;
-          return {
-            ...state,
-            trackPos: clampedTrackPos,
-            style: { transform: `translateX(${adjustedTrackPos}px)` },
-          };
+          const { initX, clientX } = action,
+            travelDistance: number = Math.floor((clientX - initX) / 40),
+            latestTrackPosition: number = Math.floor(state.trackPos + travelDistance);
+          const targetElementWidth: number = targetElement?.offsetWidth as number;
+          const targetElementChildrenArray: number[] = Array.from(targetElement?.children!).map((child) => (child as HTMLElement).offsetWidth),
+            targetElementChildrenMedianWidth: number = targetElementChildrenArray.sort((a, b) => a - b)[Math.floor(targetElementChildrenArray.length / 2)];
+          const targetElementChildrenComputedStyle: CSSStyleDeclaration = window.getComputedStyle(targetElement!),
+            targetElementChildrenComputedStyleGap: number = parseInt(targetElementChildrenComputedStyle.gap) as number,
+            targetElementChildrenComputedStyleGapSum: number = targetElementChildrenComputedStyleGap * targetElementChildrenArray.length;
+          const maximumDelta: number = targetElementChildrenMedianWidth - targetElementWidth + targetElementChildrenComputedStyleGapSum;
+          const clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta),
+            newTrackPosition: number = Math.floor(state.trackPos + (clampedTrackPosition - state.trackPos) * 0.8);
+
+          return { ...state, trackPos: newTrackPosition, style: { transform: `translateX(${newTrackPosition}px)` } };
         }
       case 'MOUSE_LEAVE':
       case 'MOUSE_UP':
@@ -68,8 +61,6 @@ const PortFooter = (): JSX.Element => {
   };
 
   const [state, dispatch] = useReducer(reducer, initState);
-  const portFooterRef = useRef<HTMLElement>(null!),
-    portFooter = portFooterRef.current;
 
   useEffect(() => {
     const targetElement = targetElementRef.current;
@@ -104,7 +95,7 @@ const PortFooter = (): JSX.Element => {
   }, [state.initX]);
 
   return (
-    <footer className="portFooter" ref={portFooterRef}>
+    <footer className="portFooter">
       <nav className="portFooter__nav" ref={targetElementRef} style={state.style}>
         <ProjectNavProp
           linkTo="/ecommerce"
@@ -113,10 +104,10 @@ const PortFooter = (): JSX.Element => {
           projectType="Ecommerce"
         />
         <ProjectNavProp
-          linkTo=""
-          imgSrc="https://images.unsplash.com/photo-1683752495866-6bd49d91699f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-          projectName="Unknown"
-          projectType="TBD"
+          linkTo="/disclosure"
+          imgSrc="https://images.unsplash.com/photo-1613035617861-c7b29e5cf65c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          projectName="Disclosure (TBD)"
+          projectType="Communication"
         />
         <ProjectNavProp
           linkTo=""

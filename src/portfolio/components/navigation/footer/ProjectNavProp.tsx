@@ -9,7 +9,7 @@ type ProjectNavPropType = {
 
 const ProjectNavProp = ({ linkTo, imgSrc, projectName, projectType }: ProjectNavPropType): JSX.Element => {
   return (
-    <Link to={linkTo} className="portFooter__projects">
+    <Link to={linkTo}>
       <article>
         <picture>
           <img src={imgSrc} alt="" draggable="false" loading="lazy" decoding="async" fetchpriority="high" />
