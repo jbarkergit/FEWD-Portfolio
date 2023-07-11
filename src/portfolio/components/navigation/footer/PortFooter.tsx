@@ -26,38 +26,49 @@ type actionType =
   | { type: 'MOUSE_UP'; mouseDown: boolean };
 
 const PortFooter = (): JSX.Element => {
-  const targetElementRef = useRef<HTMLElement>(null);
+  const targetElementRef = useRef<HTMLElement>(null),
+    targetElement = targetElementRef?.current;
 
   const reducer = (state: initStateType, action: actionType): initStateType => {
-    const getTargetElement = () => targetElementRef.current,
-      targetElement = getTargetElement();
-
     switch (action.type) {
       case 'MOUSE_DOWN':
         return { ...state, mouseDown: true, initX: action.initX, clientX: action.clientX };
+
       case 'MOUSE_MOVE':
         if (state.mouseDown === false) {
           return state;
         } else {
-          const { initX, clientX } = action,
-            targetElementTravelDistance: number = clientX - initX,
-            latestTrackPosition: number = state.prevTrackPos + targetElementTravelDistance;
-
           const targetElementWidth: number = targetElement?.offsetWidth as number;
-          const targetElementChildrenArray: number[] = Array.from(targetElement?.children!).map((child) => (child as HTMLElement).offsetWidth),
-            targetElementChildrenMedianWidth: number = targetElementChildrenArray.sort((a, b) => a - b)[Math.floor(targetElementChildrenArray.length / 2)];
+          const targetElementChildrenWidthArray: number[] = Array.from(targetElement?.children!).map((child) => (child as HTMLElement).offsetWidth),
+            targetElementChildrenMedianWidth: number = targetElementChildrenWidthArray.sort((a, b) => a - b)[Math.floor(targetElementChildrenWidthArray.length / 2)];
           const targetElementChildrenComputedStyle: CSSStyleDeclaration = window.getComputedStyle(targetElement!),
             targetElementChildrenComputedStyleGap: number = parseInt(targetElementChildrenComputedStyle.gap) as number,
-            targetElementChildrenComputedStyleGapSum: number = targetElementChildrenComputedStyleGap * targetElementChildrenArray.length;
+            targetElementChildrenComputedStyleGapSum: number = targetElementChildrenComputedStyleGap * targetElementChildrenWidthArray.length;
           const maximumDelta: number = (targetElementWidth - targetElementChildrenMedianWidth - targetElementChildrenComputedStyleGapSum) * -1;
 
-          const clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
+          const { initX, clientX } = action,
+            targetElementTravelDistance: number = clientX - initX,
+            latestTrackPosition: number = state.prevTrackPos + targetElementTravelDistance,
+            clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
 
-          return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
+          const lerp = (a: number, b: number, t: number): number => a + (b - a) * t; //Lenis Package Lerp Instance
+          const interpolatedTrackPosition = lerp(state.trackPos, clampedTrackPosition, 0.1);
+
+          return { ...state, trackPos: interpolatedTrackPosition, style: { transform: `translateX(${interpolatedTrackPosition}px)` } };
         }
+
       case 'MOUSE_LEAVE':
       case 'MOUSE_UP':
-        return { ...state, mouseDown: false, prevTrackPos: state.trackPos };
+        return {
+          ...state,
+          mouseDown: false,
+          prevTrackPos: state.trackPos,
+          style: {
+            ...state.style,
+            transitionDuration: '1200ms',
+          },
+        };
+
       default:
         throw new Error('FAILURE: Action Type may be missing or returning null');
     }
@@ -66,7 +77,7 @@ const PortFooter = (): JSX.Element => {
   const [state, dispatch] = useReducer(reducer, initState);
 
   useEffect(() => {
-    const targetElement = targetElementRef.current;
+    const targetElement = targetElementRef?.current;
 
     const userMouseDown = (e: MouseEvent) => {
       const clientX = e.clientX as number;

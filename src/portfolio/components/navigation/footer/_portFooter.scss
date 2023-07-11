@@ -5,9 +5,6 @@
   bottom: 0;
   display: block;
   width: 100%;
-  z-index: 9;
-  padding: f.rem(50) 0;
-  overflow: hidden;
   &:hover {
     cursor: grab;
   }
@@ -22,17 +19,17 @@
     gap: f.rem(50);
     width: fit-content;
     z-index: 10;
-    padding-inline-start: f.rem(80);
-    padding-inline-end: f.rem(80);
+    padding: f.rem(0) f.rem(80);
+    margin: 0 0 f.rem(50) 0;
     & > * {
       display: inline-block;
       width: 100%;
+      pointer-events: none;
       white-space: normal;
     }
-
     & a {
       content: '';
-      pointer-events: none;
+
       article {
         position: relative;
         display: flex;
