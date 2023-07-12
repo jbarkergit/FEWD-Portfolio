@@ -1,35 +1,9 @@
-/** Base **/
 @forward './base/typography';
 @forward './base/boilerplate';
 @forward './base/interaction';
 
-/** Styles **/
-@forward './styles/root';
-
-/** Shared **/
 @forward '../shared/pages/notfound';
 @forward '../shared/pages/suspenseloader';
 
-/** Portfolio **/
-@forward '../portfolio/pages/portfolio';
-@forward '../portfolio/components/navigation/header/portHeader';
-@forward '../portfolio/components/main/main';
-@forward '../portfolio/components/navigation/footer/portFooter';
-
-/** Ecommerce **/
-@forward '../ecommerce/components/navigation/header/header';
-@forward '../ecommerce/components/navigation/footer/eFooter';
-
-@forward '../ecommerce/components/features/modal';
-@forward '../ecommerce/components/features/filters/productFilters';
-@forward '../ecommerce/components/features/search/searchBar';
-
-@forward '../ecommerce/components/features/account/accountDashboard';
-
-@forward '../ecommerce/components/home/infographic';
-@forward '../ecommerce/components/home/carousel';
-@forward '../ecommerce/components/home/sideBySide';
-@forward '../ecommerce/components/home/productHighlight';
-
-@forward '../ecommerce/pages/productProps';
-@forward '../ecommerce/pages/productPages';
+@forward '../portfolio/portfolio';
+@forward '../ecommerce/ecommerce';

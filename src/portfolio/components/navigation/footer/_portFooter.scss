@@ -27,36 +27,34 @@
       pointer-events: none;
       white-space: normal;
     }
-    & a {
-      content: '';
-      article {
-        position: relative;
-        display: flex;
-        flex: 0 0 f.rem(250);
-        & picture {
-          width: min(27.5vw, 34.375rem);
-          max-height: f.rem(280);
-          aspect-ratio: 5/3;
+    content: '';
+    article {
+      position: relative;
+      display: flex;
+      flex: 0 0 f.rem(250);
+      & picture {
+        width: min(27.5vw, 34.375rem);
+        max-height: f.rem(280);
+        aspect-ratio: 5/3;
+        border-radius: f.rem(26);
+        background-color: rgba(0, 0, 0, 0.5);
+        &.active {
+          flex: 0 0 f.rem(1154);
+          transition: flex 0.85s ease-in-out;
+        }
+        & img {
           border-radius: f.rem(26);
-          background-color: rgba(0, 0, 0, 0.5);
-          &.active {
-            flex: 0 0 f.rem(1154);
-            transition: flex 0.85s ease-in-out;
-          }
-          & img {
-            border-radius: f.rem(26);
-            object-fit: cover;
-            // filter: brightness(60%) blur(1px);
-          }
+          object-fit: cover;
+          // filter: brightness(60%) blur(1px);
         }
-        & hgroup {
-          position: absolute;
-          bottom: 0;
-          display: flex;
-          flex-direction: column;
-          z-index: 10;
-          padding: f.rem(20) f.rem(25);
-        }
+      }
+      & hgroup {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        padding: f.rem(20) f.rem(25);
       }
     }
   }

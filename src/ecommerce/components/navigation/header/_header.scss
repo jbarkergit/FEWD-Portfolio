@@ -1,5 +1,5 @@
-@use '../../../../sass/styles/mixins' as m;
 @use '../../../../sass/util/functions' as f;
+@use '../../../ecommerceStyles' as m;
 
 .navkit {
   position: relative;
@@ -208,5 +208,9 @@
   }
 }
 div.searchBar:nth-child(2) > div:nth-child(1) > input:nth-child(2) {
-  box-shadow: #f0f0f0 -1px -1px 20px 0px, #fff -4px -4px 5px 0px, rgba(255, 255, 255, 0.97) 7px 7px 20px 0px, rgb(232, 232, 232) 4px 4px 5px 0px !important;
+  box-shadow:
+    #f0f0f0 -1px -1px 20px 0px,
+    #fff -4px -4px 5px 0px,
+    rgba(255, 255, 255, 0.97) 7px 7px 20px 0px,
+    rgb(232, 232, 232) 4px 4px 5px 0px !important;
 }

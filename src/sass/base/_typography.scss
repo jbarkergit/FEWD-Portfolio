@@ -1,5 +1,6 @@
-@use '../util/functions' as f;
+@use '../../sass/util/functions' as f;
 
+/* SHORTHAND - STYLE [SMALL-CAPS] WEIGHT SIZE/LINE-HEIGHT FAMILY FAMILY-FALLBACK */
 @font-face {
   font-optical-sizing: auto;
   font-family: 'Plus Jakarta Sans';
@@ -20,13 +21,23 @@
   font-stretch: normal;
   font-variant-ligatures: common-ligatures;
 }
-/* SHORTHAND - STYLE [SMALL-CAPS] WEIGHT SIZE/LINE-HEIGHT FAMILY FAMILY-FALLBACK */
+@import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
+code {
+  font-family: 'Fira Code', monospace;
+}
+@supports (font-variation-settings: normal) {
+  code {
+    font-family: 'Fira Code VF', monospace;
+  }
+}
 html {
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
 }
 body {
-  font: 400 100% / 1.25 'Plus Jakarta Sans', 'PT Sans';
+  font:
+    400 100% / 1.25 'Plus Jakarta Sans',
+    'PT Sans';
 }
 h1 {
   font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));

@@ -126,16 +126,15 @@ const PortFooter = (): JSX.Element => {
     <footer className="portFooter">
       <nav className="portFooter__nav" ref={targetElementRef} style={state.style}>
         <ProjectNavProp
-          linkTo="/ecommerce"
           imgSrc="src\ecommerce\assets\production-images\compressed-home-page\infographic\img-by-ilias-chebbi-on-unsplash.jpg"
           projectName="Dynamic Audio"
           projectType="Ecommerce"
         />
-        <ProjectNavProp linkTo="" imgSrc="" projectName="" projectType="" />
-        <ProjectNavProp linkTo="" imgSrc="" projectName="" projectType="" />
-        <ProjectNavProp linkTo="" imgSrc="" projectName="" projectType="" />
-        <ProjectNavProp linkTo="" imgSrc="" projectName="" projectType="" />
-        <ProjectNavProp linkTo="" imgSrc="" projectName="" projectType="" />
+        <ProjectNavProp imgSrc="" projectName="" projectType="" />
+        <ProjectNavProp imgSrc="" projectName="" projectType="" />
+        <ProjectNavProp imgSrc="" projectName="" projectType="" />
+        <ProjectNavProp imgSrc="" projectName="" projectType="" />
+        <ProjectNavProp imgSrc="" projectName="" projectType="" />
       </nav>
     </footer>
   );

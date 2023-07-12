@@ -1,4 +1,4 @@
-@use '../../sass/styles/mixins' as m;
+@use '../ecommerceStyles' as m;
 @use '../../sass/util/functions' as f;
 
 .browseProduct {
@@ -30,7 +30,11 @@
     height: 100%;
     aspect-ratio: 4/5;
     border-radius: f.rem(32);
-    box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+    box-shadow:
+      -1px -1px 20px 0px #fff,
+      -4px -4px 5px 0px #fff,
+      7px 7px 20px 0px rgba(153, 153, 153, 0.4),
+      4px 4px 5px 0px rgba(0, 0, 0, 0.3);
     transition: 0.55s ease-in-out;
     @media (width <= 766px) {
       height: clamp(f.rem(350), calc(f.rem(600) + 1.5vh), f.rem(700));
@@ -158,7 +162,12 @@
   width: 100%;
   height: 100%;
   font-size: f.rem(80);
-  text-shadow: 1px 1px 1px hsl(0, 0%, 20%), 1px 1px 5px hsl(0, 0%, 20%), 1px 1px 10px hsl(0, 0%, 20%), 1px 1px 20px hsl(0, 0%, 20%), 1px 1px 30px hsl(0, 0%, 20%);
+  text-shadow:
+    1px 1px 1px hsl(0, 0%, 20%),
+    1px 1px 5px hsl(0, 0%, 20%),
+    1px 1px 10px hsl(0, 0%, 20%),
+    1px 1px 20px hsl(0, 0%, 20%),
+    1px 1px 30px hsl(0, 0%, 20%);
   color: white;
   cursor: default;
 }
