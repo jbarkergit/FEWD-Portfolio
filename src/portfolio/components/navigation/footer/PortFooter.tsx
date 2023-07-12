@@ -78,7 +78,6 @@ const PortFooter = (): JSX.Element => {
         }
 
         const closestChild: number = targetElementChildrenPositionArray[closestIndex] * -1;
-        // const snapPosition: number = snappingPosition - (closestChild?.offsetLeft ?? 0) + (targetElement?.scrollLeft ?? 0);
 
         return {
           ...state,
