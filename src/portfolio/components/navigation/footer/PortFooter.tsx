@@ -57,37 +57,33 @@ const PortFooter = (): JSX.Element => {
         }
 
       case 'MOUSE_LEAVE':
-        return {
-          ...state,
-          mouseDown: false,
-          prevTrackPos: state.trackPos,
-        };
       case 'MOUSE_UP':
         const targetElementChildrenArray: HTMLElement[] = Array.from(targetElement!.children).map((child) => child as HTMLElement);
-        const targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child, i, arr) =>
-          arr.slice(0, i + 1).reduce((sum, child) => sum + child.offsetWidth, 0)
-        );
+        const targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
 
         let closestIndex = 0;
 
         for (let i = 0; i < targetElementChildrenPositionArray.length; i++) {
-          const difference = Math.abs(targetElementChildrenPositionArray[i] * -1 - state.trackPos);
-          if (difference < Math.abs(targetElementChildrenPositionArray[closestIndex] * -1 - state.trackPos)) {
+          const difference = Math.abs(targetElementChildrenPositionArray[i] - state.trackPos);
+          const previousIndex = Math.abs(targetElementChildrenPositionArray[closestIndex] - state.trackPos);
+          if (difference < previousIndex) {
             closestIndex = i;
           }
         }
 
-        const closestChild: number = targetElementChildrenPositionArray[closestIndex] * -1;
+        const targetElementLeftPadding = parseInt(window.getComputedStyle(targetElement!).paddingLeft);
+        const closestChild: number = targetElementChildrenPositionArray[closestIndex] + targetElementLeftPadding;
+        console.log(closestChild);
 
         return {
           ...state,
           mouseDown: false,
-          trackPos: closestChild,
           prevTrackPos: state.trackPos,
+          trackPos: closestChild,
           style: {
             ...state.style,
             transform: `translateX(${closestChild}px)`,
-            transitionDuration: '1200ms',
+            transitionDuration: '600ms',
           },
         };
 
