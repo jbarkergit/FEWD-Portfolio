@@ -41,8 +41,7 @@ const PortFooter = (): JSX.Element => {
           const targetElementWidth: number = targetElement?.offsetWidth as number;
           const targetElementChildrenWidthArray: number[] = Array.from(targetElement?.children!).map((child) => (child as HTMLElement).offsetWidth),
             targetElementChildrenMedianWidth: number = targetElementChildrenWidthArray.sort((a, b) => a - b)[Math.floor(targetElementChildrenWidthArray.length / 2)];
-          const targetElementChildrenComputedStyle: CSSStyleDeclaration = window.getComputedStyle(targetElement!),
-            targetElementChildrenComputedStyleGap: number = parseInt(targetElementChildrenComputedStyle.gap) as number,
+          const targetElementChildrenComputedStyleGap: number = parseInt(window.getComputedStyle(targetElement!).gap) as number,
             targetElementChildrenComputedStyleGapSum: number = targetElementChildrenComputedStyleGap * targetElementChildrenWidthArray.length;
           const maximumDelta: number = (targetElementWidth - targetElementChildrenMedianWidth - targetElementChildrenComputedStyleGapSum) * -1;
 
@@ -58,13 +57,37 @@ const PortFooter = (): JSX.Element => {
         }
 
       case 'MOUSE_LEAVE':
-      case 'MOUSE_UP':
         return {
           ...state,
           mouseDown: false,
           prevTrackPos: state.trackPos,
+        };
+      case 'MOUSE_UP':
+        const targetElementChildrenArray: HTMLElement[] = Array.from(targetElement!.children).map((child) => child as HTMLElement);
+        const targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child, i, arr) =>
+          arr.slice(0, i + 1).reduce((sum, child) => sum + child.offsetWidth, 0)
+        );
+
+        let closestIndex = 0;
+
+        for (let i = 0; i < targetElementChildrenPositionArray.length; i++) {
+          const difference = Math.abs(targetElementChildrenPositionArray[i] * -1 - state.trackPos);
+          if (difference < Math.abs(targetElementChildrenPositionArray[closestIndex] * -1 - state.trackPos)) {
+            closestIndex = i;
+          }
+        }
+
+        const closestChild: number = targetElementChildrenPositionArray[closestIndex] * -1;
+        // const snapPosition: number = snappingPosition - (closestChild?.offsetLeft ?? 0) + (targetElement?.scrollLeft ?? 0);
+
+        return {
+          ...state,
+          mouseDown: false,
+          trackPos: closestChild,
+          prevTrackPos: state.trackPos,
           style: {
             ...state.style,
+            transform: `translateX(${closestChild}px)`,
             transitionDuration: '1200ms',
           },
         };
