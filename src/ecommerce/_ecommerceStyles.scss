@@ -1,0 +1,68 @@
+@use '../sass/util/functions' as f;
+
+.highlight {
+  background: #ff5900;
+  background-clip: text;
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.highlight2 {
+  background: linear-gradient(180deg, #ffb6ff, #b344ff);
+  background-clip: text;
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@mixin productPhoto {
+  background: hsl(0, 0%, 95%);
+  background-image: -webkit-radial-gradient(top, circle cover, hsl(0, 3%, 95%) 0%, hsl(0, 0%, 90%));
+  background-image: -moz-radial-gradient(top, circle cover, hsl(0, 3%, 95%) 0%, hsl(0, 0%, 90%));
+  background-image: -o-radial-gradient(top, circle cover, hsl(0, 3%, 95%) 0%, hsl(0, 0%, 90%));
+  background-image: radial-gradient(top, circle cover, hsl(0, 3%, 100%) 0%, hsl(0, 0%, 90%));
+}
+@mixin productPhotoHover {
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-top-left-radius: f.rem(16);
+    border-top-right-radius: f.rem(16);
+    opacity: 0;
+    background: hsl(0, 0%, 95%);
+    background-image: -webkit-radial-gradient(top, circle cover, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 75%));
+    background-image: -moz-radial-gradient(top, circle cover, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 75%));
+    background-image: -o-radial-gradient(top, circle cover, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 75%));
+    background-image: radial-gradient(top, circle cover, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 75%));
+    transition: opacity 0.55s;
+  }
+  &:hover::before {
+    opacity: 1;
+  }
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+@mixin ecommerceBtn {
+  padding: f.rem(10) f.rem(13);
+  // border: 1px solid hsl(0, 0%, 20%);
+  border-radius: f.rem(5);
+  white-space: nowrap;
+  background: hsl(0, 0%, 20%);
+  color: white;
+  cursor: pointer;
+}
+@mixin photoFilters {
+  filter: contrast(103%) drop-shadow(0.25rem 0.2rem 1rem hsl(0, 0%, 97%));
+}
+@mixin BtnShadow {
+  box-shadow:
+    -1px -1px 20px 0px rgba(255, 255, 255, 1),
+    -4px -4px 5px 0px rgba(255, 255, 255, 1),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.4),
+    4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+}
