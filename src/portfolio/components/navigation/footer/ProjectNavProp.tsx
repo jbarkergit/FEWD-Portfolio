@@ -11,9 +11,7 @@ const ProjectNavProp = ({ linkTo, imgSrc, projectName, projectType }: ProjectNav
   return (
     <Link to={linkTo}>
       <article>
-        <picture>
-          <img src={imgSrc} alt="" draggable="false" loading="lazy" decoding="async" fetchpriority="high" />
-        </picture>
+        <picture>{imgSrc ? <img src={imgSrc} alt="" draggable="false" loading="lazy" decoding="async" fetchpriority="high" /> : null}</picture>
         <hgroup>
           <h3>{projectType}</h3>
           <h2>{projectName}</h2>

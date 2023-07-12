@@ -29,7 +29,6 @@
     }
     & a {
       content: '';
-
       article {
         position: relative;
         display: flex;
@@ -39,6 +38,7 @@
           max-height: f.rem(280);
           aspect-ratio: 5/3;
           border-radius: f.rem(26);
+          background-color: rgba(0, 0, 0, 0.5);
           &.active {
             flex: 0 0 f.rem(1154);
             transition: flex 0.85s ease-in-out;
@@ -46,7 +46,7 @@
           & img {
             border-radius: f.rem(26);
             object-fit: cover;
-            filter: brightness(60%) blur(1px);
+            // filter: brightness(60%) blur(1px);
           }
         }
         & hgroup {

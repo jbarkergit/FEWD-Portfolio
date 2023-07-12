@@ -4,24 +4,22 @@ import ProjectNavProp from './ProjectNavProp';
 type initStateType = {
   mouseDown: boolean;
   initX: number;
-  clientX: number;
+  pageX: number;
   trackPos: number;
-  prevTrackPos: number;
   style: React.CSSProperties;
 };
 
 const initState: initStateType = {
   mouseDown: false,
   initX: 0,
-  clientX: 0,
+  pageX: 0,
   trackPos: 0,
-  prevTrackPos: 0,
   style: { transform: `translateX(0px)` },
 };
 
 type actionType =
-  | { type: 'MOUSE_DOWN'; mouseDown: boolean; initX: number; clientX: number }
-  | { type: 'MOUSE_MOVE'; mouseDown: boolean; initX: number; clientX: number }
+  | { type: 'MOUSE_DOWN'; mouseDown: boolean; initX: number; pageX: number }
+  | { type: 'MOUSE_MOVE'; mouseDown: boolean; initX: number; pageX: number }
   | { type: 'MOUSE_LEAVE'; mouseDown: boolean }
   | { type: 'MOUSE_UP'; mouseDown: boolean };
 
@@ -32,26 +30,27 @@ const PortFooter = (): JSX.Element => {
   const reducer = (state: initStateType, action: actionType): initStateType => {
     switch (action.type) {
       case 'MOUSE_DOWN':
-        return { ...state, mouseDown: true, initX: action.initX, clientX: action.clientX };
+        return { ...state, mouseDown: true, initX: action.initX, pageX: action.pageX };
 
       case 'MOUSE_MOVE':
         if (state.mouseDown === false) {
           return state;
         } else {
           const targetElementWidth: number = targetElement?.offsetWidth as number;
-          const targetElementChildrenWidthArray: number[] = Array.from(targetElement?.children!).map((child) => (child as HTMLElement).offsetWidth),
-            targetElementChildrenMedianWidth: number = targetElementChildrenWidthArray.sort((a, b) => a - b)[Math.floor(targetElementChildrenWidthArray.length / 2)];
-          const targetElementChildrenComputedStyleGap: number = parseInt(window.getComputedStyle(targetElement!).gap) as number,
-            targetElementChildrenComputedStyleGapSum: number = targetElementChildrenComputedStyleGap * targetElementChildrenWidthArray.length;
-          const maximumDelta: number = (targetElementWidth - targetElementChildrenMedianWidth - targetElementChildrenComputedStyleGapSum) * -1;
+          // const targetElementChildrenWidthArray: number[] = Array.from(targetElement?.children!).map((child) => (child as HTMLElement).offsetWidth),
+          //   targetElementChildrenMedianWidth: number = targetElementChildrenWidthArray.sort((a, b) => a - b)[Math.floor(targetElementChildrenWidthArray.length / 2)];
+          // const targetElementChildrenComputedStyleGap: number = parseInt(window.getComputedStyle(targetElement!).gap) as number,
+          //   targetElementChildrenComputedStyleGapSum: number = targetElementChildrenComputedStyleGap * targetElementChildrenWidthArray.length;
+          // const maximumDelta: number = (targetElementWidth - targetElementChildrenMedianWidth - targetElementChildrenComputedStyleGapSum) * -1;
+          const maximumDelta: number = targetElementWidth * -1;
 
-          const { initX, clientX } = action,
-            targetElementTravelDistance: number = clientX - initX,
-            latestTrackPosition: number = state.prevTrackPos + targetElementTravelDistance,
+          const { initX, pageX } = action,
+            targetElementTravelDistance: number = pageX - initX,
+            latestTrackPosition: number = state.trackPos + targetElementTravelDistance,
             clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
 
           const lerp = (a: number, b: number, t: number): number => a + (b - a) * t; //Lenis Package Lerp Instance
-          const interpolatedTrackPosition = lerp(state.trackPos, clampedTrackPosition, 0.1);
+          const interpolatedTrackPosition = lerp(state.trackPos, clampedTrackPosition, 0.05);
 
           return { ...state, trackPos: interpolatedTrackPosition, style: { transform: `translateX(${interpolatedTrackPosition}px)` } };
         }
@@ -73,15 +72,12 @@ const PortFooter = (): JSX.Element => {
 
         const targetElementLeftPadding = parseInt(window.getComputedStyle(targetElement!).paddingLeft);
         const closestChild: number = targetElementChildrenPositionArray[closestIndex] + targetElementLeftPadding;
-        console.log(closestChild);
 
         return {
           ...state,
           mouseDown: false,
-          prevTrackPos: state.trackPos,
           trackPos: closestChild,
           style: {
-            ...state.style,
             transform: `translateX(${closestChild}px)`,
             transitionDuration: '600ms',
           },
@@ -98,15 +94,15 @@ const PortFooter = (): JSX.Element => {
     const targetElement = targetElementRef?.current;
 
     const userMouseDown = (e: MouseEvent) => {
-      const clientX = e.clientX as number;
-      dispatch({ type: 'MOUSE_DOWN', mouseDown: true, initX: clientX, clientX: clientX });
+      const pageX = e.pageX as number;
+      dispatch({ type: 'MOUSE_DOWN', mouseDown: true, initX: pageX, pageX: pageX });
     };
     const userMouseMove = (e: MouseEvent) => {
-      const clientX = e.clientX as number;
+      const pageX = e.pageX as number;
       dispatch({
         type: 'MOUSE_MOVE',
         initX: state.initX,
-        clientX: clientX,
+        pageX: pageX,
         mouseDown: state.mouseDown,
       });
     };
@@ -135,36 +131,11 @@ const PortFooter = (): JSX.Element => {
           projectName="Dynamic Audio"
           projectType="Ecommerce"
         />
-        <ProjectNavProp
-          linkTo="/disclosure"
-          imgSrc="https://images.unsplash.com/photo-1613035617861-c7b29e5cf65c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          projectName="Disclosure (TBD)"
-          projectType="Communication"
-        />
-        <ProjectNavProp
-          linkTo=""
-          imgSrc="https://images.unsplash.com/photo-1683752495866-6bd49d91699f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-          projectName="Unknown"
-          projectType="TBD"
-        />
-        <ProjectNavProp
-          linkTo=""
-          imgSrc="https://images.unsplash.com/photo-1683752495866-6bd49d91699f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-          projectName="Unknown"
-          projectType="TBD"
-        />
-        <ProjectNavProp
-          linkTo=""
-          imgSrc="https://images.unsplash.com/photo-1683752495866-6bd49d91699f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-          projectName="Unknown"
-          projectType="TBD"
-        />
-        <ProjectNavProp
-          linkTo=""
-          imgSrc="https://images.unsplash.com/photo-1683752495866-6bd49d91699f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-          projectName="Unknown"
-          projectType="TBD"
-        />
+        <ProjectNavProp linkTo="" imgSrc="" projectName="" projectType="" />
+        <ProjectNavProp linkTo="" imgSrc="" projectName="" projectType="" />
+        <ProjectNavProp linkTo="" imgSrc="" projectName="" projectType="" />
+        <ProjectNavProp linkTo="" imgSrc="" projectName="" projectType="" />
+        <ProjectNavProp linkTo="" imgSrc="" projectName="" projectType="" />
       </nav>
     </footer>
   );
