@@ -1,14 +1,13 @@
-@use 'sass:math';
 @use '../sass/util/functions' as f;
 
-$viewportMarginTopBottom: 32;
-$viewportMarginRightLeft: 64;
-$projectPreviewDataAbsoluteTop: 225;
-$projectPreviewDataAbsoluteLeft: 100;
-$projectNavWidth: 422;
-$projectNavHeight: 101;
-$projectNavAspectRatio: math.div(4.18, 1);
-$projectNavGap: 22;
+//Colors
+$transparentElem: rgba(0, 0, 0, 0.5);
+$transparentElemLight: rgba(209, 209, 209, 0.25);
+$messageYellow: hsl(48, 56%, 54%);
+
+//Footer
+$viewportMarginTopBottom: f.rem(32);
+$viewportMarginRightLeft: f.rem(64);
 
 // @mixin portElement {
 //   outline: var(--insetBorder);

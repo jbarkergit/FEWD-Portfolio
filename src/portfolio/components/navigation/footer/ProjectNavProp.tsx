@@ -9,8 +9,8 @@ const ProjectNavProp = ({ imgSrc, projectName, projectType }: ProjectNavPropType
     <article>
       <picture>{imgSrc ? <img src={imgSrc} alt="" draggable="false" loading="lazy" decoding="async" fetchpriority="high" /> : null}</picture>
       <hgroup>
-        <h3>{projectType}</h3>
         <h2>{projectName}</h2>
+        <h3>{projectType}</h3>
       </hgroup>
     </article>
   );

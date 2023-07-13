@@ -1,4 +1,5 @@
 @use '../../../../sass/util/functions' as f;
+@use '../../../portfolioStyles' as m;
 
 .portHeader {
   position: absolute;
@@ -8,8 +9,7 @@
   grid-template-rows: 1fr;
   width: 100%;
   z-index: 10;
-  padding: f.rem(50) f.rem(80);
-  // padding: f.rem($viewportMarginTopBottom) f.rem($viewportMarginRightLeft);
+  padding: m.$viewportMarginTopBottom m.$viewportMarginRightLeft;
 }
 
 .developer,
@@ -20,7 +20,13 @@
 
 .developer {
   grid-area: 1 / 1 / 2 / 2;
+  position: relative;
   display: flex;
+  &__icon {
+    position: absolute;
+    left: -4%;
+    font-size: clamp(f.rem(18), f.rem(12) + 0.5vw, f.rem(32));
+  }
   &__nameLoc {
     display: flex;
     flex-direction: column;
@@ -32,6 +38,7 @@
       font-weight: 600;
     }
     & h2 {
+      margin: 0 0 0 f.rem(2);
       font-size: clamp(f.rem(12), f.rem(8) + 1vw, f.rem(18));
       font-weight: 500;
     }
@@ -41,8 +48,35 @@
 .aboutDeveloper {
   grid-area: 1 / 2 / 2 / 3;
   justify-content: flex-end;
+  & a,
+  button {
+    width: fit-content;
+    height: f.rem(50.5);
+    padding: 0 f.rem(16);
+  }
+  & a {
+    display: grid;
+    place-items: center;
+    // width: 28.8%;
+    border-top-left-radius: f.rem(6.5);
+    border-bottom-left-radius: f.rem(6.5);
+    background-color: m.$transparentElemLight;
+  }
   & button {
-    color: #fff;
+    // width: 71.2%;
+    border-top-right-radius: f.rem(6.5);
+    border-bottom-right-radius: f.rem(6.5);
+    background-color: m.$transparentElem;
+    & span {
+      display: flex;
+      align-items: center;
+      gap: f.rem(6);
+      height: 100%;
+      margin: 0 f.rem(16) 0 f.rem(8);
+      color: #fff;
+      font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
+      font-weight: 400;
+    }
   }
 }
 
@@ -55,7 +89,7 @@
   pointer-events: none;
   & dialog {
     position: absolute;
-    top: 2.5%;
+    top: 11%;
     right: 2%;
     display: flex;
     align-items: flex-start;

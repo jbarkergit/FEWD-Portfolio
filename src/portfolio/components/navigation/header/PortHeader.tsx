@@ -1,9 +1,12 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const Developer = (): JSX.Element => {
   return (
     <div className="developer">
-      <div className="developer__icon"></div>
+      <div className="developer__icon">
+        <i className="fa-solid fa-location-dot"></i>
+      </div>
       <div className="developer__nameLoc">
         <h1>Justin Barker</h1>
         <h2>Remote, Front End Developer</h2>
@@ -13,7 +16,8 @@ const Developer = (): JSX.Element => {
 };
 
 const PortHeader = (): JSX.Element => {
-  const dialogRef = useRef<HTMLDialogElement>(null!);
+  const dialogRef = useRef<HTMLDialogElement>(null!),
+    dialog: HTMLDialogElement = dialogRef?.current;
 
   const AboutDialog = () => {
     return (
@@ -26,17 +30,24 @@ const PortHeader = (): JSX.Element => {
   };
 
   const AboutDeveloper = (): JSX.Element => {
-    const dialog: HTMLDialogElement = dialogRef?.current;
     return (
       <div className="aboutDeveloper">
+        <Link to="https://github.com/jbarkergit" target="_blank">
+          <i className="fa-brands fa-github"></i>
+        </Link>
         <button
           onClick={() => {
-            dialog?.show();
+            dialog?.showModal();
             dialog?.getAttribute('data-activity') === 'disabled'
               ? dialog?.setAttribute('data-activity', 'active')
               : dialog?.setAttribute('data-activity', 'disabled');
           }}
-        >{`() => {About()}`}</button>
+        >
+          <span>
+            <i className="fa-brands fa-dev"></i>
+            {'About'}
+          </span>
+        </button>
       </div>
     );
   };

@@ -1,4 +1,5 @@
 @use '../../../sass/util/functions' as f;
+@use '../../portfolioStyles' as m;
 
 .projectSlider {
   position: relative;
@@ -8,11 +9,11 @@
     height: inherit;
     &__data {
       position: absolute;
-      top: 30%;
+      top: f.rem(245);
+      left: f.rem(120);
       display: flex;
       flex-direction: column;
       height: fit-content;
-      margin: 0 0 0 f.rem(80);
       z-index: 2;
       & hgroup {
         display: flex;
@@ -22,6 +23,7 @@
           font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
         }
         & h2 {
+          text-transform: uppercase;
         }
         & p {
           width: clamp(45ch, 50%, 65ch);
