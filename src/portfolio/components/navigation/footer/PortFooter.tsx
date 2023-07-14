@@ -1,5 +1,23 @@
 import { RefObject, useEffect, useReducer, useRef } from 'react';
-import ProjectNavProp from './ProjectNavProp';
+
+type ProjectNavPropType = {
+  imgSrc: string;
+  projectName: string;
+  projectType: string;
+  dataStatus: string;
+};
+
+const ProjectNavProp = ({ imgSrc, projectName, projectType, dataStatus }: ProjectNavPropType): JSX.Element => {
+  return (
+    <article data-status={dataStatus}>
+      <picture>{imgSrc ? <img src={imgSrc} alt="" draggable="false" loading="lazy" decoding="async" fetchpriority="high" /> : null}</picture>
+      <hgroup data-status={dataStatus}>
+        <h2>{projectName}</h2>
+        <h3>{projectType}</h3>
+      </hgroup>
+    </article>
+  );
+};
 
 type initStateType = {
   mouseDown: boolean;
@@ -75,6 +93,12 @@ const PortFooter = (): JSX.Element => {
         const targetElementLeftPadding = parseInt(window.getComputedStyle(targetElement!).paddingLeft);
         const closestChild: number = targetElementChildrenPositionArray[closestIndex] + targetElementLeftPadding;
 
+        targetElementChildrenArray.forEach((childElement, index) => {
+          const isClosest = index === closestIndex;
+          const dataStatus = isClosest ? 'active' : 'disabled';
+          childElement.children[1].setAttribute('data-status', dataStatus);
+        });
+
         return {
           ...state,
           mouseDown: false,
@@ -133,11 +157,12 @@ const PortFooter = (): JSX.Element => {
             imgSrc="src\ecommerce\assets\production-images\compressed-home-page\infographic\img-by-ilias-chebbi-on-unsplash.jpg"
             projectName="Dynamic Audio"
             projectType="Ecommerce"
+            dataStatus="active"
           />
-          <ProjectNavProp imgSrc="" projectName="FE Assistant" projectType="Work in Progress" />
-          <ProjectNavProp imgSrc="" projectName="Slack Clone" projectType="Pre-development" />
-          <ProjectNavProp imgSrc="" projectName="TBD" projectType="" />
-          <ProjectNavProp imgSrc="" projectName="TBD" projectType="" />
+          <ProjectNavProp imgSrc="" projectName="FE Assistant" projectType="Work in Progress" dataStatus="disabled" />
+          <ProjectNavProp imgSrc="" projectName="Slack Clone" projectType="Pre-development" dataStatus="disabled" />
+          <ProjectNavProp imgSrc="" projectName="TBD" projectType="" dataStatus="disabled" />
+          <ProjectNavProp imgSrc="" projectName="TBD" projectType="" dataStatus="disabled" />
         </nav>
       </div>
       <div className="portFooter__navInfo">{`${state.closestIndex + 1} / 5`}</div>

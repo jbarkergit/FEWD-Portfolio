@@ -48,18 +48,12 @@
       position: relative;
       display: flex;
       flex: 0 0 f.rem(250);
+
       & picture {
         width: f.rem(422);
         aspect-ratio: 211/101;
         border-radius: f.rem(13);
         background-color: m.$transparentElem;
-        &.active {
-          flex: 0 0 f.rem(1154);
-          transition: flex 0.85s ease-in-out;
-        }
-        &.disabled {
-          filter: brightness(60%) blur(1px);
-        }
         & img {
           border-radius: f.rem(13);
           object-fit: cover;
@@ -75,6 +69,13 @@
         align-items: center;
         z-index: 10;
         white-space: nowrap;
+        &[data-status='active'] {
+          transition: opacity 0.85s ease-in;
+        }
+        &[data-status='disabled'] {
+          filter: opacity(20%);
+          transition: filter 0.85s ease-out;
+        }
         & h2 {
           font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(34));
           text-transform: uppercase;
