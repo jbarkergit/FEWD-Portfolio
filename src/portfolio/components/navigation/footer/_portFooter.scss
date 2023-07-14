@@ -70,11 +70,12 @@
         z-index: 10;
         white-space: nowrap;
         &[data-status='active'] {
-          transition: opacity 0.85s ease-in;
+          filter: opacity(100%);
+          transition: opacity 0.85s ease-in-out;
         }
         &[data-status='disabled'] {
           filter: opacity(20%);
-          transition: filter 0.85s ease-out;
+          transition: filter 0.85s ease-in-out;
         }
         & h2 {
           font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(34));
