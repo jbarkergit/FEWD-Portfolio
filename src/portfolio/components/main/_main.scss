@@ -2,46 +2,66 @@
 @use '../../portfolioStyles' as m;
 
 .projectSlider {
-  position: relative;
-  display: block;
+  display: flex;
+  width: 100vw;
   height: 100vh;
+  overflow: hidden;
   &__projectPreview {
-    height: inherit;
-    &__data {
-      position: absolute;
-      top: f.rem(245);
-      left: f.rem(120);
+    position: relative;
+    height: 100vh;
+    flex: 0 0 calc(100vw - f.rem(145) - f.rem(200));
+    margin: f.rem(145) 0 0 f.rem(120);
+    & hgroup {
+      position: relative;
       display: flex;
       flex-direction: column;
-      height: fit-content;
+      width: fit-content;
       z-index: 2;
-      & hgroup {
-        display: flex;
-        flex-direction: column;
-        margin: 0 0 f.rem(15) 0;
-        & h3 {
-          font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
-        }
-        & h2 {
-          text-transform: uppercase;
-        }
-        & p {
-          width: clamp(45ch, 50%, 65ch);
-          font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
-        }
+      margin: f.rem(120) 0 f.rem(24) f.rem(120);
+      & h3 {
+        font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
+        font-weight: 500;
       }
+      & h2 {
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: f.rem(6);
+      }
+      & p {
+        width: clamp(45ch, 50%, 55ch);
+        font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
+        font-weight: 500;
+      }
+    }
+    & a {
+      position: relative;
+      z-index: 2;
+      margin: f.rem(120) 0 f.rem(18) f.rem(120);
+      font-weight: 700;
+      letter-spacing: 0.08em;
     }
     & picture {
       position: absolute;
       inset: 0;
-      height: 100vh;
+      height: calc(100vh - f.rem(145) - f.rem(32));
+      border-radius: f.rem(90);
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: inherit;
+        height: calc(100% / 2.6);
+        z-index: 1;
+        border-bottom-right-radius: f.rem(90);
+        border-bottom-left-radius: f.rem(90);
+        background-image: linear-gradient(0deg, hsl(0, 0%, 0%) 0, transparent);
+      }
       & img {
         position: relative;
+        border-radius: f.rem(90);
         object-fit: cover;
-        filter: brightness(75%);
-        &:nth-child(1) {
-          transform: scaleX(-1);
-        }
+        transform: scaleX(-1);
+        filter: brightness(75%) sepia(15%);
       }
     }
   }

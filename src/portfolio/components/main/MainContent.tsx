@@ -1,8 +1,10 @@
+import { useRef } from 'react';
 import ProjectPreviewProp from './ProjectPreviewProp';
 
 const MainContent = (): JSX.Element => {
+  const projectSliderRef = useRef<HTMLElement>(null);
   return (
-    <main className="projectSlider">
+    <main className="projectSlider" ref={projectSliderRef}>
       <ProjectPreviewProp
         h3="Ecommerce"
         h2="Dynamic Audio"
@@ -10,6 +12,16 @@ const MainContent = (): JSX.Element => {
         linkTo="/ecommerce"
         imgSrc="/src/ecommerce/assets/production-images/compressed-home-page/infographic/img-by-ilias-chebbi-on-unsplash.jpg"
       />
+      <ProjectPreviewProp
+        h3=""
+        h2=""
+        p={``}
+        linkTo=""
+        imgSrc="/src/ecommerce/assets/production-images/compressed-home-page/infographic/img-by-ilias-chebbi-on-unsplash.jpg"
+      />
+      <ProjectPreviewProp h3="" h2="" p={``} linkTo="" imgSrc="" />
+      <ProjectPreviewProp h3="" h2="" p={``} linkTo="" imgSrc="" />
+      <ProjectPreviewProp h3="" h2="" p={``} linkTo="" imgSrc="" />
     </main>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from 'react';
+import { RefObject, useEffect, useReducer, useRef } from 'react';
 import ProjectNavProp from './ProjectNavProp';
 
 type initStateType = {
@@ -140,11 +140,7 @@ const PortFooter = (): JSX.Element => {
           <ProjectNavProp imgSrc="" projectName="TBD" projectType="" />
         </nav>
       </div>
-      <div className="portNavigation__navInfo">
-        <span className="portNavigation__navInfo__index">
-          {'Project: '} {state.closestIndex + 1} / {'5'}
-        </span>
-      </div>
+      <div className="portFooter__navInfo">{`${state.closestIndex + 1} / 5`}</div>
     </footer>
   );
 };

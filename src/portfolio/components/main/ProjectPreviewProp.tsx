@@ -11,17 +11,15 @@ type ProjectPreviewPropType = {
 const ProjectPreviewProp = ({ h2, h3, p, linkTo, imgSrc }: ProjectPreviewPropType): JSX.Element => {
   return (
     <article className="projectSlider__projectPreview">
-      <div className="projectSlider__projectPreview__data">
-        <hgroup>
-          <h3>{h3}</h3>
-          <h2>{h2}</h2>
-          <p>{p}</p>
-        </hgroup>
-        <Link to={linkTo}>LIVE DEMO</Link>
-      </div>
-      <picture>
-        <img src={imgSrc} draggable="false" loading="lazy" decoding="async" fetchpriority="high" />
-      </picture>
+      <hgroup>
+        <h3>{h3}</h3>
+        <h2>{h2}</h2>
+        <p>{p}</p>
+      </hgroup>
+      <Link to={linkTo}>
+        <i className="fa-solid fa-anchor"></i> VIEW DEMO
+      </Link>
+      <picture>{imgSrc ? <img src={imgSrc} draggable="false" loading="lazy" decoding="async" fetchpriority="high" /> : null}</picture>
     </article>
   );
 };
