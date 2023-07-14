@@ -6,6 +6,7 @@ type initStateType = {
   initX: number;
   pageX: number;
   trackPos: number;
+  closestIndex: number;
   style: React.CSSProperties;
 };
 
@@ -14,6 +15,7 @@ const initState: initStateType = {
   initX: 0,
   pageX: 0,
   trackPos: 0,
+  closestIndex: 0,
   style: { transform: `translateX(0px)` },
 };
 
@@ -77,6 +79,7 @@ const PortFooter = (): JSX.Element => {
           ...state,
           mouseDown: false,
           trackPos: closestChild,
+          closestIndex: closestIndex,
           style: {
             transform: `translateX(${closestChild}px)`,
             transitionDuration: '600ms',
@@ -124,18 +127,24 @@ const PortFooter = (): JSX.Element => {
 
   return (
     <footer className="portFooter">
-      <nav className="portFooter__nav" ref={targetElementRef} style={state.style}>
-        <ProjectNavProp
-          imgSrc="src\ecommerce\assets\production-images\compressed-home-page\infographic\img-by-ilias-chebbi-on-unsplash.jpg"
-          projectName="Dynamic Audio"
-          projectType="Ecommerce"
-        />
-        <ProjectNavProp imgSrc="" projectName="" projectType="" />
-        <ProjectNavProp imgSrc="" projectName="" projectType="" />
-        <ProjectNavProp imgSrc="" projectName="" projectType="" />
-        <ProjectNavProp imgSrc="" projectName="" projectType="" />
-        <ProjectNavProp imgSrc="" projectName="" projectType="" />
-      </nav>
+      <div className="portNavigation">
+        <nav className="portNavigation__nav" ref={targetElementRef} style={state.style}>
+          <ProjectNavProp
+            imgSrc="src\ecommerce\assets\production-images\compressed-home-page\infographic\img-by-ilias-chebbi-on-unsplash.jpg"
+            projectName="Dynamic Audio"
+            projectType="Ecommerce"
+          />
+          <ProjectNavProp imgSrc="" projectName="FE Assistant" projectType="Work in Progress" />
+          <ProjectNavProp imgSrc="" projectName="Slack Clone" projectType="Pre-development" />
+          <ProjectNavProp imgSrc="" projectName="TBD" projectType="" />
+          <ProjectNavProp imgSrc="" projectName="TBD" projectType="" />
+        </nav>
+      </div>
+      <div className="portNavigation__navInfo">
+        <span className="portNavigation__navInfo__index">
+          {'Project: '} {state.closestIndex + 1} / {'5'}
+        </span>
+      </div>
     </footer>
   );
 };

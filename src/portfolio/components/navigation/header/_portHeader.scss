@@ -5,7 +5,7 @@
   position: absolute;
   top: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr;
   width: 100%;
   z-index: 10;
@@ -20,13 +20,7 @@
 
 .developer {
   grid-area: 1 / 1 / 2 / 2;
-  position: relative;
   display: flex;
-  &__icon {
-    position: absolute;
-    left: -4%;
-    font-size: clamp(f.rem(18), f.rem(12) + 0.5vw, f.rem(32));
-  }
   &__nameLoc {
     display: flex;
     flex-direction: column;
@@ -45,13 +39,19 @@
   }
 }
 
-.aboutDeveloper {
+.currentTimeCDT {
   grid-area: 1 / 2 / 2 / 3;
+  display: grid;
+  place-items: center;
+}
+
+.aboutDeveloper {
+  grid-area: 1 / 3 / 2 / 4;
   justify-content: flex-end;
   & a,
   button {
     width: fit-content;
-    height: f.rem(50.5);
+    height: calc(f.rem(50.5) / 1.2);
     padding: 0 f.rem(16);
   }
   & a {
@@ -72,7 +72,7 @@
       align-items: center;
       gap: f.rem(6);
       height: 100%;
-      margin: 0 f.rem(16) 0 f.rem(8);
+      margin: 0 f.rem(24);
       color: #fff;
       font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
       font-weight: 400;

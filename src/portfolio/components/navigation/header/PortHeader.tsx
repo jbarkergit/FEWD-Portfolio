@@ -1,18 +1,42 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Developer = (): JSX.Element => {
   return (
     <div className="developer">
-      <div className="developer__icon">
-        <i className="fa-solid fa-location-dot"></i>
-      </div>
       <div className="developer__nameLoc">
         <h1>Justin Barker</h1>
         <h2>Remote, Front End Developer</h2>
       </div>
     </div>
   );
+};
+
+const CurrentTimeCDT = (): JSX.Element => {
+  const [currentTime, setCurrentTime] = useState('');
+
+  useEffect(() => {
+    const getTime = () => {
+      const currentDate: Date = new Date();
+      const formattedTime: string = currentDate.toLocaleTimeString('en-US', {
+        timeZone: 'America/Chicago',
+        hour12: true,
+        hour: 'numeric',
+        minute: '2-digit',
+      });
+
+      setCurrentTime(formattedTime);
+    };
+
+    getTime();
+    const interval = setInterval(getTime, 60000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  return <div className="currentTimeCDT">{currentTime} • CDT (GMT-5)</div>;
 };
 
 const PortHeader = (): JSX.Element => {
@@ -54,7 +78,9 @@ const PortHeader = (): JSX.Element => {
   return (
     <header className="portHeader">
       <Developer />
+      <CurrentTimeCDT />
       <AboutDeveloper />
+
       <AboutDialog />
     </header>
   );
