@@ -1,23 +1,4 @@
-import { RefObject, useEffect, useReducer, useRef } from 'react';
-
-type ProjectNavPropType = {
-  imgSrc: string;
-  projectName: string;
-  projectType: string;
-  dataStatus: string;
-};
-
-const ProjectNavProp = ({ imgSrc, projectName, projectType, dataStatus }: ProjectNavPropType): JSX.Element => {
-  return (
-    <article data-status={dataStatus}>
-      <picture>{imgSrc ? <img src={imgSrc} alt="" draggable="false" loading="lazy" decoding="async" fetchpriority="high" /> : null}</picture>
-      <hgroup data-status={dataStatus}>
-        <h2>{projectName}</h2>
-        <h3>{projectType}</h3>
-      </hgroup>
-    </article>
-  );
-};
+import { useEffect, useReducer, useRef } from 'react';
 
 type initStateType = {
   mouseDown: boolean;
@@ -35,6 +16,25 @@ const initState: initStateType = {
   trackPos: 0,
   closestIndex: 0,
   style: { transform: `translateX(0px)` },
+};
+
+type ProjectNavPropType = {
+  imgSrc: string;
+  projectName: string;
+  projectType: string;
+  imgStyle?: React.CSSProperties;
+};
+
+const ProjectNavProp = ({ imgSrc, projectName, projectType, imgStyle }: ProjectNavPropType): JSX.Element => {
+  return (
+    <article>
+      <picture>{imgSrc ? <img src={imgSrc} alt="" draggable="false" loading="lazy" decoding="async" fetchpriority="high" style={imgStyle} /> : null}</picture>
+      <hgroup>
+        <h2>{projectName}</h2>
+        <h3>{projectType}</h3>
+      </hgroup>
+    </article>
+  );
 };
 
 type actionType =
@@ -57,11 +57,6 @@ const PortFooter = (): JSX.Element => {
           return state;
         } else {
           const targetElementWidth: number = targetElement?.offsetWidth as number;
-          // const targetElementChildrenWidthArray: number[] = Array.from(targetElement?.children!).map((child) => (child as HTMLElement).offsetWidth),
-          //   targetElementChildrenMedianWidth: number = targetElementChildrenWidthArray.sort((a, b) => a - b)[Math.floor(targetElementChildrenWidthArray.length / 2)];
-          // const targetElementChildrenComputedStyleGap: number = parseInt(window.getComputedStyle(targetElement!).gap) as number,
-          //   targetElementChildrenComputedStyleGapSum: number = targetElementChildrenComputedStyleGap * targetElementChildrenWidthArray.length;
-          // const maximumDelta: number = (targetElementWidth - targetElementChildrenMedianWidth - targetElementChildrenComputedStyleGapSum) * -1;
           const maximumDelta: number = targetElementWidth * -1;
 
           const { initX, pageX } = action,
@@ -92,12 +87,6 @@ const PortFooter = (): JSX.Element => {
 
         const targetElementLeftPadding = parseInt(window.getComputedStyle(targetElement!).paddingLeft);
         const closestChild: number = targetElementChildrenPositionArray[closestIndex] + targetElementLeftPadding;
-
-        targetElementChildrenArray.forEach((childElement, index) => {
-          const isClosest = index === closestIndex;
-          const dataStatus = isClosest ? 'active' : 'disabled';
-          childElement.children[1].setAttribute('data-status', dataStatus);
-        });
 
         return {
           ...state,
@@ -157,12 +146,29 @@ const PortFooter = (): JSX.Element => {
             imgSrc="src\ecommerce\assets\production-images\compressed-home-page\infographic\img-by-ilias-chebbi-on-unsplash.jpg"
             projectName="Dynamic Audio"
             projectType="Ecommerce"
-            dataStatus="active"
           />
-          <ProjectNavProp imgSrc="" projectName="FE Assistant" projectType="Work in Progress" dataStatus="disabled" />
-          <ProjectNavProp imgSrc="" projectName="Slack Clone" projectType="Pre-development" dataStatus="disabled" />
-          <ProjectNavProp imgSrc="" projectName="TBD" projectType="" dataStatus="disabled" />
-          <ProjectNavProp imgSrc="" projectName="TBD" projectType="" dataStatus="disabled" />
+          <ProjectNavProp
+            imgSrc="src\portfolio\assets\production-images\possessed-photography-JjGXjESMxOY-unsplash.jpg"
+            projectName="FE Assistant"
+            projectType="Work in Progress"
+            imgStyle={{ objectPosition: 'bottom center' }}
+          />
+          <ProjectNavProp
+            imgSrc="src\portfolio\assets\production-images\alexander-shatov-sIFCJHrUWPM-unsplash.jpg"
+            projectName="Freemium Discord"
+            projectType="Pre-development"
+            imgStyle={{ objectPosition: 'bottom center' }}
+          />
+          <ProjectNavProp
+            imgSrc="src\portfolio\assets\production-images\possessed-photography-JjGXjESMxOY-unsplash.jpg"
+            projectName=""
+            projectType="to be determined"
+          />
+          <ProjectNavProp
+            imgSrc="src\portfolio\assets\production-images\possessed-photography-JjGXjESMxOY-unsplash.jpg"
+            projectName=""
+            projectType="to be determined"
+          />
         </nav>
       </div>
       <div className="portFooter__navInfo">{`${state.closestIndex + 1} / 5`}</div>

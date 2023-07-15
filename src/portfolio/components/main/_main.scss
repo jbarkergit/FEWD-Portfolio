@@ -30,7 +30,7 @@
       & p {
         width: clamp(45ch, 50%, 55ch);
         font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
-        font-weight: 500;
+        font-weight: 400;
       }
     }
     & a {
@@ -43,7 +43,7 @@
     & picture {
       position: absolute;
       inset: 0;
-      height: calc(100vh - f.rem(145) - f.rem(32));
+      height: calc(100vh - f.rem(145) - f.rem(18));
       border-radius: f.rem(90);
       &:after {
         content: '';

@@ -14,7 +14,7 @@
     top: -15%;
     right: 20%;
     z-index: 11;
-    opacity: 0.7;
+    opacity: 0.9;
   }
 }
 .portNavigation {
@@ -23,7 +23,7 @@
   width: 80.365%;
   max-height: inherit;
   overflow: hidden;
-  padding: 0 m.$viewportMarginRightLeft m.$viewportMarginTopBottom m.$viewportMarginRightLeft;
+  padding: 0 0 m.$viewportMarginTopBottom m.$viewportMarginRightLeft;
   &:hover {
     cursor: grab;
   }
@@ -48,12 +48,12 @@
       position: relative;
       display: flex;
       flex: 0 0 f.rem(250);
-
       & picture {
         width: f.rem(422);
         aspect-ratio: 211/101;
         border-radius: f.rem(13);
         background-color: m.$transparentElem;
+        overflow: hidden;
         & img {
           border-radius: f.rem(13);
           object-fit: cover;
@@ -69,14 +69,6 @@
         align-items: center;
         z-index: 10;
         white-space: nowrap;
-        &[data-status='active'] {
-          filter: opacity(100%);
-          transition: opacity 0.85s ease-in-out;
-        }
-        &[data-status='disabled'] {
-          filter: opacity(20%);
-          transition: filter 0.85s ease-in-out;
-        }
         & h2 {
           font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(34));
           text-transform: uppercase;
