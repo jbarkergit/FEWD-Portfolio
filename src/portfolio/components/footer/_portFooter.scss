@@ -1,0 +1,67 @@
+@use '../../../sass/util/functions' as f;
+@use '../../portfolioStyles' as m;
+
+.portFooter {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  width: 100%;
+  height: 13.89%;
+  z-index: 10;
+  padding: 0 8.33% m.$viewportMarginTopBottom 8.33%;
+}
+
+.developer,
+.aboutDeveloper {
+  display: flex;
+  align-items: center;
+}
+
+.developer {
+  display: flex;
+  align-items: flex-end;
+  &__nameLoc {
+    display: flex;
+    flex-direction: column;
+    & i {
+      margin-right: f.rem(5);
+    }
+    & h1 {
+      font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
+      font-weight: 500;
+    }
+    & h2 {
+      margin: 0 0 0 f.rem(2);
+      font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
+      font-weight: 300;
+    }
+  }
+}
+
+.currentTimeCDT {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.developerLinks {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  & a {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: f.rem(6);
+    height: calc(f.rem(50.5) / 1.2);
+    padding: 0 f.rem(16);
+    & i {
+      margin-bottom: f.rem(2);
+    }
+    & i,
+    h2 {
+      font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
+    }
+  }
+}

@@ -1,5 +1,4 @@
 @forward '../portfolio/portfolioStyles';
-@forward '../portfolio/pages/portfolio';
-@forward '../portfolio/components/navigation/header/portHeader';
-@forward '../portfolio/components/main/main';
-@forward '../portfolio/components/navigation/footer/portFooter';
+@forward '../portfolio/components/header/portHeader';
+@forward '../portfolio/components/main/mainContent';
+@forward '../portfolio/components/footer/portFooter';

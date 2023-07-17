@@ -1,0 +1,99 @@
+@use '../../../sass/util/functions' as f;
+@use '../../portfolioStyles' as m;
+
+.mainContent {
+  display: flex;
+  align-items: center;
+  height: 76.85%;
+  &__nav {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: f.rem(30);
+    width: auto;
+    padding: 0 0 0 m.$viewportMarginRightLeft;
+    &:hover {
+      cursor: grab;
+    }
+    &:active {
+      cursor: grabbing;
+    }
+    & > * {
+      display: inline-block;
+      width: 100%;
+      white-space: normal;
+    }
+  }
+}
+
+.sliderArticle {
+  display: flex;
+  flex-direction: column;
+  width: f.rem(1266);
+  aspect-ratio: 211/101;
+  filter: grayscale(0%);
+  transition: all 0.85s ease-in-out;
+  &[data-status='disabled'] {
+    width: calc(f.rem(1266) / 1.5);
+    filter: grayscale(85%) sepia(50%) brightness(30%) opacity(80%);
+  }
+  &__data {
+    display: flex;
+    align-items: flex-end;
+    margin: 0 f.rem(18) f.rem(8) f.rem(18);
+    &__left {
+      display: flex;
+      flex: 0 0 50%;
+      &__slideNum {
+        font-size: clamp(f.rem(22), f.rem(14) + 1.5vw, f.rem(40));
+        margin: 0 f.rem(6) f.rem(0) 0;
+      }
+      & hgroup {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        & span {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          & h3 {
+            font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
+            font-weight: 300;
+            text-transform: lowercase;
+            margin-bottom: f.rem(-2);
+          }
+          & h2 {
+            font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
+            font-weight: 600;
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+    &__liveDemo {
+      display: flex;
+      justify-content: flex-end;
+      flex: 0 0 50%;
+      padding: f.rem(6) f.rem(24);
+      border-radius: f.rem(6);
+      font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
+      & svg {
+        margin: 0 f.rem(3) f.rem(-3) 0;
+      }
+    }
+  }
+  &__pictureWrapper {
+    display: flex;
+    height: 100%;
+    & picture {
+      aspect-ratio: 211/101;
+      border-radius: f.rem(18);
+      background-color: m.$transparentElem;
+      overflow: hidden;
+      & img {
+        object-fit: cover;
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
-import PortFooter from '../components/navigation/footer/PortFooter';
+import PortHeader from '../components/header/PortHeader';
 import MainContent from '../components/main/MainContent';
-import PortHeader from '../components/navigation/header/PortHeader';
+import PortFooter from '../components/footer/PortFooter';
 
 const Portfolio = () => {
   return (

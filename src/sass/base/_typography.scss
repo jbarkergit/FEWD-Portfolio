@@ -21,15 +21,6 @@
   font-stretch: normal;
   font-variant-ligatures: common-ligatures;
 }
-@import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
-code {
-  font-family: 'Fira Code', monospace;
-}
-@supports (font-variation-settings: normal) {
-  code {
-    font-family: 'Fira Code VF', monospace;
-  }
-}
 html {
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;

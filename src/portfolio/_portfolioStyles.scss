@@ -1,13 +1,21 @@
 @use '../sass/util/functions' as f;
 
+#portfolio {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background-color: hsl(0, 0%, 10%);
+  color: #fff;
+}
+
 //Colors
 $transparentElem: rgba(0, 0, 0, 0.5);
 $transparentElemLight: rgba(209, 209, 209, 0.25);
 $messageYellow: hsl(48, 56%, 54%);
 
 //Footer
-$viewportMarginTopBottom: f.rem(32);
-$viewportMarginRightLeft: f.rem(64);
+$viewportMarginTopBottom: 2.963%;
+$viewportMarginRightLeft: 8.33%;
 
 // @mixin portElement {
 //   outline: var(--insetBorder);
