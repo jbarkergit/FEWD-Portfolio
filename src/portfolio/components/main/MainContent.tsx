@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useReducer, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import ProjectNavProp from './ProjectNavProp';
 
 type initStateType = {
   pointerDown: boolean;
@@ -27,61 +27,12 @@ type actionType =
   | { type: 'POINTER_LEAVE'; pointerDown: boolean; previousTrackPos: number }
   | { type: 'POINTER_UP'; pointerDown: boolean };
 
-type ProjectNavPropType = {
-  slide: string;
-  imgSrc: string;
-  projectName: string;
-  projectType: string;
-  imgStyle?: React.CSSProperties;
-  dataStatus: string;
-  demoLink?: string;
-  dataActivity: string;
-};
-
-const PortFooter = (): JSX.Element => {
+const MainContent = (): JSX.Element => {
   const targetElementRef: RefObject<HTMLElement> = useRef<HTMLElement>(null),
     targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
     targetElementWidth: number = targetElement?.scrollWidth as number,
     targetElementChildrenArray: HTMLElement[] = Array.from(targetElement?.children ?? []).map((child) => child as HTMLElement),
     targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
-
-  const ProjectNavProp = ({ slide, imgSrc, projectName, projectType, imgStyle, dataStatus, demoLink, dataActivity }: ProjectNavPropType): JSX.Element => {
-    return (
-      <article className="sliderArticle" data-status={dataStatus}>
-        <div className="sliderArticle__data">
-          <div className="sliderArticle__data__left">
-            <span className="sliderArticle__data__left__slideNum">{slide}.</span>
-            <hgroup>
-              <span>
-                <h3>{projectType}</h3>
-                <h2>{projectName}</h2>
-              </span>
-            </hgroup>
-          </div>
-          <div className="sliderArticle__data__liveDemo">
-            {demoLink ? (
-              <Link to={demoLink} target="_blank">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    fillRule="evenodd"
-                    d="M1.25 9A6.75 6.75 0 0 1 8 2.25h4a6.75 6.75 0 0 1 0 13.5h-2a.75.75 0 0 1 0-1.5h2a5.25 5.25 0 1 0 0-10.5H8a5.25 5.25 0 0 0-3.913 8.75a.75.75 0 0 1-1.118 1A6.728 6.728 0 0 1 1.25 9ZM12 9.75a5.25 5.25 0 1 0 0 10.5h4a5.25 5.25 0 0 0 3.913-8.75a.75.75 0 1 1 1.118-1A6.75 6.75 0 0 1 16 21.75h-4a6.75 6.75 0 0 1 0-13.5h2a.75.75 0 0 1 0 1.5h-2Z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                {'Open Demo'}
-              </Link>
-            ) : null}
-          </div>
-        </div>
-        <div className="sliderArticle__pictureWrapper">
-          <picture data-activity={dataActivity}>
-            {imgSrc ? <img src={imgSrc} alt="" draggable="false" loading="lazy" decoding="async" fetchpriority="high" style={imgStyle} /> : null}
-          </picture>
-        </div>
-      </article>
-    );
-  };
 
   const reducer = (state: initStateType, action: actionType): initStateType => {
     switch (action.type) {
@@ -89,7 +40,7 @@ const PortFooter = (): JSX.Element => {
         return { ...state, pointerDown: true, initPageX: action.initPageX, pageX: action.pageX };
 
       case 'POINTER_MOVE':
-        if (state.pointerDown === false) {
+        if (!state.pointerDown) {
           return state;
         } else {
           const pointerTravelDistance: number = action.pageX - state.initPageX,
@@ -97,12 +48,13 @@ const PortFooter = (): JSX.Element => {
             targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft),
             maximumDelta = targetElementWidth * -1 + (targetElementChildrenArray[1].offsetWidth + targetElementLeftPadding),
             clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
+
           return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
         }
 
       case 'POINTER_LEAVE':
       case 'POINTER_UP':
-        if (state.pointerDown === false) {
+        if (!state.pointerDown) {
           return state;
         } else {
           let closestIndex = state.closestIndex;
@@ -115,12 +67,6 @@ const PortFooter = (): JSX.Element => {
           }
           const targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft);
           const closestChild: number = targetElementChildrenPositionArray[closestIndex] + targetElementLeftPadding;
-
-          const targetElements = document.querySelectorAll('[data-status]');
-          targetElements.forEach((element) => {
-            const isClosestChild = element.getAttribute('data-closestChild') === closestChild.toString();
-            element.setAttribute('data-status', isClosestChild ? 'enabled' : 'disabled');
-          });
 
           return {
             ...state,
@@ -145,11 +91,14 @@ const PortFooter = (): JSX.Element => {
     const targetElement = targetElementRef?.current;
 
     const userPointerDown = (e: PointerEvent) => {
+      if (!state.pointerDown && e.target instanceof HTMLAnchorElement) return state;
+
       const pageX = e.pageX as number;
       dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageX: pageX, pageX: pageX });
     };
     const userPointerMove = (e: PointerEvent) => {
       const pageX = e.pageX as number;
+
       dispatch({
         type: 'POINTER_MOVE',
         pageX: pageX,
@@ -208,4 +157,4 @@ const PortFooter = (): JSX.Element => {
   );
 };
 
-export default PortFooter;
+export default MainContent;

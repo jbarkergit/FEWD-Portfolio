@@ -7,12 +7,13 @@ import SuspenseLoader from './shared/pages/SuspenseLoader';
 const NotFound = lazy(() => import('./shared/pages/NotFound'));
 
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
+// import { MainContextProvider } from './portfolio/context/PortfolioContext';
 
-import { CategoryFilterProvider } from './ecommerce/context/products/CategoryFilterContext';
-import { CartProvider } from './ecommerce/context/cart/CartContext';
 const Ecommerce = lazy(() => import('./ecommerce/pages/Home'));
 import BrowseProduct from './ecommerce/pages/BrowseProduct';
 const ProductPage = lazy(() => import('./ecommerce/pages/ProductPage'));
+import { CategoryFilterProvider } from './ecommerce/context/products/CategoryFilterContext';
+import { CartProvider } from './ecommerce/context/cart/CartContext';
 
 function App() {
   const lenis = new Lenis();
@@ -25,6 +26,7 @@ function App() {
   return (
     <BrowserRouter>
       <Suspense fallback={SuspenseLoader()}>
+        {/* <MainContextProvider> */}
         {/* @ts-ignore */}
         <CategoryFilterProvider>
           <CartProvider>
@@ -41,6 +43,7 @@ function App() {
             </Routes>
           </CartProvider>
         </CategoryFilterProvider>
+        {/* </MainContextProvider> */}
       </Suspense>
     </BrowserRouter>
   );
