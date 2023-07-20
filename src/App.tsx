@@ -1,18 +1,16 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import Lenis from '@studio-freight/lenis';
 
 import SuspenseLoader from './shared/pages/SuspenseLoader';
 const NotFound = lazy(() => import('./shared/pages/NotFound'));
+import { StateProvider } from './shared/context/StateContextProvider';
 
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
-// import { MainContextProvider } from './portfolio/context/PortfolioContext';
 
 const Ecommerce = lazy(() => import('./ecommerce/pages/Home'));
 import BrowseProduct from './ecommerce/pages/BrowseProduct';
 const ProductPage = lazy(() => import('./ecommerce/pages/ProductPage'));
-import { CategoryFilterProvider } from './ecommerce/context/products/CategoryFilterContext';
 import { CartProvider } from './ecommerce/context/cart/CartContext';
 
 function App() {
@@ -26,9 +24,8 @@ function App() {
   return (
     <BrowserRouter>
       <Suspense fallback={SuspenseLoader()}>
-        {/* <MainContextProvider> */}
         {/* @ts-ignore */}
-        <CategoryFilterProvider>
+        <StateProvider>
           <CartProvider>
             <Routes>
               <Route path="*" element={<NotFound />} />
@@ -42,8 +39,7 @@ function App() {
               <Route path="/ecommerce/product/:paramId" element={<ProductPage />} />
             </Routes>
           </CartProvider>
-        </CategoryFilterProvider>
-        {/* </MainContextProvider> */}
+        </StateProvider>
       </Suspense>
     </BrowserRouter>
   );

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import { useCategoryFilterContext } from '../../../context/products/CategoryFilterContext';
+import { useStateContext } from '../../../../shared/context/StateContextProvider';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 import { ProductType } from '../../../context/types';
 
@@ -26,7 +26,7 @@ const useBreadcrumbs = (): JSX.Element => {
 
 const ProductFilters = (): JSX.Element => {
   // @ts-ignore:
-  const { setCategoryFilter } = useCategoryFilterContext();
+  const { setCategoryFilter } = useStateContext();
 
   const useCompanies = () => {
     return (
@@ -119,7 +119,7 @@ const ProductFilters = (): JSX.Element => {
     }, [styleFilterStatus]);
 
     // @ts-ignore:
-    const { categoryFilter } = useCategoryFilterContext();
+    const { categoryFilter } = useStateContext();
 
     switch (categoryFilter) {
       case 'headphone':

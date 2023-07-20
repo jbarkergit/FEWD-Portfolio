@@ -3,16 +3,15 @@ import { ReducerAction, ReducerActionType } from '../cart/CartContext';
 import { ProductType } from '../types';
 
 type addToCartType = {
-  uniqueKey: React.Key;
   product: ProductType;
   dispatch: React.Dispatch<ReducerAction>;
   REDUCER_ACTIONS: ReducerActionType;
 };
 
-const ProductProvider = ({ uniqueKey, product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX.Element => {
+const ProductProvider = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX.Element => {
   const addToCart = () => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, stock: 1 } });
   return (
-    <li key={uniqueKey}>
+    <li>
       <article className="productGrid__product">
         <Link to={`/ecommerce/product/${product.sku}`}>
           <span className="productGrid__product--containedHover">

@@ -33,9 +33,13 @@
   width: f.rem(1266);
   aspect-ratio: 211/101;
   filter: grayscale(0%);
-  transition: all 0.85s ease-in-out;
+  transition:
+    filter 0.35s ease-in-out,
+    transform 0.35s ease-in-out,
+    transform-origin 0.35s ease-in-out;
   &[data-status='disabled'] {
-    width: calc(f.rem(1266) / 1.5);
+    transform: scale(0.8);
+    transform-origin: bottom;
     filter: grayscale(85%) sepia(50%) brightness(30%) opacity(80%);
   }
   &__data {
@@ -86,8 +90,8 @@
   &__pictureWrapper {
     display: flex;
     height: 100%;
+    will-change: width;
     & picture {
-      aspect-ratio: 211/101;
       border-radius: f.rem(18);
       background-color: m.$transparentElem;
       overflow: hidden;

@@ -1,7 +1,8 @@
-import { RefObject, useEffect, useReducer, useRef } from 'react';
+import { RefObject, useCallback, useEffect, useReducer, useRef } from 'react';
 import ProjectNavProp from './ProjectNavProp';
+import { useStateContext } from '../../../shared/context/StateContextProvider';
 
-type initStateType = {
+type initSliderStateType = {
   pointerDown: boolean;
   initPageX: number;
   pageX: number;
@@ -11,7 +12,7 @@ type initStateType = {
   style: React.CSSProperties;
 };
 
-const initState: initStateType = {
+export const initState: initSliderStateType = {
   pointerDown: false,
   initPageX: 0,
   pageX: 0,
@@ -25,7 +26,7 @@ type actionType =
   | { type: 'POINTER_DOWN'; pointerDown: boolean; initPageX: number; pageX: number }
   | { type: 'POINTER_MOVE'; pointerDown: boolean; pageX: number }
   | { type: 'POINTER_LEAVE'; pointerDown: boolean; previousTrackPos: number }
-  | { type: 'POINTER_UP'; pointerDown: boolean };
+  | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number };
 
 const MainContent = (): JSX.Element => {
   const targetElementRef: RefObject<HTMLElement> = useRef<HTMLElement>(null),
@@ -34,7 +35,15 @@ const MainContent = (): JSX.Element => {
     targetElementChildrenArray: HTMLElement[] = Array.from(targetElement?.children ?? []).map((child) => child as HTMLElement),
     targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
 
-  const reducer = (state: initStateType, action: actionType): initStateType => {
+  const revealRefs = useRef<HTMLElement[]>([]);
+
+  const addToRefs = useCallback((reference: HTMLElement) => {
+    if (reference && !revealRefs.current.includes(reference)) {
+      revealRefs.current.push(reference);
+    }
+  }, []);
+
+  const reducer = (state: initSliderStateType, action: actionType): initSliderStateType => {
     switch (action.type) {
       case 'POINTER_DOWN':
         return { ...state, pointerDown: true, initPageX: action.initPageX, pageX: action.pageX };
@@ -57,26 +66,26 @@ const MainContent = (): JSX.Element => {
         if (!state.pointerDown) {
           return state;
         } else {
-          let closestIndex = state.closestIndex;
           for (let i = 0; i < targetElementChildrenPositionArray.length; i++) {
             const distanceFromTrackPos = Math.abs(targetElementChildrenPositionArray[i] - state.trackPos);
-            const previousIndex = Math.abs(targetElementChildrenPositionArray[closestIndex] - state.trackPos);
-            if (distanceFromTrackPos < previousIndex) {
-              closestIndex = i;
-            }
+            const previousIndex = Math.abs(targetElementChildrenPositionArray[state.closestIndex] - state.trackPos);
+            if (distanceFromTrackPos < previousIndex) state.closestIndex = i;
           }
           const targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft);
-          const closestChild: number = targetElementChildrenPositionArray[closestIndex] + targetElementLeftPadding;
+          const closestChild: number = targetElementChildrenPositionArray[state.closestIndex] + targetElementLeftPadding;
+
+          revealRefs.current.forEach((article, index) => {
+            const dataStatus = index === state.closestIndex ? 'enabled' : 'disabled';
+            if (article) article.setAttribute('data-status', dataStatus);
+          });
 
           return {
             ...state,
             pointerDown: false,
             trackPos: closestChild,
             previousTrackPos: closestChild,
-            closestIndex: closestIndex,
             style: {
               transform: `translateX(${closestChild}px)`,
-              transitionDuration: '600ms',
             },
           };
         }
@@ -85,20 +94,24 @@ const MainContent = (): JSX.Element => {
     }
   };
 
+  // @ts-ignore:
+  let { closestIndexContext } = useStateContext();
+
+  useEffect(() => {
+    closestIndexContext = initState.closestIndex;
+  }, [initState.closestIndex]);
+
   const [state, dispatch] = useReducer(reducer, initState);
 
   useEffect(() => {
     const targetElement = targetElementRef?.current;
-
     const userPointerDown = (e: PointerEvent) => {
       if (!state.pointerDown && e.target instanceof HTMLAnchorElement) return state;
-
       const pageX = e.pageX as number;
       dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageX: pageX, pageX: pageX });
     };
     const userPointerMove = (e: PointerEvent) => {
       const pageX = e.pageX as number;
-
       dispatch({
         type: 'POINTER_MOVE',
         pageX: pageX,
@@ -106,7 +119,7 @@ const MainContent = (): JSX.Element => {
       });
     };
     const userPointerLeave = () => dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
-    const userPointerUp = () => dispatch({ type: 'POINTER_UP', pointerDown: false });
+    const userPointerUp = () => dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
 
     targetElement?.addEventListener('pointerdown', userPointerDown);
     targetElement?.addEventListener('pointermove', userPointerMove);
@@ -119,7 +132,7 @@ const MainContent = (): JSX.Element => {
       targetElement?.removeEventListener('pointerleave', userPointerLeave);
       targetElement?.removeEventListener('pointerup', userPointerUp);
     };
-  }, [state.pointerDown]);
+  }, []);
 
   return (
     <main className="mainContent">
@@ -132,6 +145,7 @@ const MainContent = (): JSX.Element => {
           demoLink="/ecommerce"
           dataStatus="active"
           dataActivity="active"
+          addToRefs={addToRefs}
         />
         <ProjectNavProp
           slide="02"
@@ -141,6 +155,7 @@ const MainContent = (): JSX.Element => {
           imgStyle={{ objectPosition: 'top center' }}
           dataStatus="disabled"
           dataActivity="disabled"
+          addToRefs={addToRefs}
         />
         <ProjectNavProp
           slide="03"
@@ -149,9 +164,26 @@ const MainContent = (): JSX.Element => {
           projectType="Pre-development"
           dataStatus="disabled"
           dataActivity="disabled"
+          addToRefs={addToRefs}
         />
-        <ProjectNavProp slide="04" imgSrc="" projectName="Unknown" projectType="To be determined" dataStatus="disabled" dataActivity="disabled" />
-        <ProjectNavProp slide="05" imgSrc="" projectName="Unknown" projectType="To be determined" dataStatus="disabled" dataActivity="disabled" />
+        <ProjectNavProp
+          slide="04"
+          imgSrc=""
+          projectName="Unknown"
+          projectType="To be determined"
+          dataStatus="disabled"
+          dataActivity="disabled"
+          addToRefs={addToRefs}
+        />
+        <ProjectNavProp
+          slide="05"
+          imgSrc=""
+          projectName="Unknown"
+          projectType="To be determined"
+          dataStatus="disabled"
+          dataActivity="disabled"
+          addToRefs={addToRefs}
+        />
       </nav>
     </main>
   );

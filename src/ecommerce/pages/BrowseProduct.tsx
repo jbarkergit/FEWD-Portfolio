@@ -9,11 +9,11 @@ import ProductProvider from '../context/products/ProductProvider';
 import useCart from '../hooks/useCart';
 import { ProductType } from '../context/types';
 import { ProductDatabase } from '../assets/production-data/ProductDatabase';
-import { useCategoryFilterContext } from '../context/products/CategoryFilterContext';
+import { useStateContext } from '../../shared/context/StateContextProvider';
 
 const useProductFilter = (): ProductType[] => {
   // @ts-ignore:
-  const { categoryFilter } = useCategoryFilterContext();
+  const { categoryFilter } = useStateContext();
 
   const useMiscProducts = ProductDatabase.reduce((miscProducts: ProductType[], product: ProductType) => {
     if (product.category?.includes(categoryFilter)) {
@@ -74,7 +74,7 @@ const BrowseProduct = (): JSX.Element => {
             {useProductFilter()
               .sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1))
               .map((product: ProductType) => (
-                <ProductProvider uniqueKey={uuidv4()} product={product} dispatch={dispatch} REDUCER_ACTIONS={REDUCER_ACTIONS} />
+                <ProductProvider key={uuidv4()} product={product} dispatch={dispatch} REDUCER_ACTIONS={REDUCER_ACTIONS} />
               ))}
           </ul>
         </main>

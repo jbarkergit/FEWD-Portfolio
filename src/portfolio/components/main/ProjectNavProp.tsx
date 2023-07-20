@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 type ProjectNavPropType = {
@@ -10,27 +10,17 @@ type ProjectNavPropType = {
   dataStatus: string;
   demoLink?: string;
   dataActivity: string;
+  addToRefs: (reference: HTMLElement) => void;
 };
 
-const ProjectNavProp = ({ slide, imgSrc, projectName, projectType, imgStyle, dataStatus, demoLink, dataActivity }: ProjectNavPropType): JSX.Element => {
-  const revealRefs = useRef<HTMLElement[]>([]);
-  revealRefs.current = [];
+const ProjectNavProp = ({ slide, imgSrc, projectName, projectType, imgStyle, dataStatus, demoLink, dataActivity, addToRefs }: ProjectNavPropType): JSX.Element => {
+  const sliderArticleRef = useRef<HTMLElement | null>(null);
 
-  const addToRefs = (elem: HTMLElement) => {
-    if (elem && !revealRefs.current.includes(elem)) {
-      revealRefs.current.push(elem);
+  useEffect(() => {
+    if (sliderArticleRef.current) {
+      addToRefs(sliderArticleRef.current);
     }
-  };
-
-  // const setDataStatus = () => {
-  //   const closestIndex = useContext(MainContext);
-  //   revealRefs.current.forEach((article, index) => {
-  //     if (article) {
-  //       const dataStatus = index === closestIndex ? 'enabled' : 'disabled';
-  //       article.setAttribute('data-status', dataStatus);
-  //     }
-  //   });
-  // };
+  }, [addToRefs]);
 
   return (
     <article className="sliderArticle" data-status={dataStatus} ref={addToRefs}>
