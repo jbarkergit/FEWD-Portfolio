@@ -10,7 +10,6 @@
     grid-auto-flow: column;
     justify-content: flex-start;
     align-items: flex-end;
-    gap: f.rem(30);
     width: auto;
     padding: 0 0 0 m.$viewportMarginRightLeft;
     &:hover {
@@ -56,7 +55,7 @@
       & hgroup {
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
+        justify-content: center;
         & span {
           display: flex;
           flex-direction: column;

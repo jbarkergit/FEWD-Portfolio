@@ -17,11 +17,36 @@
     align-items: center;
     & > * {
       display: grid;
-      place-items: center;
       height: 100%;
     }
-    & svg {
-      margin: f.rem(4) 0 0 f.rem(6);
+    &__location {
+      display: flex;
+      align-content: flex-start;
+      width: f.rem(105);
+      font-weight: 500;
+    }
+    &__slideNav ul {
+      position: relative;
+      display: flex;
+      gap: f.rem(18);
+      margin-left: f.rem(48);
+      font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
+      &:after {
+        content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGQ9Im0zLjE2NSAxOS41MDNsNy4zNjItMTYuNTFjLjU5LTEuMzI0IDIuMzU1LTEuMzI0IDIuOTQ2IDBsNy4zNjIgMTYuNTFjLjY2NyAxLjQ5NS0uODE0IDMuMDQ3LTIuMjAyIDIuMzA2bC01LjkwNC0zLjE1MmMtLjQ1OS0uMjQ1LTEtLjI0NS0xLjQ1OCAwbC01LjkwNCAzLjE1MmMtMS4zODguNzQtMi44Ny0uODEtMi4yMDItMi4zMDZaIi8+PC9zdmc+);
+        position: absolute;
+        left: 0;
+        top: f.rem(24);
+        display: block;
+        transform: translateX(var(--afterPsuedoSelector));
+        transition: transform 0.35s ease;
+      }
+      & li {
+        color: white;
+        font-weight: 300;
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
   }
 }
@@ -31,7 +56,11 @@
   justify-content: flex-end;
   &__nav {
     display: flex;
-    align-items: center;
     gap: f.rem(18);
+    & button span {
+      color: white;
+      font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
+      text-transform: capitalize;
+    }
   }
 }
