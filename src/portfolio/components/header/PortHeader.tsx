@@ -1,8 +1,44 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useRef } from 'react';
+import { useDialogContext } from '../../context/DialogContext';
 import { useStateContext } from '../../../shared/context/StateContextProvider';
 
-const PortHeader = () => {
+const DialogButtons = (): JSX.Element => {
+  const aboutDialogButtonRef = useRef<HTMLButtonElement>(null),
+    contactDialogButtonRef = useRef<HTMLButtonElement>(null);
+
+  //@ts-ignore
+  const { setShowDialog } = useDialogContext();
+
+  useEffect(() => {
+    function setDialogAboutTrue() {
+      setShowDialog(true);
+    }
+    function setDialogContactTrue() {
+      setShowDialog(true);
+    }
+
+    aboutDialogButtonRef.current?.addEventListener('pointerup', setDialogAboutTrue);
+    contactDialogButtonRef.current?.addEventListener('pointerup', setDialogContactTrue);
+
+    return () => {
+      aboutDialogButtonRef.current?.removeEventListener('pointerup', setDialogAboutTrue);
+      contactDialogButtonRef.current?.removeEventListener('pointerup', setDialogContactTrue);
+    };
+  }, []);
+
+  return (
+    <>
+      <button ref={aboutDialogButtonRef}>
+        <span>About</span>
+      </button>
+      <button ref={contactDialogButtonRef}>
+        <span>Contact</span>
+      </button>
+    </>
+  );
+};
+
+const PortHeader = (): JSX.Element => {
   // @ts-ignore:
   const { closestIndexContext, setClosestIndexContext } = useStateContext();
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
@@ -29,12 +65,12 @@ const PortHeader = () => {
     <header className="portHeader">
       <section className="portHeader__index">
         <div className="portHeader__index__indicator">
-          <div className="portHeader__index__indicator__location">{`Project 0${closestIndexContext + 1}`}</div>
+          <div className="portHeader__index__indicator__location">{`Project 0${closestIndexContext + 1}.`}</div>
           <nav className="portHeader__index__indicator__slideNav">
             <ul ref={unorderedListRef}>
               {Array.from({ length: 3 }).map((_, index) => (
                 <li key={index} role="button">
-                  0{index + 1}
+                  0{index + 1}.
                 </li>
               ))}
             </ul>
@@ -44,12 +80,7 @@ const PortHeader = () => {
       </section>
       <section className="portHeader__menu">
         <nav className="portHeader__menu__nav">
-          <button>
-            <span>About</span>
-          </button>
-          <button>
-            <span>Contact</span>
-          </button>
+          <DialogButtons />
         </nav>
       </section>
     </header>

@@ -64,3 +64,32 @@
     }
   }
 }
+
+.dialog {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  &__modal {
+    position: absolute;
+    top: f.rem(95);
+    right: 8.33%;
+    width: f.rem(200);
+    height: f.rem(200);
+    z-index: 25;
+    background-color: rgba(43, 43, 43, 0.8);
+    &[data-show='false'] {
+      transform: translateX(200%);
+      transition: transform 250ms ease-out;
+      transition-property: visibility;
+      transition-delay: 250ms;
+    }
+    &[data-show='true'] {
+      visibility: visible;
+      transition: translate3d(-100%, 0, 0);
+      transition: transform 250ms ease-in;
+    }
+    & button svg {
+    }
+  }
+}
