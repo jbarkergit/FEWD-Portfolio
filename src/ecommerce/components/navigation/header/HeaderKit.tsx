@@ -1,11 +1,11 @@
-import { Link, useLocation } from 'react-router-dom';
-import { useStateContext } from '../../../../shared/context/StateContextProvider';
-import SearchBar from '../../features/search/SearchBar';
 import { useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useCategoryFilterContext } from '../../../context/categoryFilter/StateContextProvider';
+import SearchBar from '../../features/search/SearchBar';
 
 const HeaderKit = (): JSX.Element => {
   // @ts-ignore:
-  const { setCategoryFilter } = useStateContext();
+  const { setCategoryFilter } = useCategoryFilterContext();
 
   const Logo = () => {
     return (

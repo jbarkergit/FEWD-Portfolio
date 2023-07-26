@@ -7,7 +7,7 @@ type StateContextType = {
   setCategoryFilter: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
-const StateContext = createContext<StateContextType | undefined>(undefined); // GUARD: Throws intentional error for Application Context Provider
+const CategoryFilterContext = createContext<StateContextType | undefined>(undefined); // GUARD: Throws intentional error for Application Context Provider
 
 type ChildrenType = { children?: ReactNode };
 
@@ -18,11 +18,11 @@ export const StateProvider = ({ children }: ChildrenType): JSX.Element => {
     sessionStorage.setItem('categoryFilter', JSON.stringify(categoryFilter));
   }, [categoryFilter]);
 
-  return <StateContext.Provider value={{ categoryFilter, setCategoryFilter }}>{children}</StateContext.Provider>;
+  return <CategoryFilterContext.Provider value={{ categoryFilter, setCategoryFilter }}>{children}</CategoryFilterContext.Provider>;
 };
 
-export const useStateContext = (): StateContextType | undefined => {
-  const stateContext = useContext(StateContext);
-  if (stateContext === undefined) console.log('Global StateContextProvider Context Hook must be placed inside of a provider.');
-  return stateContext;
+export const useCategoryFilterContext = (): StateContextType | undefined => {
+  const categoryFilterContext = useContext(CategoryFilterContext);
+  if (categoryFilterContext === undefined) console.log('CategoryFilter Context Hook must be placed inside of a provider.');
+  return categoryFilterContext;
 };

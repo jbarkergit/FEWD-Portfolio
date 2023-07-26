@@ -9,11 +9,11 @@ import ProductProvider from '../context/products/ProductProvider';
 import useCart from '../hooks/useCart';
 import { ProductType } from '../context/types';
 import { ProductDatabase } from '../assets/production-data/ProductDatabase';
-import { useStateContext } from '../../shared/context/StateContextProvider';
+import { useCategoryFilterContext } from '../context/categoryFilter/StateContextProvider';
 
 const useProductFilter = (): ProductType[] => {
   // @ts-ignore:
-  const { categoryFilter } = useStateContext();
+  const { categoryFilter } = useCategoryFilterContext();
 
   const useMiscProducts = ProductDatabase.reduce((miscProducts: ProductType[], product: ProductType) => {
     if (product.category?.includes(categoryFilter)) {
