@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDialogContext } from '../../context/DialogContext';
-import { useClosestIndexContext } from '../../context/ClosestIndex';
+import { useClosestIndexContext } from '../../context/ClosestIndexContext';
 
 const DialogButtons = (): JSX.Element => {
   const aboutDialogButtonRef = useRef<HTMLButtonElement>(null),

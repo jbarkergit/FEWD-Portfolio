@@ -3,7 +3,7 @@ import MainContent from '../components/main/MainContent';
 import PortFooter from '../components/footer/PortFooter';
 import DeveloperDialog from '../components/dialog/DeveloperDialog';
 import { DialogContextProvider, useDialogContext } from '../context/DialogContext';
-import { ClosestIndexContextProvider } from '../context/ClosestIndex';
+import { ClosestIndexContextProvider } from '../context/ClosestIndexContext';
 
 const Dialog = () => {
   // @ts-ignore

@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useEffect, useReducer, useRef } from 'react';
 import ProjectNavProp from './ProjectNavProp';
-import { useClosestIndexContext } from '../../context/ClosestIndex';
+import { useClosestIndexContext } from '../../context/ClosestIndexContext';
 
 type initSliderStateType = {
   pointerDown: boolean;
