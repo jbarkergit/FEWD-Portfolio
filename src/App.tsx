@@ -36,7 +36,7 @@ function App() {
               <Route path="/ecommerce/amps-dacs" element={<BrowseProduct />} />
               <Route path="/ecommerce/microphones" element={<BrowseProduct />} />
               <Route path="/ecommerce/interfaces" element={<BrowseProduct />} />
-              <Route path="/ecommerce/product/:paramId" element={<ProductPage />} />
+              <Route path="/ecommerce/product/:paramId" element={<ProductPage />} />{' '}
             </Routes>
           </CartProvider>
         </StateProvider>

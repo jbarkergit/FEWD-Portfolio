@@ -3,6 +3,7 @@ import MainContent from '../components/main/MainContent';
 import PortFooter from '../components/footer/PortFooter';
 import DeveloperDialog from '../components/dialog/DeveloperDialog';
 import { DialogContextProvider, useDialogContext } from '../context/DialogContext';
+import { ClosestIndexContextProvider } from '../context/ClosestIndex';
 
 const Dialog = () => {
   // @ts-ignore
@@ -13,11 +14,13 @@ const Dialog = () => {
 const Portfolio = (): JSX.Element => {
   return (
     <div id="portfolio">
-      <DialogContextProvider>
-        <PortHeader />
-        <Dialog />
-      </DialogContextProvider>
-      <MainContent />
+      <ClosestIndexContextProvider>
+        <DialogContextProvider>
+          <PortHeader />
+          <Dialog />
+        </DialogContextProvider>
+        <MainContent />
+      </ClosestIndexContextProvider>
       <PortFooter />
     </div>
   );

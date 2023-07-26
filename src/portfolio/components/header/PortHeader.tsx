@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDialogContext } from '../../context/DialogContext';
-import { useStateContext } from '../../../shared/context/StateContextProvider';
+import { useClosestIndexContext } from '../../context/ClosestIndex';
 
 const DialogButtons = (): JSX.Element => {
   const aboutDialogButtonRef = useRef<HTMLButtonElement>(null),
@@ -40,7 +40,7 @@ const DialogButtons = (): JSX.Element => {
 
 const PortHeader = (): JSX.Element => {
   // @ts-ignore:
-  const { closestIndexContext, setClosestIndexContext } = useStateContext();
+  const { closestIndexContext, setClosestIndexContext } = useClosestIndexContext();
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[],
     unorderedListChildrenPositionArray = unorderedListChildrenArray.map((child) => child.offsetLeft);

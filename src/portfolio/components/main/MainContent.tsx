@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useEffect, useReducer, useRef } from 'react';
 import ProjectNavProp from './ProjectNavProp';
-import { useStateContext } from '../../../shared/context/StateContextProvider';
+import { useClosestIndexContext } from '../../context/ClosestIndex';
 
 type initSliderStateType = {
   pointerDown: boolean;
@@ -45,7 +45,7 @@ const MainContent = (): JSX.Element => {
   }, []);
 
   // @ts-ignore:
-  const { closestIndexContext, setClosestIndexContext } = useStateContext();
+  const { closestIndexContext, setClosestIndexContext } = useClosestIndexContext();
 
   const reducer = (state: initSliderStateType, action: actionType): initSliderStateType => {
     switch (action.type) {

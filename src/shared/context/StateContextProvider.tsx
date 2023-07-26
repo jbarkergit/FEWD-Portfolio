@@ -5,8 +5,6 @@ const categoryFilterSessionState = JSON.parse(sessionStorage.getItem('categoryFi
 type StateContextType = {
   categoryFilter: string | null;
   setCategoryFilter: React.Dispatch<React.SetStateAction<string | null>>;
-  closestIndexContext: number | null;
-  setClosestIndexContext: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 const StateContext = createContext<StateContextType | undefined>(undefined); // GUARD: Throws intentional error for Application Context Provider
@@ -15,13 +13,12 @@ type ChildrenType = { children?: ReactNode };
 
 export const StateProvider = ({ children }: ChildrenType): JSX.Element => {
   const [categoryFilter, setCategoryFilter] = useState<string | null>(categoryFilterSessionState);
-  const [closestIndexContext, setClosestIndexContext] = useState<number | null>(0);
 
   useEffect(() => {
     sessionStorage.setItem('categoryFilter', JSON.stringify(categoryFilter));
   }, [categoryFilter]);
 
-  return <StateContext.Provider value={{ categoryFilter, setCategoryFilter, closestIndexContext, setClosestIndexContext }}>{children}</StateContext.Provider>;
+  return <StateContext.Provider value={{ categoryFilter, setCategoryFilter }}>{children}</StateContext.Provider>;
 };
 
 export const useStateContext = (): StateContextType | undefined => {
