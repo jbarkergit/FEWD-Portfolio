@@ -1,11 +1,5 @@
 const Skills = [
   {
-    id: 'developer',
-    detail: 'My name is',
-    name: 'Justin Barker',
-    description: `I'm a React Front-End Developer. My expertise lies in constructing performance-focused, dynamic, and responsive layouts for the web. I strive to bring websites to life with efficiency and elegance.`,
-  },
-  {
     id: 'html5',
     detail: '.HTML',
     name: 'HyperText Markup Language',

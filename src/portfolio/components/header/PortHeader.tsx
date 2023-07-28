@@ -7,14 +7,16 @@ const DialogButtons = (): JSX.Element => {
     contactDialogButtonRef = useRef<HTMLButtonElement>(null);
 
   //@ts-ignore
-  const { setShowDialog } = useDialogContext();
+  const { setShowDialog, setDialogTab } = useDialogContext();
 
   useEffect(() => {
     function setDialogAboutTrue() {
       setShowDialog(true);
+      setDialogTab('about');
     }
     function setDialogContactTrue() {
       setShowDialog(true);
+      setDialogTab('contact');
     }
 
     aboutDialogButtonRef.current?.addEventListener('pointerup', setDialogAboutTrue);
