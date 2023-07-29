@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useCart from '../../../hooks/useCart';
+import useCart from '../../../../hooks/useCart';
 import { Discover, Klarna, Mastercard, Paypal, Stripe, Visa } from './PaymentMethods';
 import CartProducts from './CartProducts';
 

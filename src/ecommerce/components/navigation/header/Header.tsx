@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
-import ShoppingCart from '../../features/cart/ShoppingCart';
-import AccountModal from '../../features/account/AccountModal';
+import ShoppingCart from '../../features/modal/cart/ShoppingCart';
+import AccountModal from '../../features/modal/account/AccountModal';
 import UserInteractions from './UserInteractions';
 import AudibleDropdown from './AudibleDropdown';
 import Logo from './Logo';

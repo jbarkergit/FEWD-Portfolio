@@ -1,0 +1,49 @@
+@use '../../../../ecommerceStyles' as m;
+@use '../../../../../sass/util/functions' as f;
+
+.account {
+  right: 8.5%;
+  height: 80vh;
+  & legend {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+  }
+  & fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: f.rem(15);
+    width: 100%;
+    & label {
+      width: 95%;
+      height: auto;
+      & input {
+        width: inherit;
+        height: inherit;
+        min-height: f.rem(50);
+        padding: 1.5% 4%;
+        border-radius: f.rem(8);
+        background-color: hsl(197, 100%, 99%);
+      }
+    }
+  }
+  &--formBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2.5%;
+    border-radius: f.rem(8);
+    background-color: hsl(197, 100%, 99%);
+    cursor: pointer;
+    & h4 {
+      padding: 2.5%;
+      text-transform: capitalize;
+      font-weight: 500;
+      letter-spacing: f.rem(0.4);
+    }
+  }
+}
+.contact__form__inputs,
+.contact__form__address {
+  padding-left: 2.5%;
+}

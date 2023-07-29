@@ -3,11 +3,14 @@
 @forward '../ecommerce/components/navigation/header/header';
 @forward '../ecommerce/components/navigation/footer/eFooter';
 
-@forward '../ecommerce/components/features/modal';
+@forward '../ecommerce/components/features/modal/modal';
+@forward '../ecommerce/components/features/modal/account/accountModal';
+@forward '../ecommerce/components/features/modal/cart/cartModal';
+
+@forward '../ecommerce/components/features/dashboard/accountDashboard';
+
 @forward '../ecommerce/components/features/filters/productFilters';
 @forward '../ecommerce/components/features/search/searchBar';
-
-@forward '../ecommerce/components/features/account/accountDashboard';
 
 @forward '../ecommerce/components/home/infographic';
 @forward '../ecommerce/components/home/carousel';
