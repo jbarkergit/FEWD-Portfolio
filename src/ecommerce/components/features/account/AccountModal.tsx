@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Apple, Google, LinkedIn } from './SignInVia';
 
 const AccountModal = (): JSX.Element => {
   const [emailAddress, setEmailAddress] = useState<string>('');
@@ -10,9 +11,20 @@ const AccountModal = (): JSX.Element => {
   return (
     <section className="accountModal" data-activity="inactive">
       <form className="account" onSubmit={handleSubmit}>
-        <legend>
+        <legend className="account__header">
           <h2>Account</h2>
         </legend>
+        <div className="account__signInVia">
+          <button>
+            <Google />
+          </button>
+          <button>
+            <Apple />
+          </button>
+          <button>
+            <LinkedIn />
+          </button>
+        </div>
         <fieldset>
           <label htmlFor="emailAddress">
             <input type="text" placeholder="Email Address" value={emailAddress} required onChange={(event) => setEmailAddress(event.target.value)} />

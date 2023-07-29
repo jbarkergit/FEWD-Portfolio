@@ -1,28 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-
+import { ProductDatabase } from '../assets/production-data/ProductDatabase';
+import { ProductType } from '../context/types';
 import Header from '../components/navigation/header/Header';
 import Footer from '../components/navigation/footer/eFooter';
 import NotFound from '../../shared/pages/NotFound';
 
-import { ProductDatabase } from '../assets/production-data/ProductDatabase';
-import { ProductType } from '../context/types';
-
-const getProductBySku = (): JSX.Element => {
+const ProductPage = (): JSX.Element => {
   const { paramId } = useParams() as { paramId: string };
   const findProduct = ProductDatabase.find((product: ProductType) => product.sku === paramId)!;
-
-  const useProductImages = (): JSX.Element => {
-    return (
-      <>
-        {findProduct.images!.map((image) => (
-          <picture key={uuidv4()}>
-            <img src={image} alt={findProduct.company + findProduct.unit} role="presentation" decoding="async" fetchpriority="high" />
-          </picture>
-        ))}
-      </>
-    );
-  };
 
   if (!findProduct) {
     return (
@@ -35,7 +21,13 @@ const getProductBySku = (): JSX.Element => {
       <>
         <Header />
         <main className="skuPage">
-          <aside className="skuPage__imgBlock">{useProductImages()}</aside>
+          <aside className="skuPage__imgBlock">
+            {findProduct.images!.map((image) => (
+              <picture key={uuidv4()}>
+                <img src={image} alt={findProduct.company + findProduct.unit} role="presentation" decoding="async" fetchpriority="high" />
+              </picture>
+            ))}
+          </aside>
           <article className="skuPage__details">
             <span>
               <h1>
@@ -59,10 +51,6 @@ const getProductBySku = (): JSX.Element => {
       </>
     );
   }
-};
-
-const ProductPage = (): JSX.Element => {
-  return <>{getProductBySku()}</>;
 };
 
 export default ProductPage;

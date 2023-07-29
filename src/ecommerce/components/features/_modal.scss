@@ -26,7 +26,6 @@
 .shoppingCart {
   position: absolute;
   top: 15%;
-  right: 8.5%;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -44,6 +43,7 @@
 
 .shoppingCart {
   height: 80vh;
+  right: 8.5%;
   &__header {
     height: 6%;
     font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(32));
@@ -197,6 +197,8 @@
 }
 
 .account {
+  right: 8.5%;
+  height: 80vh;
   & legend {
     display: flex;
     flex-wrap: nowrap;
