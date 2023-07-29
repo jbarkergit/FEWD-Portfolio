@@ -30,11 +30,7 @@ const CartProducts = (): JSX.Element[] => {
                 <button>-</button>
                 <span>{cartQuantity}</span>
                 <button>+</button>
-              </div>{' '}
-              {/* <div className="shoppingCart__lineItem__information__qty">
-                <button>-</button>
-                <button>+</button>
-              </div> */}
+              </div>
             </div>
           </div>
         </article>
@@ -59,11 +55,8 @@ const ShoppingCart = (): JSX.Element => {
         <ul className="shoppingCart__products">{cart.length > 0 ? <CartProducts /> : <>Your cart is empty.</>}</ul>
         <div className="shoppingCart__productsGradient" />
         <div className="shoppingCart__orderDetails">
-          {/* <span>
-            <h3>{cart.length > 0 ? <>Products: {cartQuantity}</> : null}</h3>
-          </span> */}
           <div className="shoppingCart__orderDetails--productTotal">
-            <span>Subtotal: </span>
+            <span>{cart.length > 0 ? <>Subtotal: </> : null}</span>
             <span>{cart.length > 0 ? <>{cartSubtotal}</> : null}</span>
           </div>
           <span className="shoppingCart__orderDetails--checkoutBtn">{cart.length > 0 ? <button onClick={submitOrder}>{'Checkout'}</button> : null}</span>

@@ -3,8 +3,10 @@ import HeaderKit from './HeaderKit';
 import SearchBar from '../../features/search/SearchBar';
 import ShoppingCart from '../../features/cart/ShoppingCart';
 import AccountModal from '../../features/account/AccountModal';
+import useCart from '../../../hooks/useCart';
 
 const UserInteractions = (): JSX.Element => {
+  const { cartQuantity, cart } = useCart();
   return (
     <div className="navkit__header__section">
       <div className="navkit__header__section__ui">
