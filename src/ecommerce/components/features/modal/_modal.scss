@@ -9,17 +9,13 @@
   height: 100vh;
   background: transparent;
   pointer-events: none;
-  visibility: hidden;
+  transform: translateX(25%);
+  transition: height 250ms ease-in-out, transform 250ms ease-out, opacity 250ms ease-out;
+  opacity: 0;
   &[data-activity='active'] {
-    visibility: visible;
-    transition: translate3d(-100%, 0, 0);
-    transition: transform 250ms ease-in;
-  }
-  &[data-activity='inactive'] {
-    transform: translateX(50%);
-    transition: transform 250ms ease-out;
-    transition-property: visibility;
-    transition-delay: 250ms;
+    transform: translate3d(0, 0, 0);
+    transition: transform 250ms ease-in, opacity 250ms ease-in;
+    opacity: 1;
   }
 }
 .account,
