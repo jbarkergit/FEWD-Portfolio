@@ -1,15 +1,15 @@
 @use '../../../../ecommerceStyles' as m;
 @use '../../../../../sass/util/functions' as f;
 
-.account {
-  right: 8.5%;
-  height: 80vh;
-  & legend {
+.ecoModal {
+  &__header {
     display: flex;
     flex-wrap: nowrap;
     align-items: flex-end;
   }
-  & fieldset {
+  &__signInVia {
+  }
+  &__inputField {
     display: flex;
     flex-direction: column;
     gap: f.rem(15);

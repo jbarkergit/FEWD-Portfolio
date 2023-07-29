@@ -7,11 +7,11 @@ const CartProducts = (): JSX.Element[] => {
   return cart.map((product) => {
     return (
       <li key={uuidv4()}>
-        <article className="shoppingCart__lineItem">
+        <article className="ecoModal__lineItem">
           <picture>
             <img src={product.images![0]} alt={product.unit} loading="lazy" decoding="async" fetchpriority="low" />
           </picture>
-          <div className="shoppingCart__lineItem__information">
+          <div className="ecoModal__lineItem__information">
             <hgroup>
               <h2>{`${product.company} ${product.unit} ${Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}`}</h2>
               <h3>
@@ -19,12 +19,12 @@ const CartProducts = (): JSX.Element[] => {
               </h3>
               <h4>{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h4>
             </hgroup>
-            <div className="shoppingCart__lineItem__information__cart">
-              <span className="shoppingCart__lineItem__information__cart--totalText">Subtotal: </span>
-              <span className="shoppingCart__lineItem__information__cart--subtotal">
+            <div className="ecoModal__lineItem__information__cart">
+              <span className="ecoModal__lineItem__information__cart--totalText">Subtotal: </span>
+              <span className="ecoModal__lineItem__information__cart--subtotal">
                 {cartQuantity > 1 ? `${Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price * cartQuantity)}` : null}
               </span>
-              <div className="shoppingCart__lineItem__information__cart__quantity">
+              <div className="ecoModal__lineItem__information__cart__quantity">
                 <button>-</button>
                 <span>{cartQuantity}</span>
                 <button>+</button>

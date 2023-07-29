@@ -1,9 +1,7 @@
 @use '../../../../ecommerceStyles' as m;
 @use '../../../../../sass/util/functions' as f;
 
-.shoppingCart {
-  height: 80vh;
-  right: 8.5%;
+.ecoModal {
   &__header {
     height: 6%;
     font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(32));

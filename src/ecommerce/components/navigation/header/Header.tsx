@@ -1,12 +1,13 @@
 import { useLocation } from 'react-router-dom';
-import ShoppingCart from '../../features/modal/cart/ShoppingCart';
-import AccountModal from '../../features/modal/account/AccountModal';
-import UserInteractions from './UserInteractions';
-import AudibleDropdown from './AudibleDropdown';
+import { ModalProvider } from '../../../context/modal/ModalContext';
 import Logo from './Logo';
-import MobileMenu from './MobileMenu';
 import SingleNavigation from './SingleNavigation';
+import AudibleDropdown from './AudibleDropdown';
 import VocalDropdown from './VocalDropdown';
+import UserInteractions from './UserInteractions';
+import MobileMenu from './MobileMenu';
+import AccountModal from '../../features/modal/account/AccountModal';
+import ShoppingCart from '../../features/modal/cart/ShoppingCart';
 
 const HeaderKit = (): JSX.Element => {
   return (
@@ -34,9 +35,11 @@ const PrimaryNav = (): JSX.Element => {
     >
       <div className="navkit__header">
         <HeaderKit />
-        <UserInteractions />
-        <ShoppingCart />
-        <AccountModal />
+        <ModalProvider>
+          <UserInteractions />
+          <AccountModal />
+          <ShoppingCart />
+        </ModalProvider>
       </div>
     </header>
   );

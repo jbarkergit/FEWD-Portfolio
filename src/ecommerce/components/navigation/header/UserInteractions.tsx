@@ -1,7 +1,11 @@
 import { useLocation } from 'react-router-dom';
 import SearchBar from '../../features/search/SearchBar';
+import { useModalContext } from '../../../context/modal/ModalContext';
 
 const UserInteractions = (): JSX.Element => {
+  // @ts-ignore
+  const { setEcoModalTab } = useModalContext();
+
   return (
     <div className="navkit__header__section">
       <div className="navkit__header__section__ui">
@@ -20,9 +24,7 @@ const UserInteractions = (): JSX.Element => {
                 : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
           }}
           onClick={() => {
-            document.querySelector('.accountModal')?.getAttribute('data-activity') === 'active'
-              ? document.querySelector('.accountModal')?.setAttribute('data-activity', 'inactive')
-              : document.querySelector('.accountModal')?.setAttribute('data-activity', 'active');
+            setEcoModalTab('account');
           }}
         >
           <i className="fa-solid fa-gear"></i>
@@ -40,9 +42,7 @@ const UserInteractions = (): JSX.Element => {
                 : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
           }}
           onClick={() => {
-            document.querySelector('.shoppingModal')?.getAttribute('data-activity') === 'active'
-              ? document.querySelector('.shoppingModal')?.setAttribute('data-activity', 'inactive')
-              : document.querySelector('.shoppingModal')?.setAttribute('data-activity', 'active');
+            setEcoModalTab('shoppingCart');
           }}
         >
           <i className="fa-solid fa-cart-shopping" style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}></i>

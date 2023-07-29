@@ -1,7 +1,16 @@
-import { useState } from 'react';
-import { Apple, Google, LinkedIn } from './SignInVia';
+import { useEffect, useRef, useState } from 'react';
+import { useModalContext } from '../../../../context/modal/ModalContext';
+import { Apple, Google, LinkedIn } from '../data/SignInVia';
 
 const AccountModal = (): JSX.Element => {
+  //@ts-ignore
+  const { ecoModalTab } = useModalContext(),
+    ecoModal = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (ecoModal.current) ecoModalTab === 'account' ? ecoModal.current.setAttribute('data-status', 'active') : ecoModal.current.setAttribute('data-status', 'false');
+  }, [ecoModalTab]);
+
   const [emailAddress, setEmailAddress] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [userSignedIn, setUserSignedIn] = useState<boolean>(false);
@@ -9,12 +18,12 @@ const AccountModal = (): JSX.Element => {
   function handleSubmit() {}
 
   return (
-    <section className="accountModal" data-activity="inactive">
-      <form className="account" onSubmit={handleSubmit}>
-        <legend className="account__header">
+    <section className="ecoModalWrap">
+      <form className="ecoModal" onSubmit={handleSubmit} data-status="false" ref={ecoModal}>
+        <legend className="ecoModal__header">
           <h2>Account</h2>
         </legend>
-        <div className="account__signInVia">
+        <div className="ecoModal__signInVia">
           <button>
             <Google />
           </button>
@@ -25,7 +34,7 @@ const AccountModal = (): JSX.Element => {
             <LinkedIn />
           </button>
         </div>
-        <fieldset>
+        <fieldset className="ecoModal__inputField">
           <label htmlFor="emailAddress">
             <input type="text" placeholder="Email Address" value={emailAddress} required onChange={(event) => setEmailAddress(event.target.value)} />
           </label>
