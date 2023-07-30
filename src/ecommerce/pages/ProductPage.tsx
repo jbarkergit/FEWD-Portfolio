@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ProductDatabase } from '../assets/production-data/ProductDatabase';
-import { ProductType } from '../context/ProductType';
+import { ProductType } from '../types/ProductType';
 import Header from '../components/navigation/header/Header';
 import Footer from '../components/navigation/footer/eFooter';
 import NotFound from '../../shared/pages/NotFound';

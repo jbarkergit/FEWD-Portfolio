@@ -1,5 +1,6 @@
-import { ReactElement, ReactNode, createContext, useMemo, useReducer } from 'react';
-import { ProductType } from './ProductType';
+import { ReactElement, createContext, useMemo, useReducer } from 'react';
+import { ProductType } from '../types/ProductType';
+import { ChildrenType } from '../types/ChildrenType';
 
 type CartStateType = { cart: ProductType[] };
 
@@ -98,8 +99,6 @@ const initCartContextState: UseCartContextType = {
 };
 
 export const CartContext = createContext<UseCartContextType>(initCartContextState);
-
-type ChildrenType = { children?: ReactNode };
 
 export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   return <CartContext.Provider value={useCartContext(initCartState)}>{children}</CartContext.Provider>;

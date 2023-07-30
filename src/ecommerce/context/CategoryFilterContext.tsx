@@ -1,4 +1,5 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { ChildrenType } from '../types/ChildrenType';
 
 const categoryFilterSessionState = JSON.parse(sessionStorage.getItem('categoryFilter') || '[]');
 
@@ -8,8 +9,6 @@ type StateContextType = {
 };
 
 const CategoryFilterContext = createContext<StateContextType | undefined>(undefined); // GUARD: Throws intentional error for Application Context Provider
-
-type ChildrenType = { children?: ReactNode };
 
 export const StateProvider = ({ children }: ChildrenType): JSX.Element => {
   const [categoryFilter, setCategoryFilter] = useState<string | null>(categoryFilterSessionState);

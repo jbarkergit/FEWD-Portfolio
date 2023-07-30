@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
-import { ProductType } from '../../../context/ProductType';
+import { ProductType } from '../../../types/ProductType';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 const useCompanies = () => {

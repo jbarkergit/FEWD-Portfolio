@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ReducerAction, ReducerActionType } from './CartContext';
-import { ProductType } from './ProductType';
+import { ProductType } from '../types/ProductType';
 
 type addToCartType = {
   product: ProductType;

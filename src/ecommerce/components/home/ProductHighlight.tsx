@@ -2,7 +2,7 @@ import { MutableRefObject, RefObject, createRef, useEffect, useRef } from 'react
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ProductDatabase } from '../../assets/production-data/ProductDatabase';
-import { ProductType } from '../../context/ProductType';
+import { ProductType } from '../../types/ProductType';
 
 const ProductHighlight = (): JSX.Element => {
   const revealRefs = useRef<HTMLPictureElement[]>([]);

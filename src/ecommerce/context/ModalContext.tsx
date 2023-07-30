@@ -1,6 +1,5 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-
-const modalContextSessionState = JSON.parse(sessionStorage.getItem('modalState') || '[]');
+import { createContext, useContext, useEffect, useState } from 'react';
+import { ChildrenType } from '../types/ChildrenType';
 
 type StateContextType = {
   ecoModalTab: string | null;
@@ -8,8 +7,6 @@ type StateContextType = {
 };
 
 const ModalContext = createContext<StateContextType | undefined>(undefined); // GUARD: Throws intentional error for Application Context Provider
-
-type ChildrenType = { children?: ReactNode };
 
 export const ModalProvider = ({ children }: ChildrenType): JSX.Element => {
   const [ecoModalTab, setEcoModalTab] = useState<string | null>('');

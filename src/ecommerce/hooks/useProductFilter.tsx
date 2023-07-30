@@ -1,6 +1,6 @@
 import { ProductDatabase } from '../assets/production-data/ProductDatabase';
 import { useCategoryFilterContext } from '../context/CategoryFilterContext';
-import { ProductType } from '../context/ProductType';
+import { ProductType } from '../types/ProductType';
 
 const useProductFilter = (): ProductType[] => {
   // @ts-ignore:
