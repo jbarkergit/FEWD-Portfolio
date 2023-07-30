@@ -8,18 +8,10 @@ const useProductFilter = (): ProductType[] => {
 
   const filteredProducts = ProductDatabase.reduce(
     (result: { miscProducts: ProductType[]; headphones: ProductType[]; companyProducts: ProductType[]; companyHeadphones: ProductType[] }, product: ProductType) => {
-      if (product.category?.includes(categoryFilter)) {
-        result.miscProducts.push({ ...product });
-      }
-      if (product.wearStyle?.includes(categoryFilter)) {
-        result.headphones.push({ ...product });
-      }
-      if (product.company?.includes(categoryFilter)) {
-        result.companyProducts.push({ ...product });
-      }
-      if (product.company?.includes(categoryFilter) && product.wearStyle?.includes(categoryFilter)) {
-        result.companyHeadphones.push({ ...product });
-      }
+      if (product.category?.includes(categoryFilter)) result.miscProducts.push({ ...product });
+      if (product.wearStyle?.includes(categoryFilter)) result.headphones.push({ ...product });
+      if (product.company?.includes(categoryFilter)) result.companyProducts.push({ ...product });
+      if (product.company?.includes(categoryFilter) && product.wearStyle?.includes(categoryFilter)) result.companyHeadphones.push({ ...product });
       return result;
     },
     { miscProducts: [], headphones: [], companyProducts: [], companyHeadphones: [] }
