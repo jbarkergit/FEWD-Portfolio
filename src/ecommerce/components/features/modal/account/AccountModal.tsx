@@ -19,35 +19,41 @@ const AccountModal = (): JSX.Element => {
 
   return (
     <section className="ecoModalWrap">
-      <form className="ecoModal" onSubmit={handleSubmit} data-status="false" ref={ecoModal}>
-        <legend className="ecoModal__header">
+      <form className="ecoModal accountModal" onSubmit={handleSubmit} data-status="false" ref={ecoModal}>
+        <legend className="ecoModal__heading">
           <h2>Account</h2>
         </legend>
-        <div className="ecoModal__signInVia">
-          <button>
-            <Google />
-          </button>
-          <button>
-            <Apple />
-          </button>
-          <button>
-            <LinkedIn />
-          </button>
-        </div>
-        <fieldset className="ecoModal__inputField">
-          <label htmlFor="emailAddress">
-            <input type="text" placeholder="Email Address" value={emailAddress} required onChange={(event) => setEmailAddress(event.target.value)} />
-          </label>
-          <label htmlFor="password">
-            <input type="text" placeholder="Last Name" value={password} onChange={(event) => setPassword(event.target.value)} />
-          </label>
-        </fieldset>
         {!userSignedIn ? (
           <>
-            <div>
-              <p>Not a member? Sign up!</p>
+            <div className="ecoModal__signInVia">
+              <button>
+                <Google />
+              </button>
+              <button>
+                <Apple />
+              </button>
+              <button>
+                <LinkedIn />
+              </button>
             </div>
-            <button type="submit">Sign in</button>
+            <fieldset className="ecoModal__inputField">
+              <label htmlFor="emailAddress">
+                <input type="text" placeholder="Email Address" value={emailAddress} required onChange={(event) => setEmailAddress(event.target.value)} />
+              </label>
+              <label htmlFor="password">
+                <input type="text" placeholder="Last Name" value={password} onChange={(event) => setPassword(event.target.value)} />
+              </label>
+            </fieldset>
+            <div className="ecoModal__actions">
+              <p>Not a member? Sign up!</p>
+              <button type="submit">Sign in</button>
+            </div>
+            <div className="ecoModal__notice">
+              <span>Privacy notice: for demo purposes only.</span>
+              <mark>
+                <p>This input field is not connected to live marketing services. Any information provided will not be stored externally or locally.</p>
+              </mark>
+            </div>
           </>
         ) : (
           <>

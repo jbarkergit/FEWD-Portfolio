@@ -15,9 +15,7 @@ const Newsletter = (): JSX.Element => {
         <h3>
           <mark>Privacy notice: for demo purposes only.</mark>
         </h3>
-        <h4>
-          This input field is not a tied to a live marketing service. Any information provided will not be stored via third party services, nor local databases.
-        </h4>
+        <h4>This input field is not connected to live marketing services. Any information provided will not be stored externally or locally.</h4>
       </div>
     </form>
   );

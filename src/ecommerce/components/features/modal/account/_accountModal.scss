@@ -1,24 +1,35 @@
 @use '../../../../ecommerceStyles' as m;
 @use '../../../../../sass/util/functions' as f;
 
+.accountModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80%;
+}
 .ecoModal {
-  &__header {
+  &__heading {
     display: flex;
-    flex-wrap: nowrap;
-    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
   }
   &__signInVia {
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
   &__inputField {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    place-items: center;
     gap: f.rem(15);
     width: 100%;
     & label {
-      width: 95%;
+      width: 80%;
       height: auto;
       & input {
-        width: inherit;
+        width: 100%;
         height: inherit;
         min-height: f.rem(50);
         padding: 1.5% 4%;
@@ -27,19 +38,36 @@
       }
     }
   }
-  &--formBtn {
+  &__actions {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2.5%;
-    border-radius: f.rem(8);
-    background-color: hsl(197, 100%, 99%);
-    cursor: pointer;
-    & h4 {
-      padding: 2.5%;
-      text-transform: capitalize;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    padding-left: 12%;
+    & button {
+      @include m.ecommerceBtn;
+    }
+  }
+  &__notice {
+    display: flex;
+    flex-direction: column;
+    gap: f.rem(6);
+    width: 90%;
+    margin-top: f.rem(20);
+    text-align: center;
+    pointer-events: none;
+    color: rgb(0, 0, 0);
+    & span {
+      font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(18));
       font-weight: 500;
-      letter-spacing: f.rem(0.4);
+    }
+    & mark {
+      padding: f.rem(6) f.rem(12);
+      border-radius: f.rem(6);
+    }
+    & mark p {
+      max-width: 45ch;
+      font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
     }
   }
 }

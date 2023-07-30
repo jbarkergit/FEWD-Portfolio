@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { ModalProvider } from '../../../context/modal/ModalContext';
+import { ModalProvider, useModalContext } from '../../../context/modal/ModalContext';
 import Logo from './Logo';
 import SingleNavigation from './SingleNavigation';
 import AudibleDropdown from './AudibleDropdown';
@@ -8,6 +8,7 @@ import UserInteractions from './UserInteractions';
 import MobileMenu from './MobileMenu';
 import AccountModal from '../../features/modal/account/AccountModal';
 import ShoppingCart from '../../features/modal/cart/ShoppingCart';
+import RegisterModal from '../../features/modal/account/RegisterModal';
 
 const HeaderKit = (): JSX.Element => {
   return (
@@ -25,6 +26,19 @@ const HeaderKit = (): JSX.Element => {
   );
 };
 
+const ConditionallyRenderedModals = (): JSX.Element | undefined => {
+  //@ts-ignore
+  const { ecoModalTab } = useModalContext();
+  switch (ecoModalTab) {
+    case 'shoppingCart':
+      return <ShoppingCart />;
+    case 'account':
+      return <AccountModal />;
+    case 'register':
+      return <RegisterModal />;
+  }
+};
+
 const PrimaryNav = (): JSX.Element => {
   return (
     <header
@@ -37,8 +51,7 @@ const PrimaryNav = (): JSX.Element => {
         <HeaderKit />
         <ModalProvider>
           <UserInteractions />
-          <AccountModal />
-          <ShoppingCart />
+          <ConditionallyRenderedModals />
         </ModalProvider>
       </div>
     </header>

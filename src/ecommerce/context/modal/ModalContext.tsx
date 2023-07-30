@@ -1,4 +1,6 @@
-import { ReactNode, createContext, useContext, useState } from 'react';
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+
+const modalContextSessionState = JSON.parse(sessionStorage.getItem('modalState') || '[]');
 
 type StateContextType = {
   ecoModalTab: string | null;
@@ -11,6 +13,10 @@ type ChildrenType = { children?: ReactNode };
 
 export const ModalProvider = ({ children }: ChildrenType): JSX.Element => {
   const [ecoModalTab, setEcoModalTab] = useState<string | null>('');
+
+  useEffect(() => {
+    sessionStorage.setItem('modalState', JSON.stringify(ecoModalTab));
+  }, [ecoModalTab]);
 
   return <ModalContext.Provider value={{ ecoModalTab, setEcoModalTab }}>{children}</ModalContext.Provider>;
 };
