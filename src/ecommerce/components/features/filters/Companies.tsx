@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
-import { ProductType } from '../../../context/types';
-import { useCategoryFilterContext } from '../../../context/categoryFilter/StateContextProvider';
+import { ProductType } from '../../../context/ProductType';
+import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 const useCompanies = () => {
   // @ts-ignore:

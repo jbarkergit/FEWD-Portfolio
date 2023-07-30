@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode, createContext, useMemo, useReducer } from 'react';
-import { ProductType } from '../types';
+import { ProductType } from './ProductType';
 
 type CartStateType = { cart: ProductType[] };
 

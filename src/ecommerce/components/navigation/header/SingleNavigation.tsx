@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../context/categoryFilter/StateContextProvider';
+import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 const SingleNavigation = (): JSX.Element => {
   // @ts-ignore:

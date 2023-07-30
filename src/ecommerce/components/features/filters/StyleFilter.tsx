@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useCategoryFilterContext } from '../../../context/categoryFilter/StateContextProvider';
+import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 const StyleFilter = (): JSX.Element | undefined => {
   const [styleFilterStatus, setStyleFilterStatus] = useState<boolean>(false);

@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { ModalProvider, useModalContext } from '../../../context/modal/ModalContext';
+import { ModalProvider, useModalContext } from '../../../context/ModalContext';
 import Logo from './Logo';
 import SingleNavigation from './SingleNavigation';
 import AudibleDropdown from './AudibleDropdown';

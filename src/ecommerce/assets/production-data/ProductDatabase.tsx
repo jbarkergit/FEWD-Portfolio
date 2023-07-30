@@ -1,4 +1,4 @@
-import { ProductType } from '../../context/types';
+import { ProductType } from '../../context/ProductType';
 
 export const ProductDatabase: ProductType[] = [
   {

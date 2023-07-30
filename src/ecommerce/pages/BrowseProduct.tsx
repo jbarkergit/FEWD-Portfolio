@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 import Header from '../components/navigation/header/Header';
 import Footer from '../components/navigation/footer/eFooter';
 import ProductFilters from '../components/features/filters/ProductFilters';
-import ProductProvider from '../context/products/ProductProvider';
-import { ProductType } from '../context/types';
+import ProductProvider from '../context/ProductProvider';
+import { ProductType } from '../context/ProductType';
 import useCart from '../hooks/useCart';
 import useProductFilter from '../hooks/useProductFilter';
 

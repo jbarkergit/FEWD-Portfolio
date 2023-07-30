@@ -11,8 +11,8 @@ const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
 const Home = lazy(() => import('./ecommerce/pages/Home'));
 const BrowseProduct = lazy(() => import('./ecommerce/pages/BrowseProduct'));
 const ProductPage = lazy(() => import('./ecommerce/pages/ProductPage'));
-import { StateProvider } from './ecommerce/context/categoryFilter/StateContextProvider';
-import { CartProvider } from './ecommerce/context/cart/CartContext';
+import { StateProvider } from './ecommerce/context/CategoryFilterContext';
+import { CartProvider } from './ecommerce/context/CartContext';
 
 function App() {
   const lenis = new Lenis();

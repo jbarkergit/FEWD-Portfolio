@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import SearchBar from '../../features/search/SearchBar';
-import { useModalContext } from '../../../context/modal/ModalContext';
+import { useModalContext } from '../../../context/ModalContext';
 
 const UserInteractions = (): JSX.Element => {
   // @ts-ignore

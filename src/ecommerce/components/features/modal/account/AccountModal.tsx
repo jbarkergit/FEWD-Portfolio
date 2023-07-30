@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useModalContext } from '../../../../context/modal/ModalContext';
+import { useModalContext } from '../../../../context/ModalContext';
 import { Apple, Google, LinkedIn } from '../data/SignInVia';
 
 const AccountModal = (): JSX.Element => {

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../context/categoryFilter/StateContextProvider';
+import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 const AudibleDropdown = (): JSX.Element => {
   // @ts-ignore:

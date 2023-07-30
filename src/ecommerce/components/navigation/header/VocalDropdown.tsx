@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../context/categoryFilter/StateContextProvider';
+import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 const VocalDropdown = (): JSX.Element => {
   // @ts-ignore:

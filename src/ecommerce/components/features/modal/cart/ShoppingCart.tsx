@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useModalContext } from '../../../../context/modal/ModalContext';
+import { useModalContext } from '../../../../context/ModalContext';
 import useCart from '../../../../hooks/useCart';
 import CartProducts from './CartProducts';
 import { Discover, Klarna, Mastercard, Paypal, Stripe, Visa } from '../data/PaymentMethods';
