@@ -6,33 +6,29 @@ const useProductFilter = (): ProductType[] => {
   // @ts-ignore:
   const { categoryFilter } = useCategoryFilterContext();
 
-  const useMiscProducts = ProductDatabase.reduce((miscProducts: ProductType[], product: ProductType) => {
-    if (product.category?.includes(categoryFilter)) {
-      miscProducts.push({ ...product });
-    }
-    return miscProducts;
-  }, []);
+  const filteredProducts = ProductDatabase.reduce(
+    (result: { miscProducts: ProductType[]; headphones: ProductType[]; companyProducts: ProductType[]; companyHeadphones: ProductType[] }, product: ProductType) => {
+      if (product.category?.includes(categoryFilter)) {
+        result.miscProducts.push({ ...product });
+      }
+      if (product.wearStyle?.includes(categoryFilter)) {
+        result.headphones.push({ ...product });
+      }
+      if (product.company?.includes(categoryFilter)) {
+        result.companyProducts.push({ ...product });
+      }
+      if (product.company?.includes(categoryFilter) && product.wearStyle?.includes(categoryFilter)) {
+        result.companyHeadphones.push({ ...product });
+      }
+      return result;
+    },
+    { miscProducts: [], headphones: [], companyProducts: [], companyHeadphones: [] }
+  );
 
-  const useHeadphones = ProductDatabase.reduce((headphones: ProductType[], product: ProductType) => {
-    if (product.wearStyle?.includes(categoryFilter)) {
-      headphones.push({ ...product });
-    }
-    return headphones;
-  }, []);
-
-  const useCompanyProducts = ProductDatabase.reduce((companyProducts: ProductType[], product: ProductType) => {
-    if (product.company?.includes(categoryFilter)) {
-      companyProducts.push({ ...product });
-    }
-    return companyProducts;
-  }, []);
-
-  const useCompanyHeadphones = ProductDatabase.reduce((companyHeadphones: ProductType[], product: ProductType) => {
-    if (product.company?.includes(categoryFilter)) {
-      companyHeadphones.push({ ...product });
-    }
-    return companyHeadphones;
-  }, []);
+  const useMiscProducts = filteredProducts.miscProducts;
+  const useHeadphones = filteredProducts.headphones;
+  const useCompanyProducts = filteredProducts.companyProducts;
+  const useCompanyHeadphones = filteredProducts.companyHeadphones;
 
   switch (categoryFilter) {
     case '':
