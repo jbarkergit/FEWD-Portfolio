@@ -13,14 +13,14 @@ const ProductHighlight = (): JSX.Element => {
   };
 
   useEffect(() => {
-    const userMouseOver = (e: MouseEvent): void => {
+    const userMouseOver = (e: PointerEvent): void => {
       const curTarget = e.currentTarget as HTMLPictureElement,
         asideTarget = curTarget.nextSibling as HTMLElement,
         videoTarget = asideTarget.children[0] as HTMLVideoElement;
       videoTarget.play();
     };
 
-    const userMouseLeave = (e: MouseEvent): void => {
+    const userMouseLeave = (e: PointerEvent): void => {
       const curTarget = e.currentTarget as HTMLPictureElement,
         asideTarget = curTarget.nextSibling as HTMLElement,
         videoTarget = asideTarget.children[0] as HTMLVideoElement;
@@ -29,14 +29,14 @@ const ProductHighlight = (): JSX.Element => {
     };
 
     revealRefs.current?.forEach((ref) => {
-      ref.addEventListener('mouseover', userMouseOver);
-      ref.addEventListener('mouseleave', userMouseLeave);
+      ref.addEventListener('pointerover', userMouseOver);
+      ref.addEventListener('pointerleave', userMouseLeave);
     });
 
     const listenerUnmount = (): void => {
       revealRefs.current?.forEach((ref) => {
-        ref.removeEventListener('mouseover', userMouseOver);
-        ref.removeEventListener('mouseleave', userMouseLeave);
+        ref.removeEventListener('pointerover', userMouseOver);
+        ref.removeEventListener('pointerleave', userMouseLeave);
       });
     };
 

@@ -15,17 +15,17 @@ const SearchBar = (): JSX.Element => {
   const searchLink = useRef<HTMLAnchorElement>(null!);
 
   useEffect(() => {
-    const useSearchBar = (e: MouseEvent): void => {
+    const useSearchBar = (e: PointerEvent): void => {
       const target = e.target as unknown as HTMLElement;
       !searchBarRef.current?.contains(target) ? setSearchTerm('') : setSearchTerm('');
     };
 
-    searchBarRef.current?.addEventListener('click', useSearchBar);
-    document.body.addEventListener('click', useSearchBar, true);
+    searchBarRef.current?.addEventListener('pointerup', useSearchBar);
+    document.body.addEventListener('pointerup', useSearchBar, true);
 
     return () => {
-      searchBarRef.current?.removeEventListener('click', useSearchBar);
-      document.body.removeEventListener('click', useSearchBar);
+      searchBarRef.current?.removeEventListener('pointerup', useSearchBar);
+      document.body.removeEventListener('pointerup', useSearchBar);
     };
   }, []);
 
