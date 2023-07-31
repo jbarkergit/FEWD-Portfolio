@@ -1,37 +1,38 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 const StyleFilter = (): JSX.Element | undefined => {
-  const [styleFilterStatus, setStyleFilterStatus] = useState<boolean>(false);
-  const styleFilterSelectMenu = useRef<HTMLDivElement>(null!);
-  const styleFilterMenu = useRef<HTMLUListElement>(null!);
+  // @ts-ignore
+  const { categoryFilter, setCategoryFilter } = useCategoryFilterContext();
+  const categorySetter = (company: string) => setCategoryFilter(company);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  const selectMenuRef = useRef<HTMLDivElement>(null),
+    accordionRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => accordionRef.current?.setAttribute('data-status', modalOpen ? 'active' : 'false'), [modalOpen]);
 
   useEffect(() => {
-    function toggleStyleFilter(e: MouseEvent) {
-      const target = e.target as unknown as HTMLElement;
-      if (styleFilterStatus === true && !styleFilterSelectMenu?.current?.contains(target)) {
-        styleFilterMenu?.current?.setAttribute('data-activity', 'inactive');
-        setStyleFilterStatus(false);
-      } else if (styleFilterStatus === true && styleFilterSelectMenu?.current?.contains(target)) {
-        styleFilterMenu?.current?.setAttribute('data-activity', 'inactive');
-      } else if (styleFilterStatus === false && styleFilterSelectMenu?.current?.contains(target)) {
-        styleFilterMenu?.current?.setAttribute('data-activity', 'active');
-      } else {
-        null;
-      }
-    }
+    const toggleModal = (e: PointerEvent) => {
+      if (selectMenuRef.current && selectMenuRef.current.contains(e.target as HTMLElement)) setModalOpen(true);
+    };
+    const handleButtons = (e: PointerEvent) => {
+      const target = e.target as HTMLButtonElement;
+      if (accordionRef.current && accordionRef.current?.contains(target)) categorySetter(target.className);
+    };
+    const handleExteriorClick = (e: PointerEvent): void => {
+      if (selectMenuRef.current && !selectMenuRef.current.contains(e.target as HTMLElement)) setModalOpen(false);
+    };
 
-    styleFilterSelectMenu?.current?.addEventListener('click', toggleStyleFilter);
-    document.body.addEventListener('click', toggleStyleFilter, true);
+    selectMenuRef.current?.addEventListener('pointerdown', toggleModal);
+    accordionRef.current?.addEventListener('pointerdown', handleButtons);
+    document.body.addEventListener('pointerdown', handleExteriorClick);
 
     return () => {
-      styleFilterSelectMenu?.current?.removeEventListener('click', toggleStyleFilter);
-      document.body.removeEventListener('click', toggleStyleFilter);
+      selectMenuRef.current?.removeEventListener('pointerdown', toggleModal);
+      document.body.removeEventListener('pointerdown', handleExteriorClick);
     };
-  }, [styleFilterStatus]);
-
-  // @ts-ignore:
-  const { categoryFilter, setCategoryFilter } = useCategoryFilterContext();
+  }, [categoryFilter]);
 
   switch (categoryFilter) {
     case 'headphone':
@@ -40,15 +41,8 @@ const StyleFilter = (): JSX.Element | undefined => {
     case 'semiopenheadphone':
     case 'closedbackheadphone':
       return (
-        <div
-          className="selectMenu"
-          ref={styleFilterSelectMenu}
-          key="styleFilter"
-          onClick={() => {
-            styleFilterStatus === false ? setStyleFilterStatus(true) : setStyleFilterStatus(false);
-          }}
-        >
-          <div className="selectMenu__selection">
+        <div className="selectMenu">
+          <div className="selectMenu__selection" ref={selectMenuRef}>
             <span className="selectMenu__selection__indicator">
               <span className="selectMenu__selection__indicator--area">Filter by Style</span>
               <span className="selectMenu__selection__indicator--area">
@@ -57,15 +51,15 @@ const StyleFilter = (): JSX.Element | undefined => {
             </span>
             <div className="selectMenu--divider"></div>
           </div>
-          <ul className="selectMenu__accordion" data-activity="inactive" ref={styleFilterMenu}>
+          <ul className="selectMenu__accordion" data-status="false" ref={accordionRef}>
             <li className="selectMenu__accordion--option" key="openbackheadphone">
-              <button onClick={() => setCategoryFilter('openbackheadphone')}>{'Open-Back'}</button>
+              <button className="openbackheadphone">{'Open-Back'}</button>
             </li>
             <li className="selectMenu__accordion--option" key="semiopenheadphone">
-              <button onClick={() => setCategoryFilter('semiopenheadphone')}>{'Semi-Open'}</button>
+              <button className="semiopenheadphone">{'Semi-Open'}</button>
             </li>
             <li className="selectMenu__accordion--option" key="closedbackheadphone">
-              <button onClick={() => setCategoryFilter('closedbackheadphone')}>{'Closed-Back'}</button>
+              <button className="closedbackheadphone">{'Closed-Back'}</button>
             </li>
           </ul>
         </div>
