@@ -42,6 +42,7 @@
       grid-template-columns: 85% 15%;
       white-space: nowrap;
       width: 100%;
+      pointer-events: none;
       &--area {
         display: flex;
         align-items: center;
@@ -52,7 +53,7 @@
       }
     }
   }
-  &__menu {
+  &__accordion {
     position: absolute;
     display: none;
     flex-direction: column;
@@ -65,14 +66,8 @@
     border-bottom-right-radius: f.rem(8);
     border-bottom-left-radius: f.rem(8);
     background: hsl(0, 0%, 20%);
-    opacity: 0;
-    &[data-activity='active'] {
+    &[data-status='active'] {
       display: flex;
-      opacity: 1;
-    }
-    &[data-activity='inactive'] {
-      display: none;
-      opacity: 0;
     }
     &--option {
       width: 100%;

@@ -1,4 +1,4 @@
-import useBreadcrumbs from './Breadcrumbs';
+import useBreadcrumbs from '../../../hooks/useBreadcrumbs';
 import BrandFilter from './BrandFilter';
 import StyleFilter from './StyleFilter';
 

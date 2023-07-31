@@ -57,14 +57,14 @@ const StyleFilter = (): JSX.Element | undefined => {
             </span>
             <div className="selectMenu--divider"></div>
           </div>
-          <ul className="selectMenu__menu" data-activity="inactive" ref={styleFilterMenu}>
-            <li className="selectMenu__menu--option" key="openbackheadphone">
+          <ul className="selectMenu__accordion" data-activity="inactive" ref={styleFilterMenu}>
+            <li className="selectMenu__accordion--option" key="openbackheadphone">
               <button onClick={() => setCategoryFilter('openbackheadphone')}>{'Open-Back'}</button>
             </li>
-            <li className="selectMenu__menu--option" key="semiopenheadphone">
+            <li className="selectMenu__accordion--option" key="semiopenheadphone">
               <button onClick={() => setCategoryFilter('semiopenheadphone')}>{'Semi-Open'}</button>
             </li>
-            <li className="selectMenu__menu--option" key="closedbackheadphone">
+            <li className="selectMenu__accordion--option" key="closedbackheadphone">
               <button onClick={() => setCategoryFilter('closedbackheadphone')}>{'Closed-Back'}</button>
             </li>
           </ul>
