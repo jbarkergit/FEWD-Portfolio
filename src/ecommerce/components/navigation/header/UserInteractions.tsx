@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import SearchBar from '../../features/search/SearchBar';
+import SearchBar from '../../features/search-bar/SearchBar';
 import { useModalContext } from '../../../context/ModalContext';
 
 const UserInteractions = (): JSX.Element => {

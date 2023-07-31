@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import useCart from '../../../../hooks/useCart';
+import useCart from '../../../hooks/useCart';
 
 const CartProducts = (): JSX.Element[] => {
   const { cartQuantity, cart } = useCart();

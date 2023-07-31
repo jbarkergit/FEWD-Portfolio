@@ -6,9 +6,9 @@ import AudibleDropdown from './AudibleDropdown';
 import VocalDropdown from './VocalDropdown';
 import UserInteractions from './UserInteractions';
 import MobileMenu from './MobileMenu';
-import AccountModal from '../../features/modal/account/AccountModal';
-import ShoppingCart from '../../features/modal/cart/ShoppingCart';
-import RegisterModal from '../../features/modal/account/RegisterModal';
+import ShoppingCart from '../../features/shopping-cart/ShoppingCart';
+import UserLoginModal from '../../user-account/user-account-login/UserLoginModal';
+import UserRegisterModal from '../../user-account/user-account-register/UserRegisterModal';
 
 const HeaderKit = (): JSX.Element => {
   return (
@@ -33,9 +33,9 @@ const ConditionallyRenderedModals = (): JSX.Element | undefined => {
     case 'shoppingCart':
       return <ShoppingCart />;
     case 'account':
-      return <AccountModal />;
+      return <UserLoginModal />;
     case 'register':
-      return <RegisterModal />;
+      return <UserRegisterModal />;
   }
 };
 

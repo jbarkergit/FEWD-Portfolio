@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { useModalContext } from '../../../../context/ModalContext';
-import { Apple, Google, LinkedIn } from '../data/SignInVia';
+import { useModalContext } from '../../../context/ModalContext';
+import { Apple, Google, LinkedIn } from '../user-account-assets/SignInViaSVGS';
 
-const AccountModal = (): JSX.Element => {
+const UserLoginModal = (): JSX.Element => {
   //@ts-ignore
   const { ecoModalTab } = useModalContext(),
     ecoModal = useRef<HTMLFormElement>(null);
@@ -65,4 +65,4 @@ const AccountModal = (): JSX.Element => {
   );
 };
 
-export default AccountModal;
+export default UserLoginModal;
