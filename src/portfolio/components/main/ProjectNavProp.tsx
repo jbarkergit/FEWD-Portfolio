@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 type ProjectNavPropType = {
   slide: string;
-  imgSrc: string;
+  webm: string;
   projectName: string;
   projectType: string;
   imgStyle?: React.CSSProperties;
@@ -13,7 +13,7 @@ type ProjectNavPropType = {
   addToRefs: (reference: HTMLElement) => void;
 };
 
-const ProjectNavProp = ({ slide, imgSrc, projectName, projectType, imgStyle, dataStatus, demoLink, dataActivity, addToRefs }: ProjectNavPropType): JSX.Element => {
+const ProjectNavProp = ({ slide, webm, projectName, projectType, imgStyle, dataStatus, demoLink, dataActivity, addToRefs }: ProjectNavPropType): JSX.Element => {
   const sliderArticleRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -51,9 +51,7 @@ const ProjectNavProp = ({ slide, imgSrc, projectName, projectType, imgStyle, dat
         </div>
       </div>
       <div className="sliderArticle__pictureWrapper">
-        <picture data-activity={dataActivity}>
-          {imgSrc ? <img src={imgSrc} alt="" draggable="false" loading="lazy" decoding="async" fetchpriority="high" style={imgStyle} /> : null}
-        </picture>
+        <picture data-activity={dataActivity}>{webm ? <video src={webm} /> : null}</picture>
       </div>
     </article>
   );

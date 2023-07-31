@@ -171,7 +171,7 @@ const MainContent = (): JSX.Element => {
       <nav className="mainContent__nav" ref={targetElementRef} style={state.style}>
         <ProjectNavProp
           slide="01"
-          imgSrc="src\ecommerce\assets\production-images\compressed-home-page\infographic\img-by-ilias-chebbi-on-unsplash.jpg"
+          webm=""
           projectName="Dynamic Audio"
           projectType="Ecommerce"
           demoLink="/ecommerce"
@@ -181,7 +181,7 @@ const MainContent = (): JSX.Element => {
         />
         <ProjectNavProp
           slide="02"
-          imgSrc="src\portfolio\assets\production-images\possessed-photography-JjGXjESMxOY-unsplash.jpg"
+          webm=""
           projectName="FE Assistant"
           projectType="Work in Progress"
           imgStyle={{ objectPosition: 'top center' }}
@@ -191,7 +191,7 @@ const MainContent = (): JSX.Element => {
         />
         <ProjectNavProp
           slide="03"
-          imgSrc="src\portfolio\assets\production-images\alexander-shatov-sIFCJHrUWPM-unsplash.jpg"
+          webm=""
           projectName="Freemium Discord"
           projectType="Pre-development"
           dataStatus="disabled"
