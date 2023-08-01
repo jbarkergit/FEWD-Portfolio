@@ -21,9 +21,13 @@ const AudibleDropdown = (): JSX.Element => {
           color: useLocation().pathname === '/ecommerce' ? 'white' : 'black',
         }}
       >
-        <span className="dropMenu__indicator--interior">
-          Audible <i className="fa-solid fa-angle-down"></i>
-        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.8em" height="1.1em" viewBox="0 0 24 24">
+          <g fill="none" stroke="#ffffff" strokeWidth="2.2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path strokeLinecap="round" strokeLinejoin="round" d="m9 8.5l3 3l3-3m-6 4l3 3l3-3"></path>
+          </g>
+        </svg>
+        Audible
       </div>
       <div>
         <ul className="dropMenu__links" data-activity="inactive" ref={audibleDropdownRef}>

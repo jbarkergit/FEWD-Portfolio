@@ -12,10 +12,10 @@ import UserRegisterModal from '../../user-account/user-account-register/UserRegi
 
 const HeaderKit = (): JSX.Element => {
   return (
-    <div className="navkit__header__section">
-      <nav className="navkit__header__section--nav">
+    <div className="navkit__section">
+      <nav className="navkit__section--nav">
         <MobileMenu />
-        <ul className="navkit__header__section__links">
+        <ul className="navkit__section__links">
           <Logo />
           <SingleNavigation />
           <AudibleDropdown />
@@ -45,15 +45,15 @@ const PrimaryNav = (): JSX.Element => {
       className="navkit"
       style={{
         position: useLocation().pathname === '/ecommerce' ? 'absolute' : 'relative',
+        left: useLocation().pathname === '/ecommerce' ? '50%' : '0',
+        transform: useLocation().pathname === '/ecommerce' ? 'translateX(-50%)' : 'translateX(0)',
       }}
     >
-      <div className="navkit__header">
-        <HeaderKit />
-        <ModalProvider>
-          <UserInteractions />
-          <ConditionallyRenderedModals />
-        </ModalProvider>
-      </div>
+      <HeaderKit />
+      <ModalProvider>
+        <UserInteractions />
+        <ConditionallyRenderedModals />
+      </ModalProvider>
     </header>
   );
 };
