@@ -12,111 +12,48 @@
   height: 11rem;
   z-index: 11;
   margin: 0 auto;
-  @media (width <= 1200px) {
-    flex-direction: column;
-    flex-wrap: wrap;
-  }
   &__section {
     display: flex;
     align-items: center;
-    gap: 5%;
-    width: 60%;
     height: 100%;
-    @media (width <= 1200px) {
-      width: 100%;
+    &:nth-child(1) {
+      justify-content: flex-start;
+      width: 75%;
     }
-    &:nth-of-type(2) {
+    &:nth-child(2) {
       justify-content: flex-end;
-      width: 40%;
-      @media (width <= 1200px) {
-        justify-content: flex-start;
-        align-items: flex-start;
-        width: 100%;
-      }
-      @media (width <= 650px) {
-        display: none;
-      }
+      gap: 5%;
+      width: 35%;
     }
-    &--nav {
-      width: 100%;
-      height: inherit;
-    }
-    &__links {
+  }
+
+  .navkit__section__links {
+    display: flex;
+    gap: 2.5%;
+    width: 100%;
+    height: 100%;
+    & li {
       display: flex;
       align-items: center;
-      gap: 4%;
-      width: 100%;
       height: 100%;
-      @media (width <= 650px) {
-        display: none;
-      }
-      & li {
-        font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
-        font-weight: 500;
-        white-space: nowrap;
-        &:first-child {
-          margin-right: 4%;
-          font-size: clamp(f.rem(18), f.rem(12) + 0.5vw, f.rem(30));
-          font-weight: 700;
-          @media (width <= 650px) {
-            display: none;
-          }
-        }
-      }
-    }
-    &--btn {
-      @include m.ecoBtn;
-      @include m.ecoBtnShadow;
-      &:nth-of-type(1) {
-        background-color: transparent;
+      font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
+      font-weight: 500;
+      white-space: nowrap;
+      &:first-child {
+        margin-right: 2.5%;
+        font-size: clamp(f.rem(18), f.rem(12) + 0.5vw, f.rem(30));
+        font-weight: 700;
       }
     }
   }
-}
-.dropMenu {
-  position: relative;
-  @media (width <= 650px) {
-    display: none;
-  }
-  &__indicator {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    height: 100%;
-  }
-  &__links {
-    position: absolute;
-    top: 125%;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    &[data-status='active'] {
-      opacity: 1;
-    }
-    &__link {
-      display: flex;
-      gap: f.rem(6);
-      height: f.rem(25);
-      & a {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        color: hsl(0, 0%, 20%);
-        font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(18));
-        font-weight: 500;
-        white-space: nowrap;
-      }
-    }
+
+  .ctaBtn {
+    @include m.ecoBtn;
+    @include m.ecoBtnShadow;
+    gap: f.rem(3);
   }
 }
-.fa-gear,
-.fa-cart-shopping {
-  padding-right: f.rem(6);
-  font-size: f.rem(14);
-}
-.fa-bars {
-  color: white;
-}
+
 .mobileMenu {
   display: flex;
   align-items: center;
@@ -175,7 +112,7 @@
           bottom: 4vh;
         }
         & li a {
-          font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
+          font-size: clamp(f.rem(16), f.rem(18) + 0.5vw, f.rem(28));
           font-weight: 500;
           color: hsl(0, 0%, 19.607843137254903%);
         }
@@ -183,6 +120,7 @@
     }
   }
 }
+
 div.searchBar:nth-child(2) > div:nth-child(1) > input:nth-child(2) {
   box-shadow: #f0f0f0 -1px -1px 20px 0px, #fff -4px -4px 5px 0px, rgba(255, 255, 255, 0.97) 7px 7px 20px 0px, rgb(232, 232, 232) 4px 4px 5px 0px !important;
 }
