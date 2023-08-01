@@ -4,45 +4,43 @@
 .searchBar {
   position: relative;
   display: flex;
+  justify-content: flex-end;
+  width: minmax(f.rem(35) f.rem(260));
   height: fit-content;
+  z-index: 6;
+  @include m.ecoBtnWhite;
+  border-radius: f.rem(5);
+  &__label {
+    display: none;
+  }
   &__input {
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    width: minmax(f.rem(35) f.rem(260));
-    z-index: 6;
-    & label {
-      display: none;
+    @include m.ecoBtn;
+    color: hsl(0, 0%, 20%);
+    cursor: text;
+    width: f.rem(65);
+    background: url('/src/ecommerce/assets/production-images/svg/magnifying-glass-solid.svg') no-repeat center center;
+    background-size: f.rem(16);
+    transition: width 0.35s cubic-bezier(0, 0, 0.45, 1), background 0.3s cubic-bezier(0, 0, 0.45, 1);
+    &::placeholder,
+    &::-moz-placeholder,
+    &::-webkit-input-placeholder {
+      opacity: 0;
+      transition: opacity 0.35s cubic-bezier(0, 0, 0.45, 1);
     }
-    &__input {
-      @include m.ecoBtn;
-      color: black;
-      cursor: text;
-      width: f.rem(65);
-      background: url('/src/ecommerce/assets/production-images/svg/magnifying-glass-solid.svg') no-repeat center center;
-      background-size: f.rem(18);
-      transition: width 0.35s cubic-bezier(0, 0, 0.45, 1), background 0.3s cubic-bezier(0, 0, 0.45, 1);
-      &::placeholder,
-      &::-moz-placeholder,
-      &::-webkit-input-placeholder {
-        opacity: 0;
-        transition: opacity 0.35s cubic-bezier(0, 0, 0.45, 1);
-      }
-      &:focus::placeholder,
-      &:focus::-moz-placeholder,
-      &:focus::-webkit-input-placeholder {
-        opacity: 1;
-        transition: opacity 0.35s cubic-bezier(0, 0, 0.45, 1);
-      }
-      &:focus {
-        width: f.rem(245);
-        padding-left: f.rem(40);
-        background-position: f.rem(13) center;
-      }
-      @media (width <= 1200px) {
-        width: 100%;
-        background-position: f.rem(13) center;
-      }
+    &:focus::placeholder,
+    &:focus::-moz-placeholder,
+    &:focus::-webkit-input-placeholder {
+      opacity: 1;
+      transition: opacity 0.35s cubic-bezier(0, 0, 0.45, 1);
+    }
+    &:focus {
+      width: f.rem(245);
+      padding-left: f.rem(40);
+      background-position: f.rem(13) center;
+    }
+    @media (width <= 1200px) {
+      width: 100%;
+      background-position: f.rem(13) center;
     }
   }
   &__return {
@@ -54,8 +52,8 @@
     padding-top: f.rem(6);
     border-bottom-right-radius: f.rem(6);
     border-bottom-left-radius: f.rem(6);
-    background-color: hsl(0, 0%, 96%);
-    &__products {
+    background-color: white;
+    &__ul {
       display: flex;
       flex-direction: column;
       max-height: f.rem(400);
@@ -63,11 +61,10 @@
       border-bottom-right-radius: f.rem(6);
       overflow-y: auto;
       overflow-x: hidden;
-      &__return {
+      &__li {
         width: 100%;
         height: 100%;
-
-        border-radius: 0.5em;
+        border-radius: f.rem(6);
         cursor: pointer;
         &:hover {
           background: hsl(0, 0%, 87%);
@@ -76,22 +73,14 @@
           display: block;
           width: 100%;
           height: 100%;
-          padding: 0.7em 0.5em;
-          color: hsl(0, 0%, 19.607843137254903%);
+          padding: 0.7em 1em;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: calc(100% - 1em);
+          color: hsl(0, 0%, 20%);
         }
       }
     }
   }
-}
-.searchBar__input input::-webkit-input-placeholder {
-  color: hsl(0, 0%, 19.607843137254903%);
-}
-.searchBar__input input:-moz-placeholder {
-  color: hsl(0, 0%, 19.607843137254903%);
-}
-.searchBar__input input::-moz-placeholder {
-  color: hsl(0, 0%, 19.607843137254903%);
-}
-.searchBar__input input:-ms-input-placeholder {
-  color: hsl(0, 0%, 19.607843137254903%);
 }

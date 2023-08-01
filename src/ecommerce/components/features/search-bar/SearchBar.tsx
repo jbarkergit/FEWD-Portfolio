@@ -5,23 +5,21 @@ import { v4 as uuidv4 } from 'uuid';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 
 const SearchBar = (): JSX.Element => {
+  const searchBarRef = useRef<HTMLDivElement>(null!),
+    searchLink = useRef<HTMLAnchorElement>(null!);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   const searchResults = ProductDatabase.filter((product) => {
     return product.sku.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  const searchBarRef = useRef<HTMLDivElement>(null!);
-  const searchLink = useRef<HTMLAnchorElement>(null!);
-
   useEffect(() => {
     const useSearchBar = (e: PointerEvent): void => {
-      const target = e.target as unknown as HTMLElement;
-      !searchBarRef.current?.contains(target) ? setSearchTerm('') : setSearchTerm('');
+      if (searchBarRef.current && !searchBarRef.current.contains(e.target as HTMLElement)) setSearchTerm('');
     };
 
     searchBarRef.current?.addEventListener('pointerup', useSearchBar);
-    document.body.addEventListener('pointerup', useSearchBar, true);
+    document.body.addEventListener('pointerup', useSearchBar);
 
     return () => {
       searchBarRef.current?.removeEventListener('pointerup', useSearchBar);
@@ -31,40 +29,37 @@ const SearchBar = (): JSX.Element => {
 
   return (
     <div className="searchBar" ref={searchBarRef}>
-      <div className="searchBar__input">
-        <label htmlFor="searchBar__input--input">Search</label>
-        <input
-          className="searchBar__input__input"
-          type="text"
-          name="searchBar__input--input"
-          placeholder="Search for a product"
-          value={searchTerm}
-          autoCapitalize="none"
-          autoComplete="none"
-          autoCorrect="off"
-          spellCheck="false"
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setSearchTerm(event?.target.value)}
-          style={{
-            backgroundColor: useLocation().pathname === '/ecommerce' ? 'white' : 'transparent',
-            boxShadow:
-              useLocation().pathname === '/ecommerce'
-                ? 'rgba(255, 255, 255, 0) -1px -1px 20px 0px, rgba(57, 57, 57, 0) -4px -4px 5px 0px, rgba(98, 98, 98, 0) 7px 7px 20px 0px, rgba(0, 0, 0, 0) 4px 4px 5px 0px'
-                : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
-          }}
-        />
-      </div>
+      <label className="searchBar__label" htmlFor="searchBar__input">
+        Search
+      </label>
+      <input
+        className="searchBar__input"
+        name="searchBar__input"
+        type="text"
+        placeholder="Search for a product"
+        value={searchTerm}
+        autoCapitalize="none"
+        autoComplete="none"
+        autoCorrect="off"
+        spellCheck="false"
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e?.target.value)}
+        style={{
+          boxShadow:
+            useLocation().pathname === '/ecommerce'
+              ? 'rgba(255, 255, 255, 0) -1px -1px 20px 0px, rgba(57, 57, 57, 0) -4px -4px 5px 0px, rgba(98, 98, 98, 0) 7px 7px 20px 0px, rgba(0, 0, 0, 0) 4px 4px 5px 0px'
+              : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
+        }}
+      />
       {searchTerm.length != 0 && (
         <div className="searchBar__return">
-          <ul className="searchBar__return__products">
+          <ul className="searchBar__return__ul">
             {!searchTerm
               ? null
               : searchResults.slice(0, 10).map((product) => {
                   return (
-                    <li className="searchBar__return__products__return" key={uuidv4()}>
+                    <li className="searchBar__return__ul__li" key={uuidv4()}>
                       <a href={`/ecommerce/product/${product.sku}`} ref={searchLink}>
-                        <span>
-                          {product.company} {product.unit}
-                        </span>
+                        {product.company} {product.unit}
                       </a>
                     </li>
                   );
