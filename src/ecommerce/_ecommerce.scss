@@ -16,14 +16,17 @@
 @forward '../ecommerce/components/navigation/header/ecoHeader';
 @forward '../ecommerce/components/navigation/footer/ecoFooter';
 
+//product
+@forward '../ecommerce/components/product/productProvider';
+
+//shared
+@forward '../ecommerce/components/shared/modal';
+
 //user-account
 @forward '../ecommerce/components/user-account/user-account-dashboard/userAccountDashboard';
 @forward '../ecommerce/components/user-account/user-account-login/userAccountLogin';
 @forward '../ecommerce/components/user-account/user-account-register/userRegisterModal';
 
-//shared
-@forward '../ecommerce/components/shared/modal';
-
 //pages
-@forward '../ecommerce/pages/productProps';
+
 @forward '../ecommerce/pages/productPages';
