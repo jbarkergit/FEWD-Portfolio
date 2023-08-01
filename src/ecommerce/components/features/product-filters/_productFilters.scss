@@ -20,6 +20,7 @@
   }
 }
 .breadcrumb h1 {
+  font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(38));
   text-transform: capitalize;
 }
 .selectMenu {
@@ -27,16 +28,13 @@
   width: clamp(15em, 15em, 15em);
   &__selection {
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     z-index: 5;
-    padding: 1em;
-    border-radius: f.rem(8);
-    background: hsl(0, 0%, 20%);
-    @include m.BtnShadow;
-    cursor: pointer;
-    color: white;
+    @include m.ecoBtn;
+    @include m.ecoBtnBlack;
+    @include m.ecoBtnShadow;
+    padding: f.rem(15);
+    font-size: f.rem(13);
+    letter-spacing: f.rem(0.5);
     &__indicator {
       display: grid;
       grid-template-columns: 85% 15%;
@@ -59,13 +57,13 @@
     flex-direction: column;
     width: inherit;
     z-index: 5;
-    top: 2.8em;
+    top: 2.3em;
     left: 50%;
     transform: translateX(-50%);
-    padding: 0.3em 0.5em 0.6em 0.5em;
+    padding: f.rem(6) 0.5em 0.6em 0.5em;
     border-bottom-right-radius: f.rem(8);
     border-bottom-left-radius: f.rem(8);
-    background: hsl(0, 0%, 20%);
+    background-color: hsl(0, 0%, 20%);
     &[data-status='active'] {
       display: flex;
     }
@@ -82,6 +80,8 @@
         height: inherit;
         padding: 1em 0.8em;
         color: white;
+        font-size: f.rem(15);
+        font-weight: 500;
         text-transform: capitalize;
         text-align: start;
       }

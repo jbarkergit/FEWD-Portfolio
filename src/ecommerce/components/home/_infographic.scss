@@ -76,18 +76,8 @@
       gap: f.rem(20);
       flex-wrap: wrap;
       & a {
-        display: grid;
-        place-items: center;
-        height: f.rem(42);
-        max-width: fit-content;
-        @include m.ecommerceBtn;
-        background-color: white;
-        & h4 {
-          color: rgb(50, 50, 50);
-          font-size: f.rem(12);
-          font-weight: 700;
-          text-transform: uppercase;
-        }
+        @include m.ecoBtn;
+        @include m.ecoBtnWhite;
       }
     }
     &__logos {

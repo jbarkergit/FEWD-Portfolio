@@ -68,18 +68,10 @@
       }
       &__ui {
         &--btn {
-          display: flex;
-          align-items: center;
-          height: f.rem(42);
-          @include m.ecommerceBtn;
-          @include m.BtnShadow;
+          @include m.ecoBtn;
+          @include m.ecoBtnShadow;
           &:nth-of-type(1) {
             background-color: transparent;
-          }
-          & h4 {
-            font-size: f.rem(12);
-            font-weight: 700;
-            text-transform: uppercase;
           }
         }
       }
@@ -150,10 +142,8 @@
     width: 50%;
     white-space: nowrap;
     & a {
-      color: rgb(50, 50, 50);
-      font-size: clamp(f.rem(18), f.rem(12) + 1.5vw, f.rem(30));
-      font-weight: 700;
-      text-transform: capitalize;
+      @include m.ecoBtn;
+      @include m.ecoBtnWhite;
     }
   }
   &__menu {
@@ -161,7 +151,7 @@
     justify-content: flex-end;
     width: 50%;
     &__indicator {
-      @include m.ecommerceBtn;
+      @include m.ecoBtn;
       font-size: clamp(f.rem(18), f.rem(12) + 1.5vw, f.rem(32));
     }
     &__slideContainer {

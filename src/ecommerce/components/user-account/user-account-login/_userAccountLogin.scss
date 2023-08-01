@@ -45,7 +45,7 @@
     width: 100%;
     padding-left: 12%;
     & button {
-      @include m.ecommerceBtn;
+      @include m.ecoBtn;
     }
   }
   &__notice {

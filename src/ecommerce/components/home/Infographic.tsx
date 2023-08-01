@@ -24,10 +24,10 @@ const Infographic = (): JSX.Element => {
         </p>
         <span className="infographic__information__cta">
           <Link to={''} role="button">
-            <h4>Learn More</h4>
+            Learn More
           </Link>
           <Link to={''} role="button">
-            <h4>Save Up To 25%</h4>
+            Save Up To 25%
           </Link>
         </span>
         <picture className="infographic__information__logos">

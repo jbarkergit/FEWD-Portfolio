@@ -17,6 +17,7 @@ const UserInteractions = (): JSX.Element => {
           id="myAccountBtn"
           style={{
             color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
+            padding: useLocation().pathname === '/ecommerce' ? '11px' : '12px',
             border: useLocation().pathname === '/ecommerce' ? '1px solid white' : '',
             boxShadow:
               useLocation().pathname === '/ecommerce'
@@ -28,7 +29,7 @@ const UserInteractions = (): JSX.Element => {
           }}
         >
           <i className="fa-solid fa-gear"></i>
-          <h4>Account</h4>
+          Account
         </button>
       </div>
       <div className="navkit__header__section__ui">
@@ -46,7 +47,7 @@ const UserInteractions = (): JSX.Element => {
           }}
         >
           <i className="fa-solid fa-cart-shopping" style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}></i>
-          <h4 style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}>Shopping Cart</h4>
+          <span style={{ color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 19.607843137254903%)' : '' }}>Shopping Cart</span>
         </button>
       </div>
     </div>

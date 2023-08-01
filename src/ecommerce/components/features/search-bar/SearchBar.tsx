@@ -34,9 +34,10 @@ const SearchBar = (): JSX.Element => {
       <div className="searchBar__input">
         <label htmlFor="searchBar__input--input">Search</label>
         <input
+          className="searchBar__input__input"
           type="text"
           name="searchBar__input--input"
-          placeholder="Search"
+          placeholder="Search for a product"
           value={searchTerm}
           autoCapitalize="none"
           autoComplete="none"
