@@ -1,52 +1,94 @@
 @use '../ecommerceStyles' as m;
 @use '../../sass/util/functions' as f;
 
-.skuPage {
+#skuPageCenter {
+  position: relative;
   display: grid;
+  place-items: center;
+  margin-bottom: 6%;
+  overflow: hidden;
+}
+.skuPage {
+  position: relative;
+  display: grid;
+  place-items: center;
   grid-template-columns: 60% 40%;
-  gap: 7%;
-  padding: 3vh 9vw 8vh 6vw;
-  &__imgBlock {
-    display: grid;
-    grid-auto-rows: auto;
-    grid-template-columns: repeat(auto-fit, minmax(48%, 1fr));
-    gap: f.rem(25);
-    padding: f.rem(30);
-    overflow: hidden;
-    & picture {
-      max-height: f.rem(650);
-      @include m.productPhoto;
-      border-radius: f.rem(32);
-      background-color: white;
-      box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
-      transition: ease-in-out 0.35s;
-      & img {
-        padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
-        object-fit: scale-down;
-        mix-blend-mode: darken;
-        @include m.photoFilters;
-      }
+  max-width: 100rem;
+  border-radius: f.rem(28);
+  @include m.ecoBtnShadow;
+  background-color: hsl(0, 0%, 98%);
+  background: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(0, 0%, 94%));
+  &__activeImg {
+    border-radius: f.rem(32);
+    & img {
+      padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
+      object-fit: scale-down;
+      mix-blend-mode: darken;
+      @include m.photoFilters;
     }
   }
   &__details {
     display: flex;
     flex-direction: column;
     justify-content: start;
-    margin-top: 8vh;
-    & h1 {
-      margin-bottom: f.rem(25);
+    padding: 8% f.rem(60) f.rem(30) f.rem(30);
+    & hgroup {
+      color: hsl(0, 0%, 20%);
+      & h1 {
+        display: none;
+      }
+      & h2 {
+        font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
+      }
+      & h3 {
+        color: black;
+        font-size: clamp(f.rem(14), f.rem(24) + 1vw, f.rem(34));
+        font-weight: 600;
+      }
     }
     & p {
       margin-bottom: f.rem(30);
-      max-width: 38ch;
+      max-width: 40ch;
       font-size: clamp(f.rem(14), f.rem(12) + 0.5vw, f.rem(18));
       font-weight: 500;
+      letter-spacing: f.rem(0.1);
       line-height: 1.4rem;
     }
-    & h3 {
+    & button {
+      gap: f.rem(5);
+      width: 100%;
+      @include m.ecoBtn;
+      @include m.ecoBtnWhite;
+      @include m.ecoBtnHarshShadow;
+      @include m.ecoBtnActive;
+      font-size: clamp(f.rem(12), f.rem(6) + 1vw, f.rem(14));
       font-weight: 500;
-      font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
-      margin-bottom: f.rem(35);
+      letter-spacing: f.rem(1.2);
+    }
+  }
+}
+.skuPage__imgBlock {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  display: flex;
+  // display: grid;
+  // grid-auto-rows: auto;
+  // grid-template-columns: repeat(auto-fit, minmax(48%, 1fr));
+  gap: f.rem(25);
+  padding: f.rem(30) f.rem(60) f.rem(30) f.rem(30);
+  & picture {
+    height: 25vh;
+    border-radius: f.rem(32);
+    background-color: white;
+    @include m.productPhoto;
+    box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+    transition: ease-in-out 0.35s;
+    & img {
+      padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
+      object-fit: scale-down;
+      mix-blend-mode: darken;
+      @include m.photoFilters;
     }
   }
 }
