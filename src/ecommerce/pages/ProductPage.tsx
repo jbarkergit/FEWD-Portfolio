@@ -27,9 +27,9 @@ const ProductPage = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX
       {!findProduct ? (
         <NotFound />
       ) : (
-        <div id="skuPageCenter">
-          <main className="skuPage">
-            <picture className="skuPage__activeImg">
+        <div className="skuPage">
+          <main className="skuPage__grid">
+            <picture className="skuPage__grid__display">
               <img
                 src={findProduct.images![0]}
                 alt={findProduct.company + findProduct.unit}
@@ -39,7 +39,7 @@ const ProductPage = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX
                 fetchpriority="high"
               />
             </picture>
-            <article className="skuPage__details">
+            <article className="skuPage__grid__details">
               <hgroup>
                 <h1>
                   {findProduct.company} {findProduct.unit}
@@ -58,14 +58,16 @@ const ProductPage = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX
                 {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(findProduct.price)}
               </button>
             </article>
+            <aside className="skuPage__grid__imgSelection">
+              <div className="skuPage__grid__imgSelection__container">
+                {findProduct.images!.map((image) => (
+                  <picture key={image}>
+                    <img src={image} alt={findProduct.company + findProduct.unit} role="presentation" decoding="async" fetchpriority="high" />
+                  </picture>
+                ))}
+              </div>
+            </aside>
           </main>
-          <aside className="skuPage__imgBlock">
-            {findProduct.images!.map((image) => (
-              <picture key={image}>
-                <img src={image} alt={findProduct.company + findProduct.unit} role="presentation" decoding="async" fetchpriority="high" />
-              </picture>
-            ))}
-          </aside>
         </div>
       )}
       <Footer />
