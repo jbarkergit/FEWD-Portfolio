@@ -147,7 +147,7 @@
       @include m.ecoBtnLight;
       font-size: clamp(f.rem(12), f.rem(6) + 1vw, f.rem(14));
       font-weight: 500;
-      letter-spacing: f.rem(1.2);
+      letter-spacing: var(--navigationLetterSpacing);
     }
   }
 }

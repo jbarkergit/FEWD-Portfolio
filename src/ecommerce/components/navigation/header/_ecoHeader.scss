@@ -22,7 +22,7 @@
     &:first-child a {
       font-size: clamp(f.rem(14), f.rem(12) + 1vw, f.rem(20));
       font-weight: 700;
-      letter-spacing: f.rem(0.8);
+      letter-spacing: var(--navigationLetterSpacing);
       text-transform: uppercase;
     }
     &:last-child {
@@ -36,7 +36,7 @@
         @include m.ecoBtn;
         border-radius: 0;
         color: var(--fontPrimary);
-        letter-spacing: f.rem(1.6);
+        letter-spacing: var(--navigationLetterSpacing);
       }
     }
   }

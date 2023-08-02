@@ -49,7 +49,6 @@
       max-width: 40ch;
       font-size: clamp(f.rem(14), f.rem(12) + 0.5vw, f.rem(18));
       font-weight: 500;
-      letter-spacing: f.rem(0.1);
       line-height: 1.4rem;
     }
     & button {
@@ -59,7 +58,6 @@
       @include m.ecoBtnLight;
       font-size: clamp(f.rem(12), f.rem(6) + 1vw, f.rem(14));
       font-weight: 500;
-      letter-spacing: f.rem(1.2);
     }
   }
 }
