@@ -12,8 +12,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  max-height: f.rem(45);
   padding: f.rem(12);
-  border-radius: f.rem(5);
+  border-radius: f.rem(6);
   cursor: pointer;
   color: white;
   font-size: f.rem(12);

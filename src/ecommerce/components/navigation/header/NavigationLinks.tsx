@@ -1,84 +1,85 @@
-import { Link, useLocation } from 'react-router-dom';
-import MobileMenu from './MobileMenu';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
+import MobileMenu from './MobileMenu';
 
 const NavigationLinks = (): JSX.Element => {
   // @ts-ignore:
   const { setCategoryFilter } = useCategoryFilterContext();
+  const path = useLocation().pathname === '/ecommerce';
 
   return (
     <nav className="navkit__section">
       <MobileMenu />
       <ul className="navkit__section__links">
         <li>
-          <Link to="/ecommerce" style={{ color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)' }}>
-            Dynamic Audio
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/ecommerce"
-            style={{
-              color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
-            }}
-          >
-            {'Home'}
-          </Link>
-        </li>
-        <li>
-          <Link
+          <NavLink
             to="/ecommerce/products"
             style={{
-              color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
+              color: path ? 'white' : 'hsl(0, 0, 20%)',
+              boxShadow: path
+                ? 'none'
+                : '-1px -1px 20px 0px rgb(255, 255, 255), -4px -4px 5px 0px rgb(255, 255, 255), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
             }}
             onClick={() => setCategoryFilter('')}
           >
             {'All Products'}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to="/ecommerce/headphones"
             style={{
-              color: useLocation().pathname === '/ecommerce' ? 'white' : 'black',
+              color: path ? 'white' : 'hsl(0, 0, 20%)',
+              boxShadow: path
+                ? 'none'
+                : '-1px -1px 20px 0px rgb(255, 255, 255), -4px -4px 5px 0px rgb(255, 255, 255), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
             }}
             onClick={() => setCategoryFilter('headphone')}
           >
             {'Headphones'}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to="/ecommerce/amps-dacs"
             style={{
-              color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)',
+              color: path ? 'white' : 'hsl(0, 0, 20%)',
+              boxShadow: path
+                ? 'none'
+                : '-1px -1px 20px 0px rgb(255, 255, 255), -4px -4px 5px 0px rgb(255, 255, 255), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
             }}
             onClick={() => setCategoryFilter('amp', 'dac')}
           >
             {'Amps & Dacs'}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to="/ecommerce/microphones"
             style={{
-              color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 20%)',
+              color: path ? 'white' : 'hsl(0, 0, 20%)',
+              boxShadow: path
+                ? 'none'
+                : '-1px -1px 20px 0px rgb(255, 255, 255), -4px -4px 5px 0px rgb(255, 255, 255), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
             }}
             onClick={() => setCategoryFilter('microphone')}
           >
             {'Microphones'}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to="/ecommerce/interfaces"
             style={{
-              color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 20%)',
+              color: path ? 'white' : 'hsl(0, 0, 20%)',
+              boxShadow: path
+                ? 'none'
+                : '-1px -1px 20px 0px rgb(255, 255, 255), -4px -4px 5px 0px rgb(255, 255, 255), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
             }}
             onClick={() => setCategoryFilter('interface')}
           >
             {'Interfaces'}
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>
