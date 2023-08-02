@@ -1,126 +1,132 @@
-import { useEffect, useRef } from 'react';
+import { RefObject, useEffect, useReducer, useRef } from 'react';
 import CarouselProps from './CarouselProps';
 
+type initSliderStateType = {
+  pointerDown: boolean;
+  initPageX: number;
+  pageX: number;
+  trackPos: number;
+  previousTrackPos: number;
+  style: React.CSSProperties;
+};
+
+export const initState: initSliderStateType = {
+  pointerDown: false,
+  initPageX: 0,
+  pageX: 0,
+  trackPos: 0,
+  previousTrackPos: 0,
+  style: { transform: `translateX(0px)` },
+};
+
+type actionType =
+  | { type: 'POINTER_DOWN'; pointerDown: boolean; initPageX: number; pageX: number }
+  | { type: 'POINTER_MOVE'; pointerDown: boolean; pageX: number }
+  | { type: 'POINTER_LEAVE'; pointerDown: boolean; previousTrackPos: number }
+  | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number };
+
 const Carousel = (): JSX.Element => {
-  const carousel = useRef<HTMLDivElement>(null!),
-    carouselTrack = useRef<HTMLDivElement>(null!),
-    userMouseDown = useRef<boolean>(false),
-    userMouseMove = useRef<boolean>(false);
+  const targetElementRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null),
+    targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
+    targetElementWidth: number = targetElement?.scrollWidth as number;
+
+  const reducer = (state: initSliderStateType, action: actionType): initSliderStateType => {
+    switch (action.type) {
+      case 'POINTER_DOWN':
+        return { ...state, pointerDown: true, initPageX: action.initPageX, pageX: action.pageX };
+
+      case 'POINTER_MOVE':
+        if (!state.pointerDown) {
+          return state;
+        } else {
+          const pointerTravelDistance: number = action.pageX - state.initPageX,
+            latestTrackPosition = state.previousTrackPos + pointerTravelDistance,
+            targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft),
+            maximumDelta = targetElementWidth * -1 + targetElement.children[0].clientWidth + targetElementLeftPadding,
+            clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
+
+          return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
+        }
+
+      case 'POINTER_LEAVE':
+      case 'POINTER_UP':
+        if (!state.pointerDown) {
+          return state;
+        } else {
+          return {
+            ...state,
+            pointerDown: false,
+            trackPos: state.trackPos,
+            previousTrackPos: state.trackPos,
+          };
+        }
+      default:
+        throw new Error('FAILURE: Action Type may be missing or returning null');
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, initState);
 
   useEffect(() => {
-    if (!carousel?.current || !carouselTrack?.current) null;
-
-    const onMouseDown = (e: MouseEvent): void => {
-      userMouseDown.current = true;
-      userMouseMove.current = false;
-      carouselTrack.current.dataset.mouseDownAt = `${e.clientX}`;
+    const targetElement = targetElementRef?.current!;
+    const userPointerDown = (e: PointerEvent) => {
+      if (!state.pointerDown && e.target instanceof HTMLAnchorElement) return state;
+      const pageX = e.pageX as number;
+      dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageX: pageX, pageX: pageX });
     };
-
-    const onMouseMove = (e: MouseEvent): void => {
-      userMouseMove.current = true;
-      const mouseDownAt: string = carouselTrack.current?.dataset.mouseDownAt as unknown as string,
-        mouseDelta: number = parseFloat(mouseDownAt) - e.clientX,
-        maxDelta: number = window.innerWidth / 1.8,
-        percentage: number = (mouseDelta / maxDelta) * -100,
-        nextPerc: string = carouselTrack.current?.dataset.prevPercentage as unknown as string;
-      let nextPercentage: number = parseFloat(nextPerc) + percentage;
-
-      if (!userMouseDown.current) {
-        return;
-      } else {
-        userMouseMove.current = true;
-        const trackWidthMax: number = (carouselTrack.current.offsetWidth / 32) * -1;
-        nextPercentage = Math.max(trackWidthMax, Math.min(6.5, nextPercentage));
-        carouselTrack.current.dataset.percentage = `${nextPercentage}`;
-      }
-
-      if (carouselTrack.current.dataset.mouseDownAt === '0') {
-        return;
-      } else {
-        carouselTrack.current.animate(
-          {
-            transform: `translateX(${nextPercentage}%)`,
-          },
-          { duration: 1200, fill: 'both' }
-        );
-        const arrayOfImages: Element[] = Array.from(carouselTrack.current.children);
-        [...arrayOfImages].forEach((el: Element) => {
-          el.children[0].animate(
-            {
-              objectPosition: `${85 + nextPercentage / 2}% 100%`,
-            },
-            { duration: 1200, fill: 'both' }
-          );
-        });
-      }
+    const userPointerMove = (e: PointerEvent) => {
+      const pageX = e.pageX as number;
+      dispatch({
+        type: 'POINTER_MOVE',
+        pageX: pageX,
+        pointerDown: state.pointerDown,
+      });
     };
+    const userPointerLeave = () => dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
+    const userPointerUp = () => dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
 
-    const onMouseLeave = (): void => {
-      userMouseDown.current = false;
-      userMouseMove.current = false;
+    targetElement?.addEventListener('pointerdown', userPointerDown);
+    targetElement?.addEventListener('pointermove', userPointerMove);
+    targetElement?.addEventListener('pointerleave', userPointerLeave);
+    targetElement?.addEventListener('pointerup', userPointerUp);
+
+    return () => {
+      targetElement?.removeEventListener('pointerdown', userPointerDown);
+      targetElement?.removeEventListener('pointermove', userPointerMove);
+      targetElement?.removeEventListener('pointerleave', userPointerLeave);
+      targetElement?.removeEventListener('pointerup', userPointerUp);
     };
-
-    const onMouseUp = (e: MouseEvent): void => {
-      userMouseDown.current = false;
-      carouselTrack.current.dataset.mouseDownAt = '0';
-      carouselTrack.current.dataset.prevPercentage = carouselTrack.current.dataset.percentage;
-
-      const target = e.target as HTMLPictureElement;
-      if (!userMouseMove.current) {
-        [...carouselTrack.current.children].forEach((child) => child.classList.replace('active', 'disabled'));
-        target.classList.contains('active') ? target.classList.replace('active', 'disabled') : target.classList.replace('disabled', 'active');
-      }
-    };
-
-    carousel.current?.addEventListener('mousedown', onMouseDown);
-    carouselTrack.current?.addEventListener('mousemove', onMouseMove);
-    carousel.current?.addEventListener('mouseleave', onMouseLeave);
-    carousel.current?.addEventListener('mouseup', onMouseUp);
-
-    const listenerUnmount = (): void => {
-      carousel.current?.removeEventListener('mousedown', onMouseDown);
-      carouselTrack.current?.removeEventListener('mousemove', onMouseMove);
-      carousel.current?.removeEventListener('mouseleave', onMouseLeave);
-      carousel.current?.removeEventListener('mouseup', onMouseUp);
-    };
-
-    return listenerUnmount;
   }, []);
 
   return (
-    <section className="carousel" ref={carousel}>
+    <section className="carousel">
       <h2 className="carousel__heading">
         Audio equipment for <span className="highlight">every</span> setting and <span className="highlight">every</span> environment
       </h2>
-      <div className="carousel__track" ref={carouselTrack} data-mouse-down-at="0" data-prev-percentage="0">
+      <div className="carousel__track" ref={targetElementRef} style={state.style}>
         <CarouselProps
           carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg"
           carouselAlt="Slide A"
-          carouselActivity="active"
           navCat="Speakers"
         />
         <CarouselProps
           carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg"
           carouselAlt="Slide C"
-          carouselActivity="disabled"
           navCat="Mixing Consoles"
         />
         <CarouselProps
           carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg"
           carouselAlt="Slide E"
-          carouselActivity="disabled"
           navCat="Headphones"
         />
         <CarouselProps
           carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg"
           carouselAlt="Slide F"
-          carouselActivity="disabled"
           navCat="Dacs & Amps"
         />
         <CarouselProps
           carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg"
           carouselAlt="Slide G"
-          carouselActivity="disabled"
           navCat="Microphones"
         />
       </div>

@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 
-type carouselPropTypes = { carouselImg: string; carouselAlt: string; carouselActivity: string; navCat: string };
+type carouselPropTypes = { carouselImg: string; carouselAlt: string; navCat: string };
 
-const CarouselProps = ({ carouselImg, carouselAlt, carouselActivity, navCat }: carouselPropTypes): JSX.Element => {
+const CarouselProps = ({ carouselImg, carouselAlt, navCat }: carouselPropTypes): JSX.Element => {
   return (
-    <div className="carousel__track__slider">
-      <picture className={`carousel__track__slide ${carouselActivity}`}>
+    <>
+      <picture>
         <img src={carouselImg} alt={carouselAlt} draggable="false" loading="lazy" decoding="async" fetchpriority="low" />
+        <Link to="">{navCat}</Link>
       </picture>
-      <Link to="">{navCat}</Link>
-    </div>
+    </>
   );
 };
 
