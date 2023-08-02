@@ -43,12 +43,6 @@ const SearchBar = (): JSX.Element => {
         autoCorrect="off"
         spellCheck="false"
         onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e?.target.value)}
-        style={{
-          boxShadow:
-            useLocation().pathname === '/ecommerce'
-              ? 'rgba(255, 255, 255, 0) -1px -1px 20px 0px, rgba(57, 57, 57, 0) -4px -4px 5px 0px, rgba(98, 98, 98, 0) 7px 7px 20px 0px, rgba(0, 0, 0, 0) 4px 4px 5px 0px'
-              : '-1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
-        }}
       />
       {searchTerm.length != 0 && (
         <div className="searchBar__return">

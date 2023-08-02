@@ -7,14 +7,14 @@ import ProductHighlight from '../components/home/ProductHighlight';
 
 const Home = (): JSX.Element => {
   return (
-    <>
+    <div data-theme="eco-light-mode">
       <Header />
       <Infographic />
       <Carousel />
       <SideBySide />
       <ProductHighlight />
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -46,7 +46,7 @@
         left: 7.5%;
         z-index: 4;
         @include m.ecoBtn;
-        @include m.ecoBtnWhite;
+        @include m.ecoBtnLight;
       }
       & img {
         border-radius: f.rem(26);

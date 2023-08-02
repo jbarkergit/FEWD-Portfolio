@@ -14,12 +14,15 @@
 
 //navigation
 @forward '../ecommerce/components/navigation/header/ecoHeader';
+@forward '../ecommerce/components/navigation/header/mobileMenu';
+
 @forward '../ecommerce/components/navigation/footer/ecoFooter';
 
 //product
 @forward '../ecommerce/components/product/productProvider';
 
 //shared
+@forward '../ecommerce/components/shared/miscellaneous';
 @forward '../ecommerce/components/shared/modal';
 
 //user-account

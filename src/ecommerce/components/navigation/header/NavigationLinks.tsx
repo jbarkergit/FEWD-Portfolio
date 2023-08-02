@@ -15,10 +15,7 @@ const NavigationLinks = (): JSX.Element => {
           <NavLink
             to="/ecommerce/products"
             style={{
-              color: path ? 'white' : 'hsl(0, 0, 20%)',
-              boxShadow: path
-                ? 'none'
-                : '-1px -1px 20px 0px rgb(255, 255, 255), -4px -4px 5px 0px rgb(255, 255, 255), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
+              color: path ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
             }}
             onClick={() => setCategoryFilter('')}
           >
@@ -29,10 +26,7 @@ const NavigationLinks = (): JSX.Element => {
           <NavLink
             to="/ecommerce/headphones"
             style={{
-              color: path ? 'white' : 'hsl(0, 0, 20%)',
-              boxShadow: path
-                ? 'none'
-                : '-1px -1px 20px 0px rgb(255, 255, 255), -4px -4px 5px 0px rgb(255, 255, 255), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
+              color: path ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
             }}
             onClick={() => setCategoryFilter('headphone')}
           >
@@ -43,10 +37,7 @@ const NavigationLinks = (): JSX.Element => {
           <NavLink
             to="/ecommerce/amps-dacs"
             style={{
-              color: path ? 'white' : 'hsl(0, 0, 20%)',
-              boxShadow: path
-                ? 'none'
-                : '-1px -1px 20px 0px rgb(255, 255, 255), -4px -4px 5px 0px rgb(255, 255, 255), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
+              color: path ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
             }}
             onClick={() => setCategoryFilter('amp', 'dac')}
           >
@@ -57,10 +48,7 @@ const NavigationLinks = (): JSX.Element => {
           <NavLink
             to="/ecommerce/microphones"
             style={{
-              color: path ? 'white' : 'hsl(0, 0, 20%)',
-              boxShadow: path
-                ? 'none'
-                : '-1px -1px 20px 0px rgb(255, 255, 255), -4px -4px 5px 0px rgb(255, 255, 255), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
+              color: path ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
             }}
             onClick={() => setCategoryFilter('microphone')}
           >
@@ -71,10 +59,7 @@ const NavigationLinks = (): JSX.Element => {
           <NavLink
             to="/ecommerce/interfaces"
             style={{
-              color: path ? 'white' : 'hsl(0, 0, 20%)',
-              boxShadow: path
-                ? 'none'
-                : '-1px -1px 20px 0px rgb(255, 255, 255), -4px -4px 5px 0px rgb(255, 255, 255), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3)',
+              color: path ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
             }}
             onClick={() => setCategoryFilter('interface')}
           >

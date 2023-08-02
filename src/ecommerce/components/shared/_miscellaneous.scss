@@ -1,0 +1,12 @@
+@use '../../ecommerceStyles' as m;
+@use '../../../sass/util/functions' as f;
+
+.ctaBtn {
+  gap: f.rem(3);
+  @include m.ecoBtn;
+  @include m.ecoBtnLight;
+  box-shadow: var(--ecoBtnShadow);
+  &:last-child {
+    @include m.ecoBtnDark;
+  }
+}

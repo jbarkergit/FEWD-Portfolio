@@ -8,8 +8,9 @@
   width: minmax(f.rem(35) f.rem(260));
   height: fit-content;
   z-index: 6;
-  @include m.ecoBtnWhite;
-  border-radius: f.rem(5);
+  border-radius: f.rem(6);
+  @include m.ecoBtnLight;
+  box-shadow: var(--ecoBtnShadow);
   &__label {
     display: none;
   }
@@ -52,7 +53,7 @@
     padding-top: f.rem(6);
     border-bottom-right-radius: f.rem(6);
     border-bottom-left-radius: f.rem(6);
-    background-color: white;
+    background-color: var(--elemBackgroundPrimary);
     &__ul {
       display: flex;
       flex-direction: column;

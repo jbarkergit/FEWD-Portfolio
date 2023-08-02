@@ -34,7 +34,7 @@
         min-height: f.rem(50);
         padding: 1.5% 4%;
         border-radius: f.rem(8);
-        background-color: hsl(197, 100%, 99%);
+        background-color: var(--elemBackgroundPrimary);
       }
     }
   }
@@ -56,7 +56,7 @@
     margin-top: f.rem(20);
     text-align: center;
     pointer-events: none;
-    color: rgb(0, 0, 0);
+    color: var(--fontPrimary);
     & span {
       font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(18));
       font-weight: 500;

@@ -10,7 +10,7 @@ import useProductFilter from '../hooks/useProductFilter';
 const BrowseProduct = (): JSX.Element => {
   const { dispatch, REDUCER_ACTIONS } = useCart();
   return (
-    <>
+    <div data-theme="eco-light-mode">
       <Header />
       <section className="browseProduct">
         <ProductFilters />
@@ -25,7 +25,7 @@ const BrowseProduct = (): JSX.Element => {
         </main>
       </section>
       <Footer />
-    </>
+    </div>
   );
 };
 

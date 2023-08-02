@@ -79,7 +79,7 @@
           & button,
           & span {
             padding: f.rem(6) f.rem(13);
-            color: white;
+            color: var(--fontSecondary);
           }
           & button {
             &:nth-of-type(1) {

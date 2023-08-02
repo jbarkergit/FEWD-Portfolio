@@ -15,7 +15,7 @@
     z-index: 10;
     border-top-right-radius: f.rem(64);
     border-top-left-radius: f.rem(64);
-    background-color: hsl(0, 0%, 96%);
+    background-color: var(--bodyBackground);
   }
   &__graphic {
     position: absolute;
@@ -69,7 +69,7 @@
     h2,
     p,
     a {
-      color: white;
+      color: var(--fontSecondary);
     }
     &__cta {
       display: flex;
@@ -77,7 +77,7 @@
       flex-wrap: wrap;
       & a {
         @include m.ecoBtn;
-        @include m.ecoBtnWhite;
+        @include m.ecoBtnLight;
       }
     }
     &__logos {
@@ -100,7 +100,7 @@
     }
     &__heading {
       display: flex;
-      color: white;
+      color: var(--fontSecondary);
       & i {
         padding-right: f.rem(8);
       }

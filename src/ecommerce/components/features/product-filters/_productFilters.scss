@@ -30,8 +30,7 @@
     position: relative;
     z-index: 5;
     @include m.ecoBtn;
-    @include m.ecoBtnBlack;
-    @include m.ecoBtnShadow;
+    @include m.ecoBtnDark;
     padding: f.rem(15);
     font-size: f.rem(13);
     letter-spacing: f.rem(0.5);
@@ -63,7 +62,7 @@
     padding: f.rem(6) 0.5em 0.6em 0.5em;
     border-bottom-right-radius: f.rem(8);
     border-bottom-left-radius: f.rem(8);
-    background-color: hsl(0, 0%, 20%);
+    background-color: var(--elemBackgroundSecondary);
     &[data-status='active'] {
       display: flex;
     }
@@ -73,13 +72,13 @@
       border-radius: 0.5em;
       cursor: pointer;
       &:hover {
-        background: hsl(0, 0%, 25%);
+        background-color: hsl(0, 0%, 25%);
       }
       & button {
         width: inherit;
         height: inherit;
         padding: 1em 0.8em;
-        color: white;
+        color: var(--fontSecondary);
         font-size: f.rem(15);
         font-weight: 500;
         text-transform: capitalize;

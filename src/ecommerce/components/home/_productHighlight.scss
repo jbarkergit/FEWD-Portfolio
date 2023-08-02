@@ -5,7 +5,7 @@
   display: grid;
   place-items: center;
   padding: f.rem(50) 0 f.rem(150) 0;
-  background-color: hsl(0, 0%, 100%);
+  background-color: var(--elemBackgroundPrimary);
   &__heading {
     display: flex;
     justify-content: center;
@@ -30,11 +30,7 @@
       aspect-ratio: 0.8/1;
       border-radius: f.rem(26);
       overflow: hidden;
-      box-shadow:
-        -1px -1px 20px 0px #ececec,
-        -4px -4px 5px 0px #fff,
-        7px 7px 20px 0px rgba(153, 153, 153, 0.4),
-        4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+      box-shadow: -1px -1px 20px 0px #ececec, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
       & div {
         position: absolute;
         inset: -65% 0 0 0;
@@ -65,7 +61,7 @@
           position: absolute;
           inset: 0;
           border-radius: f.rem(26);
-          background-color: hsl(0, 0%, 100%);
+          background-color: var(--elemBackgroundPrimary);
           opacity: 0.8;
         }
         &:hover {

@@ -1,12 +1,43 @@
 @use '../sass/util/functions' as f;
 
-.highlight {
-  background: #ff5900;
-  background-clip: text;
-  background-size: 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+// [data-theme='eco-dark-mode'] {
+//   --bodyBackground: hsl(0, 0%, 20%);
+//   --elemBackgroundPrimary: hsl(0, 0%, 20%);
+//   --elemBackgroundSecondary: hsl(0, 0%, 100%);
+//   --fontPrimary: hsl(0, 0%, 100%);
+//   --fontSecondary: hsl(0, 0%, 20%);
+//   --fontAccent: #fff;
+//   // --textShadow: 2px 2px 5px hsl(225, 4%, 25%);
+// }
+
+[data-theme='eco-light-mode'] {
+  --bodyBackground: hsl(0, 0%, 96%);
+  --elemBackgroundPrimary: hsl(0, 0%, 100%);
+  --elemBackgroundSecondary: hsl(0, 0%, 20%);
+  --gradientMono: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(0, 0%, 94%));
+  --gradientColored: linear-gradient(145deg, hsl(11, 52%, 96%), hsl(0, 0%, 86%));
+  --ecoBtnShadow: -2px -3px 1px hsla(0, 0%, 100%, 0.4), 2px 3px 4px hsl(0, 0%, 78%);
+  --shadowRefined: -2px -3px 3px hsl(0, 0%, 100%), 2px 3px 3px hsl(0, 0%, 65%);
+  --shadowSoft: 0.3rem 0.3rem 0.6rem hsl(223, 10%, 71%), -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%);
+  --borderChunky: 0.13rem solid hsl(0, 0%, 94%);
+  --fontPrimary: hsl(0, 0%, 20%);
+  --fontSecondary: hsl(0, 0%, 100%);
+  --fontAccent: #ff5900;
+  // --textShadow: 2px 2px 5px hsl(0, 0%, 100%);
 }
+
+.highlight {
+  color: var(--fontAccent);
+}
+// @mixin gradientText {
+//   color: transparent;
+//   background-color:
+//   background: linear-gradient(to right, hsl(39, 49%, 67%), hsl(39, 45%, 57%));
+//   background-size: 200%;
+//   background-clip: text;
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+// }
 
 @mixin ecoBtn {
   display: flex;
@@ -16,33 +47,30 @@
   padding: f.rem(12);
   border-radius: f.rem(6);
   cursor: pointer;
-  color: white;
   font-size: f.rem(12);
   font-weight: 600;
   letter-spacing: f.rem(0.3);
   text-transform: uppercase;
   white-space: nowrap;
 }
-@mixin ecoBtnBlack {
-  background-color: hsl(0, 0%, 20%);
-  color: white;
+@mixin ecoBtnDark {
+  background-color: var(--elemBackgroundSecondary);
+  color: var(--fontSecondary);
 }
-@mixin ecoBtnWhite {
-  background-color: rgb(255, 255, 255);
-  color: hsl(0, 0%, 5%);
+@mixin ecoBtnLight {
+  background-color: var(--elemBackgroundPrimary);
+  border: var(--borderChunky);
+  color: var(--fontPrimary);
+
+  // box-shadow: inset 0.1rem 0.1rem 0.3rem hsl(226, 9%, 71%), inset 0.2rem 0.2rem 0.5rem hsl(225, 39%, 85%), inset -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%); //activebtn
+
+  //   //SHADOWS
+  // box-shadow: -2px -3px 3px 1px hsl(206, 5%, 27%), 2px 3px 3px 1px hsl(225, 5%, 16%);
+  // box-shadow: inset 0.1rem 0.1rem 0.3rem hsl(226, 9%, 71%), inset 0.2rem 0.2rem 0.5rem hsl(225, 39%, 85%), inset -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%);
+  //   box-shadow: -2px -3px 1px hsl(180, 5%, 30%), 2px 3px 4px hsl(216, 4%, 20%);
+  //   box-shadow: 0.3rem 0.3rem 0.6rem hsl(0, 0%, 15%), -0.2rem -0.2rem 0.5rem hsl(0, 0%, 20%);
 }
-@mixin ecoBtnShadow {
-  box-shadow: -1px -1px 20px 0px rgba(255, 255, 255, 1), -4px -4px 5px 0px rgba(255, 255, 255, 1), 7px 7px 20px 0px rgba(0, 0, 0, 0.4),
-    4px 4px 5px 0px rgba(0, 0, 0, 0.3);
-}
-@mixin ecoBtnHarshShadow {
-  box-shadow: 0.3rem 0.3rem 0.6rem hsl(223, 10%, 71%), -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%);
-}
-@mixin ecoBtnActive {
-  &:active {
-    box-shadow: inset 0.3rem 0.3rem 0.6rem hsl(223, 10%, 71%), -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%);
-  }
-}
+
 @mixin productPhoto {
   background: hsl(0, 0%, 95%);
   background-image: -webkit-radial-gradient(top, circle cover, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 86%));
@@ -79,3 +107,8 @@
 @mixin photoFilters {
   filter: contrast(103%) drop-shadow(0.25rem 0.2rem 1rem hsl(0, 0%, 97%));
 }
+
+// @mixin formField {
+//   background-color: hsl(197, 100%, 99%);
+//   box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), inset -0.2rem -0.2rem 0.5rem var(--white);
+// }

@@ -25,7 +25,7 @@
     z-index: 10;
     border-bottom-right-radius: f.rem(64);
     border-bottom-left-radius: f.rem(64);
-    background-color: hsl(0, 0%, 96%);
+    background-color: var(--bodyBackground);
   }
   &__textArea {
     display: flex;

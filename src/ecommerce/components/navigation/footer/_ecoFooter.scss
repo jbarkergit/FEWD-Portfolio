@@ -13,7 +13,7 @@
     position: absolute;
     bottom: 7%;
     left: 5%;
-    color: white;
+    color: var(--fontSecondary);
     font-weight: 600;
   }
   &__newsCta {
@@ -28,7 +28,7 @@
       font-weight: 800;
       margin-bottom: f.rem(15);
       z-index: 5;
-      color: white;
+      color: var(--fontSecondary);
       text-shadow: 1px 2px 3px rgb(163, 163, 163);
     }
   }
@@ -54,7 +54,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      color: white;
+      color: var(--fontSecondary);
       &:nth-of-type(2) {
         padding-top: f.rem(25);
       }
@@ -96,7 +96,7 @@
         border-radius: f.rem(5);
         line-height: f.rem(40);
         cursor: text;
-        color: white;
+        color: var(--fontSecondary);
       }
     }
     & button {
@@ -121,7 +121,7 @@
     max-width: 45ch;
     text-align: center;
     pointer-events: none;
-    color: white;
+    color: var(--fontSecondary);
     & mark {
       padding: f.rem(3) f.rem(10);
       font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));

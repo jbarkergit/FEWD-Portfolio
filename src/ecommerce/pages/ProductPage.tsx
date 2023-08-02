@@ -28,7 +28,7 @@ const ProductPage = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX
     );
   } else {
     return (
-      <>
+      <div data-theme="eco-light-mode">
         <Header />
         <div id="skuPageCenter">
           <main className="skuPage">
@@ -64,7 +64,7 @@ const ProductPage = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX
           </aside>
         </div>
         <Footer />
-      </>
+      </div>
     );
   }
 };
