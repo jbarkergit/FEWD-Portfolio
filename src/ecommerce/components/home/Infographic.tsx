@@ -13,15 +13,13 @@ const Infographic = (): JSX.Element => {
         />
       </picture>
       <article className="infographic__information">
-        <span className="infographic__information__heading">
-          <i className="fa-solid fa-microphone-lines"></i>
-          <h1>Dynamic Audio</h1>
-        </span>
-        <h2>Your go-to source for audiophile grade HiFi audio equipment</h2>
-        <p>
-          Unparalleled HiFi audio & superior manufacturing - crystal-clear sound, premium materials, meticulous craftsmanship, and lasting durability for discerning
-          audiophiles.
-        </p>
+        <hgroup>
+          <h2>Your go-to source for audiophile grade HiFi audio equipment</h2>
+          <h1>
+            Unparalleled HiFi audio and superior manufacturing for discerning audiophiles. Crystal-clear sound, premium materials, meticulous craftsmanship, and
+            lasting durability.
+          </h1>
+        </hgroup>
         <span className="infographic__information__cta">
           <Link to={''} role="button">
             Learn More
