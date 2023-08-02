@@ -5,8 +5,10 @@ import Lenis from '@studio-freight/lenis';
 //Shared
 import SuspenseLoader from './shared/pages/SuspenseLoader';
 const NotFound = lazy(() => import('./shared/pages/NotFound'));
+
 //Portfolio
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
+
 //Ecommerce
 const Home = lazy(() => import('./ecommerce/pages/Home'));
 const BrowseProduct = lazy(() => import('./ecommerce/pages/BrowseProduct'));
@@ -14,6 +16,7 @@ const ProductPage = lazy(() => import('./ecommerce/pages/ProductPage'));
 import { StateProvider } from './ecommerce/context/CategoryFilterContext';
 import { CartProvider } from './ecommerce/context/CartContext';
 
+//Lenis Package
 function App() {
   const lenis = new Lenis();
   function raf(time: any) {

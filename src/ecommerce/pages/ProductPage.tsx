@@ -1,10 +1,9 @@
 import { useParams } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
-import { ProductDatabase } from '../assets/production-data/ProductDatabase';
-import { ProductType } from '../types/ProductType';
 import Header from '../components/navigation/header/Header';
 import Footer from '../components/navigation/footer/eFooter';
 import NotFound from '../../shared/pages/NotFound';
+import { ProductDatabase } from '../assets/production-data/ProductDatabase';
+import { ProductType } from '../types/ProductType';
 import { ReducerAction, ReducerActionType } from '../context/CartContext';
 
 type addToCartType = {
@@ -15,25 +14,30 @@ type addToCartType = {
 
 const ProductPage = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX.Element => {
   const { paramId } = useParams() as { paramId: string };
-
   const findProduct = ProductDatabase.find((product: ProductType) => product.sku === paramId)!;
 
-  const addToCart = () => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, stock: 1 } });
+  const addToCart = () => {
+    const payload = { ...product, stock: 1 };
+    dispatch({ type: REDUCER_ACTIONS.ADD, payload });
+  };
 
-  if (!findProduct) {
-    return (
-      <>
+  return (
+    <div data-theme="eco-light-mode">
+      <Header />
+      {!findProduct ? (
         <NotFound />
-      </>
-    );
-  } else {
-    return (
-      <div data-theme="eco-light-mode">
-        <Header />
+      ) : (
         <div id="skuPageCenter">
           <main className="skuPage">
             <picture className="skuPage__activeImg">
-              <img src={findProduct.images![0]} alt={findProduct.company + findProduct.unit} role="presentation" decoding="async" fetchpriority="high" />
+              <img
+                src={findProduct.images![0]}
+                alt={findProduct.company + findProduct.unit}
+                loading="lazy"
+                role="presentation"
+                decoding="async"
+                fetchpriority="high"
+              />
             </picture>
             <article className="skuPage__details">
               <hgroup>
@@ -57,16 +61,16 @@ const ProductPage = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX
           </main>
           <aside className="skuPage__imgBlock">
             {findProduct.images!.map((image) => (
-              <picture key={uuidv4()}>
+              <picture key={image}>
                 <img src={image} alt={findProduct.company + findProduct.unit} role="presentation" decoding="async" fetchpriority="high" />
               </picture>
             ))}
           </aside>
         </div>
-        <Footer />
-      </div>
-    );
-  }
+      )}
+      <Footer />
+    </div>
+  );
 };
 
 export default ProductPage;
