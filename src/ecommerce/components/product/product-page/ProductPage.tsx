@@ -66,9 +66,7 @@ const ProductPage = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX
         </aside>
       </main>
       <div className="skuPage__recommendations">
-        <ul className="skuPage__recommendations__selection">
-          <MoreLikeThis findProduct={findProduct} />
-        </ul>
+        <MoreLikeThis findProduct={findProduct} />
       </div>
     </div>
   );

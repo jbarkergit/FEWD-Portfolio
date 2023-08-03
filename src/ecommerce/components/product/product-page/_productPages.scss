@@ -13,10 +13,10 @@
     grid-template-rows: repeat(3, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    max-width: 90rem;
+    max-width: f.rem(1600);
     max-height: 80vh;
     border-radius: f.rem(28);
-    margin: f.rem(60) 0 f.rem(50) 0;
+    margin: f.rem(0) 0 f.rem(50) 0;
     background-color: var(--elemBackgroundPrimary);
     background: var(--gradientColored);
     box-shadow: var(--shadowRefined);
