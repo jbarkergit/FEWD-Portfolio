@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ReducerAction, ReducerActionType } from '../../../context/CartContext';
 import { ProductType } from '../../../types/ProductType';
@@ -8,7 +9,7 @@ type addToCartType = {
   REDUCER_ACTIONS: ReducerActionType;
 };
 
-const ProductProvider = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX.Element => {
+const ProductProvider = memo(({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX.Element => {
   const addToCart = () => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, stock: 1 } });
   const { sku, stock, company, unit, description, price, category, wearStyle, productshowcase, images } = product;
 
@@ -42,6 +43,6 @@ const ProductProvider = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType):
       </article>
     </li>
   );
-};
+});
 
 export default ProductProvider;
