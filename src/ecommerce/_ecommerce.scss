@@ -19,7 +19,9 @@
 @forward '../ecommerce/components/navigation/footer/ecoFooter';
 
 //product
-@forward '../ecommerce/components/product/productProvider';
+@forward '../ecommerce/components/product/product-page/productPages';
+@forward '../ecommerce/components/product/product-provider/productProvider';
+@forward '../ecommerce/components/product/product-recommenders/moreLikeThis';
 
 //shared
 @forward '../ecommerce/components/shared/miscellaneous';
@@ -29,7 +31,3 @@
 @forward '../ecommerce/components/user-account/user-account-dashboard/userAccountDashboard';
 @forward '../ecommerce/components/user-account/user-account-login/userAccountLogin';
 @forward '../ecommerce/components/user-account/user-account-register/userRegisterModal';
-
-//pages
-
-@forward '../ecommerce/pages/productPages';
