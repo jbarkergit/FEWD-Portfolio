@@ -4,20 +4,22 @@ import { ProductType } from '../../../types/ProductType';
 import { ReducerAction, ReducerActionType } from '../../../context/CartContext';
 import MoreLikeThis from '../product-recommenders/MoreLikeThis';
 
-type addToCartType = {
-  product: ProductType;
-  dispatch: React.Dispatch<ReducerAction>;
-  REDUCER_ACTIONS: ReducerActionType;
-};
-
-const ProductPage = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX.Element => {
+// type addToCartType = {
+//   product: ProductType;
+//   dispatch: React.Dispatch<ReducerAction>;
+//   REDUCER_ACTIONS: ReducerActionType;
+// };
+// { product, dispatch, REDUCER_ACTIONS }: addToCartType
+const ProductPage = (): JSX.Element => {
   const { paramId } = useParams() as { paramId: string };
   const findProduct = ProductDatabase.find((product: ProductType) => product.sku === paramId)!;
 
-  const addToCart = () => {
-    const payload = { ...product, stock: 1 };
-    dispatch({ type: REDUCER_ACTIONS.ADD, payload });
-  };
+  // const addToCart = () => {
+  //   const payload = { ...product, stock: 1 };
+  //   dispatch({ type: REDUCER_ACTIONS.ADD, payload });
+  // };
+
+  //onClick={addToCart}
 
   return (
     <div className="skuPage">
@@ -47,7 +49,7 @@ const ProductPage = ({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX
             <h3>{findProduct.unit}</h3>
           </hgroup>
           <p>{findProduct.description}</p>
-          <button onClick={addToCart}>
+          <button>
             <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24">
               <path
                 fill="hsl(0, 0%, 20%)"

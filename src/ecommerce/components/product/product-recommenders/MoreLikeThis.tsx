@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ProductType } from '../../../types/ProductType';
@@ -10,12 +9,6 @@ type MoreLikeThisType = {
 
 const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
   const filteredRecommenders = useProductFilter().filter((product) => product.sku !== findProduct.sku);
-  const [useRecommender, setUseRecommender] = useState<boolean>(false);
-
-  useEffect(() => {
-    window.scrollTo({ top: 30, behavior: 'smooth' });
-    setTimeout(() => setUseRecommender(false), 150);
-  }, [useRecommender]);
 
   return (
     <section className="recommenders" style={{ backgroundColor: 'transparent' }}>
@@ -25,7 +18,7 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
       <ul className="recommenders__unorderedList">
         {filteredRecommenders.splice(0, 8).map((product) => (
           <li key={uuidv4()} className="recommenders__unorderedList__item">
-            <Link to={`/ecommerce/product/${product.sku}`} onClick={() => setUseRecommender(true)}>
+            <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <article>
                 <picture>
                   <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />
