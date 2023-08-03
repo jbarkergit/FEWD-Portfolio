@@ -23,7 +23,7 @@ const MobileMenu = (): JSX.Element => {
               : slideContainerRef.current.setAttribute('data-activity', 'inactive')
           }
         >
-          <i className="fa-solid fa-bars"></i>
+          icon
         </button>
         <div className="mobileMenu__menu__slideContainer" data-activity="inactive" ref={slideContainerRef}>
           <div className="mobileMenu__menu__slideIn">
