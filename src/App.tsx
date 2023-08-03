@@ -11,8 +11,8 @@ const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
 
 //Ecommerce
 const Home = lazy(() => import('./ecommerce/pages/Home'));
-const BrowseProduct = lazy(() => import('./ecommerce/pages/BrowseProduct'));
-const ProductPage = lazy(() => import('./ecommerce/pages/ProductPage'));
+const ProductCatalog = lazy(() => import('./ecommerce/pages/ProductCatalog'));
+const ProductDetailPage = lazy(() => import('./ecommerce/pages/ProductDetailPage'));
 import { StateProvider } from './ecommerce/context/CategoryFilterContext';
 import { CartProvider } from './ecommerce/context/CartContext';
 
@@ -34,12 +34,12 @@ function App() {
               <Route path="*" element={<NotFound />} />
               <Route path="/" element={<Portfolio />} />
               <Route path="/ecommerce" element={<Home />} />
-              <Route path="/ecommerce/products" element={<BrowseProduct />} />
-              <Route path="/ecommerce/headphones" element={<BrowseProduct />} />
-              <Route path="/ecommerce/amps-dacs" element={<BrowseProduct />} />
-              <Route path="/ecommerce/microphones" element={<BrowseProduct />} />
-              <Route path="/ecommerce/interfaces" element={<BrowseProduct />} />
-              <Route path="/ecommerce/product/:paramId" element={<ProductPage />} />
+              <Route path="/ecommerce/products" element={<ProductCatalog />} />
+              <Route path="/ecommerce/headphones" element={<ProductCatalog />} />
+              <Route path="/ecommerce/amps-dacs" element={<ProductCatalog />} />
+              <Route path="/ecommerce/microphones" element={<ProductCatalog />} />
+              <Route path="/ecommerce/interfaces" element={<ProductCatalog />} />
+              <Route path="/ecommerce/product/:paramId" element={<ProductDetailPage />} />
             </Routes>
           </CartProvider>
         </StateProvider>
