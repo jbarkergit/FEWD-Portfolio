@@ -40,7 +40,7 @@
               position: absolute;
               inset: 0;
               border-radius: f.rem(26);
-              background-color: var(--elemBackgroundPrimary);
+              background-color: var(--gradientMono);
               opacity: 0.8;
             }
             & img {
@@ -48,7 +48,7 @@
               object-fit: scale-down;
               object-position: center bottom;
               mix-blend-mode: darken;
-              padding: f.rem(10) f.rem(15) 0 f.rem(15);
+              padding: f.rem(10) f.rem(15) 5% f.rem(15);
               @include m.photoFilters;
             }
           }
