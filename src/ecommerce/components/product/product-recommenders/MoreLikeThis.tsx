@@ -18,7 +18,7 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
       <ul className="recommenders__unorderedList">
         {filteredRecommenders.splice(0, 8).map((product) => (
           <li key={uuidv4()} className="recommenders__unorderedList__item">
-            <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0 })}>
               <article>
                 <picture>
                   <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />

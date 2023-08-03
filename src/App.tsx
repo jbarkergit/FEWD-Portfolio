@@ -1,6 +1,5 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Lenis from '@studio-freight/lenis';
 
 //Shared
 import SuspenseLoader from './shared/pages/SuspenseLoader';
@@ -16,15 +15,7 @@ const ProductDetailPage = lazy(() => import('./ecommerce/pages/ProductDetailPage
 import { StateProvider } from './ecommerce/context/CategoryFilterContext';
 import { CartProvider } from './ecommerce/context/CartContext';
 
-//Lenis Package
 function App() {
-  const lenis = new Lenis();
-  function raf(time: any) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
-
   return (
     <BrowserRouter>
       <Suspense fallback={SuspenseLoader()}>
