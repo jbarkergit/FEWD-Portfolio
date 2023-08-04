@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
@@ -37,7 +37,7 @@ const BrandFilter = (): JSX.Element => {
     };
   }, []);
 
-  const uniqueCompanies = [...new Set(ProductDatabase.map((product: ProductType) => product.company))].sort((a, b) => (a > b ? 1 : -1));
+  const uniqueCompanies = useMemo(() => [...new Set(ProductDatabase.map((product: ProductType) => product.company))].sort((a, b) => (a > b ? 1 : -1)), []);
 
   return (
     <div className="selectMenu">
