@@ -1,44 +1,57 @@
-import { memo } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef, Fragment } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import usePaginatedSets from '../../../hooks/usePaginatedSets';
 import { ProductType } from '../../../types/ProductType';
-import { addToCart } from '../../../hooks/useAddToCart';
+import { setArrayType } from '../../../types/SetArrayType';
+import ProductProp from './ProductProp';
+import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
-type ProductProviderType = {
-  product: ProductType;
-};
+const ProductProvider = () => {
+  // const { dispatch, REDUCER_ACTIONS } = useCart();
+  //dispatch={dispatch} REDUCER_ACTIONS={REDUCER_ACTIONS} //props
 
-const ProductProvider = memo(({ product }: ProductProviderType): JSX.Element => {
-  const { sku, stock, company, unit, description, price, category, wearStyle, productshowcase, images } = product;
+  const [fetchedSets, setFetchedSets] = useState<setArrayType[]>([]); //holds currently fetched sets for query
+  const paginatedSets: setArrayType[] = usePaginatedSets(); //localize custom hook import to bypass react warnings
+  //usePaginatedSets utilizes useProductFilter, which uses useState[categoryFilter] Context Hook to render appropriate product arrays
+
+  // @ts-ignore //categoryFilter is a single global state, which is used by useProductFilter -> rerenders ProductProvider Prop upon navigation
+  const { categoryFilter } = useCategoryFilterContext();
+
+  useEffect(() => setFetchedSets([paginatedSets[0]]), [categoryFilter]); //sets first product set from paginatedSets(usePaginatedSets Hook) as initState on nav
+  const lastProductRef = useRef<HTMLLIElement>(null); //ref for last rendered element for observer
+
+  useEffect(() => {
+    if (lastProductRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          //if last product is in the viewport, spread new set into fetchedSets state
+          if (entries[0].isIntersecting && fetchedSets) setFetchedSets((prevSets) => [...prevSets, paginatedSets[fetchedSets.length]]);
+        },
+        {
+          threshold: 0.5,
+        }
+      );
+      observer.observe(lastProductRef.current);
+      return () => {
+        if (lastProductRef.current) observer.unobserve(lastProductRef.current);
+      };
+    }
+  }, [lastProductRef, fetchedSets]);
+
   return (
-    <li key={sku}>
-      <article className="productGrid__product">
-        <Link to={`/ecommerce/product/${sku}`}>
-          <span className="productGrid__product--containedHover">
-            <picture>
-              <img src={images![0]} alt={unit} loading="lazy" decoding="async" fetchpriority="high" />
-            </picture>
-          </span>
-        </Link>
-        <div className="productGrid__product__information">
-          <Link to={`/ecommerce/product/${sku}`}>
-            <h2>
-              {company} {unit}
-            </h2>
-          </Link>
-          <p>{description}</p>
-          <button onClick={addToCart}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24">
-              <path
-                fill="hsl(0, 0%, 20%)"
-                d="M2.237 2.288a.75.75 0 1 0-.474 1.423l.265.089c.676.225 1.124.376 1.453.529c.312.145.447.262.533.382c.087.12.155.284.194.626c.041.361.042.833.042 1.546v2.672c0 1.367 0 2.47.117 3.337c.12.9.38 1.658.982 2.26c.601.602 1.36.86 2.26.981c.866.117 1.969.117 3.336.117H18a.75.75 0 0 0 0-1.5h-7c-1.435 0-2.436-.002-3.192-.103c-.733-.099-1.122-.28-1.399-.556c-.235-.235-.4-.551-.506-1.091h10.12c.959 0 1.438 0 1.814-.248c.376-.248.565-.688.943-1.57l.428-1c.81-1.89 1.215-2.834.77-3.508C19.533 6 18.506 6 16.45 6H5.745a8.996 8.996 0 0 0-.047-.833c-.055-.485-.176-.93-.467-1.333c-.291-.404-.675-.66-1.117-.865c-.417-.194-.946-.37-1.572-.58l-.305-.1ZM7.5 18a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3Zm9 0a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3Z"
-              ></path>
-            </svg>
-            {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(price)}
-          </button>
-        </div>
-      </article>
-    </li>
+    <ul className="productGrid">
+      {fetchedSets.length > 0 &&
+        fetchedSets.map((productSet: setArrayType) =>
+          productSet?.products.map((product: ProductType, index: number) => {
+            return (
+              <Fragment key={uuidv4()}>
+                <ProductProp product={product} />
+                {fetchedSets.length - 1 === index && fetchedSets[fetchedSets.length - 1] === productSet && <li key="lastProduct" ref={lastProductRef} />}
+              </Fragment>
+            );
+          })
+        )}
+    </ul>
   );
-});
-
+};
 export default ProductProvider;
