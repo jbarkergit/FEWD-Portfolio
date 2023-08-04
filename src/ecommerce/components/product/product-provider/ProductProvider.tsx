@@ -1,20 +1,16 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { ReducerAction, ReducerActionType } from '../../../context/CartContext';
 import { ProductType } from '../../../types/ProductType';
+import { addToCart } from '../../../hooks/useAddToCart';
 
-type addToCartType = {
+type ProductProviderType = {
   product: ProductType;
-  dispatch: React.Dispatch<ReducerAction>;
-  REDUCER_ACTIONS: ReducerActionType;
 };
 
-const ProductProvider = memo(({ product, dispatch, REDUCER_ACTIONS }: addToCartType): JSX.Element => {
-  const addToCart = () => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, stock: 1 } });
+const ProductProvider = memo(({ product }: ProductProviderType): JSX.Element => {
   const { sku, stock, company, unit, description, price, category, wearStyle, productshowcase, images } = product;
-
   return (
-    <li>
+    <li key={sku}>
       <article className="productGrid__product">
         <Link to={`/ecommerce/product/${sku}`}>
           <span className="productGrid__product--containedHover">
