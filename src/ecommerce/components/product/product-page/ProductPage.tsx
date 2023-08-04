@@ -1,25 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 import { ProductType } from '../../../types/ProductType';
-import { ReducerAction, ReducerActionType } from '../../../context/CartContext';
 import MoreLikeThis from '../product-recommenders/MoreLikeThis';
+import { addToCart } from '../../../hooks/useAddToCart';
 
-// type addToCartType = {
-//   product: ProductType;
-//   dispatch: React.Dispatch<ReducerAction>;
-//   REDUCER_ACTIONS: ReducerActionType;
-// };
-// { product, dispatch, REDUCER_ACTIONS }: addToCartType
 const ProductPage = (): JSX.Element => {
   const { paramId } = useParams() as { paramId: string };
   const findProduct = ProductDatabase.find((product: ProductType) => product.sku === paramId)!;
-
-  // const addToCart = () => {
-  //   const payload = { ...product, stock: 1 };
-  //   dispatch({ type: REDUCER_ACTIONS.ADD, payload });
-  // };
-
-  //onClick={addToCart}
 
   return (
     <div className="skuPage">
@@ -49,7 +36,7 @@ const ProductPage = (): JSX.Element => {
             <h3>{findProduct.unit}</h3>
           </hgroup>
           <p>{findProduct.description}</p>
-          <button>
+          <button onClick={addToCart}>
             <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24">
               <path
                 fill="hsl(0, 0%, 20%)"
