@@ -10,7 +10,7 @@ type StateContextType = {
 
 const CategoryFilterContext = createContext<StateContextType | undefined>(undefined); // GUARD: Throws intentional error for Application Context Provider
 
-export const StateProvider = ({ children }: ChildrenType): JSX.Element => {
+export const CategoryFilterProvider = ({ children }: ChildrenType): JSX.Element => {
   const [categoryFilter, setCategoryFilter] = useState<string | null>(categoryFilterSessionState);
 
   useEffect(() => {

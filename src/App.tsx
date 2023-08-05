@@ -12,14 +12,14 @@ const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
 const Home = lazy(() => import('./ecommerce/pages/Home'));
 const ProductCatalog = lazy(() => import('./ecommerce/pages/ProductCatalog'));
 const ProductDetailPage = lazy(() => import('./ecommerce/pages/ProductDetailPage'));
-import { StateProvider } from './ecommerce/context/CategoryFilterContext';
+import { CategoryFilterProvider } from './ecommerce/context/CategoryFilterContext';
 import { CartProvider } from './ecommerce/context/CartContext';
 
 function App() {
   return (
     <BrowserRouter>
       <Suspense fallback={SuspenseLoader()}>
-        <StateProvider>
+        <CategoryFilterProvider>
           <CartProvider>
             <Routes>
               <Route path="*" element={<NotFound />} />
@@ -33,7 +33,7 @@ function App() {
               <Route path="/ecommerce/product/:paramId" element={<ProductDetailPage />} />
             </Routes>
           </CartProvider>
-        </StateProvider>
+        </CategoryFilterProvider>
       </Suspense>
     </BrowserRouter>
   );

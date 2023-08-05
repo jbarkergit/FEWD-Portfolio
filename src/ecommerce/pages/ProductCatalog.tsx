@@ -1,6 +1,5 @@
 import Header from '../components/navigation/header/Header';
 import Footer from '../components/navigation/footer/eFooter';
-import { StateProvider } from '../context/CategoryFilterContext';
 import ProductFilters from '../components/features/product-filters/ProductFilters';
 import ProductProvider from '../components/product/product-provider/ProductProvider';
 
