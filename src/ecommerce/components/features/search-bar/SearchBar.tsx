@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 
 const SearchBar = (): JSX.Element => {
@@ -28,7 +27,13 @@ const SearchBar = (): JSX.Element => {
   }, []);
 
   return (
-    <div className="searchBar" ref={searchBarRef}>
+    <div
+      className="searchBar"
+      style={{
+        boxShadow: useLocation().pathname === '/ecommerce' ? 'none' : 'var(--shadowRefined)',
+      }}
+      ref={searchBarRef}
+    >
       <label className="searchBar__label" htmlFor="searchBar__input">
         Search
       </label>

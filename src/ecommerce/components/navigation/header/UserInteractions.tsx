@@ -14,7 +14,7 @@ const UserInteractions = (): JSX.Element => {
         className="ctaBtn"
         id="myAccountBtn"
         style={{
-          boxShadow: path ? 'none' : '-2px -3px 1px hsla(0, 0%, 100%, 0.4), 2px 3px 4px hsl(0, 0%, 78%)',
+          boxShadow: path ? 'none' : 'var(--shadowRefined)',
         }}
         onClick={() => {
           setEcoModalTab('account');
@@ -32,7 +32,7 @@ const UserInteractions = (): JSX.Element => {
       </button>
       <button
         className="ctaBtn"
-        style={{ border: 'none' }}
+        style={{ boxShadow: path ? 'none' : 'var(--shadowRefined)' }}
         onClick={() => {
           setEcoModalTab('shoppingCart');
         }}
