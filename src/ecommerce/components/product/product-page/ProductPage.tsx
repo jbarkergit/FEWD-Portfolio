@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 import { ProductType } from '../../../types/ProductType';
 import MoreLikeThis from '../product-recommenders/MoreLikeThis';
-import { addToCart } from '../../../hooks/useAddToCart';
+import { addToCart } from '../../../hooks/useCartMethods';
 
 const ProductPage = (): JSX.Element => {
   const { paramId } = useParams() as { paramId: string };

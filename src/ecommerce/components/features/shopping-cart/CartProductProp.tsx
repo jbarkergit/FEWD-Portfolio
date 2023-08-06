@@ -2,15 +2,13 @@ import { v4 as uuidv4 } from 'uuid';
 import useCart from '../../../hooks/useCart';
 
 const CartProducts = (): JSX.Element[] => {
-  const { cartQuantity, cart } = useCart();
+  const { dispatch, REDUCER_ACTIONS, shoppingCart, cartProductQuantity, cartProductSubtotal } = useCart();
 
-  return cart.map((product) => {
+  return shoppingCart.map((product) => {
     return (
       <li key={uuidv4()}>
         <article className="ecoModal__lineItem">
-          <picture>
-            <img src={product.images![0]} alt={product.unit} loading="lazy" decoding="async" fetchpriority="low" />
-          </picture>
+          <picture>{product.images ? <img src={product.images![0]} alt={product.unit} loading="lazy" decoding="async" fetchpriority="low" /> : null}</picture>
           <div className="ecoModal__lineItem__information">
             <hgroup>
               <h2>{`${product.company} ${product.unit} ${Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}`}</h2>
@@ -21,13 +19,11 @@ const CartProducts = (): JSX.Element[] => {
             </hgroup>
             <div className="ecoModal__lineItem__information__cart">
               <span className="ecoModal__lineItem__information__cart--totalText">Subtotal: </span>
-              <span className="ecoModal__lineItem__information__cart--subtotal">
-                {cartQuantity > 1 ? `${Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price * cartQuantity)}` : null}
-              </span>
+              <span className="ecoModal__lineItem__information__cart--subtotal">{cartProductQuantity > 1 ? `${cartProductSubtotal}` : null}</span>
               <div className="ecoModal__lineItem__information__cart__quantity">
-                <button>-</button>
-                <span>{cartQuantity}</span>
-                <button>+</button>
+                <button onClick={() => dispatch({ type: REDUCER_ACTIONS.REMOVE, payload: { ...product } })}>-</button>
+                <span>{cartProductQuantity}</span>
+                <button onClick={() => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, quantity: 1 } })}>+</button>
               </div>
             </div>
           </div>

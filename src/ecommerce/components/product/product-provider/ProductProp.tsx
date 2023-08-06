@@ -1,21 +1,20 @@
 import { Link } from 'react-router-dom';
 import { ProductType } from '../../../types/ProductType';
-import { addToCart } from '../../../hooks/useAddToCart';
+import useCart from '../../../hooks/useCart';
 
 type ProductPropType = {
   product: ProductType;
 };
 
 const ProductProp = ({ product }: ProductPropType): JSX.Element => {
-  const { sku, stock, company, unit, description, price, category, wearStyle, productshowcase, images } = product;
+  const { sku, company, unit, description, price, images } = product;
+  const { dispatch, REDUCER_ACTIONS } = useCart();
   return (
     <li key={product.sku}>
       <article className="productGrid__product">
         <Link to={`/ecommerce/product/${sku}`}>
           <span className="productGrid__product--containedHover">
-            <picture>
-              <img src={images![0]} alt={unit} loading="lazy" decoding="async" fetchpriority="high" />
-            </picture>
+            <picture>{images ? <img src={images![0]} alt={unit} loading="lazy" decoding="async" fetchpriority="high" /> : null}</picture>
           </span>
         </Link>
         <div className="productGrid__product__information">
@@ -25,7 +24,7 @@ const ProductProp = ({ product }: ProductPropType): JSX.Element => {
             </h2>
           </Link>
           <p>{description}</p>
-          <button onClick={addToCart}>
+          <button onClick={() => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, quantity: 1 } })}>
             <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24">
               <path
                 fill="hsl(0, 0%, 20%)"

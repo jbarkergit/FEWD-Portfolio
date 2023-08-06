@@ -1,39 +1,33 @@
 import { useEffect, useRef, useState } from 'react';
 import { useModalContext } from '../../../context/ModalContext';
 import useCart from '../../../hooks/useCart';
-import CartProducts from './CartProducts';
+import CartProductProp from './CartProductProp';
 import { Discover, Klarna, Mastercard, Paypal, Stripe, Visa } from '../../user-account/user-account-assets/PaymentMethodSVGS';
 
 const ShoppingCart = (): JSX.Element => {
   // @ts-ignore
-  const { ecoModalTab } = useModalContext(),
-    ecoModal = useRef<HTMLDivElement>(null);
+  const { ecoModalTab } = useModalContext();
+  const ecoModal = useRef<HTMLDivElement>(null);
+  const { shoppingCart, cartProductSubtotal, dispatch, REDUCER_ACTIONS } = useCart();
 
   useEffect(() => {
-    if (ecoModal.current)
-      ecoModalTab === 'shoppingCart' ? ecoModal.current.setAttribute('data-status', 'active') : ecoModal.current.setAttribute('data-status', 'false');
+    if (ecoModal.current) ecoModal.current.setAttribute('data-status', ecoModalTab ? 'active' : 'false');
   }, [ecoModalTab]);
-
-  const { cartSubtotal, cart, dispatch, REDUCER_ACTIONS } = useCart(),
-    [confirmation, setConfirmation] = useState<boolean>(false);
-
-  function submitOrder(): void {
-    dispatch({ type: REDUCER_ACTIONS.SUBMIT });
-    setConfirmation(true);
-  }
 
   return (
     <section className="ecoModalWrap">
       <div className="ecoModal" data-status="false" ref={ecoModal}>
         <div className="ecoModal__header">Shopping Cart</div>
-        <ul className="ecoModal__products">{cart.length > 0 ? <CartProducts /> : <>Your cart is empty.</>}</ul>
+        <ul className="ecoModal__products">{shoppingCart.length > 0 ? <CartProductProp /> : <>Your cart is empty.</>}</ul>
         <div className="ecoModal__productsGradient" />
         <div className="ecoModal__orderDetails">
           <div className="ecoModal__orderDetails--productTotal">
-            <span>{cart.length > 0 ? <>Subtotal: </> : null}</span>
-            <span>{cart.length > 0 ? <>{cartSubtotal}</> : null}</span>
+            <span>{shoppingCart.length > 0 ? <>Subtotal: </> : null}</span>
+            <span>{shoppingCart.length > 0 ? <>{cartProductSubtotal}</> : null}</span>
           </div>
-          <span className="ecoModal__orderDetails--checkoutBtn">{cart.length > 0 ? <button onClick={submitOrder}>{'Checkout'}</button> : null}</span>
+          <span className="ecoModal__orderDetails--checkoutBtn">
+            {shoppingCart.length > 0 ? <button onClick={() => dispatch({ type: REDUCER_ACTIONS.SUBMIT })}>{'Checkout'}</button> : null}
+          </span>
         </div>
         <div className="ecoModal__checkoutMethods">
           <div className="ecoModal__checkoutMethods__paymentProcessor">
