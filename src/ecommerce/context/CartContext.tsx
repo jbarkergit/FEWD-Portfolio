@@ -106,7 +106,7 @@ const initCartContextState: UseCartContextType = {
 };
 
 //create CartContext
-const CartContext = createContext<UseCartContextType>(initCartContextState);
+export const CartContext = createContext<UseCartContextType>(initCartContextState);
 
 //export CartContext Provider to pass required Shopping Cart data throughout application
 export const CartProvider = ({ children }: ChildrenType): ReactElement => {
