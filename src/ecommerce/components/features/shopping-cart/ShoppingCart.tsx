@@ -30,16 +30,14 @@ const ShoppingCart = (): JSX.Element => {
           <EmptyCart />
         )}
         <div className="ecoModal__orderDetails">
-          <button onClick={() => dispatch({ type: REDUCER_ACTIONS.SUBMIT })}>
-            <span>{shoppingCart.length > 0 ? <>Subtotal: {cartProductSubtotal}</> : null}</span>
-            <span>
-              {shoppingCart.length > 0 ? (
-                <>
-                  {'Secure Checkout with'} <Stripe />
-                </>
-              ) : null}
-            </span>
-          </button>
+          {shoppingCart.length > 0 ? (
+            <button onClick={() => dispatch({ type: REDUCER_ACTIONS.SUBMIT })}>
+              <span>Subtotal: {cartProductSubtotal}</span>
+              <span>
+                {'Secure Checkout with'} <Stripe />
+              </span>
+            </button>
+          ) : null}
         </div>
       </div>
     </section>
