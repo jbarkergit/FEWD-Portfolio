@@ -55,17 +55,17 @@ const cartReducer = (state: CartStateType, action: CartReducerAction): CartState
 
     case CART_REDUCER_ACTION_TYPE.ADD: {
       if (!action.payload) throw new Error('Action Payload may be void or undefined for Reducer Action Type ADD');
-      const { quantity, sku, company, unit, price, images } = action.payload;
-      const productExists: CartProductType | undefined = state.shoppingCart.find((product) => product.sku === sku);
-      const databaseProductStock: number | undefined = ProductDatabase.find((product) => product.sku === sku)?.stock;
+      const { quantity, sku, company, unit, price, images } = action.payload; //grab necessary data from CartProductType to send to our shopping cart
+      const productExists: CartProductType | undefined = state.shoppingCart.find((product) => product.sku === sku); //identifies products in cart to update (if in cart)
+      const databaseProductStock: number | undefined = ProductDatabase.find((product) => product.sku === sku)?.stock; //checks for product stock in database
 
       if (productExists === undefined && databaseProductStock && databaseProductStock > 0) {
-        const newItem = { quantity, sku, company, unit, price, images };
-        const updatedCart = [...state.shoppingCart, newItem];
-        return { ...state, shoppingCart: updatedCart };
+        const newItem = { quantity, sku, company, unit, price, images }; //destructure action.payload into new variable
+        const updatedCart = [...state.shoppingCart, newItem]; //if product is not in cart, create new array, push new product
+        return { ...state, shoppingCart: updatedCart }; //update shoppingCart with new array of products
       } else if (productExists && databaseProductStock && productExists.quantity < databaseProductStock) {
-        const updatedCart = state.shoppingCart.map((product) => (product.sku === sku ? { ...product, quantity: product.quantity + 1 } : product));
-        return { ...state, shoppingCart: updatedCart };
+        const updatedCart = state.shoppingCart.map((product) => (product.sku === sku ? { ...product, quantity: product.quantity + 1 } : product)); //if product is in cart
+        return { ...state, shoppingCart: updatedCart }; //update quantity
       } else return state;
     }
 
