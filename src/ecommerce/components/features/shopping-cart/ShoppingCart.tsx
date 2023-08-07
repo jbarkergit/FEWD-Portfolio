@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useModalContext } from '../../../context/ModalContext';
 import useCart from '../../../hooks/useCart';
-import CartProductProp from './CartProductProp';
+import CartProduct from './CartProduct';
 import { Discover, Klarna, Mastercard, Paypal, Stripe, Visa } from '../../user-account/user-account-assets/PaymentMethodSVGS';
 
 const ShoppingCart = (): JSX.Element => {
   // @ts-ignore
   const { ecoModalTab } = useModalContext();
   const ecoModal = useRef<HTMLDivElement>(null);
-  const { shoppingCart, cartProductSubtotal, dispatch, REDUCER_ACTIONS } = useCart();
+  const { dispatch, REDUCER_ACTIONS, shoppingCart, cartProductSubtotal } = useCart();
 
   useEffect(() => {
     if (ecoModal.current) ecoModal.current.setAttribute('data-status', ecoModalTab ? 'active' : 'false');
@@ -18,7 +18,7 @@ const ShoppingCart = (): JSX.Element => {
     <section className="ecoModalWrap">
       <div className="ecoModal" data-status="false" ref={ecoModal}>
         <div className="ecoModal__header">Shopping Cart</div>
-        <ul className="ecoModal__products">{shoppingCart.length > 0 ? <CartProductProp /> : <>Your cart is empty.</>}</ul>
+        <ul className="ecoModal__products">{shoppingCart.length > 0 ? <CartProduct /> : <>Your cart is empty.</>}</ul>
         <div className="ecoModal__productsGradient" />
         <div className="ecoModal__orderDetails">
           <div className="ecoModal__orderDetails--productTotal">

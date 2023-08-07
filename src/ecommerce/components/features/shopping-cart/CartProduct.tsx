@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 import useCart from '../../../hooks/useCart';
+import { CartProductType } from '../../../context/CartContext';
 
 const CartProducts = (): JSX.Element[] => {
-  const { dispatch, REDUCER_ACTIONS, shoppingCart, cartProductQuantity, cartProductSubtotal } = useCart();
-
-  return shoppingCart.map((product) => {
+  const { dispatch, REDUCER_ACTIONS, shoppingCart } = useCart();
+  return shoppingCart.map((product: CartProductType) => {
     return (
       <li key={uuidv4()}>
         <article className="ecoModal__lineItem">
@@ -17,14 +17,10 @@ const CartProducts = (): JSX.Element[] => {
               </h3>
               <h4>{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h4>
             </hgroup>
-            <div className="ecoModal__lineItem__information__cart">
-              <span className="ecoModal__lineItem__information__cart--totalText">Subtotal: </span>
-              <span className="ecoModal__lineItem__information__cart--subtotal">{cartProductQuantity > 1 ? `${cartProductSubtotal}` : null}</span>
-              <div className="ecoModal__lineItem__information__cart__quantity">
-                <button onClick={() => dispatch({ type: REDUCER_ACTIONS.REMOVE, payload: { ...product } })}>-</button>
-                <span>{cartProductQuantity}</span>
-                <button onClick={() => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, quantity: 1 } })}>+</button>
-              </div>
+            <div className="ecoModal__lineItem__information__quantity">
+              <button onClick={() => dispatch({ type: REDUCER_ACTIONS.REMOVE, payload: product })}>-</button>
+              <span>{product.quantity}</span>
+              <button onClick={() => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, quantity: 1 } })}>+</button>
             </div>
           </div>
         </article>
