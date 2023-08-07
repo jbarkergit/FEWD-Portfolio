@@ -24,11 +24,11 @@
           font-size: clamp(f.rem(14), f.rem(14) + 1vw, f.rem(18));
         }
       }
-      &__buttons {
+      &__nav {
         display: flex;
         flex-direction: column;
         gap: f.rem(10);
-        & button {
+        & a {
           @include m.ecoBtn;
           @include m.ecoBtnDark;
         }
