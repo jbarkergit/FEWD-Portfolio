@@ -11,58 +11,68 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: f.rem(25);
     width: 100%;
-    height: 80%;
-    padding: f.rem(15) 0 f.rem(200) 0;
-    overflow-y: scroll;
-  }
-  &__productsGradient {
-    position: absolute;
-    bottom: f.rem(143);
-    left: 0;
-    width: 90%;
-    height: 10%;
-    z-index: 12;
-    background: linear-gradient(0deg, rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 1) 10%, rgba(245, 245, 245, 0) 100%);
+    height: 86%;
+    padding: f.rem(15) 0;
+    overflow-y: hidden;
+    &__emptyCart {
+      display: flex;
+      flex-direction: column;
+      &__header {
+        margin-bottom: 6%;
+        & span {
+          font-size: clamp(f.rem(14), f.rem(14) + 1vw, f.rem(18));
+        }
+      }
+      &__buttons {
+        display: flex;
+        flex-direction: column;
+        gap: f.rem(10);
+        & button {
+          @include m.ecoBtn;
+          @include m.ecoBtnDark;
+        }
+      }
+    }
   }
   &__lineItem {
     display: flex;
-    max-height: f.rem(200);
+    max-height: f.rem(165);
     & picture {
       position: relative;
       width: 45%;
+      height: inherit;
       z-index: 3;
-      border-radius: f.rem(26);
-      box-shadow: -1px -1px 20px 0px #fff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
-      @include m.productPhoto;
       & img {
         max-height: inherit;
         object-fit: scale-down;
         mix-blend-mode: darken;
-        padding: f.rem(10) f.rem(10) f.rem(0) f.rem(10);
-        @include m.photoFilters;
       }
     }
     &__information {
       position: relative;
       display: flex;
       flex-direction: column;
-      padding-left: 5%;
+      gap: 8%;
       width: 55%;
+      padding: 6% 2.5% 0% 2.5%;
       & hgroup {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         & h2 {
           display: none;
         }
         & h3 {
-          font-weight: 600;
-          font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
+          font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
+          font-weight: 500;
+          line-height: 125%;
+          margin-bottom: 2%;
         }
         & h4 {
+          font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
           font-weight: 400;
-          font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
+          margin-bottom: 4%;
         }
       }
       &__quantity {
@@ -71,10 +81,13 @@
         width: fit-content;
         border-radius: f.rem(6);
         font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
-        background: hsl(0, 0%, 20%);
+        font-weight: 500;
+        @include m.ecoBtnDark;
         & button,
         & span {
-          padding: f.rem(6) f.rem(13);
+          display: grid;
+          place-items: center;
+          padding: f.rem(6) f.rem(12);
           color: var(--fontSecondary);
         }
         & button {
@@ -92,52 +105,41 @@
       }
     }
   }
-  &__orderDetails,
-  &__checkoutMethods {
-    height: 4%;
-    padding: 0 f.rem(30) 0 f.rem(10);
-  }
   &__orderDetails {
     display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: 10%;
-    &--productTotal {
-      display: flex;
-      flex-direction: column;
-      width: 50%;
-      font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
-      & span:nth-of-type(1) {
-        font-weight: 600;
+    height: 8%;
+    & button {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 1fr;
+      gap: 2%;
+      width: 100%;
+      max-height: f.rem(45);
+      padding: f.rem(12) f.rem(12);
+      border-radius: f.rem(6);
+      font-size: f.rem(13);
+      font-weight: 600;
+      letter-spacing: f.rem(0.5);
+      text-transform: uppercase;
+      white-space: nowrap;
+      @include m.ecoBtnDark;
+      & span {
+        display: flex;
+        align-items: center;
       }
-      & span:nth-of-type(2) {
-        font-weight: 500;
+      & span:first-child {
+        justify-content: flex-start;
       }
-    }
-    &--checkoutBtn {
-      display: flex;
-      justify-content: flex-end;
-      width: 50%;
-      & button {
-        text-transform: capitalize;
-        font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
-        font-weight: 800;
-        color: hsl(0, 0%, 27%);
+      & span:last-child {
+        justify-content: flex-end;
+        gap: 2.5%;
+        & svg {
+          font-size: f.rem(20);
+        }
       }
-    }
-  }
-  &__checkoutMethods {
-    display: flex;
-    width: 100%;
-    &__paymentProcessor {
-      display: flex;
-      gap: f.rem(12);
-      width: 25%;
-    }
-    &__paymentMethods {
-      display: flex;
-      justify-content: flex-end;
-      gap: f.rem(12);
-      width: 75%;
     }
   }
 }

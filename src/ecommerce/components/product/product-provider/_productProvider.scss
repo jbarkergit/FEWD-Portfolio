@@ -25,25 +25,10 @@
     place-items: center;
     gap: f.rem(40) f.rem(50);
   }
-  // &__cartQuantity {
-  //   position: absolute;
-  //   top: 3.5%;
-  //   left: 5%;
-  //   display: grid;
-  //   place-items: center;
-  //   z-index: 3;
-  //   pointer-events: none;
-  //   width: f.rem(50);
-  //   aspect-ratio: 1/1;
-  //   border-radius: 50%;
-  //   background-color: var(--elemBackgroundPrimary);
-  //   box-shadow: inset 0.3rem 0.3rem 0.6rem hsl(223, 10%, 71%), -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%);
-  // }
   &__product {
     position: relative;
     height: 100%;
     aspect-ratio: 4/5;
-    border: 3px solid hsl(0, 0%, 93%);
     border-radius: f.rem(26);
     box-shadow: var(--shadowSoft);
     transition: 0.55s ease-in-out;

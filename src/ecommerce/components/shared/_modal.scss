@@ -21,10 +21,9 @@
   max-width: f.rem(480);
   height: 80vh;
   z-index: 11;
-  padding: f.rem(35) f.rem(30);
-  border-radius: f.rem(32);
-  background-color: var(--bodyBackground);
-  background: var(--gradientMono);
+  padding: 2% 2% 1% 2%;
+  border-radius: f.rem(24);
+  background-color: var(--elemBackgroundPrimary);
   pointer-events: all;
   transform: translateX(25%);
   transition: height 250ms ease-in-out, transform 250ms ease-out, opacity 250ms ease-out;
