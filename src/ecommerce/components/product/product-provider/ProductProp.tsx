@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ProductType } from '../../../types/ProductType';
 import useCart from '../../../hooks/useCart';
+import { useEffect } from 'react';
 
 type ProductPropType = {
   product: ProductType;
@@ -8,7 +9,13 @@ type ProductPropType = {
 
 const ProductProp = ({ product }: ProductPropType): JSX.Element => {
   const { sku, company, unit, description, price, images } = product;
-  const { dispatch, REDUCER_ACTIONS } = useCart();
+  const { dispatch, REDUCER_ACTIONS, shoppingCart, cartProductQuantity } = useCart();
+
+  //set Shopping Cart array of products in local Storage
+  useEffect(() => {
+    localStorage.setItem('shoppingCartState', JSON.stringify(shoppingCart));
+  }, [cartProductQuantity]);
+
   return (
     <li key={product.sku}>
       <article className="productGrid__product">

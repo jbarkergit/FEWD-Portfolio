@@ -1,8 +1,6 @@
 import { ReactElement, createContext, useMemo, useReducer } from 'react';
 import { ChildrenType } from '../types/ChildrenType';
-import ShoppingCart from '../components/features/shopping-cart/ShoppingCart';
 import { ProductDatabase } from '../assets/production-data/ProductDatabase';
-import { ProductType } from '../types/ProductType';
 
 //define type for product in shopping cart
 export type CartProductType = {
@@ -19,8 +17,11 @@ type CartStateType = {
   shoppingCart: CartProductType[];
 };
 
-//initialize cart with an empty array
-const initCartState: CartStateType = { shoppingCart: [] };
+//grab Shopping Cart array from local Storage
+const shoppingCartState = JSON.parse(localStorage.getItem('shoppingCartState') || '[]');
+
+//initialize cart with local Storage Shopping Cart array
+const initCartState: CartStateType = { shoppingCart: shoppingCartState };
 
 //define reducer action type
 const CART_REDUCER_ACTION_TYPE = {

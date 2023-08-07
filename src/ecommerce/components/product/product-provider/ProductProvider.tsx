@@ -7,9 +7,6 @@ import ProductProp from './ProductProp';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 const ProductProvider = () => {
-  // const { dispatch, REDUCER_ACTIONS } = useCart();
-  //dispatch={dispatch} REDUCER_ACTIONS={REDUCER_ACTIONS} //props
-
   const [fetchedSets, setFetchedSets] = useState<setArrayType[]>([]); //holds currently fetched sets for query
   const paginatedSets: setArrayType[] = usePaginatedSets(); //localize custom hook import to bypass react warnings
   //usePaginatedSets utilizes useProductFilter, which uses useState[categoryFilter] Context Hook to render appropriate product arrays
