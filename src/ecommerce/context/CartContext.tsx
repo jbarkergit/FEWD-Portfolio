@@ -61,17 +61,10 @@ const cartReducer = (state: CartStateType, action: CartReducerAction): CartState
     case CART_REDUCER_ACTION_TYPE.REMOVE: {
       if (!action.payload) throw new Error('Action Payload may be void or undefined for Reducer Action Type REMOVE');
       const { sku } = action.payload; //grab necessary data from CartProductType to send to our shopping cart
-      const indexOfProductToRemove: number = state.shoppingCart.findIndex((product) => product.sku === sku); //grabs index of requested sku in shopping cart
-      const cartLineItem = state.shoppingCart[indexOfProductToRemove];
 
-      if (cartLineItem.quantity <= 1) {
-        //removes product sku from cart if quantity <=1
-        return { ...state, shoppingCart: state.shoppingCart.filter((product) => product.sku !== sku) };
-      } else {
-        //decrement product sku quantity by 1 if >1
-        const decrementedCart = state.shoppingCart.map((product) => (product.sku === sku ? { ...product, quantity: product.quantity - 1 } : product));
-        return { ...state, shoppingCart: decrementedCart };
-      }
+      if (state.shoppingCart[state.shoppingCart.findIndex((product) => product.sku === sku)].quantity <= 1)
+        return { ...state, shoppingCart: state.shoppingCart.filter((product) => product.sku !== sku) }; //removes product sku from cart if quantity <=1
+      else return { ...state, shoppingCart: state.shoppingCart.map((product) => (product.sku === sku ? { ...product, quantity: product.quantity - 1 } : product)) }; //decrement
     }
     case CART_REDUCER_ACTION_TYPE.SUBMIT: {
       return { ...state, shoppingCart: [] }; //handle submission logic -> returning an empty array until I'm ready to handle a payment gateway/processor
