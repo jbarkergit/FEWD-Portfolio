@@ -1,6 +1,8 @@
 import { ReactElement, createContext, useMemo, useReducer } from 'react';
 import { ChildrenType } from '../types/ChildrenType';
 import ShoppingCart from '../components/features/shopping-cart/ShoppingCart';
+import { ProductDatabase } from '../assets/production-data/ProductDatabase';
+import { ProductType } from '../types/ProductType';
 
 //define type for product in shopping cart
 export type CartProductType = {
@@ -43,32 +45,44 @@ const cartReducer = (state: CartStateType, action: CartReducerAction): CartState
     case CART_REDUCER_ACTION_TYPE.QUANTITY: {
       if (!action.payload) throw new Error('Action Payload may be void or undefined for Reducer Action Type QUANTITY');
       const { sku, quantity } = action.payload; //grab necessary data from CartProductType to send to our shopping cart
-      const itemExists: CartProductType | undefined = state.shoppingCart.find((product) => product.sku === sku); //identify which product to update, if it exists
+      const productExists: CartProductType | undefined = state.shoppingCart.find((product) => product.sku === sku); //identify which product to update, if it exists
 
-      if (!itemExists) throw new Error('Product SKU may be void or undefined: Reducer Action Type QUANTITY Failure');
-      const updatedProduct: CartProductType = { ...itemExists, quantity };
+      if (!productExists) throw new Error('Product SKU may be void or undefined: Reducer Action Type QUANTITY Failure');
+      const updatedProduct: CartProductType = { ...productExists, quantity };
       const filteredCart: CartProductType[] = state.shoppingCart.filter((product) => product.sku !== sku); //identify which products in the shopping cart we are not updating
       return { ...state, shoppingCart: [...filteredCart, updatedProduct] }; //spread array of products into shopping cart, updates quantity for specified product
     }
+
     case CART_REDUCER_ACTION_TYPE.ADD: {
       if (!action.payload) throw new Error('Action Payload may be void or undefined for Reducer Action Type ADD');
-      const { sku, company, unit, price, images } = action.payload; //grab necessary data from CartProductType to send to our shopping cart
-      const filteredCart: CartProductType[] = state.shoppingCart.filter((product) => product.sku !== sku); //identify which products in the shopping cart we are not updating
-      const itemExists: CartProductType | undefined = state.shoppingCart.find((product) => product.sku === sku); //identify which product to update, if it exists
-      const quantity: number = itemExists ? itemExists.quantity + 1 : 1; //if product exists, add one to current quantity, otherwise add one
-      return { ...state, shoppingCart: [...filteredCart, { quantity, sku, company, unit, price, images }] }; //spread array of products into shopping cart with quantity & data
+      const { quantity, sku, company, unit, price, images } = action.payload;
+      const productExists: CartProductType | undefined = state.shoppingCart.find((product) => product.sku === sku);
+      const databaseProductStock: number | undefined = ProductDatabase.find((product) => product.sku === sku)?.stock;
+
+      if (productExists === undefined && databaseProductStock && databaseProductStock > 0) {
+        const newItem = { quantity, sku, company, unit, price, images };
+        const updatedCart = [...state.shoppingCart, newItem];
+        return { ...state, shoppingCart: updatedCart };
+      } else if (productExists && databaseProductStock && productExists.quantity < databaseProductStock) {
+        const updatedCart = state.shoppingCart.map((product) => (product.sku === sku ? { ...product, quantity: product.quantity + 1 } : product));
+        return { ...state, shoppingCart: updatedCart };
+      } else return state;
     }
+
     case CART_REDUCER_ACTION_TYPE.REMOVE: {
       if (!action.payload) throw new Error('Action Payload may be void or undefined for Reducer Action Type REMOVE');
       const { sku } = action.payload; //grab necessary data from CartProductType to send to our shopping cart
+      const cartProductIndex: number = state.shoppingCart.findIndex((product) => product.sku === sku);
 
-      if (state.shoppingCart[state.shoppingCart.findIndex((product) => product.sku === sku)].quantity <= 1)
+      if (state.shoppingCart[cartProductIndex].quantity <= 1) {
         return { ...state, shoppingCart: state.shoppingCart.filter((product) => product.sku !== sku) }; //removes product sku from cart if quantity <=1
-      else return { ...state, shoppingCart: state.shoppingCart.map((product) => (product.sku === sku ? { ...product, quantity: product.quantity - 1 } : product)) }; //decrement
+      } else
+        return { ...state, shoppingCart: state.shoppingCart.map((product) => (product.sku === sku ? { ...product, quantity: product.quantity - 1 } : product)) }; //decrement
     }
     case CART_REDUCER_ACTION_TYPE.SUBMIT: {
       return { ...state, shoppingCart: [] }; //handle submission logic -> returning an empty array until I'm ready to handle a payment gateway/processor
     }
+
     default:
       throw new Error('Reducer Action Type may be unidentified');
   }
