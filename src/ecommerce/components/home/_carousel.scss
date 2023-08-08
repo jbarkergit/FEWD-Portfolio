@@ -43,7 +43,6 @@
       & img {
         border-radius: f.rem(26);
         object-fit: cover;
-        @include m.photoFilters;
       }
     }
     & a {

@@ -83,7 +83,6 @@
           object-position: center bottom;
           mix-blend-mode: darken;
           padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
-          @include m.photoFilters;
         }
       }
       & aside {

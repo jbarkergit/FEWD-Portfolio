@@ -51,7 +51,6 @@
       padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
       object-fit: scale-down;
       mix-blend-mode: darken;
-      @include m.photoFilters;
     }
   }
   &__nav {
@@ -123,7 +122,6 @@
       padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
       object-fit: scale-down;
       mix-blend-mode: darken;
-      @include m.photoFilters;
     }
   }
 }

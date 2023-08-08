@@ -94,9 +94,6 @@
     transform: scale(1.2);
   }
 }
-@mixin photoFilters {
-  filter: contrast(103%) drop-shadow(0.25rem 0.2rem 1rem hsl(0, 0%, 97%));
-}
 
 // @mixin formField {
 //   background-color: hsl(197, 100%, 99%);
