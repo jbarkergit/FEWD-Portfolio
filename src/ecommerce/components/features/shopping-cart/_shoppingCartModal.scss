@@ -21,7 +21,8 @@
       &__header {
         margin-bottom: 6%;
         & span {
-          font-size: clamp(f.rem(14), f.rem(14) + 1vw, f.rem(18));
+          font-size: clamp(f.rem(14), f.rem(14) + 1vw, f.rem(17));
+          font-weight: 500;
         }
       }
       &__nav {
