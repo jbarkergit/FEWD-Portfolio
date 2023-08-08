@@ -37,11 +37,13 @@
   }
   &__lineItem {
     display: flex;
-    max-height: f.rem(165);
+    height: 100%;
+    max-height: calc((80vh - 14%) / 4);
+    margin-bottom: 5%;
     & picture {
       position: relative;
       width: 45%;
-      height: inherit;
+      height: 100%;
       z-index: 3;
       & img {
         max-height: inherit;
@@ -55,7 +57,8 @@
       flex-direction: column;
       gap: 8%;
       width: 55%;
-      padding: 6% 2.5% 0% 2.5%;
+      height: fit-content;
+      padding-left: 2%;
       & hgroup {
         display: flex;
         flex-direction: column;
