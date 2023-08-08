@@ -14,6 +14,9 @@
     font-weight: 800;
     line-height: 115%;
     text-transform: uppercase;
+    & span {
+      padding-left: 0.6%;
+    }
   }
   &__unorderedList {
     position: relative;
@@ -22,56 +25,54 @@
     grid-template-rows: 1fr;
     gap: f.rem(25);
     max-width: f.rem(1600);
-    &__item {
-      & a {
-        & article {
-          position: relative;
-          aspect-ratio: 0.8/1;
+    &__item a article {
+      position: relative;
+      aspect-ratio: 0.8/1;
+      border-radius: f.rem(26);
+      overflow: hidden;
+      box-shadow: -1px -1px 20px 0px #ececec, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+      & picture {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        z-index: 3;
+        border-radius: f.rem(26);
+        @include m.productPhoto;
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0;
           border-radius: f.rem(26);
-          overflow: hidden;
-          box-shadow: -1px -1px 20px 0px #ececec, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
-          & picture {
-            position: relative;
-            z-index: 3;
-            border-radius: f.rem(26);
-            @include m.productPhoto;
-            &::before {
-              content: '';
-              position: absolute;
-              inset: 0;
-              border-radius: f.rem(26);
-              background-color: var(--gradientMono);
-              opacity: 0.8;
-            }
-            & img {
-              max-height: inherit;
-              object-fit: scale-down;
-              object-position: center bottom;
-              mix-blend-mode: darken;
-              padding: f.rem(10) f.rem(15) 5% f.rem(15);
-            }
-          }
-          & hgroup {
-            position: absolute;
-            inset: -65% 0 0 0;
-            margin: auto;
-            width: max-content;
-            max-width: 22ch;
-            height: fit-content;
-            z-index: 4;
-            pointer-events: none;
-            & h2 {
-              font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(36));
-              font-weight: 700;
-            }
-            & h3 {
-              font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
-              font-weight: 500;
-            }
-            & h4 {
-              font-weight: 500;
-            }
-          }
+          background-color: var(--gradientMono);
+          opacity: 0.8;
+        }
+        & img {
+          max-height: 68%;
+          object-fit: scale-down;
+          object-position: center bottom;
+          mix-blend-mode: darken;
+          padding: 0 1% 0 1%;
+        }
+      }
+      & hgroup {
+        position: absolute;
+        inset: -65% 0 0 0;
+        margin: auto;
+        width: max-content;
+        max-width: 22ch;
+        height: fit-content;
+        z-index: 4;
+        pointer-events: none;
+        & h2 {
+          font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(36));
+          font-weight: 700;
+        }
+        & h3 {
+          font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
+          font-weight: 500;
+        }
+        & h4 {
+          font-weight: 500;
         }
       }
     }
