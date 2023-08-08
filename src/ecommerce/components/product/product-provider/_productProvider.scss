@@ -70,7 +70,6 @@
       border-bottom-left-radius: f.rem(26);
       border-bottom-right-radius: f.rem(26);
       background-color: var(--elemBackgroundPrimary);
-      background: var(--gradientMono);
       & h2,
       h3 {
         width: inherit;
@@ -128,7 +127,7 @@
       gap: f.rem(5);
       width: 100%;
       @include m.ecoBtn;
-      @include m.ecoBtnLight;
+      @include m.ecoBtnDark;
       font-size: clamp(f.rem(12), f.rem(6) + 1vw, f.rem(14));
       font-weight: 500;
       letter-spacing: var(--navigationLetterSpacing);
