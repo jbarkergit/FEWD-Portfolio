@@ -53,7 +53,7 @@ const ProductHighlight = (): JSX.Element => {
       <ul>
         {ProductDatabase.filter((product: ProductType) => product.productshowcase === true).map((product: ProductType) => (
           <li key={uuidv4()}>
-            <Link to={`/ecommerce/product/${product.sku}`}>
+            <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0 })}>
               <article>
                 <picture ref={addToRefs}>
                   <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />
