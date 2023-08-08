@@ -1,6 +1,6 @@
 @use '../sass/util/functions' as f;
 
-[data-theme='eco-light-mode'] {
+:root {
   --bodyBackground: hsl(0, 0%, 96%);
   --elemBackgroundPrimary: hsl(0, 0%, 100%);
   --elemBackgroundSecondary: hsl(0, 0%, 20%);

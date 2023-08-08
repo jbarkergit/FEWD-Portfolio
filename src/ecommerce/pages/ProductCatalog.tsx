@@ -5,7 +5,7 @@ import ProductProvider from '../components/product/product-provider/ProductProvi
 
 const ProductCatalog = (): JSX.Element => {
   return (
-    <div data-theme="eco-light-mode">
+    <>
       <Header />
       <section className="browseProduct">
         <ProductFilters />
@@ -14,7 +14,7 @@ const ProductCatalog = (): JSX.Element => {
         </main>
       </section>
       <Footer />
-    </div>
+    </>
   );
 };
 
