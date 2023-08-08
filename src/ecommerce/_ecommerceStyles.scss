@@ -1,15 +1,5 @@
 @use '../sass/util/functions' as f;
 
-// [data-theme='eco-dark-mode'] {
-//   --bodyBackground: hsl(0, 0%, 20%);
-//   --elemBackgroundPrimary: hsl(0, 0%, 20%);
-//   --elemBackgroundSecondary: hsl(0, 0%, 100%);
-//   --fontPrimary: hsl(0, 0%, 100%);
-//   --fontSecondary: hsl(0, 0%, 20%);
-//   --fontAccent: #fff;
-//   // --textShadow: 2px 2px 5px hsl(225, 4%, 25%);
-// }
-
 [data-theme='eco-light-mode'] {
   --bodyBackground: hsl(0, 0%, 96%);
   --elemBackgroundPrimary: hsl(0, 0%, 100%);
