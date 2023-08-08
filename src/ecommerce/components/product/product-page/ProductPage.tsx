@@ -2,11 +2,12 @@ import { useParams } from 'react-router-dom';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 import { ProductType } from '../../../types/ProductType';
 import MoreLikeThis from '../product-recommenders/MoreLikeThis';
-import { addToCart } from '../../../hooks/useCartMethods';
+import useCart from '../../../hooks/useCart';
 
 const ProductPage = (): JSX.Element => {
   const { paramId } = useParams() as { paramId: string };
   const findProduct = ProductDatabase.find((product: ProductType) => product.sku === paramId)!;
+  const { REDUCER_ACTIONS, dispatch } = useCart();
 
   return (
     <div className="skuPage">
@@ -36,7 +37,7 @@ const ProductPage = (): JSX.Element => {
             <h3>{findProduct.unit}</h3>
           </hgroup>
           <p>{findProduct.description}</p>
-          <button onClick={addToCart}>
+          <button onClick={() => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...findProduct, quantity: 1 } })}>
             <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24">
               <path
                 fill="hsl(0, 0%, 20%)"
