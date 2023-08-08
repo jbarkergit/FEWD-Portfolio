@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    margin: 2.5% 5% 2% 0;
+    margin: 2.5% 5% f.rem(50) 0;
     color: var(--textPrimary);
     font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
     font-weight: 800;
@@ -23,14 +23,14 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
-    gap: f.rem(25);
+    gap: f.rem(35);
     max-width: f.rem(1600);
     &__item a article {
       position: relative;
       aspect-ratio: 0.8/1;
       border-radius: f.rem(26);
       overflow: hidden;
-      box-shadow: -1px -1px 20px 0px #ececec, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+      box-shadow: -1px -1px 20px 0px #ffffff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
       & picture {
         position: relative;
         display: flex;
@@ -51,7 +51,7 @@
           object-fit: scale-down;
           object-position: center bottom;
           mix-blend-mode: darken;
-          padding: 0 1% 0 1%;
+          padding: 3% 1% 10% 1%;
         }
       }
       & hgroup {

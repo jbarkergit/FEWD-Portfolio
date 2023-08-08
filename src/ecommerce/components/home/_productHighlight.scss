@@ -22,7 +22,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
-    gap: f.rem(25);
+    gap: f.rem(35);
     max-width: f.rem(1600);
     & li a article {
       position: relative;
