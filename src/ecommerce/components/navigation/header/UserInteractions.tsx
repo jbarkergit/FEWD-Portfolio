@@ -4,7 +4,7 @@ import { useModalContext } from '../../../context/ModalContext';
 
 const UserInteractions = (): JSX.Element => {
   // @ts-ignore
-  const { setEcoModalTab } = useModalContext();
+  const { ecoModalTab, setEcoModalTab } = useModalContext();
   const path = useLocation().pathname === '/ecommerce';
 
   return (
@@ -16,9 +16,7 @@ const UserInteractions = (): JSX.Element => {
         style={{
           boxShadow: path ? 'none' : 'var(--shadowRefined)',
         }}
-        onClick={() => {
-          setEcoModalTab('account');
-        }}
+        onClick={() => setEcoModalTab(ecoModalTab === '' || ecoModalTab === 'shoppingCart' ? 'userLogin' : '')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24">
           <path
@@ -33,9 +31,7 @@ const UserInteractions = (): JSX.Element => {
       <button
         className="ctaBtn"
         style={{ boxShadow: path ? 'none' : 'var(--shadowRefined)' }}
-        onClick={() => {
-          setEcoModalTab('shoppingCart');
-        }}
+        onClick={() => setEcoModalTab(ecoModalTab === '' || ecoModalTab === 'userLogin' ? 'shoppingCart' : '')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="1.6em" height="1.6em" viewBox="0 0 24 24">
           <path

@@ -1,25 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
-import { useModalContext } from '../../../context/ModalContext';
 import { Apple, Google, LinkedIn } from '../user-account-assets/SignInViaSVGS';
 
-const UserLoginModal = (): JSX.Element => {
-  //@ts-ignore
-  const { ecoModalTab } = useModalContext(),
-    ecoModal = useRef<HTMLFormElement>(null);
+type PropType = {
+  dataStatus: string;
+};
+
+function handleSubmit() {}
+
+const UserLoginModal = ({ dataStatus }: PropType): JSX.Element => {
+  const userLoginModal = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (ecoModal.current) ecoModalTab === 'account' ? ecoModal.current.setAttribute('data-status', 'active') : ecoModal.current.setAttribute('data-status', 'false');
-  }, [ecoModalTab]);
+    if (userLoginModal.current) userLoginModal.current?.setAttribute('data-status', dataStatus === 'userLogin' ? 'active' : 'false');
+  }, [dataStatus]);
 
   const [emailAddress, setEmailAddress] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [userSignedIn, setUserSignedIn] = useState<boolean>(false);
 
-  function handleSubmit() {}
-
   return (
     <section className="ecoModalWrap">
-      <form className="ecoModal accountModal" onSubmit={handleSubmit} data-status="false" ref={ecoModal}>
+      <form className="ecoModal accountModal" onSubmit={handleSubmit} data-status="false" ref={userLoginModal}>
         <legend className="ecoModal__heading">
           <h2>Account</h2>
         </legend>

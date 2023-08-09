@@ -1,26 +1,25 @@
-import { useEffect, useRef } from 'react';
-import { useModalContext } from '../../../context/ModalContext';
 import useCart from '../../../hooks/useCart';
 import CartProduct from './CartProduct';
 import EmptyCart from './EmptyCart';
 import { Stripe } from '../../user-account/user-account-assets/PaymentMethodSVGS';
+import { useEffect, useRef } from 'react';
 
-const ShoppingCart = (): JSX.Element => {
-  // @ts-ignore
-  const { ecoModalTab } = useModalContext();
-  const ecoModal = useRef<HTMLDivElement>(null);
+type PropType = {
+  dataStatus: string;
+};
+
+const ShoppingCart = ({ dataStatus }: PropType): JSX.Element => {
   const { dispatch, REDUCER_ACTIONS, shoppingCart, cartProductSubtotal, cartProductQuantity } = useCart();
 
+  const shoppingCartModal = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (ecoModal.current) {
-      ecoModal.current.setAttribute('data-status', ecoModalTab ? 'active' : 'false');
-      ecoModalTab ? ecoModal.current.focus() : null;
-    }
-  }, [ecoModalTab]);
+    if (shoppingCartModal.current) shoppingCartModal.current?.setAttribute('data-status', dataStatus === 'shoppingCart' ? 'active' : 'false');
+  }, [dataStatus]);
 
   return (
     <section className="ecoModalWrap">
-      <div className="ecoModal" data-status="false" ref={ecoModal}>
+      <div className="ecoModal" data-status="false" ref={shoppingCartModal}>
         <div className="ecoModal__header">{cartProductQuantity > 0 ? <>{`Shopping Cart (${cartProductQuantity})`}</> : <>{'Shopping Cart'}</>}</div>
         {shoppingCart.length > 0 ? (
           <ul className="ecoModal__products">

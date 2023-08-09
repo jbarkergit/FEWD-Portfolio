@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { ChildrenType } from '../types/ChildrenType';
 
 type StateContextType = {
@@ -10,11 +10,6 @@ const ModalContext = createContext<StateContextType | undefined>(undefined); // 
 
 export const ModalProvider = ({ children }: ChildrenType): JSX.Element => {
   const [ecoModalTab, setEcoModalTab] = useState<string | null>('');
-
-  useEffect(() => {
-    sessionStorage.setItem('modalState', JSON.stringify(ecoModalTab));
-  }, [ecoModalTab]);
-
   return <ModalContext.Provider value={{ ecoModalTab, setEcoModalTab }}>{children}</ModalContext.Provider>;
 };
 

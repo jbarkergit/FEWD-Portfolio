@@ -6,13 +6,16 @@ import UserRegisterModal from '../../user-account/user-account-register/UserRegi
 const ConditionallyRenderedModals = (): JSX.Element | undefined => {
   // @ts-ignore
   const { ecoModalTab } = useModalContext();
+
   switch (ecoModalTab) {
     case 'shoppingCart':
-      return <ShoppingCart />;
-    case 'account':
-      return <UserLoginModal />;
-    case 'register':
-      return <UserRegisterModal />;
+      return <ShoppingCart dataStatus={ecoModalTab} />;
+    case 'userLogin':
+      return <UserLoginModal dataStatus={ecoModalTab} />;
+    // case 'register':
+    // return <UserRegisterModal dataStatus={modalStatus} />;
+    default:
+      null;
   }
 };
 
