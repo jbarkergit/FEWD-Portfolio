@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ModalProvider } from '../../../context/ModalContext';
 import UserInteractions from './UserInteractions';
 import NavigationLinks from './NavigationLinks';
@@ -15,9 +15,9 @@ const PrimaryNav = (): JSX.Element => {
       }}
     >
       <div className="navkit__section">
-        <NavLink to="/ecommerce" style={{ color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)' }}>
+        <Link to="/ecommerce" style={{ color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)' }}>
           Dynamic Audio
-        </NavLink>
+        </Link>
       </div>
       <NavigationLinks />
       <ModalProvider>

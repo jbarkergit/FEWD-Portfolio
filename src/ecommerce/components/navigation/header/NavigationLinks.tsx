@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 import MobileMenu from './MobileMenu';
 
@@ -12,7 +12,7 @@ const NavigationLinks = (): JSX.Element => {
       <MobileMenu />
       <ul className="navkit__section__links">
         <li>
-          <NavLink
+          <Link
             to="/ecommerce/products"
             style={{
               color: path ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
@@ -20,10 +20,10 @@ const NavigationLinks = (): JSX.Element => {
             onClick={() => setCategoryFilter('')}
           >
             {'All Products'}
-          </NavLink>
+          </Link>
         </li>
         <li>
-          <NavLink
+          <Link
             to="/ecommerce/headphones"
             style={{
               color: path ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
@@ -31,10 +31,10 @@ const NavigationLinks = (): JSX.Element => {
             onClick={() => setCategoryFilter('headphone')}
           >
             {'Headphones'}
-          </NavLink>
+          </Link>
         </li>
         <li>
-          <NavLink
+          <Link
             to="/ecommerce/amps-dacs"
             style={{
               color: path ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
@@ -42,10 +42,10 @@ const NavigationLinks = (): JSX.Element => {
             onClick={() => setCategoryFilter('amp', 'dac')}
           >
             {'Amps & Dacs'}
-          </NavLink>
+          </Link>
         </li>
         <li>
-          <NavLink
+          <Link
             to="/ecommerce/microphones"
             style={{
               color: path ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
@@ -53,10 +53,10 @@ const NavigationLinks = (): JSX.Element => {
             onClick={() => setCategoryFilter('microphone')}
           >
             {'Microphones'}
-          </NavLink>
+          </Link>
         </li>
         <li>
-          <NavLink
+          <Link
             to="/ecommerce/interfaces"
             style={{
               color: path ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
@@ -64,7 +64,7 @@ const NavigationLinks = (): JSX.Element => {
             onClick={() => setCategoryFilter('interface')}
           >
             {'Interfaces'}
-          </NavLink>
+          </Link>
         </li>
       </ul>
     </nav>
