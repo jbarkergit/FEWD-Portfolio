@@ -3,39 +3,37 @@
 
 .skuPage {
   position: relative;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 6%;
   &__grid {
     position: relative;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    display: flex;
+    width: 100%;
     max-width: f.rem(1600);
-    height: 100%;
-    max-height: 80vh;
+    max-height: 65vh;
     border-radius: f.rem(28);
     margin: f.rem(0) 0 f.rem(50) 0;
-    background: var(--gradientMono);
+    background-color: var(--elemBackgroundPrimary);
     box-shadow: var(--shadowRefined);
     &__display {
-      grid-row: 1 / span 3;
-      grid-column: 1 / span 1;
-      height: 100%;
+      width: calc(100% / 2);
+      border-top-left-radius: f.rem(24);
+      border-bottom-left-radius: f.rem(24);
+      background-color: var(--elemBackgroundPrimary);
     }
     &__details {
-      grid-row: 1 / span 2;
-      grid-column: 2 / span 1;
-      height: 100%;
-      border-top-right-radius: f.rem(24);
-      border-top-left-radius: f.rem(24);
+      width: calc(100% / 2);
+      border-radius: f.rem(24);
+      background-color: var(--elemBackgroundSecondary);
+      color: var(--fontSecondary);
     }
     &__imgSelection {
-      grid-row: 3 / span 1;
-      grid-column: 2 / span 1;
-      height: 100%;
-      border-bottom-left-radius: f.rem(24);
+      width: 20%;
+      border-top-right-radius: f.rem(24);
       border-bottom-right-radius: f.rem(24);
+      background-color: var(--elemBackgroundPrimary);
     }
   }
 }
@@ -43,6 +41,7 @@
 .skuPage__grid__display {
   position: relative;
   & picture {
+    padding: 15% 0;
     border-radius: f.rem(32);
     & img {
       padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
@@ -52,28 +51,49 @@
   }
   &__nav {
     position: absolute;
-    bottom: 0;
+    bottom: 5%;
     left: 0;
     display: flex;
     width: 100%;
-    & span {
-      width: 50%;
+    & button {
       @include m.ecoBtn;
-      padding: 0 f.rem(100) f.rem(50) f.rem(100);
+      width: 50%;
+      padding: 0 5%;
+      font-size: clamp(f.rem(12), f.rem(14) + 0.5vw, f.rem(14));
+      font-weight: 600;
+      letter-spacing: 0.03125rem;
+      text-transform: capitalize;
+      color: var(--fontSecondaryOffset);
+      &:first-child {
+        justify-content: flex-start;
+      }
       &:last-child {
-        text-align: end;
+        justify-content: flex-end;
       }
     }
+  }
+  &__heading {
+    position: absolute;
+    top: 5%;
+    left: 0;
+    width: 100%;
+    @include m.ecoBtn;
+    padding: 0;
+    font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
+    font-weight: 600;
+    letter-spacing: f.rem(1);
+    cursor: default;
   }
 }
 
 .skuPage__grid__details {
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  padding: 8%;
-  @include m.ecoBtnDark;
+  justify-content: center;
+  align-items: center;
+  text-align: start;
   & hgroup {
+    width: 80%;
     & h1 {
       display: none;
     }
@@ -87,38 +107,58 @@
     }
   }
   & p {
-    margin-bottom: f.rem(30);
-    max-width: 65ch;
+    margin: f.rem(5) 0 f.rem(25) 0;
+    max-width: 80%;
     font-size: clamp(f.rem(14), f.rem(12) + 0.5vw, f.rem(18));
     font-weight: 400;
     line-height: 1.4rem;
   }
   & button {
-    gap: f.rem(5);
     @include m.ecoBtn;
     @include m.ecoBtnLight;
+    gap: f.rem(5);
+    width: 80%;
     font-size: clamp(f.rem(12), f.rem(6) + 1vw, f.rem(14));
     font-weight: 500;
   }
 }
 
 .skuPage__grid__imgSelection {
-  @include m.ecoBtnDark;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: f.rem(25);
-  padding: f.rem(30) 0 f.rem(30) f.rem(30);
   overflow: hidden;
-  & picture {
-    position: relative;
-    flex: 1 0 f.rem(300);
-    max-width: f.rem(300);
-    border-radius: f.rem(18);
+  &:hover + &__nav {
+    opacity: 0;
+  }
+  &__nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+    z-index: 5;
     background-color: var(--elemBackgroundPrimary);
-    & img {
-      padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
-      object-fit: scale-down;
-      mix-blend-mode: darken;
+    color: var(--fontPrimary);
+    opacity: 1;
+  }
+  &__images {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 90%;
+    padding: 5% f.rem(10);
+    overflow: auto;
+    scrollbar-width: none;
+    & picture {
+      padding: 2.5%;
+      background-color: var(--elemBackgroundPrimary);
+      cursor: pointer;
+      & img {
+        border-radius: f.rem(24);
+        object-fit: scale-down;
+        mix-blend-mode: darken;
+      }
     }
   }
 }
