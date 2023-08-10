@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { ChildrenType } from '../types/ChildrenType';
 
-const categoryFilterSessionState = JSON.parse(sessionStorage.getItem('categoryFilter') || '[]');
+const categoryFilterSessionState = JSON.parse(localStorage.getItem('categoryFilter') || '[]');
 
 type StateContextType = {
   categoryFilter: string | null;
@@ -14,7 +14,7 @@ export const CategoryFilterProvider = ({ children }: ChildrenType): JSX.Element 
   const [categoryFilter, setCategoryFilter] = useState<string | null>(categoryFilterSessionState);
 
   useEffect(() => {
-    sessionStorage.setItem('categoryFilter', JSON.stringify(categoryFilter));
+    localStorage.setItem('categoryFilter', JSON.stringify(categoryFilter));
   }, [categoryFilter]);
 
   return <CategoryFilterContext.Provider value={{ categoryFilter, setCategoryFilter }}>{children}</CategoryFilterContext.Provider>;

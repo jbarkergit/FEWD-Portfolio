@@ -24,15 +24,16 @@ const useProductFilter = (): ProductType[] => {
 
   switch (categoryFilter) {
     case '':
-    case 'amp':
-    case 'dac':
-    case 'microphone':
-    case 'interface':
+    case 'amps':
+    case 'dacs':
+    case 'amps-dacs':
+    case 'microphones':
+    case 'interfaces':
       return useMiscProducts;
-    case 'headphone':
-    case 'openbackheadphone':
-    case 'semiopenheadphone':
-    case 'closedbackheadphone':
+    case 'headphones':
+    case 'openbackheadphones':
+    case 'semiopenheadphones':
+    case 'closedbackheadphones':
       return useHeadphones;
     default:
       if (useCompanyProducts.length > 0) return useCompanyProducts;
