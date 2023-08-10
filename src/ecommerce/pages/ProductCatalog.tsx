@@ -1,14 +1,24 @@
 import Header from '../components/navigation/header/Header';
 import Footer from '../components/navigation/footer/eFooter';
-import ProductFilters from '../components/features/product-filters/ProductFilters';
 import ProductProvider from '../components/product/product-provider/ProductProvider';
+import BrandFilter from '../components/features/product-filters/BrandFilter';
+import PolarPatternFilter from '../components/features/product-filters/PolarPatternFilter';
+import WearStyleFilter from '../components/features/product-filters/WearStyleFilter';
+import useBreadcrumbs from '../hooks/useBreadcrumbs';
 
 const ProductCatalog = (): JSX.Element => {
   return (
     <>
       <Header />
       <section className="browseProduct">
-        <ProductFilters />
+        <section className="productFilters">
+          <div className="productFilters__panel">{useBreadcrumbs()}</div>
+          <div className="productFilters__panel">
+            <PolarPatternFilter />
+            <WearStyleFilter />
+            <BrandFilter />
+          </div>
+        </section>
         <main>
           <ProductProvider />
         </main>
