@@ -1,5 +1,6 @@
 import useBreadcrumbs from '../../../hooks/useBreadcrumbs';
 import BrandFilter from './BrandFilter';
+import PolarPatternFilter from './PolarPatternFilter';
 import StyleFilter from './StyleFilter';
 
 const ProductFilters = (): JSX.Element => {
@@ -7,8 +8,9 @@ const ProductFilters = (): JSX.Element => {
     <section className="productFilters">
       <div className="productFilters__panel">{useBreadcrumbs()}</div>
       <div className="productFilters__panel">
-        {StyleFilter()}
-        {BrandFilter()}
+        <PolarPatternFilter />
+        <StyleFilter />
+        <BrandFilter />
       </div>
     </section>
   );
