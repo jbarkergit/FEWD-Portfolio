@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
@@ -31,12 +32,17 @@ const PolarPatternButtons = (): JSX.Element => {
 const PolarPatternFilter = (): JSX.Element | undefined => {
   // @ts-ignore
   const { categoryFilter, setCategoryFilter } = useCategoryFilterContext();
-  const categorySetter = (company: string) => setCategoryFilter(company);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [filterName, setFilterName] = useState<string>('Filter by Polar Pattern');
+  useEffect(() => setFilterName('Filter by Polar Pattern'), [useLocation()]);
+  const categorySetter = (company: string) => {
+    setCategoryFilter(company);
+    setFilterName(company);
+  };
 
   const selectMenuRef = useRef<HTMLDivElement>(null),
     accordionRef = useRef<HTMLUListElement>(null);
 
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   useEffect(() => accordionRef.current?.setAttribute('data-status', modalOpen ? 'active' : 'false'), [modalOpen]);
 
   useEffect(() => {
@@ -72,7 +78,7 @@ const PolarPatternFilter = (): JSX.Element | undefined => {
         <div className="selectMenu">
           <div className="selectMenu__selection" ref={selectMenuRef}>
             <span className="selectMenu__selection__indicator">
-              <span className="selectMenu__selection__indicator--area">Filter by Polar Pattern</span>
+              <span className="selectMenu__selection__indicator--area">{filterName}</span>
               <span className="selectMenu__selection__indicator--area">
                 <svg xmlns="http://www.w3.org/2000/svg" width="0.79em" height="1.25em" viewBox="0 0 320 512">
                   <path

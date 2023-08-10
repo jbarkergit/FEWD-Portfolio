@@ -1,22 +1,18 @@
-import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 import { ProductType } from '../../../types/ProductType';
 
-type FilterButtonType = {
-  setFilterName: Dispatch<SetStateAction<string>>;
-};
-
-const FilterButtons = ({ setFilterName }: FilterButtonType): JSX.Element => {
+const FilterButtons = (): JSX.Element => {
   const uniqueCompanies = useMemo(() => [...new Set(ProductDatabase.map((product: ProductType) => product.company))].sort((a, b) => (a > b ? 1 : -1)), []);
+
   return (
     <>
       {uniqueCompanies.map((company) => (
         <li className="selectMenu__accordion--option" key={uuidv4()}>
-          <button className={company} onClick={() => setFilterName(`${company}`)}>
-            {company}
-          </button>
+          <button className={company}>{company}</button>
         </li>
       ))}
     </>
@@ -26,13 +22,17 @@ const FilterButtons = ({ setFilterName }: FilterButtonType): JSX.Element => {
 const BrandFilter = (): JSX.Element => {
   // @ts-ignore
   const { setCategoryFilter } = useCategoryFilterContext();
-  const categorySetter = (company: string) => setCategoryFilter(company);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [filterName, setFilterName] = useState<string>('Filter by Brand');
+  useEffect(() => setFilterName('Filter by Brand'), [useLocation()]);
+  const categorySetter = (company: string) => {
+    setCategoryFilter(company);
+    setFilterName(company);
+  };
 
   const selectMenuRef = useRef<HTMLDivElement>(null),
     accordionRef = useRef<HTMLUListElement>(null);
 
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   useEffect(() => accordionRef.current?.setAttribute('data-status', modalOpen ? 'active' : 'false'), [modalOpen]);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const BrandFilter = (): JSX.Element => {
         <div className="selectMenu--divider"></div>
       </div>
       <ul className="selectMenu__accordion" data-status="false" ref={accordionRef}>
-        <FilterButtons setFilterName={setFilterName} />
+        <FilterButtons />
       </ul>
     </div>
   );

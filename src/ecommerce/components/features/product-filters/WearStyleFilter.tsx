@@ -1,14 +1,17 @@
 import { useRef, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
-const StyleFilter = (): JSX.Element | undefined => {
+const WearStyleFilter = (): JSX.Element | undefined => {
   // @ts-ignore
   const { categoryFilter, setCategoryFilter } = useCategoryFilterContext();
-  const categorySetter = (company: string) => setCategoryFilter(company);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [filterName, setFilterName] = useState<string>('Filter by Wear Style');
+  useEffect(() => setFilterName('Filter by Wear Style'), [useLocation()]);
 
   const selectMenuRef = useRef<HTMLDivElement>(null),
     accordionRef = useRef<HTMLUListElement>(null);
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => accordionRef.current?.setAttribute('data-status', modalOpen ? 'active' : 'false'), [modalOpen]);
 
@@ -18,7 +21,10 @@ const StyleFilter = (): JSX.Element | undefined => {
     };
     const handleButtons = (e: PointerEvent) => {
       const target = e.target as HTMLButtonElement;
-      if (accordionRef.current && accordionRef.current?.contains(target)) categorySetter(target.className);
+      if (accordionRef.current && accordionRef.current?.contains(target)) {
+        setCategoryFilter(target.className);
+        setFilterName(target.textContent!);
+      }
     };
     const handleExteriorClick = (e: PointerEvent): void => {
       if (selectMenuRef.current && !selectMenuRef.current.contains(e.target as HTMLElement)) setModalOpen(false);
@@ -44,7 +50,7 @@ const StyleFilter = (): JSX.Element | undefined => {
         <div className="selectMenu">
           <div className="selectMenu__selection" ref={selectMenuRef}>
             <span className="selectMenu__selection__indicator">
-              <span className="selectMenu__selection__indicator--area">Filter by Wear Style</span>
+              <span className="selectMenu__selection__indicator--area">{filterName}</span>
               <span className="selectMenu__selection__indicator--area">
                 <svg xmlns="http://www.w3.org/2000/svg" width="0.79em" height="1.25em" viewBox="0 0 320 512">
                   <path
@@ -74,4 +80,4 @@ const StyleFilter = (): JSX.Element | undefined => {
   }
 };
 
-export default StyleFilter;
+export default WearStyleFilter;
