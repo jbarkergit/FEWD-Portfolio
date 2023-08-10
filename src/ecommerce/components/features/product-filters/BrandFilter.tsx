@@ -1,14 +1,34 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 import { ProductType } from '../../../types/ProductType';
+
+type FilterButtonType = {
+  setFilterName: Dispatch<SetStateAction<string>>;
+};
+
+const FilterButtons = ({ setFilterName }: FilterButtonType) => {
+  const uniqueCompanies = useMemo(() => [...new Set(ProductDatabase.map((product: ProductType) => product.company))].sort((a, b) => (a > b ? 1 : -1)), []);
+  return (
+    <>
+      {uniqueCompanies.map((company) => (
+        <li className="selectMenu__accordion--option" key={uuidv4()}>
+          <button className={company} onClick={() => setFilterName(`${company}`)}>
+            {company}
+          </button>
+        </li>
+      ))}
+    </>
+  );
+};
 
 const BrandFilter = (): JSX.Element => {
   // @ts-ignore
   const { setCategoryFilter } = useCategoryFilterContext();
   const categorySetter = (company: string) => setCategoryFilter(company);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [filterName, setFilterName] = useState<string>('Filter by Brand');
 
   const selectMenuRef = useRef<HTMLDivElement>(null),
     accordionRef = useRef<HTMLUListElement>(null);
@@ -37,13 +57,11 @@ const BrandFilter = (): JSX.Element => {
     };
   }, []);
 
-  const uniqueCompanies = useMemo(() => [...new Set(ProductDatabase.map((product: ProductType) => product.company))].sort((a, b) => (a > b ? 1 : -1)), []);
-
   return (
     <div className="selectMenu">
       <div className="selectMenu__selection" ref={selectMenuRef}>
         <span className="selectMenu__selection__indicator">
-          <span className="selectMenu__selection__indicator--area">Filter by Brand</span>
+          <span className="selectMenu__selection__indicator--area">{filterName}</span>
           <span className="selectMenu__selection__indicator--area">
             <svg xmlns="http://www.w3.org/2000/svg" width="0.79em" height="1.25em" viewBox="0 0 320 512">
               <path
@@ -56,11 +74,7 @@ const BrandFilter = (): JSX.Element => {
         <div className="selectMenu--divider"></div>
       </div>
       <ul className="selectMenu__accordion" data-status="false" ref={accordionRef}>
-        {uniqueCompanies.map((company) => (
-          <li className="selectMenu__accordion--option" key={uuidv4()}>
-            <button className={company}>{company}</button>
-          </li>
-        ))}
+        <FilterButtons setFilterName={setFilterName} />
       </ul>
     </div>
   );

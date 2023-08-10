@@ -15,6 +15,19 @@ const polarPatternArray = (): Set<string> => {
   return polarPatternSet;
 };
 
+const PolarPatternButtons = (): JSX.Element => {
+  const uniquePolarPatterns = useMemo(() => Array.from(polarPatternArray()).sort((a, b) => (a > b ? 1 : -1)), []);
+  return (
+    <>
+      {uniquePolarPatterns.map((PolarPattern) => (
+        <li className="selectMenu__accordion--option" key={uuidv4()}>
+          <button className={`${PolarPattern}`}>{PolarPattern}</button>
+        </li>
+      ))}
+    </>
+  );
+};
+
 const PolarPatternFilter = (): JSX.Element | undefined => {
   // @ts-ignore
   const { categoryFilter, setCategoryFilter } = useCategoryFilterContext();
@@ -48,8 +61,6 @@ const PolarPatternFilter = (): JSX.Element | undefined => {
     };
   }, [categoryFilter]);
 
-  const uniquePolarPatterns = Array.from(polarPatternArray());
-
   switch (categoryFilter) {
     case 'microphones':
     case 'cardioid':
@@ -74,11 +85,7 @@ const PolarPatternFilter = (): JSX.Element | undefined => {
             <div className="selectMenu--divider"></div>
           </div>
           <ul className="selectMenu__accordion" data-status="false" ref={accordionRef}>
-            {uniquePolarPatterns.map((PolarPattern) => (
-              <li className="selectMenu__accordion--option" key={uuidv4()}>
-                <button className={`${PolarPattern}`}>{PolarPattern}</button>
-              </li>
-            ))}
+            <PolarPatternButtons />
           </ul>
         </div>
       );
