@@ -6,6 +6,7 @@ export type ProductType = {
   description?: string;
   price: number;
   category?: string;
+  polarPattern?: string | string[];
   wearStyle?: string;
   productshowcase?: boolean;
   images?: string[];

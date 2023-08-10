@@ -514,6 +514,7 @@ export const ProductDatabase: ProductType[] = [
     price: 498.0,
     productshowcase: false,
     category: 'microphones',
+    polarPattern: 'cardioid',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Electro-Voice/microphone/RE20-BLACK/re20-black-1.png',
       '/src/ecommerce/assets/production-images/compressed-product-src/Electro-Voice/microphone/RE20-BLACK/re20-black-2.png',
@@ -529,6 +530,7 @@ export const ProductDatabase: ProductType[] = [
     price: 498.0,
     productshowcase: false,
     category: 'microphones',
+    polarPattern: 'cardioid',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Electro-Voice/microphone/RE20/re20-1.png',
       '/src/ecommerce/assets/production-images/compressed-product-src/Electro-Voice/microphone/RE20/re20-2.png',
@@ -544,6 +546,7 @@ export const ProductDatabase: ProductType[] = [
     price: 399.0,
     productshowcase: true,
     category: 'microphones',
+    polarPattern: 'cardioid',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM7B/sm7b-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM7B/sm7b-2.webp',
@@ -564,6 +567,7 @@ export const ProductDatabase: ProductType[] = [
     price: 99.0,
     productshowcase: false,
     category: 'microphones',
+    polarPattern: 'cardioid',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM58/sm58-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM58/sm58-2.webp',
@@ -582,6 +586,7 @@ export const ProductDatabase: ProductType[] = [
     price: 269.0,
     productshowcase: false,
     category: 'microphones',
+    polarPattern: 'cardioid',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/NT1/nt1-1.png',
       '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/NT1/nt1-2.png',
@@ -598,6 +603,7 @@ export const ProductDatabase: ProductType[] = [
     price: 199.0,
     productshowcase: false,
     category: 'microphones',
+    polarPattern: 'cardioid',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/NT1-A/nt1-a-1.png',
       '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/NT1-A/nta-1-2.png',
@@ -612,6 +618,7 @@ export const ProductDatabase: ProductType[] = [
     price: 99.0,
     productshowcase: true,
     category: 'microphones',
+    polarPattern: 'cardioid',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMic/podmic-1.png',
       '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMic/podmic-2.png',
@@ -630,6 +637,7 @@ export const ProductDatabase: ProductType[] = [
     price: 199.99,
     productshowcase: false,
     category: 'microphones',
+    polarPattern: 'cardioid',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMicUSB/podmic-usb-1.png',
       '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMicUSB/podmic-usb-2.png',
@@ -649,6 +657,7 @@ export const ProductDatabase: ProductType[] = [
     price: 1550.0,
     productshowcase: false,
     category: 'microphones',
+    polarPattern: ['omni', 'wide cardioid', 'cardioid', 'hyper cardioid', 'figure-8'],
     images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107 BK Studio Set/tlm-107-bk-studio-set-1.webp'],
   },
   {
@@ -660,6 +669,7 @@ export const ProductDatabase: ProductType[] = [
     price: 1550.0,
     productshowcase: false,
     category: 'microphones',
+    polarPattern: ['omni', 'wide cardioid', 'cardioid', 'hyper cardioid', 'figure-8'],
     images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107 Studio Set/tlm-107-studio-set-1.webp'],
   },
   {
@@ -671,6 +681,7 @@ export const ProductDatabase: ProductType[] = [
     price: 1450.0,
     productshowcase: false,
     category: 'microphones',
+    polarPattern: ['omni', 'wide cardioid', 'cardioid', 'hyper cardioid', 'figure-8'],
     images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107 BK/tlm-107-bk-1.webp'],
   },
   {
@@ -682,6 +693,7 @@ export const ProductDatabase: ProductType[] = [
     price: 1450.0,
     productshowcase: false,
     category: 'microphones',
+    polarPattern: ['omni', 'wide cardioid', 'cardioid', 'hyper cardioid', 'figure-8'],
     images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107/tlm-107-1.webp'],
   },
   {
