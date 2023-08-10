@@ -8,7 +8,7 @@ type FilterButtonType = {
   setFilterName: Dispatch<SetStateAction<string>>;
 };
 
-const FilterButtons = ({ setFilterName }: FilterButtonType) => {
+const FilterButtons = ({ setFilterName }: FilterButtonType): JSX.Element => {
   const uniqueCompanies = useMemo(() => [...new Set(ProductDatabase.map((product: ProductType) => product.company))].sort((a, b) => (a > b ? 1 : -1)), []);
   return (
     <>
