@@ -35,7 +35,7 @@ const StyleFilter = (): JSX.Element | undefined => {
   }, [categoryFilter]);
 
   switch (categoryFilter) {
-    case 'headphone':
+    case 'headphones':
     case 'Beyerdynamic':
     case 'openbackheadphone':
     case 'semiopenheadphone':

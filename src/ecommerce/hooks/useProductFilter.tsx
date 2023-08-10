@@ -8,43 +8,46 @@ const useProductFilter = (): ProductType[] => {
 
   const filteredProducts = ProductDatabase.reduce(
     (
-      result: { miscProducts: ProductType[]; headphones: ProductType[]; ampsDacs: ProductType[]; companyProducts: ProductType[]; companyHeadphones: ProductType[] },
+      result: {
+        categoryProducts: ProductType[];
+        ampsDacs: ProductType[];
+        wearStyleHeadphones: ProductType[];
+        companyProducts: ProductType[];
+        companyHeadphones: ProductType[];
+      },
       product: ProductType
     ) => {
-      if (product.category?.includes(categoryFilter)) result.miscProducts.push({ ...product });
-      if (product.wearStyle?.includes(categoryFilter)) result.headphones.push({ ...product });
+      if (product.category?.includes(categoryFilter)) result.categoryProducts.push({ ...product });
       if (product.category?.includes('amps' || 'dacs' || 'amps-dacs')) result.ampsDacs.push({ ...product });
-      if (product.company?.includes(categoryFilter)) result.companyProducts.push({ ...product });
+      if (product.wearStyle?.includes(categoryFilter)) result.wearStyleHeadphones.push({ ...product });
       if (product.company?.includes(categoryFilter) && product.wearStyle?.includes(categoryFilter)) result.companyHeadphones.push({ ...product });
+      if (product.company?.includes(categoryFilter)) result.companyProducts.push({ ...product });
       return result;
     },
-    { miscProducts: [], headphones: [], ampsDacs: [], companyProducts: [], companyHeadphones: [] }
+    { categoryProducts: [], wearStyleHeadphones: [], ampsDacs: [], companyProducts: [], companyHeadphones: [] }
   );
 
-  const useMiscProducts = filteredProducts.miscProducts;
-  const useHeadphones = filteredProducts.headphones;
+  const useCategoryProducts = filteredProducts.categoryProducts;
   const useAmpsDacs = filteredProducts.ampsDacs;
-  const useCompanyProducts = filteredProducts.companyProducts;
+  const useWearStyleHeadphones = filteredProducts.wearStyleHeadphones;
   const useCompanyHeadphones = filteredProducts.companyHeadphones;
+  const useCompanyProducts = filteredProducts.companyProducts;
 
   switch (categoryFilter) {
-    case '':
-    case 'amps':
-    case 'dacs':
+    case 'headphones':
     case 'microphones':
     case 'interfaces':
-      return useMiscProducts;
+      return useCategoryProducts;
     case 'amps-dacs':
       return useAmpsDacs;
-    case 'headphones':
     case 'openbackheadphones':
     case 'semiopenheadphones':
     case 'closedbackheadphones':
-      return useHeadphones;
+      return useWearStyleHeadphones;
     default:
-      if (useCompanyProducts.length > 0) return useCompanyProducts;
-      else if (useCompanyHeadphones.length > 0) return useCompanyHeadphones;
-      else return ProductDatabase;
+      if (useCompanyProducts.length > 0) return useCompanyProducts; //check if user is filtering by companies
+      else if (useCompanyHeadphones.length > 0) return useCompanyHeadphones; //check if user is filtering by headphones wear style
+      else return ProductDatabase; //return product database if no condition is met
   }
 };
 
