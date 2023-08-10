@@ -44,7 +44,7 @@ const StyleFilter = (): JSX.Element | undefined => {
         <div className="selectMenu">
           <div className="selectMenu__selection" ref={selectMenuRef}>
             <span className="selectMenu__selection__indicator">
-              <span className="selectMenu__selection__indicator--area">Filter by Style</span>
+              <span className="selectMenu__selection__indicator--area">Filter by Wear Style</span>
               <span className="selectMenu__selection__indicator--area">
                 <svg xmlns="http://www.w3.org/2000/svg" width="0.79em" height="1.25em" viewBox="0 0 320 512">
                   <path
