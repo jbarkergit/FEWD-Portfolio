@@ -37,9 +37,9 @@ const StyleFilter = (): JSX.Element | undefined => {
   switch (categoryFilter) {
     case 'headphones':
     case 'Beyerdynamic':
-    case 'openbackheadphone':
-    case 'semiopenheadphone':
-    case 'closedbackheadphone':
+    case 'openbackheadphones':
+    case 'semiopenheadphones':
+    case 'closedbackheadphones':
       return (
         <div className="selectMenu">
           <div className="selectMenu__selection" ref={selectMenuRef}>
@@ -58,13 +58,13 @@ const StyleFilter = (): JSX.Element | undefined => {
           </div>
           <ul className="selectMenu__accordion" data-status="false" ref={accordionRef}>
             <li className="selectMenu__accordion--option" key="openbackheadphone">
-              <button className="openbackheadphone">{'Open-Back'}</button>
+              <button className="openbackheadphones">{'Open-Back'}</button>
             </li>
             <li className="selectMenu__accordion--option" key="semiopenheadphone">
-              <button className="semiopenheadphone">{'Semi-Open'}</button>
+              <button className="semiopenheadphones">{'Semi-Open'}</button>
             </li>
             <li className="selectMenu__accordion--option" key="closedbackheadphone">
-              <button className="closedbackheadphone">{'Closed-Back'}</button>
+              <button className="closedbackheadphones">{'Closed-Back'}</button>
             </li>
           </ul>
         </div>
