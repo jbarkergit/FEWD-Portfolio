@@ -12,7 +12,6 @@ const ProductCatalog = (): JSX.Element => {
   const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Brand', useUniqueCompanies());
   const PolarPatternFilter = (): JSX.Element => ProductFilterConstructor('Filter by Polar Pattern', useUniquePolarPatterns());
   const WearStyleFilter = (): JSX.Element => ProductFilterConstructor('Filter by Wear Style', useUniqueWearStyles());
-
   return (
     <>
       <Header />
@@ -20,7 +19,7 @@ const ProductCatalog = (): JSX.Element => {
         <section className="productFilters">
           <div className="productFilters__panel">{useBreadcrumbs()}</div>
           <div className="productFilters__panel">
-            <WearStyleFilter />
+            {<WearStyleFilter />}
             <PolarPatternFilter />
             <CompanyFilter />
           </div>
