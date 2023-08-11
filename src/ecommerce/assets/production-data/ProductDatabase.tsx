@@ -169,7 +169,7 @@ export const ProductDatabase: ProductType[] = [
     price: 899.0,
     productshowcase: false,
     category: 'headphones',
-    wearStyle: 'closedbackheadphones',
+    wearStyle: 'closed-back',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/T5/t5-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/T5/t5-2.webp',
@@ -185,7 +185,7 @@ export const ProductDatabase: ProductType[] = [
     price: 899.0,
     productshowcase: false,
     category: 'headphones',
-    wearStyle: 'openbackheadphones',
+    wearStyle: 'open-back',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/T1/t1-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/T1/t1-2.webp',
@@ -201,7 +201,7 @@ export const ProductDatabase: ProductType[] = [
     price: 349.0,
     productshowcase: false,
     category: 'headphones',
-    wearStyle: 'openbackheadphones',
+    wearStyle: 'open-back',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 900 PRO X/dt-900-pro-x-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 900 PRO X/dt-900-pro-x-2.webp',
@@ -217,7 +217,7 @@ export const ProductDatabase: ProductType[] = [
     price: 259.0,
     productshowcase: true,
     category: 'headphones',
-    wearStyle: 'closedbackheadphones',
+    wearStyle: 'closed-back',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 700 PRO X/dt-700-pro-x-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 700 PRO X/dt-700-pro-x-2.webp',
@@ -233,7 +233,7 @@ export const ProductDatabase: ProductType[] = [
     price: 499.0,
     productshowcase: false,
     category: 'headphones',
-    wearStyle: 'openbackheadphones',
+    wearStyle: 'open-back',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 1990 PRO/dt-1990-pro-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 1990 PRO/dt-1990-pro-2.webp',
@@ -249,7 +249,7 @@ export const ProductDatabase: ProductType[] = [
     price: 499.0,
     productshowcase: true,
     category: 'headphones',
-    wearStyle: 'closedbackheadphones',
+    wearStyle: 'closed-back',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 1770 PRO/dt-1770-pro-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 1770 PRO/dt-1770-pro-2.webp',
@@ -265,7 +265,7 @@ export const ProductDatabase: ProductType[] = [
     price: 159.0,
     productshowcase: false,
     category: 'headphones',
-    wearStyle: 'openbackheadphones',
+    wearStyle: 'open-back',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 Black Special Edition/dt-990-black-special-edition-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 Black Special Edition/dt-990-black-special-edition-2.webp',
@@ -281,7 +281,7 @@ export const ProductDatabase: ProductType[] = [
     price: 159.0,
     productshowcase: true,
     category: 'headphones',
-    wearStyle: 'openbackheadphones',
+    wearStyle: 'open-back',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 PRO/dt-990-pro-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 PRO/dt-990-pro-2.webp',
@@ -297,7 +297,7 @@ export const ProductDatabase: ProductType[] = [
     price: 199.0,
     productshowcase: false,
     category: 'headphones',
-    wearStyle: 'semiopenheadphones',
+    wearStyle: 'semi-open',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 880 PRO/dt-880-pro-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 880 PRO/dt-880-pro-2.webp',
@@ -313,7 +313,7 @@ export const ProductDatabase: ProductType[] = [
     price: 159.0,
     productshowcase: true,
     category: 'headphones',
-    wearStyle: 'closedbackheadphones',
+    wearStyle: 'closed-back',
     images: ['/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 770 PRO/dt-770-pro-1.webp'],
   },
   {
@@ -325,7 +325,7 @@ export const ProductDatabase: ProductType[] = [
     price: 175.0,
     productshowcase: false,
     category: 'headphones',
-    wearStyle: 'openbackheadphones',
+    wearStyle: 'open-back',
     images: [
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 Edition/dt-990-edition-1.webp',
       '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 Edition/dt-990-edition-2.webp',
@@ -657,7 +657,7 @@ export const ProductDatabase: ProductType[] = [
     price: 1550.0,
     productshowcase: false,
     category: 'microphones',
-    polarPattern: ['omni', 'wide cardioid', 'cardioid', 'hyper cardioid', 'figure-8'],
+    polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
     images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107 BK Studio Set/tlm-107-bk-studio-set-1.webp'],
   },
   {
@@ -669,7 +669,7 @@ export const ProductDatabase: ProductType[] = [
     price: 1550.0,
     productshowcase: false,
     category: 'microphones',
-    polarPattern: ['omni', 'wide cardioid', 'cardioid', 'hyper cardioid', 'figure-8'],
+    polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
     images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107 Studio Set/tlm-107-studio-set-1.webp'],
   },
   {
@@ -681,7 +681,7 @@ export const ProductDatabase: ProductType[] = [
     price: 1450.0,
     productshowcase: false,
     category: 'microphones',
-    polarPattern: ['omni', 'wide cardioid', 'cardioid', 'hyper cardioid', 'figure-8'],
+    polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
     images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107 BK/tlm-107-bk-1.webp'],
   },
   {
@@ -693,7 +693,7 @@ export const ProductDatabase: ProductType[] = [
     price: 1450.0,
     productshowcase: false,
     category: 'microphones',
-    polarPattern: ['omni', 'wide cardioid', 'cardioid', 'hyper cardioid', 'figure-8'],
+    polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
     images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107/tlm-107-1.webp'],
   },
   {

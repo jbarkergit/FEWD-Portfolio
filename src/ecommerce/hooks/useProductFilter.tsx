@@ -49,10 +49,14 @@ const useProductFilter = (): ProductType[] => {
       return useWearStyleHeadphones;
     case 'cardioid':
     case 'omni':
-    case 'wide cardioid':
-    case 'hyper cardioid':
+    case 'wide-cardioid':
+    case 'hyper-cardioid':
     case 'figure-8':
       return usePolarPatternMicrophones;
+    case 'closed-back':
+    case 'open-back':
+    case 'semi-open':
+      return useWearStyleHeadphones;
     default:
       if (useCompanyProducts.length > 0) return useCompanyProducts; //check if user is filtering by companies
       else if (useCompanyHeadphones.length > 0) return useCompanyHeadphones; //check if user is filtering by headphones wear style

@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 //Shared
@@ -14,6 +14,9 @@ const ProductCatalog = lazy(() => import('./ecommerce/pages/ProductCatalog'));
 const ProductDetailPage = lazy(() => import('./ecommerce/pages/ProductDetailPage'));
 import { CategoryFilterProvider } from './ecommerce/context/CategoryFilterContext';
 import { CartProvider } from './ecommerce/context/CartContext';
+import useUniqueCompanies from './ecommerce/hooks/useUniqueCompanies';
+import useUniquePolarPatterns from './ecommerce/hooks/useUniquePolarPatterns';
+import useUniqueWearStyles from './ecommerce/hooks/useUniqueWearStyles';
 
 function App() {
   return (
@@ -31,6 +34,15 @@ function App() {
               <Route path="/ecommerce/microphones" element={<ProductCatalog />} />
               <Route path="/ecommerce/interfaces" element={<ProductCatalog />} />
               <Route path="/ecommerce/product/:paramId" element={<ProductDetailPage />} />
+              {useUniqueCompanies().map((company: string) => (
+                <Route path={`/ecommerce/${company}`} element={<ProductCatalog />} key={company} />
+              ))}
+              {useUniquePolarPatterns().map((polarPattern) => (
+                <Route path={`/ecommerce/${polarPattern}`} element={<ProductCatalog />} key={polarPattern} />
+              ))}
+              {useUniqueWearStyles().map((wearStyle) => (
+                <Route path={`/ecommerce/${wearStyle}`} element={<ProductCatalog />} key={wearStyle} />
+              ))}
             </Routes>
           </CartProvider>
         </CategoryFilterProvider>
