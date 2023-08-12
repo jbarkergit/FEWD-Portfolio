@@ -13,7 +13,7 @@ type ProjectNavPropType = {
   addToRefs: (reference: HTMLElement) => void;
 };
 
-const ProjectNavProp = ({ slide, webm, projectName, projectType, imgStyle, dataStatus, demoLink, dataActivity, addToRefs }: ProjectNavPropType): JSX.Element => {
+const ProjectNavProp = ({ slide, webm, projectName, projectType, dataStatus, demoLink, dataActivity, addToRefs }: ProjectNavPropType): JSX.Element => {
   const sliderArticleRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {

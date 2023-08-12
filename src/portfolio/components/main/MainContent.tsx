@@ -45,7 +45,7 @@ const MainContent = (): JSX.Element => {
   }, []);
 
   // @ts-ignore:
-  const { closestIndexContext, setClosestIndexContext } = useClosestIndexContext();
+  const { setClosestIndexContext } = useClosestIndexContext();
 
   const reducer = (state: initSliderStateType, action: actionType): initSliderStateType => {
     switch (action.type) {

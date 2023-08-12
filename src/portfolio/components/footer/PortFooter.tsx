@@ -6,7 +6,7 @@ const Developer = (): JSX.Element => {
     <section className="developer">
       <hgroup className="developer__nameLoc">
         <h1>Justin Barker</h1>
-        <h2>React Front-end Developer</h2>
+        <h2>React Developer</h2>
       </hgroup>
     </section>
   );
