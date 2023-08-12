@@ -1,7 +1,13 @@
 import { ProductDatabase } from '../assets/production-data/ProductDatabase';
 import { ProductType } from '../types/ProductType';
 
-const useUniqueData = () => {
+const useUniqueData: () => {
+  useUniqueCompanies: string[];
+  useUniquePolarPatterns: string[];
+  useUniqueWearStyles: string[];
+  useUniqueHeadphoneCompanies: string[];
+  useUniqueMicrophoneCompanies: string[];
+} = () => {
   //filters string and array properties from ProductDatabase out into sets
   const uniqueDataProps = ProductDatabase.reduce(
     (

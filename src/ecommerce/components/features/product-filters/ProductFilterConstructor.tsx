@@ -1,28 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 import ProductFilterButtonConstructor from './ProductFilterButtonConstructor';
 
 const ProductFilterConstructor = (initFilterName: string, filterData: string[] | Set<string>): JSX.Element => {
-  // @ts-ignore
-  const { categoryFilter } = useCategoryFilterContext();
-
   //Filter Name State, takes initFilterName parameter as initial state
   const [filterName, setFilterName] = useState<string>(initFilterName);
 
   //Conditionally returns filterData for types Array & Set (converts Set to an Array)
-  const useFilterData = () => {
+  const useFilterData: () => string[] = () => {
     if (Array.isArray(filterData)) return filterData;
     else if (filterData instanceof Set) throw new Error('useFilterData only accepts Arrays');
     else throw new Error('Filter Data Type may be void or returning null');
   };
 
   //useLocation Hook from react-router-dom, has to be stored in a reference variable
-  const useLoc = useLocation().pathname.replace('/ecommerce/', '');
+  const location: string = useLocation().pathname.replace('/ecommerce/', '');
 
   //If useLoc is not found in useFilterData, setFilterName to initFilterName parameter, else setFilterName to useFilterData item or "data" as generic term
   useEffect(() => {
-    const locName = useFilterData().find((data) => data === useLoc);
+    const locName = useFilterData().find((data) => data === location);
     if (locName) setFilterName(locName);
     else setFilterName(initFilterName);
   }, [useLocation().pathname]);
