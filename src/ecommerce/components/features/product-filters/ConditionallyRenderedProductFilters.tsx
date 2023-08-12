@@ -7,8 +7,8 @@ const ConditionallyRenderedProductFilters = () => {
   //Memoized data dependencies
   const uniqueWearStyles = useMemo(() => useUniqueData().useUniqueWearStyles, [useUniqueData().useUniqueCompanies]);
   const uniquePolarPatterns = useMemo(() => useUniqueData().useUniquePolarPatterns, [useUniqueData().useUniquePolarPatterns]);
+
   //Filter Components built with ProductFilterConstructor: takes initial filter name and custom hook that returns data
-  //Data filtered via reduce method using useUniqueData custom hook
   const WearStyleFilter = (): JSX.Element => ProductFilterConstructor('Filter by Wear Style', uniqueWearStyles);
   const PolarPatternFilter = (): JSX.Element => ProductFilterConstructor('Filter by Polar Pattern', uniquePolarPatterns);
 
