@@ -1,8 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { ChildrenType } from '../types/ChildrenType';
 
-const categoryFilterSessionState = JSON.parse(localStorage.getItem('categoryFilter') || '[]');
-
 type StateContextType = {
   categoryFilter: string | null;
   setCategoryFilter: React.Dispatch<React.SetStateAction<string | null>>;
@@ -11,11 +9,7 @@ type StateContextType = {
 const CategoryFilterContext = createContext<StateContextType | undefined>(undefined); // GUARD: Throws intentional error for Application Context Provider
 
 export const CategoryFilterProvider = ({ children }: ChildrenType): JSX.Element => {
-  const [categoryFilter, setCategoryFilter] = useState<string | null>(categoryFilterSessionState);
-
-  useEffect(() => {
-    localStorage.setItem('categoryFilter', JSON.stringify(categoryFilter));
-  }, [categoryFilter]);
+  const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
 
   return <CategoryFilterContext.Provider value={{ categoryFilter, setCategoryFilter }}>{children}</CategoryFilterContext.Provider>;
 };
