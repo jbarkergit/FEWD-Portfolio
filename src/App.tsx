@@ -35,11 +35,11 @@ function App() {
               {useUniqueData().useUniqueCompanies.map((company: string) => (
                 <Route path={`/ecommerce/${company}`} element={<ProductCatalog />} key={company} />
               ))}
-              {useUniqueData().useUniquePolarPatterns.map((polarPattern) => (
-                <Route path={`/ecommerce/${polarPattern}`} element={<ProductCatalog />} key={polarPattern} />
-              ))}
               {useUniqueData().useUniqueWearStyles.map((wearStyle) => (
                 <Route path={`/ecommerce/${wearStyle}`} element={<ProductCatalog />} key={wearStyle} />
+              ))}
+              {useUniqueData().useUniquePolarPatterns.map((polarPattern) => (
+                <Route path={`/ecommerce/${polarPattern}`} element={<ProductCatalog />} key={polarPattern} />
               ))}
             </Routes>
           </CartProvider>
