@@ -16,6 +16,6 @@ export const CategoryFilterProvider = ({ children }: ChildrenType): JSX.Element 
 
 export const useCategoryFilterContext = (): StateContextType | undefined => {
   const categoryFilterContext = useContext(CategoryFilterContext);
-  if (categoryFilterContext === undefined) console.log('CategoryFilter Context Hook must be placed inside of a provider.');
+  if (categoryFilterContext === undefined) console.error('CategoryFilter Context Hook must be placed inside of a provider.');
   return categoryFilterContext;
 };

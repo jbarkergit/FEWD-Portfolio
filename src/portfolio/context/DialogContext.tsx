@@ -20,6 +20,6 @@ export const DialogContextProvider = ({ children }: ChildrenType): JSX.Element =
 
 export const useDialogContext = (): StoreType | undefined => {
   const stateContext = useContext(DialogContext);
-  if (stateContext === undefined) console.log('DialogContext Hook must be placed inside of a provider.');
+  if (stateContext === undefined) console.error('DialogContext Hook must be placed inside of a provider.');
   return stateContext;
 };

@@ -17,6 +17,6 @@ export const ClosestIndexContextProvider = ({ children }: ChildrenType): JSX.Ele
 
 export const useClosestIndexContext = (): StateContextType | undefined => {
   const closestIndexContext = useContext(ClosestIndexContext);
-  if (closestIndexContext === undefined) console.log('ClosestIndex Context Hook must be placed inside of a provider.');
+  if (closestIndexContext === undefined) console.error('ClosestIndex Context Hook must be placed inside of a provider.');
   return closestIndexContext;
 };

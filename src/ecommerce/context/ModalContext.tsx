@@ -15,6 +15,6 @@ export const ModalProvider = ({ children }: ChildrenType): JSX.Element => {
 
 export const useModalContext = (): StateContextType | undefined => {
   const modalContext = useContext(ModalContext);
-  if (modalContext === undefined) console.log('Modal Context Hook must be placed inside of a provider.');
+  if (modalContext === undefined) console.error('Modal Context Hook must be placed inside of a provider.');
   return modalContext;
 };

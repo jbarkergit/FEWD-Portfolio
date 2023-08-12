@@ -13,7 +13,7 @@ const ProductProvider = () => {
   //categoryFilter is a single global state, which is used by useProductFilter -> rerenders ProductProvider Prop upon navigation
 
   const paginatedSets: setArrayType[] = usePaginatedSets(); //Filtered & paginated products -> localize hook to prevent warnings
-  // console.log(paginatedSets);
+
   const [renderedSets, setRenderedSets] = useState<setArrayType[]>([paginatedSets[0]]); //Initialize empty array to hold paginated product sets
   useEffect(() => setRenderedSets([paginatedSets[0]]), [categoryFilter]); //Resets renderedSets state to hold the first set of products
 
