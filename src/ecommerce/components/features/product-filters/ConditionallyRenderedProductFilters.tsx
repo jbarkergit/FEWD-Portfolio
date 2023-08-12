@@ -16,12 +16,20 @@ const ConditionallyRenderedProductFilters = () => {
   const uniqueHeadphoneCompanies = useMemo(() => useUniqueData().useUniqueHeadphoneCompanies, [useUniqueData().useUniqueHeadphoneCompanies]);
   const uniqueMicrophoneCompanies = useMemo(() => useUniqueData().useUniqueMicrophoneCompanies, [useUniqueData().useUniqueMicrophoneCompanies]);
 
-  //Variable conditional dependencies for conditional rendering
-  const location = useLocation().pathname.replace('/ecommerce/', '');
+  //Variable dependencies for conditional rendering
+  const regexPattern = /\/ecommerce\//g;
+  const location = useLocation().pathname.replace(regexPattern, '');
 
   //Conditional rendering
-  if (location === 'headphones' || uniqueHeadphoneCompanies.includes(location) || uniqueWearStyles.includes(location)) return <WearStyleFilter />;
-  else if (location === 'microphones' || uniqueMicrophoneCompanies || uniquePolarPatterns.includes(location)) return <PolarPatternFilter />;
+  if (location === 'products')
+    return (
+      <>
+        <WearStyleFilter />
+        <PolarPatternFilter />
+      </>
+    );
+  if (['headphones', ...uniqueHeadphoneCompanies, ...uniqueWearStyles].includes(location)) return <WearStyleFilter />;
+  if (['microphones', ...uniqueMicrophoneCompanies, ...uniquePolarPatterns].includes(location)) return <PolarPatternFilter />;
 };
 
 export default ConditionallyRenderedProductFilters;
