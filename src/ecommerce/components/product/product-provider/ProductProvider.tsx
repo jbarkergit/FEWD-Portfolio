@@ -9,6 +9,7 @@ import { useCategoryFilterContext } from '../../../context/CategoryFilterContext
 const ProductProvider = () => {
   // @ts-ignore
   const { categoryFilter } = useCategoryFilterContext();
+
   //usePaginatedSets utilizes useProductFilter, which uses useState[categoryFilter] Context Hook to render appropriate product arrays
   //categoryFilter is a single global state, which is used by useProductFilter -> rerenders ProductProvider Prop upon navigation
 
@@ -50,4 +51,5 @@ const ProductProvider = () => {
     </ul>
   );
 };
+
 export default ProductProvider;
