@@ -7,6 +7,7 @@ const ConditionallyRenderedProductFilters = () => {
   //Memoized data dependencies
   const uniqueWearStyles = useMemo(() => useUniqueData().useUniqueWearStyles, [useUniqueData().useUniqueCompanies]);
   const uniquePolarPatterns = useMemo(() => useUniqueData().useUniquePolarPatterns, [useUniqueData().useUniquePolarPatterns]);
+  const uniqueHeadphoneCompanies = useMemo(() => useUniqueData().useUniqueHeadphoneCompanies, [useUniqueData().useUniqueHeadphoneCompanies]);
 
   //Filter Components built with ProductFilterConstructor: takes initial filter name and custom hook that returns data
   const WearStyleFilter = (): JSX.Element => ProductFilterConstructor('Filter by Wear Style', uniqueWearStyles);
@@ -15,7 +16,7 @@ const ConditionallyRenderedProductFilters = () => {
   //Condition for renders
   const useLoc = useLocation().pathname.replace('/ecommerce/', '');
 
-  if (useLoc === 'headphones' || uniqueWearStyles.includes(useLoc)) return <WearStyleFilter />;
+  if (useLoc === 'headphones' || uniqueHeadphoneCompanies.includes(useLoc) || uniqueWearStyles.includes(useLoc)) return <WearStyleFilter />;
   else if (useLoc === 'microphones' || uniquePolarPatterns.includes(useLoc)) return <PolarPatternFilter />;
 };
 
