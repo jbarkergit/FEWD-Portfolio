@@ -1,23 +1,15 @@
-import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 
-const useBreadcrumbs = (): JSX.Element => {
-  const location = useLocation();
-
-  const currentLocation = useMemo(() => {
-    const breadcrumbs = location.pathname
-      .replace(/[^\w\s]/gi, ' ')
-      .split('ecommerce')
-      .filter((breadcrumb) => breadcrumb !== '');
-    return breadcrumbs.join('');
-  }, [location.pathname]);
+const useBreadCrumbs = (): JSX.Element => {
+  const locationPath = useLocation().pathname;
+  const regexPattern = /(ecommerce|\W)+/g;
+  const breadCrumbs = locationPath.replace(regexPattern, ' ');
 
   return (
-    <div className="breadcrumb" key={uuidv4()} aria-label={currentLocation}>
-      <h1>{currentLocation}</h1>
+    <div className="breadcrumb" aria-label={breadCrumbs}>
+      <h1>{breadCrumbs}</h1>
     </div>
   );
 };
 
-export default useBreadcrumbs;
+export default useBreadCrumbs;
