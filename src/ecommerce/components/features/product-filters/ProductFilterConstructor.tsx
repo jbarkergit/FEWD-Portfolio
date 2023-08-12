@@ -13,7 +13,7 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
   //Conditionally returns filterData for types Array & Set (converts Set to an Array)
   const useFilterData = () => {
     if (Array.isArray(filterData)) return filterData;
-    else if (filterData instanceof Set) return Array.from(filterData);
+    else if (filterData instanceof Set) throw new Error('useFilterData only accepts Arrays');
     else throw new Error('Filter Data Type may be void or returning null');
   };
 
@@ -22,10 +22,10 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
 
   //If useLoc is not found in useFilterData, setFilterName to initFilterName parameter, else setFilterName to useFilterData item or "data" as generic term
   useEffect(() => {
-    const companyFilterName = useFilterData().find((data) => data === useLoc);
-    if (companyFilterName) setFilterName(companyFilterName);
+    const locName = useFilterData().find((data) => data === useLoc);
+    if (locName) setFilterName(locName);
     else setFilterName(initFilterName);
-  }, [categoryFilter]);
+  }, [useLocation().pathname]);
 
   //Modal Refs & Toggle State Depedency
   const selectMenuRef = useRef<HTMLDivElement>(null),
