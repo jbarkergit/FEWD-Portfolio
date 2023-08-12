@@ -2,7 +2,7 @@ import { ProductDatabase } from '../assets/production-data/ProductDatabase';
 import { useCategoryFilterContext } from '../context/CategoryFilterContext';
 import { ProductType } from '../types/ProductType';
 
-const useProductFilter = (): ProductType[] => {
+const useProductFilter = (): ProductType[] | null => {
   // @ts-ignore:
   const { categoryFilter } = useCategoryFilterContext();
 
@@ -37,6 +37,8 @@ const useProductFilter = (): ProductType[] => {
   const useWearStyleHeadphones = filteredProducts.wearStyleHeadphones.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
   //POLAR PATTERN MICROPHONE FILTER
   const usePolarPatternMicrophones = filteredProducts.polarPatternMicrophones.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
+
+  if (!categoryFilter) return null;
 
   switch (categoryFilter) {
     case 'headphones':
