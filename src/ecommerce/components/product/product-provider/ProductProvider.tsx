@@ -5,6 +5,7 @@ import { ProductType } from '../../../types/ProductType';
 import { setArrayType } from '../../../types/SetArrayType';
 import ProductProp from './ProductProp';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
+import useProductFilter from '../../../hooks/useProductFilter';
 
 const ProductProvider = () => {
   // @ts-ignore
@@ -14,6 +15,7 @@ const ProductProvider = () => {
   //categoryFilter is a single global state, which is used by useProductFilter -> rerenders ProductProvider Prop upon navigation
 
   const paginatedSets: setArrayType[] = usePaginatedSets(); //Filtered & paginated products -> localize hook to prevent warnings
+  const filteredProducts: ProductType[] | null = useProductFilter();
 
   const [renderedSets, setRenderedSets] = useState<setArrayType[]>([paginatedSets[0]]); //Initialize empty array to hold paginated product sets
   useEffect(() => setRenderedSets([paginatedSets[0]]), [categoryFilter]); //Resets renderedSets state to hold the first set of products
@@ -47,7 +49,13 @@ const ProductProvider = () => {
               );
             })
           )
-        : null}
+        : filteredProducts?.map((product: ProductType) => {
+            return (
+              <Fragment key={uuidv4()}>
+                <ProductProp product={product} />
+              </Fragment>
+            );
+          })}
     </ul>
   );
 };
