@@ -38,7 +38,7 @@ const useProductFilter = (): ProductType[] | null => {
   //POLAR PATTERN MICROPHONE FILTER
   const usePolarPatternMicrophones = filteredProducts.polarPatternMicrophones.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
 
-  if (!categoryFilter) return null;
+  if (!categoryFilter) return null; //Performance safety net: prevent switch from firing early causing default to render
 
   switch (categoryFilter) {
     case 'headphones':
