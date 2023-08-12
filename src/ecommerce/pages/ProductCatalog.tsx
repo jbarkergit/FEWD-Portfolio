@@ -4,13 +4,10 @@ import ProductProvider from '../components/product/product-provider/ProductProvi
 import useBreadcrumbs from '../hooks/useBreadcrumbs';
 import ProductFilterConstructor from '../components/features/product-filters/ProductFilterConstructor';
 import useUniqueData from '../hooks/useUniqueData';
+import ConditionallyRenderedProductFilters from '../components/features/product-filters/ConditionallyRenderedProductFilters';
 
 const ProductCatalog = (): JSX.Element => {
-  //Filter Components built with ProductFilterConstructor: takes initial filter name and custom hook that returns data
-  //Data filtered via reduce method using useUniqueData custom hook
   const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData().useUniqueCompanies);
-  const PolarPatternFilter = (): JSX.Element => ProductFilterConstructor('Filter by Polar Pattern', useUniqueData().useUniquePolarPatterns);
-  const WearStyleFilter = (): JSX.Element => ProductFilterConstructor('Filter by Wear Style', useUniqueData().useUniqueWearStyles);
   return (
     <>
       <Header />
@@ -18,8 +15,7 @@ const ProductCatalog = (): JSX.Element => {
         <section className="productFilters">
           <div className="productFilters__panel">{useBreadcrumbs()}</div>
           <div className="productFilters__panel">
-            <WearStyleFilter />
-            <PolarPatternFilter />
+            <ConditionallyRenderedProductFilters />
             <CompanyFilter />
           </div>
         </section>
