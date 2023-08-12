@@ -17,6 +17,10 @@ import { CartProvider } from './ecommerce/context/CartContext';
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
 function App() {
+  const uniqueCompanies = useMemo(() => useUniqueData().useUniqueCompanies, [useUniqueData().useUniqueCompanies]);
+  const uniqueWearStyles = useMemo(() => useUniqueData().useUniqueWearStyles, [useUniqueData().useUniqueCompanies]);
+  const uniquePolarPatterns = useMemo(() => useUniqueData().useUniquePolarPatterns, [useUniqueData().useUniquePolarPatterns]);
+
   return (
     <BrowserRouter>
       <Suspense fallback={SuspenseLoader()}>
@@ -32,13 +36,13 @@ function App() {
               <Route path="/ecommerce/microphones" element={<ProductCatalog />} />
               <Route path="/ecommerce/interfaces" element={<ProductCatalog />} />
               <Route path="/ecommerce/product/:paramId" element={<ProductDetailPage />} />
-              {useUniqueData().useUniqueCompanies.map((company: string) => (
+              {uniqueCompanies.map((company: string) => (
                 <Route path={`/ecommerce/${company}`} element={<ProductCatalog />} key={company} />
               ))}
-              {useUniqueData().useUniqueWearStyles.map((wearStyle) => (
+              {uniqueWearStyles.map((wearStyle) => (
                 <Route path={`/ecommerce/${wearStyle}`} element={<ProductCatalog />} key={wearStyle} />
               ))}
-              {useUniqueData().useUniquePolarPatterns.map((polarPattern) => (
+              {uniquePolarPatterns.map((polarPattern) => (
                 <Route path={`/ecommerce/${polarPattern}`} element={<ProductCatalog />} key={polarPattern} />
               ))}
             </Routes>
