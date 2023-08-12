@@ -4,7 +4,7 @@ import ProductProvider from '../components/product/product-provider/ProductProvi
 import ProductFilterConstructor from '../components/features/product-filters/ProductFilterConstructor';
 import useUniqueData from '../hooks/useUniqueData';
 import ConditionallyRenderedProductFilters from '../components/features/product-filters/ConditionallyRenderedProductFilters';
-import useBreadCrumbs from '../hooks/useBreadcrumbs';
+import useBreadCrumbs from '../hooks/useBreadCrumbs';
 
 const ProductCatalog = (): JSX.Element => {
   const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData().useUniqueCompanies);
@@ -13,7 +13,7 @@ const ProductCatalog = (): JSX.Element => {
       <Header />
       <section className="browseProduct">
         <section className="productFilters">
-          <div className="productFilters__panel">{useBreadCrumbs()}</div>
+          {useBreadCrumbs()}
           <div className="productFilters__panel">
             <ConditionallyRenderedProductFilters />
             <CompanyFilter />
