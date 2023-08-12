@@ -9,30 +9,39 @@ const useUniqueData = () => {
         uniqueCompanySet: Set<string>;
         uniquePolarPatternSet: Set<string>;
         uniqueWearStyleSet: Set<string>;
+        uniqueHeadphoneCompanies: Set<string>;
       },
       product: ProductType
     ) => {
-      result.uniqueCompanySet.add(product.company as string); //Filter unique companies
+      result.uniqueCompanySet.add(product.company as string); //uniqueCompanies
 
-      //Filter unique polarPatterns: handles string props AND array props
+      //uniquePolarPatterns: handles string props AND array props
       if (typeof product.polarPattern === 'string') result.uniquePolarPatternSet.add(product.polarPattern as string);
       else if (Array.isArray(product.polarPattern)) product.polarPattern.forEach((pattern: string) => result.uniquePolarPatternSet.add(pattern as string));
 
-      if (product.wearStyle !== undefined) result.uniqueWearStyleSet.add(product.wearStyle as string); //Filter unique wearStyles
+      if (product.wearStyle !== undefined) result.uniqueWearStyleSet.add(product.wearStyle as string); //uniqueWearStyles
+
+      if (product.category === 'headphones') result.uniqueHeadphoneCompanies.add(product.company as string); //uniqueHeadphoneCompanies
 
       return result; //Return accumulator (stores filtered data)
     },
     //Initialize new Sets
-    { uniqueCompanySet: new Set<string>(), uniquePolarPatternSet: new Set<string>(), uniqueWearStyleSet: new Set<string>() }
+    {
+      uniqueCompanySet: new Set<string>(),
+      uniquePolarPatternSet: new Set<string>(),
+      uniqueWearStyleSet: new Set<string>(),
+      uniqueHeadphoneCompanies: new Set<string>(),
+    }
   );
 
   //Converts sets to arrays & sorts data in descending order
   const useUniqueCompanies: string[] = Array.from(uniqueDataProps.uniqueCompanySet).sort((a, b) => (a > b ? 1 : -1));
   const useUniquePolarPatterns: string[] = Array.from(uniqueDataProps.uniquePolarPatternSet).sort((a, b) => (a > b ? 1 : -1));
   const useUniqueWearStyles: string[] = Array.from(uniqueDataProps.uniqueWearStyleSet).sort((a, b) => (a > b ? 1 : -1));
+  const useUniqueHeadphoneCompanies: string[] = Array.from(uniqueDataProps.uniqueHeadphoneCompanies).sort((a, b) => (a > b ? 1 : -1));
 
   //Returns sorted arrays
-  return { useUniqueCompanies, useUniquePolarPatterns, useUniqueWearStyles };
+  return { useUniqueCompanies, useUniquePolarPatterns, useUniqueWearStyles, useUniqueHeadphoneCompanies };
 };
 
 export default useUniqueData;
