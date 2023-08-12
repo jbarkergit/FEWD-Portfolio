@@ -1,19 +1,20 @@
+import { useMemo } from 'react';
 import { ProductType } from '../types/ProductType';
 import { setArrayType } from '../types/SetArrayType';
 import useProductFilter from './useProductFilter';
 
 const usePaginatedSets = (): setArrayType[] => {
-  const paginatedSets: setArrayType[] = [];
+  const useFilteredProducts: ProductType[] = useProductFilter(); //Pull product data
+  const filteredProducts: ProductType[] = useMemo(() => useFilteredProducts, [useProductFilter()]); //Memoize product data
+  const paginatedProducts: setArrayType[] = []; //Initialize empty array for paginated sets
 
-  if (useProductFilter) {
-    const filteredProducts: ProductType[] = useProductFilter().sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
-
-    for (let i = 0; i < filteredProducts.length; i += 9) {
-      const setItems = filteredProducts.slice(i, i + 9);
-      paginatedSets.push({ id: paginatedSets.length + 1, products: setItems });
-    }
+  //Iterate over products, slice into arrays of 9, push to paginatedProducts
+  for (let i = 0; i < filteredProducts.length; i += 9) {
+    const setItems = filteredProducts.slice(i, i + 9);
+    paginatedProducts.push({ id: paginatedProducts.length + 1, products: setItems });
   }
-  return paginatedSets;
+
+  return paginatedProducts;
 };
 
 export default usePaginatedSets;

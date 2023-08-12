@@ -11,30 +11,32 @@ const useProductFilter = (): ProductType[] => {
       result: {
         categoryProducts: ProductType[];
         ampsDacs: ProductType[];
-        wearStyleHeadphones: ProductType[];
         companyProducts: ProductType[];
-        companyHeadphones: ProductType[];
+        wearStyleHeadphones: ProductType[];
         polarPatternMicrophones: ProductType[];
       },
       product: ProductType
     ) => {
       if (product.category?.includes(categoryFilter)) result.categoryProducts.push({ ...product });
       if (product.category?.includes('amps' || 'dacs' || 'amps-dacs')) result.ampsDacs.push({ ...product });
-      if (product.wearStyle?.includes(categoryFilter)) result.wearStyleHeadphones.push({ ...product });
-      if (product.company?.includes(categoryFilter) && product.wearStyle?.includes(categoryFilter)) result.companyHeadphones.push({ ...product });
       if (product.company?.includes(categoryFilter)) result.companyProducts.push({ ...product });
+      if (product.wearStyle?.includes(categoryFilter)) result.wearStyleHeadphones.push({ ...product });
       if (product.polarPattern?.includes(categoryFilter)) result.polarPatternMicrophones.push({ ...product });
       return result;
     },
-    { categoryProducts: [], wearStyleHeadphones: [], ampsDacs: [], companyProducts: [], companyHeadphones: [], polarPatternMicrophones: [] }
+    { categoryProducts: [], wearStyleHeadphones: [], ampsDacs: [], companyProducts: [], polarPatternMicrophones: [] }
   );
 
-  const useCategoryProducts = filteredProducts.categoryProducts;
-  const useAmpsDacs = filteredProducts.ampsDacs;
-  const useWearStyleHeadphones = filteredProducts.wearStyleHeadphones;
-  const useCompanyHeadphones = filteredProducts.companyHeadphones;
-  const useCompanyProducts = filteredProducts.companyProducts;
-  const usePolarPatternMicrophones = filteredProducts.polarPatternMicrophones;
+  //Main navigation
+  const useCategoryProducts = filteredProducts.categoryProducts.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
+  //Amps & Dacs (union page)
+  const useAmpsDacs = filteredProducts.ampsDacs.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
+  //COMPANY FILTER
+  const useCompanyProducts = filteredProducts.companyProducts.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
+  //WEAR STYLE HEADPHONE FILTER
+  const useWearStyleHeadphones = filteredProducts.wearStyleHeadphones.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
+  //POLAR PATTERN MICROPHONE FILTER
+  const usePolarPatternMicrophones = filteredProducts.polarPatternMicrophones.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
 
   switch (categoryFilter) {
     case 'headphones':
@@ -58,9 +60,8 @@ const useProductFilter = (): ProductType[] => {
     case 'semi-open':
       return useWearStyleHeadphones;
     default:
-      if (useCompanyProducts.length > 0) return useCompanyProducts; //check if user is filtering by companies
-      else if (useCompanyHeadphones.length > 0) return useCompanyHeadphones; //check if user is filtering by headphones wear style
-      else return ProductDatabase; //return product database if no condition is met
+      if (useCompanyProducts.length > 0) return useCompanyProducts; //User Company Filter interaction check
+      else return ProductDatabase; //Return all products if no condition is satisfied
   }
 };
 
