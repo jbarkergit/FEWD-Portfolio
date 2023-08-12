@@ -14,10 +14,10 @@ const ConditionallyRenderedProductFilters = () => {
   const PolarPatternFilter = (): JSX.Element => ProductFilterConstructor('Filter by Polar Pattern', uniquePolarPatterns);
 
   //Condition for renders
-  const useLoc = useLocation().pathname.replace('/ecommerce/', '');
+  const location = useLocation().pathname.replace('/ecommerce/', '');
 
-  if (useLoc === 'headphones' || uniqueHeadphoneCompanies.includes(useLoc) || uniqueWearStyles.includes(useLoc)) return <WearStyleFilter />;
-  else if (useLoc === 'microphones' || uniquePolarPatterns.includes(useLoc)) return <PolarPatternFilter />;
+  if (location === 'headphones' || uniqueHeadphoneCompanies.includes(location) || uniqueWearStyles.includes(location)) return <WearStyleFilter />;
+  else if (location === 'microphones' || uniquePolarPatterns.includes(location)) return <PolarPatternFilter />;
 };
 
 export default ConditionallyRenderedProductFilters;
