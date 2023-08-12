@@ -7,17 +7,21 @@ const ConditionallyRenderedProductFilters = () => {
   //Memoized data dependencies
   const uniqueWearStyles = useMemo(() => useUniqueData().useUniqueWearStyles, [useUniqueData().useUniqueCompanies]);
   const uniquePolarPatterns = useMemo(() => useUniqueData().useUniquePolarPatterns, [useUniqueData().useUniquePolarPatterns]);
-  const uniqueHeadphoneCompanies = useMemo(() => useUniqueData().useUniqueHeadphoneCompanies, [useUniqueData().useUniqueHeadphoneCompanies]);
 
   //Filter Components built with ProductFilterConstructor: takes initial filter name and custom hook that returns data
   const WearStyleFilter = (): JSX.Element => ProductFilterConstructor('Filter by Wear Style', uniqueWearStyles);
   const PolarPatternFilter = (): JSX.Element => ProductFilterConstructor('Filter by Polar Pattern', uniquePolarPatterns);
 
-  //Condition for renders
+  //Memoized conditional data dependencies for conditional rendering
+  const uniqueHeadphoneCompanies = useMemo(() => useUniqueData().useUniqueHeadphoneCompanies, [useUniqueData().useUniqueHeadphoneCompanies]);
+  const uniqueMicrophoneCompanies = useMemo(() => useUniqueData().useUniqueMicrophoneCompanies, [useUniqueData().useUniqueMicrophoneCompanies]);
+
+  //Variable conditional dependencies for conditional rendering
   const location = useLocation().pathname.replace('/ecommerce/', '');
 
+  //Conditional rendering
   if (location === 'headphones' || uniqueHeadphoneCompanies.includes(location) || uniqueWearStyles.includes(location)) return <WearStyleFilter />;
-  else if (location === 'microphones' || uniquePolarPatterns.includes(location)) return <PolarPatternFilter />;
+  else if (location === 'microphones' || uniqueMicrophoneCompanies || uniquePolarPatterns.includes(location)) return <PolarPatternFilter />;
 };
 
 export default ConditionallyRenderedProductFilters;
