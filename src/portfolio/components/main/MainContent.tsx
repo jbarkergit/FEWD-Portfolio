@@ -174,6 +174,7 @@ const MainContent = (): JSX.Element => {
           webm=""
           projectName="Dynamic Audio"
           projectType="Ecommerce"
+          documentationLink="/"
           demoLink="/ecommerce"
           dataStatus="active"
           dataActivity="active"
@@ -184,7 +185,6 @@ const MainContent = (): JSX.Element => {
           webm=""
           projectName="FE Assistant"
           projectType="Work in Progress"
-          imgStyle={{ objectPosition: 'top center' }}
           dataStatus="disabled"
           dataActivity="disabled"
           addToRefs={addToRefs}
