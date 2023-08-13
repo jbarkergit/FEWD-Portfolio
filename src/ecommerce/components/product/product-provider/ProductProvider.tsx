@@ -14,11 +14,16 @@ const ProductProvider = () => {
   //usePaginatedSets utilizes useProductFilter, which uses useState[categoryFilter] Context Hook to render appropriate product arrays
   //categoryFilter is a single global state, which is used by useProductFilter -> rerenders ProductProvider Prop upon navigation
 
-  const paginatedSets: setArrayType[] = usePaginatedSets(); //Filtered & paginated products -> localize hook to prevent warnings
-  const filteredProducts: ProductType[] | null = useProductFilter();
+  const filteredProducts: ProductType[] | null = useProductFilter(); //Safety conditional fallback for conditional rendering
 
-  const [renderedSets, setRenderedSets] = useState<setArrayType[]>([paginatedSets[0]]); //Initialize empty array to hold paginated product sets
-  useEffect(() => setRenderedSets([paginatedSets[0]]), [categoryFilter]); //Resets renderedSets state to hold the first set of products
+  const paginatedSets: setArrayType[] = usePaginatedSets(); //Filtered & paginated products -> localize hook to prevent warnings
+
+  const [renderedSets, setRenderedSets] = useState<setArrayType[]>([]); //Initialize empty array to hold paginated product sets
+  // console.log(paginatedSets);
+
+  useEffect(() => {
+    if (paginatedSets) setRenderedSets([paginatedSets[0]]);
+  }, [categoryFilter]); //Resets renderedSets state to hold the first set of products
 
   const lastProductRef = useRef<HTMLLIElement>(null); //useRef to be placed on last rendered element (for the observer)
 
