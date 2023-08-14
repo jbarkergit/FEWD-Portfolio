@@ -18,7 +18,7 @@ const useProductFilter = (): ProductType[] | null => {
       product: ProductType
     ) => {
       if (product.category?.includes(categoryFilter)) result.categoryProducts.push({ ...product });
-      if (product.category?.includes('amps' || 'dacs' || 'amps-dacs')) result.ampsDacs.push({ ...product });
+      if (product.category?.includes('amps') || product.category?.includes('dacs') || product.category?.includes('amps-dacs')) result.ampsDacs.push({ ...product });
       if (product.company?.includes(categoryFilter)) result.companyProducts.push({ ...product });
       if (product.wearStyle?.includes(categoryFilter)) result.wearStyleHeadphones.push({ ...product });
       if (product.polarPattern?.includes(categoryFilter)) result.polarPatternMicrophones.push({ ...product });
