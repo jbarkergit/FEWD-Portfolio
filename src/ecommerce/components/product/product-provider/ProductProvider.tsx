@@ -22,8 +22,10 @@ const ProductProvider = (): JSX.Element => {
 
   //Push new array of products when the last visible product is in the viewport
   const pushProducts = () => {
-    setVisibleProducts((prevVisibleProducts) => [...prevVisibleProducts, ...paginatedProducts[visibleArrayIndex + 1]]);
-    setVisibleArrayIndex(visibleArrayIndex + 1);
+    if (visibleArrayIndex + 1 < paginatedProducts.length) {
+      setVisibleProducts((prevVisibleProducts) => [...prevVisibleProducts, ...paginatedProducts[visibleArrayIndex + 1]]);
+      setVisibleArrayIndex((prevVisibleArrayIndex) => prevVisibleArrayIndex + 1);
+    }
   };
 
   //Envoke pushProducts when the last visible product is in the viewport
