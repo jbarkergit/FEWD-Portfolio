@@ -1,37 +1,68 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import usePaginatedSets from '../../../hooks/usePaginatedSets';
 import { ProductType } from '../../../types/ProductType';
 import ProductProp from './ProductProp';
+import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 //usePaginatedSets utilizes useProductFilter, which uses useState[categoryFilter] Context Hook to render appropriate product arrays
 //categoryFilter is a single global state, which is used by useProductFilter -> rerenders ProductProvider Prop upon navigation
 
 const ProductProvider = (): JSX.Element => {
-  const paginatedProducts: ProductType[][] = usePaginatedSets(); //Filtered & paginated products -> localize hook to prevent warnings
+  // @ts-ignore:
+  const { categoryFilter } = useCategoryFilterContext();
+  const paginatedProducts: ProductType[][] = usePaginatedSets(); //Filtered & paginated products
+  const [visibleProducts, setVisibleProducts] = useState<ProductType[]>([]); //useState that holds current visible products to be mapped
+  const [visibleArrayIndex, setVisibleArrayIndex] = useState<number>(0); //Tracks current visible array index
+  const lastProductRef = useRef<HTMLLIElement>(null); //Reference variable to keep track of last visible product
 
-  //useRef to be placed on last rendered element for the observer
-  const lastProductRef = useRef<HTMLLIElement>(null);
+  //Push first set of products to dom on navigation
+  useEffect(() => {
+    if (paginatedProducts.length > 0) setVisibleProducts(paginatedProducts[0]);
+  }, [categoryFilter, paginatedProducts]);
 
-  // Retrieves data and pushes to fetchedSetsStorage when last product is in the viewport
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver((entries) => {
-  //     //Check if the last product element is visible
-  //     if (entries[0].isIntersecting) setRenderedSets((renderedProductSets) => [...renderedProductSets, paginatedSets[renderedSets.length]]);
-  //   });
+  //Push new array of products when the last visible product is in the viewport
+  const pushProducts = () => {
+    setVisibleProducts((prevVisibleProducts) => [...prevVisibleProducts, ...paginatedProducts[visibleArrayIndex + 1]]);
+    setVisibleArrayIndex(visibleArrayIndex + 1);
+  };
 
-  //   if (lastProductRef.current) observer.observe(lastProductRef.current);
-  //   return () => {
-  //     if (lastProductRef.current) observer.unobserve(lastProductRef.current);
-  //     observer.disconnect;
-  //   };
-  // }, []);
+  //Envoke pushProducts when the last visible product is in the viewport
+  const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
+    const [entry] = entries;
+    if (entry.isIntersecting) pushProducts();
+  };
+
+  //Observer logic
+  useEffect(() => {
+    const observer = new IntersectionObserver(intersectionCallback, {
+      root: null, //Defining null allows the observer to use the dom viewport
+      threshold: 1.0, //Physical element amount visible in viewport (10%)
+    });
+
+    if (lastProductRef.current) observer.observe(lastProductRef.current);
+
+    return () => {
+      if (lastProductRef.current) observer.unobserve(lastProductRef.current);
+      observer.disconnect(); //Prevent memory leaks
+    };
+  }, [visibleProducts]);
 
   return (
     <ul className="productGrid">
-      {paginatedProducts.map((paginatedArrays: ProductType[]) => {
-        return paginatedArrays.map((product: ProductType) => {
-          return <ProductProp key={product.unit} product={product} />;
-        });
+      {visibleProducts.map((product: ProductType, index: number) => {
+        if (index === visibleProducts.length - 1) {
+          return (
+            <li key={product.unit} ref={lastProductRef}>
+              <ProductProp product={product} />
+            </li>
+          );
+        } else {
+          return (
+            <li key={product.unit}>
+              <ProductProp product={product} />
+            </li>
+          );
+        }
       })}
     </ul>
   );
