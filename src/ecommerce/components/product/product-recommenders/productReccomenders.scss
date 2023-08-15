@@ -24,15 +24,19 @@
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
     gap: f.rem(35);
-    max-width: f.rem(1600);
+    width: f.rem(1600);
     &__item a article {
       position: relative;
+      display: flex;
+      justify-content: center;
       aspect-ratio: 0.8/1;
       border-radius: f.rem(26);
       overflow: hidden;
       box-shadow: -1px -1px 20px 0px #ffffff, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
       & picture {
-        position: relative;
+        position: absolute;
+        bottom: 0;
+        left: 0;
         display: flex;
         align-items: flex-end;
         z-index: 3;
@@ -55,23 +59,23 @@
         }
       }
       & hgroup {
-        position: absolute;
-        inset: -65% 0 0 0;
-        margin: auto;
-        width: max-content;
-        max-width: 22ch;
-        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        position: relative;
         z-index: 4;
-        pointer-events: none;
+        padding: 8% 15% 0 15%;
         & h2 {
+          width: fit-content;
           font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(36));
           font-weight: 700;
         }
         & h3 {
+          width: fit-content;
           font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
           font-weight: 500;
         }
         & h4 {
+          width: fit-content;
           font-weight: 500;
         }
       }
