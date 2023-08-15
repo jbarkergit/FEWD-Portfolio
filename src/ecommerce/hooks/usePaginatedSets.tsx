@@ -1,17 +1,24 @@
+import { useEffect, useState } from 'react';
 import { ProductType } from '../types/ProductType';
-import { setArrayType } from '../types/SetArrayType';
 import useProductFilter from './useProductFilter';
+import { useCategoryFilterContext } from '../context/CategoryFilterContext';
 
-const usePaginatedSets = (): setArrayType[] => {
-  const filteredProducts: ProductType[] | null = useProductFilter(); //Pull product data //useMemo not necessary, useProductFilter reruns on navigation.
-  const paginatedProducts: setArrayType[] = []; //Initialize empty array for paginated sets
+const usePaginatedSets = (): ProductType[][] => {
+  // @ts-ignore
+  const { categoryFilter } = useCategoryFilterContext();
+  const filteredData: ProductType[] = useProductFilter(); //Localize variable in FC, pass to useEffect
 
-  //Iterate over products, slice into arrays of 7, push to storage array: paginatedProducts
-  if (filteredProducts)
-    for (let i = 0; i < filteredProducts.length; i += 7) {
-      const setItems = filteredProducts.slice(i, i + 7);
-      paginatedProducts.push({ id: paginatedProducts.length + 1, products: setItems });
+  //Iterate over filteredProducts, slice into arrays of 7, push to storage array, setPaginatedProducts(storage array)
+  const [paginatedProducts, setPaginatedProducts] = useState<ProductType[][]>([]);
+
+  useEffect(() => {
+    const paginatedData: ProductType[][] = [];
+    for (let i = 0; i < filteredData.length; i += 7) {
+      const setItems = filteredData.slice(i, i + 7);
+      paginatedData.push(setItems);
     }
+    setPaginatedProducts(paginatedData);
+  }, [categoryFilter]);
 
   return paginatedProducts;
 };

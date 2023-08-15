@@ -1,66 +1,38 @@
-import { useState, useEffect, useRef, Fragment } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useRef } from 'react';
 import usePaginatedSets from '../../../hooks/usePaginatedSets';
 import { ProductType } from '../../../types/ProductType';
-import { setArrayType } from '../../../types/SetArrayType';
 import ProductProp from './ProductProp';
-import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
-import useProductFilter from '../../../hooks/useProductFilter';
 
-const ProductProvider = () => {
-  // @ts-ignore
-  const { categoryFilter } = useCategoryFilterContext();
+//usePaginatedSets utilizes useProductFilter, which uses useState[categoryFilter] Context Hook to render appropriate product arrays
+//categoryFilter is a single global state, which is used by useProductFilter -> rerenders ProductProvider Prop upon navigation
 
-  //usePaginatedSets utilizes useProductFilter, which uses useState[categoryFilter] Context Hook to render appropriate product arrays
-  //categoryFilter is a single global state, which is used by useProductFilter -> rerenders ProductProvider Prop upon navigation
+const ProductProvider = (): JSX.Element => {
+  const paginatedProducts: ProductType[][] = usePaginatedSets(); //Filtered & paginated products -> localize hook to prevent warnings
 
-  const filteredProducts: ProductType[] | null = useProductFilter(); //Safety conditional fallback for conditional rendering
+  //useRef to be placed on last rendered element for the observer
+  const lastProductRef = useRef<HTMLLIElement>(null);
 
-  const paginatedSets: setArrayType[] = usePaginatedSets(); //Filtered & paginated products -> localize hook to prevent warnings
+  // Retrieves data and pushes to fetchedSetsStorage when last product is in the viewport
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver((entries) => {
+  //     //Check if the last product element is visible
+  //     if (entries[0].isIntersecting) setRenderedSets((renderedProductSets) => [...renderedProductSets, paginatedSets[renderedSets.length]]);
+  //   });
 
-  const [renderedSets, setRenderedSets] = useState<setArrayType[]>([]); //Initialize empty array to hold paginated product sets
-  // console.log(paginatedSets);
-
-  useEffect(() => {
-    if (paginatedSets) setRenderedSets([paginatedSets[0]]);
-  }, [categoryFilter]); //Resets renderedSets state to hold the first set of products
-
-  const lastProductRef = useRef<HTMLLIElement>(null); //useRef to be placed on last rendered element (for the observer)
-
-  //Retrieves data and pushes to fetchedSetsStorage when last product is in the viewport
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      //Check if the last product element is visible
-      if (entries[0].isIntersecting) setRenderedSets((renderedProductSets) => [...renderedProductSets, paginatedSets[renderedSets.length]]);
-    });
-
-    if (lastProductRef.current) observer.observe(lastProductRef.current);
-    return () => {
-      if (lastProductRef.current) observer.unobserve(lastProductRef.current);
-      observer.disconnect;
-    };
-  }, []);
+  //   if (lastProductRef.current) observer.observe(lastProductRef.current);
+  //   return () => {
+  //     if (lastProductRef.current) observer.unobserve(lastProductRef.current);
+  //     observer.disconnect;
+  //   };
+  // }, []);
 
   return (
     <ul className="productGrid">
-      {renderedSets.length > 0
-        ? renderedSets.map((productSet: setArrayType) =>
-            productSet?.products.map((product: ProductType, index: number) => {
-              return (
-                <Fragment key={uuidv4()}>
-                  <ProductProp product={product} />
-                  {renderedSets.length - 1 === index && renderedSets[renderedSets.length - 1] === productSet && <li key="lastProduct" ref={lastProductRef} />}
-                </Fragment>
-              );
-            })
-          )
-        : filteredProducts?.map((product: ProductType) => {
-            return (
-              <Fragment key={uuidv4()}>
-                <ProductProp product={product} />
-              </Fragment>
-            );
-          })}
+      {paginatedProducts.map((paginatedArrays: ProductType[]) => {
+        return paginatedArrays.map((product: ProductType) => {
+          return <ProductProp key={product.unit} product={product} />;
+        });
+      })}
     </ul>
   );
 };
