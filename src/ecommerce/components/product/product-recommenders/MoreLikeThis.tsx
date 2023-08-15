@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ProductType } from '../../../types/ProductType';
-import useProductFilter from '../../../hooks/useProductFilter';
+import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 
 type MoreLikeThisType = {
   findProduct: ProductType;
 };
 
 const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
-  const filteredRecommenders = useProductFilter().filter((product) => product.sku !== findProduct.sku);
+  const filteredRecommenders = ProductDatabase.filter((product) => product.sku !== findProduct.sku);
 
   return (
     <section className="recommenders" style={{ backgroundColor: 'transparent' }}>
