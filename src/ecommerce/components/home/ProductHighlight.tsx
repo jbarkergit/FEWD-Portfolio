@@ -1,4 +1,4 @@
-import { MutableRefObject, RefObject, createRef, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ProductDatabase } from '../../assets/production-data/ProductDatabase';
@@ -6,7 +6,6 @@ import { ProductType } from '../../types/ProductType';
 
 const ProductHighlight = (): JSX.Element => {
   const revealRefs = useRef<HTMLPictureElement[]>([]);
-  revealRefs.current = [];
 
   const addToRefs = (el: HTMLPictureElement) => {
     if (el && !revealRefs.current.includes(el)) revealRefs.current.push(el);
@@ -14,16 +13,16 @@ const ProductHighlight = (): JSX.Element => {
 
   useEffect(() => {
     const userPointerOver = (e: PointerEvent): void => {
-      const curTarget = e.currentTarget as HTMLPictureElement,
-        asideTarget = curTarget.nextSibling as HTMLElement,
-        videoTarget = asideTarget.children[0] as HTMLVideoElement;
+      const curTarget = e.currentTarget as HTMLPictureElement;
+      const asideTarget = curTarget.nextSibling as HTMLElement;
+      const videoTarget = asideTarget.children[0] as HTMLVideoElement;
       videoTarget.play();
     };
 
     const userPointerLeave = (e: PointerEvent): void => {
-      const curTarget = e.currentTarget as HTMLPictureElement,
-        asideTarget = curTarget.nextSibling as HTMLElement,
-        videoTarget = asideTarget.children[0] as HTMLVideoElement;
+      const curTarget = e.currentTarget as HTMLPictureElement;
+      const asideTarget = curTarget.nextSibling as HTMLElement;
+      const videoTarget = asideTarget.children[0] as HTMLVideoElement;
       videoTarget.pause();
       videoTarget.currentTime = 0;
     };
@@ -33,14 +32,12 @@ const ProductHighlight = (): JSX.Element => {
       ref.addEventListener('pointerleave', userPointerLeave);
     });
 
-    const listenerUnmount = (): void => {
+    return () => {
       revealRefs.current?.forEach((ref) => {
         ref.removeEventListener('pointerover', userPointerOver);
         ref.removeEventListener('pointerleave', userPointerLeave);
       });
     };
-
-    return listenerUnmount;
   }, []);
 
   return (
