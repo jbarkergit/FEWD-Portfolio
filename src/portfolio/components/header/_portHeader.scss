@@ -5,47 +5,42 @@
   position: relative;
   display: flex;
   width: 100%;
-  height: 9.26%;
+  height: 12%;
   z-index: 10;
   padding: m.$viewportMarginTopBottom 8.33% 0 8.33%;
 }
 
 .portHeader__index {
   display: flex;
-  &__indicator {
+  height: 100%;
+  & > * {
     display: flex;
-    align-items: center;
-    & > * {
-      display: grid;
-      height: 100%;
+    height: 100%;
+  }
+  &__location {
+    display: flex;
+    align-content: flex-start;
+    padding-right: f.rem(18);
+    font-weight: 500;
+  }
+  &__slideNav ul {
+    position: relative;
+    display: flex;
+    gap: f.rem(18);
+    font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
+    &:after {
+      content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGQ9Im0zLjE2NSAxOS41MDNsNy4zNjItMTYuNTFjLjU5LTEuMzI0IDIuMzU1LTEuMzI0IDIuOTQ2IDBsNy4zNjIgMTYuNTFjLjY2NyAxLjQ5NS0uODE0IDMuMDQ3LTIuMjAyIDIuMzA2bC01LjkwNC0zLjE1MmMtLjQ1OS0uMjQ1LTEtLjI0NS0xLjQ1OCAwbC01LjkwNCAzLjE1MmMtMS4zODguNzQtMi44Ny0uODEtMi4yMDItMi4zMDZaIi8+PC9zdmc+);
+      position: absolute;
+      left: 0;
+      top: f.rem(24);
+      display: block;
+      transform: translateX(var(--afterPsuedoSelector));
+      transition: transform 0.35s ease;
     }
-    &__location {
-      display: flex;
-      align-content: flex-start;
-      width: f.rem(105);
-      font-weight: 500;
-    }
-    &__slideNav ul {
-      position: relative;
-      display: flex;
-      gap: f.rem(18);
-      margin-left: f.rem(48);
-      font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
-      &:after {
-        content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGQ9Im0zLjE2NSAxOS41MDNsNy4zNjItMTYuNTFjLjU5LTEuMzI0IDIuMzU1LTEuMzI0IDIuOTQ2IDBsNy4zNjIgMTYuNTFjLjY2NyAxLjQ5NS0uODE0IDMuMDQ3LTIuMjAyIDIuMzA2bC01LjkwNC0zLjE1MmMtLjQ1OS0uMjQ1LTEtLjI0NS0xLjQ1OCAwbC01LjkwNCAzLjE1MmMtMS4zODguNzQtMi44Ny0uODEtMi4yMDItMi4zMDZaIi8+PC9zdmc+);
-        position: absolute;
-        left: 0;
-        top: f.rem(24);
-        display: block;
-        transform: translateX(var(--afterPsuedoSelector));
-        transition: transform 0.35s ease;
-      }
-      & li {
+    & li {
+      & button {
         color: white;
         font-weight: 300;
-        &:hover {
-          cursor: pointer;
-        }
       }
     }
   }
@@ -53,14 +48,12 @@
 
 .portHeader__menu {
   display: flex;
+  align-items: flex-start;
   justify-content: flex-end;
-  &__nav {
-    display: flex;
-    gap: f.rem(18);
-    & button {
-      color: white;
-      font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
-      text-transform: capitalize;
-    }
+  gap: f.rem(18);
+  & button {
+    color: white;
+    font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
+    text-transform: capitalize;
   }
 }

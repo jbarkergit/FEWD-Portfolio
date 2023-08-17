@@ -23,41 +23,37 @@ const PortHeader = ({ closestIndex, setClosestIndex, showDialog, setShowDialog, 
   return (
     <header className="portHeader">
       <section className="portHeader__index">
-        <div className="portHeader__index__indicator">
-          <div className="portHeader__index__indicator__location">{`Project 0${closestIndex + 1}.`}</div>
-          <nav className="portHeader__index__indicator__slideNav">
-            <ul ref={unorderedListRef}>
-              {Array.from({ length: 3 }).map((_, index) => (
-                <li key={index} role="button" onClick={() => setClosestIndex(index)}>
-                  0{index + 1}.
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
+        <div className="portHeader__index__location">{`Project 0${closestIndex + 1}.`}</div>
+        <nav className="portHeader__index__slideNav">
+          <ul ref={unorderedListRef}>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <li key={index}>
+                <button onClick={() => setClosestIndex(index)}>0{index + 1}.</button>
+              </li>
+            ))}
+          </ul>
+        </nav>
         <div className="portHeader__slideSelection__slideIndex"></div>
       </section>
       <section className="portHeader__menu">
-        <nav className="portHeader__menu__nav">
-          <button
-            ref={aboutDialogButtonRef}
-            onClick={() => {
-              setShowDialog(true);
-              setDialogTab('about');
-            }}
-          >
-            Technologies
-          </button>
-          <button
-            ref={contactDialogButtonRef}
-            onClick={() => {
-              setShowDialog(true);
-              setDialogTab('contact');
-            }}
-          >
-            Contact
-          </button>
-        </nav>
+        <button
+          ref={aboutDialogButtonRef}
+          onClick={() => {
+            setShowDialog(true);
+            setDialogTab('about');
+          }}
+        >
+          Technologies
+        </button>
+        <button
+          ref={contactDialogButtonRef}
+          onClick={() => {
+            setShowDialog(true);
+            setDialogTab('contact');
+          }}
+        >
+          Contact
+        </button>
       </section>
     </header>
   );
