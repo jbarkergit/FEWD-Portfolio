@@ -3,8 +3,9 @@
 
 .mainContent {
   display: flex;
-  align-items: center;
-  height: 76%;
+  align-items: flex-end;
+  height: 88%;
+  padding: 0 0 m.$viewportMarginTopBottom 0;
   &__nav {
     display: grid;
     grid-auto-flow: column;

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import PortHeader from '../components/header/PortHeader';
 import MainContent from '../components/main/MainContent';
-import PortFooter from '../components/footer/PortFooter';
 import DeveloperDialog from '../components/dialog/DeveloperDialog';
 
 const Portfolio = (): JSX.Element => {
@@ -20,7 +19,6 @@ const Portfolio = (): JSX.Element => {
       />
       <DeveloperDialog showDialog={showDialog} setShowDialog={setShowDialog} dialogTab={dialogTab} setDialogTab={setDialogTab} />
       <MainContent closestIndex={closestIndex} setClosestIndex={setClosestIndex} />
-      <PortFooter />
     </div>
   );
 };

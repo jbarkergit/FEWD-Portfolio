@@ -8,25 +8,23 @@
   height: 12%;
   z-index: 10;
   padding: m.$viewportMarginTopBottom 8.33% 0 8.33%;
+  & > * {
+    display: flex;
+    flex: 1 1 calc(100% / 3);
+  }
 }
 
 .portHeader__index {
-  display: flex;
-  height: 100%;
-  & > * {
-    display: flex;
-    height: 100%;
-  }
   &__location {
     display: flex;
     align-content: flex-start;
-    padding-right: f.rem(18);
+    padding-right: m.$portfolioGap;
     font-weight: 500;
   }
   &__slideNav ul {
     position: relative;
     display: flex;
-    gap: f.rem(18);
+    gap: m.$portfolioGap;
     font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
     &:after {
       content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGQ9Im0zLjE2NSAxOS41MDNsNy4zNjItMTYuNTFjLjU5LTEuMzI0IDIuMzU1LTEuMzI0IDIuOTQ2IDBsNy4zNjIgMTYuNTFjLjY2NyAxLjQ5NS0uODE0IDMuMDQ3LTIuMjAyIDIuMzA2bC01LjkwNC0zLjE1MmMtLjQ1OS0uMjQ1LTEtLjI0NS0xLjQ1OCAwbC01LjkwNCAzLjE1MmMtMS4zODguNzQtMi44Ny0uODEtMi4yMDItMi4zMDZaIi8+PC9zdmc+);
@@ -46,11 +44,14 @@
   }
 }
 
+.portHeader__currentTimeCDT {
+  justify-content: center;
+}
+
 .portHeader__menu {
-  display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  gap: f.rem(18);
+  gap: m.$portfolioGap;
   & button {
     color: white;
     font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
