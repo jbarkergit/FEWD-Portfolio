@@ -51,32 +51,39 @@
           opacity: 0.8;
         }
         & img {
+          position: relative;
           max-height: 68%;
           object-fit: scale-down;
           object-position: center bottom;
           mix-blend-mode: darken;
           padding: 3% 1% 10% 1%;
+          opacity: 1;
+          transition: 0.4s ease-in;
+          &.fadeOut {
+            opacity: 0;
+            transition: 0.4s ease-out;
+          }
         }
-      }
-      & hgroup {
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        z-index: 4;
-        padding: 8% 15% 0 15%;
-        & h2 {
-          width: fit-content;
-          font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(36));
-          font-weight: 700;
-        }
-        & h3 {
-          width: fit-content;
-          font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
-          font-weight: 500;
-        }
-        & h4 {
-          width: fit-content;
-          font-weight: 500;
+        & hgroup {
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          z-index: 4;
+          padding: 8% 15% 0 15%;
+          & h2 {
+            width: fit-content;
+            font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(36));
+            font-weight: 700;
+          }
+          & h3 {
+            width: fit-content;
+            font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
+            font-weight: 500;
+          }
+          & h4 {
+            width: fit-content;
+            font-weight: 500;
+          }
         }
       }
     }
