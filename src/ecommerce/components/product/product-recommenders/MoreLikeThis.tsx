@@ -8,7 +8,7 @@ type MoreLikeThisType = {
 };
 
 const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
-  const filteredRecommenders = ProductDatabase.filter((product) => product.sku !== findProduct.sku).splice(0, 8);
+  const filteredRecommenders = ProductDatabase.filter((product) => product.sku !== findProduct.sku);
 
   return (
     <section className="recommenders" style={{ backgroundColor: 'transparent' }}>
@@ -16,12 +16,12 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
         More {findProduct.category}s like <span className="highlight">{findProduct.unit}</span>
       </h2>
       <ul className="recommenders__unorderedList">
-        {filteredRecommenders.map((product) => (
+        {filteredRecommenders.splice(0, 8).map((product) => (
           <li key={uuidv4()} className="recommenders__unorderedList__item">
             <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0 })}>
               <article>
                 <picture>
-                  <img className="" src={product.images![0]} alt={`${product.company} ${product.unit}`} decoding="async" fetchpriority="high" loading="lazy" />
+                  <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />
                 </picture>
                 <hgroup>
                   <h3>{product.company}</h3>
