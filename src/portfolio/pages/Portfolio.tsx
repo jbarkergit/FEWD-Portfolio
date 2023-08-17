@@ -1,20 +1,25 @@
+import { useState } from 'react';
 import PortHeader from '../components/header/PortHeader';
 import MainContent from '../components/main/MainContent';
 import PortFooter from '../components/footer/PortFooter';
 import DeveloperDialog from '../components/dialog/DeveloperDialog';
-import { DialogContextProvider } from '../context/DialogContext';
-import { ClosestIndexContextProvider } from '../context/ClosestIndexContext';
 
 const Portfolio = (): JSX.Element => {
+  const [closestIndex, setClosestIndex] = useState<number>(0);
+  const [showDialog, setShowDialog] = useState<boolean | null>(false);
+  const [dialogTab, setDialogTab] = useState<string | null>('contact');
   return (
     <div id="portfolio">
-      <ClosestIndexContextProvider>
-        <DialogContextProvider>
-          <PortHeader />
-          <DeveloperDialog />
-        </DialogContextProvider>
-        <MainContent />
-      </ClosestIndexContextProvider>
+      <PortHeader
+        closestIndex={closestIndex}
+        setClosestIndex={setClosestIndex}
+        showDialog={showDialog}
+        setShowDialog={setShowDialog}
+        dialogTab={dialogTab}
+        setDialogTab={setDialogTab}
+      />
+      <DeveloperDialog showDialog={showDialog} setShowDialog={setShowDialog} dialogTab={dialogTab} setDialogTab={setDialogTab} />
+      <MainContent closestIndex={closestIndex} setClosestIndex={setClosestIndex} />
       <PortFooter />
     </div>
   );

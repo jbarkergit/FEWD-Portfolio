@@ -1,6 +1,7 @@
-import { RefObject, useCallback, useEffect, useReducer, useRef } from 'react';
+import { Dispatch, RefObject, SetStateAction, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import ProjectNavProp from './ProjectNavProp';
-import { useClosestIndexContext } from '../../context/ClosestIndexContext';
+
+type indexStateType = { closestIndex: number; setClosestIndex: Dispatch<SetStateAction<number>> };
 
 type initSliderStateType = {
   pointerDown: boolean;
@@ -8,7 +9,6 @@ type initSliderStateType = {
   pageX: number;
   trackPos: number;
   previousTrackPos: number;
-  closestIndex: number;
   style: React.CSSProperties;
 };
 
@@ -18,7 +18,6 @@ export const initState: initSliderStateType = {
   pageX: 0,
   trackPos: 0,
   previousTrackPos: 0,
-  closestIndex: 0,
   style: { transform: `translateX(0px)` },
 };
 
@@ -29,7 +28,7 @@ type actionType =
   | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number }
   | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] };
 
-const MainContent = (): JSX.Element => {
+const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Element => {
   const targetElementRef: RefObject<HTMLElement> = useRef<HTMLElement>(null),
     targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
     targetElementWidth: number = targetElement?.scrollWidth as number,
@@ -43,9 +42,6 @@ const MainContent = (): JSX.Element => {
       revealRefs.current.push(reference);
     }
   }, []);
-
-  // @ts-ignore:
-  const { setClosestIndexContext } = useClosestIndexContext();
 
   const reducer = (state: initSliderStateType, action: actionType): initSliderStateType => {
     switch (action.type) {
@@ -72,15 +68,16 @@ const MainContent = (): JSX.Element => {
         } else {
           for (let i = 0; i < targetElementChildrenPositionArray.length; i++) {
             const distanceFromTrackPos = Math.abs(targetElementChildrenPositionArray[i] - state.trackPos);
-            const previousIndex = Math.abs(targetElementChildrenPositionArray[state.closestIndex] - state.trackPos);
-            if (distanceFromTrackPos < previousIndex) state.closestIndex = i;
+            const previousIndex = Math.abs(targetElementChildrenPositionArray[closestIndex] - state.trackPos);
+            if (distanceFromTrackPos < previousIndex) closestIndex = i;
           }
           const targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft);
-          const closestChild: number = targetElementChildrenPositionArray[state.closestIndex] + targetElementLeftPadding;
+          const closestChild: number = targetElementChildrenPositionArray[closestIndex] + targetElementLeftPadding;
 
           revealRefs.current.forEach((article, index) => {
-            const dataStatus = index === state.closestIndex ? 'enabled' : 'disabled';
+            const dataStatus = index === closestIndex ? 'enabled' : 'disabled';
             if (article) article.setAttribute('data-status', dataStatus);
+            setClosestIndex(closestIndex);
           });
 
           return {
@@ -96,7 +93,7 @@ const MainContent = (): JSX.Element => {
       case 'SCROLL':
         const scrollDirection = Math.sign(action.deltaY);
         const targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft);
-        let nextClosestIndex = state.closestIndex;
+        let nextClosestIndex = closestIndex;
 
         scrollDirection === -1
           ? (nextClosestIndex = Math.min(nextClosestIndex + 1, targetElementChildrenPositionArray.length - 1))
@@ -109,9 +106,10 @@ const MainContent = (): JSX.Element => {
           if (article) article.setAttribute('data-status', dataStatus);
         });
 
+        setClosestIndex(nextClosestIndex);
+
         return {
           ...state,
-          closestIndex: nextClosestIndex,
           trackPos: closestChild,
           previousTrackPos: closestChild,
           style: {
@@ -124,10 +122,6 @@ const MainContent = (): JSX.Element => {
   };
 
   const [state, dispatch] = useReducer(reducer, initState);
-
-  useEffect(() => {
-    setClosestIndexContext(state.closestIndex);
-  }, [state.closestIndex]);
 
   useEffect(() => {
     const targetElement = targetElementRef?.current!;

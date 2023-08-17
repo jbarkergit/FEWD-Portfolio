@@ -57,7 +57,7 @@
   &__nav {
     display: flex;
     gap: f.rem(18);
-    & button span {
+    & button {
       color: white;
       font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
       text-transform: capitalize;

@@ -1,11 +1,15 @@
-import { useEffect, useRef } from 'react';
-import { useDialogContext } from '../../context/DialogContext';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import ContactFormDialog from './tabs/ContactFormDialog';
 import AboutDeveloperDialog from './tabs/AboutDeveloperDialog';
 
-const DeveloperDialog = () => {
-  //@ts-ignore
-  const { showDialog, setShowDialog, dialogTab } = useDialogContext();
+type DeveloperDialogType = {
+  showDialog: boolean | null;
+  setShowDialog: Dispatch<SetStateAction<boolean | null>>;
+  dialogTab: string | null;
+  setDialogTab: Dispatch<SetStateAction<string | null>>;
+};
+
+const DeveloperDialog = ({ showDialog, setShowDialog, dialogTab, setDialogTab }: DeveloperDialogType) => {
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const closeDialogButtonRef = useRef<HTMLButtonElement | null>(null);
 

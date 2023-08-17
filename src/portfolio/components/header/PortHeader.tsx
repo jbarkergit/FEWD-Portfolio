@@ -1,77 +1,34 @@
-import { useEffect, useRef } from 'react';
-import { useDialogContext } from '../../context/DialogContext';
-import { useClosestIndexContext } from '../../context/ClosestIndexContext';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
-const DialogButtons = (): JSX.Element => {
-  const aboutDialogButtonRef = useRef<HTMLButtonElement>(null),
-    contactDialogButtonRef = useRef<HTMLButtonElement>(null);
-
-  //@ts-ignore
-  const { setShowDialog, setDialogTab } = useDialogContext();
-
-  useEffect(() => {
-    function setDialogAboutTrue() {
-      setShowDialog(true);
-      setDialogTab('about');
-    }
-    function setDialogContactTrue() {
-      setShowDialog(true);
-      setDialogTab('contact');
-    }
-
-    aboutDialogButtonRef.current?.addEventListener('pointerup', setDialogAboutTrue);
-    contactDialogButtonRef.current?.addEventListener('pointerup', setDialogContactTrue);
-
-    return () => {
-      aboutDialogButtonRef.current?.removeEventListener('pointerup', setDialogAboutTrue);
-      contactDialogButtonRef.current?.removeEventListener('pointerup', setDialogContactTrue);
-    };
-  }, []);
-
-  return (
-    <>
-      <button ref={aboutDialogButtonRef}>
-        <span>About</span>
-      </button>
-      <button ref={contactDialogButtonRef}>
-        <span>Contact</span>
-      </button>
-    </>
-  );
+type PortHeaderType = {
+  closestIndex: number;
+  setClosestIndex: Dispatch<SetStateAction<number>>;
+  showDialog: boolean | null;
+  setShowDialog: Dispatch<SetStateAction<boolean | null>>;
+  dialogTab: string | null;
+  setDialogTab: Dispatch<SetStateAction<string | null>>;
 };
 
-const PortHeader = (): JSX.Element => {
-  // @ts-ignore:
-  const { closestIndexContext, setClosestIndexContext } = useClosestIndexContext();
+const PortHeader = ({ closestIndex, setClosestIndex, showDialog, setShowDialog, dialogTab, setDialogTab }: PortHeaderType): JSX.Element => {
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
-  const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[],
-    unorderedListChildrenPositionArray = unorderedListChildrenArray.map((child) => child.offsetLeft);
+  const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
+  const unorderedListChildrenPositionArray = unorderedListChildrenArray.map((child) => child.offsetLeft);
 
-  useEffect(() => {
-    if (unorderedListRef.current)
-      unorderedListRef.current.style.setProperty('--afterPsuedoSelector', `${3 + unorderedListChildrenPositionArray[closestIndexContext]}px`);
-  }, [unorderedListRef.current, closestIndexContext]);
+  const aboutDialogButtonRef = useRef<HTMLButtonElement>(null);
+  const contactDialogButtonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    const setCurrentSlide = (e: PointerEvent) => {
-      if (unorderedListChildrenArray && e.target instanceof HTMLLIElement) {
-        const index = unorderedListChildrenArray.findIndex((child) => child === e.target);
-        setClosestIndexContext(index);
-      }
-    };
-    unorderedListRef.current?.addEventListener('pointerup', setCurrentSlide);
-    return () => unorderedListRef.current?.removeEventListener('pointerup', setCurrentSlide);
-  }, [unorderedListChildrenArray, unorderedListRef.current]);
+  //Set arrow position of project navigation by number
+  useEffect(() => unorderedListRef.current?.style.setProperty('--afterPsuedoSelector', `${3 + unorderedListChildrenPositionArray[closestIndex]}px`), [closestIndex]);
 
   return (
     <header className="portHeader">
       <section className="portHeader__index">
         <div className="portHeader__index__indicator">
-          <div className="portHeader__index__indicator__location">{`Project 0${closestIndexContext + 1}.`}</div>
+          <div className="portHeader__index__indicator__location">{`Project 0${closestIndex + 1}.`}</div>
           <nav className="portHeader__index__indicator__slideNav">
             <ul ref={unorderedListRef}>
               {Array.from({ length: 3 }).map((_, index) => (
-                <li key={index} role="button">
+                <li key={index} role="button" onClick={() => setClosestIndex(index)}>
                   0{index + 1}.
                 </li>
               ))}
@@ -82,7 +39,24 @@ const PortHeader = (): JSX.Element => {
       </section>
       <section className="portHeader__menu">
         <nav className="portHeader__menu__nav">
-          <DialogButtons />
+          <button
+            ref={aboutDialogButtonRef}
+            onClick={() => {
+              setShowDialog(true);
+              setDialogTab('about');
+            }}
+          >
+            Technologies
+          </button>
+          <button
+            ref={contactDialogButtonRef}
+            onClick={() => {
+              setShowDialog(true);
+              setDialogTab('contact');
+            }}
+          >
+            Contact
+          </button>
         </nav>
       </section>
     </header>
