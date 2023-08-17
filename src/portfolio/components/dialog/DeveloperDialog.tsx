@@ -28,14 +28,6 @@ const DeveloperDialog = ({ showDialog, setShowDialog, dialogTab, setDialogTab }:
     }
   }, [showDialog]);
 
-  // useEffect(() => {
-  //   if (containerRef.current) {
-  //     const containerHeight = containerRef.current.offsetHeight;
-  //     const parentElement = containerRef.current.parentElement;
-  //     parentElement.style.height = containerHeight + 'px';
-  //   }
-  // }, [dialogTab])
-
   return (
     <aside className="dialog">
       <div
