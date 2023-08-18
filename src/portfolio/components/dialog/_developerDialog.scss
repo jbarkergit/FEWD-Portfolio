@@ -10,7 +10,7 @@
   &__modal {
     position: absolute;
     top: f.rem(95);
-    right: 8.33%;
+    right: m.$viewportMarginRightLeft;
     width: f.rem(350);
     height: fit-content;
     z-index: 25;
