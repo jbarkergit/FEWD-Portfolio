@@ -2,6 +2,7 @@ import { Dispatch, RefObject, SetStateAction, useCallback, useEffect, useReducer
 import ProjectNavProp from './ProjectNavProp';
 import EcommerceExtendedInfo from '../../assets/production-data/documentation/ecommerce/EcommerceExtendedInfo';
 import EcommerceAbridgedInfo from '../../assets/production-data/documentation/ecommerce/EcommerceAbridgedInfo';
+import PortfolioNavigation from '../navigation/PortfolioNavigation';
 
 type indexStateType = { closestIndex: number; setClosestIndex: Dispatch<SetStateAction<number>> };
 

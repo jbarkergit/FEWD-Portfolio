@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PortHeader from '../components/header/PortHeader';
 import MainContent from '../components/main/MainContent';
 import DeveloperDialog from '../components/dialog/DeveloperDialog';
+import PortfolioNavigation from '../components/navigation/PortfolioNavigation';
 
 const Portfolio = (): JSX.Element => {
   const [closestIndex, setClosestIndex] = useState<number>(0);
@@ -19,6 +20,7 @@ const Portfolio = (): JSX.Element => {
       />
       <DeveloperDialog showDialog={showDialog} setShowDialog={setShowDialog} dialogTab={dialogTab} setDialogTab={setDialogTab} />
       <MainContent closestIndex={closestIndex} setClosestIndex={setClosestIndex} />
+      <PortfolioNavigation closestIndex={closestIndex} setClosestIndex={setClosestIndex} />
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 
 type ProjectNavPropType = {
   projectName: string;
@@ -34,14 +33,6 @@ const ProjectNavProp = ({
 
   return (
     <article className="mainContent__slider__article" data-status={dataStatus} ref={addToRefs}>
-      <section className="mainContent__slider__article__header">
-        <h2 style={{ display: 'none' }}>{projectName}</h2>
-        <nav>
-          {extendedInfo ? <button>Project Overview</button> : null}
-          {abridgedInfo ? <button>Project Summary</button> : null}
-          {demoLink ? <Link to={demoLink}>Live Demo</Link> : null}
-        </nav>
-      </section>
       <section className="mainContent__slider__article__pictureWrapper">
         <picture data-activity={dataActivity}>
           {imgSrc ? <img src={imgSrc} alt="" draggable="false" loading="lazy" decoding="async" fetchpriority="high" /> : null}
