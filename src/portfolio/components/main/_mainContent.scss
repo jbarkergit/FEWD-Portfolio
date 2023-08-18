@@ -5,14 +5,14 @@
   display: flex;
   align-items: flex-end;
   height: 88vh;
-  padding: 0 0 m.$viewportMarginTopBottom 0;
   &__slider {
     display: grid;
     grid-auto-flow: column;
     justify-content: flex-start;
     align-items: flex-end;
     width: auto;
-    padding: 0 0 0 m.$viewportMarginRightLeft;
+    height: inherit;
+    padding: m.$viewportMarginTopBottom 0 m.$viewportMarginTopBottom m.$viewportMarginRightLeft;
     &:hover {
       cursor: grab;
     }
@@ -26,8 +26,6 @@
   display: flex;
   flex-direction: column;
   gap: 5%;
-  width: f.rem(1266);
-  aspect-ratio: 211/101;
   filter: grayscale(0%);
   transition: filter 0.35s ease-in-out, transform 0.35s ease-in-out, transform-origin 0.35s ease-in-out;
   &[data-status='disabled'] {
@@ -35,44 +33,10 @@
     transform-origin: bottom;
     filter: grayscale(85%) sepia(50%) brightness(30%) opacity(80%);
   }
-  &__info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    & h2 {
-      font-size: clamp(f.rem(14), f.rem(30) + 1vw, f.rem(36));
-      font-weight: 700;
-      letter-spacing: f.rem(2);
-      text-transform: uppercase;
-      line-height: 150%;
-    }
-    & p {
-      width: clamp(45ch, 100%, 65ch);
-      font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
-      font-weight: 400;
-      line-height: 150%;
-      text-align: center;
-    }
-    & nav {
-      display: flex;
-      gap: m.$portfolioGap;
-      & a {
-        font-size: clamp(f.rem(14), f.rem(12) + 1vw, f.rem(18));
-        font-weight: 600;
-        text-transform: capitalize;
-        line-height: 150%;
-        & svg {
-          width: 1em;
-          height: 1em;
-          margin-right: f.rem(4);
-        }
-      }
-    }
-  }
   &__pictureWrapper {
     display: flex;
-    height: 100%;
+    width: f.rem(1266);
+    aspect-ratio: 211/101;
     will-change: width;
     & picture {
       border-radius: f.rem(18);
@@ -82,5 +46,59 @@
         object-fit: cover;
       }
     }
+  }
+}
+
+.mainContent__slider__article__header {
+  display: flex;
+  height: auto; //inherit to push slider
+  & h2 {
+    margin-right: calc(m.$portfolioGap * 2);
+    font-size: clamp(f.rem(14), f.rem(30) + 1vw, f.rem(36));
+    font-weight: 700;
+    letter-spacing: f.rem(2);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  & nav {
+    position: relative;
+    display: flex;
+    & button,
+    & a {
+      display: grid;
+      place-items: center;
+      padding: 0 m.$portfolioGap;
+      font-size: f.rem(16);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: rgb(71, 71, 71);
+      &:hover {
+        color: white;
+        transition: color 0.35s ease-in-out;
+      }
+    }
+  }
+  &__extendedInfo,
+  &__abridgedInfo {
+    & h2 {
+      text-align: center;
+      font-size: clamp(f.rem(12), f.rem(16) + 1vw, f.rem(22));
+    }
+    & p {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: clamp(45ch, 100%, 65ch);
+      font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
+      font-weight: 400;
+      line-height: 150%;
+      text-align: center;
+    }
+  }
+  &__extendedInfo {
+  }
+  &__abridgedInfo {
   }
 }

@@ -1,4 +1,4 @@
-import Skills from '../../../assets/production-data/Skills';
+import Skills from '../../../assets/production-data/documentation/misc/Skills';
 import SkillButton from '../props/SkillButton';
 
 type SkillsValuesType = {

@@ -2,6 +2,8 @@
 
 #portfolio {
   position: relative;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   overflow: hidden;
   background-color: hsl(0, 0%, 10%);
