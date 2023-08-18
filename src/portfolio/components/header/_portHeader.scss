@@ -5,12 +5,13 @@
   position: relative;
   display: flex;
   width: 100%;
-  height: 12%;
+  height: 100%;
+  max-height: 12vh;
   z-index: 10;
   padding: m.$viewportMarginTopBottom 8.33% 0 8.33%;
   & > * {
     display: flex;
-    flex: 1 1 calc(100% / 3);
+    flex: 1 1 calc(100% / 2);
   }
 }
 
@@ -45,7 +46,8 @@
 }
 
 .portHeader__currentTimeCDT {
-  justify-content: center;
+  width: fit-content;
+  margin: 0;
 }
 
 .portHeader__menu {

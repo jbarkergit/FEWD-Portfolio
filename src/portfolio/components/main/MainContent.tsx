@@ -29,7 +29,7 @@ type actionType =
   | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] };
 
 const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Element => {
-  const targetElementRef: RefObject<HTMLElement> = useRef<HTMLElement>(null),
+  const targetElementRef = useRef<HTMLDivElement>(null),
     targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
     targetElementWidth: number = targetElement?.scrollWidth as number,
     targetElementChildrenArray: HTMLElement[] = Array.from(targetElement?.children ?? []) as HTMLElement[],
@@ -160,39 +160,26 @@ const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Ele
     };
   }, []);
 
+  // projectName, projectInfo?, demoLink?, webm?, dataStatus, dataActivity, addToRefs
   return (
     <main className="mainContent">
-      <nav className="mainContent__nav" ref={targetElementRef} style={state.style}>
+      <div className="mainContent__slider" ref={targetElementRef} style={state.style}>
+        <ProjectNavProp projectName="Dynamic Audio" projectInfo="" webm="" dataStatus="active" dataActivity="active" addToRefs={addToRefs} />
         <ProjectNavProp
-          slide="01"
-          webm=""
-          projectName="Dynamic Audio"
-          projectType="Ecommerce"
-          documentationLink="/"
-          demoLink="/ecommerce"
-          dataStatus="active"
-          dataActivity="active"
-          addToRefs={addToRefs}
-        />
-        <ProjectNavProp
-          slide="02"
-          webm=""
-          projectName="FE Assistant"
-          projectType="Work in Progress"
+          projectName="Unknown"
+          projectInfo="I aim to flesh out every project I start; therefore, I've only one available project at this moment. Placeholders have been implemented for slider interaction."
           dataStatus="disabled"
           dataActivity="disabled"
           addToRefs={addToRefs}
         />
         <ProjectNavProp
-          slide="03"
-          webm=""
-          projectName="Freemium Discord"
-          projectType="Pre-development"
+          projectName="Unknown"
+          projectInfo="I aim to flesh out every project I start; therefore, I've only one available project at this moment. Placeholders have been implemented for slider interaction."
           dataStatus="disabled"
           dataActivity="disabled"
           addToRefs={addToRefs}
         />
-      </nav>
+      </div>
     </main>
   );
 };
