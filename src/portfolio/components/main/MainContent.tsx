@@ -169,7 +169,6 @@ const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Ele
     <main className="mainContent">
       <div className="mainContent__slider" ref={targetElementRef} style={state.style}>
         <ProjectNavProp
-          slide="01."
           projectName="Dynamic Audio"
           extendedInfo={ecommerceExtendedInfo}
           abridgedInfo={ecommerceAbridgedInfo}
@@ -182,7 +181,6 @@ const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Ele
           addToRefs={addToRefs}
         />
         <ProjectNavProp
-          slide="02."
           projectName="Unknown"
           extendedInfo=""
           abridgedInfo=""
@@ -193,7 +191,6 @@ const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Ele
           addToRefs={addToRefs}
         />
         <ProjectNavProp
-          slide="03."
           projectName="Unknown"
           extendedInfo=""
           abridgedInfo=""

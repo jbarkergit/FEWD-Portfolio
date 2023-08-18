@@ -20,15 +20,16 @@
     display: flex;
     align-content: flex-start;
     padding-right: m.$portfolioGap;
+    color: white;
     font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
-    font-weight: 300;
-    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: f.rem(1.2);
+    text-transform: lowercase;
   }
   &__slideNav ul {
     position: relative;
     display: flex;
     gap: m.$portfolioGap;
-    font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
     &:after {
       content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0ibTEyIDQuNWw1IDVtLTUtNWwtNSA1bTUtNXYxMGMwIDEuNjY3LTEgNS01IDUiLz48L3N2Zz4=);
       position: absolute;
@@ -50,7 +51,11 @@
 .portHeader__currentTimeCDT {
   width: fit-content;
   margin: 0;
+  color: white;
   font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
+  font-weight: 400;
+  letter-spacing: f.rem(1.2);
+  text-transform: lowercase;
 }
 
 .portHeader__menu {
@@ -60,6 +65,8 @@
   & button {
     color: white;
     font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
-    text-transform: capitalize;
+    font-weight: 400;
+    letter-spacing: f.rem(1.2);
+    text-transform: lowercase;
   }
 }

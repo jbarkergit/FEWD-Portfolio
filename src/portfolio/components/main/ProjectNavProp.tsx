@@ -37,10 +37,7 @@ const ProjectNavProp = ({
   return (
     <article className="mainContent__slider__article" data-status={dataStatus} ref={addToRefs}>
       <section className="mainContent__slider__article__header">
-        <h2>
-          <span>{slide}</span>
-          <span>{projectName}</span>
-        </h2>
+        <h2 style={{ display: 'none' }}>{projectName}</h2>
         <nav>
           {extendedInfo ? <button>Project Overview</button> : null}
           {abridgedInfo ? <button>Project Summary</button> : null}

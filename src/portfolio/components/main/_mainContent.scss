@@ -52,26 +52,32 @@
 .mainContent__slider__article__header {
   display: flex;
   height: auto; //inherit to push slider
+  padding-bottom: f.rem(6);
   & h2 {
     margin-right: calc(m.$portfolioGap * 2);
+    color: white;
     font-size: clamp(f.rem(14), f.rem(30) + 1vw, f.rem(36));
-    font-weight: 700;
-    letter-spacing: f.rem(2);
-    text-transform: uppercase;
-    text-align: center;
+    font-weight: 400;
+    letter-spacing: f.rem(1.2);
+    text-transform: lowercase;
+    white-space: nowrap;
   }
   & nav {
     position: relative;
     display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
     & button,
     & a {
       display: grid;
       place-items: center;
-      padding: 0 m.$portfolioGap;
-      font-size: f.rem(16);
-      font-weight: 700;
+      padding: 0 calc(m.$portfolioGap / 2);
+      color: hsl(0, 0%, 34%);
+      font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
+      font-weight: 400;
+      letter-spacing: f.rem(1.2);
       text-transform: uppercase;
-      color: rgb(71, 71, 71);
       &:hover {
         color: white;
         transition: color 0.35s ease-in-out;

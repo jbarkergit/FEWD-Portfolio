@@ -8,6 +8,9 @@
   overflow: hidden;
   background-color: hsl(0, 0%, 10%);
   color: #fff;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 400;
+  letter-spacing: f.rem(1.2);
 }
 
 //Colors
@@ -18,4 +21,4 @@ $messageYellow: hsl(48, 56%, 54%);
 //Spacing
 $viewportMarginTopBottom: 2.963%;
 $viewportMarginRightLeft: 8.33%;
-$portfolioGap: f.rem(18);
+$portfolioGap: f.rem(24);
