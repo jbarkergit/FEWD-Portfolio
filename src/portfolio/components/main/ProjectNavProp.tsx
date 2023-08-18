@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 type ProjectNavPropType = {
-  slide: string;
   projectName: string;
   extendedInfo?: string;
   abridgedInfo?: string;
@@ -16,7 +15,6 @@ type ProjectNavPropType = {
 };
 
 const ProjectNavProp = ({
-  slide,
   projectName,
   extendedInfo,
   abridgedInfo,
