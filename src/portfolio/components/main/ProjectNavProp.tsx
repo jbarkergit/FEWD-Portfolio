@@ -32,12 +32,12 @@ const ProjectNavProp = ({
   }, [addToRefs]);
 
   return (
-    <article className="mainContent__slider__article" data-status={dataStatus} ref={addToRefs}>
-      <section className="mainContent__slider__article__pictureWrapper">
+    <article className="mainContent__article" data-status={dataStatus} ref={addToRefs}>
+      <div className="mainContent__article__pictureWrapper">
         <picture data-activity={dataActivity}>
           {imgSrc ? <img src={imgSrc} alt="" draggable="false" loading="lazy" decoding="async" fetchpriority="high" /> : null}
         </picture>
-      </section>
+      </div>
     </article>
   );
 };

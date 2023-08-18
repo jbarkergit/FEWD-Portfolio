@@ -2,7 +2,7 @@ import { Dispatch, RefObject, SetStateAction, useCallback, useEffect, useReducer
 import ProjectNavProp from './ProjectNavProp';
 import EcommerceExtendedInfo from '../../assets/production-data/documentation/ecommerce/EcommerceExtendedInfo';
 import EcommerceAbridgedInfo from '../../assets/production-data/documentation/ecommerce/EcommerceAbridgedInfo';
-import PortfolioNavigation from '../navigation/PortfolioNavigation';
+import PortfolioNavigation from '../navigation/footer/PortFooter';
 
 type indexStateType = { closestIndex: number; setClosestIndex: Dispatch<SetStateAction<number>> };
 
@@ -167,41 +167,39 @@ const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Ele
   const ecommerceExtendedInfo = EcommerceExtendedInfo;
   const ecommerceAbridgedInfo = EcommerceAbridgedInfo;
   return (
-    <main className="mainContent">
-      <div className="mainContent__slider" ref={targetElementRef} style={state.style}>
-        <ProjectNavProp
-          projectName="Dynamic Audio"
-          extendedInfo={ecommerceExtendedInfo}
-          abridgedInfo={ecommerceAbridgedInfo}
-          imgSrc="src/portfolio/assets/production-images/ecom-prev.png"
-          demoLink="/ecommerce"
-          dataStatus="active"
-          dataActivity="active"
-          closestIndex={closestIndex}
-          setClosestIndex={setClosestIndex}
-          addToRefs={addToRefs}
-        />
-        <ProjectNavProp
-          projectName="Unknown"
-          extendedInfo=""
-          abridgedInfo=""
-          dataStatus="disabled"
-          dataActivity="disabled"
-          closestIndex={closestIndex}
-          setClosestIndex={setClosestIndex}
-          addToRefs={addToRefs}
-        />
-        <ProjectNavProp
-          projectName="Unknown"
-          extendedInfo=""
-          abridgedInfo=""
-          dataStatus="disabled"
-          dataActivity="disabled"
-          closestIndex={closestIndex}
-          setClosestIndex={setClosestIndex}
-          addToRefs={addToRefs}
-        />
-      </div>
+    <main className="mainContent" ref={targetElementRef} style={state.style}>
+      <ProjectNavProp
+        projectName="Dynamic Audio"
+        extendedInfo={ecommerceExtendedInfo}
+        abridgedInfo={ecommerceAbridgedInfo}
+        imgSrc="src/portfolio/assets/production-images/ecom-prev.png"
+        demoLink="/ecommerce"
+        dataStatus="active"
+        dataActivity="active"
+        closestIndex={closestIndex}
+        setClosestIndex={setClosestIndex}
+        addToRefs={addToRefs}
+      />
+      <ProjectNavProp
+        projectName="Unknown"
+        extendedInfo=""
+        abridgedInfo=""
+        dataStatus="disabled"
+        dataActivity="disabled"
+        closestIndex={closestIndex}
+        setClosestIndex={setClosestIndex}
+        addToRefs={addToRefs}
+      />
+      <ProjectNavProp
+        projectName="Unknown"
+        extendedInfo=""
+        abridgedInfo=""
+        dataStatus="disabled"
+        dataActivity="disabled"
+        closestIndex={closestIndex}
+        setClosestIndex={setClosestIndex}
+        addToRefs={addToRefs}
+      />
     </main>
   );
 };

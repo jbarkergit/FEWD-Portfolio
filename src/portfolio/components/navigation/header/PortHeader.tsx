@@ -1,6 +1,4 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import CurrentTimeCDT from './CurrentTimeCDT';
 
 type PortHeaderType = {
   closestIndex: number;
@@ -64,7 +62,6 @@ const PortHeader = ({ closestIndex, setClosestIndex, showDialog, setShowDialog, 
         >
           Contact
         </button>
-        <CurrentTimeCDT />
       </section>
     </header>
   );

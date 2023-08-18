@@ -2,27 +2,19 @@
 @use '../../portfolioStyles' as m;
 
 .mainContent {
-  display: flex;
-  align-items: flex-end;
-  height: 88vh;
-  &__slider {
-    display: grid;
-    grid-auto-flow: column;
-    justify-content: flex-start;
-    align-items: flex-end;
-    width: auto;
-    height: inherit;
-    padding: m.$viewportMarginTopBottom 0 m.$viewportMarginTopBottom m.$viewportMarginRightLeft;
-    &:hover {
-      cursor: grab;
-    }
-    &:active {
-      cursor: grabbing;
-    }
+  display: grid;
+  grid-auto-flow: column;
+  height: 76vh;
+  padding: 0 0 0 m.$viewportMarginRightLeft;
+  &:hover {
+    cursor: grab;
+  }
+  &:active {
+    cursor: grabbing;
   }
 }
 
-.mainContent__slider__article {
+.mainContent__article {
   display: flex;
   flex-direction: column;
   gap: 5%;
@@ -35,8 +27,8 @@
   }
   &__pictureWrapper {
     display: flex;
-    width: f.rem(1266);
-    aspect-ratio: 211/121; //211/101
+    height: 76vh; //1680 //1266 //1266
+    aspect-ratio: 211/101; //2.333/1; //211/121 //211/101
     will-change: width;
     & picture {
       border-radius: f.rem(18);
