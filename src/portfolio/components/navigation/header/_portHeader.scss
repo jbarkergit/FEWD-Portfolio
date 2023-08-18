@@ -20,11 +20,6 @@
     display: flex;
     align-content: flex-start;
     padding-right: m.$portfolioGap;
-    color: white;
-    font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
-    font-weight: 400;
-    letter-spacing: f.rem(1.2);
-    text-transform: lowercase;
   }
   &__slideNav ul {
     position: relative;
@@ -39,23 +34,12 @@
       transform: translateX(var(--afterPsuedoSelector));
       transition: transform 0.35s ease;
     }
-    & li {
-      & button {
-        color: white;
-        font-weight: 300;
-      }
-    }
   }
 }
 
 .portHeader__currentTimeCDT {
   width: fit-content;
   margin: 0;
-  color: white;
-  font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
-  font-weight: 400;
-  letter-spacing: f.rem(1.2);
-  text-transform: lowercase;
 }
 
 .portHeader__menu {
@@ -63,10 +47,10 @@
   justify-content: flex-end;
   gap: m.$portfolioGap;
   & button {
-    color: white;
-    font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
+    color: #fff;
+    font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
     font-weight: 400;
-    letter-spacing: f.rem(1.2);
+    letter-spacing: f.rem(0.8);
     text-transform: lowercase;
   }
 }

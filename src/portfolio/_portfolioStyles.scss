@@ -9,7 +9,10 @@
   background-color: hsl(0, 0%, 10%);
   color: #fff;
   font-family: 'Manrope', sans-serif;
-  letter-spacing: f.rem(1.2);
+  font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
+  font-weight: 400;
+  letter-spacing: f.rem(0.8);
+  text-transform: capitalize;
 }
 
 //Colors

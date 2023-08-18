@@ -8,18 +8,21 @@
   max-height: 12vh;
   z-index: 10;
   padding: 0 calc(m.$viewportMarginRightLeft * 1.5) m.$viewportMarginTopBottom m.$viewportMarginRightLeft;
-  & nav {
+  &__project {
+  }
+  &__nav {
     display: flex;
     align-items: flex-end;
     gap: m.$portfolioGap;
     width: inherit;
     height: inherit;
-    & > * {
-      font-size: f.rem(16);
-      font-weight: 600;
+    & button {
+      color: #fff;
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
+      font-weight: 400;
       letter-spacing: f.rem(0.8);
       text-transform: capitalize;
-      color: white;
     }
     & a {
       display: flex;

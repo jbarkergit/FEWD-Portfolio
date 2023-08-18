@@ -36,7 +36,8 @@ const PortFooter = ({ closestIndex, setClosestIndex }: ProjectNavPropType) => {
 
   return (
     <footer className="portFooter">
-      <nav>
+      <div className="portFooter__project"></div>
+      <nav className="portFooter__nav">
         {getExtendedInfo() ? <button>Project Overview</button> : <span className="portfoliofooterigation__unavailable">this content is unavailable</span>}
         {getAbridgedInfo() ? <button>Project Summary</button> : null}
         {getDemoLink() ? (
