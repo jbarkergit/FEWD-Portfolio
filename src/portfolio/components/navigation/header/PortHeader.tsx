@@ -9,7 +9,7 @@ type PortHeaderType = {
   setDialogTab: Dispatch<SetStateAction<string | null>>;
 };
 
-const PortHeader = ({ closestIndex, setClosestIndex, showDialog, setShowDialog, dialogTab, setDialogTab }: PortHeaderType): JSX.Element => {
+const PortHeader = ({ closestIndex, setClosestIndex, setShowDialog, setDialogTab }: PortHeaderType): JSX.Element => {
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
   const unorderedListChildrenPositionArray = unorderedListChildrenArray.map((child) => child.offsetLeft);

@@ -1,13 +1,11 @@
-import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentTimeCDT from './CurrentTimeCDT';
 
 type ProjectNavPropType = {
-  setClosestIndex: Dispatch<SetStateAction<number>>;
   closestIndex: number;
 };
 
-const PortFooter = ({ closestIndex, setClosestIndex }: ProjectNavPropType) => {
+const PortFooter = ({ closestIndex }: ProjectNavPropType) => {
   const getExtendedInfo = () => {
     switch (closestIndex) {
       case 0:

@@ -13,18 +13,7 @@ type ProjectNavPropType = {
   closestIndex: number;
 };
 
-const ProjectNavProp = ({
-  projectName,
-  extendedInfo,
-  abridgedInfo,
-  demoLink,
-  imgSrc,
-  dataStatus,
-  dataActivity,
-  addToRefs,
-  closestIndex,
-  setClosestIndex,
-}: ProjectNavPropType): JSX.Element => {
+const ProjectNavProp = ({ imgSrc, dataStatus, dataActivity, addToRefs }: ProjectNavPropType): JSX.Element => {
   const sliderArticleRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
