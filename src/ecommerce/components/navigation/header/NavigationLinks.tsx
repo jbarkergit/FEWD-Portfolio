@@ -22,6 +22,7 @@ const NavigationLinks = (): JSX.Element => {
             to="/ecommerce/products"
             style={{
               color: ecoPath ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
+              fontWeight: ecoPath ? '600' : '700',
             }}
           >
             {'All Products'}
@@ -32,6 +33,7 @@ const NavigationLinks = (): JSX.Element => {
             to="/ecommerce/headphones"
             style={{
               color: ecoPath ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
+              fontWeight: ecoPath ? '600' : '700',
             }}
           >
             {'Headphones'}
@@ -42,6 +44,7 @@ const NavigationLinks = (): JSX.Element => {
             to="/ecommerce/amps-dacs"
             style={{
               color: ecoPath ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
+              fontWeight: ecoPath ? '600' : '700',
             }}
           >
             {'Amps & Dacs'}
@@ -52,6 +55,7 @@ const NavigationLinks = (): JSX.Element => {
             to="/ecommerce/microphones"
             style={{
               color: ecoPath ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
+              fontWeight: ecoPath ? '600' : '700',
             }}
           >
             {'Microphones'}
@@ -62,6 +66,7 @@ const NavigationLinks = (): JSX.Element => {
             to="/ecommerce/interfaces"
             style={{
               color: ecoPath ? 'var(--fontSecondary)' : 'var(--fontPrimary)',
+              fontWeight: ecoPath ? '600' : '700',
             }}
           >
             {'Interfaces'}

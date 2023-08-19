@@ -31,6 +31,8 @@ const SearchBar = (): JSX.Element => {
       className="searchBar"
       style={{
         boxShadow: useLocation().pathname === '/ecommerce' ? 'none' : 'var(--shadowRefined)',
+        color: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 20%)' : 'hsl(0, 0%, 100%)',
+        backgroundColor: useLocation().pathname === '/ecommerce' ? 'hsl(0, 0%, 100%)' : 'hsl(0, 0%, 20%)',
       }}
       ref={searchBarRef}
     >
@@ -41,7 +43,7 @@ const SearchBar = (): JSX.Element => {
         className="searchBar__input"
         name="searchBar__input"
         type="text"
-        placeholder="Search for a product"
+        placeholder="Search products"
         value={searchTerm}
         autoCapitalize="none"
         autoComplete="none"

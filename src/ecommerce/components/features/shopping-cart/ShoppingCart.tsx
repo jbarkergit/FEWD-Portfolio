@@ -1,7 +1,6 @@
 import useCart from '../../../hooks/useCart';
 import CartProduct from './CartProduct';
 import EmptyCart from './EmptyCart';
-import { Stripe } from '../../user-account/user-account-assets/PaymentMethodSVGS';
 import { useEffect, useRef } from 'react';
 
 type PropType = {
