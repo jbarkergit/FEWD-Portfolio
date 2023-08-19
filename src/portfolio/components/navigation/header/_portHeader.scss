@@ -13,42 +13,36 @@
     display: flex;
     flex: 1 1 calc(100% / 2);
   }
-}
-
-.portHeader__index {
-  &__location {
-    display: flex;
-    align-content: flex-start;
-    width: f.rem(120);
-    padding-right: m.$portfolioGap;
-    white-space: nowrap;
-  }
-  &__slideNav ul {
-    position: relative;
-    display: flex;
-    gap: m.$portfolioGap;
-    padding: f.rem(1) 0 0 0;
-    &:after {
-      content: url(https://api.iconify.design/solar:alt-arrow-up-bold.svg?color=%23ffffff);
-      position: absolute;
-      left: f.rem(2.5);
-      top: f.rem(24);
-      display: block;
-      transform: translateX(var(--afterPsuedoSelector));
-      transition: transform 0.35s ease;
+  &__index {
+    &__location {
+      display: flex;
+      align-content: flex-start;
+      width: f.rem(120);
+      padding-right: m.$portfolioGap;
+      white-space: nowrap;
+    }
+    &__slideNav ul {
+      position: relative;
+      display: flex;
+      gap: m.$portfolioGap;
+      padding: f.rem(1) 0 0 0;
+      &:after {
+        content: url(https://api.iconify.design/solar:alt-arrow-up-bold.svg?color=%23ffffff);
+        position: absolute;
+        left: f.rem(2.5);
+        top: f.rem(24);
+        display: block;
+        transform: translateX(var(--afterPsuedoSelector));
+        transition: transform 0.35s ease;
+      }
     }
   }
-}
-
-.portHeader__menu {
-  align-items: flex-start;
-  justify-content: flex-end;
-  gap: m.$portfolioGap;
-  & button {
-    color: #fff;
-    font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
-    font-weight: 500;
-    letter-spacing: f.rem(0.8);
-    text-transform: capitalize;
+  &__menu {
+    align-items: flex-start;
+    justify-content: flex-end;
+    & nav {
+      display: flex;
+      gap: m.$portfolioGap;
+    }
   }
 }

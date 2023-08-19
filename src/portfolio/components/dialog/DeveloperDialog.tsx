@@ -1,47 +1,13 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import ContactFormDialog from './tabs/ContactFormDialog';
-import AboutDeveloperDialog from './tabs/AboutDeveloperDialog';
 
-type DeveloperDialogType = {
-  showDialog: boolean | null;
-  setShowDialog: Dispatch<SetStateAction<boolean | null>>;
-  dialogTab: string | null;
-  setDialogTab: Dispatch<SetStateAction<string | null>>;
-};
-
-const DeveloperDialog = ({ showDialog, setShowDialog, dialogTab, setDialogTab }: DeveloperDialogType) => {
-  const dialogRef = useRef<HTMLDivElement | null>(null);
-  const closeDialogButtonRef = useRef<HTMLButtonElement | null>(null);
-
-  useEffect(() => {
-    function setDialogFalse() {
-      setShowDialog(false);
-    }
-
-    closeDialogButtonRef.current?.addEventListener('pointerup', setDialogFalse);
-    return () => closeDialogButtonRef.current?.addEventListener('pointerup', setDialogFalse);
-  }, []);
-
-  useEffect(() => {
-    if (dialogRef.current) {
-      dialogRef.current.setAttribute('data-show', showDialog ? 'true' : 'false');
-    }
-  }, [showDialog]);
-
+const DeveloperDialog = () => {
   return (
     <aside className="dialog">
-      <div
-        role="dialog"
-        aria-modal="true"
-        className="dialog__modal"
-        data-show="false"
-        aria-label="About Developer and Developer Contact information"
-        ref={dialogRef}
-      >
+      <div role="dialog" aria-modal="true" className="dialog__modal" data-show="false" aria-label="About Developer and Developer Contact information">
         <div className="dialog__modal__header">
-          <span className="dialog__modal__header__col">{dialogTab}</span>
+          <span className="dialog__modal__header__col"></span>
           <span className="dialog__modal__header__col">
-            <button ref={closeDialogButtonRef}>
+            <button>
               <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                 <path
                   fill="none"
@@ -54,7 +20,7 @@ const DeveloperDialog = ({ showDialog, setShowDialog, dialogTab, setDialogTab }:
             </button>
           </span>
         </div>
-        {dialogTab === 'contact' ? <ContactFormDialog /> : <AboutDeveloperDialog />}
+        <ContactFormDialog />
       </div>
     </aside>
   );
