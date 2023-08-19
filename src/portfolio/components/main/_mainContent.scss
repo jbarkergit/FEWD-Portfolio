@@ -28,7 +28,8 @@
   }
   &__pictureWrapper {
     display: flex;
-    height: 76vh; //1680 //1266 //1266
+    width: 79vw; //1680 //1266 //1266
+    max-height: 76vh;
     aspect-ratio: 211/101; //2.333/1; //211/121 //211/101
     will-change: width;
     & picture {
