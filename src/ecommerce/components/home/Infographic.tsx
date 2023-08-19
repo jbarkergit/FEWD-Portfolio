@@ -16,7 +16,7 @@ const Infographic = (): JSX.Element => {
         <div className="infographic__information__details">
           <hgroup>
             <h3>
-              now partnered with <span className="highlight">beyerdynamic</span>
+              Now partnered with <span className="highlight">beyerdynamic</span>
             </h3>
             <h2>the new hifi shop</h2>
             <h1>
