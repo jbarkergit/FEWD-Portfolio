@@ -28,7 +28,8 @@ type actionType =
   | { type: 'POINTER_MOVE'; pointerDown: boolean; pageX: number }
   | { type: 'POINTER_LEAVE'; pointerDown: boolean; previousTrackPos: number }
   | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number }
-  | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] };
+  | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] }
+  | { type: 'CUSTOM_UPDATE' };
 
 const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element => {
   const targetElementRef = useRef<HTMLDivElement>(null),
@@ -40,9 +41,7 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
   const revealRefs = useRef<HTMLElement[]>([]);
 
   const addToRefs = useCallback((reference: HTMLElement) => {
-    if (reference && !revealRefs.current.includes(reference)) {
-      revealRefs.current.push(reference);
-    }
+    if (reference && !revealRefs.current.includes(reference)) revealRefs.current.push(reference);
   }, []);
 
   const reducer = (state: initSliderStateType, action: actionType): initSliderStateType => {
@@ -91,6 +90,7 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
             },
           };
         }
+
       case 'SCROLL':
         const scrollDirection = Math.sign(action.deltaY);
         const targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft);
@@ -116,6 +116,26 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
             transform: `translateX(${closestChild}px)`,
           },
         };
+
+      case 'CUSTOM_UPDATE':
+        const targElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft);
+        const setSliderPosition: number = targetElementChildrenPositionArray[stateIndex] + targElementLeftPadding;
+
+        revealRefs.current.forEach((article, index) => {
+          const dataStatus = index === stateIndex ? 'enabled' : 'disabled';
+          if (article) article.setAttribute('data-status', dataStatus);
+        });
+
+        return {
+          ...state,
+          closestIndex: stateIndex,
+          trackPos: setSliderPosition,
+          previousTrackPos: setSliderPosition,
+          style: {
+            transform: `translateX(${setSliderPosition}px)`,
+          },
+        };
+
       default:
         throw new Error('FAILURE: Action Type may be missing or returning null');
     }
@@ -125,11 +145,13 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
 
   useEffect(() => {
     const targetElement = targetElementRef?.current!;
+
     const userPointerDown = (e: PointerEvent) => {
       if (!state.pointerDown && e.target instanceof HTMLAnchorElement) return state;
       const pageX = e.pageX as number;
       dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageX: pageX, pageX: pageX });
     };
+
     const userPointerMove = (e: PointerEvent) => {
       const pageX = e.pageX as number;
       dispatch({
@@ -138,8 +160,11 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
         pointerDown: state.pointerDown,
       });
     };
+
     const userPointerLeave = () => dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
+
     const userPointerUp = () => dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
+
     const userWheelEvent = (e: WheelEvent) => {
       const targetElementChildrenPositionArray = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
       dispatch({ type: 'SCROLL', deltaY: e.deltaY, targetElementChildrenPositionArray });
@@ -161,6 +186,12 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
   }, []);
 
   useEffect(() => setStateIndex(state.closestIndex), [state.closestIndex]);
+
+  useEffect(() => {
+    if (targetElementRef) {
+      dispatch({ type: 'CUSTOM_UPDATE' });
+    }
+  }, [stateIndex]);
 
   return (
     <main className="mainContent" ref={targetElementRef} style={state.style}>

@@ -28,7 +28,7 @@ const PortHeader = ({ stateIndex, setStateIndex, setShowDialog, setDialogTab }: 
           <ul ref={unorderedListRef}>
             {Array.from({ length: 3 }).map((_, index) => (
               <li key={index}>
-                <button onClick={() => setStateIndex(index)}>
+                <button className="buttonNav" onClick={() => setStateIndex(index)}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
                     <path
                       fill="#ffffff"
