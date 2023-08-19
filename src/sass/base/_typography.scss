@@ -29,35 +29,26 @@ body {
   font: 400 100% / 1.25 'Plus Jakarta Sans', 'PT Sans';
 }
 h1 {
-  font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
-  font-weight: 700;
-  line-height: 1;
+  font-size: clamp(f.rem(22), f.rem(34) + 1vw, f.rem(40));
+  font-weight: 600;
 }
 h2 {
-  font-size: clamp(f.rem(22), f.rem(14) + 1.5vw, f.rem(36));
+  font-size: clamp(f.rem(20), f.rem(28) + 1vw, f.rem(34));
   font-weight: 500;
 }
 h3 {
-  font-size: clamp(f.rem(18), f.rem(12) + 0.5vw, f.rem(32));
-  font-weight: 400;
+  font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
+  font-weight: 500;
 }
 h4 {
-  font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
-  font-weight: 400;
-}
-h5 {
-  font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
-  font-weight: 400;
-}
-h6 {
-  font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
-  font-weight: 400;
+  font-size: clamp(f.rem(16), f.rem(16) + 1vw, f.rem(22));
+  font-weight: 500;
 }
 p,
 article {
   // width: clamp(45ch, 50%, 75ch);
-  font-size: clamp(f.rem(12), f.rem(15) + 0.25vw, f.rem(32));
-  font-weight: 400;
+  font-size: clamp(f.rem(12), f.rem(10) + 1vw, f.rem(16));
+  font-weight: 500;
 }
 article {
   scroll-padding: f.rem(10) 0 0 0;
