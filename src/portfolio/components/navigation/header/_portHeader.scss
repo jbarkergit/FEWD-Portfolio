@@ -19,16 +19,19 @@
   &__location {
     display: flex;
     align-content: flex-start;
+    width: f.rem(120);
     padding-right: m.$portfolioGap;
+    white-space: nowrap;
   }
   &__slideNav ul {
     position: relative;
     display: flex;
     gap: m.$portfolioGap;
+    padding: f.rem(1) 0 0 0;
     &:after {
-      content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0ibTEyIDQuNWw1IDVtLTUtNWwtNSA1bTUtNXYxMGMwIDEuNjY3LTEgNS01IDUiLz48L3N2Zz4=);
+      content: url(https://api.iconify.design/solar:alt-arrow-up-bold.svg?color=%23ffffff);
       position: absolute;
-      left: 0;
+      left: f.rem(2.5);
       top: f.rem(24);
       display: block;
       transform: translateX(var(--afterPsuedoSelector));
@@ -49,8 +52,8 @@
   & button {
     color: #fff;
     font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: f.rem(0.8);
-    text-transform: lowercase;
+    text-transform: capitalize;
   }
 }

@@ -42,8 +42,11 @@ const PortFooter = ({ closestIndex, setClosestIndex }: ProjectNavPropType) => {
         {getAbridgedInfo() ? <button>Project Summary</button> : null}
         {getDemoLink() ? (
           <Link to={getDemoLink()}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-              <path fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" d="M9 12h6m-6 6H8A6 6 0 0 1 8 6h1m6 0h1a6 6 0 0 1 0 12h-1"></path>
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
+              <g fill="none" stroke="#ffffff" strokeLinecap="round" strokeWidth="1.5">
+                <path d="m12.792 15.8l1.43-1.432a6.076 6.076 0 0 0 0-8.59a6.067 6.067 0 0 0-8.583 0L2.778 8.643A6.076 6.076 0 0 0 6.732 19"></path>
+                <path d="m11.208 8.2l-1.43 1.432a6.076 6.076 0 0 0 0 8.59a6.067 6.067 0 0 0 8.583 0l2.861-2.864A6.076 6.076 0 0 0 17.268 5"></path>
+              </g>
             </svg>
             Demo Link
           </Link>
