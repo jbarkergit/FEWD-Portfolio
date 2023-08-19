@@ -25,9 +25,9 @@ const CurrentTimeCDT = (): JSX.Element => {
   }, []);
 
   return (
-    <section className="portHeader__currentTimeCDT">
+    <>
       {currentTime} • CDT (GMT-5) <h2 style={{ display: 'none' }}>Current time in Central Daylight Time, GMT-5</h2>
-    </section>
+    </>
   );
 };
 
