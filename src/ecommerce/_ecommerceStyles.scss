@@ -14,7 +14,6 @@
   --fontSecondary: hsl(0, 0%, 100%);
   --fontSecondaryOffset: hsl(0, 3%, 42%);
   --fontAccent: #ff5900;
-  --navigationLetterSpacing: 0.06rem;
   // --textShadow: 2px 2px 5px hsl(0, 0%, 100%);
 }
 
@@ -27,12 +26,12 @@
   justify-content: center;
   align-items: center;
   max-height: f.rem(45);
-  padding: f.rem(12) f.rem(12);
+  padding: f.rem(10) f.rem(14);
   border-radius: f.rem(6);
   cursor: pointer;
-  font-size: f.rem(12);
+  font-size: clamp(f.rem(12), f.rem(8) + 1vw, f.rem(14));
   font-weight: 600;
-  letter-spacing: f.rem(0.5);
+  letter-spacing: f.rem(0.7);
   text-transform: uppercase;
   white-space: nowrap;
 }

@@ -14,7 +14,7 @@
     bottom: 7%;
     left: 5%;
     color: var(--fontSecondary);
-    font-weight: 600;
+    font-weight: 500;
   }
   &__newsCta {
     display: flex;
@@ -23,11 +23,9 @@
     width: 40%;
     & h2 {
       font-style: italic;
-      font-size: f.rem(40);
-      line-height: 115%;
-      font-weight: 800;
+      font-size: clamp(f.rem(16), f.rem(34) + 1vw, f.rem(40));
+      font-weight: 700;
       margin-bottom: f.rem(15);
-      z-index: 5;
       color: var(--fontSecondary);
       text-shadow: 1px 2px 3px rgb(163, 163, 163);
     }
@@ -59,17 +57,17 @@
         padding-top: f.rem(25);
       }
       & li {
+        width: 100%;
         padding-bottom: f.rem(8);
+        text-align: center;
         & h2 {
-          font-size: clamp(f.rem(22), f.rem(14) + 1.5vw, f.rem(36));
+          font-size: clamp(f.rem(16), f.rem(24) + 1vw, f.rem(30));
           font-weight: 700;
           color: hsl(0, 0%, 100%);
-          text-shadow: 1px 2px 3px rgb(122, 122, 122);
         }
         & a h3 {
-          font-size: clamp(f.rem(16), f.rem(10) + 0.5vw, f.rem(28));
-          font-weight: 500;
-          text-shadow: 1px 2px 3px rgb(148, 148, 148);
+          font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
+          font-weight: 400;
         }
       }
     }
@@ -123,13 +121,14 @@
     pointer-events: none;
     color: var(--fontSecondary);
     & mark {
-      padding: f.rem(3) f.rem(10);
-      font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
+      padding: f.rem(6) f.rem(12);
+      font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
+      border-radius: f.rem(6);
     }
     & h4 {
       max-width: 45ch;
       margin-top: f.rem(5);
-      font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
+      font-size: clamp(f.rem(12), f.rem(9) + 1vw, f.rem(15));
     }
   }
 }

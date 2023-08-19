@@ -20,7 +20,7 @@
   }
 }
 .breadCrumbs h1 {
-  font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(38));
+  font-size: clamp(f.rem(14), f.rem(30) + 1vw, f.rem(36));
   text-transform: capitalize;
 }
 .selectMenu {
@@ -31,8 +31,7 @@
     z-index: 5;
     @include m.ecoBtn;
     @include m.ecoBtnDark;
-    padding: f.rem(15);
-    font-size: f.rem(13);
+    padding: f.rem(14);
     &__indicator {
       display: grid;
       grid-template-columns: 85% 15%;
@@ -78,8 +77,8 @@
         height: inherit;
         padding: 1em 0.8em;
         color: var(--fontSecondary);
-        font-size: f.rem(15);
-        font-weight: 500;
+        font-size: clamp(f.rem(12), f.rem(10) + 1vw, f.rem(16));
+        font-weight: 400;
         text-transform: capitalize;
         text-align: start;
       }

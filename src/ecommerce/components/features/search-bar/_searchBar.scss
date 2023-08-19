@@ -16,7 +16,7 @@
   }
   &__input {
     @include m.ecoBtn;
-    color: hsl(0, 0%, 20%);
+    color: var(--fontPrimary);
     cursor: text;
     width: f.rem(65);
     background: url('/src/ecommerce/assets/production-images/svg/magnifying-glass-solid.svg') no-repeat center center;
