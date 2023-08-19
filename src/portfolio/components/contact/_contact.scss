@@ -1,0 +1,18 @@
+@use '../../../sass/util/functions' as f;
+@use '../../portfolioStyles' as m;
+
+.sidebar {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  border: m.$portfolioBorder;
+  margin-bottom: 2px;
+}
+.contact {
+  position: relative;
+  z-index: 11;
+  width: f.rem(calc(1920 / 2.5));
+  padding: 1%;
+  border-right: m.$portfolioBorder;
+  background-color: hsl(0, 0%, 10%);
+}

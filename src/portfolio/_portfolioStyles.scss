@@ -14,7 +14,11 @@
   text-transform: capitalize;
 }
 
-//Colors
+.flex {
+  display: flex;
+}
+
+//Color
 $transparentElem: rgba(0, 0, 0, 0.5);
 $transparentElemLight: rgba(209, 209, 209, 0.25);
 $messageYellow: hsl(48, 56%, 54%);
@@ -23,3 +27,6 @@ $messageYellow: hsl(48, 56%, 54%);
 $viewportMarginTopBottom: calc(2.963% / 1.5);
 $viewportMarginRightLeft: 8.33%;
 $portfolioGap: f.rem(24);
+
+//Border
+$portfolioBorder: 2px solid hsl(0, 0%, 14%);

@@ -40,9 +40,13 @@
   &__menu {
     align-items: flex-start;
     justify-content: flex-end;
-    & nav {
-      display: flex;
-      gap: m.$portfolioGap;
+    gap: m.$portfolioGap;
+    & button {
+      color: #fff;
+      font: 500 100% / 1.25 'Manrope', sans-serif;
+      font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
+      letter-spacing: f.rem(0.8);
+      text-transform: capitalize;
     }
   }
 }

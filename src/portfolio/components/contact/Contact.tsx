@@ -1,9 +1,18 @@
 import ContactFormDialog from './tabs/ContactFormDialog';
 
-const DeveloperDialog = () => {
+const Contact = () => {
   return (
-    <aside className="dialog">
-      <div role="dialog" aria-modal="true" className="dialog__modal" data-show="false" aria-label="About Developer and Developer Contact information">
+    <aside className="contact">
+      <hgroup className="contact__hgroup">
+        <h2>Justin Barker</h2>
+        <h3>React Developer</h3>
+      </hgroup>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptas earum recusandae aspernatur maiores consequatur quis fugit et at? Repellat qui esse
+        praesentium nisi suscipit odio aspernatur reprehenderit cum voluptate? Soluta excepturi asperiores facere, eaque eos quis autem exercitationem quas repellat
+        officia temporibus incidunt architecto.
+      </p>
+      <div className="dialog__modal" role="dialog" aria-modal="true" data-show="false" aria-label="About Developer and Developer Contact information">
         <div className="dialog__modal__header">
           <span className="dialog__modal__header__col"></span>
           <span className="dialog__modal__header__col">
@@ -25,5 +34,4 @@ const DeveloperDialog = () => {
     </aside>
   );
 };
-
-export default DeveloperDialog;
+export default Contact;

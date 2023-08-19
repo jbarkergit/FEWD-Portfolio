@@ -1,17 +1,26 @@
 import { useState } from 'react';
 import PortHeader from '../components/navigation/header/PortHeader';
 import MainContent from '../components/main/MainContent';
-import DeveloperDialog from '../components/dialog/DeveloperDialog';
 import PortFooter from '../components/navigation/footer/PortFooter';
+import Contact from '../components/contact/Contact';
 
 const Portfolio = (): JSX.Element => {
   const [stateIndex, setStateIndex] = useState<number>(0);
+  const [contactForm, setContactForm] = useState<boolean>(false);
 
   return (
     <div id="portfolio">
-      <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} />
-      <DeveloperDialog />
-      <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} />
+      <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} contactForm={contactForm} setContactForm={setContactForm} />
+      {contactForm ? (
+        <div className="sidebar">
+          <Contact />
+          <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} />
+        </div>
+      ) : (
+        <>
+          <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} />
+        </>
+      )}
       <PortFooter stateIndex={stateIndex} />
     </div>
   );
