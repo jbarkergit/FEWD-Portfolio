@@ -4,6 +4,7 @@
 .mainContent {
   display: grid;
   grid-auto-flow: column;
+  width: max-content;
   height: 76vh;
   padding: 0 0 0 m.$viewportMarginRightLeft;
   &:hover {

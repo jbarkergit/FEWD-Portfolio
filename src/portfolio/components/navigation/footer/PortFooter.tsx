@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import CurrentTimeCDT from './CurrentTimeCDT';
 
 type ProjectNavPropType = {
-  closestIndex: number;
+  stateIndex: number;
 };
 
-const PortFooter = ({ closestIndex }: ProjectNavPropType) => {
+const PortFooter = ({ stateIndex }: ProjectNavPropType) => {
   const getExtendedInfo = () => {
-    switch (closestIndex) {
+    switch (stateIndex) {
       case 0:
         return true;
       default:
@@ -16,7 +16,7 @@ const PortFooter = ({ closestIndex }: ProjectNavPropType) => {
   };
 
   const getAbridgedInfo = () => {
-    switch (closestIndex) {
+    switch (stateIndex) {
       case 0:
         return true;
       default:
@@ -25,7 +25,7 @@ const PortFooter = ({ closestIndex }: ProjectNavPropType) => {
   };
 
   const getDemoLink = () => {
-    switch (closestIndex) {
+    switch (stateIndex) {
       case 0:
         return '/ecommerce';
       default:

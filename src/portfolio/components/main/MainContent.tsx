@@ -1,9 +1,7 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useReducer, useRef } from 'react';
 import ProjectNavProp from './ProjectNavProp';
-import EcommerceExtendedInfo from '../../assets/production-data/documentation/ecommerce/EcommerceExtendedInfo';
-import EcommerceAbridgedInfo from '../../assets/production-data/documentation/ecommerce/EcommerceAbridgedInfo';
 
-type indexStateType = { closestIndex: number; setClosestIndex: Dispatch<SetStateAction<number>> };
+type indexStateType = { stateIndex: number; setStateIndex: Dispatch<SetStateAction<number>> };
 
 type initSliderStateType = {
   pointerDown: boolean;
@@ -11,6 +9,7 @@ type initSliderStateType = {
   pageX: number;
   trackPos: number;
   previousTrackPos: number;
+  closestIndex: number;
   style: React.CSSProperties;
 };
 
@@ -20,6 +19,7 @@ export const initState: initSliderStateType = {
   pageX: 0,
   trackPos: 0,
   previousTrackPos: 0,
+  closestIndex: 0,
   style: { transform: `translateX(0px)` },
 };
 
@@ -30,7 +30,7 @@ type actionType =
   | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number }
   | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] };
 
-const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Element => {
+const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element => {
   const targetElementRef = useRef<HTMLDivElement>(null),
     targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
     targetElementWidth: number = targetElement?.scrollWidth as number,
@@ -70,16 +70,15 @@ const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Ele
         } else {
           for (let i = 0; i < targetElementChildrenPositionArray.length; i++) {
             const distanceFromTrackPos = Math.abs(targetElementChildrenPositionArray[i] - state.trackPos);
-            const previousIndex = Math.abs(targetElementChildrenPositionArray[closestIndex] - state.trackPos);
-            if (distanceFromTrackPos < previousIndex) closestIndex = i;
+            const previousIndex = Math.abs(targetElementChildrenPositionArray[state.closestIndex] - state.trackPos);
+            if (distanceFromTrackPos < previousIndex) state.closestIndex = i;
           }
           const targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft);
-          const closestChild: number = targetElementChildrenPositionArray[closestIndex] + targetElementLeftPadding;
+          const closestChild: number = targetElementChildrenPositionArray[state.closestIndex] + targetElementLeftPadding;
 
           revealRefs.current.forEach((article, index) => {
-            const dataStatus = index === closestIndex ? 'enabled' : 'disabled';
+            const dataStatus = index === state.closestIndex ? 'enabled' : 'disabled';
             if (article) article.setAttribute('data-status', dataStatus);
-            setClosestIndex(closestIndex);
           });
 
           return {
@@ -95,7 +94,7 @@ const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Ele
       case 'SCROLL':
         const scrollDirection = Math.sign(action.deltaY);
         const targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft);
-        let nextClosestIndex = closestIndex;
+        let nextClosestIndex = state.closestIndex;
 
         scrollDirection === -1
           ? (nextClosestIndex = Math.min(nextClosestIndex + 1, targetElementChildrenPositionArray.length - 1))
@@ -108,10 +107,9 @@ const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Ele
           if (article) article.setAttribute('data-status', dataStatus);
         });
 
-        setClosestIndex(nextClosestIndex);
-
         return {
           ...state,
+          closestIndex: nextClosestIndex,
           trackPos: closestChild,
           previousTrackPos: closestChild,
           style: {
@@ -162,43 +160,13 @@ const MainContent = ({ closestIndex, setClosestIndex }: indexStateType): JSX.Ele
     };
   }, []);
 
-  // projectName, extendedInfo?, abridgedInfo?, demoLink?, webm?, dataStatus, dataActivity, addToRefs
-  const ecommerceExtendedInfo = EcommerceExtendedInfo;
-  const ecommerceAbridgedInfo = EcommerceAbridgedInfo;
+  useEffect(() => setStateIndex(state.closestIndex), [state.closestIndex]);
+
   return (
     <main className="mainContent" ref={targetElementRef} style={state.style}>
-      <ProjectNavProp
-        projectName="Dynamic Audio"
-        extendedInfo={ecommerceExtendedInfo}
-        abridgedInfo={ecommerceAbridgedInfo}
-        imgSrc="src/portfolio/assets/production-images/ecom-prev.png"
-        demoLink="/ecommerce"
-        dataStatus="active"
-        dataActivity="active"
-        closestIndex={closestIndex}
-        setClosestIndex={setClosestIndex}
-        addToRefs={addToRefs}
-      />
-      <ProjectNavProp
-        projectName="Unknown"
-        extendedInfo=""
-        abridgedInfo=""
-        dataStatus="disabled"
-        dataActivity="disabled"
-        closestIndex={closestIndex}
-        setClosestIndex={setClosestIndex}
-        addToRefs={addToRefs}
-      />
-      <ProjectNavProp
-        projectName="Unknown"
-        extendedInfo=""
-        abridgedInfo=""
-        dataStatus="disabled"
-        dataActivity="disabled"
-        closestIndex={closestIndex}
-        setClosestIndex={setClosestIndex}
-        addToRefs={addToRefs}
-      />
+      <ProjectNavProp imgSrc="src/portfolio/assets/production-images/ecom-prev.png" dataStatus="active" dataActivity="active" addToRefs={addToRefs} />
+      <ProjectNavProp dataStatus="disabled" dataActivity="disabled" addToRefs={addToRefs} />
+      <ProjectNavProp dataStatus="disabled" dataActivity="disabled" addToRefs={addToRefs} />
     </main>
   );
 };

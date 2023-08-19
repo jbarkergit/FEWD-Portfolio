@@ -5,23 +5,23 @@ import DeveloperDialog from '../components/dialog/DeveloperDialog';
 import PortFooter from '../components/navigation/footer/PortFooter';
 
 const Portfolio = (): JSX.Element => {
-  const [closestIndex, setClosestIndex] = useState<number>(0);
+  const [stateIndex, setStateIndex] = useState<number>(0);
   const [showDialog, setShowDialog] = useState<boolean | null>(false);
   const [dialogTab, setDialogTab] = useState<string | null>('contact');
 
   return (
     <div id="portfolio">
       <PortHeader
-        closestIndex={closestIndex}
-        setClosestIndex={setClosestIndex}
+        stateIndex={stateIndex}
+        setStateIndex={setStateIndex}
         showDialog={showDialog}
         setShowDialog={setShowDialog}
         dialogTab={dialogTab}
         setDialogTab={setDialogTab}
       />
       <DeveloperDialog showDialog={showDialog} setShowDialog={setShowDialog} dialogTab={dialogTab} setDialogTab={setDialogTab} />
-      <MainContent closestIndex={closestIndex} setClosestIndex={setClosestIndex} />
-      <PortFooter closestIndex={closestIndex} />
+      <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} />
+      <PortFooter stateIndex={stateIndex} />
     </div>
   );
 };

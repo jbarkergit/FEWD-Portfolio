@@ -1,16 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 type ProjectNavPropType = {
-  projectName: string;
-  extendedInfo?: string;
-  abridgedInfo?: string;
-  demoLink?: string;
   imgSrc?: string;
   dataStatus: string;
   dataActivity: string;
   addToRefs: (reference: HTMLElement) => void;
-  setClosestIndex: Dispatch<SetStateAction<number>>;
-  closestIndex: number;
 };
 
 const ProjectNavProp = ({ imgSrc, dataStatus, dataActivity, addToRefs }: ProjectNavPropType): JSX.Element => {

@@ -1,15 +1,15 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
 type PortHeaderType = {
-  closestIndex: number;
-  setClosestIndex: Dispatch<SetStateAction<number>>;
+  stateIndex: number;
+  setStateIndex: Dispatch<SetStateAction<number>>;
   showDialog: boolean | null;
   setShowDialog: Dispatch<SetStateAction<boolean | null>>;
   dialogTab: string | null;
   setDialogTab: Dispatch<SetStateAction<string | null>>;
 };
 
-const PortHeader = ({ closestIndex, setClosestIndex, setShowDialog, setDialogTab }: PortHeaderType): JSX.Element => {
+const PortHeader = ({ stateIndex, setStateIndex, setShowDialog, setDialogTab }: PortHeaderType): JSX.Element => {
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
   const unorderedListChildrenPositionArray = unorderedListChildrenArray.map((child) => child.offsetLeft);
@@ -18,17 +18,17 @@ const PortHeader = ({ closestIndex, setClosestIndex, setShowDialog, setDialogTab
   const contactDialogButtonRef = useRef<HTMLButtonElement>(null);
 
   //Set arrow position of project navigation by number
-  useEffect(() => unorderedListRef.current?.style.setProperty('--afterPsuedoSelector', `${unorderedListChildrenPositionArray[closestIndex]}px`), [closestIndex]);
+  useEffect(() => unorderedListRef.current?.style.setProperty('--afterPsuedoSelector', `${unorderedListChildrenPositionArray[stateIndex]}px`), [stateIndex]);
 
   return (
     <header className="portHeader">
       <section className="portHeader__index">
-        <div className="portHeader__index__location">{`Project 0${closestIndex + 1}.`}</div>
+        <div className="portHeader__index__location">{`Project 0${stateIndex + 1}.`}</div>
         <nav className="portHeader__index__slideNav">
           <ul ref={unorderedListRef}>
             {Array.from({ length: 3 }).map((_, index) => (
               <li key={index}>
-                <button onClick={() => setClosestIndex(index)}>
+                <button onClick={() => setStateIndex(index)}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
                     <path
                       fill="#ffffff"
