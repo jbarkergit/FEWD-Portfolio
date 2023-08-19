@@ -26,9 +26,9 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      -webkit-transform: scaleX(-1);
+      object-position: center center;
       transform: scaleX(-1);
-      filter: contrast(105%);
+      filter: contrast(108%);
     }
     & .imgFadeGradient {
       position: absolute;
@@ -48,42 +48,55 @@
     height: 100vh;
     z-index: 2;
     padding: 0 8vw;
-    & hgroup {
-      & h1 {
-        max-width: 40ch;
-        margin: 0 0 f.rem(20) f.rem(3);
-        font-size: clamp(f.rem(12), f.rem(15) + 0.25vw, f.rem(32));
-        font-weight: 600;
-        letter-spacing: f.rem(0.1);
-        line-height: 1.2;
-        color: var(--fontSecondary);
-      }
-      h2 {
-        max-width: 25ch;
-        margin-bottom: f.rem(15);
-        font-style: italic;
-        font-weight: 800;
-        line-height: 100%;
-        color: var(--fontSecondary);
-      }
-    }
-    &__cta {
+    &__details {
       display: flex;
-      gap: f.rem(20);
-      flex-wrap: wrap;
-      & a {
-        @include m.ecoBtn;
-        @include m.ecoBtnLight;
+      flex-direction: column;
+      max-width: f.rem(620);
+      margin-bottom: 1.5%;
+      & hgroup {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: f.rem(15);
+        & h3 {
+          color: var(--fontSecondary);
+          font-size: f.rem(16);
+          font-weight: 500;
+          letter-spacing: f.rem(0.5);
+          text-transform: lowercase;
+          font-style: italic;
+        }
+        & h2 {
+          color: var(--fontSecondary);
+          font-size: clamp(f.rem(16), f.rem(34) + 1vw, f.rem(40));
+          font-weight: 600;
+          text-transform: uppercase;
+          padding-bottom: f.rem(6);
+        }
+        & h1 {
+          color: var(--fontSecondary);
+          font-size: clamp(f.rem(16), f.rem(18) + 1vw, f.rem(21));
+          font-weight: 500;
+          letter-spacing: f.rem(0.5);
+          line-height: 115%;
+          margin-left: f.rem(4);
+        }
+      }
+      &__cta {
+        display: flex;
+        gap: f.rem(25);
+        & a {
+          @include m.ecoBtn;
+          @include m.ecoBtnDark;
+        }
       }
     }
     &__logos {
       position: absolute;
       display: flex;
       flex-wrap: wrap;
-      gap: f.rem(25);
+      gap: f.rem(50);
       height: auto;
-      padding-right: 8vw;
-      bottom: 12%;
+      bottom: 7%;
       & img {
         width: clamp(f.rem(50), f.rem(150), f.rem(200));
         @media (width <= 542px) {
