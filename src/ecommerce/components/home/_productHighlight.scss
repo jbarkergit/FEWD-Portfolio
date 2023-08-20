@@ -31,29 +31,34 @@
       border-radius: f.rem(26);
       overflow: hidden;
       box-shadow: -1px -1px 20px 0px #ececec, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
-      & div {
-        position: absolute;
-        inset: -65% 0 0 0;
-        margin: auto;
-        width: fit-content;
-        height: fit-content;
+      & hgroup {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: f.rem(5);
+        width: 100%;
         z-index: 4;
-        pointer-events: none;
-        & h3 {
-          font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
-          font-weight: 500;
-        }
+        padding: 8% 15% 0 15%;
+        text-align: center;
         & h2 {
-          font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(36));
+          width: 100%;
+          font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
           font-weight: 700;
         }
-        & h4 {
+        & h3 {
+          width: 100%;
+          font-size: clamp(f.rem(14), f.rem(12) + 1vw, f.rem(18));
           font-weight: 500;
         }
       }
       & picture {
-        position: relative;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: flex-end;
         z-index: 3;
+        padding: 0 f.rem(15);
         border-radius: f.rem(26);
         @include m.productPhoto;
         &::before {
@@ -61,7 +66,7 @@
           position: absolute;
           inset: 0;
           border-radius: f.rem(26);
-          background-color: var(--elemBackgroundPrimary);
+          background-color: var(--gradientMono);
           opacity: 0.8;
         }
         &:hover {
@@ -78,11 +83,12 @@
           }
         }
         & img {
-          max-height: inherit;
+          position: relative;
+          max-height: 68%;
           object-fit: scale-down;
           object-position: center bottom;
           mix-blend-mode: darken;
-          padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
+          padding: 0 0 10% 0;
         }
       }
       & aside {

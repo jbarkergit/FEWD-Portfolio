@@ -60,11 +60,12 @@ const ProductHighlight = (): JSX.Element => {
                     <source src="/src/ecommerce/assets/production-videos/stockfootagesplice.webm" type="video/webm" />
                   </video>
                 </aside>
-                <div id="productHighlightInfo">
-                  <h3>{product.company}</h3>
-                  <h2>{product.unit}</h2>
-                  <h4>Starting at {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h4>
-                </div>
+                <hgroup id="productHighlightInfo">
+                  <h2>
+                    {product.company} {product.unit}
+                  </h2>
+                  <h3>Starting at {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h3>
+                </hgroup>
               </article>
             </Link>
           </li>
