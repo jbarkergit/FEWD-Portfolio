@@ -79,9 +79,8 @@
     width: 100%;
     @include m.ecoBtn;
     padding: 0;
-    font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
-    font-weight: 600;
-    letter-spacing: f.rem(1);
+    font-size: clamp(f.rem(16), f.rem(18) + 1vw, f.rem(24));
+    font-weight: 800;
     cursor: default;
   }
 }
