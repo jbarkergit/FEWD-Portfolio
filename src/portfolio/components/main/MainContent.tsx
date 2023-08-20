@@ -29,7 +29,7 @@ type actionType =
   | { type: 'POINTER_LEAVE'; pointerDown: boolean; previousTrackPos: number }
   | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number }
   | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] }
-  | { type: 'CUSTOM_UPDATE' };
+  | { type: 'BUTTON_NAVIGATION' };
 
 const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element => {
   const targetElementRef = useRef<HTMLDivElement>(null),
@@ -128,7 +128,7 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
           },
         };
 
-      case 'CUSTOM_UPDATE':
+      case 'BUTTON_NAVIGATION':
         const targElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft);
         const setSliderPosition: number = targetElementChildrenPositionArray[stateIndex] + targElementLeftPadding;
 
@@ -194,7 +194,8 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
   }, []);
 
   useEffect(() => setStateIndex(state.closestIndex), [state.closestIndex]);
-  useEffect(() => dispatch({ type: 'CUSTOM_UPDATE' }), [stateIndex]);
+  useEffect(() => toggleSmoothenAnimation(), [stateIndex]);
+  useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [stateIndex]);
 
   return (
     <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} ref={targetElementRef} style={state.style}>
