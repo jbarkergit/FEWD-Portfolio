@@ -73,10 +73,10 @@
       & h2,
       h3 {
         width: inherit;
-        padding-bottom: 1vh;
+        padding-bottom: f.rem(5);
       }
       & h2 {
-        font-size: clamp(f.rem(14), f.rem(12) + 0.5vw, f.rem(20));
+        font-size: clamp(f.rem(14), f.rem(14) + 1vw, f.rem(20));
         font-weight: 600;
       }
       & p {
@@ -87,8 +87,6 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
         line-height: 1.3rem;
-        font-size: clamp(f.rem(14), f.rem(12) + 0.5vw, f.rem(18));
-        font-weight: 400;
         @media (width >= 1570px) {
           -webkit-line-clamp: 5;
           height: f.rem(108);
@@ -124,11 +122,11 @@
       }
     }
     & button {
-      gap: f.rem(5);
       width: 100%;
       @include m.ecoBtn;
       @include m.ecoBtnDark;
-      font-size: clamp(f.rem(12), f.rem(6) + 1vw, f.rem(14));
+      margin-top: f.rem(10);
+      font-size: clamp(f.rem(12), f.rem(9) + 1vw, f.rem(15));
       font-weight: 500;
       letter-spacing: var(--navigationLetterSpacing);
     }

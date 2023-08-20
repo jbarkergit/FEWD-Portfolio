@@ -9,15 +9,16 @@
   height: fit-content;
   z-index: 6;
   border-radius: f.rem(6);
+  @include m.ecoBtnLight;
   &__label {
     display: none;
   }
   &__input {
     @include m.ecoBtn;
-    @include m.ecoBtnDark;
+    @include m.ecoBtnLight;
     cursor: text;
     width: f.rem(65);
-    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjA2NCAyMC4yODZjNS4wMDYgMCA5LjA2NC00LjA5NCA5LjA2NC05LjE0M0MyMC4xMjggNi4wOTMgMTYuMDcgMiAxMS4wNjQgMlMyIDYuMDkzIDIgMTEuMTQzYzAgNS4wNSA0LjA1OCA5LjE0MyA5LjA2NCA5LjE0M1ptOC42NTctMi41MDNjLTEuMDg1LS4wOS0xLjk5LjgyMy0xLjkwMiAxLjkxOGMuMDE2LjE5LjA4NC40MTYuMTUzLjY0OGwuMDIuMDY3bC4wMTguMDZjLjA2My4yMTMuMTI1LjQyNC4yMS41ODVhMS43NTQgMS43NTQgMCAwIDAgMi41MjcuNjQzYy4xNTEtLjEuMzA1LS4yNTcuNDYtLjQxNGwuMDQ1LS4wNDVsLjA0NC0uMDQ0YTMuMzEgMy4zMSAwIDAgMCAuNDEtLjQ2NWExLjc4NiAxLjc4NiAwIDAgMC0uNjM3LTIuNTQ5YTMuMjUzIDMuMjUzIDAgMCAwLS41OC0uMjEybC0uMDYtLjAxOGwtLjA2Ni0uMDJjLS4yMy0uMDctLjQ1NC0uMTM4LS42NDItLjE1NFptLTcuOTAyLTguNjcxYS43NTkuNzU5IDAgMCAwLS43NTUtLjc2MmEuNzU5Ljc1OSAwIDAgMC0uNzU1Ljc2MnYxLjI3aC0xLjI2YS43NTkuNzU5IDAgMCAwLS43NTUuNzYxYS43Ni43NiAwIDAgMCAuNzU2Ljc2MmgxLjI1OXYxLjI3YzAgLjQyLjMzOC43NjIuNzU1Ljc2MmEuNzU5Ljc1OSAwIDAgMCAuNzU1LS43NjJ2LTEuMjdoMS4yNmEuNzU5Ljc1OSAwIDAgMCAuNzU1LS43NjJhLjc1OS43NTkgMCAwIDAtLjc1Ni0uNzYySDExLjgydi0xLjI3WiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PC9zdmc+')
+    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiMzMzMzMzMiIGQ9Im0xOS42IDIxbC02LjMtNi4zcS0uNzUuNi0xLjcyNS45NVQ5LjUgMTZxLTIuNzI1IDAtNC42MTItMS44ODhUMyA5LjVxMC0yLjcyNSAxLjg4OC00LjYxMlQ5LjUgM3EyLjcyNSAwIDQuNjEyIDEuODg4VDE2IDkuNXEwIDEuMS0uMzUgMi4wNzVUMTQuNyAxMy4zbDYuMyA2LjNsLTEuNCAxLjRaTTkuNSAxNHExLjg3NSAwIDMuMTg4LTEuMzEzVDE0IDkuNXEwLTEuODc1LTEuMzEzLTMuMTg4VDkuNSA1UTcuNjI1IDUgNi4zMTIgNi4zMTNUNSA5LjVxMCAxLjg3NSAxLjMxMyAzLjE4OFQ5LjUgMTRaIi8+PC9zdmc+')
       no-repeat center center;
     background-size: f.rem(24);
     transition: width 0.35s cubic-bezier(0, 0, 0.45, 1), background 0.3s cubic-bezier(0, 0, 0.45, 1);
@@ -52,7 +53,7 @@
     padding-top: f.rem(6);
     border-bottom-right-radius: f.rem(6);
     border-bottom-left-radius: f.rem(6);
-    background-color: var(--elemBackgroundSecondary);
+    background-color: var(--elemBackgroundPrimary);
     &__ul {
       display: flex;
       flex-direction: column;
@@ -67,7 +68,7 @@
         border-radius: f.rem(6);
         cursor: pointer;
         &:hover {
-          background: hsl(0, 0%, 28%);
+          background: hsl(0, 0%, 92%);
         }
         & a {
           display: block;
@@ -78,7 +79,6 @@
           overflow: hidden;
           text-overflow: ellipsis;
           max-width: calc(100% - 1em);
-          color: var(--fontSecondary);
         }
       }
     }

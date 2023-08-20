@@ -33,6 +33,7 @@
       width: 100%;
       & li a {
         @include m.ecoBtn;
+        font-size: f.rem(14);
         letter-spacing: f.rem(1.4);
         border-radius: 0;
         color: var(--fontPrimary);
@@ -47,5 +48,8 @@ div.searchBar:nth-child(2) > div:nth-child(1) > input:nth-child(2) {
 
 .ctaBtn {
   @include m.ecoBtn;
-  gap: f.rem(4);
+  @include m.ecoBtnLight;
+  &:nth-child(3) {
+    @include m.ecoBtnDark;
+  }
 }

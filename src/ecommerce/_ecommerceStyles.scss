@@ -25,11 +25,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: f.rem(3);
   max-height: f.rem(45);
   padding: f.rem(10) f.rem(14);
   border-radius: f.rem(6);
   cursor: pointer;
-  font-size: clamp(f.rem(12), f.rem(8) + 1vw, f.rem(14));
+  font-size: f.rem(12);
   font-weight: 600;
   letter-spacing: f.rem(0.7);
   text-transform: uppercase;
