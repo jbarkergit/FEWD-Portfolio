@@ -24,9 +24,10 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
                   <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />
                 </picture>
                 <hgroup>
-                  <h3>{product.company}</h3>
-                  <h2>{product.unit}</h2>
-                  <h4>Starting at {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h4>
+                  <h2>
+                    {product.company} {product.unit}
+                  </h2>
+                  <h3>Starting at {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h3>
                 </hgroup>
               </article>
             </Link>

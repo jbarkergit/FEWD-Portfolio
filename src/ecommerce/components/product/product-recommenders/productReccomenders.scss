@@ -40,6 +40,7 @@
         display: flex;
         align-items: flex-end;
         z-index: 3;
+        padding: 0 f.rem(15);
         border-radius: f.rem(26);
         @include m.productPhoto;
         &::before {
@@ -56,27 +57,26 @@
           object-fit: scale-down;
           object-position: center bottom;
           mix-blend-mode: darken;
-          padding: 3% 1% 10% 1%;
+          padding: 0 0 10% 0;
         }
       }
       & hgroup {
+        position: relative;
         display: flex;
         flex-direction: column;
-        position: relative;
+        gap: f.rem(5);
+        width: 100%;
         z-index: 4;
         padding: 8% 15% 0 15%;
+        text-align: center;
         & h2 {
-          width: fit-content;
-          font-size: clamp(f.rem(18), f.rem(12) + 1vw, f.rem(36));
+          width: 100%;
+          font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
           font-weight: 700;
         }
         & h3 {
-          width: fit-content;
-          font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(24));
-          font-weight: 500;
-        }
-        & h4 {
-          width: fit-content;
+          width: 100%;
+          font-size: clamp(f.rem(14), f.rem(12) + 1vw, f.rem(18));
           font-weight: 500;
         }
       }
