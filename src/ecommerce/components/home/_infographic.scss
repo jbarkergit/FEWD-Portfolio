@@ -69,7 +69,6 @@
           font-size: clamp(f.rem(16), f.rem(34) + 1vw, f.rem(40));
           font-weight: 600;
           text-transform: uppercase;
-          padding-bottom: f.rem(6);
         }
         & h1 {
           color: var(--fontSecondary);
