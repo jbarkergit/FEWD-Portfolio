@@ -13,7 +13,7 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
   return (
     <section className="recommenders" style={{ backgroundColor: 'transparent' }}>
       <h2 className="recommenders__header">
-        More {findProduct.category}s like <span className="highlight">{findProduct.unit}</span>
+        More {findProduct.category} like <span className="highlight">{findProduct.unit}</span>
       </h2>
       <ul className="recommenders__unorderedList">
         {filteredRecommenders.splice(0, 8).map((product) => (
