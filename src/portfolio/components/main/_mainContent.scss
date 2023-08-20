@@ -13,6 +13,9 @@
   &:active {
     cursor: grabbing;
   }
+  &.smoothen {
+    transition: transform 0.25s ease-out;
+  }
 }
 
 .mainContent__article {

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useReducer, useRef } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import ProjectNavProp from './ProjectNavProp';
 
 type indexStateType = { stateIndex: number; setStateIndex: Dispatch<SetStateAction<number>> };
@@ -37,6 +37,14 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
     targetElementWidth: number = targetElement?.scrollWidth as number,
     targetElementChildrenArray: HTMLElement[] = Array.from(targetElement?.children ?? []) as HTMLElement[],
     targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
+  const [applySmoothenAnimation, setApplySmoothenAnimation] = useState<boolean>(false);
+
+  const toggleSmoothenAnimation = () => {
+    setApplySmoothenAnimation((prev) => !prev);
+    setTimeout(() => {
+      setApplySmoothenAnimation(false);
+    }, 250);
+  };
 
   const revealRefs = useRef<HTMLElement[]>([]);
 
@@ -58,7 +66,6 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
             targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft),
             maximumDelta = targetElementWidth * -1 + (targetElementChildrenArray[1].offsetWidth + targetElementLeftPadding),
             clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
-
           return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
         }
 
@@ -79,6 +86,8 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
             const dataStatus = index === state.closestIndex ? 'enabled' : 'disabled';
             if (article) article.setAttribute('data-status', dataStatus);
           });
+
+          toggleSmoothenAnimation();
 
           return {
             ...state,
@@ -107,6 +116,8 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
           if (article) article.setAttribute('data-status', dataStatus);
         });
 
+        toggleSmoothenAnimation();
+
         return {
           ...state,
           closestIndex: nextClosestIndex,
@@ -121,10 +132,7 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
         const targElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft);
         const setSliderPosition: number = targetElementChildrenPositionArray[stateIndex] + targElementLeftPadding;
 
-        revealRefs.current.forEach((article, index) => {
-          const dataStatus = index === stateIndex ? 'enabled' : 'disabled';
-          if (article) article.setAttribute('data-status', dataStatus);
-        });
+        revealRefs.current.forEach((article, index) => article.setAttribute('data-status', index === stateIndex ? 'enabled' : 'disabled'));
 
         return {
           ...state,
@@ -186,15 +194,10 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
   }, []);
 
   useEffect(() => setStateIndex(state.closestIndex), [state.closestIndex]);
-
-  useEffect(() => {
-    if (targetElementRef) {
-      dispatch({ type: 'CUSTOM_UPDATE' });
-    }
-  }, [stateIndex]);
+  useEffect(() => dispatch({ type: 'CUSTOM_UPDATE' }), [stateIndex]);
 
   return (
-    <main className="mainContent" ref={targetElementRef} style={state.style}>
+    <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} ref={targetElementRef} style={state.style}>
       <ProjectNavProp imgSrc="src/portfolio/assets/production-images/ecom-prev.png" dataStatus="active" dataActivity="active" addToRefs={addToRefs} />
       <ProjectNavProp dataStatus="disabled" dataActivity="disabled" addToRefs={addToRefs} />
       <ProjectNavProp dataStatus="disabled" dataActivity="disabled" addToRefs={addToRefs} />
