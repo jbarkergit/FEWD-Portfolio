@@ -17,7 +17,7 @@ import { CartProvider } from './ecommerce/context/CartContext';
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
 //Hyundai-N
-const HyundaiInitial = lazy(() => import('./hyundai-n/pages/HyundaiInitial'));
+const HyundaiPageStructure = lazy(() => import('./hyundai-n/pages/HyundaiPageStructure'));
 
 function App() {
   const uniqueCompanies = useMemo(() => useUniqueData().useUniqueCompanies, [useUniqueData().useUniqueCompanies]);
@@ -48,7 +48,7 @@ function App() {
               {uniquePolarPatterns.map((polarPattern) => (
                 <Route path={`/ecommerce/${polarPattern}`} element={<ProductCatalog />} key={polarPattern} />
               ))}
-              <Route path="/hyundai-n" element={<HyundaiInitial />} />
+              <Route path="/hyundai-n" element={<HyundaiPageStructure />} />
             </Routes>
           </CartProvider>
         </CategoryFilterProvider>
