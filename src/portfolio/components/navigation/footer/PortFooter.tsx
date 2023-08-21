@@ -10,6 +10,8 @@ const PortFooter = ({ stateIndex }: ProjectNavPropType) => {
     switch (stateIndex) {
       case 0:
         return true;
+      case 1:
+        return true;
       default:
         return false;
     }
@@ -19,6 +21,8 @@ const PortFooter = ({ stateIndex }: ProjectNavPropType) => {
     switch (stateIndex) {
       case 0:
         return true;
+      case 1:
+        return true;
       default:
         return false;
     }
@@ -27,6 +31,8 @@ const PortFooter = ({ stateIndex }: ProjectNavPropType) => {
   const getDemoLink = () => {
     switch (stateIndex) {
       case 0:
+        return '/hyundai-n';
+      case 1:
         return '/ecommerce';
       default:
         return '';

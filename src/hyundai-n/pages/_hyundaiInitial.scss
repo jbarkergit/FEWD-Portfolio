@@ -1,0 +1,15 @@
+@use '../../sass/util/functions' as f;
+
+.initial {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  overflow: hidden;
+  font: 500 100% / 1.25 'Manrope', sans-serif;
+  &__teaserVideo {
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+}
