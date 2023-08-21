@@ -1,4 +1,8 @@
 const HyundaiHero = () => {
-  return <div>HyundaiHero</div>;
+  return (
+    <section className="hyundaiHero">
+      <></>
+    </section>
+  );
 };
 export default HyundaiHero;
