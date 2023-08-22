@@ -28,7 +28,7 @@ const PrimaryNav = (): JSX.Element => {
       </ModalProvider>
       <section className="navkit__section">
         <button className="navkit__section__mobileMenuBtn" onClick={() => (mobileMenu ? setMobileMenu(false) : setMobileMenu(true))}>
-          {path ? (
+          {path === '/ecommerce' ? (
             <svg xmlns="http://www.w3.org/2000/svg" width="2.4em" height="2.4em" viewBox="0 0 24 24">
               <path fill="hsl(0, 0%, 100%)" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path>
             </svg>
