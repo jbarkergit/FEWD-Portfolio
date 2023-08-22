@@ -8,7 +8,7 @@ const MobileMenu = (): JSX.Element => {
   const { setCategoryFilter } = useCategoryFilterContext();
   const slideContainerRef = useRef<HTMLDivElement>(null!);
   return (
-    <div className="mobileMenu">
+    <aside className="mobileMenu">
       <div className="mobileMenu__logo">
         <Link to="/ecommerce" style={{ color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)' }}>
           Dynamic Audio
@@ -72,7 +72,7 @@ const MobileMenu = (): JSX.Element => {
           </div>
         </div>
       </div>
-    </div>
+    </aside>
   );
 };
 

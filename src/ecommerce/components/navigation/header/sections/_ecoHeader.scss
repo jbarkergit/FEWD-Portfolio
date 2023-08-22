@@ -12,6 +12,9 @@
   padding: 0 8.335%;
   z-index: 11;
   margin: 0 auto;
+  @media (width <= 1550px) {
+    grid-template-columns: auto auto;
+  }
   &__section {
     display: flex;
     align-items: center;
@@ -25,6 +28,25 @@
     &:nth-of-type(3) {
       justify-content: flex-end;
       gap: 5%;
+    }
+    &:nth-of-type(2),
+    &:nth-of-type(3) {
+      @media (width <= 1550px) {
+        display: none;
+      }
+    }
+    &:nth-of-type(4) {
+      & button {
+        @include m.ecoBtn;
+      }
+      @media (width > 1550px) {
+        display: none;
+      }
+      @media (width <= 1550px) {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
     }
     &__links {
       display: flex;
@@ -55,4 +77,9 @@ div.searchBar:nth-child(2) > div:nth-child(1) > input:nth-child(2) {
   &:nth-child(3) {
     @include m.ecoBtnDark;
   }
+}
+
+.navkit__section__mobileMenuBtn {
+  @include m.ecoBtn;
+  justify-content: flex-end;
 }
