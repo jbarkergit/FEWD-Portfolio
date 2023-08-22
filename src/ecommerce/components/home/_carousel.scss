@@ -4,7 +4,7 @@
 .carousel {
   position: relative;
   display: block;
-  margin: f.rem(50) 0;
+  margin: f.rem(50) 0 calc(f.rem(50) + f.rem(32)) 0;
   &:hover {
     cursor: grab;
   }
@@ -12,13 +12,25 @@
     cursor: grabbing;
   }
   &__heading {
-    max-width: 26ch;
-    margin: 2.5% 5% 2% 8vw;
-    color: var(--textPrimary);
-    font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
-    font-weight: 800;
-    line-height: 115%;
-    text-transform: uppercase;
+    width: 100%;
+    padding: f.rem(25) f.rem(50);
+    & h2 {
+      color: var(--textPrimary);
+      font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));
+      font-weight: 800;
+      text-transform: uppercase;
+      @media (width <= 1148px) {
+        font-size: clamp(f.rem(26), f.rem(30) + 1vw, f.rem(36));
+      }
+      @media (width <= 591px) {
+        font-size: clamp(f.rem(18), f.rem(24) + 1vw, f.rem(30));
+      }
+    }
+    & h3 {
+      padding-left: f.rem(2);
+      font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
+      font-weight: 500;
+    }
   }
   &__track {
     position: relative;
@@ -26,22 +38,42 @@
     flex-wrap: nowrap;
     gap: f.rem(20);
     width: fit-content;
-    height: f.rem(650);
+    height: f.rem(625);
     z-index: 4;
     margin: 0 f.rem(25);
     scrollbar-width: none;
     scroll-behavior: smooth;
+    @media (width <= 690px) {
+      height: f.rem(325);
+    }
+    @media (width <= 480px) {
+      height: f.rem(280);
+    }
     & picture {
       position: relative;
-      width: min(27.5vw, 34.375rem);
-      aspect-ratio: 5/3;
-      border-radius: f.rem(26);
+      height: 100%;
+      aspect-ratio: 4/5;
+      transition: flex 0.85s ease-in-out;
+      @media (width <= 1065px) {
+        aspect-ratio: 2/4;
+      }
+      @media (width <= 690px) {
+        aspect-ratio: 1/1;
+      }
       &:first-child {
-        width: f.rem(1154);
-        transition: flex 0.85s ease-in-out;
+        aspect-ratio: 4/2;
+        @media (width <= 1815px) {
+          aspect-ratio: 4/5;
+        }
+        @media (width <= 1065px) {
+          aspect-ratio: 2/4;
+        }
+        @media (width <= 690px) {
+          aspect-ratio: 1/1;
+        }
       }
       & img {
-        border-radius: f.rem(26);
+        border-radius: f.rem(18);
         object-fit: cover;
       }
     }
@@ -52,17 +84,6 @@
       z-index: 4;
       @include m.ecoBtn;
       @include m.ecoBtnLight;
-    }
-    @media (width <= 1450px) {
-      flex: 0 0 f.rem(300);
-      aspect-ratio: 2/2;
-    }
-    @media (width <= 1100px) {
-      aspect-ratio: 2/2;
-    }
-    @media (width <= 730px) {
-      max-width: 92vw;
-      aspect-ratio: 2/1;
     }
   }
 }

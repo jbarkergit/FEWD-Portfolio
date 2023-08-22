@@ -100,9 +100,12 @@ const Carousel = (): JSX.Element => {
 
   return (
     <section className="carousel">
-      <h2 className="carousel__heading">
-        Audio equipment for <span className="highlight">every</span> setting and <span className="highlight">every</span> environment
-      </h2>
+      <hgroup className="carousel__heading">
+        <h2>
+          Audio solutions for <span className="highlight">dynamic</span> environments
+        </h2>
+        <h3>Looking for something specific? We've got you covered.</h3>
+      </hgroup>
       <div className="carousel__track" ref={targetElementRef} style={state.style}>
         <CarouselProps
           carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg"
