@@ -3,10 +3,11 @@
 
 .skuPage {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 6%;
+  padding: 0 8.335%;
+  margin-bottom: f.rem(104);
+  @media (width <= 1530px) {
+    flex-wrap: wrap;
+  }
   &__grid {
     position: relative;
     display: flex;
@@ -17,23 +18,44 @@
     margin: f.rem(0) 0 f.rem(50) 0;
     background-color: var(--elemBackgroundPrimary);
     box-shadow: var(--shadowRefined);
+    @media (width <= 1530px) {
+      max-height: fit-content;
+    }
+    @media (width <= 1530px) {
+      flex-wrap: wrap;
+    }
+    @media (width <= 1050px) {
+      flex-direction: column;
+    }
     &__display {
       width: calc(100% / 2);
       border-top-left-radius: f.rem(24);
       border-bottom-left-radius: f.rem(24);
       background-color: var(--elemBackgroundPrimary);
+      @media (width <= 1050px) {
+        width: 100%;
+        border-top-right-radius: f.rem(24);
+      }
     }
     &__details {
       width: calc(100% / 2);
+      padding: f.rem(25) 0;
       border-radius: f.rem(24);
       background-color: var(--elemBackgroundSecondary);
       color: var(--fontSecondary);
+      @media (width <= 1050px) {
+        width: 100%;
+      }
     }
     &__imgSelection {
       width: 20%;
       border-top-right-radius: f.rem(24);
       border-bottom-right-radius: f.rem(24);
       background-color: var(--elemBackgroundPrimary);
+      @media (width <= 1050px) {
+        width: 100%;
+        border-bottom-left-radius: f.rem(24);
+      }
     }
   }
 }
@@ -55,20 +77,34 @@
     left: 0;
     display: flex;
     width: 100%;
+    height: f.rem(30);
     & button {
       @include m.ecoBtn;
       width: 50%;
+      height: 100%;
       padding: 0 5%;
       font-size: clamp(f.rem(12), f.rem(14) + 0.5vw, f.rem(14));
       font-weight: 600;
       letter-spacing: 0.03125rem;
       text-transform: capitalize;
       color: var(--fontSecondaryOffset);
+      & span {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        & span {
+          margin-bottom: f.rem(2);
+        }
+        & svg {
+          height: f.rem(30);
+        }
+      }
       &:first-child {
         justify-content: flex-start;
       }
       &:last-child {
         justify-content: flex-end;
+        align-items: center;
       }
     }
   }
@@ -76,12 +112,17 @@
     position: absolute;
     top: 5%;
     left: 0;
+    display: grid;
+    place-items: center;
     width: 100%;
-    @include m.ecoBtn;
-    padding: 0;
+    padding: 0 f.rem(25);
     font-size: clamp(f.rem(16), f.rem(18) + 1vw, f.rem(24));
     font-weight: 800;
+    white-space: wrap;
     cursor: default;
+    @media (width <= 1100px) {
+      font-size: clamp(f.rem(16), f.rem(14) + 1vw, f.rem(20));
+    }
   }
 }
 
@@ -93,6 +134,8 @@
   text-align: start;
   &__block {
     width: 80%;
+    padding: f.rem(25) 0;
+    overflow: hidden;
     & hgroup {
       & h1 {
         display: none;
@@ -124,6 +167,10 @@
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  @media (width <= 1530px) {
+    flex-direction: row;
+    width: 100%;
+  }
   &:hover + &__nav {
     opacity: 0;
   }
@@ -138,6 +185,9 @@
     background-color: transparent;
     color: var(--fontPrimary);
     opacity: 1;
+    @media (width <= 1530px) {
+      display: none;
+    }
     &:before {
       content: '';
       position: absolute;
@@ -156,10 +206,28 @@
     padding: 15% f.rem(10);
     overflow: auto;
     scrollbar-width: none;
+    @media (width <= 1530px) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: f.rem(25);
+      padding: 0;
+      margin: f.rem(50) f.rem(10);
+    }
     & picture {
       padding: 2.5%;
       background-color: var(--elemBackgroundPrimary);
       cursor: pointer;
+      @media (width <= 1530px) {
+        max-height: f.rem(200);
+        flex: 1 0 calc(25% - f.rem(25));
+        padding: 0;
+      }
+      @media (width <= 850px) {
+        flex: 1 0 calc(50% - f.rem(50));
+      }
+      @media (width <= 480px) {
+        flex: 1 0 calc(100%);
+      }
       & img {
         border-radius: f.rem(24);
         object-fit: scale-down;
