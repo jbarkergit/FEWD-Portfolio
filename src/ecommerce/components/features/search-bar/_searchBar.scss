@@ -23,15 +23,11 @@
       no-repeat center center;
     background-size: f.rem(24);
     transition: width 0.35s cubic-bezier(0, 0, 0.45, 1), background 0.3s cubic-bezier(0, 0, 0.45, 1);
-    &::placeholder,
-    &::-moz-placeholder,
-    &::-webkit-input-placeholder {
+    &::placeholder {
       opacity: 0;
       transition: opacity 0.35s cubic-bezier(0, 0, 0.45, 1);
     }
-    &:focus::placeholder,
-    &:focus::-moz-placeholder,
-    &:focus::-webkit-input-placeholder {
+    &:focus::placeholder {
       opacity: 1;
       transition: opacity 0.35s cubic-bezier(0, 0, 0.45, 1);
     }
