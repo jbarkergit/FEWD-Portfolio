@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
 
 const SearchBar = (): JSX.Element => {
-  const searchBarRef = useRef<HTMLDivElement>(null!),
-    searchLink = useRef<HTMLAnchorElement>(null!);
+  const searchBarRef = useRef<HTMLDivElement>(null!);
+  const searchLink = useRef<HTMLAnchorElement>(null!);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   const searchResults = ProductDatabase.filter((product) => {
