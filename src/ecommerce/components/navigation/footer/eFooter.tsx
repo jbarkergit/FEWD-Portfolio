@@ -6,7 +6,7 @@ const eFooter = (): JSX.Element => {
   return (
     <footer className="eFooter">
       <section className="eFooter__newsCta">
-        <h2>Keep in touch</h2>
+        <h2>Let's stay in touch</h2>
         <Newsletter />
       </section>
       <nav className="footerKit">
