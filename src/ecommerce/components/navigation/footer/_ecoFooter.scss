@@ -50,6 +50,7 @@
   gap: f.rem(50);
   width: max-content;
   height: auto;
+  padding: f.rem(50) 0;
   margin: 0 auto;
   @media (width <= 1200px) {
     flex-direction: column;
