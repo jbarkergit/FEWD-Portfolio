@@ -52,18 +52,20 @@
       display: flex;
       flex-direction: column;
       max-width: f.rem(620);
-      margin-bottom: 1.5%;
       & hgroup {
         display: flex;
         flex-direction: column;
         margin-bottom: f.rem(15);
+        @media (width <= 436px) {
+          margin-bottom: f.rem(55);
+        }
         & h3 {
           color: var(--fontSecondary);
           font-size: f.rem(16);
           font-weight: 500;
           letter-spacing: f.rem(0.5);
           text-transform: lowercase;
-          @media (width <= 434px) {
+          @media (width <= 436px) {
             font-size: f.rem(15);
           }
         }
