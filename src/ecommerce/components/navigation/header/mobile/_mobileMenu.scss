@@ -2,66 +2,69 @@
 @use '../../../../ecommerceStyles' as m;
 
 .mobileMenu {
+  position: absolute;
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
   width: 100%;
-  @media (width > 650px) {
-    display: none;
-  }
-  &__logo {
-    width: 50%;
-    white-space: nowrap;
-    & a {
-      @include m.ecoBtn;
-      @include m.ecoBtnLight;
-    }
-  }
+  height: 100vh;
+  z-index: 15;
   &__menu {
-    display: flex;
-    justify-content: flex-end;
-    width: 50%;
-    &__indicator {
-      @include m.ecoBtn;
-      font-size: clamp(f.rem(18), f.rem(12) + 1.5vw, f.rem(32));
-    }
-    &__slideContainer {
-      position: absolute;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100vh;
-      margin-right: -5vw;
-      pointer-events: none;
-      &[data-activity='inactive'] {
-        display: none;
+    width: f.rem(450);
+    &__logo {
+      width: 50%;
+      white-space: nowrap;
+      & a {
+        @include m.ecoBtn;
+        @include m.ecoBtnLight;
       }
     }
-    &__slideIn {
-      position: relative;
+    &__menu {
       display: flex;
-      flex-direction: column;
-      gap: 5vh;
-      width: 100%;
-      height: 85%;
-      z-index: 10;
-      padding: 5vh 8vw;
-      margin: 2vh 5vw;
-      border-radius: f.rem(16);
-      background-color: hsl(0, 0%, 97%);
-      pointer-events: all;
-      & ul {
+      justify-content: flex-end;
+      width: 50%;
+      &__indicator {
+        @include m.ecoBtn;
+        font-size: clamp(f.rem(18), f.rem(12) + 1.5vw, f.rem(32));
+      }
+      &__slideContainer {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        margin-right: -5vw;
+        pointer-events: none;
+        &[data-activity='inactive'] {
+          display: none;
+        }
+      }
+      &__slideIn {
+        position: relative;
         display: flex;
         flex-direction: column;
-        gap: f.rem(10);
-        &:nth-of-type(2) {
-          position: absolute;
-          bottom: 4vh;
-        }
-        & li a {
-          font-size: clamp(f.rem(16), f.rem(18) + 0.5vw, f.rem(28));
-          font-weight: 500;
-          color: var(--textSecondary);
+        gap: 5vh;
+        width: 100%;
+        height: 85%;
+        z-index: 10;
+        padding: 5vh 8vw;
+        margin: 2vh 5vw;
+        border-radius: f.rem(16);
+        background-color: hsl(0, 0%, 97%);
+        pointer-events: all;
+        & ul {
+          display: flex;
+          flex-direction: column;
+          gap: f.rem(10);
+          &:nth-of-type(2) {
+            position: absolute;
+            bottom: 4vh;
+          }
+          & li a {
+            font-size: clamp(f.rem(16), f.rem(18) + 0.5vw, f.rem(28));
+            font-weight: 500;
+            color: var(--textSecondary);
+          }
         }
       }
     }
