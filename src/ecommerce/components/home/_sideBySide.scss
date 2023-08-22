@@ -5,20 +5,15 @@
   position: relative;
   display: flex;
   width: 100%;
-  max-height: calc(100vh + f.rem(32));
-  padding: f.rem(50) 2vw;
-  @media (width <= 1460px) {
-    height: 100vh;
-    padding: 0 0;
-    margin: f.rem(100) 0;
-  }
-  @media (width <= 930px) {
+  height: 100vh;
+  margin: f.rem(50) 0 calc(f.rem(50) + f.rem(32)) 0;
+  @media (width <= 980px) {
     flex-direction: column;
   }
   &:after {
     content: '';
     position: absolute;
-    bottom: f.rem(-32);
+    bottom: f.rem(-114);
     left: 0;
     width: 100%;
     height: f.rem(32);
@@ -26,53 +21,62 @@
     border-bottom-right-radius: f.rem(64);
     border-bottom-left-radius: f.rem(64);
     background-color: var(--bodyBackground);
+    @media (width > 981px) {
+    }
   }
   &__textArea {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 50%;
+    height: inherit;
     padding: 0 f.rem(50);
+    @media (width <= 980px) {
+      width: 100%;
+      height: auto;
+      padding-bottom: f.rem(50);
+      padding: f.rem(25) f.rem(50);
+    }
     & h3 {
       text-transform: uppercase;
       font-weight: 700;
       letter-spacing: f.rem(2.2);
-    }
-    & p {
-      width: clamp(45ch, 50%, 65ch);
-      margin-left: f.rem(25);
-      font-weight: 500;
+      @media (width >= 467px) {
+        font-size: clamp(f.rem(20), f.rem(20) + 1vw, f.rem(26));
+      }
     }
     & h2 {
-      max-width: 26ch;
-      margin-bottom: f.rem(35);
-      font-size: clamp(f.rem(26), f.rem(16) + 2.5vw, f.rem(100));
+      margin-bottom: f.rem(10);
+      font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
       font-weight: 800;
-      line-height: 100%;
+      line-height: 115%;
+      text-transform: uppercase;
+      @media (width >= 467px) {
+        font-size: clamp(f.rem(20), f.rem(28) + 1vw, f.rem(34));
+      }
+    }
+    & p {
+      width: clamp(20ch, 100%, 65ch);
+      padding: 0 f.rem(6);
+      font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
+      font-weight: 500;
     }
   }
   &__video {
     display: grid;
     place-items: center;
     width: 50%;
-    @media (width <= 1460px) {
-      position: absolute;
+    height: inherit;
+    padding: 0 f.rem(50);
+    @media (width <= 980px) {
       width: 100%;
-    }
-    @media (width <= 930px) {
-      position: relative;
+      height: auto;
     }
     & video {
       aspect-ratio: 0.8/1;
-      min-height: 90vh;
       border-radius: f.rem(26);
       pointer-events: unset;
-      object-fit: cover;
-      @media (width <= 1460px) {
-        min-height: 0;
-        max-height: 100vh;
-        width: 100%;
-      }
+      object-fit: contain;
     }
   }
 }
