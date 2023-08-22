@@ -4,18 +4,26 @@
 .productHighlight {
   display: grid;
   place-items: center;
-  padding: f.rem(50) 0 f.rem(150) 0;
+  padding: f.rem(50) f.rem(50) f.rem(150) f.rem(50);
   background-color: var(--elemBackgroundPrimary);
+  @media (width <= 530px) {
+    display: flex;
+    flex-direction: column;
+  }
   &__heading {
+    position: relative;
     display: flex;
     justify-content: center;
     width: 100%;
-    margin: 2.5% 5% 2% 0;
+    padding: f.rem(25) f.rem(50);
     color: var(--textPrimary);
     font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
     font-weight: 800;
     line-height: 115%;
     text-transform: uppercase;
+    @media (width <= 416px) {
+      padding: f.rem(25) 0;
+    }
   }
   & ul {
     position: relative;
@@ -24,6 +32,16 @@
     grid-template-rows: 1fr;
     gap: f.rem(35);
     max-width: f.rem(1600);
+    @media (width <= 1265px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (width <= 970px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (width <= 530px) {
+      grid-template-columns: repeat(1, 1fr);
+      width: 100%;
+    }
     & li a article {
       position: relative;
       flex: 0 0 calc(1600 / 4 - 100);
@@ -31,6 +49,9 @@
       border-radius: f.rem(26);
       overflow: hidden;
       box-shadow: -1px -1px 20px 0px #ececec, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+      @media (width <= 530px) {
+        height: 100%;
+      }
       & hgroup {
         position: relative;
         display: flex;
@@ -40,15 +61,34 @@
         z-index: 4;
         padding: 8% 15% 0 15%;
         text-align: center;
+        @media (width <= 530px) {
+          padding: 8% 5% 0 5%;
+        }
         & h2 {
           width: 100%;
           font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
           font-weight: 700;
+          @media (width <= 700px) {
+            font-size: clamp(f.rem(18), f.rem(16) + 1vw, f.rem(22));
+          }
+          @media (width <= 700px) {
+            font-size: clamp(f.rem(14), f.rem(12) + 1vw, f.rem(18));
+          }
+          @media (width <= 530px) {
+            font-size: clamp(f.rem(18), f.rem(16) + 1vw, f.rem(22));
+            font-weight: 600;
+          }
         }
         & h3 {
           width: 100%;
           font-size: clamp(f.rem(14), f.rem(12) + 1vw, f.rem(18));
           font-weight: 500;
+          @media (width <= 605px) {
+            font-size: f.rem(15);
+          }
+          @media (width <= 530px) {
+            font-size: clamp(f.rem(18), f.rem(16) + 1vw, f.rem(22));
+          }
         }
       }
       & picture {
