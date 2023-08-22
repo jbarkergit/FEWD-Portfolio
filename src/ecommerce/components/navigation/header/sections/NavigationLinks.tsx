@@ -5,9 +5,9 @@ import { useCategoryFilterContext } from '../../../../context/CategoryFilterCont
 const NavigationLinks = (): JSX.Element => {
   // @ts-ignore:
   const { setCategoryFilter } = useCategoryFilterContext();
-  const path = useLocation().pathname.replace('/ecommerce/', '');
   const ecoPath = useLocation().pathname === '/ecommerce';
 
+  const path = useLocation().pathname.replace('/ecommerce/', '');
   useEffect(() => setCategoryFilter(path), [path]);
 
   return (
