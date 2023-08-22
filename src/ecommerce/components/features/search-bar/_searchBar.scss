@@ -21,7 +21,7 @@
     width: f.rem(50);
     background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiMzMzMzMzMiIGQ9Ik0xOS4wMjMgMTYuOTc3YTM1LjEzIDM1LjEzIDAgMCAxLTEuMzY3LTEuMzg0Yy0uMzcyLS4zNzgtLjU5Ni0uNjUzLS41OTYtLjY1M2wtMi44LTEuMzM3QTYuOTYyIDYuOTYyIDAgMCAwIDE2IDljMC0zLjg1OS0zLjE0LTctNy03UzIgNS4xNDEgMiA5czMuMTQgNyA3IDdjMS43NjMgMCAzLjM3LS42NiA0LjYwMy0xLjczOWwxLjMzNyAyLjhzLjI3NS4yMjQuNjUzLjU5NmMuMzg3LjM2My44OTYuODU0IDEuMzg0IDEuMzY3bDEuMzU4IDEuMzkybC42MDQuNjQ2bDIuMTIxLTIuMTIxbC0uNjQ2LS42MDRjLS4zNzktLjM3Mi0uODg1LS44NjYtMS4zOTEtMS4zNnpNOSAxNGMtMi43NTcgMC01LTIuMjQzLTUtNXMyLjI0My01IDUtNXM1IDIuMjQzIDUgNXMtMi4yNDMgNS01IDV6Ii8+PC9zdmc+')
       no-repeat center center;
-    background-size: f.rem(24);
+    background-size: f.rem(21);
     transition: width 0.35s cubic-bezier(0, 0, 0.45, 1), background 0.3s cubic-bezier(0, 0, 0.45, 1);
     &::placeholder {
       opacity: 0;
