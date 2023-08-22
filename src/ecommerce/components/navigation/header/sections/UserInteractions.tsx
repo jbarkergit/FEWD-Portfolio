@@ -1,8 +1,14 @@
+import { Dispatch, SetStateAction } from 'react';
 import { useLocation } from 'react-router-dom';
 import SearchBar from '../../../features/search-bar/SearchBar';
 import { useModalContext } from '../../../../context/ModalContext';
 
-const UserInteractions = (): JSX.Element => {
+type UserInteractionsType = {
+  mobileMenu: boolean;
+  setMobileMenu: Dispatch<SetStateAction<boolean>>;
+};
+
+const UserInteractions = ({ mobileMenu, setMobileMenu }: UserInteractionsType): JSX.Element => {
   // @ts-ignore
   const { ecoModalTab, setEcoModalTab } = useModalContext();
   const path = useLocation().pathname === '/ecommerce';
@@ -40,6 +46,11 @@ const UserInteractions = (): JSX.Element => {
           ></path>
         </svg>
         <span className="text">{'Shopping Cart'}</span>
+      </button>
+      <button className="navkit__section__mobileMenuBtn" onClick={() => (mobileMenu ? setMobileMenu(false) : setMobileMenu(true))}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="2.2em" height="2.2em" viewBox="0 0 24 24">
+          <path fill="hsl(0, 0%, 100%)" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path>
+        </svg>
       </button>
     </section>
   );

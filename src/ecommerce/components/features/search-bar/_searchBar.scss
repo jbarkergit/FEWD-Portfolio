@@ -36,10 +36,6 @@
       padding-left: f.rem(40);
       background-position: f.rem(13) center;
     }
-    @media (width <= 1200px) {
-      width: 100%;
-      background-position: f.rem(13) center;
-    }
   }
   &__return {
     position: absolute;

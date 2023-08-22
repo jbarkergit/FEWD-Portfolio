@@ -8,7 +8,6 @@ import ConditionallyRenderedModals from './ConditionallyRenderedModals';
 import MobileMenu from './mobile/MobileMenu';
 
 const PrimaryNav = (): JSX.Element => {
-  const path = useLocation().pathname.replace('/ecommerce/', '');
   const [mobileMenu, setMobileMenu] = useState<boolean>(false);
 
   return (
@@ -23,22 +22,9 @@ const PrimaryNav = (): JSX.Element => {
       <LogoArea />
       <NavigationLinks />
       <ModalProvider>
-        <UserInteractions />
+        <UserInteractions mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
         <ConditionallyRenderedModals />
       </ModalProvider>
-      <section className="navkit__section">
-        <button className="navkit__section__mobileMenuBtn" onClick={() => (mobileMenu ? setMobileMenu(false) : setMobileMenu(true))}>
-          {path === '/ecommerce' ? (
-            <svg xmlns="http://www.w3.org/2000/svg" width="2.4em" height="2.4em" viewBox="0 0 24 24">
-              <path fill="hsl(0, 0%, 100%)" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path>
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" width="2.4em" height="2.4em" viewBox="0 0 24 24">
-              <path fill="hsl(0, 0%, 20%)" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path>
-            </svg>
-          )}
-        </button>
-      </section>
       {mobileMenu ? <MobileMenu mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} /> : null}
     </header>
   );
