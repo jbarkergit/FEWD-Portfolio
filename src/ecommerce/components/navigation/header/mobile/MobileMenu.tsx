@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import SearchBar from '../../features/search-bar/SearchBar';
-import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
+import SearchBar from '../../../features/search-bar/SearchBar';
+import { useCategoryFilterContext } from '../../../../context/CategoryFilterContext';
 
 const MobileMenu = (): JSX.Element => {
   // @ts-ignore:

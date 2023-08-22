@@ -1,7 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { ModalProvider } from '../../../context/ModalContext';
-import UserInteractions from './UserInteractions';
-import NavigationLinks from './NavigationLinks';
+import LogoArea from './sections/LogoArea';
+import NavigationLinks from './sections/NavigationLinks';
+import UserInteractions from './sections/UserInteractions';
 import ConditionallyRenderedModals from './ConditionallyRenderedModals';
 
 const PrimaryNav = (): JSX.Element => {
@@ -14,11 +15,7 @@ const PrimaryNav = (): JSX.Element => {
         transform: useLocation().pathname === '/ecommerce' ? 'translateX(-50%)' : 'translateX(0)',
       }}
     >
-      <div className="navkit__section">
-        <Link to="/ecommerce" style={{ color: useLocation().pathname === '/ecommerce' ? 'white' : 'hsl(0, 0%, 19.607843137254903%)' }}>
-          Dynamic Audio
-        </Link>
-      </div>
+      <LogoArea />
       <NavigationLinks />
       <ModalProvider>
         <UserInteractions />

@@ -1,5 +1,5 @@
-@use '../../../../sass/util/functions' as f;
-@use '../../../ecommerceStyles' as m;
+@use '../../../../../sass/util/functions' as f;
+@use '../../../../ecommerceStyles' as m;
 
 .navkit {
   position: relative;
@@ -7,11 +7,9 @@
   display: grid;
   grid-template-columns: auto auto auto;
   grid-template-rows: 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
   width: 100%;
-  max-width: f.rem(1584);
   height: 11rem;
+  padding: 0 8.335%;
   z-index: 11;
   margin: 0 auto;
   &__section {
@@ -19,12 +17,12 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    &:first-child a {
+    &:nth-of-type(1) {
       font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
       font-weight: 700;
       text-transform: uppercase;
     }
-    &:nth-of-type(2) {
+    &:nth-of-type(3) {
       justify-content: flex-end;
       gap: 5%;
     }
@@ -49,6 +47,11 @@ div.searchBar:nth-child(2) > div:nth-child(1) > input:nth-child(2) {
 .ctaBtn {
   @include m.ecoBtn;
   @include m.ecoBtnLight;
+  & .text {
+    @media (width <= 1840px) {
+      display: none;
+    }
+  }
   &:nth-child(3) {
     @include m.ecoBtnDark;
   }
