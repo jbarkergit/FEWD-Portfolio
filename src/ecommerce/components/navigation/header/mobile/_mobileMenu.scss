@@ -3,65 +3,64 @@
 
 .mobileMenu {
   position: absolute;
-  display: flex;
-  justify-content: flex-end;
+  top: 0;
+  right: 0;
   width: 100%;
   height: 100vh;
-  z-index: 15;
-  &__menu {
-    width: f.rem(450);
+  margin: 0 8.335%;
+  pointer-events: none;
+  &__modal {
+    position: absolute;
+    top: 15%;
+    right: 0;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: f.rem(10);
+    width: 100%;
+    max-width: f.rem(400);
+    height: 80vh;
+    z-index: 11;
+    padding: 2% 2% 1% 2%;
+    border-radius: f.rem(24);
+    background-color: var(--elemBackgroundPrimary);
+    pointer-events: all;
+    transform: translateX(25%);
+    transition: height 250ms ease-in-out, transform 250ms ease-out, opacity 250ms ease-out;
+    opacity: 0;
+    &[data-status='active'] {
+      transform: translate3d(0, 0, 0);
+      transition: transform 250ms ease-in, opacity 250ms ease-in;
+      opacity: 1;
+    }
     &__logo {
-      width: 50%;
-      white-space: nowrap;
+      display: flex;
+      width: 100%;
+      & span {
+        width: 80%;
+        &:last-child {
+          display: flex;
+          justify-content: flex-end;
+          width: 20%;
+        }
+      }
       & a {
-        @include m.ecoBtn;
-        @include m.ecoBtnLight;
+        font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
+        font-weight: 700;
+        text-transform: uppercase;
       }
     }
     &__menu {
       display: flex;
-      justify-content: flex-end;
-      width: 50%;
-      &__indicator {
-        @include m.ecoBtn;
-        font-size: clamp(f.rem(18), f.rem(12) + 1.5vw, f.rem(32));
-      }
-      &__slideContainer {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100vh;
-        margin-right: -5vw;
-        pointer-events: none;
-        &[data-activity='inactive'] {
-          display: none;
-        }
-      }
-      &__slideIn {
-        position: relative;
+      flex-direction: column;
+      width: 100%;
+      & ul {
         display: flex;
         flex-direction: column;
-        gap: 5vh;
-        width: 100%;
-        height: 85%;
-        z-index: 10;
-        padding: 5vh 8vw;
-        margin: 2vh 5vw;
-        border-radius: f.rem(16);
-        background-color: hsl(0, 0%, 97%);
-        pointer-events: all;
-        & ul {
-          display: flex;
-          flex-direction: column;
-          gap: f.rem(10);
-          &:nth-of-type(2) {
-            position: absolute;
-            bottom: 4vh;
-          }
-          & li a {
-            font-size: clamp(f.rem(16), f.rem(18) + 0.5vw, f.rem(28));
+        gap: f.rem(10);
+        & li {
+          & a {
+            font-size: clamp(f.rem(14), f.rem(14) + 1vw, f.rem(20));
             font-weight: 500;
             color: var(--textSecondary);
           }

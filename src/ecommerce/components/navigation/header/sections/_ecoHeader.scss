@@ -36,6 +36,13 @@
       }
     }
     &:nth-of-type(4) {
+      display: flex;
+      justify-content: flex-end;
+      @media (width >= 1550px) {
+        display: none;
+      }
+    }
+    &:nth-of-type(5) {
       & button {
         @include m.ecoBtn;
       }

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ModalProvider } from '../../../context/ModalContext';
 import LogoArea from './sections/LogoArea';
@@ -5,7 +6,6 @@ import NavigationLinks from './sections/NavigationLinks';
 import UserInteractions from './sections/UserInteractions';
 import ConditionallyRenderedModals from './ConditionallyRenderedModals';
 import MobileMenu from './mobile/MobileMenu';
-import { useState } from 'react';
 
 const PrimaryNav = (): JSX.Element => {
   const path = useLocation().pathname.replace('/ecommerce/', '');
@@ -39,7 +39,7 @@ const PrimaryNav = (): JSX.Element => {
           )}
         </button>
       </section>
-      {mobileMenu ? <MobileMenu mobileMenu={mobileMenu} /> : null}
+      {mobileMenu ? <MobileMenu mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} /> : null}
     </header>
   );
 };
