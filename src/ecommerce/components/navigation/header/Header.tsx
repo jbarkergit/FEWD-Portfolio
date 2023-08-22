@@ -6,6 +6,7 @@ import NavigationLinks from './sections/NavigationLinks';
 import UserInteractions from './sections/UserInteractions';
 import ConditionallyRenderedModals from './ConditionallyRenderedModals';
 import MobileMenu from './mobile/MobileMenu';
+import SearchBar from '../../features/search-bar/SearchBar';
 
 const PrimaryNav = (): JSX.Element => {
   const [mobileMenu, setMobileMenu] = useState<boolean>(false);
