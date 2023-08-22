@@ -6,7 +6,7 @@
   align-items: center;
   width: 100%;
   height: fit-content;
-  padding: 0 f.rem(25) f.rem(50) f.rem(25);
+  padding: 0 0 f.rem(50) 0;
   @media (width <= 1000px) {
     flex-direction: column;
     gap: f.rem(25);
@@ -16,7 +16,7 @@
     flex: 1 1 auto;
     gap: f.rem(25);
     height: fit-content;
-    @media (width <= 550px) {
+    @media (width <= 780px) {
       flex-direction: column;
     }
     &:nth-of-type(2) {
