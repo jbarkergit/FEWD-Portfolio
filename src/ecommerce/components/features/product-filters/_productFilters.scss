@@ -7,11 +7,18 @@
   width: 100%;
   height: fit-content;
   padding: 0 f.rem(25) f.rem(50) f.rem(25);
+  @media (width <= 1000px) {
+    flex-direction: column;
+    gap: f.rem(25);
+  }
   &__panel {
     display: flex;
     flex: 1 1 auto;
     gap: f.rem(25);
     height: fit-content;
+    @media (width <= 550px) {
+      flex-direction: column;
+    }
     &:nth-of-type(2) {
       display: flex;
       justify-content: flex-end;
@@ -22,6 +29,9 @@
 .breadCrumbs h1 {
   font-size: clamp(f.rem(14), f.rem(30) + 1vw, f.rem(36));
   text-transform: capitalize;
+  @media (width <= 1000px) {
+    text-transform: uppercase;
+  }
 }
 .selectMenu {
   position: relative;
