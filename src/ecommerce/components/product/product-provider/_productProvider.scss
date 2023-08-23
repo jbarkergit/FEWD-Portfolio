@@ -17,13 +17,18 @@
   justify-content: center;
   max-width: f.rem(1600);
   margin-bottom: f.rem(50);
-  @media (width <= 1128px) {
-    grid-template-columns: repeat(auto-fit, calc(50% - f.rem(75)));
+  @media (width <= 1370px) {
+    grid-template-columns: repeat(auto-fit, calc(50% - f.rem(50)));
   }
-  @media (width <= 766px) {
+  @media (width <= 966px) {
     grid-template-columns: 1fr;
     place-items: center;
     gap: f.rem(40) f.rem(50);
+  }
+  & li {
+    @media (width <= 800px) {
+      height: f.rem(560);
+    }
   }
   &__product {
     position: relative;
@@ -32,20 +37,39 @@
     border-radius: f.rem(26);
     box-shadow: var(--shadowSoft);
     transition: 0.55s ease-in-out;
-    @media (width <= 766px) {
-      height: clamp(f.rem(350), calc(f.rem(600) + 1.5vh), f.rem(700));
-      margin: 0 8vw;
+    background-color: var(--elemBackgroundPrimary);
+    @media (width <= 966px) {
+      display: flex;
+      aspect-ratio: unset;
     }
-    @media (width <= 490px) {
-      height: clamp(f.rem(300), calc(f.rem(400) + 1.5vh), f.rem(450));
-      margin: 0 8vw;
+    @media (width <= 800px) {
+      display: flex;
+      flex-direction: column;
+    }
+    &__pictureLink {
+      @media (width <= 966px) {
+        width: 42.5%;
+      }
+      @media (width <= 800px) {
+        width: 100%;
+        height: 55%;
+      }
+      @media (width <= 676px) {
+        height: 60%;
+      }
     }
     &--containedHover {
       display: block;
-      height: 60%;
+      height: 58%;
       border-top-left-radius: f.rem(26);
       border-top-right-radius: f.rem(26);
       overflow: hidden;
+      @media (width <= 966px) {
+        height: 100%;
+      }
+      @media (width <= 800px) {
+        height: 100%;
+      }
     }
     & picture {
       position: relative;
@@ -62,69 +86,103 @@
       }
     }
     &__information {
+      position: relative;
       display: flex;
       flex-direction: column;
       width: 100%;
-      height: 40%;
-      padding: 2vh 1.5vw;
+      height: 42%;
+      padding: 3% 6%;
       border-bottom-left-radius: f.rem(26);
       border-bottom-right-radius: f.rem(26);
-      background-color: var(--elemBackgroundPrimary);
-      & h2,
-      h3 {
-        width: inherit;
-        padding-bottom: f.rem(5);
+      @media (width <= 966px) {
+        width: 57.5%;
+        height: 100%;
+      }
+      @media (width <= 800px) {
+        width: 100%;
+        height: 45%;
+      }
+      @media (width <= 676px) {
+        height: 40%;
       }
       & h2 {
+        width: inherit;
+        padding-bottom: f.rem(5);
         font-size: clamp(f.rem(14), f.rem(14) + 1vw, f.rem(20));
         font-weight: 600;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
       & p {
         display: -webkit-box;
         width: inherit;
-        height: f.rem(66);
-        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5;
+        height: f.rem(108);
         overflow: hidden;
+        text-overflow: ellipsis;
         line-height: 1.3rem;
-        @media (width >= 1570px) {
+        @media (width <= 1710px) {
+          -webkit-line-clamp: 4;
+          height: f.rem(88);
+        }
+        @media (width <= 1554px) {
+          -webkit-line-clamp: 3;
+          height: f.rem(66);
+        }
+        @media (width <= 1370px) {
+          -webkit-line-clamp: 9;
+          height: f.rem(198);
+        }
+        @media (width <= 1288px) {
+          -webkit-line-clamp: 7;
+          height: f.rem(150);
+        }
+        @media (width <= 1284px) {
+          -webkit-line-clamp: 6;
+          height: f.rem(128);
+        }
+        @media (width <= 1168px) {
           -webkit-line-clamp: 5;
-          height: f.rem(108);
+          height: f.rem(104);
         }
-        @media (width <= 1226px) {
-          -webkit-line-clamp: 2;
-          height: f.rem(44);
-        }
-        @media (width <= 1128px) {
-          -webkit-line-clamp: 5;
-          height: f.rem(106);
-        }
-        @media (width <= 996px) {
+        @media (width <= 1072px) {
           -webkit-line-clamp: 4;
           height: f.rem(84);
         }
-        @media (width <= 910px) {
-          -webkit-line-clamp: 3;
-          height: f.rem(60);
+        @media (width <= 966px) {
+          -webkit-line-clamp: 10;
+          width: 100%;
+          height: f.rem(234);
         }
-        @media (width <= 766px) {
+        @media (width <= 676px) {
+          -webkit-line-clamp: 6;
+          width: 100%;
+          height: f.rem(128);
+        }
+        @media (width <= 676px) {
           -webkit-line-clamp: 5;
-          height: f.rem(108);
+          width: 100%;
+          height: f.rem(106);
         }
-        @media (width <= 490px) {
-          -webkit-line-clamp: 3;
-          height: f.rem(62);
+        @media (width <= 500px) {
+          -webkit-line-clamp: 6;
+          width: 100%;
+          height: f.rem(128);
         }
       }
       & h3 {
+        width: inherit;
+        padding-bottom: f.rem(5);
         font-weight: 400;
         height: 100%;
       }
     }
     & button {
-      width: 100%;
       @include m.ecoBtn;
       @include m.ecoBtnDark;
+      width: 100%;
       margin-top: f.rem(10);
       font-size: clamp(f.rem(12), f.rem(9) + 1vw, f.rem(15));
       font-weight: 500;
