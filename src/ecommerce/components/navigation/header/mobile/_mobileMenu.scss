@@ -36,34 +36,27 @@
     &__logo {
       display: flex;
       width: 100%;
-      & span {
-        width: 80%;
-        &:last-child {
-          display: flex;
-          justify-content: flex-end;
-          width: 20%;
-        }
-      }
       & a {
-        font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
+        width: inherit;
+        font-size: clamp(f.rem(18), f.rem(24) + 1vw, f.rem(30));
         font-weight: 700;
         text-transform: uppercase;
+        text-align: center;
       }
     }
     &__menu {
       display: flex;
       flex-direction: column;
       width: 100%;
-      & ul {
+      &__nav {
         display: flex;
         flex-direction: column;
         gap: f.rem(10);
-        & li {
-          & a {
-            font-size: clamp(f.rem(14), f.rem(14) + 1vw, f.rem(20));
-            font-weight: 500;
-            color: var(--textSecondary);
-          }
+        & li a,
+        & li button {
+          @include m.ecoBtn;
+          @include m.ecoBtnDark;
+          width: 100%;
         }
       }
     }
