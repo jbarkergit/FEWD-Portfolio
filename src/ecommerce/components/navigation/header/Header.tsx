@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ModalProvider } from '../../../context/ModalContext';
 import LogoArea from './sections/LogoArea';
 import NavigationLinks from './sections/NavigationLinks';
 import UserInteractions from './sections/UserInteractions';
-import ConditionallyRenderedModals from './ConditionallyRenderedModals';
 import MobileMenu from './mobile/MobileMenu';
-import SearchBar from '../../features/search-bar/SearchBar';
+import ShoppingCart from '../../features/shopping-cart/ShoppingCart';
+import UserLoginModal from '../../user-account/user-account-login/UserLoginModal';
 
 const PrimaryNav = (): JSX.Element => {
-  const [mobileMenu, setMobileMenu] = useState<boolean>(false);
+  const [uiModal, setUiModal] = useState<string>('');
 
   return (
     <header
@@ -22,11 +21,10 @@ const PrimaryNav = (): JSX.Element => {
     >
       <LogoArea />
       <NavigationLinks />
-      <ModalProvider>
-        <UserInteractions mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
-        <ConditionallyRenderedModals />
-      </ModalProvider>
-      {mobileMenu ? <MobileMenu mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} /> : null}
+      <UserInteractions setUiModal={setUiModal} />
+      {uiModal === 'shoppingCart' ? <ShoppingCart uiModal={uiModal} setUiModal={setUiModal} /> : null}
+      {uiModal === 'userLogin' ? <UserLoginModal uiModal={uiModal} /> : null}
+      {uiModal === 'mobileMenu' ? <MobileMenu uiModal={uiModal} setUiModal={setUiModal} /> : null}
     </header>
   );
 };

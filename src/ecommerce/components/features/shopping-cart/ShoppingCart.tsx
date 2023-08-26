@@ -1,20 +1,19 @@
 import useCart from '../../../hooks/useCart';
 import CartProduct from './CartProduct';
 import EmptyCart from './EmptyCart';
-import { useEffect, useRef } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
 type PropType = {
-  dataStatus: string;
+  uiModal: string;
+  setUiModal: Dispatch<SetStateAction<string>>;
 };
 
-const ShoppingCart = ({ dataStatus }: PropType): JSX.Element => {
+const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   const { dispatch, REDUCER_ACTIONS, shoppingCart, cartProductSubtotal, cartProductQuantity } = useCart();
 
   const shoppingCartModal = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (shoppingCartModal.current) shoppingCartModal.current?.setAttribute('data-status', dataStatus === 'shoppingCart' ? 'active' : 'false');
-  }, [dataStatus]);
+  useEffect(() => shoppingCartModal.current?.setAttribute('data-status', uiModal === 'shoppingCart' ? 'active' : 'false'), [uiModal]);
 
   return (
     <section className="ecoModalWrap">
@@ -25,7 +24,7 @@ const ShoppingCart = ({ dataStatus }: PropType): JSX.Element => {
             <CartProduct />
           </ul>
         ) : (
-          <EmptyCart />
+          <EmptyCart setUiModal={setUiModal} />
         )}
         <div className="ecoModal__orderDetails">
           {shoppingCart.length > 0 ? <button onClick={() => dispatch({ type: REDUCER_ACTIONS.SUBMIT })}>Subtotal {cartProductSubtotal}</button> : null}

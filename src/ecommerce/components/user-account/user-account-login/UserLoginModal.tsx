@@ -2,17 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import { Apple, Google, LinkedIn } from '../user-account-assets/SignInViaSVGS';
 
 type PropType = {
-  dataStatus: string;
+  uiModal: string;
 };
 
 function handleSubmit() {}
 
-const UserLoginModal = ({ dataStatus }: PropType): JSX.Element => {
+const UserLoginModal = ({ uiModal }: PropType): JSX.Element => {
   const userLoginModal = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
-    if (userLoginModal.current) userLoginModal.current?.setAttribute('data-status', dataStatus === 'userLogin' ? 'active' : 'false');
-  }, [dataStatus]);
+  useEffect(() => userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal]);
 
   const [emailAddress, setEmailAddress] = useState<string>('');
   const [password, setPassword] = useState<string>('');
