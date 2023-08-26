@@ -3,10 +3,11 @@ import { useLocation } from 'react-router-dom';
 import SearchBar from '../../../features/search-bar/SearchBar';
 
 type UserInteractionsType = {
+  uiModal: string;
   setUiModal: Dispatch<SetStateAction<string>>;
 };
 
-const UserInteractions = ({ setUiModal }: UserInteractionsType): JSX.Element => {
+const UserInteractions = ({ uiModal, setUiModal }: UserInteractionsType): JSX.Element => {
   const path = useLocation().pathname === '/ecommerce';
 
   return (
@@ -18,7 +19,7 @@ const UserInteractions = ({ setUiModal }: UserInteractionsType): JSX.Element => 
         style={{
           boxShadow: path ? 'none' : 'var(--shadowRefined)',
         }}
-        onClick={() => setUiModal('userLogin')}
+        onClick={() => setUiModal(uiModal === 'userLogin' ? '' : 'userLogin')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
           <path
@@ -33,7 +34,7 @@ const UserInteractions = ({ setUiModal }: UserInteractionsType): JSX.Element => 
         style={{
           boxShadow: path ? 'none' : 'var(--shadowRefined)',
         }}
-        onClick={() => setUiModal('shoppingCart')}
+        onClick={() => setUiModal(uiModal === 'shoppingCart' ? '' : 'shoppingCart')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="1.6em" height="1.6em" viewBox="0 0 24 24">
           <path
@@ -43,7 +44,7 @@ const UserInteractions = ({ setUiModal }: UserInteractionsType): JSX.Element => 
         </svg>
         <span className="text">Shopping Cart</span>
       </button>
-      <button className="navkit__section__mobileMenuBtn" onClick={() => setUiModal('mobileMenu')}>
+      <button className="navkit__section__mobileMenuBtn" onClick={() => setUiModal(uiModal === 'mobileMenu' ? '' : 'mobileMenu')}>
         <svg xmlns="http://www.w3.org/2000/svg" width="2.2em" height="2.2em" viewBox="0 0 24 24">
           <path fill="hsl(0, 0%, 100%)" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path>
         </svg>
