@@ -6,70 +6,89 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: f.rem(18);
 }
 .ecoModal {
-  &__heading {
-    display: flex;
-    justify-content: center;
+  & legend h2 {
     width: 100%;
+    font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
+    font-weight: 700;
+    text-transform: uppercase;
   }
   &__signInVia {
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: f.rem(18);
     width: 100%;
+    & button svg {
+      font-size: f.rem(20);
+    }
   }
   &__inputField {
     display: grid;
     place-items: center;
-    gap: f.rem(15);
+    gap: f.rem(18);
     width: 100%;
     & label {
-      width: 80%;
+      position: relative;
+      width: 90%;
       height: auto;
+      outline: 1px solid hsl(0, 0%, 68%);
+      border-radius: f.rem(8);
       & input {
         width: 100%;
         height: inherit;
-        min-height: f.rem(50);
+        min-height: f.rem(42);
         padding: 1.5% 4%;
-        border-radius: f.rem(8);
-        background-color: var(--elemBackgroundPrimary);
+        background-color: hsl(0, 0%, 100%);
       }
     }
   }
   &__actions {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-    padding-left: 12%;
+    justify-content: center;
+    gap: f.rem(18);
+    width: 90%;
     & button {
       @include m.ecoBtn;
+      @include m.ecoBtnDark;
+      width: 100%;
     }
   }
   &__notice {
     display: flex;
     flex-direction: column;
-    gap: f.rem(6);
+    gap: f.rem(4);
     width: 90%;
-    margin-top: f.rem(20);
     text-align: center;
     pointer-events: none;
     color: var(--fontPrimary);
     & span {
-      font-size: clamp(f.rem(14), f.rem(8) + 0.5vw, f.rem(18));
-      font-weight: 500;
+      font-size: f.rem(17);
+      font-weight: 600;
     }
-    & mark {
-      padding: f.rem(6) f.rem(12);
-      border-radius: f.rem(6);
-    }
-    & mark p {
+    & p {
       max-width: 45ch;
-      font-size: clamp(f.rem(12), f.rem(6) + 0.5vw, f.rem(20));
+      margin: 0 auto;
+      font-size: f.rem(16);
+      font-weight: 500;
     }
   }
 }
+
 .contact__form__inputs,
 .contact__form__address {
   padding-left: 2.5%;
+}
+
+.passwordLabel {
+  display: flex;
+  &__visibility {
+    padding: 0 f.rem(10);
+    border-left: 1px solid hsl(0, 0%, 68%);
+    & svg {
+      transform: translateY(10%);
+    }
+  }
 }
