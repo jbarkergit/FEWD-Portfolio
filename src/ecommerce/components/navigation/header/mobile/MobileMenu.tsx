@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import SearchBar from '../../../features/search-bar/SearchBar';
 import { useCategoryFilterContext } from '../../../../context/CategoryFilterContext';
 
 type MobileMenuType = {
@@ -16,40 +15,39 @@ const MobileMenu = ({ uiModal, setUiModal }: MobileMenuType): JSX.Element => {
   useEffect(() => mobileModal.current?.setAttribute('data-status', uiModal === 'mobileMenu' ? 'active' : 'false'), [uiModal]);
 
   return (
-    <div className="mobileMenu">
-      <aside className="mobileMenu__modal" data-status="false" ref={mobileModal}>
-        <div className="mobileMenu__modal__logo">
+    <div className="ecoModalWrap">
+      <aside className="ecoModal" data-status="false" ref={mobileModal}>
+        <div className="ecoModal__simpleHeading">
           <Link to="/ecommerce">Dynamic Audio</Link>
         </div>
-
-        <nav className="mobileMenu__modal__menu">
-          <ul className="mobileMenu__modal__menu__nav">
-            <li>
+        <nav className="ecoModal__nav">
+          <ul className="ecoModal__nav__ul">
+            <li className="ecoModal__nav__ul__li">
               <Link to="/ecommerce/headphones" onClick={() => setCategoryFilter('')}>
                 {'Shop Headphones'}
               </Link>
             </li>
-            <li>
+            <li className="ecoModal__nav__ul__li">
               <Link to="/ecommerce/amps-dacs" onClick={() => setCategoryFilter('headphone')}>
                 {'Shop Amps & Dacs'}
               </Link>
             </li>
-            <li>
+            <li className="ecoModal__nav__ul__li">
               <Link to="/ecommerce/microphones" onClick={() => setCategoryFilter('amp', 'dac')}>
                 {'Shop Microphones'}
               </Link>
             </li>
-            <li>
+            <li className="ecoModal__nav__ul__li">
               <Link to="/ecommerce/interfaces" onClick={() => setCategoryFilter('microphone')}>
                 {'Shop Interfaces'}
               </Link>
             </li>
-            <li>
+            <li className="ecoModal__nav__ul__li">
               <Link to="/ecommerce/products" onClick={() => setCategoryFilter('interface')}>
                 {'Browse All Products'}
               </Link>
             </li>
-            <li>
+            <li className="ecoModal__nav__ul__li">
               <button onClick={() => setUiModal('')}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="1.6em" height="1.6em" viewBox="0 0 24 24">
                   <path
