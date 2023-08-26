@@ -25,7 +25,7 @@
   max-width: f.rem(480);
   height: 80vh;
   z-index: 11;
-  padding: 2% 2% 1% 2%;
+  padding: f.rem(20) f.rem(30);
   border-radius: f.rem(18);
   background-color: var(--elemBackgroundPrimary);
   pointer-events: all;
