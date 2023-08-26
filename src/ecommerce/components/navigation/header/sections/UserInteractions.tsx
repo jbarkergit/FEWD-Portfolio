@@ -45,7 +45,7 @@ const UserInteractions = ({ uiModal, setUiModal }: UserInteractionsType): JSX.El
         <span className="text">Shopping Cart</span>
       </button>
       <button className="navkit__section__mobileMenuBtn" onClick={() => setUiModal(uiModal === 'mobileMenu' ? '' : 'mobileMenu')}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="2.2em" height="2.2em" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
           <path fill="hsl(0, 0%, 100%)" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path>
         </svg>
       </button>
