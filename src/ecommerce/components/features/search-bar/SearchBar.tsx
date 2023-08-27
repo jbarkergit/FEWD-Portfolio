@@ -52,7 +52,7 @@ const SearchBar = (): JSX.Element => {
       {searchTerm.length != 0 && (
         <div className="searchBar__return">
           <ul className="searchBar__return__ul">
-            {!searchTerm
+            {searchTerm === ''
               ? null
               : searchResults.slice(0, 10).map((product) => {
                   return (
