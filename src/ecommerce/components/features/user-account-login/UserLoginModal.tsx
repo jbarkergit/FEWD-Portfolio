@@ -15,7 +15,7 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
 
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
-      if (!userLoginModal.current?.contains(e.target as Node)) setUiModal('');
+      if (!userLoginModal.current?.contains(e.target as Node) && !(e.target as HTMLButtonElement).classList.contains('ctaBtn')) setUiModal('');
     };
 
     document.body.addEventListener('pointerdown', handleExteriorClick);

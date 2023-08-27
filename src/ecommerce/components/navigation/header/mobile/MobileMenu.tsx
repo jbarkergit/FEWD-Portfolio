@@ -16,7 +16,7 @@ const MobileMenu = ({ uiModal, setUiModal }: MobileMenuType): JSX.Element => {
 
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
-      if (!mobileModal.current?.contains(e.target as Node)) setUiModal('');
+      if (!mobileModal.current?.contains(e.target as Node) && !(e.target as HTMLButtonElement).classList.contains('navkit__section__mobileMenuBtn')) setUiModal('');
     };
 
     document.body.addEventListener('pointerdown', handleExteriorClick);

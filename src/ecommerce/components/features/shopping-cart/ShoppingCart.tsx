@@ -17,7 +17,7 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
 
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
-      if (!shoppingCartModal.current?.contains(e.target as Node)) setUiModal('');
+      if (!shoppingCartModal.current?.contains(e.target as Node) && !(e.target as HTMLButtonElement).classList.contains('ctaBtn')) setUiModal('');
     };
 
     document.body.addEventListener('pointerdown', handleExteriorClick);
