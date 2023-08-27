@@ -5,7 +5,7 @@
   display: grid;
   grid-auto-flow: column;
   width: max-content;
-  height: 76vh;
+  height: 76%;
   padding: 0 0 0 m.$viewportMarginRightLeft;
   &:hover {
     cursor: grab;
@@ -23,14 +23,12 @@
   align-self: flex-end;
   max-width: 82vw;
   max-height: 76vh;
+  height: 100%;
   transition: filter 0.35s ease-in-out, transform 0.35s ease-in-out, transform-origin 0.35s ease-in-out;
   &[data-status='disabled'] {
     transform: scale(0.8);
     transform-origin: bottom;
     filter: grayscale(85%) sepia(50%) brightness(30%) opacity(80%);
-  }
-  &:last-child {
-    filter: grayscale(100%);
   }
   &__pictureWrapper {
     display: flex;
@@ -45,6 +43,9 @@
       border-radius: f.rem(18);
       background-color: m.$transparentElem;
       overflow: hidden;
+      @media (width <= 1444px) {
+        aspect-ratio: 4/5;
+      }
       & img {
         object-fit: cover;
       }

@@ -11,7 +11,7 @@ const PortFooter = ({ stateIndex }: ProjectNavPropType) => {
       case 0:
         return true;
       case 1:
-        return true;
+        return false;
       default:
         return false;
     }
@@ -22,7 +22,7 @@ const PortFooter = ({ stateIndex }: ProjectNavPropType) => {
       case 0:
         return true;
       case 1:
-        return true;
+        return false;
       default:
         return false;
     }
@@ -31,9 +31,9 @@ const PortFooter = ({ stateIndex }: ProjectNavPropType) => {
   const getDemoLink = () => {
     switch (stateIndex) {
       case 0:
-        return '/hyundai-n';
-      case 1:
         return '/ecommerce';
+      case 1:
+        return '';
       default:
         return '';
     }
@@ -43,7 +43,7 @@ const PortFooter = ({ stateIndex }: ProjectNavPropType) => {
     <footer className="portFooter">
       <nav className="portFooter__nav">
         <section className="portFooter__nav__left">
-          {getExtendedInfo() ? <button>Project Overview</button> : <span className="portfoliofooterigation__unavailable">this content is unavailable</span>}
+          {getExtendedInfo() ? <button>Project Overview</button> : <span className="portfoliofooterigation__unavailable">this project is unavailable</span>}
           {getAbridgedInfo() ? <button>Project Summary</button> : null}
           {getDemoLink() ? (
             <Link to={getDemoLink()}>
