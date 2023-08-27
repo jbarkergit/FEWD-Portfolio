@@ -42,6 +42,13 @@ const PortFooter = ({ stateIndex }: ProjectNavPropType) => {
   return (
     <footer className="portFooter">
       <nav className="portFooter__nav">
+        <section className="portFooter__nav__mobileLeft">
+          <button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
+              <path fill="#ffffff" d="M16 18v2H5v-2h11Zm5-7v2H3v-2h18Zm-2-7v2H8V4h11Z"></path>
+            </svg>
+          </button>
+        </section>
         <section className="portFooter__nav__left">
           {getExtendedInfo() ? <button>Project Overview</button> : <span className="portfoliofooterigation__unavailable">this project is unavailable</span>}
           {getAbridgedInfo() ? <button>Project Summary</button> : null}
