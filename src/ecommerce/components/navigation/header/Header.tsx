@@ -5,7 +5,7 @@ import NavigationLinks from './sections/NavigationLinks';
 import UserInteractions from './sections/UserInteractions';
 import MobileMenu from './mobile/MobileMenu';
 import ShoppingCart from '../../features/shopping-cart/ShoppingCart';
-import UserLoginModal from '../../user-account/user-account-login/UserLoginModal';
+import UserLoginModal from '../../features/user-account-login/UserLoginModal';
 
 const PrimaryNav = (): JSX.Element => {
   const [uiModal, setUiModal] = useState<string>('');
@@ -23,7 +23,7 @@ const PrimaryNav = (): JSX.Element => {
       <NavigationLinks />
       <UserInteractions uiModal={uiModal} setUiModal={setUiModal} />
       {uiModal === 'shoppingCart' ? <ShoppingCart uiModal={uiModal} setUiModal={setUiModal} /> : null}
-      {uiModal === 'userLogin' ? <UserLoginModal uiModal={uiModal} /> : null}
+      {uiModal === 'userLogin' ? <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} /> : null}
       {uiModal === 'mobileMenu' ? <MobileMenu uiModal={uiModal} setUiModal={setUiModal} /> : null}
     </header>
   );

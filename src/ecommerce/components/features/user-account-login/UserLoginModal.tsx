@@ -1,16 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
-import { Apple, Google, LinkedIn } from '../user-account-assets/SignInViaSVGS';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Apple, Google, LinkedIn } from '../../../assets/production-images/user-account-svg/SignInViaSVGS';
 
 type PropType = {
   uiModal: string;
+  setUiModal: Dispatch<SetStateAction<string>>;
 };
 
 function handleSubmit() {}
 
-const UserLoginModal = ({ uiModal }: PropType): JSX.Element => {
+const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   const userLoginModal = useRef<HTMLFormElement>(null);
 
   useEffect(() => userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal]);
+
+  useEffect(() => {
+    const handleExteriorClick = (e: PointerEvent) => {
+      if (!userLoginModal.current?.contains(e.target as Node)) setUiModal('');
+    };
+
+    document.body.addEventListener('pointerdown', handleExteriorClick);
+    return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
+  }, []);
 
   const [emailAddress, setEmailAddress] = useState<string>('test@email.com');
   const [password, setPassword] = useState<string>('test');

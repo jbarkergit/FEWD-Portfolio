@@ -15,6 +15,15 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
 
   useEffect(() => shoppingCartModal.current?.setAttribute('data-status', uiModal === 'shoppingCart' ? 'active' : 'false'), [uiModal]);
 
+  useEffect(() => {
+    const handleExteriorClick = (e: PointerEvent) => {
+      if (!shoppingCartModal.current?.contains(e.target as Node)) setUiModal('');
+    };
+
+    document.body.addEventListener('pointerdown', handleExteriorClick);
+    return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
+  }, []);
+
   return (
     <section className="ecoModalWrap">
       <div className="ecoModal" data-status="false" ref={shoppingCartModal}>

@@ -14,6 +14,15 @@ const MobileMenu = ({ uiModal, setUiModal }: MobileMenuType): JSX.Element => {
 
   useEffect(() => mobileModal.current?.setAttribute('data-status', uiModal === 'mobileMenu' ? 'active' : 'false'), [uiModal]);
 
+  useEffect(() => {
+    const handleExteriorClick = (e: PointerEvent) => {
+      if (!mobileModal.current?.contains(e.target as Node)) setUiModal('');
+    };
+
+    document.body.addEventListener('pointerdown', handleExteriorClick);
+    return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
+  }, []);
+
   return (
     <div className="ecoModalWrap">
       <aside className="ecoModal" data-status="false" ref={mobileModal}>
