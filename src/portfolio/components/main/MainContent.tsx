@@ -199,8 +199,8 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
 
   return (
     <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} ref={targetElementRef} style={state.style}>
-      <ProjectNavProp imgSrc="src/portfolio/assets/production-images/hyundai-preview.jpg" dataStatus="disabled" dataActivity="disabled" addToRefs={addToRefs} />
       <ProjectNavProp imgSrc="src/portfolio/assets/production-images/ecommerce-preview.png" dataStatus="active" dataActivity="active" addToRefs={addToRefs} />
+      <ProjectNavProp imgSrc="src/portfolio/assets/production-images/hyundai-preview.jpg" dataStatus="disabled" dataActivity="disabled" addToRefs={addToRefs} />
     </main>
   );
 };
