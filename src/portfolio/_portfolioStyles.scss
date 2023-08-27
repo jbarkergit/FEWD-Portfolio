@@ -24,8 +24,10 @@ $transparentElemLight: rgba(209, 209, 209, 0.25);
 $messageYellow: hsl(48, 56%, 54%);
 
 //Spacing
-$viewportMarginTopBottom: calc(2.963% / 1.5);
-$viewportMarginRightLeft: 8.33%;
+$viewportMarginTopBottom: f.rem(40);
+$viewportMarginRightLeft: f.rem(160);
+// $viewportMarginTopBottom: calc(2.963% / 1.5);
+// $viewportMarginRightLeft: 8.33%;
 $portfolioGap: f.rem(24);
 
 //Border
