@@ -8,11 +8,81 @@
   border: m.$portfolioBorder;
   margin-bottom: 2px;
 }
+
 .contact {
   position: relative;
-  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  gap: f.rem(24);
   width: f.rem(calc(1920 / 2.5));
-  padding: 1%;
+  z-index: 11;
   border-right: m.$portfolioBorder;
   background-color: hsl(0, 0%, 10%);
+  &__section {
+    width: auto;
+    height: fit-content;
+  }
+}
+
+.contact__section__information {
+  & h2 {
+  }
+  & h3 {
+  }
+}
+
+.contact__section__skills {
+  display: flex;
+  gap: f.rem(6);
+}
+
+.contact__section__form {
+  display: flex;
+  flex-direction: column;
+  gap: f.rem(18);
+  padding-bottom: f.rem(24);
+  &__field {
+    position: relative;
+    &--label {
+      position: absolute;
+      top: f.rem(-12);
+      left: f.rem(20);
+      z-index: 11;
+      color: hsl(0, 0%, 92%);
+      font-size: clamp(f.rem(12), f.rem(8) + 0.5vw, f.rem(14));
+      transform: translateY(f.rem(24));
+      transition: color 150ms ease-in, font-size 150ms ease-in, letter-spacing 150ms ease-in, transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      &::before {
+        content: '';
+        position: absolute;
+        display: block;
+        background-color: hsl(0, 0%, 10%);
+        border-radius: f.rem(8);
+        width: 120%;
+        height: 100%;
+        z-index: -1;
+        left: -10%;
+      }
+      &[data-status='active'] {
+        color: rgba(255, 255, 0, 0.85);
+        font-size: f.rem(12);
+        letter-spacing: 0.08em;
+        transform: translateY(f.rem(4));
+        transition: color 150ms ease-out, font-size 150ms ease-out, letter-spacing 150ms ease-out, transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      &:hover {
+        cursor: text;
+      }
+    }
+    &--input {
+      position: relative;
+      z-index: 10;
+      padding: 0 0 0 f.rem(12);
+      border: 1px solid hsl(0, 0%, 30%);
+      border-radius: f.rem(5);
+      cursor: text;
+      color: hsl(0, 0%, 92%);
+      line-height: f.rem(42);
+    }
+  }
 }

@@ -6,7 +6,7 @@ type FormValuesType = {
   [key: string]: string;
 };
 
-const ContactFormDialog = () => {
+const ContactForm = () => {
   const initialFormValues: FormValuesType = FormInputs.reduce((acc, input) => ({ ...acc, [input.name]: '' }), {});
 
   const [formValues, setFormValues] = useState<FormValuesType>(initialFormValues);
@@ -19,9 +19,9 @@ const ContactFormDialog = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => e.preventDefault();
 
   return (
-    <section className="dialog__modal__contact">
+    <section className="contact__section" role="dialog" aria-modal="true" data-show="false" aria-label="About Developer and Developer Contact information">
       <h2 style={{ display: 'none' }}>Contact the Developer</h2>
-      <form method="dialog" onSubmit={handleSubmit} className="dialog__modal__contact__form">
+      <form method="dialog" onSubmit={handleSubmit} className="contact__section__form">
         {FormInputs.map((input) => (
           <FormLabelDialogProp
             key={input.id}
@@ -38,4 +38,4 @@ const ContactFormDialog = () => {
   );
 };
 
-export default ContactFormDialog;
+export default ContactForm;

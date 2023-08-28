@@ -21,12 +21,12 @@ const FormLabelDialogProp: FunctionComponent<FormLabelDialogPropProps> = ({ name
   };
 
   return (
-    <div className="dialog__modal__contact__form__field">
-      <label className="dialog__modal__contact__form__field--label" htmlFor={name} ref={fieldLabelRef} data-status="false">
+    <div className="contact__section__form__field">
+      <label className="contact__section__form__field--label" htmlFor={name} ref={fieldLabelRef} data-status="false">
         {placeholder}
       </label>
       <input
-        className="dialog__modal__contact__form__field--input"
+        className="contact__section__form__field--input"
         type={type}
         id={name}
         name={name}
