@@ -12,7 +12,7 @@ const Portfolio = (): JSX.Element => {
     <div id="portfolio">
       <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} contactForm={contactForm} setContactForm={setContactForm} />
       {contactForm ? (
-        <div className="sidebar">
+        <div className="sideWithMain">
           <Contact />
           <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} />
         </div>
