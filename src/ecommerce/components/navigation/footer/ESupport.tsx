@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const Support = (): JSX.Element => {
+const ESupport = (): JSX.Element => {
   return (
     <ul>
       <li>
@@ -55,4 +55,4 @@ const Support = (): JSX.Element => {
   );
 };
 
-export default Support;
+export default ESupport;

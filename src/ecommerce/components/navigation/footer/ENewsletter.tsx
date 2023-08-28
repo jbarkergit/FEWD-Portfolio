@@ -1,4 +1,4 @@
-const Newsletter = (): JSX.Element => {
+const ENewsletter = (): JSX.Element => {
   return (
     <form className="newsletter">
       <div className="newsletter__field">
@@ -12,13 +12,11 @@ const Newsletter = (): JSX.Element => {
         </button>
       </div>
       <div className="newsletter__notice">
-        <h3>
-          <mark>Privacy notice: for demo purposes only.</mark>
-        </h3>
-        <h4>This input field is not connected to live marketing services. Any information provided will not be stored externally or locally.</h4>
+        <span>Privacy notice: for demo purposes only.</span>
+        <p>This input field is not connected to live marketing services. Any information provided will not be stored externally nor locally.</p>
       </div>
     </form>
   );
 };
 
-export default Newsletter;
+export default ENewsletter;

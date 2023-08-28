@@ -1,27 +1,29 @@
-import Newsletter from './Newsletter';
-import Service from './Service';
-import Support from './Support';
+import ENewsletter from './ENewsletter';
+import EServices from './EServices';
+import ESupport from './ESupport';
 
-const eFooter = (): JSX.Element => {
+const EFooter = (): JSX.Element => {
   return (
     <footer className="eFooter">
       <section className="eFooter__newsCta">
         <h2>Let's stay in touch</h2>
-        <Newsletter />
+        <ENewsletter />
       </section>
-      <nav className="footerKit">
-        <section className="footerKit__customerSupport">
-          <Support />
+      <nav className="eFooter__kit">
+        <section className="eFooter__kit__customerSupport">
+          <ESupport />
         </section>
-        <section className="footerKit__customerSupport">
-          <div>
-            <Service />
-          </div>
+        <section className="eFooter__kit__customerSupport">
+          <EServices />
         </section>
       </nav>
-      <small>2023 Dynamic Audio</small>
+      <section className="eFooter__company">
+        <small>2023 Dynamic Audio</small>
+        <address>1800 DAUDIO</address>
+        <address>support@dynamicaudio.com</address>
+      </section>
     </footer>
   );
 };
 
-export default eFooter;
+export default EFooter;
