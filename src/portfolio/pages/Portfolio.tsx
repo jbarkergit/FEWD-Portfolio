@@ -11,16 +11,8 @@ const Portfolio = (): JSX.Element => {
   return (
     <div id="portfolio">
       <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} contactForm={contactForm} setContactForm={setContactForm} />
-      {contactForm ? (
-        <div className="sideWithMain">
-          <Contact />
-          <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} />
-        </div>
-      ) : (
-        <>
-          <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} />
-        </>
-      )}
+      <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} />
+      <Contact contactForm={contactForm} />
       <PortFooter stateIndex={stateIndex} />
     </div>
   );
