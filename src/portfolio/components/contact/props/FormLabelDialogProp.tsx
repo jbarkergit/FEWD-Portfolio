@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent, useRef } from 'react';
+import { ChangeEvent, FocusEventHandler, FunctionComponent, useRef } from 'react';
 
 type FormLabelDialogPropProps = {
   name: string;
@@ -12,12 +12,10 @@ type FormLabelDialogPropProps = {
 const FormLabelDialogProp: FunctionComponent<FormLabelDialogPropProps> = ({ name, placeholder, type, value, required, onChange }) => {
   const fieldLabelRef = useRef<HTMLLabelElement>(null);
 
-  const handleFocus = () => {
-    if (fieldLabelRef.current) fieldLabelRef.current.setAttribute('data-status', 'active');
-  };
-
-  const handleBlur = () => {
-    if (fieldLabelRef.current) fieldLabelRef.current.setAttribute('data-status', 'false');
+  const handleFocus = () => fieldLabelRef.current?.setAttribute('data-status', 'active');
+  const handleBlur: FocusEventHandler<HTMLInputElement> = (e) => {
+    if ((e.target as HTMLInputElement).value) null;
+    else fieldLabelRef.current?.setAttribute('data-status', 'false');
   };
 
   return (

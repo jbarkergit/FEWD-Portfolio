@@ -20,7 +20,7 @@ const ContactForm = () => {
 
   return (
     <section className="contact__section" role="dialog" aria-modal="true" data-show="false" aria-label="About Developer and Developer Contact information">
-      <h2 style={{ display: 'none' }}>Contact the Developer</h2>
+      <h2>Contact</h2>
       <form method="dialog" onSubmit={handleSubmit} className="contact__section__form">
         {FormInputs.map((input) => (
           <FormLabelDialogProp
@@ -33,6 +33,7 @@ const ContactForm = () => {
             onChange={handleChange}
           />
         ))}
+        <button>Send Message</button>
       </form>
     </section>
   );

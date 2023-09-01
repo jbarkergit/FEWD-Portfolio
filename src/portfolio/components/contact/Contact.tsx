@@ -17,12 +17,6 @@ const Contact = ({ contactForm }: ContactType) => {
   return (
     <div className="contactWrapper" data-status="false" ref={contactWrapperRef}>
       <aside className="contact" data-status="false" ref={contactRef}>
-        <section className="contact__section">
-          <hgroup className="contact__section__information">
-            <h2>Justin Barker</h2>
-            <h3>React Developer</h3>
-          </hgroup>
-        </section>
         <ContactForm />
       </aside>
     </div>
