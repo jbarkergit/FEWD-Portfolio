@@ -22,7 +22,7 @@ const PortHeader = ({ stateIndex, setStateIndex, contactForm, setContactForm }: 
         <div className="portHeader__index__location">{`Project 0${stateIndex + 1}.`}</div>
         <nav className="portHeader__index__slideNav">
           <ul ref={unorderedListRef}>
-            {Array.from({ length: 3 }).map((_, index) => (
+            {Array.from({ length: 2 }).map((_, index) => (
               <li key={index}>
                 <button className="buttonNav" onClick={() => setStateIndex(index)}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
