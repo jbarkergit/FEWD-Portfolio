@@ -28,3 +28,4 @@ public
 
 # Dependencies
 package-lock.json
+formatter-tests.tsx
