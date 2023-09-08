@@ -1,4 +1,10 @@
 module.exports = {
+  "prettier.useEditorConfig": true,
+  "prettier.requireConfig": true,
+  "prettier.prettierPath": "./node_modules/prettier/",
+  "prettier.configPath": ".prettierrc.cjs",
+  "prettier.ignorePath": ".prettierignore",
+
   "prettier.arrowParens": "always",
   "prettier.bracketSameLine": true,
   "prettier.bracketSpacing": true,
