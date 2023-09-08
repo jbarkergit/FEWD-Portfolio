@@ -1,31 +1,41 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Apple, Google, LinkedIn } from '../../../assets/production-images/user-account-svg/SignInViaSVGS';
+import UserAccountActive from '../user-account-active/UserAccountActive';
 
+//Submit form
+function handleSubmit() {}
+
+//Prop drilling
 type PropType = {
   uiModal: string;
   setUiModal: Dispatch<SetStateAction<string>>;
 };
 
-function handleSubmit() {}
-
 const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
+  //Form ref
   const userLoginModal = useRef<HTMLFormElement>(null);
 
+  //Toggle modal
   useEffect(() => userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal]);
 
+  //Handle exterior clicks
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
       if (!userLoginModal.current?.contains(e.target as Node) && !(e.target as HTMLButtonElement).classList.contains('ctaBtn')) setUiModal('');
     };
-
     document.body.addEventListener('pointerdown', handleExteriorClick);
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
   }, []);
 
+  //Form validation
   const [emailAddress, setEmailAddress] = useState<string>('test@email.com');
   const [password, setPassword] = useState<string>('test');
+
+  //Feature: toggle password visibility
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-  let userSignedIn: boolean = false;
+
+  //User authentication
+  const [userSignedIn, setUserSignedIn] = useState<boolean>(false);
 
   return (
     <section className="ecoModalWrap">
@@ -82,13 +92,13 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
               <span>Privacy notice: for demo purposes only.</span>
               <p>
                 This input field is not connected to live marketing services. Any information provided will not be stored externally nor locally. A dummy account has
-                been provided for your convenience and privacy.
+                been provided for your convenience and to protect your privacy. Please sign in to view the user dashboard.
               </p>
             </div>
           </>
         ) : (
           <>
-            <button type="submit">Sign out</button>
+            <UserAccountActive />
           </>
         )}
       </form>

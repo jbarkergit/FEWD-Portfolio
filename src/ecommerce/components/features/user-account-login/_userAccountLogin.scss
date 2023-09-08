@@ -21,8 +21,9 @@
     align-items: center;
     gap: f.rem(18);
     width: 100%;
+    margin-bottom: f.rem(20);
     & button svg {
-      font-size: f.rem(20);
+      font-size: f.rem(26);
     }
   }
   &__inputField {
