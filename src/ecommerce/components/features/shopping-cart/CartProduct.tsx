@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import useCart from '../../../hooks/useCart';
 import { CartProductType } from '../../../context/CartContext';
-import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
+import { ProductDatabase } from '../../../assets/production-data/product-db/ProductDatabase';
 
 const CartProducts = (): JSX.Element[] => {
   const { dispatch, REDUCER_ACTIONS, shoppingCart } = useCart();

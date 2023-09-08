@@ -1,6 +1,6 @@
 import { ReactElement, createContext, useMemo, useReducer } from 'react';
 import { ChildrenType } from '../types/ChildrenType';
-import { ProductDatabase } from '../assets/production-data/ProductDatabase';
+import { ProductDatabase } from '../assets/production-data/product-db/ProductDatabase';
 
 //define type for product in shopping cart
 export type CartProductType = {

@@ -1,4 +1,4 @@
-import { ProductDatabase } from '../assets/production-data/ProductDatabase';
+import { ProductDatabase } from '../assets/production-data/product-db/ProductDatabase';
 import { useCategoryFilterContext } from '../context/CategoryFilterContext';
 import { ProductType } from '../types/ProductType';
 

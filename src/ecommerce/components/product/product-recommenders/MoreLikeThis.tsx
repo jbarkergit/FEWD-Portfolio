@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ProductType } from '../../../types/ProductType';
-import { ProductDatabase } from '../../../assets/production-data/ProductDatabase';
+import { ProductDatabase } from '../../../assets/production-data/product-db/ProductDatabase';
 
 type MoreLikeThisType = {
   findProduct: ProductType;

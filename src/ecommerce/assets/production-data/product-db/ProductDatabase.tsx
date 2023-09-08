@@ -1,4 +1,4 @@
-import { ProductType } from '../../types/ProductType';
+import { ProductType } from '../../../types/ProductType';
 
 export const ProductDatabase: ProductType[] = [
   {
