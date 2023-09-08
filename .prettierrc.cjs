@@ -4,7 +4,7 @@ module.exports = {
   "prettier.prettierPath": "./node_modules/prettier/",
   "prettier.configPath": ".prettierrc.cjs",
   "prettier.ignorePath": ".prettierignore",
-
+  /** */
   "prettier.arrowParens": "always",
   "prettier.bracketSameLine": true,
   "prettier.bracketSpacing": true,
