@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom';
 import LogoArea from './sections/LogoArea';
 import NavigationLinks from './sections/NavigationLinks';
 import UserInteractions from './sections/UserInteractions';
-import MobileMenu from './mobile/MobileMenu';
+import UserAccountModal from '../../features/user-account/UserAccountModal';
 import ShoppingCart from '../../features/shopping-cart/ShoppingCart';
-import UserLoginModal from '../../features/user-account-modal/user-account-modal-login/UserLoginModal';
+import MobileMenu from './mobile/MobileMenu';
 
 const PrimaryNav = (): JSX.Element => {
   const [uiModal, setUiModal] = useState<string>('');
@@ -21,8 +21,8 @@ const PrimaryNav = (): JSX.Element => {
       <LogoArea />
       <NavigationLinks />
       <UserInteractions uiModal={uiModal} setUiModal={setUiModal} />
+      <UserAccountModal uiModal={uiModal} setUiModal={setUiModal} />
       {uiModal === 'shoppingCart' ? <ShoppingCart uiModal={uiModal} setUiModal={setUiModal} /> : null}
-      {uiModal === 'userLogin' ? <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} /> : null}
       {uiModal === 'mobileMenu' ? <MobileMenu uiModal={uiModal} setUiModal={setUiModal} /> : null}
     </header>
   );
