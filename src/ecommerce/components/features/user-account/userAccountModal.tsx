@@ -9,15 +9,15 @@ type UserAccountModalType = {
   setUiModal: Dispatch<SetStateAction<string>>;
 };
 
-const UserAccountModal = ({ uiModal, setUiModal }: UserAccountModalType): JSX.Element => {
+const UserAccountModal = ({ uiModal, setUiModal }: UserAccountModalType): JSX.Element | undefined => {
   //User authentication
   const [userSignedIn, setUserSignedIn] = useState<boolean>(false);
 
-  const ConditionallyRenderedAccountModals = (): JSX.Element => {
+  const ConditionallyRenderedAccountModals = (): JSX.Element | undefined => {
     if (uiModal === 'userLogin' && !userSignedIn) return <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} />;
     else if (uiModal === 'userLogin' && userSignedIn) return <UserAccountActive />;
     else if (uiModal === 'userRegistry') return <UserAccountRegistry />;
-    else return <UserAccountRegistry />;
+    else null;
   };
 
   return ConditionallyRenderedAccountModals();

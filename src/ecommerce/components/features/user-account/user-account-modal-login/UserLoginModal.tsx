@@ -24,6 +24,9 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
   }, []);
 
+  //Feature: toggle password visibility
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+
   //Focus & Error References
   const userRef = useRef();
   const errorRef = useRef();
@@ -44,9 +47,6 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   // const [password, setPassword] = useState<string>('test');
   // const [validPassword, setValidPassword] = useState<boolean>(false);
   // const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
-
-  //Feature: toggle password visibility
-  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
   return (
     <section className='ecoModalWrap'>
