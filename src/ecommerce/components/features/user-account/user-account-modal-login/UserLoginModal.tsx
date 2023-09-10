@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { Apple, Google, LinkedIn } from '../../../assets/production-images/user-account-svg/SignInViaSVGS';
-import UserAccountActive from '../user-account-active/UserAccountActive';
+import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/SignInViaSVGS';
+import UserAccountActive from '../user-account-modal-active/UserAccountActive';
 
 //Submit form
 function handleSubmit() {}
@@ -27,16 +27,26 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
   }, []);
 
-  //Username Regex Pattern //RFC2822 Standard
-  const userEmailAddressRegex: RegExp =
-    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
-
-  //Password Regex Pattern //8 chars, 1 uppercase, 1 lowercase, 1 number, special chars enabled
-  const userPasswordRegex: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+  //Focus & Error References
+  const userRef = useRef();
+  const errorRef = useRef();
 
   //Form validation
   const [emailAddress, setEmailAddress] = useState<string>('test@email.com');
+  const [validEmailAddress, setValidEmailAddress] = useState<boolean>(false);
+  const [emailInputFocus, setEmailInputFocus] = useState<boolean>(false);
+
   const [password, setPassword] = useState<string>('test');
+  const [validPassword, setValidPassword] = useState<boolean>(false);
+  const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
+
+  const [password, setPassword] = useState<string>('test');
+  const [validPassword, setValidPassword] = useState<boolean>(false);
+  const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
+
+  const [password, setPassword] = useState<string>('test');
+  const [validPassword, setValidPassword] = useState<boolean>(false);
+  const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
 
   //Feature: toggle password visibility
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -82,7 +92,7 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
               </label>
             </fieldset>
             <div className='ecoModal__actions'>
-              <button type='submit'>Sign in</button>
+              <button type='submit'>Log in</button>
             </div>
             <div className='ecoModal__signInVia'>
               <button>

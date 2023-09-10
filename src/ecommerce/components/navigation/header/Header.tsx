@@ -5,20 +5,19 @@ import NavigationLinks from './sections/NavigationLinks';
 import UserInteractions from './sections/UserInteractions';
 import MobileMenu from './mobile/MobileMenu';
 import ShoppingCart from '../../features/shopping-cart/ShoppingCart';
-import UserLoginModal from '../../features/user-account-login/UserLoginModal';
+import UserLoginModal from '../../features/user-account-modal/user-account-modal-login/UserLoginModal';
 
 const PrimaryNav = (): JSX.Element => {
   const [uiModal, setUiModal] = useState<string>('');
 
   return (
     <header
-      className="navkit"
+      className='navkit'
       style={{
         position: useLocation().pathname === '/ecommerce' ? 'absolute' : 'relative',
         left: useLocation().pathname === '/ecommerce' ? '50%' : '0',
         transform: useLocation().pathname === '/ecommerce' ? 'translateX(-50%)' : 'translateX(0)',
-      }}
-    >
+      }}>
       <LogoArea />
       <NavigationLinks />
       <UserInteractions uiModal={uiModal} setUiModal={setUiModal} />

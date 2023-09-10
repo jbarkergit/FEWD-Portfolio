@@ -21,10 +21,11 @@
 @forward '../ecommerce/components/product/product-provider/productProvider';
 @forward '../ecommerce/components/product/product-recommenders/productReccomenders.scss';
 
+//user-account
+@forward '../ecommerce/components/features/user-account/user-account-login/userAccountLogin';
+@forward '../ecommerce/components/features/user-account/user-account-modal-registry/userAccountRegistry';
+@forward '../ecommerce/components/features/user-account/user-account-active/userAccountActive';
+@forward '../ecommerce/components/user-account/user-account-dashboard/userAccountDashboard';
+
 //shared
 @forward '../ecommerce/components/shared/modal';
-
-//user-account
-@forward '../ecommerce/components/features/user-account-login/userAccountLogin';
-@forward '../ecommerce/components/features/user-account-active/userAccountActive';
-@forward '../ecommerce/components/user-account-dashboard/userAccountDashboard';
