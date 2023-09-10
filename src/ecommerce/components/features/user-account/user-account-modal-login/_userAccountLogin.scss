@@ -45,8 +45,9 @@
   }
   &__actions {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: f.rem(18);
+    gap: f.rem(6);
     width: 90%;
     & button {
       @include m.ecoBtn;

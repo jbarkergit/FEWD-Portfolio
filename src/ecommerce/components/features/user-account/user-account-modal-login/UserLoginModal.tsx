@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/SignInViaSVGS';
-import useLoginFormSubmission from './hooks/useLoginFormSubmission';
 
 //Prop drilling
 type PropType = {
@@ -9,44 +8,58 @@ type PropType = {
 };
 
 const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
-  //Form Reference
-  const userLoginModal = useRef<HTMLFormElement>(null);
-
   //Form Toggle
+  const userLoginModal = useRef<HTMLFormElement>(null);
   useEffect(() => userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal]);
 
   //Form Exterior Click Handler
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
-      if (!userLoginModal.current?.contains(e.target as Node) && !(e.target as HTMLButtonElement).classList.contains('ctaBtn')) setUiModal('');
+      if (!userLoginModal.current?.contains(e.target as Node)) setUiModal('');
+      clearLoginInputValues();
     };
     document.body.addEventListener('pointerdown', handleExteriorClick);
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
-  }, []);
+  }, [uiModal]);
 
   //Feature: toggle password visibility
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+
+  //Form validation state
+  const [emailAddressInputFocus, setEmailAddressInputFocus] = useState<boolean>(false);
+  const [emailAddress, setEmailAddress] = useState<string>('test@email.com');
+  const [validEmailAddress, setValidEmailAddress] = useState<boolean>(false);
+
+  const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>('test');
+  const [validPassword, setValidPassword] = useState<boolean>(false);
+
+  // const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
+  // const [password, setPassword] = useState<string>('test');
+  // const [validPassword, setValidPassword] = useState<boolean>(false);
+
+  // const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
+  // const [password, setPassword] = useState<string>('test');
+  // const [validPassword, setValidPassword] = useState<boolean>(false);
+
+  //Form input value clear hook
+  const clearLoginInputValues = () => {
+    //Clear Email Address state
+    setEmailAddressInputFocus(false);
+    setEmailAddress('');
+    setValidEmailAddress(false);
+    //Clear Password state
+    setPasswordInputFocus(false);
+    setPassword('');
+    setValidPassword(false);
+  };
 
   //Focus & Error References
   const userRef = useRef();
   const errorRef = useRef();
 
-  //Form validation
-  const [emailAddress, setEmailAddress] = useState<string>('test@email.com');
-  const [validEmailAddress, setValidEmailAddress] = useState<boolean>(false);
-  const [emailInputFocus, setEmailInputFocus] = useState<boolean>(false);
-
-  const [password, setPassword] = useState<string>('test');
-  const [validPassword, setValidPassword] = useState<boolean>(false);
-  const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
-
-  // const [password, setPassword] = useState<string>('test');
-  // const [validPassword, setValidPassword] = useState<boolean>(false);
-  // const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
-
-  // const [password, setPassword] = useState<string>('test');
-  // const [validPassword, setValidPassword] = useState<boolean>(false);
-  // const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
+  //Form submission hook
+  const useLoginFormSubmission = () => {};
 
   return (
     <section className='ecoModalWrap'>
@@ -86,6 +99,7 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
           </fieldset>
           <div className='ecoModal__actions'>
             <button type='submit'>Log in</button>
+            <button type='submit'>Sign up</button>
           </div>
           <div className='ecoModal__signInVia'>
             <button>
