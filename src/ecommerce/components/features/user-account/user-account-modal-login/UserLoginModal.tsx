@@ -1,9 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/SignInViaSVGS';
-import UserAccountActive from '../user-account-modal-active/UserAccountActive';
-
-//Submit form
-function handleSubmit() {}
+import useLoginFormSubmission from './hooks/useLoginFormSubmission';
 
 //Prop drilling
 type PropType = {
@@ -12,13 +9,13 @@ type PropType = {
 };
 
 const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
-  //Form ref
+  //Form Reference
   const userLoginModal = useRef<HTMLFormElement>(null);
 
-  //Toggle modal
+  //Form Toggle
   useEffect(() => userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal]);
 
-  //Handle exterior clicks
+  //Form Exterior Click Handler
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
       if (!userLoginModal.current?.contains(e.target as Node) && !(e.target as HTMLButtonElement).classList.contains('ctaBtn')) setUiModal('');
@@ -53,7 +50,7 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
 
   return (
     <section className='ecoModalWrap'>
-      <form className='ecoModal accountModal' onSubmit={handleSubmit} data-status='false' ref={userLoginModal}>
+      <form className='ecoModal accountModal' onSubmit={useLoginFormSubmission} data-status='false' ref={userLoginModal}>
         <legend>
           <h2>My Account</h2>
         </legend>

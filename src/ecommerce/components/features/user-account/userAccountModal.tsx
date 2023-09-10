@@ -3,6 +3,7 @@ import UserLoginModal from './user-account-modal-login/UserLoginModal';
 import UserAccountRegistry from './user-account-modal-registry/UserAccountRegistry';
 import UserAccountActive from './user-account-modal-active/UserAccountActive';
 
+//Prop drilling
 type UserAccountModalType = {
   uiModal: string;
   setUiModal: Dispatch<SetStateAction<string>>;
