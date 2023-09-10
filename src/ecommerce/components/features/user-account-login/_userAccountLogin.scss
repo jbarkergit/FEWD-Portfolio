@@ -60,7 +60,7 @@
   &__notice {
     display: flex;
     flex-direction: column;
-    gap: f.rem(4);
+    gap: f.rem(2);
     width: 90%;
     text-align: center;
     pointer-events: none;
@@ -68,12 +68,15 @@
     & span {
       font-size: f.rem(17);
       font-weight: 600;
+      letter-spacing: f.rem(0.6);
+      text-transform: uppercase;
     }
     & p {
       max-width: 45ch;
       margin: 0 auto;
       font-size: f.rem(16);
       font-weight: 500;
+      line-height: f.rem(18);
     }
   }
 }
