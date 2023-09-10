@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/SignInViaSVGS';
+import { userEmailAddressRegex, userPasswordRegex } from '../shared/authentication/userAccountRegExp';
 
 //Prop drilling
 type PropType = {
@@ -8,9 +9,15 @@ type PropType = {
 };
 
 const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
+  const userLoginModal = useRef<HTMLFormElement>(null); //Form Reference
+  const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Field Reference
+  const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Field Reference
+
   //Form Toggle
-  const userLoginModal = useRef<HTMLFormElement>(null);
   useEffect(() => userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal]);
+
+  //Focus input field setter on initial load
+  useEffect(() => emailAddressInputFieldRef.current?.focus(), []);
 
   //Form Exterior Click Handler
   useEffect(() => {
@@ -34,13 +41,22 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   const [password, setPassword] = useState<string>('test');
   const [validPassword, setValidPassword] = useState<boolean>(false);
 
-  // const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
-  // const [password, setPassword] = useState<string>('test');
-  // const [validPassword, setValidPassword] = useState<boolean>(false);
+  //Email Address input value RegExp validation
+  useEffect(() => {
+    userEmailAddressRegex.test(emailAddress);
+  }, [emailAddressInputFieldRef]);
 
-  // const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
-  // const [password, setPassword] = useState<string>('test');
-  // const [validPassword, setValidPassword] = useState<boolean>(false);
+  //Password input value RegExp validation
+  useEffect(() => {
+    userPasswordRegex.test(password);
+  }, [passwordInputFieldRef]);
+
+  //Error message state
+  const errorRef = useRef();
+  const [errorPrompt, setErrorPrompt] = useState<string>('');
+
+  //User account login success state
+  const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
 
   //Form input value clear hook
   const clearLoginInputValues = () => {
@@ -54,10 +70,6 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
     setValidPassword(false);
   };
 
-  //Focus & Error References
-  const userRef = useRef();
-  const errorRef = useRef();
-
   //Form submission hook
   const useLoginFormSubmission = () => {};
 
@@ -70,14 +82,24 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
         <>
           <fieldset className='ecoModal__inputField'>
             <label htmlFor='emailAddress'>
-              <input type='text' placeholder='Email Address' value={emailAddress} required onChange={(event) => setEmailAddress(event.target.value)} />
+              <input
+                type='text'
+                placeholder='Email Address'
+                value={emailAddress}
+                required
+                ref={emailAddressInputFieldRef}
+                onChange={(event) => setEmailAddress(event.target.value)}
+              />
             </label>
             <label htmlFor='password' className='passwordLabel'>
-              {passwordVisible ? (
-                <input type='text' placeholder='Password' value={password} required onChange={(event) => setPassword(event.target.value)} />
-              ) : (
-                <input type='password' placeholder='Password' value={password} required onChange={(event) => setPassword(event.target.value)} />
-              )}
+              <input
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder='Password'
+                value={password}
+                required
+                ref={passwordInputFieldRef}
+                onChange={(event) => setPassword(event.target.value)}
+              />
               <button className='passwordLabel__visibility' onClick={() => setPasswordVisible(passwordVisible ? false : true)}>
                 {passwordVisible ? (
                   <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 14 14'>
