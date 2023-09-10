@@ -2,11 +2,8 @@
 @use '../../../../../sass/util/functions' as f;
 
 .accountModal {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: f.rem(18);
 }
 .ecoModal {
   & legend h2 {

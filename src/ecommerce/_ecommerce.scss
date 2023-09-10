@@ -5,6 +5,7 @@
 @forward '../ecommerce/components/features/product-filters/productFilters';
 @forward '../ecommerce/components/features/search-bar/searchBar';
 @forward '../ecommerce/components/features/shopping-cart/shoppingCartModal';
+@forward '../ecommerce/components/features/shared/modal';
 
 //home
 @forward '../ecommerce/components/home/carousel';
@@ -26,6 +27,3 @@
 @forward '../ecommerce/components/features/user-account/user-account-modal-registry/userAccountRegistry';
 @forward '../ecommerce/components/features/user-account/user-account-modal-active/userAccountActive';
 @forward '../ecommerce/components/features/user-account/user-account-dashboard/userAccountDashboard';
-
-//shared
-@forward '../ecommerce/components/shared/modal';

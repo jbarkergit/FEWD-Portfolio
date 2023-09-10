@@ -1,5 +1,5 @@
-@use '../../ecommerceStyles' as m;
-@use '../../../sass/util/functions' as f;
+@use '../../../ecommerceStyles' as m;
+@use '../../../../sass/util/functions' as f;
 
 .ecoModalWrap {
   position: fixed;
@@ -18,7 +18,6 @@
   top: 15%;
   right: 0;
   display: flex;
-  align-items: flex-start;
   flex-direction: column;
   gap: f.rem(10);
   min-width: f.rem(425);
@@ -31,7 +30,10 @@
   background-color: var(--elemBackgroundPrimary);
   pointer-events: all;
   transform: translateX(25%);
-  transition: height 250ms ease-in-out, transform 250ms ease-out, opacity 250ms ease-out;
+  transition:
+    height 250ms ease-in-out,
+    transform 250ms ease-out,
+    opacity 250ms ease-out;
   opacity: 0;
   @media (width <= 778px) {
     top: 0;
@@ -48,7 +50,9 @@
   }
   &[data-status='active'] {
     transform: translate3d(0, 0, 0);
-    transition: transform 250ms ease-in, opacity 250ms ease-in;
+    transition:
+      transform 250ms ease-in,
+      opacity 250ms ease-in;
     opacity: 1;
   }
   &[data-status='false'] {
