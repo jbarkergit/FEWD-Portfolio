@@ -43,13 +43,13 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
 
   //Email Address input value RegExp validation
   useEffect(() => {
-    userEmailAddressRegex.test(emailAddress);
-  }, [emailAddressInputFieldRef]);
+    userEmailAddressRegex.test(emailAddress) ? setValidEmailAddress(true) : setValidEmailAddress(false);
+  }, [emailAddressInputFieldRef, validEmailAddress]);
 
   //Password input value RegExp validation
   useEffect(() => {
-    userPasswordRegex.test(password);
-  }, [passwordInputFieldRef]);
+    userPasswordRegex.test(password) ? setValidPassword(true) : setValidPassword(false);
+  }, [passwordInputFieldRef, validPassword]);
 
   //Error message state
   const errorRef = useRef();
