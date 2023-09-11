@@ -5,35 +5,32 @@ import { ProductDatabase } from '../../assets/production-data/product-db/Product
 import { ProductType } from '../../types/ProductType';
 
 const ProductHighlight = (): JSX.Element => {
-  //Initialize useRef with empty array to hold all instances of picture reference
+  //Push all instances of pictureRef references into useRef array
   const pictureArrayRef = useRef<HTMLPictureElement[]>([]);
-
-  //Push all instances of picture into pictureArrayRef
-  const pictureRef = (el: HTMLPictureElement) => (el && !pictureArrayRef.current.includes(el) ? pictureArrayRef.current.push(el) : null);
+  const pictureRef = (element: HTMLPictureElement) => (element && !pictureArrayRef.current.includes(element) ? pictureArrayRef.current.push(element) : null);
 
   //Play video on user pointer hover
   useEffect(() => {
     const userPointerOver = (e: PointerEvent): void => {
-      const curTarget = e.currentTarget as HTMLPictureElement;
-      const asideTarget = curTarget.nextSibling as HTMLElement;
-      const videoTarget = asideTarget.children[0] as HTMLVideoElement;
-      videoTarget.play();
+      const asideTarget = (e.currentTarget as HTMLPictureElement).nextSibling as HTMLElement;
+      (asideTarget.children[0] as HTMLVideoElement).play();
     };
 
     //Pause and restart video on user pointer leave
     const userPointerLeave = (e: PointerEvent): void => {
-      const curTarget = e.currentTarget as HTMLPictureElement;
-      const asideTarget = curTarget.nextSibling as HTMLElement;
+      const asideTarget = (e.currentTarget as HTMLPictureElement).nextSibling as HTMLElement;
       const videoTarget = asideTarget.children[0] as HTMLVideoElement;
       videoTarget.pause();
       videoTarget.currentTime = 0;
     };
 
+    //Mount
     pictureArrayRef.current?.forEach((ref) => {
       ref.addEventListener('pointerover', userPointerOver);
       ref.addEventListener('pointerleave', userPointerLeave);
     });
 
+    //Unmount
     return () => {
       pictureArrayRef.current?.forEach((ref) => {
         ref.removeEventListener('pointerover', userPointerOver);
@@ -58,7 +55,7 @@ const ProductHighlight = (): JSX.Element => {
                   <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchpriority='low' />
                 </picture>
                 <aside>
-                  <video preload='metadata' playsInline loop muted aria-label='Video of joyful people wearing headphones listening to music'>
+                  <video preload='none' playsInline loop muted aria-label='Video of joyful people wearing headphones listening to music'>
                     <source src='/src/ecommerce/assets/production-videos/stockfootagesplice.webm' type='video/webm' />
                   </video>
                 </aside>
