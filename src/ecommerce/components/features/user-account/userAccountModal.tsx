@@ -14,10 +14,16 @@ const UserAccountModal = ({ uiModal, setUiModal }: UserAccountModalType): JSX.El
   const [userSignedIn, setUserSignedIn] = useState<boolean>(false);
 
   const ConditionallyRenderedAccountModals = (): JSX.Element | undefined => {
-    if (uiModal === 'userLogin' && !userSignedIn) return <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} setUserSignedIn={setUserSignedIn} />;
-    else if (uiModal === 'userRegistry') return <UserAccountRegistry uiModal={uiModal} setUiModal={setUiModal} />;
-    else if (userSignedIn) return <UserAccountActive />;
-    else null;
+    switch (uiModal) {
+      case 'userLogin':
+        return <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} setUserSignedIn={setUserSignedIn} />;
+      case 'userRegistry':
+        return <UserAccountRegistry uiModal={uiModal} setUiModal={setUiModal} />;
+      case 'userActive':
+        if (userSignedIn) return <UserAccountActive />;
+      default:
+        null;
+    }
   };
 
   return ConditionallyRenderedAccountModals();
