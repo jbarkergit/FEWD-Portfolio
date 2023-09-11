@@ -23,7 +23,7 @@ const PrimaryNav = (): JSX.Element => {
         <NavigationLinks />
         <UserInteractions uiModal={uiModal} setUiModal={setUiModal} />
       </header>
-      {uiModal === 'shoppingCart' ? <ShoppingCart uiModal={uiModal} setUiModal={setUiModal} /> : null}
+      <ShoppingCart uiModal={uiModal} setUiModal={setUiModal} />
       {uiModal === 'mobileMenu' ? <MobileMenu uiModal={uiModal} setUiModal={setUiModal} /> : null}
       <UserAccountModal uiModal={uiModal} setUiModal={setUiModal} />
     </>
