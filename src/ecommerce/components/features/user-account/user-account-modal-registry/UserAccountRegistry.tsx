@@ -66,7 +66,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
     <section className='ecoModalWrap'>
       <form className='ecoModal accountModal' onSubmit={useRegistryFormSubmission} data-status='false' ref={userRegistryModal}>
         <legend>
-          <h2>My Account</h2>
+          <h2>Account Creation</h2>
         </legend>
         <>
           <fieldset className='ecoModal__inputField'>
@@ -142,11 +142,8 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
             </button>
           </div>
           <div className='ecoModal__notice'>
-            <span>Privacy notice</span>
-            <p>
-              This input field is not submitted to 3rd party services. Optional account registry features are solely cosmetic. Any information provided will not be
-              stored externally nor locally. A dummy account has been provided to protect your privacy.
-            </p>
+            <span>Notice</span>
+            <p>This registration form is solely cosmetic.</p>
           </div>
         </>
       </form>
