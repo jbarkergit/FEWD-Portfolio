@@ -14,7 +14,7 @@ const SearchBar = (): JSX.Element => {
 
   useEffect(() => {
     const useSearchBar = (e: PointerEvent): void => {
-      if (searchBarRef.current && !searchBarRef.current.contains(e.target as HTMLElement)) setSearchTerm('');
+      if (!searchBarRef.current?.contains(e.target as HTMLElement)) setSearchTerm('');
     };
 
     searchBarRef.current?.addEventListener('pointerup', useSearchBar);
@@ -28,36 +28,35 @@ const SearchBar = (): JSX.Element => {
 
   return (
     <div
-      className="searchBar"
+      className='searchBar'
       style={{
         boxShadow: useLocation().pathname === '/ecommerce' ? 'none' : 'var(--shadowRefined)',
       }}
-      ref={searchBarRef}
-    >
-      <label className="searchBar__label" htmlFor="searchBar__input">
+      ref={searchBarRef}>
+      <label className='searchBar__label' htmlFor='searchBar__input'>
         Search
       </label>
       <input
-        className="searchBar__input"
-        name="searchBar__input"
-        type="text"
-        placeholder="Search products"
+        className='searchBar__input'
+        name='searchBar__input'
+        type='text'
+        placeholder='Search products'
         value={searchTerm}
-        autoCapitalize="none"
-        autoComplete="none"
-        autoCorrect="off"
-        spellCheck="false"
+        autoCapitalize='none'
+        autoComplete='none'
+        autoCorrect='off'
+        spellCheck='false'
         onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e?.target.value)}
       />
       {searchTerm.length != 0 && (
-        <div className="searchBar__return">
-          <ul className="searchBar__return__ul">
+        <div className='searchBar__return'>
+          <ul className='searchBar__return__ul'>
             {searchTerm === ''
               ? null
               : searchResults.slice(0, 10).map((product) => {
                   return (
-                    <li className="searchBar__return__ul__li" key={uuidv4()}>
-                      <a href={`/ecommerce/product/${product.sku}`} ref={searchLink}>
+                    <li className='searchBar__return__ul__li' key={uuidv4()}>
+                      <a href={`/ecommerce/product/${product.sku}`} ref={searchLink} onClick={() => setSearchTerm('')}>
                         {product.company} {product.unit}
                       </a>
                     </li>
