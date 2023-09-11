@@ -74,8 +74,10 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
                 placeholder='Email Address'
                 value={emailAddress}
                 required
-                ref={emailAddressInputFieldRef}
                 autoFocus
+                aria-invalid={validEmailAddress ? 'false' : 'true'}
+                aria-describedby='uidnote'
+                ref={emailAddressInputFieldRef}
                 onClick={() => focus()}
                 onChange={(event) => setEmailAddress(event.target.value)}
               />
@@ -92,6 +94,8 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
                 placeholder='Password'
                 value={password}
                 required
+                aria-invalid={validPassword ? 'false' : 'true'}
+                aria-describedby='pwdnote'
                 ref={passwordInputFieldRef}
                 onClick={() => focus()}
                 onChange={(event) => setPassword(event.target.value)}
