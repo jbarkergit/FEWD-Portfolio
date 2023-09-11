@@ -48,7 +48,11 @@
       aspect-ratio: 0.8/1;
       border-radius: f.rem(26);
       overflow: hidden;
-      box-shadow: -1px -1px 20px 0px #ececec, -4px -4px 5px 0px #fff, 7px 7px 20px 0px rgba(153, 153, 153, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
+      box-shadow:
+        -1px -1px 20px 0px #ececec,
+        -4px -4px 5px 0px #fff,
+        7px 7px 20px 0px rgba(153, 153, 153, 0.4),
+        4px 4px 5px 0px rgba(0, 0, 0, 0.3);
       @media (width <= 530px) {
         height: 100%;
       }
@@ -61,6 +65,7 @@
         z-index: 4;
         padding: 8% 15% 0 15%;
         text-align: center;
+        pointer-events: none;
         @media (width <= 530px) {
           padding: 8% 5% 0 5%;
         }
