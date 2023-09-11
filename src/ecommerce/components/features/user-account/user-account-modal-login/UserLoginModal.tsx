@@ -123,7 +123,7 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
           </fieldset>
           <div className='ecoModal__actions'>
             <button type='submit'>Log in</button>
-            <button type='submit'>Sign up</button>
+            <button onClick={() => setUiModal('userRegistry')}>Sign up</button>
           </div>
           <div className='ecoModal__signInVia'>
             <button>
