@@ -5,12 +5,13 @@ import { ProductDatabase } from '../../assets/production-data/product-db/Product
 import { ProductType } from '../../types/ProductType';
 
 const ProductHighlight = (): JSX.Element => {
-  const revealRefs = useRef<HTMLPictureElement[]>([]);
+  //Initialize useRef with empty array to hold all instances of picture reference
+  const pictureArrayRef = useRef<HTMLPictureElement[]>([]);
 
-  const addToRefs = (el: HTMLPictureElement) => {
-    if (el && !revealRefs.current.includes(el)) revealRefs.current.push(el);
-  };
+  //Push all instances of picture into pictureArrayRef
+  const pictureRef = (el: HTMLPictureElement) => (el && !pictureArrayRef.current.includes(el) ? pictureArrayRef.current.push(el) : null);
 
+  //Play video on user pointer hover
   useEffect(() => {
     const userPointerOver = (e: PointerEvent): void => {
       const curTarget = e.currentTarget as HTMLPictureElement;
@@ -19,6 +20,7 @@ const ProductHighlight = (): JSX.Element => {
       videoTarget.play();
     };
 
+    //Pause and restart video on user pointer leave
     const userPointerLeave = (e: PointerEvent): void => {
       const curTarget = e.currentTarget as HTMLPictureElement;
       const asideTarget = curTarget.nextSibling as HTMLElement;
@@ -27,13 +29,13 @@ const ProductHighlight = (): JSX.Element => {
       videoTarget.currentTime = 0;
     };
 
-    revealRefs.current?.forEach((ref) => {
+    pictureArrayRef.current?.forEach((ref) => {
       ref.addEventListener('pointerover', userPointerOver);
       ref.addEventListener('pointerleave', userPointerLeave);
     });
 
     return () => {
-      revealRefs.current?.forEach((ref) => {
+      pictureArrayRef.current?.forEach((ref) => {
         ref.removeEventListener('pointerover', userPointerOver);
         ref.removeEventListener('pointerleave', userPointerLeave);
       });
@@ -41,10 +43,10 @@ const ProductHighlight = (): JSX.Element => {
   }, []);
 
   return (
-    <section className="productHighlight">
-      <h2 className="productHighlight__heading">
+    <section className='productHighlight'>
+      <h2 className='productHighlight__heading'>
         <span>
-          Available <span className="highlight">Now</span>
+          Available <span className='highlight'>Now</span>
         </span>
       </h2>
       <ul>
@@ -52,15 +54,15 @@ const ProductHighlight = (): JSX.Element => {
           <li key={uuidv4()}>
             <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0 })}>
               <article>
-                <picture ref={addToRefs}>
-                  <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading="lazy" decoding="async" fetchpriority="low" />
+                <picture ref={pictureRef}>
+                  <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchpriority='low' />
                 </picture>
                 <aside>
-                  <video preload="metadata" playsInline loop muted aria-label="Video of joyful people wearing headphones listening to music">
-                    <source src="/src/ecommerce/assets/production-videos/stockfootagesplice.webm" type="video/webm" />
+                  <video preload='metadata' playsInline loop muted aria-label='Video of joyful people wearing headphones listening to music'>
+                    <source src='/src/ecommerce/assets/production-videos/stockfootagesplice.webm' type='video/webm' />
                   </video>
                 </aside>
-                <hgroup id="productHighlightInfo">
+                <hgroup id='productHighlightInfo'>
                   <h2>
                     {product.company} {product.unit}
                   </h2>
