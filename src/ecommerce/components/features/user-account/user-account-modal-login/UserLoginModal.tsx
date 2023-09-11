@@ -58,15 +58,7 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
   useEffect(() => (!validPassword && password.length > 0 ? setPasswordErrorPrompt(true) : setPasswordErrorPrompt(false)), [validPassword]);
 
   //Form submission hook
-  const useLoginFormSubmission = () => {
-    if (validEmailAddress && validPassword) setUserSignedIn(true);
-    else setUserSignedIn(false);
-  };
-
-  useEffect(() => {
-    console.log(validEmailAddress);
-    console.log(validPassword);
-  }, [validEmailAddress, validPassword]);
+  const useLoginFormSubmission = () => (validEmailAddress && validPassword ? setUserSignedIn(true) : setUserSignedIn(false));
 
   return (
     <section className='ecoModalWrap'>
@@ -125,7 +117,7 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
             {passwordErrorPrompt ? (
               <figure className='inputFieldErrorMessage'>
                 <figcaption style={{ display: 'none' }}>Error Message</figcaption>
-                <p>Password must contain at least one special letter, one lowercase and uppercase letter.</p>
+                <p>Password must contain at least one special character, one lowercase and uppercase letter.</p>
               </figure>
             ) : null}
           </fieldset>
