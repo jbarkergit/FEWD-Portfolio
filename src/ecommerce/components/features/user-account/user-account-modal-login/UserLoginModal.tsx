@@ -6,72 +6,67 @@ import { userEmailAddressRegex, userPasswordRegex } from '../shared/authenticati
 type PropType = {
   uiModal: string;
   setUiModal: Dispatch<SetStateAction<string>>;
+  setUserSignedIn: Dispatch<SetStateAction<boolean>>;
 };
 
-const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
+const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX.Element => {
   const userLoginModal = useRef<HTMLFormElement>(null); //Form Reference
-  const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Field Reference
-  const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Field Reference
+  const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Input Field Reference
+  const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Input Field Reference
 
   //Form Toggle
   useEffect(() => userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal]);
 
-  //Focus input field setter on initial load
-  useEffect(() => emailAddressInputFieldRef.current?.focus(), []);
+  //Feature: toggle password visibility state
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+
+  //Form validation state
+  const [emailAddress, setEmailAddress] = useState<string>('test@email.com');
+  const [validEmailAddress, setValidEmailAddress] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>('test');
+  const [validPassword, setValidPassword] = useState<boolean>(false);
+
+  //Form input value clear hook
+  const clearLoginInputValues = (): void => {
+    setEmailAddress('');
+    setValidEmailAddress(false);
+    setPassword('');
+    setValidPassword(false);
+  };
 
   //Form Exterior Click Handler
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
-      if (!userLoginModal.current?.contains(e.target as Node)) setUiModal('');
-      clearLoginInputValues();
+      if (!userLoginModal.current?.contains(e.target as Node)) {
+        setUiModal('');
+        clearLoginInputValues();
+      }
     };
     document.body.addEventListener('pointerdown', handleExteriorClick);
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
   }, [uiModal]);
 
-  //Feature: toggle password visibility
-  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  //Form input value RegExp validation
+  useEffect(() => setValidEmailAddress(userEmailAddressRegex.test(emailAddress)), [emailAddress]);
+  useEffect(() => setValidPassword(userPasswordRegex.test(password)), [password]);
 
-  //Form validation state
-  const [emailAddressInputFocus, setEmailAddressInputFocus] = useState<boolean>(false);
-  const [emailAddress, setEmailAddress] = useState<string>('test@email.com');
-  const [validEmailAddress, setValidEmailAddress] = useState<boolean>(false);
+  //Input field ERROR state
+  const [emailAddressErrorPrompt, setEmailAddressErrorPrompt] = useState<boolean>(false);
+  const [passwordErrorPrompt, setPasswordErrorPrompt] = useState<boolean>(false);
 
-  const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
-  const [password, setPassword] = useState<string>('test');
-  const [validPassword, setValidPassword] = useState<boolean>(false);
-
-  //Email Address input value RegExp validation
-  useEffect(() => {
-    userEmailAddressRegex.test(emailAddress) ? setValidEmailAddress(true) : setValidEmailAddress(false);
-  }, [emailAddressInputFieldRef, validEmailAddress]);
-
-  //Password input value RegExp validation
-  useEffect(() => {
-    userPasswordRegex.test(password) ? setValidPassword(true) : setValidPassword(false);
-  }, [passwordInputFieldRef, validPassword]);
-
-  //Error message state
-  const errorRef = useRef();
-  const [errorPrompt, setErrorPrompt] = useState<string>('');
-
-  //User account login success state
-  const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
-
-  //Form input value clear hook
-  const clearLoginInputValues = () => {
-    //Clear Email Address state
-    setEmailAddressInputFocus(false);
-    setEmailAddress('');
-    setValidEmailAddress(false);
-    //Clear Password state
-    setPasswordInputFocus(false);
-    setPassword('');
-    setValidPassword(false);
-  };
+  useEffect(() => (!validEmailAddress && emailAddress.length > 0 ? setEmailAddressErrorPrompt(true) : setEmailAddressErrorPrompt(false)), [validEmailAddress]);
+  useEffect(() => (!validPassword && password.length > 0 ? setPasswordErrorPrompt(true) : setPasswordErrorPrompt(false)), [validPassword]);
 
   //Form submission hook
-  const useLoginFormSubmission = () => {};
+  const useLoginFormSubmission = () => {
+    if (validEmailAddress && validPassword) setUserSignedIn(true);
+    else setUserSignedIn(false);
+  };
+
+  useEffect(() => {
+    console.log(validEmailAddress);
+    console.log(validPassword);
+  }, [validEmailAddress, validPassword]);
 
   return (
     <section className='ecoModalWrap'>
@@ -88,9 +83,18 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
                 value={emailAddress}
                 required
                 ref={emailAddressInputFieldRef}
+                data-error={!validEmailAddress ? 'true' : 'false'}
+                autoFocus
+                onClick={() => focus()}
                 onChange={(event) => setEmailAddress(event.target.value)}
               />
             </label>
+            {emailAddressErrorPrompt ? (
+              <figure className='inputFieldErrorMessage'>
+                <figcaption style={{ display: 'none' }}>Error Message</figcaption>
+                <p>Invalid Email Address</p>
+              </figure>
+            ) : null}
             <label htmlFor='password' className='passwordLabel'>
               <input
                 type={passwordVisible ? 'text' : 'password'}
@@ -98,6 +102,8 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
                 value={password}
                 required
                 ref={passwordInputFieldRef}
+                data-error={!validPassword ? 'true' : 'false'}
+                onClick={() => focus()}
                 onChange={(event) => setPassword(event.target.value)}
               />
               <button className='passwordLabel__visibility' onClick={() => setPasswordVisible(passwordVisible ? false : true)}>
@@ -118,6 +124,12 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
                 )}
               </button>
             </label>
+            {passwordErrorPrompt ? (
+              <figure className='inputFieldErrorMessage'>
+                <figcaption style={{ display: 'none' }}>Error Message</figcaption>
+                <p>Password must contain at least one special letter, one lowercase and uppercase letter.</p>
+              </figure>
+            ) : null}
           </fieldset>
           <div className='ecoModal__actions'>
             <button type='submit'>Log in</button>
