@@ -81,6 +81,7 @@ const cartReducer = (state: CartStateType, action: CartReducerAction): CartState
         return { ...state, shoppingCart: state.shoppingCart.map((product) => (product.sku === sku ? { ...product, quantity: product.quantity - 1 } : product)) }; //decrement
     }
     case CART_REDUCER_ACTION_TYPE.SUBMIT: {
+      localStorage.setItem('shoppingCartState', '');
       return { ...state, shoppingCart: [] }; //handle submission logic -> returning an empty array until I'm ready to handle a payment gateway/processor
     }
 
