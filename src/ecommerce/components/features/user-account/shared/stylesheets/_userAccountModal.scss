@@ -1,5 +1,5 @@
-@use '../../../../ecommerceStyles' as m;
-@use '../../../../../sass/util/functions' as f;
+@use '../../../../../ecommerceStyles' as m;
+@use '../../../../../../sass/util/functions' as f;
 
 .accountModal {
   justify-content: center;
@@ -33,7 +33,10 @@
       width: 90%;
       height: auto;
       outline: 1px solid hsl(0, 0%, 68%);
-      border-radius: f.rem(8);
+      border-radius: f.rem(6);
+      &[data-error='true'] {
+        outline: 1px solid hsl(0, 100%, 80%);
+      }
       & input {
         width: 100%;
         height: inherit;

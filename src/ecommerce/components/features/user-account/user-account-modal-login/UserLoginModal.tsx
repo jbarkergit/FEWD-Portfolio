@@ -76,14 +76,13 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
         </legend>
         <>
           <fieldset className='ecoModal__inputField'>
-            <label htmlFor='emailAddress'>
+            <label htmlFor='emailAddress' data-error={!validPassword ? 'true' : 'false'}>
               <input
                 type='text'
                 placeholder='Email Address'
                 value={emailAddress}
                 required
                 ref={emailAddressInputFieldRef}
-                data-error={!validEmailAddress ? 'true' : 'false'}
                 autoFocus
                 onClick={() => focus()}
                 onChange={(event) => setEmailAddress(event.target.value)}
@@ -95,14 +94,13 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
                 <p>Invalid Email Address</p>
               </figure>
             ) : null}
-            <label htmlFor='password' className='passwordLabel'>
+            <label htmlFor='password' className='passwordLabel' data-error={!validPassword ? 'true' : 'false'}>
               <input
                 type={passwordVisible ? 'text' : 'password'}
                 placeholder='Password'
                 value={password}
                 required
                 ref={passwordInputFieldRef}
-                data-error={!validPassword ? 'true' : 'false'}
                 onClick={() => focus()}
                 onChange={(event) => setPassword(event.target.value)}
               />
