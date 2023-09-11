@@ -122,13 +122,13 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
             </label>
             {passwordErrorPrompt ? (
               <figure className='inputFieldErrorMessage'>
-                <figcaption style={{ display: 'none' }}>Error Message</figcaption>
+                <figcaption>Error Message</figcaption>
                 <p>Password must contain at least one special character, one lowercase and uppercase letter.</p>
               </figure>
             ) : null}
           </fieldset>
           <div className='ecoModal__actions'>
-            <button onClick={() => setUiModal('userRegistry')}>Sign up</button>
+            <button onClick={() => setUiModal('userRegistry')}>Submit</button>
           </div>
           <div className='ecoModal__signInVia'>
             <button>

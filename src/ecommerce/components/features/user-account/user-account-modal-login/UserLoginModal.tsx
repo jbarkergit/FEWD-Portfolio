@@ -120,7 +120,7 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
             </label>
             {passwordErrorPrompt ? (
               <figure className='inputFieldErrorMessage'>
-                <figcaption style={{ display: 'none' }}>Error Message</figcaption>
+                <figcaption>Error Message</figcaption>
                 <p>Password must contain at least one special character, one lowercase and uppercase letter.</p>
               </figure>
             ) : null}
