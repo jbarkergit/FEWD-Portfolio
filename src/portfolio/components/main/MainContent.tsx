@@ -196,6 +196,8 @@ const MainContent = ({ stateIndex, setStateIndex, projectDetail }: indexStateTyp
   useEffect(() => setStateIndex(state.closestIndex), [state.closestIndex]);
   useEffect(() => toggleSmoothenAnimation(), [stateIndex]);
   useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [stateIndex]);
+
+  //Adjust "main" (slider) height based on projectDetail state
   useEffect(() => {
     if (projectDetail !== '' && targetElementRef.current) targetElementRef.current.style.width = 'auto';
     else {
