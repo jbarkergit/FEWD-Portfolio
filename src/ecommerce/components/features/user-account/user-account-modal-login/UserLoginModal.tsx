@@ -10,12 +10,16 @@ type PropType = {
 };
 
 const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX.Element => {
+  const ecoModalWrap = useRef<HTMLElement>(null); //Modal Reference
   const userLoginModal = useRef<HTMLFormElement>(null); //Form Reference
   const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Input Field Reference
   const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Input Field Reference
 
   //Form Toggle
-  useEffect(() => userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal]);
+  useEffect(() => {
+    ecoModalWrap.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal];
+    userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal];
+  });
 
   //Feature: toggle password visibility state
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -61,7 +65,7 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
   const useLoginFormSubmission = () => (validEmailAddress && validPassword ? setUserSignedIn(true) : setUserSignedIn(false));
 
   return (
-    <section className='ecoModalWrap'>
+    <section className='ecoModalWrap' ref={ecoModalWrap}>
       <form className='ecoModal accountModal' onSubmit={useLoginFormSubmission} data-status='false' ref={userLoginModal}>
         <legend>
           <h2>My Account</h2>
