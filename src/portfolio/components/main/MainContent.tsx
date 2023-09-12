@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import ProjectNavProp from './ProjectNavProp';
 
-type indexStateType = { stateIndex: number; setStateIndex: Dispatch<SetStateAction<number>> };
+type indexStateType = { stateIndex: number; setStateIndex: Dispatch<SetStateAction<number>>; projectDetail: string };
 
 type initSliderStateType = {
   pointerDown: boolean;
@@ -31,7 +31,7 @@ type actionType =
   | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] }
   | { type: 'BUTTON_NAVIGATION' };
 
-const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element => {
+const MainContent = ({ stateIndex, setStateIndex, projectDetail }: indexStateType): JSX.Element => {
   const targetElementRef = useRef<HTMLDivElement>(null),
     targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
     targetElementWidth: number = targetElement?.scrollWidth as number,
@@ -196,11 +196,17 @@ const MainContent = ({ stateIndex, setStateIndex }: indexStateType): JSX.Element
   useEffect(() => setStateIndex(state.closestIndex), [state.closestIndex]);
   useEffect(() => toggleSmoothenAnimation(), [stateIndex]);
   useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [stateIndex]);
+  useEffect(() => {
+    if (projectDetail !== '' && targetElementRef.current) targetElementRef.current.style.width = 'auto';
+    else {
+      if (targetElementRef.current) targetElementRef.current.style.width = 'max-content';
+    }
+  }, [projectDetail]);
 
   return (
     <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} ref={targetElementRef} style={state.style}>
-      <ProjectNavProp imgSrc="src/portfolio/assets/production-images/ecommerce-preview.png" dataStatus="active" dataActivity="active" addToRefs={addToRefs} />
-      <ProjectNavProp imgSrc="src/portfolio/assets/production-images/hyundai-preview.jpg" dataStatus="disabled" dataActivity="disabled" addToRefs={addToRefs} />
+      <ProjectNavProp imgSrc='src/portfolio/assets/production-images/ecommerce-preview.png' dataStatus='active' dataActivity='active' addToRefs={addToRefs} />
+      <ProjectNavProp imgSrc='src/portfolio/assets/production-images/hyundai-preview.jpg' dataStatus='disabled' dataActivity='disabled' addToRefs={addToRefs} />
     </main>
   );
 };

@@ -4,8 +4,8 @@ import { Dispatch, SetStateAction } from 'react';
 
 type ProjectNavPropType = {
   stateIndex: number;
-  projectDetail: boolean;
-  setProjectDetail: Dispatch<SetStateAction<boolean>>;
+  projectDetail: string;
+  setProjectDetail: Dispatch<SetStateAction<string>>;
 };
 
 const PortFooter = ({ stateIndex, projectDetail, setProjectDetail }: ProjectNavPropType) => {
@@ -58,11 +58,11 @@ const PortFooter = ({ stateIndex, projectDetail, setProjectDetail }: ProjectNavP
         </section>
         <section className='portFooter__nav__left'>
           {getExtendedInfo() ? (
-            <button onClick={() => setProjectDetail(projectDetail ? false : true)}>Project Overview</button>
+            <button onClick={() => setProjectDetail('projectOverview')}>Project Overview</button>
           ) : (
             <span className='portfoliofooterigation__unavailable'>this project is unavailable</span>
           )}
-          {getAbridgedInfo() ? <button onClick={() => setProjectDetail(projectDetail ? false : true)}>Project Summary</button> : null}
+          {getAbridgedInfo() ? <button onClick={() => setProjectDetail('projectSummary')}>Project Summary</button> : null}
           {getDemoLink() ? (
             <Link to={getDemoLink()}>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 24 24'>

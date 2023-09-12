@@ -8,13 +8,13 @@ import ProjectDetails from '../components/project-details/ProjectDetails';
 const Portfolio = (): JSX.Element => {
   const [stateIndex, setStateIndex] = useState<number>(0);
   const [contactForm, setContactForm] = useState<boolean>(false);
-  const [projectDetail, setProjectDetail] = useState<boolean>(true);
+  const [projectDetail, setProjectDetail] = useState<string>('');
 
   return (
     <div id='portfolio'>
       <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} contactForm={contactForm} setContactForm={setContactForm} />
       <ProjectDetails projectDetail={projectDetail} setProjectDetail={setProjectDetail} />
-      <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} />
+      <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} projectDetail={projectDetail} />
       <Contact contactForm={contactForm} />
       <PortFooter stateIndex={stateIndex} projectDetail={projectDetail} setProjectDetail={setProjectDetail} />
     </div>
