@@ -13,7 +13,7 @@ const Portfolio = (): JSX.Element => {
   return (
     <div id='portfolio'>
       <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} contactForm={contactForm} setContactForm={setContactForm} />
-      <ProjectDetails projectDetail={projectDetail} setProjectDetail={setProjectDetail} />
+      <ProjectDetails projectDetail={projectDetail} setProjectDetail={setProjectDetail} stateIndex={stateIndex} />
       <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} projectDetail={projectDetail} />
       <Contact contactForm={contactForm} />
       <PortFooter stateIndex={stateIndex} projectDetail={projectDetail} setProjectDetail={setProjectDetail} />
