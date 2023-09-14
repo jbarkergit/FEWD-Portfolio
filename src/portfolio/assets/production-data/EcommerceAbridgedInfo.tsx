@@ -1,9 +1,18 @@
+import { Dispatch, SetStateAction } from 'react';
 import EcommerceTechStack from './EcommerceTechStack';
 
-const EcommerceAbridgedInfo = (): JSX.Element => {
+type EcommerceProjectInfoType = {
+  setProjectDetail: Dispatch<SetStateAction<string>>;
+};
+
+const EcommerceAbridgedInfo = ({ setProjectDetail }: EcommerceProjectInfoType): JSX.Element => {
   return (
     <article className='projectDetails__projectSummary'>
       <h2>Ecommerce Project Summary</h2>
+      <nav className='projectDetails__projectOverview__nav'>
+        <button onClick={() => setProjectDetail('projectSummary')}>Project Summary</button>
+        <button onClick={() => setProjectDetail('projectOverview')}>Project Overview</button>
+      </nav>
       <EcommerceTechStack />
       <section className='projectDetails__projectSummary__information'>
         <p>

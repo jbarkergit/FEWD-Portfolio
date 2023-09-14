@@ -18,17 +18,26 @@
       font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
       font-weight: 700;
     }
-    &__techStack {
+    &__nav {
       display: flex;
-      justify-content: center;
-      padding-bottom: f.rem(24);
-      & span {
-        & button {
-          & img {
-            width: 2.2em;
-            height: 2.2em;
-          }
-        }
+      gap: f.rem(18);
+      padding: calc(m.$viewportMarginTopBottom / 3) 0 calc(m.$viewportMarginTopBottom / 2) 0;
+      & button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: f.rem(3);
+        max-height: f.rem(45);
+        padding: f.rem(10) f.rem(14);
+        border-radius: f.rem(6);
+        cursor: pointer;
+        font-size: f.rem(12);
+        font-weight: 600;
+        letter-spacing: f.rem(0.7);
+        text-transform: uppercase;
+        white-space: nowrap;
+        background-color: var(--elemBackgroundSecondary);
+        color: var(--fontSecondary);
       }
     }
     &__information {

@@ -15,7 +15,7 @@ const ProjectDetails = ({ projectDetail, setProjectDetail, stateIndex }: Project
   } | null => {
     switch (stateIndex) {
       case 0:
-        return { extended: <EcommerceExtendedInfo />, summary: <EcommerceAbridgedInfo /> };
+        return { extended: <EcommerceExtendedInfo setProjectDetail={setProjectDetail} />, summary: <EcommerceAbridgedInfo setProjectDetail={setProjectDetail} /> };
       default:
         return null;
     }
