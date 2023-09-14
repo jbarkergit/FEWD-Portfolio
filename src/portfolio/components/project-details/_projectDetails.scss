@@ -2,16 +2,52 @@
 @use '../../portfolioStyles' as m;
 
 .projectDetails {
-  display: flex;
-  padding: m.$viewportMarginTopBottom calc(m.$viewportMarginRightLeft * 2) 0 m.$viewportMarginRightLeft;
-  &__projectOverview {
-    width: 100%;
-    & h2 {
-    }
-    & pre {
-      width: clamp(45ch, 100%, 120ch);
-      font-size: clamp(f.rem(12), f.rem(10) + 1vw, f.rem(16));
+  padding: m.$viewportMarginTopBottom calc(m.$viewportMarginRightLeft * 2) m.$viewportMarginTopBottom m.$viewportMarginRightLeft;
+  &__projectOverview,
+  &__projectSummary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h2 {
+      font-size: clamp(f.rem(16), f.rem(18) + 1vw, f.rem(24));
       font-weight: 500;
+    }
+    h3 {
+      width: 65ch;
+      padding-bottom: f.rem(24);
+      font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
+      font-weight: 700;
+    }
+    &__techStack {
+      display: flex;
+      justify-content: center;
+      padding-bottom: f.rem(24);
+      & span {
+        & button {
+          & img {
+            width: 2.2em;
+            height: 2.2em;
+          }
+        }
+      }
+    }
+    &__information {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      p {
+        width: clamp(45ch, 100%, 65ch);
+        padding-bottom: f.rem(12);
+        font-size: f.rem(16);
+        font-weight: 400;
+        line-height: 1.4rem;
+        & span {
+          font-weight: 800;
+          letter-spacing: f.rem(1.2);
+          line-height: 1.2rem;
+          text-transform: uppercase;
+        }
+      }
     }
   }
 }

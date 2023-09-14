@@ -2,7 +2,7 @@ const EcommerceExtendedInfo = (): JSX.Element => {
   return (
     <article className='projectDetails__projectOverview'>
       <h2>Ecommerce Project Overview</h2>
-      <h3>Key Technologies: HTML, CSS, SASS, JavaScript, TypeScript, Vite, Vitest, ESLint, Prettier, React, React Router DOM</h3>
+      <div className='projectDetails__projectSummary__techStackIcons'></div>
       <p>
         This eCommerce project was developed with the primary goal of establishing a solid foundation in building dynamic web applications. Through iterative
         processes, I successfully achieved this objective without relying on third-party libraries to enforce stronger problem solving and critical thinking
