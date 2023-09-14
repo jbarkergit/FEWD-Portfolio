@@ -33,14 +33,14 @@ const PortFooter = ({ stateIndex, projectDetail, setProjectDetail }: ProjectNavP
               </svg>
             </button>
           ) : (
-            <span className='portfoliofooterigation__unavailable'>this project is unavailable</span>
+            <span className='projectUnavailable'>this project is unavailable</span>
           )}
         </section>
         <section className='portFooter__nav__left'>
           {useProjectInformation()?.extended ? (
             <button onClick={() => setProjectDetail('projectOverview')}>Project Overview</button>
           ) : (
-            <span className='portfoliofooterigation__unavailable'>this project is unavailable</span>
+            <span className='projectUnavailable'>this project is unavailable</span>
           )}
           {useProjectInformation()?.summary ? <button onClick={() => setProjectDetail('projectSummary')}>Project Summary</button> : null}
           {useProjectInformation()?.demoLink ? (
