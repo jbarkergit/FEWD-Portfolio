@@ -26,7 +26,9 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 body {
-  font: 400 100% / 1.25 'Plus Jakarta Sans', 'PT Sans';
+  font:
+    400 100% / 1.25 'Plus Jakarta Sans',
+    'PT Sans';
 }
 h1 {
   font-size: clamp(f.rem(22), f.rem(34) + 1vw, f.rem(40));
@@ -89,5 +91,5 @@ pre,
 code,
 kbd,
 samp {
-  font-size: f.em(1);
+  font-size: 1em;
 }
