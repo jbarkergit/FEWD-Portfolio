@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PortHeader from '../components/navigation/header/PortHeader';
 import MainContent from '../components/main/MainContent';
 import PortFooter from '../components/navigation/footer/PortFooter';
@@ -9,9 +9,12 @@ const Portfolio = (): JSX.Element => {
   const [stateIndex, setStateIndex] = useState<number>(0);
   const [contactForm, setContactForm] = useState<boolean>(false);
   const [projectDetail, setProjectDetail] = useState<string>('');
+  const [projectDetailOpen, setProjectDetailOpen] = useState<boolean>(false);
+
+  useEffect(() => (projectDetail !== '' ? setProjectDetailOpen(true) : setProjectDetailOpen(false)), [projectDetail]);
 
   return (
-    <div id='portfolio'>
+    <div id='portfolio' style={projectDetailOpen ? { height: 'auto' } : { height: '100vh' }}>
       <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} contactForm={contactForm} setContactForm={setContactForm} />
       <ProjectDetails projectDetail={projectDetail} setProjectDetail={setProjectDetail} stateIndex={stateIndex} />
       <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} projectDetail={projectDetail} />
