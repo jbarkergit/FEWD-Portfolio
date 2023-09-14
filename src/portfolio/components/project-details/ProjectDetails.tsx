@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import EcommerceExtendedInfo from '../../assets/production-data/EcommerceExtendedInfo';
+import EcommerceAbridgedInfo from '../../assets/production-data/EcommerceAbridgedInfo';
 
 type ProjectDetailsType = {
   projectDetail: string;
@@ -8,6 +9,17 @@ type ProjectDetailsType = {
 };
 
 const ProjectDetails = ({ projectDetail, setProjectDetail, stateIndex }: ProjectDetailsType) => {
+  const useProjectInfo = () => {
+    switch (stateIndex) {
+      case 0:
+        return { extended: EcommerceExtendedInfo, summary: EcommerceAbridgedInfo };
+      case 1:
+        return { extended: EcommerceExtendedInfo, summary: EcommerceAbridgedInfo };
+      default:
+        null;
+    }
+  };
+
   if (projectDetail !== '')
     return (
       <section className='projectDetails'>
@@ -21,13 +33,13 @@ const ProjectDetails = ({ projectDetail, setProjectDetail, stateIndex }: Project
         {projectDetail === 'projectOverview' ? (
           <article className='projectDetails__projectOverview'>
             <h2>Project Overview</h2>
-            <pre>{EcommerceExtendedInfo}</pre>
+            <pre>{useProjectInfo()?.extended}</pre>
           </article>
         ) : null}
         {projectDetail === 'projectSummary' ? (
           <article className='projectDetails__projectSummary'>
             <h2>Project Summary</h2>
-            <pre>{EcommerceExtendedInfo}</pre>
+            <pre>{useProjectInfo()?.summary}</pre>
           </article>
         ) : null}
       </section>

@@ -4,4 +4,14 @@
 .projectDetails {
   display: flex;
   padding: m.$viewportMarginTopBottom calc(m.$viewportMarginRightLeft * 2) 0 m.$viewportMarginRightLeft;
+  &__projectOverview {
+    width: 100%;
+    & h2 {
+    }
+    & pre {
+      width: clamp(45ch, 100%, 120ch);
+      font-size: clamp(f.rem(12), f.rem(10) + 1vw, f.rem(16));
+      font-weight: 500;
+    }
+  }
 }
