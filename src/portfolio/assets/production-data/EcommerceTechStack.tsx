@@ -1,33 +1,71 @@
-import { useRef, useState, RefObject, useEffect } from 'react';
+import { useRef, useState, RefObject, useEffect, useCallback } from 'react';
 import TechStack from './TechStack';
 
 const EcommerceTechStack = () => {
-  //Spread every instance of techButton reference into empty array on mount
-  const techButton = useRef<HTMLButtonElement>(null);
-  const [arrayOfTechButtons, setArrayOfTechButtons] = useState<RefObject<HTMLButtonElement>[]>([]);
-  useEffect(() => setArrayOfTechButtons([...arrayOfTechButtons, techButton]), []);
+  //Push every instance of techButtonRef into empty array on mount
+  const arrayOfTechButtons = useRef<HTMLButtonElement[]>([]);
+
+  const techButtonRef = useCallback((reference: HTMLButtonElement) => {
+    if (reference && !arrayOfTechButtons.current.includes(reference)) arrayOfTechButtons.current.push(reference);
+  }, []);
 
   //State for useTechStack hook
   const [techName, setTechName] = useState<string>('');
-  const [description, setTechDescription] = useState<string>('');
-  const [previousActiveTechButton, setPreviousActiveTechButton] = useState<RefObject<HTMLButtonElement>>();
+  const [techDescription, setTechDescription] = useState<string>('');
+  const [previousActiveTechButton, setPreviousActiveTechButton] = useState<HTMLButtonElement>();
 
-  //Compare target.id to TechStack array of objects until it finds a match, set data
-  const useTechStack = (event: PointerEvent): void => {
-    const target = event.target as HTMLButtonElement;
-    const getTechStackId = TechStack.find((techObject) => techObject.id === target.id)!;
-    setTechName(getTechStackId.name);
-    setTechDescription(getTechStackId.description);
+  //Tooltip Reference
+  const techStackTooltipRef = useRef<HTMLDivElement>(null);
 
-    const getTechButtonFromArray = arrayOfTechButtons.find((techButton) => techButton.current?.id === target.id)!;
-    setPreviousActiveTechButton(getTechButtonFromArray);
-    getTechButtonFromArray.current?.setAttribute('data-status', 'true');
-    if (previousActiveTechButton) previousActiveTechButton.current?.setAttribute('data-status', 'false');
-  };
+  useEffect(() => {
+    const userPointerEnter = (e: PointerEvent) => {
+      const target = e.target as HTMLButtonElement;
+
+      //Compare target.id to TechStack array of objects until it finds a match, set data
+      const getTechStackId = TechStack.find((techObject) => techObject.id === target.id)!;
+      setTechName(getTechStackId.name);
+      setTechDescription(getTechStackId.description);
+
+      //Toggle tooltip visibility
+      techStackTooltipRef.current?.setAttribute('data-status', 'active');
+
+      //Set data-attr for previously active and currently active TechStack buttons
+      const getTechButtonFromArray = arrayOfTechButtons.current?.find((techButton) => techButton.id === target.id)!;
+      setPreviousActiveTechButton(getTechButtonFromArray);
+      getTechButtonFromArray.setAttribute('data-status', 'active');
+      if (previousActiveTechButton) previousActiveTechButton.setAttribute('data-status', 'false');
+    };
+
+    const userPointerLeave = () => techStackTooltipRef.current?.setAttribute('data-status', 'false');
+
+    arrayOfTechButtons.current?.forEach((button) => button.addEventListener('pointerover', userPointerEnter));
+    arrayOfTechButtons.current?.forEach((button) => button.addEventListener('pointerleave', userPointerLeave));
+
+    return () => {
+      arrayOfTechButtons.current?.forEach((button) => button.removeEventListener('pointerover', userPointerEnter));
+      arrayOfTechButtons.current?.forEach((button) => button.removeEventListener('pointerleave', userPointerLeave));
+    };
+  }, [arrayOfTechButtons.current]);
+
+  //Attach pointer x,y coordinates to techStackTooltipRef
+  useEffect(() => {
+    const getPointerPos = (e: PointerEvent) => {
+      techStackTooltipRef.current!.style.top = `${e.clientY}px`;
+      techStackTooltipRef.current!.style.left = `${e.clientX}px`;
+    };
+
+    document.addEventListener('pointermove', getPointerPos);
+    return () => document.addEventListener('pointermove', getPointerPos);
+  }, []);
+
   return (
     <section className='projectDetails__projectSummary__techStack'>
+      <div className='techStackTooltip' ref={techStackTooltipRef} data-status='false'>
+        <span>{techName}</span>
+        <span>{techDescription}</span>
+      </div>
       <span>
-        <button id='nodejs' aria-label='Node.js Runtime Environment' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='nodejs' aria-label='Node.js Runtime Environment' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 292'>
             <defs>
               <path
@@ -77,7 +115,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='npm' aria-label='Node Package Manager' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='npm' aria-label='Node Package Manager' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 165'>
             <path
               fill='#C12127'
@@ -86,7 +124,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='eslint' aria-label='ESLint' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='eslint' aria-label='ESLint' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
             <path
               fill='#4b32c3'
@@ -96,7 +134,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='prettier' aria-label='prettier' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='prettier' aria-label='prettier' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 439 512'>
             <path
               fill='#ffffff'
@@ -105,7 +143,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='html' aria-label='HyperText Markup Language' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='html' aria-label='HyperText Markup Language' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
             <path fill='#e44f26' d='M5.902 27.201L3.655 2h24.69l-2.25 25.197L15.985 30L5.902 27.201z'></path>
             <path fill='#f1662a' d='m16 27.858l8.17-2.265l1.922-21.532H16v23.797z'></path>
@@ -119,7 +157,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='css' aria-label='Cascading Style Sheets' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='css' aria-label='Cascading Style Sheets' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'>
             <path fill='#1572B6' d='M18.814 114.123L8.76 1.352h110.48l-10.064 112.754l-45.243 12.543l-45.119-12.526z'></path>
             <path fill='#33A9DC' d='m64.001 117.062l36.559-10.136l8.601-96.354h-45.16v106.49z'></path>
@@ -133,7 +171,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='sass' aria-label='Syntactically Awesome Stylesheet Preprocessor' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='sass' aria-label='Syntactically Awesome Stylesheet Preprocessor' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
             <path
               fill='#cd6799'
@@ -142,7 +180,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='javascript' aria-label='JavaScript' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='javascript' aria-label='JavaScript' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
             <path
               fill='#ffffff'
@@ -151,7 +189,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='typescript' aria-label='TypeScript' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='typescript' aria-label='TypeScript' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
             <path
               fill='#007acc'
@@ -160,7 +198,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='vite' aria-label='Vite' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='vite' aria-label='Vite' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 257'>
             <defs>
               <linearGradient id='logosVitejs0' x1='-.828%' x2='57.636%' y1='7.652%' y2='78.411%'>
@@ -183,7 +221,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='vitest' aria-label='Vitest' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='vitest' aria-label='Vitest' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
             <path
               fill='#fcc72b'
@@ -199,7 +237,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='reacttestinglibrary' aria-label='React Testing Library' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='reacttestinglibrary' aria-label='React Testing Library' data-status='false' ref={techButtonRef}>
           <picture>
             <img
               src='src/portfolio/assets/production-data/react-testing-lib-logo.png'
@@ -212,7 +250,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='react' aria-label='React' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='react' aria-label='React' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 228'>
             <path
               fill='#00D8FF'
@@ -221,7 +259,7 @@ const EcommerceTechStack = () => {
         </button>
       </span>
       <span>
-        <button id='reactrouterdom' aria-label='React Router Dom' data-status='false' onClick={() => useTechStack} ref={techButton}>
+        <button id='reactrouterdom' aria-label='React Router Dom' data-status='false' ref={techButtonRef}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'>
             <path
               fill='#F44250'
