@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import EcommerceTechStack from './EcommerceTechStack';
+import EcommerceTechStack from '../tech-stack/EcommerceTechStack';
 
 type EcommerceProjectInfoType = {
   setProjectDetail: Dispatch<SetStateAction<string>>;

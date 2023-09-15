@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
-import EcommerceExtendedInfo from '../../assets/production-data/EcommerceExtendedInfo';
-import EcommerceAbridgedInfo from '../../assets/production-data/EcommerceAbridgedInfo';
+import EcommerceExtendedInfo from './information/EcommerceExtendedInfo';
+import EcommerceAbridgedInfo from './information/EcommerceAbridgedInfo';
 
 type ProjectDetailsType = {
   projectDetail: string;
