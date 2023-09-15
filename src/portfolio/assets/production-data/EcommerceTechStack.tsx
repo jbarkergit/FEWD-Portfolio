@@ -9,33 +9,21 @@ const EcommerceTechStack = () => {
     if (reference && !arrayOfTechButtons.current.includes(reference)) arrayOfTechButtons.current.push(reference);
   }, []);
 
-  //State for useTechStack hook
+  //Tooltip Ref & State
+  const techStackTooltipRef = useRef<HTMLDivElement>(null);
   const [techName, setTechName] = useState<string>('');
   const [techDescription, setTechDescription] = useState<string>('');
-  const [previousActiveTechButton, setPreviousActiveTechButton] = useState<HTMLButtonElement>();
-
-  //Tooltip Reference
-  const techStackTooltipRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    //Compare target.id to TechStack array of objects until it finds a match, set data
     const userPointerEnter = (e: PointerEvent) => {
-      const target = e.target as HTMLButtonElement;
-
-      //Compare target.id to TechStack array of objects until it finds a match, set data
-      const getTechStackId = TechStack.find((techObject) => techObject.id === target.id)!;
+      const getTechStackId = TechStack.find((techObject) => techObject.id === (e.target as HTMLButtonElement).id)!;
       setTechName(getTechStackId.name);
       setTechDescription(getTechStackId.description);
-
-      //Toggle tooltip visibility
-      techStackTooltipRef.current?.setAttribute('data-status', 'active');
-
-      //Set data-attr for previously active and currently active TechStack buttons
-      const getTechButtonFromArray = arrayOfTechButtons.current?.find((techButton) => techButton.id === target.id)!;
-      setPreviousActiveTechButton(getTechButtonFromArray);
-      getTechButtonFromArray.setAttribute('data-status', 'active');
-      if (previousActiveTechButton) previousActiveTechButton.setAttribute('data-status', 'false');
+      techStackTooltipRef.current?.setAttribute('data-status', 'active'); //Enable tooltip visibility
     };
 
+    //Disable tooltip visibility
     const userPointerLeave = () => techStackTooltipRef.current?.setAttribute('data-status', 'false');
 
     arrayOfTechButtons.current?.forEach((button) => button.addEventListener('pointerover', userPointerEnter));
