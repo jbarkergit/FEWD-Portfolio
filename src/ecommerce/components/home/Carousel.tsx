@@ -99,38 +99,38 @@ const Carousel = (): JSX.Element => {
   }, []);
 
   return (
-    <section className="carousel">
-      <hgroup className="carousel__heading">
-        <h2>
-          Audio solutions for <span className="highlight">dynamic</span> environments
-        </h2>
+    <section className='carousel'>
+      <hgroup className='carousel__heading'>
         <h3>Looking for something specific? We've got you covered.</h3>
+        <h2>
+          Audio solutions for <span className='highlight'>dynamic</span> environments
+        </h2>
       </hgroup>
-      <div className="carousel__track" ref={targetElementRef} style={state.style}>
+      <div className='carousel__track' ref={targetElementRef} style={state.style}>
         <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg"
-          carouselAlt="Slide A"
-          navCat="Speakers"
+          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg'
+          carouselAlt='Slide A'
+          navCat='Speakers'
         />
         <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg"
-          carouselAlt="Slide C"
-          navCat="Mixing Consoles"
+          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg'
+          carouselAlt='Slide C'
+          navCat='Mixing Consoles'
         />
         <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg"
-          carouselAlt="Slide E"
-          navCat="Headphones"
+          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg'
+          carouselAlt='Slide E'
+          navCat='Headphones'
         />
         <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg"
-          carouselAlt="Slide F"
-          navCat="Dacs & Amps"
+          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg'
+          carouselAlt='Slide F'
+          navCat='Dacs & Amps'
         />
         <CarouselProps
-          carouselImg="src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg"
-          carouselAlt="Slide G"
-          navCat="Microphones"
+          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg'
+          carouselAlt='Slide G'
+          navCat='Microphones'
         />
       </div>
     </section>

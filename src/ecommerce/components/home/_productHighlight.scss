@@ -4,7 +4,7 @@
 .productHighlight {
   display: grid;
   place-items: center;
-  padding: f.rem(50) f.rem(50) f.rem(150) f.rem(50);
+  padding: calc(f.rem(50) + f.rem(32)) f.rem(50) f.rem(150) f.rem(50);
   background-color: var(--elemBackgroundPrimary);
   @media (width <= 530px) {
     display: flex;
@@ -15,7 +15,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    padding: f.rem(25) f.rem(50);
+    padding: f.rem(25) 0 calc(f.rem(15) * 3) 0;
     color: var(--textPrimary);
     font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
     font-weight: 800;
@@ -103,7 +103,6 @@
         display: flex;
         align-items: flex-end;
         z-index: 3;
-        padding: 0 f.rem(15);
         border-radius: f.rem(26);
         @include m.productPhoto;
         &::before {
@@ -133,7 +132,6 @@
           object-fit: scale-down;
           object-position: center bottom;
           mix-blend-mode: darken;
-          padding: 0 0 10% 0;
         }
       }
       & aside {

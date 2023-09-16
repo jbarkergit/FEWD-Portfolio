@@ -13,7 +13,7 @@
   }
   &__heading {
     width: 100%;
-    padding: f.rem(25) f.rem(50);
+    padding: f.rem(25) 0 f.rem(15) f.rem(50);
     & h2 {
       color: var(--textPrimary);
       font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));

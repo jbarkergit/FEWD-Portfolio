@@ -36,16 +36,7 @@
       padding-bottom: f.rem(50);
       padding: f.rem(25) f.rem(50);
     }
-    & h3 {
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: f.rem(2.2);
-      @media (width >= 467px) {
-        font-size: clamp(f.rem(20), f.rem(20) + 1vw, f.rem(26));
-      }
-    }
     & h2 {
-      margin-bottom: f.rem(10);
       font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
       font-weight: 800;
       line-height: 115%;
@@ -55,8 +46,8 @@
       }
     }
     & p {
-      width: clamp(20ch, 100%, 65ch);
-      padding: 0 f.rem(6);
+      width: clamp(20ch, 100%, 55ch);
+      padding: 0 f.rem(4);
       font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
       font-weight: 500;
     }
