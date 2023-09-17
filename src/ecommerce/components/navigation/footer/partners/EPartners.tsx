@@ -1,6 +1,6 @@
 const EPartners = () => {
   return (
-    <>
+    <div className='eFooter__partners__track'>
       <picture>
         <img
           src='src/ecommerce/assets/production-images/compressed-company-logos/Apos.png'
@@ -131,7 +131,7 @@ const EPartners = () => {
           fetchpriority='low'
         />
       </picture>
-    </>
+    </div>
   );
 };
 export default EPartners;
