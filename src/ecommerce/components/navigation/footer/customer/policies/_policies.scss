@@ -1,0 +1,36 @@
+@use '../../../../../ecommerceStyles' as m;
+@use '../../../../../../sass/util/functions' as f;
+
+.eFooter__customer__policies {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50%;
+  margin: 0;
+  z-index: 2;
+  & support {
+    & ul {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: f.rem(6);
+      & li {
+        width: 100%;
+        text-align: center;
+        & h2 {
+          font-size: clamp(f.rem(16), f.rem(24) + 1vw, f.rem(22));
+          font-weight: 700;
+          color: var(--fontSecondary);
+          white-space: nowrap;
+        }
+        & a h3 {
+          font-size: f.rem(16);
+          font-weight: 500;
+          color: var(--fontSecondary);
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}

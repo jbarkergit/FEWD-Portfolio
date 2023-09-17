@@ -1,26 +1,42 @@
-import ENewsletter from './ENewsletter';
-import EServices from './EServices';
-import ESupport from './ESupport';
+import ENewsletter from './customer/newsletter/ENewsletter';
+import EPartners from './partners/EPartners';
+import EServices from './customer/policies/EServices';
+import ESupport from './customer/policies/ESupport';
+import PaymentTypes from './additions/payment-types/PaymentTypes';
+import Address from './additions/address/Address';
+import SocialMedia from './additions/social-media/SocialMedia';
 
 const EFooter = (): JSX.Element => {
   return (
-    <footer className="eFooter">
-      <section className="eFooter__newsCta">
-        <h2>Let's stay in touch</h2>
-        <ENewsletter />
+    <footer className='eFooter'>
+      <section className='eFooter__partners'>
+        <EPartners />
       </section>
-      <nav className="eFooter__kit">
-        <section className="eFooter__kit__customerSupport">
-          <ESupport />
+
+      <section className='eFooter__customer'>
+        <section className='eFooter__customer__marketing'>
+          <ENewsletter />
         </section>
-        <section className="eFooter__kit__customerSupport">
-          <EServices />
+        <nav className='eFooter__customer__policies'>
+          <section className='eFooter__customer__policies__support'>
+            <ESupport />
+          </section>
+          <section className='eFooter__customer__policies__support'>
+            <EServices />
+          </section>
+        </nav>
+      </section>
+
+      <section className='eFooter__additions'>
+        <section className='eFooter__additions__paymentTypes'>
+          <PaymentTypes />
         </section>
-      </nav>
-      <section className="eFooter__company">
-        <small>2023 Dynamic Audio</small>
-        <address>1800 DAUDIO</address>
-        <address>support@dynamicaudio.com</address>
+        <section className='eFooter__additions__address'>
+          <Address />
+        </section>
+        <section className='eFooter__additions__socialMedia'>
+          <SocialMedia />
+        </section>
       </section>
     </footer>
   );

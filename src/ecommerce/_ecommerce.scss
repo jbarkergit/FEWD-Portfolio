@@ -1,27 +1,35 @@
-//mixins, global vars
+//Mixins, Global Vars
 @forward '../ecommerce/ecommerceStyles';
 
-//features
+//Features
 @forward '../ecommerce/components/features/product-filters/productFilters';
 @forward '../ecommerce/components/features/search-bar/searchBar';
 @forward '../ecommerce/components/features/shopping-cart/shoppingCartModal';
 @forward '../ecommerce/components/features/shared/modal';
 
-//home
+//Home
 @forward '../ecommerce/components/home/carousel';
 @forward '../ecommerce/components/home/infographic';
 @forward '../ecommerce/components/home/productHighlight';
 @forward '../ecommerce/components/home/sideBySide';
 
-//navigation
+//Header
 @forward '../ecommerce/components/navigation/header/ecoHeader';
-@forward '../ecommerce/components/navigation/footer/ecoFooter';
 
-//product
+//Footer
+@forward '../ecommerce/components/navigation/footer/ecoFooter';
+@forward '../ecommerce/components/navigation/footer/additions/address/address';
+@forward '../ecommerce/components/navigation/footer/additions/payment-types/paymentTypes';
+@forward '../ecommerce/components/navigation/footer/additions/social-media/socialMedia';
+@forward '../ecommerce/components/navigation/footer/customer/newsletter/newsletter';
+@forward '../ecommerce/components/navigation/footer/customer/policies/policies';
+@forward '../ecommerce/components/navigation/footer/partners/partners';
+
+//Product
 @forward '../ecommerce/components/product/product-page/productPages';
 @forward '../ecommerce/components/product/product-provider/productProvider';
 @forward '../ecommerce/components/product/product-recommenders/productReccomenders.scss';
 
-//user-account
+//User Account
 @forward '../ecommerce/components/features/user-account/shared/stylesheets/userAccountModal';
 @forward '../ecommerce/components/features/user-account/user-account-dashboard/userAccountDashboard';

@@ -1,0 +1,19 @@
+@use '../../../../../ecommerceStyles' as m;
+@use '../../../../../../sass/util/functions' as f;
+
+.eFooter__additions__address {
+  display: flex;
+  gap: f.rem(24);
+  & small,
+  & address {
+    width: fit-content;
+    font-size: f.rem(14);
+    font-weight: 500;
+    color: var(--fontSecondary);
+    letter-spacing: f.rem(1.2);
+    white-space: nowrap;
+    @media (width <= 660px) {
+      margin: 0 auto;
+    }
+  }
+}

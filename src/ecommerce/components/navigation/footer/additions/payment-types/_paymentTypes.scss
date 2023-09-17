@@ -1,0 +1,10 @@
+@use '../../../../../ecommerceStyles' as m;
+@use '../../../../../../sass/util/functions' as f;
+
+.eFooter__additions__paymentTypes {
+  display: flex;
+  gap: f.rem(24);
+  & img,
+  svg {
+  }
+}
