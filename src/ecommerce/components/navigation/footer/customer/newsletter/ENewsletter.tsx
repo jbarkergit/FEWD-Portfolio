@@ -1,8 +1,8 @@
 const ENewsletter = (): JSX.Element => {
   return (
     <>
-      <h2>Let's stay in touch</h2>
       <form className='newsletter'>
+        <h2>Let's stay in touch</h2>
         <div className='newsletter__field'>
           <label>
             <input type='email' name='email' placeholder='Enter email address...' />
@@ -14,8 +14,11 @@ const ENewsletter = (): JSX.Element => {
           </button>
         </div>
         <div className='newsletter__notice'>
-          <span>Privacy notice: for demo purposes only.</span>
-          <p>This input field is not connected to live marketing services. Any information provided will not be stored externally nor locally.</p>
+          <span>Privacy Notice</span>
+          <p>
+            For demo purposes solely. This input field is not connected to live marketing services. Any information provided will not be stored externally nor
+            locally.
+          </p>
         </div>
       </form>
     </>
