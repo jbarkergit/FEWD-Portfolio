@@ -3,8 +3,8 @@ const EPartners = () => {
     <>
       <picture>
         <img
-          src='src/ecommerce/assets/production-images/compressed-company-logos/audientLogo.svg'
-          alt=''
+          src='src/ecommerce/assets/production-images/compressed-company-logos/Apos.png'
+          alt='Apos'
           draggable='false'
           loading='lazy'
           decoding='async'
@@ -13,8 +13,8 @@ const EPartners = () => {
       </picture>
       <picture>
         <img
-          src='src/ecommerce/assets/production-images/compressed-company-logos/beyerdynamicLogo.svg'
-          alt=''
+          src='src/ecommerce/assets/production-images/compressed-company-logos/Audient.svg'
+          alt='Audient'
           draggable='false'
           loading='lazy'
           decoding='async'
@@ -23,8 +23,8 @@ const EPartners = () => {
       </picture>
       <picture>
         <img
-          src='src/ecommerce/assets/production-images/compressed-company-logos/neumannLogo.webp'
-          alt=''
+          src='src/ecommerce/assets/production-images/compressed-company-logos/Beyerdynamic.svg'
+          alt='Beyerdynamic'
           draggable='false'
           loading='lazy'
           decoding='async'
@@ -33,8 +33,8 @@ const EPartners = () => {
       </picture>
       <picture>
         <img
-          src='src/ecommerce/assets/production-images/compressed-company-logos/shureLogo.svg'
-          alt=''
+          src='src/ecommerce/assets/production-images/compressed-company-logos/ElectroVoice.png'
+          alt='Electro Voice'
           draggable='false'
           loading='lazy'
           decoding='async'
@@ -43,8 +43,8 @@ const EPartners = () => {
       </picture>
       <picture>
         <img
-          src='src/ecommerce/assets/production-images/compressed-company-logos/solidStateLogicLogo.svg'
-          alt=''
+          src='src/ecommerce/assets/production-images/compressed-company-logos/Evo.svg'
+          alt='Evo'
           draggable='false'
           loading='lazy'
           decoding='async'
@@ -52,13 +52,84 @@ const EPartners = () => {
         />
       </picture>
       <picture>
-        <img src='' alt='' draggable='false' loading='lazy' decoding='async' fetchpriority='low' />
+        <img
+          src='src/ecommerce/assets/production-images/compressed-company-logos/Focusrite.png'
+          alt='Focusrite'
+          draggable='false'
+          loading='lazy'
+          decoding='async'
+          fetchpriority='low'
+        />
       </picture>
       <picture>
-        <img src='' alt='' draggable='false' loading='lazy' decoding='async' fetchpriority='low' />
+        <img
+          src='src/ecommerce/assets/production-images/compressed-company-logos/Neumann.webp'
+          alt='Neumann'
+          draggable='false'
+          loading='lazy'
+          decoding='async'
+          fetchpriority='low'
+        />
       </picture>
       <picture>
-        <img src='' alt='' draggable='false' loading='lazy' decoding='async' fetchpriority='low' />
+        <img
+          src='src/ecommerce/assets/production-images/compressed-company-logos/Rode.svg'
+          alt='Rode'
+          draggable='false'
+          loading='lazy'
+          decoding='async'
+          fetchpriority='low'
+        />
+      </picture>
+      <picture>
+        <img
+          src='src/ecommerce/assets/production-images/compressed-company-logos/Schiit.png'
+          alt='Schiit'
+          draggable='false'
+          loading='lazy'
+          decoding='async'
+          fetchpriority='low'
+        />
+      </picture>
+      <picture>
+        <img
+          src='src/ecommerce/assets/production-images/compressed-company-logos/Shure.svg'
+          alt='Shure'
+          draggable='false'
+          loading='lazy'
+          decoding='async'
+          fetchpriority='low'
+        />
+      </picture>
+      <picture>
+        <img
+          src='src/ecommerce/assets/production-images/compressed-company-logos/SMSL.png'
+          alt='SMSL'
+          draggable='false'
+          loading='lazy'
+          decoding='async'
+          fetchpriority='low'
+        />
+      </picture>
+      <picture>
+        <img
+          src='src/ecommerce/assets/production-images/compressed-company-logos/SolidStateLogic.svg'
+          alt='Solid State Logic'
+          draggable='false'
+          loading='lazy'
+          decoding='async'
+          fetchpriority='low'
+        />
+      </picture>
+      <picture>
+        <img
+          src='src/ecommerce/assets/production-images/compressed-company-logos/UAudio.png'
+          alt='UAudio'
+          draggable='false'
+          loading='lazy'
+          decoding='async'
+          fetchpriority='low'
+        />
       </picture>
     </>
   );
