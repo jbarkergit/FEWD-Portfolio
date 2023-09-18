@@ -105,11 +105,16 @@
       bottom: 7%;
       left: 0;
       display: flex;
-      flex-wrap: wrap;
-      gap: f.rem(50);
-      height: auto;
+      gap: f.rem(25);
+      max-height: f.rem(30);
       padding: 0 8.335%;
-      & img {
+      & picture:nth-of-type(3) img,
+      & picture:nth-of-type(5) img,
+      & picture:nth-of-type(8) img,
+      & picture:nth-of-type(13) img {
+        filter: invert(100%);
+      }
+      & picture img {
         width: clamp(f.rem(50), f.rem(150), f.rem(200));
         @media (width <= 660px) {
           width: f.rem(100);
