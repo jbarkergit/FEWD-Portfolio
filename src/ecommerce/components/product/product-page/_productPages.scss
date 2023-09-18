@@ -3,7 +3,7 @@
 
 .skuPage {
   position: relative;
-  padding: 0 8.335%;
+  padding: 0 10.335% f.rem(50) 10.335%;
   margin-bottom: f.rem(104);
   @media (width <= 1530px) {
     flex-wrap: wrap;
