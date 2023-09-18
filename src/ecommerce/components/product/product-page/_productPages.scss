@@ -29,8 +29,8 @@
     }
     &__display {
       width: calc(100% / 2);
-      border-top-left-radius: f.rem(24);
-      border-bottom-left-radius: f.rem(24);
+      border-radius: f.rem(24);
+      border-radius: f.rem(24);
       background-color: var(--elemBackgroundPrimary);
       @media (width <= 1050px) {
         width: 100%;
@@ -49,8 +49,8 @@
     }
     &__imgSelection {
       width: 20%;
-      border-top-right-radius: f.rem(24);
-      border-bottom-right-radius: f.rem(24);
+      border-top-left-radius: f.rem(24);
+      border-bottom-left-radius: f.rem(24);
       background-color: var(--elemBackgroundPrimary);
       @media (width <= 1050px) {
         width: 100%;

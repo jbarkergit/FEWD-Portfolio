@@ -17,13 +17,13 @@ const ProductDetailPage = (): JSX.Element => {
   return (
     <>
       <Header />
-      <div className="skuPage">
-        <main className="skuPage__grid">
+      <div className='skuPage'>
+        <main className='skuPage__grid'>
+          {findProduct.images!.length > 1 ? <ProductPageImgSelect findProduct={findProduct} setActiveDisplay={setActiveDisplay} /> : null}
           <ProductPageImgDisplay findProduct={findProduct} activeDisplay={activeDisplay} setActiveDisplay={setActiveDisplay} />
           <ProductPageDetails findProduct={findProduct} />
-          {findProduct.images!.length > 1 ? <ProductPageImgSelect findProduct={findProduct} setActiveDisplay={setActiveDisplay} /> : null}
         </main>
-        <div className="skuPage__recommendations">
+        <div className='skuPage__recommendations'>
           <MoreLikeThis findProduct={findProduct} />
         </div>
       </div>
