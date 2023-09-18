@@ -103,13 +103,13 @@
         display: flex;
         align-items: flex-end;
         z-index: 3;
-        border-radius: f.rem(26);
+        border-radius: f.rem(18);
         @include m.productPhoto;
         &::before {
           content: '';
           position: absolute;
           inset: 0;
-          border-radius: f.rem(26);
+          border-radius: f.rem(18);
           background-color: var(--gradientMono);
           opacity: 0.8;
         }
@@ -141,7 +141,7 @@
         & video {
           aspect-ratio: inherit;
           border: 2px solid white;
-          border-radius: f.rem(26);
+          border-radius: f.rem(18);
           object-fit: cover;
           filter: brightness(0) invert(1) blur(4px);
         }

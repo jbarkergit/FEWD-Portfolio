@@ -4,14 +4,14 @@
 .productTabs {
   display: flex;
   min-height: f.rem(500);
-  border-radius: f.rem(24);
+  border-radius: f.rem(18);
   background-color: var(--elemBackgroundPrimary);
   &__tabs {
     display: flex;
     flex-direction: column;
     width: f.rem(150);
-    border-bottom-left-radius: f.rem(24);
-    border-top-left-radius: f.rem(24);
+    border-bottom-left-radius: f.rem(18);
+    border-top-left-radius: f.rem(18);
     background-color: var(--elemBackgroundSecondary);
     &__tab {
       display: flex;
@@ -20,7 +20,7 @@
       height: f.rem(50);
       padding-left: f.rem(24);
       &:first-child {
-        border-top-left-radius: f.rem(24);
+        border-top-left-radius: f.rem(18);
       }
       &:hover {
         background-color: hsl(0, 0%, 25%);
