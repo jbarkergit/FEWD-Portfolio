@@ -14,9 +14,9 @@ const ENewsletter = (): JSX.Element => {
           </button>
         </div>
         <div className='newsletter__notice'>
-          <span>Privacy Notice</span>
           <p>
-            For demo purposes solely. This input field is not connected to live marketing services. Any information provided will not be stored externally nor
+            <span>Privacy Notice: </span>
+            For demo purposes, solely cosmetic. This input field is not tied to live marketing services. Any information provided will not be stored externally nor
             locally.
           </p>
         </div>
