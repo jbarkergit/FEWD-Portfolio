@@ -11,7 +11,14 @@ export const ProductDatabase: ProductType[] = [
     price: 899.0,
     category: 'interfaces',
     productshowcase: false,
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-1.webp'],
+    images: [
+      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-1.jpg',
+      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-2.jpg',
+      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-3.jpg',
+      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-4.jpg',
+      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-5.jpg',
+      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-6.jpg',
+    ],
   },
   {
     sku: 'focusrite-scarlett-solo-3rd-gen',
