@@ -10,20 +10,37 @@ const EFooter = (): JSX.Element => {
   return (
     <footer className='eFooter'>
       <section className='eFooter__partners'>
+        <div className='eFooter__splitter'>
+          <span className='eFooter__splitter__line' />
+          <h2>Partners</h2>
+          <span className='eFooter__splitter__line' />
+        </div>
         <EPartners />
       </section>
 
       <section className='eFooter__customer'>
         <section className='eFooter__customer__marketing'>
+          <div className='eFooter__splitter'>
+            <span className='eFooter__splitter__line' />
+            <h2>News & discounts</h2>
+            <span className='eFooter__splitter__line' />
+          </div>
           <ENewsletter />
         </section>
         <nav className='eFooter__customer__policies'>
-          <section className='eFooter__customer__policies__support'>
-            <ESupport />
-          </section>
-          <section className='eFooter__customer__policies__support'>
-            <EServices />
-          </section>
+          <div className='eFooter__splitter'>
+            <span className='eFooter__splitter__line' />
+            <h2>Customer Support</h2>
+            <span className='eFooter__splitter__line' />
+          </div>
+          <div className='eFooter__customer__policies__wrapper'>
+            <section className='eFooter__customer__policies__wrapper__support'>
+              <ESupport />
+            </section>
+            <section className='eFooter__customer__policies__wrapper__support'>
+              <EServices />
+            </section>
+          </div>
         </nav>
       </section>
 
