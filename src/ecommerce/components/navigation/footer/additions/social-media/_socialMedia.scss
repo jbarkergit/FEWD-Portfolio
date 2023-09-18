@@ -1,0 +1,9 @@
+@use '../../../../../ecommerceStyles' as m;
+@use '../../../../../../sass/util/functions' as f;
+
+.eFooter__additions__socialMedia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: f.rem(25);
+}
