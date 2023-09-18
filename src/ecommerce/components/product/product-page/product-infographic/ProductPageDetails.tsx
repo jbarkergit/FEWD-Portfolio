@@ -1,5 +1,5 @@
-import useCart from '../../../hooks/useCart';
-import { ProductType } from '../../../types/ProductType';
+import useCart from '../../../../hooks/useCart';
+import { ProductType } from '../../../../types/ProductType';
 
 type PropType = {
   findProduct: ProductType;
