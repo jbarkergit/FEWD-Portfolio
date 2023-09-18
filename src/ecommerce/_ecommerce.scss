@@ -26,8 +26,9 @@
 @forward '../ecommerce/components/navigation/footer/partners/partners';
 
 //Product
-@forward '../ecommerce/components/product/product-page/productPages';
 @forward '../ecommerce/components/product/product-provider/productProvider';
+@forward '../ecommerce/components/product/product-page/productPages';
+@forward '../ecommerce/components/product/product-page/productPageTabs';
 @forward '../ecommerce/components/product/product-recommenders/productReccomenders.scss';
 
 //User Account

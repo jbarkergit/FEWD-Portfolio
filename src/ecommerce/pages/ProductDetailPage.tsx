@@ -7,6 +7,7 @@ import { ProductType } from '../types/ProductType';
 import ProductPageDetails from '../components/product/product-page/ProductPageDetails';
 import ProductPageImgDisplay from '../components/product/product-page/ProductPageImgDisplay';
 import ProductPageImgSelect from '../components/product/product-page/ProductPageImgSelect';
+import ProductPageTabs from '../components/product/product-page/tabs/ProductPageTabs';
 import MoreLikeThis from '../components/product/product-recommenders/MoreLikeThis';
 
 const ProductDetailPage = (): JSX.Element => {
@@ -23,6 +24,7 @@ const ProductDetailPage = (): JSX.Element => {
           <ProductPageImgDisplay findProduct={findProduct} activeDisplay={activeDisplay} setActiveDisplay={setActiveDisplay} />
           <ProductPageDetails findProduct={findProduct} />
         </main>
+        <ProductPageTabs />
         <div className='skuPage__recommendations'>
           <MoreLikeThis findProduct={findProduct} />
         </div>
