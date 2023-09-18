@@ -5,9 +5,6 @@ const ESupport = (): JSX.Element => {
     <>
       <ul>
         <li>
-          <h2>Support</h2>
-        </li>
-        <li>
           <Link to=''>
             <h3>My Account</h3>
           </Link>
@@ -40,11 +37,6 @@ const ESupport = (): JSX.Element => {
         <li>
           <Link to=''>
             <h3>Returns</h3>
-          </Link>
-        </li>
-        <li>
-          <Link to=''>
-            <h3>Payment</h3>
           </Link>
         </li>
         <li>
