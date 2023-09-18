@@ -205,7 +205,7 @@
       z-index: 3;
       @include m.ecoBtn;
       @include m.ecoBtnDark;
-      width: 86%;
+      width: 90%;
       font-size: clamp(f.rem(12), f.rem(9) + 1vw, f.rem(15));
       font-weight: 500;
       letter-spacing: var(--navigationLetterSpacing);
