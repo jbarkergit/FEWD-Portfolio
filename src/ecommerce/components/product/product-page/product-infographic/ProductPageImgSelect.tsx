@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ProductType } from '../../../../types/ProductType';
+import { v4 as uuidv4 } from 'uuid';
 
 type PropType = {
   findProduct: ProductType;
@@ -12,11 +13,11 @@ const ProductPageImgSelect = ({ findProduct, setActiveDisplay }: PropType) => {
   return (
     <aside className='skuPage__grid__imgSelection'>
       <div className='skuPage__grid__imgSelection__images'>
-        {images!.map((image, index) => (
-          <picture key={image} onClick={() => setActiveDisplay(index)}>
-            <img src={image} alt={company + unit} role='presentation' decoding='async' fetchpriority='high' />
-          </picture>
-        ))}
+        <picture>
+          {images!.map((image, index) => (
+            <img src={image} alt={company + unit} role='presentation' decoding='async' fetchpriority='high' onClick={() => setActiveDisplay(index)} key={uuidv4()} />
+          ))}
+        </picture>
       </div>
     </aside>
   );
