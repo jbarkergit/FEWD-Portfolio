@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ProductType } from '../../../../types/ProductType';
 
 type PropType = {
@@ -11,14 +11,49 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
   const { company, images, unit } = findProduct;
   const lastSlide = findProduct.images!.length - 1;
 
+  //Hover effect
+  const primaryImg = useRef<HTMLImageElement>(null);
+  const magnifier = useRef<HTMLDivElement>(null);
+
+  const [cursorEntered, setCursorEntered] = useState<boolean>(false);
+  const [cursorCoordinates, setCursorCoordinates] = useState({ x: 0, y: 0 });
+
+  const userPointerEnter = (): void => setCursorEntered(true);
+  const userPointerMove = (e: PointerEvent) => (cursorEntered ? setCursorCoordinates({ x: e.offsetX, y: e.offsetY }) : null);
+  const userPointerLeave = (): void => setCursorEntered(false);
+
+  useEffect(() => {
+    primaryImg.current?.addEventListener('pointerenter', userPointerEnter);
+    primaryImg.current?.addEventListener('pointermove', userPointerMove);
+    primaryImg.current?.addEventListener('pointerleave', userPointerLeave);
+
+    return () => {
+      primaryImg.current?.removeEventListener('pointerenter', userPointerEnter);
+      primaryImg.current?.removeEventListener('pointermove', userPointerMove);
+      primaryImg.current?.removeEventListener('pointerleave', userPointerLeave);
+    };
+  }, [primaryImg.current]);
+
+  useEffect(() => {
+    if (magnifier.current) magnifier.current.style.backgroundPosition = `-${cursorCoordinates.x}px -${cursorCoordinates.y}px`;
+  }, [cursorCoordinates]);
+
   return (
     <div className='skuPage__grid__display'>
       <div className='skuPage__grid__display__heading'>
         {company} {unit}
       </div>
-      <picture>
-        <img src={images![activeDisplay]} alt={company + unit} loading='lazy' role='presentation' decoding='async' fetchpriority='high' />
-      </picture>
+
+      <div className='skuPage__grid__display__primaryImg'>
+        <div
+          className='skuPage__grid__display__primaryImg__magnifier'
+          ref={magnifier}
+          style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)`, backgroundImage: `url(${images![activeDisplay]}` }}
+        />
+        <picture className='skuPage__grid__display__primaryImg--picture'>
+          <img src={images![activeDisplay]} alt={company + unit} loading='lazy' role='presentation' decoding='async' fetchpriority='high' ref={primaryImg} />
+        </picture>
+      </div>
       {images!.length === 1 ? null : (
         <div className='skuPage__grid__display__nav'>
           <button onClick={() => (activeDisplay === 0 ? setActiveDisplay(lastSlide) : setActiveDisplay(activeDisplay - 1))}>
