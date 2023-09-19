@@ -37,6 +37,7 @@
   align-items: center;
   width: 20%;
   z-index: 1;
+  border-right: var(--borderChunky);
   border-top-left-radius: f.rem(18);
   border-bottom-left-radius: f.rem(18);
   overflow: hidden;
