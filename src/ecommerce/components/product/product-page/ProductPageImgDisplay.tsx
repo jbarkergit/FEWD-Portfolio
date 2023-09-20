@@ -11,29 +11,50 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
   const { company, images, unit } = findProduct;
   const lastSlide = findProduct.images!.length - 1;
 
-  //Hover effect
+  //Magnifier feature
   const primaryImg = useRef<HTMLImageElement>(null);
   const magnifier = useRef<HTMLDivElement>(null);
-
-  const [cursorEntered, setCursorEntered] = useState<boolean>(false);
+  const [magnifierEnabled, setMagnifierEnabled] = useState<boolean>(false);
   const [cursorCoordinates, setCursorCoordinates] = useState({ x: 0, y: 0 });
-
-  const userPointerUp = (): void => setCursorEntered(true);
-  const userPointerMove = (e: PointerEvent) => setCursorCoordinates({ x: e.offsetX, y: e.offsetY });
-  const userPointerLeave = (): void => setCursorEntered(false);
+  const [magnification, setMagnification] = useState<number>(1);
 
   useEffect(() => {
+    const userPointerUp = (): void => (magnifierEnabled ? setMagnifierEnabled(false) : setMagnifierEnabled(true));
+
+    const userWheel = (e: WheelEvent): void => {
+      if (magnifierEnabled) {
+        e.preventDefault(); //Prevent page scroll
+        //Increment & Decrement magnification by prefered notch on scroll direction
+        const minMaxMagnification = { min: 1, max: 2 }; //Range
+        const clampedMagnification = Math.min(minMaxMagnification.max, Math.max(minMaxMagnification.min, magnification + (e.deltaY < 0 ? 0.2 : -0.2)));
+        setMagnification(clampedMagnification);
+      }
+    };
+
+    const userPointerMove = (e: PointerEvent) => (magnifierEnabled ? setCursorCoordinates({ x: e.offsetX, y: e.offsetY }) : null);
+    const userPointerLeave = (): void => setMagnifierEnabled(false);
+
     primaryImg.current?.addEventListener('pointerup', userPointerUp);
+    primaryImg.current?.addEventListener('wheel', userWheel);
     primaryImg.current?.addEventListener('pointermove', userPointerMove);
     primaryImg.current?.addEventListener('pointerleave', userPointerLeave);
 
     return () => {
       primaryImg.current?.removeEventListener('pointerup', userPointerUp);
+      primaryImg.current?.removeEventListener('wheel', userWheel);
       primaryImg.current?.removeEventListener('pointermove', userPointerMove);
       primaryImg.current?.removeEventListener('pointerleave', userPointerLeave);
     };
-  }, [primaryImg.current]);
+  }, [primaryImg.current, magnifierEnabled, magnification]);
 
+  //Set magnifier background-size
+  useEffect(() => {
+    if (magnifier.current && primaryImg.current) {
+      magnifier.current.style.backgroundSize = `${primaryImg.current.width * magnification}px ${primaryImg.current.height * magnification}px`;
+    }
+  }, [magnifierEnabled, magnification]);
+
+  //Set magnifier background position
   useEffect(() => {
     if (magnifier.current) magnifier.current.style.backgroundPosition = `-${cursorCoordinates.x}px -${cursorCoordinates.y}px`;
   }, [cursorCoordinates]);
@@ -45,15 +66,24 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
       </div>
 
       <div className='skuPage__grid__display__primaryImg'>
-        {cursorEntered ? (
-          <div
-            className='skuPage__grid__display__primaryImg__magnifier'
-            ref={magnifier}
-            style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)`, backgroundImage: `url(${images![activeDisplay]}` }}
-          />
-        ) : null}
+        {/* {magnifierEnabled ? ( */}
+        <div
+          className='skuPage__grid__display__primaryImg__magnifier'
+          ref={magnifier}
+          style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)`, backgroundImage: `url(${images![activeDisplay]}` }}
+        />
+        {/* // ) : null} */}
         <picture className='skuPage__grid__display__primaryImg--picture'>
-          <img src={images![activeDisplay]} alt={company + unit} loading='lazy' role='presentation' decoding='async' fetchpriority='high' ref={primaryImg} />
+          <img
+            src={images![activeDisplay]}
+            alt={company + unit}
+            loading='lazy'
+            role='presentation'
+            decoding='async'
+            fetchpriority='high'
+            ref={primaryImg}
+            style={magnifierEnabled ? { cursor: 'none' } : { cursor: 'zoom-in' }}
+          />
         </picture>
       </div>
       {images!.length === 1 ? null : (
