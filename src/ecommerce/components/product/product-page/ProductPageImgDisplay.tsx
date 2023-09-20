@@ -64,24 +64,19 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
     };
   }, [primaryImg.current, magnifierEnabled, magnification]);
 
-  //Set magnifier background position based on cursor coordinates
+  //Set magnifier background position based on cursor coordinates and magnification
   useEffect(() => {
-    const userPointerMove = (): void => {
-      if (magnifierEnabled && magnifier.current) {
-        const backgroundPosX = cursorCoordinates.x * magnification - magnifier.current.offsetWidth / 2;
-        const backgroundPosY = cursorCoordinates.y * magnification - magnifier.current.offsetHeight / 2;
-        setMagnifierBackgroundPos({ x: backgroundPosX, y: backgroundPosY });
-      }
-    };
-
-    primaryImgContainer.current?.addEventListener('pointermove', userPointerMove);
-    return () => primaryImgContainer.current?.removeEventListener('pointermove', userPointerMove);
-  }, [primaryImgContainer.current, cursorCoordinates, magnification]);
+    if (magnifierEnabled && magnifier.current) {
+      const backgroundPosX = cursorCoordinates.x * magnification - magnifier.current.offsetWidth / 2;
+      const backgroundPosY = cursorCoordinates.y * magnification - magnifier.current.offsetHeight / 2;
+      setMagnifierBackgroundPos({ x: backgroundPosX, y: backgroundPosY });
+    }
+  }, [magnifier.current, cursorCoordinates, magnifierBackgroundSize]);
 
   //Set magnifier background-size based on scaling
   useEffect((): void => {
     if (primaryImg.current) setMagnifierBackgroundSize(`${primaryImg.current.width * magnification}px ${primaryImg.current.height * magnification}px`);
-  }, [primaryImg.current, magnifierEnabled, magnification]);
+  }, [primaryImg.current, magnification]);
 
   return (
     <div className='skuPage__grid__display'>
