@@ -18,17 +18,17 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
   const [cursorEntered, setCursorEntered] = useState<boolean>(false);
   const [cursorCoordinates, setCursorCoordinates] = useState({ x: 0, y: 0 });
 
-  const userPointerEnter = (): void => setCursorEntered(true);
-  const userPointerMove = (e: PointerEvent) => (cursorEntered ? setCursorCoordinates({ x: e.offsetX, y: e.offsetY }) : null);
+  const userPointerUp = (): void => setCursorEntered(true);
+  const userPointerMove = (e: PointerEvent) => setCursorCoordinates({ x: e.offsetX, y: e.offsetY });
   const userPointerLeave = (): void => setCursorEntered(false);
 
   useEffect(() => {
-    primaryImg.current?.addEventListener('pointerenter', userPointerEnter);
+    primaryImg.current?.addEventListener('pointerup', userPointerUp);
     primaryImg.current?.addEventListener('pointermove', userPointerMove);
     primaryImg.current?.addEventListener('pointerleave', userPointerLeave);
 
     return () => {
-      primaryImg.current?.removeEventListener('pointerenter', userPointerEnter);
+      primaryImg.current?.removeEventListener('pointerup', userPointerUp);
       primaryImg.current?.removeEventListener('pointermove', userPointerMove);
       primaryImg.current?.removeEventListener('pointerleave', userPointerLeave);
     };
@@ -45,11 +45,13 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
       </div>
 
       <div className='skuPage__grid__display__primaryImg'>
-        <div
-          className='skuPage__grid__display__primaryImg__magnifier'
-          ref={magnifier}
-          style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)`, backgroundImage: `url(${images![activeDisplay]}` }}
-        />
+        {cursorEntered ? (
+          <div
+            className='skuPage__grid__display__primaryImg__magnifier'
+            ref={magnifier}
+            style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)`, backgroundImage: `url(${images![activeDisplay]}` }}
+          />
+        ) : null}
         <picture className='skuPage__grid__display__primaryImg--picture'>
           <img src={images![activeDisplay]} alt={company + unit} loading='lazy' role='presentation' decoding='async' fetchpriority='high' ref={primaryImg} />
         </picture>

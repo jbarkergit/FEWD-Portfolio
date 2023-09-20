@@ -53,9 +53,8 @@
     opacity: 0;
   }
   &__images {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(65vh / 4.5), 1fr));
     width: 100%;
     height: 100%;
     overflow: auto;
@@ -70,6 +69,7 @@
     }
     & picture {
       height: auto;
+      overflow: hidden;
       @include m.productPhoto;
       @media (width <= 1530px) {
         max-height: f.rem(200);
@@ -83,7 +83,7 @@
         flex: 1 0 calc(100%);
       }
       & img {
-        max-height: calc(65vh / 4.5);
+        // max-height: calc(65vh / 4.5);
         object-fit: scale-down;
         mix-blend-mode: darken;
         pointer-events: all;
