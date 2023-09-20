@@ -83,7 +83,6 @@
         flex: 1 0 calc(100%);
       }
       & img {
-        // max-height: calc(65vh / 4.5);
         object-fit: scale-down;
         mix-blend-mode: darken;
         pointer-events: all;
@@ -135,6 +134,7 @@
       z-index: 4;
       border-radius: f.rem(18);
       background-repeat: no-repeat;
+      object-fit: scale-down;
       overflow: hidden;
       pointer-events: none;
     }

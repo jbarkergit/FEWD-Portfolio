@@ -8,30 +8,38 @@ type PropType = {
 };
 
 const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }: PropType) => {
-  const { company, images, unit } = findProduct;
-  const lastSlide = findProduct.images!.length - 1;
+  const { company, images, unit } = findProduct; //Prop drilled logic to find product based on useParams
+  const lastSlide = findProduct.images!.length - 1; //Index of last img in product img array
 
   //Magnifier feature
   const primaryImg = useRef<HTMLImageElement>(null);
   const magnifier = useRef<HTMLDivElement>(null);
   const [magnifierEnabled, setMagnifierEnabled] = useState<boolean>(false);
-  const [cursorCoordinates, setCursorCoordinates] = useState({ x: 0, y: 0 });
+  const [cursorCoordinates, setCursorCoordinates] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [magnifierBackgroundSize, setMagnifierBackgroundSize] = useState<string>('');
+  const [magnifierBackgroundPos, setMagnifierBackgroundPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [magnification, setMagnification] = useState<number>(1);
 
   useEffect(() => {
+    //Enable magnifier
     const userPointerUp = (): void => (magnifierEnabled ? setMagnifierEnabled(false) : setMagnifierEnabled(true));
 
+    //Increment & decrement magnification by prefered scaling ratio via scroll direction
     const userWheel = (e: WheelEvent): void => {
       if (magnifierEnabled) {
         e.preventDefault(); //Prevent page scroll
-        //Increment & Decrement magnification by prefered notch on scroll direction
-        const minMaxMagnification = { min: 1, max: 2 }; //Range
-        const clampedMagnification = Math.min(minMaxMagnification.max, Math.max(minMaxMagnification.min, magnification + (e.deltaY < 0 ? 0.2 : -0.2)));
+        const minMaxMagnify = { min: 1, max: 1.6 }; //Range (legibility variable)
+        const clampedMagnification = Math.min(minMaxMagnify.max, Math.max(minMaxMagnify.min, magnification + (e.deltaY < 0 ? 0.2 : -0.2)));
         setMagnification(clampedMagnification);
       }
     };
 
-    const userPointerMove = (e: PointerEvent) => (magnifierEnabled ? setCursorCoordinates({ x: e.offsetX, y: e.offsetY }) : null);
+    //Set cursor coordinates
+    const userPointerMove = (e: PointerEvent) => {
+      if (magnifierEnabled && primaryImg.current && magnifier.current) setCursorCoordinates({ x: e.offsetX, y: e.offsetY });
+    };
+
+    //Disable magnifier
     const userPointerLeave = (): void => setMagnifierEnabled(false);
 
     primaryImg.current?.addEventListener('pointerup', userPointerUp);
@@ -47,17 +55,25 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
     };
   }, [primaryImg.current, magnifierEnabled, magnification]);
 
-  //Set magnifier background-size
+  //Set magnifier background position based on cursor coordinates
   useEffect(() => {
-    if (magnifier.current && primaryImg.current) {
-      magnifier.current.style.backgroundSize = `${primaryImg.current.width * magnification}px ${primaryImg.current.height * magnification}px`;
-    }
-  }, [magnifierEnabled, magnification]);
+    const userPointerMove = () => {
+      if (magnifierEnabled && magnifier.current) {
+        const backgroundPosX = cursorCoordinates.x - magnifier.current.offsetWidth / 2;
+        const backgroundPosY = cursorCoordinates.y - magnifier.current.offsetHeight / 2;
+        setMagnifierBackgroundPos({ x: backgroundPosX, y: backgroundPosY });
+      }
+    };
 
-  //Set magnifier background position
-  useEffect(() => {
-    if (magnifier.current) magnifier.current.style.backgroundPosition = `-${cursorCoordinates.x}px -${cursorCoordinates.y}px`;
+    primaryImg.current?.addEventListener('pointermove', userPointerMove);
+    return () => primaryImg.current?.addEventListener('pointermove', userPointerMove);
   }, [cursorCoordinates]);
+
+  //Set magnifier background-size based on scaling
+  useEffect(() => {
+    if (magnifier.current && primaryImg.current)
+      setMagnifierBackgroundSize(`${primaryImg.current.width * magnification}px ${primaryImg.current.height * magnification}px`);
+  }, [magnifierEnabled, magnification]);
 
   return (
     <div className='skuPage__grid__display'>
@@ -66,13 +82,18 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
       </div>
 
       <div className='skuPage__grid__display__primaryImg'>
-        {/* {magnifierEnabled ? ( */}
-        <div
-          className='skuPage__grid__display__primaryImg__magnifier'
-          ref={magnifier}
-          style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)`, backgroundImage: `url(${images![activeDisplay]}` }}
-        />
-        {/* // ) : null} */}
+        {magnifierEnabled ? (
+          <div
+            className='skuPage__grid__display__primaryImg__magnifier'
+            ref={magnifier}
+            style={{
+              transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)`,
+              backgroundImage: `url(${images![activeDisplay]}`,
+              backgroundSize: `${magnifierBackgroundSize}`,
+              backgroundPosition: `-${magnifierBackgroundPos.x}px -${magnifierBackgroundPos.y}px`,
+            }}
+          />
+        ) : null}
         <picture className='skuPage__grid__display__primaryImg--picture'>
           <img
             src={images![activeDisplay]}
