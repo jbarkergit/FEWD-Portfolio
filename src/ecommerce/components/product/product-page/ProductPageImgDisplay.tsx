@@ -16,35 +16,39 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
     primaryImg = useRef<HTMLImageElement>(null),
     magnifier = useRef<HTMLDivElement>(null);
 
-  const [magnifierEnabled, setMagnifierEnabled] = useState<boolean>(false);
-  const [cursorCoordinates, setCursorCoordinates] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [magnifierBackgroundSize, setMagnifierBackgroundSize] = useState<string>('');
-  const [magnifierBackgroundPos, setMagnifierBackgroundPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [magnification, setMagnification] = useState<number>(1);
+  const [magnifierEnabled, setMagnifierEnabled] = useState<boolean>(false),
+    [cursorCoordinates, setCursorCoordinates] = useState<{ x: number; y: number }>({ x: 0, y: 0 }),
+    [magnifierBackgroundSize, setMagnifierBackgroundSize] = useState<string>(''),
+    [magnifierBackgroundPos, setMagnifierBackgroundPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 }),
+    [magnification, setMagnification] = useState<number>(1);
 
   useEffect(() => {
     //Enable magnifier, set initial cursor pos
     const userPointerUp = (e: PointerEvent): void => {
-      magnifierEnabled ? setMagnifierEnabled(false) : setMagnifierEnabled(true);
-      setCursorCoordinates({ x: e.offsetX, y: e.offsetY });
+      if (magnifierEnabled) {
+        setMagnifierEnabled(false);
+      } else {
+        setCursorCoordinates({ x: e.offsetX, y: e.offsetY });
+        setMagnifierEnabled(true);
+      }
     };
 
     //Increment & decrement magnification by prefered scaling ratio via scroll direction
     const userWheel = (e: WheelEvent): void => {
       if (magnifierEnabled) {
         e.preventDefault(); //Prevent page scroll
-        const minMaxMagnify = { min: 1, max: 1.6 }; //Range (legibility variable)
+        const minMaxMagnify = { min: 1, max: 1.6 }; //Range setter
         const clampedMagnification = Math.min(minMaxMagnify.max, Math.max(minMaxMagnify.min, magnification + (e.deltaY < 0 ? 0.2 : -0.2)));
         setMagnification(clampedMagnification);
       }
     };
 
-    //Set cursor coordinates
+    //Set cursor coordinates on pointer move
     const userPointerMove = (e: PointerEvent) => {
-      if (magnifierEnabled && primaryImg.current && magnifier.current) setCursorCoordinates({ x: e.offsetX, y: e.offsetY });
+      if (magnifierEnabled) setCursorCoordinates({ x: e.offsetX, y: e.offsetY });
     };
 
-    //Disable magnifier
+    //Disable magnifier on pointer leave
     const userPointerLeave = (): void => setMagnifierEnabled(false);
 
     primaryImg.current?.addEventListener('pointerup', userPointerUp);
