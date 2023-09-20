@@ -83,6 +83,7 @@
         flex: 1 0 calc(100%);
       }
       & img {
+        padding: 15px 0;
         object-fit: scale-down;
         mix-blend-mode: darken;
         pointer-events: all;
@@ -118,6 +119,7 @@
       & img {
         width: inherit;
         height: inherit;
+        padding: 100px 0;
         object-fit: scale-down;
         mix-blend-mode: darken;
         pointer-events: all;
@@ -132,6 +134,7 @@
       width: f.rem(200);
       height: f.rem(200);
       z-index: 4;
+      padding: 100px 0;
       border-radius: f.rem(18);
       background-repeat: no-repeat;
       object-fit: scale-down;
