@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { ProductType } from '../../../../types/ProductType';
+import { ProductType } from '../../../types/ProductType';
 
 type PropType = {
   findProduct: ProductType;
