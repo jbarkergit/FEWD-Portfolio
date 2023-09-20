@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../components/navigation/header/Header';
-import Footer from '../components/navigation/footer/eFooter';
+import Footer from '../components/navigation/footer/EFooter';
 import { ProductDatabase } from '../assets/production-data/product-db/ProductDatabase';
 import { ProductType } from '../types/ProductType';
 import ProductPageDetails from '../components/product/product-page/product-infographic/ProductPageDetails';
 import ProductPageImgDisplay from '../components/product/product-page/product-infographic/ProductPageImgDisplay';
 import ProductPageImgSelect from '../components/product/product-page/product-infographic/ProductPageImgSelect';
-import ProductPageTabs from '../components/product/product-page/tabs/ProductPageTabs';
 import MoreLikeThis from '../components/product/product-recommenders/MoreLikeThis';
 
 const ProductDetailPage = (): JSX.Element => {
@@ -24,7 +23,6 @@ const ProductDetailPage = (): JSX.Element => {
           <ProductPageImgDisplay findProduct={findProduct} activeDisplay={activeDisplay} setActiveDisplay={setActiveDisplay} />
           <ProductPageDetails findProduct={findProduct} />
         </main>
-        <ProductPageTabs />
         <div className='skuPage__recommendations'>
           <MoreLikeThis findProduct={findProduct} />
         </div>

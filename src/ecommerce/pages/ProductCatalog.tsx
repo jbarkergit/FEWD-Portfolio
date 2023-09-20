@@ -1,5 +1,5 @@
 import Header from '../components/navigation/header/Header';
-import Footer from '../components/navigation/footer/eFooter';
+import Footer from '../components/navigation/footer/EFooter';
 import ProductProvider from '../components/product/product-provider/ProductProvider';
 import ProductFilterConstructor from '../components/features/product-filters/ProductFilterConstructor';
 import useUniqueData from '../hooks/useUniqueData';
@@ -11,10 +11,10 @@ const ProductCatalog = (): JSX.Element => {
   return (
     <>
       <Header />
-      <section className="browseProduct">
-        <section className="productFilters">
+      <section className='browseProduct'>
+        <section className='productFilters'>
           {useBreadCrumbs()}
-          <div className="productFilters__panel">
+          <div className='productFilters__panel'>
             <ConditionallyRenderedProductFilters />
             <CompanyFilter />
           </div>
