@@ -141,6 +141,19 @@
       overflow: hidden;
       pointer-events: none;
       image-rendering: crisp-edges;
+      &::after {
+        content: 'SCROLL TO ZOOM';
+        position: absolute;
+        right: 1.5%;
+        top: 15%;
+        z-index: 20;
+        width: 20px;
+        height: 100%;
+        writing-mode: vertical-rl;
+        text-wrap: nowrap;
+        font-weight: 400;
+        color: white;
+      }
     }
   }
   &__heading {
