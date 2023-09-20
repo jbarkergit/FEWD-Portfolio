@@ -73,9 +73,8 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
 
   //Set magnifier background-size based on scaling
   useEffect(() => {
-    if (magnifier.current && primaryImg.current)
-      setMagnifierBackgroundSize(`${primaryImg.current.width * magnification}px ${primaryImg.current.height * magnification}px`);
-  }, [magnifierEnabled, magnification]);
+    if (primaryImg.current) setMagnifierBackgroundSize(`${primaryImg.current.width * magnification}px ${primaryImg.current.height * magnification}px`);
+  }, [primaryImg.current, magnifierEnabled, magnification]);
 
   return (
     <div className='skuPage__grid__display'>
