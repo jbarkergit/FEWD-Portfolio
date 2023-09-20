@@ -11,9 +11,11 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
   const { company, images, unit } = findProduct; //Prop drilled logic to find product based on useParams
   const lastSlide = findProduct.images!.length - 1; //Index of last img in product img array
 
-  //Magnifier feature
-  const primaryImg = useRef<HTMLImageElement>(null);
-  const magnifier = useRef<HTMLDivElement>(null);
+  //FEATURE: Magnifier
+  const primaryImgContainer = useRef<HTMLDivElement>(null),
+    primaryImg = useRef<HTMLImageElement>(null),
+    magnifier = useRef<HTMLDivElement>(null);
+
   const [magnifierEnabled, setMagnifierEnabled] = useState<boolean>(false);
   const [cursorCoordinates, setCursorCoordinates] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [magnifierBackgroundSize, setMagnifierBackgroundSize] = useState<string>('');
@@ -21,8 +23,11 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
   const [magnification, setMagnification] = useState<number>(1);
 
   useEffect(() => {
-    //Enable magnifier
-    const userPointerUp = (): void => (magnifierEnabled ? setMagnifierEnabled(false) : setMagnifierEnabled(true));
+    //Enable magnifier, set initial cursor pos
+    const userPointerUp = (e: PointerEvent): void => {
+      magnifierEnabled ? setMagnifierEnabled(false) : setMagnifierEnabled(true);
+      setCursorCoordinates({ x: e.offsetX, y: e.offsetY });
+    };
 
     //Increment & decrement magnification by prefered scaling ratio via scroll direction
     const userWheel = (e: WheelEvent): void => {
@@ -57,22 +62,20 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
 
   //Set magnifier background position based on cursor coordinates
   useEffect(() => {
-    const userPointerMove = () => {
+    const userPointerMove = (): void => {
       if (magnifierEnabled && magnifier.current) {
-        const backgroundPosX = cursorCoordinates.x - magnifier.current.offsetWidth / 2;
-        const backgroundPosY = cursorCoordinates.y - magnifier.current.offsetHeight / 2;
-        const backgroundPos = { x: backgroundPosX, y: backgroundPosY };
-
-        if (backgroundPos !== magnifierBackgroundPos) setMagnifierBackgroundPos(backgroundPos);
+        const backgroundPosX = cursorCoordinates.x * magnification - magnifier.current.offsetWidth / 2;
+        const backgroundPosY = cursorCoordinates.y * magnification - magnifier.current.offsetHeight / 2;
+        setMagnifierBackgroundPos({ x: backgroundPosX, y: backgroundPosY });
       }
     };
 
-    primaryImg.current?.addEventListener('pointermove', userPointerMove);
-    return () => primaryImg.current?.removeEventListener('pointermove', userPointerMove);
-  }, [cursorCoordinates]);
+    primaryImgContainer.current?.addEventListener('pointermove', userPointerMove);
+    return () => primaryImgContainer.current?.removeEventListener('pointermove', userPointerMove);
+  }, [primaryImgContainer.current, cursorCoordinates, magnification]);
 
   //Set magnifier background-size based on scaling
-  useEffect(() => {
+  useEffect((): void => {
     if (primaryImg.current) setMagnifierBackgroundSize(`${primaryImg.current.width * magnification}px ${primaryImg.current.height * magnification}px`);
   }, [primaryImg.current, magnifierEnabled, magnification]);
 
@@ -82,7 +85,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
         {company} {unit}
       </div>
 
-      <div className='skuPage__grid__display__primaryImg'>
+      <div className='skuPage__grid__display__primaryImg' ref={primaryImgContainer}>
         {magnifierEnabled ? (
           <div
             className='skuPage__grid__display__primaryImg__magnifier'

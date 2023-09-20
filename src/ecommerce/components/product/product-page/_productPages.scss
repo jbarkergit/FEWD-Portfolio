@@ -137,6 +137,10 @@
       object-fit: scale-down;
       overflow: hidden;
       pointer-events: none;
+      image-rendering: crisp-edges;
+      image-rendering: -moz-crisp-edges; /* Firefox */
+      image-rendering: -o-crisp-edges; /* Opera */
+      image-rendering: -webkit-optimize-contrast; /* Webkit */
     }
   }
   &__heading {
