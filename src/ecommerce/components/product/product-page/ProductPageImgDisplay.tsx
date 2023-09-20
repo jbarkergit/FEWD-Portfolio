@@ -61,12 +61,14 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
       if (magnifierEnabled && magnifier.current) {
         const backgroundPosX = cursorCoordinates.x - magnifier.current.offsetWidth / 2;
         const backgroundPosY = cursorCoordinates.y - magnifier.current.offsetHeight / 2;
-        setMagnifierBackgroundPos({ x: backgroundPosX, y: backgroundPosY });
+        const backgroundPos = { x: backgroundPosX, y: backgroundPosY };
+
+        if (backgroundPos !== magnifierBackgroundPos) setMagnifierBackgroundPos(backgroundPos);
       }
     };
 
     primaryImg.current?.addEventListener('pointermove', userPointerMove);
-    return () => primaryImg.current?.addEventListener('pointermove', userPointerMove);
+    return () => primaryImg.current?.removeEventListener('pointermove', userPointerMove);
   }, [cursorCoordinates]);
 
   //Set magnifier background-size based on scaling
