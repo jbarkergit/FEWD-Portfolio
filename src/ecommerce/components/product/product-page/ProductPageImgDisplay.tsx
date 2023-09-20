@@ -68,14 +68,14 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
   useEffect(() => {
     if (magnifierEnabled && magnifier.current) {
       const backgroundPosX = cursorCoordinates.x * magnification - magnifier.current.offsetWidth / 2;
-      const backgroundPosY = cursorCoordinates.y * magnification - (magnifier.current.offsetHeight + 100) / 2;
+      const backgroundPosY = cursorCoordinates.y * magnification - magnifier.current.offsetHeight / 2;
       setMagnifierBackgroundPos({ x: backgroundPosX, y: backgroundPosY });
     }
   }, [magnifier.current, cursorCoordinates, magnifierBackgroundSize]);
 
   //Set magnifier background-size based on scaling
   useEffect((): void => {
-    if (primaryImg.current) setMagnifierBackgroundSize(`${primaryImg.current.width * magnification}px ${(primaryImg.current.height + 100) * magnification}px`);
+    if (primaryImg.current) setMagnifierBackgroundSize(`${primaryImg.current.width * magnification}px ${(primaryImg.current.height + 200) * magnification}px`);
   }, [primaryImg.current, magnification]);
 
   return (
