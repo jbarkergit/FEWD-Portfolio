@@ -103,6 +103,7 @@
     &__logos {
       position: absolute;
       bottom: 4%;
+      left: 0;
       display: inline-flex;
       flex-direction: row;
       height: calc(f.rem(25) * 2 + f.rem(25));
@@ -114,7 +115,7 @@
         gap: f.rem(100);
         height: 100%;
         padding-left: f.rem(100);
-        animation: 50s companyLogoSlider infinite linear;
+        animation: 80s companyLogoSlider infinite linear;
         & a {
           display: flex;
           & picture {
