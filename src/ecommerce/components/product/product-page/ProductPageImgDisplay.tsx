@@ -73,9 +73,10 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
     }
   }, [magnifier.current, cursorCoordinates, magnifierBackgroundSize]);
 
-  //Set magnifier background-size based on scaling
+  //Set magnifier background-size based on magnification, adjust for css padding
   useEffect((): void => {
-    if (primaryImg.current) setMagnifierBackgroundSize(`${primaryImg.current.width * magnification}px ${(primaryImg.current.height + 200) * magnification}px`);
+    if (primaryImg.current)
+      setMagnifierBackgroundSize(`${(primaryImg.current.width - 75) * magnification}px ${(primaryImg.current.height + 175) * magnification}px`);
   }, [primaryImg.current, magnification]);
 
   return (
