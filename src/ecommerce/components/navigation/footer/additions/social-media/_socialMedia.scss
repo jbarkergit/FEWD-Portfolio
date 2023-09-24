@@ -9,4 +9,7 @@
   & a svg:nth-child(1) {
     border-radius: f.rem(6);
   }
+  @media (width <= 1600px) {
+    justify-content: center;
+  }
 }

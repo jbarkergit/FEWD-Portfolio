@@ -9,6 +9,9 @@
   width: 50%;
   height: 100%;
   margin: 0;
+  @media (width <= 1020px) {
+    width: 100%;
+  }
 }
 
 .newsletter {

@@ -4,6 +4,12 @@
 .eFooter__additions__address {
   display: flex;
   gap: f.rem(24);
+  @media (width <= 700px) {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 auto;
+  }
   & small,
   & address {
     width: fit-content;
@@ -12,7 +18,7 @@
     color: var(--fontSecondary);
     letter-spacing: f.rem(1.2);
     white-space: nowrap;
-    @media (width <= 660px) {
+    @media (width <= 700px) {
       margin: 0 auto;
     }
   }
