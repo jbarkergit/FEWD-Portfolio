@@ -20,11 +20,6 @@
   }
   &__partners {
     grid-column: span 3;
-    &--positionShift {
-      position: relative;
-      height: calc(1.5625rem * 2 + 1.5625rem);
-      overflow: hidden;
-    }
   }
   &__customer {
     grid-column: span 3;

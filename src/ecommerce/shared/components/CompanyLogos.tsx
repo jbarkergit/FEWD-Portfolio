@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const CompanyLogos = () => {
   return (
-    <div className='infographic__information__logos__partial'>
+    <div className='companyLogos__partial'>
       <Link to='http://localhost:5173/ecommerce/Apos'>
         <picture>
           <img

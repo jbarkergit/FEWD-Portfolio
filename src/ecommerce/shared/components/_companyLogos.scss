@@ -1,0 +1,114 @@
+@use '../../../sass/util/functions' as f;
+
+.eFooter__partners__companyLogos {
+  position: relative;
+  height: calc(1.5625rem * 2 + 1.5625rem);
+  overflow: hidden;
+}
+.companyLogos {
+  position: absolute;
+  bottom: 4%;
+  left: 0;
+  display: inline-flex;
+  flex-direction: row;
+  height: calc(f.rem(25) * 2 + f.rem(25));
+  overflow: hidden;
+  &__partial {
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    gap: f.rem(100);
+    height: 100%;
+    padding-left: f.rem(100);
+    animation: 80s companyLogoSlider infinite linear;
+    & a {
+      display: flex;
+      & picture {
+        flex: 0 1 auto;
+        width: auto;
+        height: fit-content;
+        & img {
+          height: auto;
+          width: auto;
+          min-width: f.rem(90);
+          max-width: f.rem(125);
+          aspect-ratio: 6/1;
+          @media (width <= 584px) {
+            max-width: f.rem(110);
+          }
+          &:nth-of-type(2) {
+            filter: invert(100%);
+          }
+        }
+      }
+    }
+    & a:nth-of-type(1) picture img {
+      aspect-ratio: 3/1;
+      max-height: f.rem(30);
+    }
+    & a:nth-of-type(2) picture img {
+      aspect-ratio: 5/1;
+      min-width: f.rem(100);
+    }
+    & a:nth-of-type(3) picture img {
+      aspect-ratio: 1/1;
+      max-height: f.rem(25);
+    }
+    & a:nth-of-type(4) picture img {
+      aspect-ratio: 5/1;
+      min-width: f.rem(160);
+    }
+    & a:nth-of-type(5) picture img {
+      aspect-ratio: 1/1;
+      min-width: f.rem(100);
+    }
+    & a:nth-of-type(6) picture img {
+      aspect-ratio: 6/1;
+      min-width: auto;
+      max-width: f.rem(60);
+    }
+    & a:nth-of-type(7) picture img {
+      aspect-ratio: 5/1;
+      max-width: f.rem(106);
+    }
+    & a:nth-of-type(8) picture img {
+      max-width: f.rem(150);
+    }
+    & a:nth-of-type(9) picture img {
+      aspect-ratio: 4/1;
+      max-height: f.rem(22);
+    }
+    & a:nth-of-type(10) picture img {
+      aspect-ratio: 5/1;
+      max-width: f.rem(166);
+    }
+    & a:nth-of-type(11) picture img {
+      aspect-ratio: 4/1;
+      max-width: f.rem(160);
+    }
+    & a:nth-of-type(12) picture img {
+      aspect-ratio: 6/1;
+    }
+    & a:nth-of-type(13) picture img {
+      aspect-ratio: 3/1;
+    }
+    & a:nth-of-type(14) picture img {
+      aspect-ratio: 2/1;
+      max-height: f.rem(40);
+    }
+    & a:nth-of-type(4) picture img,
+    & a:nth-of-type(6) picture img,
+    & a:nth-of-type(9) picture img,
+    & a:nth-of-type(14) picture img {
+      filter: invert(100%);
+    }
+  }
+}
+@keyframes companyLogoSlider {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}

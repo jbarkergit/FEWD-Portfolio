@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import CompanyLogos from '../../../shared/components/CompanyLogos';
+import CompanyLogos from '../../shared/components/CompanyLogos';
 
 const Infographic = (): JSX.Element => {
   return (
@@ -35,7 +35,7 @@ const Infographic = (): JSX.Element => {
             </Link>
           </div>
         </div>
-        <div className='infographic__information__logos'>
+        <div className='companyLogos'>
           <CompanyLogos />
           <CompanyLogos />
         </div>

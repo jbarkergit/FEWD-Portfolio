@@ -1,6 +1,9 @@
 //Mixins, Global Vars
 @forward '../ecommerce/ecommerceStyles';
 
+//Shared
+@forward '../ecommerce/shared/components/companyLogos';
+
 //Features
 @forward '../ecommerce/components/features/product-filters/productFilters';
 @forward '../ecommerce/components/features/search-bar/searchBar';
