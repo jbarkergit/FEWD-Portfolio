@@ -3,7 +3,7 @@
 
 .eFooter__additions__socialMedia {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   gap: f.rem(25);
   & a svg:nth-child(1) {
