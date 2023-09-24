@@ -1,10 +1,10 @@
 import ENewsletter from './customer/newsletter/ENewsletter';
-import EPartners from './partners/EPartners';
 import EServices from './customer/policies/EServices';
 import ESupport from './customer/policies/ESupport';
 import PaymentTypes from './additions/payment-types/PaymentTypes';
 import Address from './additions/address/Address';
 import SocialMedia from './additions/social-media/SocialMedia';
+import CompanyLogos from '../../home/CompanyLogos';
 
 const EFooter = (): JSX.Element => {
   return (
@@ -15,7 +15,12 @@ const EFooter = (): JSX.Element => {
           <h2>Partners</h2>
           <span className='eFooter__splitter__line' />
         </div>
-        <EPartners />
+        <div className='eFooter__partners--positionShift'>
+          <div className='infographic__information__logos'>
+            <CompanyLogos />
+            <CompanyLogos />
+          </div>
+        </div>
       </section>
 
       <section className='eFooter__customer'>
