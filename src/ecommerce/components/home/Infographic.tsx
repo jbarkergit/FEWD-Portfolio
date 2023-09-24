@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import CompanyLogos from './CompanyLogos';
+import CompanyLogos from '../../../shared/components/CompanyLogos';
 
 const Infographic = (): JSX.Element => {
   return (
