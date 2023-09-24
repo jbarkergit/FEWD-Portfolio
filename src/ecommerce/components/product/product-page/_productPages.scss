@@ -5,9 +5,6 @@
   position: relative;
   padding: 0 10.335% f.rem(50) 10.335%;
   margin-bottom: f.rem(104);
-  @media (width <= 1530px) {
-    flex-wrap: wrap;
-  }
   &__grid {
     position: relative;
     display: flex;
@@ -18,15 +15,6 @@
     margin: f.rem(0) 0 f.rem(100) 0;
     @include m.productPhoto;
     box-shadow: var(--shadowSoft);
-    @media (width <= 1530px) {
-      max-height: fit-content;
-    }
-    @media (width <= 1530px) {
-      flex-wrap: wrap;
-    }
-    @media (width <= 1050px) {
-      flex-direction: column;
-    }
   }
 }
 
@@ -41,14 +29,6 @@
   border-top-left-radius: f.rem(18);
   border-bottom-left-radius: f.rem(18);
   overflow: hidden;
-  @media (width <= 1530px) {
-    flex-direction: row;
-    width: 100%;
-  }
-  @media (width <= 1050px) {
-    width: 100%;
-    border-bottom-left-radius: f.rem(18);
-  }
   &:hover + &__nav {
     opacity: 0;
   }
@@ -60,28 +40,10 @@
     overflow: auto;
     cursor: pointer;
     scrollbar-width: none;
-    @media (width <= 1530px) {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: f.rem(25);
-      padding: 0;
-      margin: f.rem(50) f.rem(10);
-    }
     & picture {
       height: auto;
       overflow: hidden;
       @include m.productPhoto;
-      @media (width <= 1530px) {
-        max-height: f.rem(200);
-        flex: 1 0 calc(25% - f.rem(25));
-        padding: 0;
-      }
-      @media (width <= 850px) {
-        flex: 1 0 calc(50% - f.rem(50));
-      }
-      @media (width <= 480px) {
-        flex: 1 0 calc(100%);
-      }
       & img {
         padding: 15px 0;
         object-fit: scale-down;
@@ -102,10 +64,6 @@
   width: calc(100% - 38%);
   height: inherit;
   overflow: hidden;
-  @media (width <= 1050px) {
-    width: 100%;
-    border-top-right-radius: f.rem(18);
-  }
   &__primaryImg {
     position: absolute;
     inset: 0;
@@ -171,9 +129,6 @@
     font-weight: 700;
     letter-spacing: f.rem(0.3);
     text-transform: capitalize;
-    @media (width <= 1100px) {
-      font-size: clamp(f.rem(16), f.rem(14) + 1vw, f.rem(20));
-    }
   }
   &__nav {
     position: absolute;
@@ -243,9 +198,6 @@
   background-color: var(--elemBackgroundSecondary);
   text-align: start;
   color: var(--fontSecondary);
-  @media (width <= 1050px) {
-    width: 100%;
-  }
   &__block {
     width: 80%;
     padding: f.rem(25) 0;
