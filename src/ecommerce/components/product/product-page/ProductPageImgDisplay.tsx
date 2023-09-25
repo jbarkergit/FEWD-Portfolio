@@ -86,22 +86,22 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
       </div>
 
       <div className='skuPage__grid__display__primaryImg' ref={primaryImgContainer}>
-        {/* {magnifierEnabled ? ( */}
-        <div
-          className='skuPage__grid__display__primaryImg__magnifier'
-          ref={magnifier}
-          style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)` }}>
-          <img
-            src={images![activeDisplay]}
-            style={{
-              width: `${magnifierBackgroundSize.width}`,
-              maxWidth: `${magnifierBackgroundSize.width}`,
-              maxHeight: `${magnifierBackgroundSize.height}`,
-              transform: `translateX(-${magnifierBackgroundPos.x}px) translateY(-${magnifierBackgroundPos.y}px)`,
-            }}
-          />
-        </div>
-        {/* ) : null} */}
+        {magnifierEnabled ? (
+          <div
+            className='skuPage__grid__display__primaryImg__magnifier'
+            ref={magnifier}
+            style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)` }}>
+            <img
+              src={images![activeDisplay]}
+              style={{
+                width: `${magnifierBackgroundSize.width}`,
+                maxWidth: `${magnifierBackgroundSize.width}`,
+                maxHeight: `${magnifierBackgroundSize.height}`,
+                transform: `translateX(-${magnifierBackgroundPos.x}px) translateY(-${magnifierBackgroundPos.y}px)`,
+              }}
+            />
+          </div>
+        ) : null}
         <picture className='skuPage__grid__display__primaryImg--picture'>
           <img
             src={images![activeDisplay]}
