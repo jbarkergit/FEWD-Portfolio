@@ -14,11 +14,11 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
   //FEATURE: Magnifier
   const primaryImgContainer = useRef<HTMLDivElement>(null),
     primaryImg = useRef<HTMLImageElement>(null),
-    magnifier = useRef<HTMLDivElement>(null);
+    magnifier = useRef<HTMLImageElement>(null);
 
   const [magnifierEnabled, setMagnifierEnabled] = useState<boolean>(false),
     [cursorCoordinates, setCursorCoordinates] = useState<{ x: number; y: number }>({ x: 0, y: 0 }),
-    [magnifierBackgroundSize, setMagnifierBackgroundSize] = useState<string>(''),
+    [magnifierBackgroundSize, setMagnifierBackgroundSize] = useState<{ width: string; height: string }>({ width: '', height: '' }),
     [magnifierBackgroundPos, setMagnifierBackgroundPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 }),
     [magnification, setMagnification] = useState<number>(1);
 
@@ -75,7 +75,8 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
 
   //Set magnifier background-size, by passes container wxh inheritance
   useEffect((): void => {
-    if (primaryImg.current) setMagnifierBackgroundSize(`${primaryImg.current.width * magnification}px ${primaryImg.current.height * magnification}px`);
+    if (primaryImg.current)
+      setMagnifierBackgroundSize({ width: `${primaryImg.current.width * magnification}px`, height: `${primaryImg.current.height * magnification}px` });
   }, [primaryImg.current, magnification]);
 
   return (
@@ -85,23 +86,26 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
       </div>
 
       <div className='skuPage__grid__display__primaryImg' ref={primaryImgContainer}>
-        {magnifierEnabled ? (
-          <div
-            className='skuPage__grid__display__primaryImg__magnifier'
-            ref={magnifier}
+        {/* {magnifierEnabled ? ( */}
+        <div
+          className='skuPage__grid__display__primaryImg__magnifier'
+          ref={magnifier}
+          style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)` }}>
+          <img
+            src={images![activeDisplay]}
             style={{
-              transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)`,
-              backgroundImage: `url(${images![activeDisplay]}`,
-              backgroundSize: `${magnifierBackgroundSize}`,
-              backgroundPosition: `-${magnifierBackgroundPos.x}px -${magnifierBackgroundPos.y}px`,
+              width: `${magnifierBackgroundSize.width}`,
+              maxWidth: `${magnifierBackgroundSize.width}`,
+              maxHeight: `${magnifierBackgroundSize.height}`,
+              transform: `translateX(-${magnifierBackgroundPos.x}px) translateY(-${magnifierBackgroundPos.y}px)`,
             }}
           />
-        ) : null}
+        </div>
+        {/* ) : null} */}
         <picture className='skuPage__grid__display__primaryImg--picture'>
           <img
             src={images![activeDisplay]}
             alt={company + unit}
-            loading='lazy'
             role='presentation'
             decoding='async'
             fetchpriority='high'

@@ -101,6 +101,8 @@
       overflow: hidden;
       pointer-events: none;
       image-rendering: crisp-edges;
+      @include m.productPhoto;
+      filter: brightness(110%);
       &::after {
         content: 'SCROLL TO ZOOM';
         position: absolute;
@@ -113,6 +115,12 @@
         text-wrap: nowrap;
         font-weight: 400;
         color: white;
+      }
+      & img {
+        width: auto; //Avoid inheritance
+        height: auto; //Avoid inheritance
+        object-fit: scale-down;
+        mix-blend-mode: darken;
       }
     }
   }
