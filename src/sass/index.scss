@@ -2,8 +2,7 @@
 @forward './base/boilerplate';
 @forward './base/interaction';
 
-@forward '../shared/error/notFound';
-@forward '../shared/suspense/suspenseLoader';
+@forward '../shared/pathing-error/notFound';
 
 @forward '../portfolio/portfolio';
 @forward '../ecommerce/ecommerce';

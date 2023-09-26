@@ -1,9 +1,9 @@
 import { Suspense, lazy, useMemo } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 //Shared
-import SuspenseLoader from './shared/suspense/SuspenseLoader';
-const NotFound = lazy(() => import('./shared/error/NotFound'));
+const NotFound = lazy(() => import('./shared/pathing-error/NotFound'));
+import SuspensePathHandler from './shared/suspense/pathing-handler/SuspensePathHandler';
 
 //Portfolio
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
@@ -19,6 +19,7 @@ import useUniqueData from './ecommerce/hooks/useUniqueData';
 //Hyundai-N
 const HyundaiPageStructure = lazy(() => import('./hyundai-n/pages/HyundaiPageStructure'));
 
+//Application
 function App() {
   const uniqueCompanies = useMemo(() => useUniqueData().useUniqueCompanies, [useUniqueData().useUniqueCompanies]);
   const uniqueWearStyles = useMemo(() => useUniqueData().useUniqueWearStyles, [useUniqueData().useUniqueCompanies]);
@@ -26,7 +27,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Suspense fallback={SuspenseLoader()}>
+      <Suspense fallback={<SuspensePathHandler />}>
         <CategoryFilterProvider>
           <CartProvider>
             <Routes>
