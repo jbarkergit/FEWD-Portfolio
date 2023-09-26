@@ -1,7 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
-import HomeSkeleton from '../../../ecommerce/pages/skeletons/HomeSkeleton';
-import ProductCatalogSkeleton from '../../../ecommerce/pages/skeletons/ProductCatalogSkeleton';
-import ProductDetailPageSkeleton from '../../../ecommerce/pages/skeletons/ProductDetailPageSkeleton';
+import HomeSkeleton from '../../../ecommerce/skeletons/pages/HomeSkeleton';
+import ProductCatalogSkeleton from '../../../ecommerce/skeletons/pages/ProductCatalogSkeleton';
+import ProductDetailPageSkeleton from '../../../ecommerce/skeletons/pages/ProductDetailPageSkeleton';
 import DefaultSkeleton from '../default-skeleton/DefaultSkeleton';
 
 function SuspensePathHandler() {
