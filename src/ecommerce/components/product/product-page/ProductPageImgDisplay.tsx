@@ -28,7 +28,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
       if (magnifierEnabled) {
         setMagnifierEnabled(false);
       } else {
-        setCursorCoordinates({ x: e.offsetX, y: e.offsetY });
+        setCursorCoordinates({ x: e.offsetX, y: e.offsetY + 80 });
         setMagnifierEnabled(true);
       }
     };
@@ -45,7 +45,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
 
     //Set cursor coordinates on pointer move
     const userPointerMove = (e: PointerEvent) => {
-      if (magnifierEnabled) setCursorCoordinates({ x: e.offsetX, y: e.offsetY });
+      if (magnifierEnabled) setCursorCoordinates({ x: e.offsetX, y: e.offsetY + 80 });
     };
 
     //Disable magnifier on pointer leave
@@ -64,16 +64,16 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
     };
   }, [primaryImg.current, magnifierEnabled, magnification]);
 
-  //Set magnifier background position based on cursor coordinates and magnification
+  //Set magnifier image position based on cursor coordinates and magnification
   useEffect(() => {
     if (magnifierEnabled && magnifier.current) {
       const backgroundPosX = cursorCoordinates.x * magnification - magnifier.current.offsetWidth / 2;
-      const backgroundPosY = cursorCoordinates.y * magnification - magnifier.current.offsetHeight / 2;
+      const backgroundPosY = cursorCoordinates.y * magnification - magnifier.current.offsetHeight / 2 - 80;
       setMagnifierBackgroundPos({ x: backgroundPosX, y: backgroundPosY });
     }
   }, [magnifier.current, cursorCoordinates, magnifierBackgroundSize]);
 
-  //Set magnifier background-size, by passes container wxh inheritance
+  //Set magnifier image size, by passes container wxh inheritance
   useEffect((): void => {
     if (primaryImg.current)
       setMagnifierBackgroundSize({ width: `${primaryImg.current.width * magnification}px`, height: `${primaryImg.current.height * magnification}px` });
@@ -86,22 +86,23 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
       </div>
 
       <div className='skuPage__grid__display__primaryImg' ref={primaryImgContainer}>
-        {magnifierEnabled ? (
-          <div
-            className='skuPage__grid__display__primaryImg__magnifier'
-            ref={magnifier}
-            style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)` }}>
-            <img
-              src={images![activeDisplay]}
-              style={{
-                width: `${magnifierBackgroundSize.width}`,
-                maxWidth: `${magnifierBackgroundSize.width}`,
-                maxHeight: `${magnifierBackgroundSize.height}`,
-                transform: `translateX(-${magnifierBackgroundPos.x}px) translateY(-${magnifierBackgroundPos.y}px)`,
-              }}
-            />
-          </div>
-        ) : null}
+        {/* {magnifierEnabled ? ( */}
+        <div
+          className='skuPage__grid__display__primaryImg__magnifier'
+          ref={magnifier}
+          style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)` }}>
+          <img
+            src={images![activeDisplay]}
+            style={{
+              width: `${magnifierBackgroundSize.width}`,
+              height: `${magnifierBackgroundSize.height}`,
+              maxWidth: `${magnifierBackgroundSize.width}`,
+              maxHeight: `${magnifierBackgroundSize.height}`,
+              transform: `translateX(-${magnifierBackgroundPos.x}px) translateY(-${magnifierBackgroundPos.y}px)`,
+            }}
+          />
+        </div>
+        {/* ) : null} */}
         <picture className='skuPage__grid__display__primaryImg--picture'>
           <img
             src={images![activeDisplay]}
