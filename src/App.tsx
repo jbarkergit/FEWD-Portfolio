@@ -2,8 +2,8 @@ import { Suspense, lazy, useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 //Shared
-import SuspenseLoader from './shared/pages/SuspenseLoader';
-const NotFound = lazy(() => import('./shared/pages/NotFound'));
+import SuspenseLoader from './shared/suspense/SuspenseLoader';
+const NotFound = lazy(() => import('./shared/error/NotFound'));
 
 //Portfolio
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
@@ -30,15 +30,15 @@ function App() {
         <CategoryFilterProvider>
           <CartProvider>
             <Routes>
-              <Route path="*" element={<NotFound />} />
-              <Route path="/" element={<Portfolio />} />
-              <Route path="/ecommerce" element={<Home />} />
-              <Route path="/ecommerce/products" element={<ProductCatalog />} />
-              <Route path="/ecommerce/headphones" element={<ProductCatalog />} />
-              <Route path="/ecommerce/amps-dacs" element={<ProductCatalog />} />
-              <Route path="/ecommerce/microphones" element={<ProductCatalog />} />
-              <Route path="/ecommerce/interfaces" element={<ProductCatalog />} />
-              <Route path="/ecommerce/product/:paramId" element={<ProductDetailPage />} />
+              <Route path='*' element={<NotFound />} />
+              <Route path='/' element={<Portfolio />} />
+              <Route path='/ecommerce' element={<Home />} />
+              <Route path='/ecommerce/products' element={<ProductCatalog />} />
+              <Route path='/ecommerce/headphones' element={<ProductCatalog />} />
+              <Route path='/ecommerce/amps-dacs' element={<ProductCatalog />} />
+              <Route path='/ecommerce/microphones' element={<ProductCatalog />} />
+              <Route path='/ecommerce/interfaces' element={<ProductCatalog />} />
+              <Route path='/ecommerce/product/:paramId' element={<ProductDetailPage />} />
               {uniqueCompanies.map((company: string) => (
                 <Route path={`/ecommerce/${company}`} element={<ProductCatalog />} key={company} />
               ))}
@@ -48,7 +48,7 @@ function App() {
               {uniquePolarPatterns.map((polarPattern) => (
                 <Route path={`/ecommerce/${polarPattern}`} element={<ProductCatalog />} key={polarPattern} />
               ))}
-              <Route path="/hyundai-n" element={<HyundaiPageStructure />} />
+              <Route path='/hyundai-n' element={<HyundaiPageStructure />} />
             </Routes>
           </CartProvider>
         </CategoryFilterProvider>
