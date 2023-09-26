@@ -1,9 +1,6 @@
 //Mixins, Global Vars
 @forward '../ecommerce/ecommerceStyles';
 
-//Shared
-@forward '../ecommerce/shared/components/companyLogos';
-
 //Features
 @forward '../ecommerce/components/features/product-filters/productFilters';
 @forward '../ecommerce/components/features/search-bar/searchBar';
@@ -31,6 +28,9 @@
 @forward '../ecommerce/components/product/product-provider/productProvider';
 @forward '../ecommerce/components/product/product-page/productPages';
 @forward '../ecommerce/components/product/product-recommenders/productRecommenders.scss';
+
+//Shared
+@forward '../ecommerce/components/shared/companyLogos';
 
 //User Account
 @forward '../ecommerce/components/features/user-account/shared/stylesheets/userAccountModal';

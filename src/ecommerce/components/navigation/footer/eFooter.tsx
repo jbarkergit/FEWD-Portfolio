@@ -4,7 +4,7 @@ import ESupport from './customer/policies/ESupport';
 import PaymentTypes from './additions/payment-types/PaymentTypes';
 import Address from './additions/address/Address';
 import SocialMedia from './additions/social-media/SocialMedia';
-import CompanyLogos from '../../../shared/components/CompanyLogos';
+import CompanyLogos from '../../shared/CompanyLogos';
 
 const EFooter = (): JSX.Element => {
   return (
