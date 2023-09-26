@@ -1,4 +1,4 @@
-import { ProductDatabase } from '../assets/production-data/product-db/ProductDatabase';
+import { ProductDatabase } from '../database/product-db/ProductDatabase';
 import { ProductType } from '../types/ProductType';
 
 const useUniqueData: () => {
@@ -8,7 +8,7 @@ const useUniqueData: () => {
   useUniqueHeadphoneCompanies: string[];
   useUniqueMicrophoneCompanies: string[];
 } = () => {
-  //filters string and array properties from ProductDatabase out into sets
+  //Filters string and array properties from ProductDatabase out into sets
   const uniqueDataProps = ProductDatabase.reduce(
     (
       result: {

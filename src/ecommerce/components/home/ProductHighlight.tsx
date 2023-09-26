@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { ProductDatabase } from '../../assets/production-data/product-db/ProductDatabase';
+import { ProductDatabase } from '../../database/product-db/ProductDatabase';
 import { ProductType } from '../../types/ProductType';
 
 const ProductHighlight = (): JSX.Element => {

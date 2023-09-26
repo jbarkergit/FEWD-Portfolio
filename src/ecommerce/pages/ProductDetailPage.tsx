@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../components/navigation/header/Header';
 import Footer from '../components/navigation/footer/EFooter';
-import { ProductDatabase } from '../assets/production-data/product-db/ProductDatabase';
+import { ProductDatabase } from '../database/product-db/ProductDatabase';
 import { ProductType } from '../types/ProductType';
 import ProductPageDetails from '../components/product/product-page/ProductPageDetails';
 import ProductPageImgDisplay from '../components/product/product-page/ProductPageImgDisplay';
