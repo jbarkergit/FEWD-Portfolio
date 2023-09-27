@@ -5,7 +5,6 @@ import ProductDetailPageSkeleton from '../../ecommerce/skeletons/pages/ProductDe
 
 function SuspensePathHandler() {
   const location = useLocation();
-  const { paramId } = useParams();
 
   switch (location.pathname) {
     case '/ecommerce':
@@ -16,10 +15,8 @@ function SuspensePathHandler() {
     case '/ecommerce/microphones':
     case '/ecommerce/interfaces':
       return <ProductCatalogSkeleton />;
-    case `/product/${paramId}`:
-      return <ProductDetailPageSkeleton />;
     default:
-      return <HomeSkeleton />;
+      return <ProductDetailPageSkeleton />;
   }
 }
 

@@ -1,5 +1,5 @@
 import { Suspense, lazy, useMemo } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 //Shared
 const NotFound = lazy(() => import('./shared/pathing-error/NotFound'));
@@ -16,11 +16,6 @@ import { CategoryFilterProvider } from './ecommerce/context/CategoryFilterContex
 import { CartProvider } from './ecommerce/context/CartContext';
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
-//Ecommerce Skeletons
-import HomeSkeleton from './ecommerce/skeletons/pages/HomeSkeleton';
-import ProductCatalogSkeleton from './ecommerce/skeletons/pages/ProductCatalogSkeleton';
-import ProductDetailPageSkeleton from './ecommerce/skeletons/pages/ProductDetailPageSkeleton';
-
 //Hyundai-N
 const HyundaiPageStructure = lazy(() => import('./hyundai-n/pages/HyundaiPageStructure'));
 
@@ -36,7 +31,6 @@ function App() {
         <CategoryFilterProvider>
           <CartProvider>
             <Routes>
-              {/* <Route path='/skeleton' element={<ProductCatalogSkeleton />} /> */}
               <Route path='*' element={<NotFound />} />
               <Route path='/' element={<Portfolio />} />
               <Route path='/ecommerce' element={<Home />} />
