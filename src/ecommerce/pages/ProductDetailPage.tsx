@@ -19,7 +19,7 @@ const ProductDetailPage = (): JSX.Element => {
       <Header />
       <div className='skuPage'>
         <main className='skuPage__grid'>
-          {findProduct.images!.length > 1 ? <ProductPageImgSelect findProduct={findProduct} setActiveDisplay={setActiveDisplay} /> : null}
+          {findProduct.images!.small.length > 1 ? <ProductPageImgSelect findProduct={findProduct} setActiveDisplay={setActiveDisplay} /> : null}
           <ProductPageImgDisplay findProduct={findProduct} activeDisplay={activeDisplay} setActiveDisplay={setActiveDisplay} />
           <ProductPageDetails findProduct={findProduct} />
         </main>

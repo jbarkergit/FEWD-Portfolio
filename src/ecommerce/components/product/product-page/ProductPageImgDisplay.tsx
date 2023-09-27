@@ -9,7 +9,7 @@ type PropType = {
 
 const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }: PropType) => {
   const { company, images, unit } = findProduct; //Prop drilled logic to find product based on useParams
-  const lastSlide = findProduct.images!.length - 1; //Index of last img in product img array
+  const lastSlide = findProduct.images!.large.length - 1; //Index of last img in product img array
 
   //FEATURE: Magnifier
   const primaryImgContainer = useRef<HTMLDivElement>(null),
@@ -92,7 +92,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
             ref={magnifier}
             style={{ transform: `translateX(${cursorCoordinates.x}px) translateY(${cursorCoordinates.y}px)` }}>
             <img
-              src={images![activeDisplay]}
+              src={images?.large[activeDisplay]}
               style={{
                 width: `${magnifierBackgroundSize.width}`,
                 height: `${magnifierBackgroundSize.height}`,
@@ -105,7 +105,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
         ) : null}
         <picture className='skuPage__grid__display__primaryImg--picture'>
           <img
-            src={images![activeDisplay]}
+            src={images?.large[activeDisplay]}
             alt={company + unit}
             role='presentation'
             decoding='async'
@@ -115,7 +115,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
           />
         </picture>
       </div>
-      {images!.length === 1 ? null : (
+      {images?.large.length === 1 ? null : (
         <div className='skuPage__grid__display__nav'>
           <div className='skuPage__grid__display__nav__container'>
             <button onClick={() => (activeDisplay === 0 ? setActiveDisplay(lastSlide) : setActiveDisplay(activeDisplay - 1))}>

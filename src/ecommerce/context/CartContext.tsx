@@ -9,7 +9,11 @@ export type CartProductType = {
   company: string;
   unit: string;
   price: number;
-  images?: string[];
+  images?: {
+    small: string[];
+    medium: string[];
+    large: string[];
+  };
 };
 
 //define type for shopping cart

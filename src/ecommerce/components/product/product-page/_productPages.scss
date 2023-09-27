@@ -45,7 +45,7 @@
       overflow: hidden;
       @include m.productPhoto;
       & img {
-        padding: 15px 0;
+        // padding: 15px 0;
         object-fit: scale-down;
         mix-blend-mode: darken;
         pointer-events: all;

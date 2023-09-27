@@ -29,7 +29,7 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
             <Link to={`/ecommerce/product/${product.sku}`}>
               <article>
                 <picture>
-                  <img src={product.images![0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchpriority='low' />
+                  <img src={product.images?.small[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchpriority='low' />
                 </picture>
                 <hgroup>
                   <h2>

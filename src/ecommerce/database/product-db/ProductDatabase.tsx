@@ -47,7 +47,7 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     images: {
       small: [
-        '/src/ecommerce/assets/production-images/compressed-products-300x300/Focusrite/interfacescarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-1.jpg',
+        '/src/ecommerce/assets/production-images/compressed-products-300x300/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-1.jpg',
         '/src/ecommerce/assets/production-images/compressed-products-300x300/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-2.jpg',
         '/src/ecommerce/assets/production-images/compressed-products-300x300/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-3.jpg',
         '/src/ecommerce/assets/production-images/compressed-products-300x300/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-4.jpg',
@@ -55,7 +55,7 @@ export const ProductDatabase: ProductType[] = [
         '/src/ecommerce/assets/production-images/compressed-products-300x300/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-6.jpg',
       ],
       medium: [
-        '/src/ecommerce/assets/production-images/compressed-products-660x660/Focusrite/interfacescarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-1.jpg',
+        '/src/ecommerce/assets/production-images/compressed-products-660x660/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-1.jpg',
         '/src/ecommerce/assets/production-images/compressed-products-660x660/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-2.jpg',
         '/src/ecommerce/assets/production-images/compressed-products-660x660/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-3.jpg',
         '/src/ecommerce/assets/production-images/compressed-products-660x660/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-4.jpg',
@@ -63,7 +63,7 @@ export const ProductDatabase: ProductType[] = [
         '/src/ecommerce/assets/production-images/compressed-products-660x660/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-6.jpg',
       ],
       large: [
-        '/src/ecommerce/assets/production-images/compressed-products-1000x1000/Focusrite/interfacescarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-1.jpg',
+        '/src/ecommerce/assets/production-images/compressed-products-1000x1000/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-1.jpg',
         '/src/ecommerce/assets/production-images/compressed-products-1000x1000/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-2.jpg',
         '/src/ecommerce/assets/production-images/compressed-products-1000x1000/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-3.jpg',
         '/src/ecommerce/assets/production-images/compressed-products-1000x1000/Focusrite/interface/scarlett-solo-3rd-gen/focusrite-scarlett-solo-3rd-gen-4.jpg',

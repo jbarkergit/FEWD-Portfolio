@@ -14,7 +14,7 @@ const CartProducts = (): JSX.Element[] => {
     return (
       <li key={uuidv4()}>
         <article className='ecoModal__lineItem'>
-          <picture>{product.images ? <img src={product.images![0]} alt={product.unit} loading='lazy' decoding='async' fetchpriority='low' /> : null}</picture>
+          <picture>{product.images ? <img src={product.images.small[0]} alt={product.unit} loading='lazy' decoding='async' fetchpriority='low' /> : null}</picture>
           <div className='ecoModal__lineItem__information'>
             <hgroup>
               <h2>{`${product.company} ${product.unit} ${Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}`}</h2>
