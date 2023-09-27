@@ -16,6 +16,11 @@ import { CategoryFilterProvider } from './ecommerce/context/CategoryFilterContex
 import { CartProvider } from './ecommerce/context/CartContext';
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
+//Ecommerce Skeletons
+import HomeSkeleton from './ecommerce/skeletons/pages/HomeSkeleton';
+import ProductCatalogSkeleton from './ecommerce/skeletons/pages/ProductCatalogSkeleton';
+import ProductDetailPageSkeleton from './ecommerce/skeletons/pages/ProductDetailPageSkeleton';
+
 //Hyundai-N
 const HyundaiPageStructure = lazy(() => import('./hyundai-n/pages/HyundaiPageStructure'));
 
@@ -31,6 +36,7 @@ function App() {
         <CategoryFilterProvider>
           <CartProvider>
             <Routes>
+              <Route path='/skeleton' element={<ProductDetailPageSkeleton />} />
               <Route path='*' element={<NotFound />} />
               <Route path='/' element={<Portfolio />} />
               <Route path='/ecommerce' element={<Home />} />

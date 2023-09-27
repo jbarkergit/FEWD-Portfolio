@@ -7,14 +7,14 @@
 @forward '../ecommerce/components/features/shopping-cart/shoppingCartModal';
 @forward '../ecommerce/components/features/shared/modal';
 
+//Skeletons
+@forward '../ecommerce/skeletons/skeletonDefaults';
+
 //Home
 @forward '../ecommerce/components/home/carousel';
 @forward '../ecommerce/components/home/infographic';
 @forward '../ecommerce/components/home/productHighlight';
 @forward '../ecommerce/components/home/sideBySide';
-
-//Home Skeletons
-@forward '../ecommerce/skeletons/pages/homeSkeletons';
 
 //Header
 @forward '../ecommerce/components/navigation/header/ecoHeader';
@@ -27,19 +27,10 @@
 @forward '../ecommerce/components/navigation/footer/customer/newsletter/newsletter';
 @forward '../ecommerce/components/navigation/footer/customer/policies/policies';
 
-//Navigation Skeletons
-@forward '../ecommerce/skeletons/navigation/navigationSkeletons';
-
 //Product
 @forward '../ecommerce/components/product/product-provider/productProvider';
 @forward '../ecommerce/components/product/product-page/productPages';
 @forward '../ecommerce/components/product/product-recommenders/productRecommenders.scss';
-
-//Product Catelog Skeletons
-@forward '../ecommerce/skeletons/pages/productCatelogSkeletons';
-
-//Product Detail Page Skeletons
-@forward '../ecommerce/skeletons/pages/productDetailPageSkeletons';
 
 //Shared
 @forward '../ecommerce/components/shared/companyLogos';
