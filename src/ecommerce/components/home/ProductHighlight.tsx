@@ -56,7 +56,7 @@ const ProductHighlight = (): JSX.Element => {
                 </picture>
                 <aside>
                   <video preload='none' playsInline loop muted aria-label='Video of joyful people wearing headphones listening to music'>
-                    <source src='/src/ecommerce/assets/production-videos/stockfootagesplice.webm' type='video/webm' />
+                    <source src='/src/ecommerce/assets/production-videos/stock-footage-splice-374x467.webm' type='video/webm' />
                   </video>
                 </aside>
                 <hgroup id='productHighlightInfo'>

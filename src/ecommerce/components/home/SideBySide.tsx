@@ -1,9 +1,9 @@
 const SideBySide = (): JSX.Element => {
   return (
-    <article className="sideBySide">
-      <div className="sideBySide__textArea">
+    <article className='sideBySide'>
+      <div className='sideBySide__textArea'>
         <h2>
-          Groundbreaking Tech, <span className="highlight">superior</span> audio
+          Groundbreaking Tech, <span className='highlight'>superior</span> audio
         </h2>
         <p>
           Our mission at Dynamic Audio is to offer a diverse selection of superior HiFi audio products from renowned brands, to ensure top-notch sound quality for
@@ -11,9 +11,9 @@ const SideBySide = (): JSX.Element => {
           every purchase, enjoy instant satisfaction knowing you're backed by the expertise and craftsmanship of the brands we represent.
         </p>
       </div>
-      <aside className="sideBySide__video">
-        <video preload="metadata" playsInline autoPlay loop muted aria-label="Video of joyful people wearing headphones listening to music">
-          <source src="/src/ecommerce/assets/production-videos/stockfootagesplice.webm" type="video/webm" />
+      <aside className='sideBySide__video'>
+        <video preload='metadata' playsInline autoPlay loop muted aria-label='Video of joyful people wearing headphones listening to music'>
+          <source src='/src/ecommerce/assets/production-videos/stock-footage-splice-688x860.webm' type='video/webm' />
         </video>
       </aside>
     </article>
