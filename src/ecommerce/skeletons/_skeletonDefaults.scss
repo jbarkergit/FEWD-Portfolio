@@ -107,27 +107,37 @@
     height: auto;
   }
   &--subHeading {
-    width: calc(40% / 2.5);
+    width: calc(600px / 2.5);
     height: calc(32px / 1.2);
     border-radius: calc(18px / 2);
     background-color: hsl(0, 0%, 18%);
     animation: colorShiftHeading 1.8s infinite;
+    @media (width <= 730px) {
+      width: 35%;
+    }
   }
   &--heading {
-    width: calc(40% / 1.5);
+    width: calc(600px / 1.5);
     height: calc(32px * 2);
     border-radius: calc(18px / 1.5);
     background-color: hsl(0, 0%, 18%);
     animation: colorShiftHeading 1.8s infinite;
+    @media (width <= 730px) {
+      width: 55%;
+    }
   }
   &--text {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40%;
+    width: 600px;
     height: calc(32px * 6);
     background-color: hsl(0, 0%, 20%);
     animation: colorShiftText 1.8s infinite;
+    @media (width <= 730px) {
+      width: 75%;
+      height: calc(32px * 3);
+    }
   }
 }
 
@@ -137,13 +147,32 @@
 }
 
 .skeleton__header {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  grid-template-rows: 1fr;
-  column-gap: 50px;
+  display: flex;
+  align-items: center;
   width: 100%;
   height: 11rem;
-  border-bottom: 4px solid hsl(0, 0%, 20%);
+  &__desktop {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: 1fr;
+    column-gap: 50px;
+    width: 100%;
+    @media (width < 1600px) {
+      display: none;
+    }
+  }
+  &__mobile {
+    display: none;
+    width: 100%;
+    @media (width < 1600px) {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-template-rows: 1fr;
+    }
+    &--svg {
+      display: flex;
+    }
+  }
 }
 
 .skeleton__infographic,
@@ -192,6 +221,11 @@
     width: 100%;
     height: fit-content;
     padding-top: f.rem(25);
+    @media (width <= 500px) {
+      display: flex;
+      flex-direction: column;
+      gap: f.rem(25);
+    }
   }
   &__grid {
     display: grid;
@@ -209,28 +243,15 @@
     }
     @media (width <= 966px) {
       grid-template-columns: 1fr;
-      place-items: center;
       gap: f.rem(40) f.rem(50);
     }
     &--li {
       position: relative;
-      height: f.rem(560);
       aspect-ratio: 4/5;
       border-radius: f.rem(18);
       transition: 0.55s ease-in-out;
       background-color: hsl(0, 0%, 20%);
       animation: colorShiftText 3.2s infinite;
-      @media (width <= 966px) {
-        display: flex;
-        aspect-ratio: unset;
-      }
-      @media (width <= 800px) {
-        display: flex;
-        flex-direction: column;
-      }
-      @media (width <= 800px) {
-        height: f.rem(560);
-      }
     }
   }
 }
