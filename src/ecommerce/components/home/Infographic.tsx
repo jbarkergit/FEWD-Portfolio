@@ -6,8 +6,12 @@ const Infographic = (): JSX.Element => {
     <main className='infographic'>
       <picture className='infographic__graphic'>
         <span className='imgFadeGradient' />
+        <source
+          media='(max-width: 1528px)'
+          srcSet='/src/ecommerce/assets/production-images/compressed-home-page/infographic/1528x915/img-by-ilias-chebbi-on-unsplash.jpg'
+        />
         <img
-          src='src/ecommerce/assets/production-images/compressed-home-page/infographic/img-by-ilias-chebbi-on-unsplash.jpg'
+          src='/src/ecommerce/assets/production-images/compressed-home-page/infographic/1920x1080/img-by-ilias-chebbi-on-unsplash.jpg'
           alt='Dynamic Audio - Your new go-to source for audiophile grade HiFi audio equipment'
           decoding='async'
           fetchpriority='high'
