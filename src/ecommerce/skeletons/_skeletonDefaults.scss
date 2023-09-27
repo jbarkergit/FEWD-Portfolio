@@ -1,5 +1,61 @@
 @use '../../sass/util/functions' as f;
 
+@keyframes colorShiftLogo {
+  0% {
+    background-color: hsl(0, 0%, 26%);
+  }
+  50% {
+    background-color: hsl(0, 0%, 30%);
+  }
+  100% {
+    background-color: hsl(0, 0%, 26%);
+  }
+}
+@keyframes colorShiftHeading {
+  0% {
+    background-color: hsl(0, 0%, 18%);
+  }
+  50% {
+    background-color: hsl(0, 0%, 22%);
+  }
+  100% {
+    background-color: hsl(0, 0%, 18%);
+  }
+}
+@keyframes colorShiftText {
+  0% {
+    background-color: hsl(0, 0%, 20%);
+  }
+  50% {
+    background-color: hsl(0, 0%, 24%);
+  }
+  100% {
+    background-color: hsl(0, 0%, 20%);
+  }
+}
+@keyframes colorShiftLink {
+  0% {
+    background-color: hsl(0, 0%, 23%);
+  }
+  50% {
+    background-color: hsl(0, 0%, 27%);
+  }
+  100% {
+    background-color: hsl(0, 0%, 23%);
+  }
+}
+@keyframes colorShiftText {
+  0% {
+    background-color: hsl(0, 0%, 20%);
+  }
+  50% {
+    background-color: hsl(0, 0%, 24%);
+  }
+  100% {
+    background-color: hsl(0, 0%, 20%);
+  }
+}
+
 .--flexStart {
   align-items: center;
   justify-content: start;
@@ -29,17 +85,20 @@
     width: 160px;
     height: 32px;
     background-color: hsl(0, 0%, 26%);
+    animation: colorShiftLogo 1.8s infinite;
   }
   &--link {
     width: 80px;
     height: 32px;
     background-color: hsl(0, 0%, 23%);
+    animation: colorShiftLink 1.8s infinite;
   }
   &--button {
     width: 120px;
     aspect-ratio: 3/1;
     border-radius: 30px;
     background-color: hsl(0, 0%, 26%);
+    animation: colorShiftLogo 1.8s infinite;
   }
   &--gridColumn {
     display: flex;
@@ -52,12 +111,14 @@
     height: calc(32px / 1.2);
     border-radius: calc(18px / 2);
     background-color: hsl(0, 0%, 18%);
+    animation: colorShiftHeading 1.8s infinite;
   }
   &--heading {
     width: calc(40% / 1.5);
     height: calc(32px * 2);
     border-radius: calc(18px / 1.5);
     background-color: hsl(0, 0%, 18%);
+    animation: colorShiftHeading 1.8s infinite;
   }
   &--text {
     display: flex;
@@ -66,6 +127,7 @@
     width: 40%;
     height: calc(32px * 6);
     background-color: hsl(0, 0%, 20%);
+    animation: colorShiftText 1.8s infinite;
   }
 }
 
@@ -101,19 +163,19 @@
 .skeleton__infographic {
   top: 0;
   left: 0;
-}
-
-.skeleton__infographic__carousel {
-  display: flex;
-  gap: 24px;
-  width: 100%;
-  height: 100px;
-  margin-top: 100px;
-  &--partner {
-    width: calc(100% - 8.335% / 10);
-    height: 100%;
-    border-radius: 12px;
-    background-color: hsl(0, 0%, 28%);
+  &__carousel {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+    height: 100px;
+    margin-top: 100px;
+    &--partner {
+      width: calc(100% - 8.335% / 10);
+      height: 100%;
+      border-radius: 12px;
+      background-color: hsl(0, 0%, 28%);
+      animation: colorShiftLogo 3.2s infinite;
+    }
   }
 }
 
@@ -157,6 +219,7 @@
       border-radius: f.rem(18);
       transition: 0.55s ease-in-out;
       background-color: hsl(0, 0%, 20%);
+      animation: colorShiftText 3.2s infinite;
       @media (width <= 966px) {
         display: flex;
         aspect-ratio: unset;
@@ -183,5 +246,6 @@
     height: 65vh;
     border-radius: f.rem(28);
     background-color: hsl(0, 0%, 20%);
+    animation: colorShiftText 3.2s infinite;
   }
 }

@@ -36,7 +36,7 @@ function App() {
         <CategoryFilterProvider>
           <CartProvider>
             <Routes>
-              <Route path='/skeleton' element={<ProductDetailPageSkeleton />} />
+              <Route path='/skeleton' element={<HomeSkeleton />} />
               <Route path='*' element={<NotFound />} />
               <Route path='/' element={<Portfolio />} />
               <Route path='/ecommerce' element={<Home />} />
