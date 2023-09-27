@@ -1,8 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
-import HomeSkeleton from '../../../ecommerce/skeletons/pages/HomeSkeleton';
-import ProductCatalogSkeleton from '../../../ecommerce/skeletons/pages/ProductCatalogSkeleton';
-import ProductDetailPageSkeleton from '../../../ecommerce/skeletons/pages/ProductDetailPageSkeleton';
-import DefaultSkeleton from '../default-skeleton/DefaultSkeleton';
+import HomeSkeleton from '../../ecommerce/skeletons/pages/HomeSkeleton';
+import ProductCatalogSkeleton from '../../ecommerce/skeletons/pages/ProductCatalogSkeleton';
+import ProductDetailPageSkeleton from '../../ecommerce/skeletons/pages/ProductDetailPageSkeleton';
 
 function SuspensePathHandler() {
   const location = useLocation();
@@ -20,7 +19,7 @@ function SuspensePathHandler() {
     case `/product/${paramId}`:
       return <ProductDetailPageSkeleton />;
     default:
-      return <DefaultSkeleton />;
+      return <HomeSkeleton />;
   }
 }
 

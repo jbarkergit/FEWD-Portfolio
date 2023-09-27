@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 //Shared
 const NotFound = lazy(() => import('./shared/pathing-error/NotFound'));
-import SuspensePathHandler from './shared/suspense/pathing-handler/SuspensePathHandler';
+import SuspensePathHandler from './shared/suspense-pathing-handler/SuspensePathHandler';
 
 //Portfolio
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
