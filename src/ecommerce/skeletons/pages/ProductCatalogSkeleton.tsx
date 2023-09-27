@@ -2,7 +2,7 @@ import EHeaderSkeleton from '../components/HeaderSkeleton';
 
 const ProductCatalogSkeleton = () => {
   return (
-    <div className='skeleton'>
+    <div className='skeleton' style={{ backgroundColor: 'hsl(0, 0%, 96%)' }}>
       <EHeaderSkeleton />
       <div className='skeleton__catalog --flexEnd'>
         <div className='skeleton__catalog__filters'>
