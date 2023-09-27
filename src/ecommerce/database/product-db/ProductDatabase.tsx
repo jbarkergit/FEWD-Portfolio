@@ -11,14 +11,11 @@ export const ProductDatabase: ProductType[] = [
     price: 899.0,
     category: 'interfaces',
     productshowcase: false,
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-2.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-3.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-4.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-5.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Avid/interface/mbox-studio/mbox-studio-usb-audio-interface-6.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'focusrite-scarlett-solo-3rd-gen',
@@ -30,14 +27,11 @@ export const ProductDatabase: ProductType[] = [
     price: 129.99,
     category: 'interfaces',
     productshowcase: false,
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-solo-3rd-gen/scarlett-solo-3rd-gen-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-solo-3rd-gen/scarlett-solo-3rd-gen-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-solo-3rd-gen/scarlett-solo-3rd-gen-3.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-solo-3rd-gen/scarlett-solo-3rd-gen-4.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-solo-3rd-gen/scarlett-solo-3rd-gen-5.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-solo-3rd-gen/scarlett-solo-3rd-gen-6.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'focusrite-scarlett-2i2-3rd-gen',
@@ -49,14 +43,11 @@ export const ProductDatabase: ProductType[] = [
     price: 189.99,
     category: 'interfaces',
     productshowcase: true,
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-2i2-3rd-gen/scarlett-2i2-3rd-gen-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-2i2-3rd-gen/scarlett-2i2-3rd-gen-2.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-2i2-3rd-gen/scarlett-2i2-3rd-gen-3.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-2i2-3rd-gen/scarlett-2i2-3rd-gen-4.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-2i2-3rd-gen/scarlett-2i2-3rd-gen-5.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Focusrite/interface/scarlett-2i2-3rd-gen/scarlett-2i2-3rd-gen-6.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'uaudio-apollo-solo',
@@ -68,11 +59,11 @@ export const ProductDatabase: ProductType[] = [
     price: 499.0,
     category: 'interfaces',
     productshowcase: false,
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-solo/apollo-solo-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-solo/apollo-solo-2.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-solo/apollo-solo-3.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'uaudio-apollo-twin-mk-ii',
@@ -84,11 +75,11 @@ export const ProductDatabase: ProductType[] = [
     price: 799.0,
     category: 'interfaces',
     productshowcase: false,
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-twin-mkii/apollo-twin-mkii-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-twin-mkii/apollo-twin-mkii-2.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-twin-mkii/apollo-twin-mkii-3.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'uaudio-apollo-twin-x',
@@ -100,11 +91,11 @@ export const ProductDatabase: ProductType[] = [
     price: 999.0,
     category: 'interfaces',
     productshowcase: false,
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-twin-x/apollo-twin-x-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-twin-x/apollo-twin-x-2.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-twin-x/apollo-twin-x-3.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'uaudio-apollo-x4',
@@ -116,11 +107,11 @@ export const ProductDatabase: ProductType[] = [
     price: 1999.0,
     category: 'interfaces',
     productshowcase: false,
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-x4/apollo-x4-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-x4/apollo-x4-2.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/apollo-x4/apollo-x4-3.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'uaudio-volt-1',
@@ -132,10 +123,11 @@ export const ProductDatabase: ProductType[] = [
     price: 189.0,
     category: 'interfaces',
     productshowcase: false,
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/volt-1/volt-1-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/volt-1/volt-1-2.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'uaudio-volt-2',
@@ -147,10 +139,11 @@ export const ProductDatabase: ProductType[] = [
     price: 189.0,
     category: 'interfaces',
     productshowcase: false,
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/volt-2/volt-2-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/volt-2/volt-2-2.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'uaudio-volt-4',
@@ -162,10 +155,11 @@ export const ProductDatabase: ProductType[] = [
     price: 259.0,
     category: 'interfaces',
     productshowcase: false,
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/volt-4/volt-4-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/UAudio/interface/volt-4/volt-4-1.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'beyerdynamic-t5',
@@ -177,11 +171,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'headphones',
     wearStyle: 'closed-back',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/T5/t5-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/T5/t5-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/T5/t5-3.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'beyerdynamic-t1',
@@ -193,11 +187,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'headphones',
     wearStyle: 'open-back',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/T1/t1-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/T1/t1-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/T1/t1-3.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'beyerdynamic-dt-900-pro-x',
@@ -209,11 +203,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'headphones',
     wearStyle: 'open-back',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 900 PRO X/dt-900-pro-x-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 900 PRO X/dt-900-pro-x-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 900 PRO X/dt-900-pro-x-3.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'beyerdynamic-dt-700-pro-x',
@@ -225,11 +219,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: true,
     category: 'headphones',
     wearStyle: 'closed-back',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 700 PRO X/dt-700-pro-x-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 700 PRO X/dt-700-pro-x-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 700 PRO X/dt-700-pro-x-3.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'beyerdynamic-dt-1990-pro',
@@ -241,11 +235,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'headphones',
     wearStyle: 'open-back',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 1990 PRO/dt-1990-pro-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 1990 PRO/dt-1990-pro-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 1990 PRO/dt-1990-pro-3.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'beyerdynamic-dt-1770-pro',
@@ -257,11 +251,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: true,
     category: 'headphones',
     wearStyle: 'closed-back',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 1770 PRO/dt-1770-pro-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 1770 PRO/dt-1770-pro-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 1770 PRO/dt-1770-pro-3.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'beyerdynamic-dt-990-black-se',
@@ -273,11 +267,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'headphones',
     wearStyle: 'open-back',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 Black Special Edition/dt-990-black-special-edition-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 Black Special Edition/dt-990-black-special-edition-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 Black Special Edition/dt-990-black-special-edition-3.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'beyerdynamic-dt-990-pro',
@@ -289,11 +283,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: true,
     category: 'headphones',
     wearStyle: 'open-back',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 PRO/dt-990-pro-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 PRO/dt-990-pro-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 PRO/dt-990-pro-3.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'beyerdynamic-dt-880-pro',
@@ -305,11 +299,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'headphones',
     wearStyle: 'semi-open',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 880 PRO/dt-880-pro-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 880 PRO/dt-880-pro-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 880 PRO/dt-880-pro-3.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'beyerdynamic-dt-770-pro',
@@ -321,7 +315,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: true,
     category: 'headphones',
     wearStyle: 'closed-back',
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 770 PRO/dt-770-pro-1.webp'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'beyerdynamic-dt-990-e',
@@ -333,11 +331,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'headphones',
     wearStyle: 'open-back',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 Edition/dt-990-edition-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 Edition/dt-990-edition-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Beyerdynamic/headphone/DT 990 Edition/dt-990-edition-3.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'evo-4',
@@ -348,14 +346,11 @@ export const ProductDatabase: ProductType[] = [
     price: 129.0,
     productshowcase: false,
     category: 'interfaces',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/4/evo-4-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/4/evo-4-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/4/evo-4-3.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/4/evo-4-4.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/4/evo-4-5.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/4/evo-4-6.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'evo-8',
@@ -366,14 +361,11 @@ export const ProductDatabase: ProductType[] = [
     price: 199.0,
     productshowcase: false,
     category: 'interfaces',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/8/evo-8-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/8/evo-8-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/8/evo-8-3.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/8/evo-8-4.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/8/evo-8-5.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/8/evo-8-6.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'evo-16',
@@ -384,13 +376,11 @@ export const ProductDatabase: ProductType[] = [
     price: 499.0,
     productshowcase: false,
     category: 'interfaces',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/16/evo-16-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/16/evo-16-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/16/evo-16-3.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/16/evo-16-4.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/16/evo-16-5.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'evo-sp8',
@@ -401,13 +391,11 @@ export const ProductDatabase: ProductType[] = [
     price: 499.0,
     productshowcase: false,
     category: 'interfaces',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/SP8/evo-sp8-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/SP8/evo-sp8-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/SP8/evo-sp8-3.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/SP8/evo-sp8-4.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Evo/interface/SP8/evo-sp8-5.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'audient-id4',
@@ -418,7 +406,11 @@ export const ProductDatabase: ProductType[] = [
     price: 199.0,
     productshowcase: false,
     category: 'interfaces',
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Audient/interface/iD4/iD4-1.png'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'audient-id14',
@@ -429,7 +421,11 @@ export const ProductDatabase: ProductType[] = [
     price: 298.99,
     productshowcase: false,
     category: 'interfaces',
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Audient/interface/iD14/iD14-1.png'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'audient-id22',
@@ -440,7 +436,11 @@ export const ProductDatabase: ProductType[] = [
     price: 499.99,
     productshowcase: false,
     category: 'interfaces',
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Audient/interface/iD22/iD22-1.png'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'audient-id24',
@@ -451,7 +451,11 @@ export const ProductDatabase: ProductType[] = [
     price: 399.0,
     productshowcase: true,
     category: 'interfaces',
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Audient/interface/iD24/iD24-1.png'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'audient-id44',
@@ -462,7 +466,11 @@ export const ProductDatabase: ProductType[] = [
     price: 699.0,
     productshowcase: false,
     category: 'interfaces',
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Audient/interface/iD44/iD44-1.png'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'solid-state-logic-ssl2',
@@ -473,12 +481,11 @@ export const ProductDatabase: ProductType[] = [
     price: 179.99,
     productshowcase: false,
     category: 'interfaces',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL2/ssl2-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL2/ssl2-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL2/ssl2-3.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL2/ssl2-4.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'solid-state-logic-ssl2+',
@@ -489,11 +496,11 @@ export const ProductDatabase: ProductType[] = [
     price: 229.99,
     productshowcase: false,
     category: 'interfaces',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL 2+/ssl2+-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL 2+/ssl2+-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL 2+/ssl2+-3.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'solid-state-logic-ssl12',
@@ -504,13 +511,11 @@ export const ProductDatabase: ProductType[] = [
     price: 499.99,
     productshowcase: false,
     category: 'interfaces',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL 12/ssl12-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL 12/ssl12-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL 12/ssl12-3.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL 12/ssl12-4.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Solid State Logic/interface/SSL 12/ssl12-5.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Electro-Voice-RE20-BLACK-EDITION',
@@ -522,11 +527,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'microphones',
     polarPattern: 'cardioid',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Electro-Voice/microphone/RE20-BLACK/re20-black-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Electro-Voice/microphone/RE20-BLACK/re20-black-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Electro-Voice/microphone/RE20-BLACK/re20-black-3.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Electro-Voice-RE20',
@@ -538,11 +543,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'microphones',
     polarPattern: 'cardioid',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Electro-Voice/microphone/RE20/re20-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Electro-Voice/microphone/RE20/re20-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Electro-Voice/microphone/RE20/re20-3.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Shure-SM7B',
@@ -554,16 +559,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: true,
     category: 'microphones',
     polarPattern: 'cardioid',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM7B/sm7b-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM7B/sm7b-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM7B/sm7b-3.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM7B/sm7b-4.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM7B/sm7b-5.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM7B/sm7b-6.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM7B/sm7b-7.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM7B/sm7b-8.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Shure-SM58',
@@ -575,14 +575,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'microphones',
     polarPattern: 'cardioid',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM58/sm58-1.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM58/sm58-2.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM58/sm58-3.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM58/sm58-4.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM58/sm58-5.webp',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Shure/microphone/SM58/sm58-6.webp',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Rode-NT1',
@@ -594,12 +591,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'microphones',
     polarPattern: 'cardioid',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/NT1/nt1-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/NT1/nt1-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/NT1/nt1-3.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/NT1/nt1-4.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Rode-NT1-A',
@@ -611,10 +607,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'microphones',
     polarPattern: 'cardioid',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/NT1-A/nt1-a-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/NT1-A/nta-1-2.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Rode-PodMic',
@@ -626,14 +623,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: true,
     category: 'microphones',
     polarPattern: 'cardioid',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMic/podmic-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMic/podmic-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMic/podmic-3.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMic/podmic-4.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMic/podmic-5.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMic/podmic-6.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Rode-PodMic-USB',
@@ -645,15 +639,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'microphones',
     polarPattern: 'cardioid',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMicUSB/podmic-usb-1.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMicUSB/podmic-usb-2.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMicUSB/podmic-usb-3.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMicUSB/podmic-usb-4.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMicUSB/podmic-usb-5.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMicUSB/podmic-usb-6.png',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Rode/microphone/PodMicUSB/podmic-usb-7.png',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Neumann-TLM-107-BK-Studio-Set',
@@ -665,7 +655,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'microphones',
     polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107 BK Studio Set/tlm-107-bk-studio-set-1.webp'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Neumann-TLM-107-Studio-Set',
@@ -677,7 +671,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'microphones',
     polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107 Studio Set/tlm-107-studio-set-1.webp'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Neumann-TLM-107-BK',
@@ -689,7 +687,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'microphones',
     polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107 BK/tlm-107-bk-1.webp'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'Neumann-TLM-107',
@@ -701,7 +703,11 @@ export const ProductDatabase: ProductType[] = [
     productshowcase: false,
     category: 'microphones',
     polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Neumann/TLM 107/tlm-107-1.webp'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'schiit-fulla',
@@ -712,11 +718,11 @@ export const ProductDatabase: ProductType[] = [
     price: 136.0,
     productshowcase: false,
     category: 'amps-dacs',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/Fulla/fulla-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/Fulla/fulla-2.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/Fulla/fulla-3.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'schiit-hel',
@@ -727,14 +733,11 @@ export const ProductDatabase: ProductType[] = [
     price: 262.0,
     productshowcase: false,
     category: 'amps-dacs',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/Hel/hel-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/Hel/hel-2.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/Hel/hel-3.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/Hel/hel-4.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/Hel/hel-5.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/Hel/hel-6.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'schiit-magni+-black',
@@ -745,10 +748,11 @@ export const ProductDatabase: ProductType[] = [
     price: 145.0,
     productshowcase: false,
     category: 'amps',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/magni+-black/magni+-black-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/magni+-black/magni+-black-2.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'schiit-magni+-silver',
@@ -759,10 +763,11 @@ export const ProductDatabase: ProductType[] = [
     price: 145.0,
     category: 'amps',
     productshowcase: false,
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/magni+-silver/magni+-silver-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/magni+-silver/magni+-silver-2.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'schiit-magnius',
@@ -773,11 +778,11 @@ export const ProductDatabase: ProductType[] = [
     price: 262.0,
     productshowcase: false,
     category: 'amps',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/magnius/magnius-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/magnius/magnius-2.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/Schiit/amp/magnius/magnius-3.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'apos-topping-a90-discrete-black',
@@ -789,7 +794,11 @@ export const ProductDatabase: ProductType[] = [
     price: 599.0,
     category: 'amps',
     productshowcase: false,
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Apos/amp/topping-a90-discrete/topping-a90-discrete-1.webp'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 'apos-topping-dx3-pro+',
@@ -801,7 +810,11 @@ export const ProductDatabase: ProductType[] = [
     price: 199.0,
     category: 'amps-dacs',
     productshowcase: false,
-    images: ['/src/ecommerce/assets/production-images/compressed-product-src/Apos/amp/topping-dx3-pro+/topping-dx3-pro+.webp'],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 's.m.s.l-sh-6-black',
@@ -812,11 +825,11 @@ export const ProductDatabase: ProductType[] = [
     price: 119.99,
     productshowcase: false,
     category: 'amps',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/S.M.S.L/sh-6-black/sh-6-black-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/S.M.S.L/sh-6-black/sh-6-black-2.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/S.M.S.L/sh-6-black/sh-6-black-3.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
   {
     sku: 's.m.s.l-sh-6-silver',
@@ -827,9 +840,10 @@ export const ProductDatabase: ProductType[] = [
     price: 119.99,
     productshowcase: false,
     category: 'amps',
-    images: [
-      '/src/ecommerce/assets/production-images/compressed-product-src/S.M.S.L/sh-6-silver/sh-6-silver-1.jpg',
-      '/src/ecommerce/assets/production-images/compressed-product-src/S.M.S.L/sh-6-silver/sh-6-silver-2.jpg',
-    ],
+    images: {
+      small: [],
+      medium: [],
+      large: [],
+    },
   },
 ];

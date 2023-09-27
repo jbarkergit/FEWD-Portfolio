@@ -9,5 +9,9 @@ export type ProductType = {
   polarPattern?: string | string[];
   wearStyle?: string;
   productshowcase?: boolean;
-  images?: string[];
+  images?: {
+    small: string[];
+    medium: string[];
+    large: string[];
+  };
 };
