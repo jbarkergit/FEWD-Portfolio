@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/SignInViaSVGS';
+import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/PasskeySvgs';
 import { userEmailAddressRegex, userPasswordRegex } from '../authentication/userAccountRegExp';
 
 //Prop drilling
@@ -75,7 +75,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   const useRegistryFormSubmission = () => {};
 
   return (
-    <section className='ecoModalWrap'>
+    <section className='modalWrapper'>
       <form className='ecoModal accountModal' onSubmit={useRegistryFormSubmission} data-status='false' ref={userRegistryModal}>
         <legend>
           <h2>Account Creation</h2>

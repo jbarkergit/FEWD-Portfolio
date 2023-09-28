@@ -9,6 +9,7 @@
 
 //Header
 @forward '../ecommerce/components/navigation/header/ecoHeader';
+@forward '../ecommerce/components/navigation/header/mobile/mobileMenu';
 
 //Footer
 @forward '../ecommerce/components/navigation/footer/ecoFooter';
@@ -38,8 +39,7 @@
 //Feature: Shopping Cart
 @forward '../ecommerce/components/features/shopping-cart/shoppingCartModal';
 
-//Shared Feature: Reusable Modal Styling (PROBLEM!)
-@forward '../ecommerce/components/features/shared/modal';
+//Shared Feature: Reusable Modal Styling
 @forward '../ecommerce/components/features/user-account/userAccountModal';
 
 //Feature: User Account Modal Active

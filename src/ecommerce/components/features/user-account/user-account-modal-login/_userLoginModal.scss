@@ -1,1 +1,16 @@
 @use '../../../../../sass/util/functions' as f;
+
+.userLogin {
+  justify-content: center;
+  align-items: center;
+  &__passkeys {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: f.rem(18);
+    width: 100%;
+    & button svg {
+      font-size: f.rem(26);
+    }
+  }
+}

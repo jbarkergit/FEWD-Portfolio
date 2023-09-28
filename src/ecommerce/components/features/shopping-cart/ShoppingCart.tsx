@@ -12,12 +12,12 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   const { dispatch, REDUCER_ACTIONS, shoppingCart, cartProductSubtotal, cartProductQuantity } = useCart();
 
   //Modal reference
-  const ecoModalWrap = useRef<HTMLElement>(null);
+  const modalWrapper = useRef<HTMLElement>(null);
   const shoppingCartModal = useRef<HTMLDivElement>(null);
 
   //Toggle modal
   useEffect(() => {
-    ecoModalWrap.current?.setAttribute('data-status', uiModal === 'shoppingCart' ? 'active' : 'false'), [uiModal];
+    modalWrapper.current?.setAttribute('data-status', uiModal === 'shoppingCart' ? 'active' : 'false'), [uiModal];
     shoppingCartModal.current?.setAttribute('data-status', uiModal === 'shoppingCart' ? 'active' : 'false'), [uiModal];
   });
 
@@ -31,7 +31,7 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   }, []);
 
   return (
-    <section className='ecoModalWrap' ref={ecoModalWrap}>
+    <section className='modalWrapper' ref={modalWrapper}>
       <div className='ecoModal' data-status='false' ref={shoppingCartModal}>
         <div className='ecoModal__header'>{cartProductQuantity > 0 ? <>{`Shopping Cart (${cartProductQuantity})`}</> : <>{'Shopping Cart'}</>}</div>
         {shoppingCart.length > 0 ? (

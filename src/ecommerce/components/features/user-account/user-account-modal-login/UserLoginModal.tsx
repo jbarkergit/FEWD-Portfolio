@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/SignInViaSVGS';
+import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/PasskeySvgs';
 import { userEmailAddressRegex, userPasswordRegex } from '../authentication/userAccountRegExp';
 
 //Prop drill from UserAccountModal
@@ -10,14 +10,14 @@ type PropType = {
 };
 
 const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX.Element => {
-  const ecoModalWrap = useRef<HTMLElement>(null); //Modal Reference
+  const modalWrapper = useRef<HTMLElement>(null); //Modal Reference
   const userLoginModal = useRef<HTMLFormElement>(null); //Form Reference
   const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Input Field Reference
   const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Input Field Reference
 
   //Form Toggle
   useEffect(() => {
-    ecoModalWrap.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal];
+    modalWrapper.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal];
     userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal];
   }, [uiModal]);
 
@@ -98,93 +98,91 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
   }
 
   return (
-    <section className='ecoModalWrap' ref={ecoModalWrap}>
-      <form className='ecoModal accountModal' onSubmit={useLoginFormSubmission} data-status='false' ref={userLoginModal}>
+    <section className='modalWrapper' ref={modalWrapper}>
+      <form className='ecoModal userLogin' onSubmit={useLoginFormSubmission} data-status='false' ref={userLoginModal}>
         <legend>
           <h2>My Account</h2>
         </legend>
-        <>
-          <fieldset className='ecoModal__inputField'>
-            <label htmlFor='emailAddress' data-error={!formValidation.passwordValid ? 'true' : 'false'}>
-              <input
-                type='text'
-                placeholder='Email Address'
-                value={formValidation.emailAddress}
-                required
-                autoFocus
-                aria-invalid={formValidation.emailAddressValid ? 'false' : 'true'}
-                aria-describedby='uidnote'
-                ref={emailAddressInputFieldRef}
-                onClick={() => focus()}
-                onChange={(event) => setFormValidation({ ...formValidation, emailAddress: event.target.value })}
-              />
-            </label>
-            {formError.emailAddressError ? (
-              <figure className='inputFieldErrorMessage'>
-                <figcaption style={{ display: 'none' }}>Error Message</figcaption>
-                <p>Invalid Email Address</p>
-              </figure>
-            ) : null}
-            <label htmlFor='password' className='passwordLabel' data-error={!formValidation.passwordValid ? 'true' : 'false'}>
-              <input
-                type={formValidation.passwordVisible ? 'text' : 'password'}
-                placeholder='Password'
-                value={formValidation.password}
-                required
-                aria-invalid={formValidation.passwordValid ? 'false' : 'true'}
-                aria-describedby='pwdnote'
-                ref={passwordInputFieldRef}
-                onClick={() => focus()}
-                onChange={(event) => setFormValidation({ ...formValidation, password: event.target.value })}
-              />
-              <button
-                className='passwordLabel__visibility'
-                onClick={() => setFormValidation({ ...formValidation, passwordVisible: formValidation.passwordVisible ? false : true })}>
-                {formValidation.passwordVisible ? (
-                  <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 14 14'>
-                    <g fill='none' stroke='hsl(0, 0%, 20%)' strokeLinecap='round' strokeLinejoin='round'>
-                      <path d='M13.23 6.33a1 1 0 0 1 0 1.34C12.18 8.8 9.79 11 7 11S1.82 8.8.77 7.67a1 1 0 0 1 0-1.34C1.82 5.2 4.21 3 7 3s5.18 2.2 6.23 3.33Z'></path>
-                      <circle cx='7' cy='7' r='2'></circle>
-                    </g>
-                  </svg>
-                ) : (
-                  <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 14 14'>
-                    <g fill='none' stroke='hsl(0, 0%, 20%)' strokeLinecap='round' strokeLinejoin='round'>
-                      <path d='M12.29 5.4c.38.34.7.67.94.93a1 1 0 0 1 0 1.34C12.18 8.8 9.79 11 7 11h-.4m-2.73-.87a12.4 12.4 0 0 1-3.1-2.46a1 1 0 0 1 0-1.34C1.82 5.2 4.21 3 7 3a6.56 6.56 0 0 1 3.13.87M12.5 1.5l-11 11'></path>
-                      <path d='M5.59 8.41A2 2 0 0 1 5 7a2 2 0 0 1 2-2a2 2 0 0 1 1.41.59M8.74 8a2 2 0 0 1-.74.73'></path>
-                    </g>
-                  </svg>
-                )}
-              </button>
-            </label>
-            {formError.passwordError ? (
-              <figure className='inputFieldErrorMessage'>
-                <figcaption>Error Message</figcaption>
-                <p>Password must contain at least one special character, one lowercase and uppercase letter.</p>
-              </figure>
-            ) : null}
-          </fieldset>
-          <div className='ecoModal__actions'>
-            <button type='submit'>Log in</button>
-            <button onClick={() => setUiModal('userRegistry')}>Sign up</button>
-            <button>Reset Password</button>
-          </div>
-          <div className='ecoModal__signInVia'>
-            <button>
-              <Google />
+        <fieldset>
+          <label htmlFor='emailAddress' data-error={!formValidation.passwordValid ? 'true' : 'false'}>
+            <input
+              type='text'
+              placeholder='Email Address'
+              value={formValidation.emailAddress}
+              required
+              autoFocus
+              aria-invalid={formValidation.emailAddressValid ? 'false' : 'true'}
+              aria-describedby='uidnote'
+              ref={emailAddressInputFieldRef}
+              onClick={() => focus()}
+              onChange={(event) => setFormValidation({ ...formValidation, emailAddress: event.target.value })}
+            />
+          </label>
+          {formError.emailAddressError ? (
+            <figure className='inputFieldErrorMessage'>
+              <figcaption style={{ display: 'none' }}>Error Message</figcaption>
+              <p>Invalid Email Address</p>
+            </figure>
+          ) : null}
+          <label htmlFor='password' className='passwordLabel' data-error={!formValidation.passwordValid ? 'true' : 'false'}>
+            <input
+              type={formValidation.passwordVisible ? 'text' : 'password'}
+              placeholder='Password'
+              value={formValidation.password}
+              required
+              aria-invalid={formValidation.passwordValid ? 'false' : 'true'}
+              aria-describedby='pwdnote'
+              ref={passwordInputFieldRef}
+              onClick={() => focus()}
+              onChange={(event) => setFormValidation({ ...formValidation, password: event.target.value })}
+            />
+            <button
+              className='passwordLabel__visibility'
+              onClick={() => setFormValidation({ ...formValidation, passwordVisible: formValidation.passwordVisible ? false : true })}>
+              {formValidation.passwordVisible ? (
+                <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 14 14'>
+                  <g fill='none' stroke='hsl(0, 0%, 20%)' strokeLinecap='round' strokeLinejoin='round'>
+                    <path d='M13.23 6.33a1 1 0 0 1 0 1.34C12.18 8.8 9.79 11 7 11S1.82 8.8.77 7.67a1 1 0 0 1 0-1.34C1.82 5.2 4.21 3 7 3s5.18 2.2 6.23 3.33Z'></path>
+                    <circle cx='7' cy='7' r='2'></circle>
+                  </g>
+                </svg>
+              ) : (
+                <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 14 14'>
+                  <g fill='none' stroke='hsl(0, 0%, 20%)' strokeLinecap='round' strokeLinejoin='round'>
+                    <path d='M12.29 5.4c.38.34.7.67.94.93a1 1 0 0 1 0 1.34C12.18 8.8 9.79 11 7 11h-.4m-2.73-.87a12.4 12.4 0 0 1-3.1-2.46a1 1 0 0 1 0-1.34C1.82 5.2 4.21 3 7 3a6.56 6.56 0 0 1 3.13.87M12.5 1.5l-11 11'></path>
+                    <path d='M5.59 8.41A2 2 0 0 1 5 7a2 2 0 0 1 2-2a2 2 0 0 1 1.41.59M8.74 8a2 2 0 0 1-.74.73'></path>
+                  </g>
+                </svg>
+              )}
             </button>
-            <button>
-              <LinkedIn />
-            </button>
-            <button>
-              <Apple />
-            </button>
-          </div>
-          <div className='ecoModal__notice'>
-            <span>Privacy notice</span>
-            <p>This input field simulates user authentication via localStorage. A dummy account has been provided to protect your privacy.</p>
-          </div>
-        </>
+          </label>
+          {formError.passwordError ? (
+            <figure className='inputFieldErrorMessage'>
+              <figcaption>Error Message</figcaption>
+              <p>Password must contain at least one special character, one lowercase and uppercase letter.</p>
+            </figure>
+          ) : null}
+        </fieldset>
+        <div className='ecoModal__buttons'>
+          <button type='submit'>Log in</button>
+          <button onClick={() => setUiModal('userRegistry')}>Sign up</button>
+          <button>Reset Password</button>
+        </div>
+        <div className='userLogin__passkeys'>
+          <button>
+            <Google />
+          </button>
+          <button>
+            <LinkedIn />
+          </button>
+          <button>
+            <Apple />
+          </button>
+        </div>
+        <div className='ecoModal__notice'>
+          <span>Privacy notice</span>
+          <p>This input field simulates user authentication via localStorage. A dummy account has been provided to protect your privacy.</p>
+        </div>
       </form>
     </section>
   );
