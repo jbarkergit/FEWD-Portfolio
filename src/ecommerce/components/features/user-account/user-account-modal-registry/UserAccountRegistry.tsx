@@ -33,11 +33,11 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   }>({
     firstNameRegistry: '',
     lastNameRegistry: '',
-    birthRegistry: '00/00/0000',
+    birthRegistry: '01/01/2000',
     emailAddressRegistry: '',
     emailAddressValidRegistry: true,
     emailAddressRegistryCheck: '',
-    passwordRegistry: 'Test1!',
+    passwordRegistry: '',
     passwordVisible: true,
     passwordValidRegistry: true,
     passwordRegistryCheck: '',
@@ -48,13 +48,13 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
     setRegistry({
       firstNameRegistry: '',
       lastNameRegistry: '',
-      birthRegistry: '00/00/0000',
+      birthRegistry: '01/01/2000',
       emailAddressRegistry: '',
-      emailAddressValidRegistry: true,
+      emailAddressValidRegistry: false,
       emailAddressRegistryCheck: '',
-      passwordRegistry: 'Test1!',
-      passwordVisible: true,
-      passwordValidRegistry: true,
+      passwordRegistry: '',
+      passwordVisible: false,
+      passwordValidRegistry: false,
       passwordRegistryCheck: '',
     });
   };
@@ -115,21 +115,21 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
         </legend>
         <>
           <fieldset className='ecoModal__inputField'>
-            <label htmlFor='emailAddress' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
+            <label htmlFor='firstName' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
               <input
                 type='text'
                 placeholder='First Name'
                 value={registry.firstNameRegistry}
                 required
                 autoFocus
-                aria-invalid={registry.emailAddressValidRegistry ? 'false' : 'true'}
+                aria-invalid={registry.firstNameRegistry ? 'false' : 'true'}
                 aria-describedby='uidnote'
                 ref={emailAddressInputFieldRef}
                 onClick={() => focus()}
-                onChange={(event) => setRegistry({ ...registry, emailAddressRegistry: event.target.value })}
+                onChange={(event) => setRegistry({ ...registry, firstNameRegistry: event.target.value })}
               />
             </label>
-            <label htmlFor='emailAddress' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
+            <label htmlFor='lastName' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
               <input
                 type='text'
                 placeholder='Last Name'
@@ -140,7 +140,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 aria-describedby='uidnote'
                 ref={emailAddressInputFieldRef}
                 onClick={() => focus()}
-                onChange={(event) => setRegistry({ ...registry, emailAddressRegistry: event.target.value })}
+                onChange={(event) => setRegistry({ ...registry, lastNameRegistry: event.target.value })}
               />
             </label>
             <label htmlFor='emailAddress' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
@@ -175,7 +175,12 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 onClick={() => focus()}
                 onChange={(event) => setRegistry({ ...registry, passwordRegistry: event.target.value })}
               />
-              <button className='passwordLabel__visibility' onClick={() => setRegistry({ ...registry, passwordVisible: registry.passwordVisible ? false : true })}>
+              <button
+                className='passwordLabel__visibility'
+                onClick={(e) => {
+                  e.preventDefault();
+                  setRegistry({ ...registry, passwordVisible: registry.passwordVisible ? false : true });
+                }}>
                 {registry.passwordVisible ? (
                   <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 14 14'>
                     <g fill='none' stroke='hsl(0, 0%, 20%)' strokeLinecap='round' strokeLinejoin='round'>
@@ -209,7 +214,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 aria-describedby='pwdnote'
                 ref={passwordInputFieldRef}
                 onClick={() => focus()}
-                onChange={(event) => setRegistry({ ...registry, passwordRegistry: event.target.value })}
+                onChange={(event) => setRegistry({ ...registry, passwordRegistryCheck: event.target.value })}
               />
               <button className='passwordLabel__visibility' onClick={() => setRegistry({ ...registry, passwordVisible: registry.passwordVisible ? false : true })}>
                 {registry.passwordVisible ? (
@@ -236,19 +241,14 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
               </figure>
             ) : null}
           </fieldset>
-          <div className='ecoModal__actions'>
-            <button onClick={() => setUiModal('userRegistry')}>Submit</button>
-          </div>
-          <div className='ecoModal__signInVia'>
-            <button>
-              <Google />
+          <div className='ecoModal__buttons'>
+            <button
+              onClick={() => {
+                clearFormInputValues();
+              }}>
+              Submit
             </button>
-            <button>
-              <LinkedIn />
-            </button>
-            <button>
-              <Apple />
-            </button>
+            <button onClick={() => setUiModal('userLogin')}>Return to Login</button>
           </div>
           <div className='ecoModal__notice'>
             <span>Notice</span>
