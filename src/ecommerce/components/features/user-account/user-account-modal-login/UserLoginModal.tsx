@@ -105,7 +105,7 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
           <h2>My Account</h2>
         </legend>
         <fieldset>
-          <label htmlFor='emailAddress' data-error={!formValidation.passwordValid ? 'true' : 'false'}>
+          <label htmlFor='emailAddress' data-error={formValidation.password.length > 0 && !formValidation.passwordValid ? 'true' : 'false'}>
             <input
               type='text'
               placeholder='Email Address'
@@ -125,7 +125,7 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
               <p>Invalid Email Address</p>
             </figure>
           ) : null}
-          <label htmlFor='password' className='passwordLabel' data-error={!formValidation.passwordValid ? 'true' : 'false'}>
+          <label htmlFor='password' className='passwordLabel' data-error={formValidation.password.length > 0 && !formValidation.passwordValid ? 'true' : 'false'}>
             <input
               type={formValidation.passwordVisible ? 'text' : 'password'}
               placeholder='Password'
@@ -139,7 +139,10 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
             />
             <button
               className='passwordLabel__visibility'
-              onClick={() => setFormValidation({ ...formValidation, passwordVisible: formValidation.passwordVisible ? false : true })}>
+              onClick={(e) => {
+                e.preventDefault();
+                setFormValidation({ ...formValidation, passwordVisible: formValidation.passwordVisible ? false : true });
+              }}>
               {formValidation.passwordVisible ? (
                 <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 14 14'>
                   <g fill='none' stroke='hsl(0, 0%, 20%)' strokeLinecap='round' strokeLinejoin='round'>
@@ -181,8 +184,7 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
           </button>
         </div>
         <div className='ecoModal__notice'>
-          <span>Privacy notice</span>
-          <p>This input field simulates user authentication via localStorage. A dummy account has been provided to protect your privacy.</p>
+          <p>This form validates input fields and aims to simulate user authentication via localStorage.</p>
         </div>
       </form>
     </section>

@@ -66,11 +66,9 @@
   }
 }
 
-.ecoModal__inputField,
-.ecoModal__actions,
-.ecoModal__signInVia,
-.ecoModal__notice {
-  padding-bottom: f.rem(12);
+.ecoModal fieldset,
+.ecoModal__buttons {
+  padding-bottom: f.rem(18);
 }
 
 .ecoModal legend h2 {
@@ -120,17 +118,10 @@
 .ecoModal__notice {
   display: flex;
   flex-direction: column;
-  gap: f.rem(2);
   width: 90%;
   text-align: center;
   pointer-events: none;
   color: var(--fontPrimary);
-  & span {
-    font-size: f.rem(17);
-    font-weight: 600;
-    letter-spacing: f.rem(0.6);
-    text-transform: uppercase;
-  }
   & p {
     max-width: 45ch;
     margin: 0 auto;
