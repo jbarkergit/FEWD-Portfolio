@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/PasskeySvgs';
 import { userEmailAddressRegex, userPasswordRegex } from '../authentication/userAccountRegExp';
 
-//Prop drilling
+//Prop drill from UserAccountModal
 type PropType = {
   uiModal: string;
   setUiModal: Dispatch<SetStateAction<string>>;
@@ -14,35 +14,49 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Input Field Reference
 
   //Form Toggle
-  useEffect(() => userRegistryModal.current?.setAttribute('data-status', uiModal === 'userRegistry' ? 'active' : 'false'), [uiModal]);
+  useEffect(() => {
+    userRegistryModal.current?.setAttribute('data-status', uiModal === 'userRegistry' ? 'active' : 'false');
+  }, [uiModal]);
 
-  //Feature: toggle password visibility state
-  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-
-  //Form validation state
-  const [registryFirstName, setRegistryFirstName] = useState<string>('John');
-  const [validRegistryFirstName, setValidRegistryFirstName] = useState<boolean>(false);
-
-  const [registryLastName, setRegistryLastName] = useState<string>('Doe');
-  const [validRegistryLastName, setValidRegistryLastName] = useState<boolean>(false);
-
-  const [registryDOB, setRegistryDOB] = useState<string>('00/00/0000');
-
-  const [registryEmailAddress, setRegistryEmailAddress] = useState<string>('test@email.com');
-  const [validRegistryEmailAddress, setValidRegistryEmailAddress] = useState<boolean>(false);
-  const [registryEmailAddressCheck, setRegistryEmailAddressCheck] = useState<boolean>(false);
-
-  const [registryPassword, setRegistryPassword] = useState<string>('TestAccount1_');
-  const [validRegistryPassword, setValidRegistryPassword] = useState<boolean>(false);
-  const [registryPasswordCheck, setRegistryPasswordCheck] = useState<string>('TestAccount1_');
-  const [registryValidPasswordCheck, setRegistryValidPasswordCheck] = useState<boolean>(false);
+  //Registry validation state
+  const [registry, setRegistry] = useState<{
+    firstNameRegistry: string;
+    lastNameRegistry: string;
+    birthRegistry: string;
+    emailAddressRegistry: string;
+    emailAddressValidRegistry: boolean;
+    emailAddressRegistryCheck: string;
+    passwordRegistry: string;
+    passwordVisible: boolean;
+    passwordValidRegistry: boolean;
+    passwordRegistryCheck: string;
+  }>({
+    firstNameRegistry: '',
+    lastNameRegistry: '',
+    birthRegistry: '00/00/0000',
+    emailAddressRegistry: '',
+    emailAddressValidRegistry: true,
+    emailAddressRegistryCheck: '',
+    passwordRegistry: 'Test1!',
+    passwordVisible: true,
+    passwordValidRegistry: true,
+    passwordRegistryCheck: '',
+  });
 
   //Form input value clear hook
-  const clearLoginInputValues = (): void => {
-    setRegistryEmailAddress('');
-    setValidRegistryEmailAddress(false);
-    setRegistryPassword('');
-    setValidRegistryPassword(false);
+  const clearFormInputValues = (): void => {
+    setRegistry({
+      firstNameRegistry: '',
+      lastNameRegistry: '',
+      birthRegistry: '00/00/0000',
+      emailAddressRegistry: '',
+      emailAddressValidRegistry: true,
+      emailAddressRegistryCheck: '',
+      passwordRegistry: 'Test1!',
+      passwordVisible: true,
+      passwordValidRegistry: true,
+      passwordRegistryCheck: '',
+    });
   };
 
   //Form Exterior Click Handler
@@ -50,26 +64,45 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
     const handleExteriorClick = (e: PointerEvent) => {
       if (!userRegistryModal.current?.contains(e.target as Node)) {
         setUiModal('');
-        clearLoginInputValues();
+        clearFormInputValues();
       }
     };
     document.body.addEventListener('pointerdown', handleExteriorClick);
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
   }, [uiModal]);
 
-  //Form input value RegExp validation
-  useEffect(() => setValidRegistryEmailAddress(userEmailAddressRegex.test(registryEmailAddress)), [registryEmailAddress]);
-  useEffect(() => setValidRegistryPassword(userPasswordRegex.test(registryPassword)), [registryPassword]);
+  //RegExp test for email input value -> sets state validation boolean
+  useEffect(() => {
+    setRegistry({ ...registry, emailAddressValidRegistry: userEmailAddressRegex.test(registry.emailAddressRegistry) });
+  }, [registry.emailAddressRegistry]);
+
+  //RegExp test for password input value -> sets state validation boolean
+  useEffect(() => {
+    setRegistry({ ...registry, passwordValidRegistry: userPasswordRegex.test(registry.passwordRegistry) });
+  }, [registry.passwordRegistry]);
 
   //Input field ERROR state
-  const [emailAddressErrorPrompt, setEmailAddressErrorPrompt] = useState<boolean>(false);
-  const [passwordErrorPrompt, setPasswordErrorPrompt] = useState<boolean>(false);
+  const [registryError, setRegistryError] = useState<{
+    emailAddressRegistryError: boolean;
+    passwordRegistryError: boolean;
+  }>({
+    emailAddressRegistryError: false,
+    passwordRegistryError: false,
+  });
 
-  useEffect(
-    () => (!validRegistryEmailAddress && registryEmailAddress.length > 0 ? setEmailAddressErrorPrompt(true) : setEmailAddressErrorPrompt(false)),
-    [validRegistryEmailAddress]
-  );
-  useEffect(() => (!validRegistryPassword && registryPassword.length > 0 ? setPasswordErrorPrompt(true) : setPasswordErrorPrompt(false)), [registryPassword]);
+  //Email validation -> sets error state boolean
+  useEffect(() => {
+    !registry.emailAddressRegistry && registry.emailAddressRegistry.length > 0
+      ? setRegistryError({ ...registryError, emailAddressRegistryError: true })
+      : setRegistryError({ ...registryError, emailAddressRegistryError: false });
+  }, [registry.emailAddressValidRegistry]);
+
+  //Password validation -> sets error state boolean
+  useEffect(() => {
+    !registry.passwordRegistry && registry.passwordRegistry.length > 0
+      ? setRegistryError({ ...registryError, passwordRegistryError: true })
+      : setRegistryError({ ...registryError, passwordRegistryError: false });
+  }, [registry.passwordValidRegistry]);
 
   //Registry form submission hook
   const useRegistryFormSubmission = () => {};
@@ -82,68 +115,68 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
         </legend>
         <>
           <fieldset className='ecoModal__inputField'>
-            <label htmlFor='emailAddress' data-error={!validRegistryPassword ? 'true' : 'false'}>
+            <label htmlFor='emailAddress' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
               <input
                 type='text'
                 placeholder='First Name'
-                value={registryFirstName}
+                value={registry.firstNameRegistry}
                 required
                 autoFocus
-                aria-invalid={validRegistryEmailAddress ? 'false' : 'true'}
+                aria-invalid={registry.emailAddressValidRegistry ? 'false' : 'true'}
                 aria-describedby='uidnote'
                 ref={emailAddressInputFieldRef}
                 onClick={() => focus()}
-                onChange={(event) => setRegistryEmailAddress(event.target.value)}
+                onChange={(event) => setRegistry({ ...registry, emailAddressRegistry: event.target.value })}
               />
             </label>
-            <label htmlFor='emailAddress' data-error={!validRegistryPassword ? 'true' : 'false'}>
+            <label htmlFor='emailAddress' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
               <input
                 type='text'
                 placeholder='Last Name'
-                value={registryLastName}
+                value={registry.lastNameRegistry}
                 required
                 autoFocus
-                aria-invalid={validRegistryEmailAddress ? 'false' : 'true'}
+                aria-invalid={registry.emailAddressValidRegistry ? 'false' : 'true'}
                 aria-describedby='uidnote'
                 ref={emailAddressInputFieldRef}
                 onClick={() => focus()}
-                onChange={(event) => setRegistryEmailAddress(event.target.value)}
+                onChange={(event) => setRegistry({ ...registry, emailAddressRegistry: event.target.value })}
               />
             </label>
-            <label htmlFor='emailAddress' data-error={!validRegistryPassword ? 'true' : 'false'}>
+            <label htmlFor='emailAddress' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
               <input
                 type='text'
                 placeholder='Email Address'
-                value={registryEmailAddress}
+                value={registry.emailAddressRegistry}
                 required
                 autoFocus
-                aria-invalid={validRegistryEmailAddress ? 'false' : 'true'}
+                aria-invalid={registry.emailAddressValidRegistry ? 'false' : 'true'}
                 aria-describedby='uidnote'
                 ref={emailAddressInputFieldRef}
                 onClick={() => focus()}
-                onChange={(event) => setRegistryEmailAddress(event.target.value)}
+                onChange={(event) => setRegistry({ ...registry, emailAddressRegistry: event.target.value })}
               />
             </label>
-            {emailAddressErrorPrompt ? (
+            {registryError.emailAddressRegistryError ? (
               <figure className='inputFieldErrorMessage'>
                 <figcaption style={{ display: 'none' }}>Error Message</figcaption>
                 <p>Invalid Email Address</p>
               </figure>
             ) : null}
-            <label htmlFor='password' className='passwordLabel' data-error={!validRegistryPassword ? 'true' : 'false'}>
+            <label htmlFor='password' className='passwordLabel' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
               <input
-                type={passwordVisible ? 'text' : 'password'}
+                type={registry.passwordVisible ? 'text' : 'password'}
                 placeholder='Password'
-                value={registryPassword}
+                value={registry.passwordRegistry}
                 required
-                aria-invalid={validRegistryPassword ? 'false' : 'true'}
+                aria-invalid={registry.passwordValidRegistry ? 'false' : 'true'}
                 aria-describedby='pwdnote'
                 ref={passwordInputFieldRef}
                 onClick={() => focus()}
-                onChange={(event) => setRegistryPassword(event.target.value)}
+                onChange={(event) => setRegistry({ ...registry, passwordRegistry: event.target.value })}
               />
-              <button className='passwordLabel__visibility' onClick={() => setPasswordVisible(passwordVisible ? false : true)}>
-                {passwordVisible ? (
+              <button className='passwordLabel__visibility' onClick={() => setRegistry({ ...registry, passwordVisible: registry.passwordVisible ? false : true })}>
+                {registry.passwordVisible ? (
                   <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 14 14'>
                     <g fill='none' stroke='hsl(0, 0%, 20%)' strokeLinecap='round' strokeLinejoin='round'>
                       <path d='M13.23 6.33a1 1 0 0 1 0 1.34C12.18 8.8 9.79 11 7 11S1.82 8.8.77 7.67a1 1 0 0 1 0-1.34C1.82 5.2 4.21 3 7 3s5.18 2.2 6.23 3.33Z'></path>
@@ -160,26 +193,26 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 )}
               </button>
             </label>
-            {passwordErrorPrompt ? (
+            {registryError.passwordRegistryError ? (
               <figure className='inputFieldErrorMessage'>
                 <figcaption>Error Message</figcaption>
                 <p>Password must contain at least one special character, one lowercase and uppercase letter.</p>
               </figure>
             ) : null}
-            <label htmlFor='password' className='passwordLabel' data-error={!validRegistryPassword ? 'true' : 'false'}>
+            <label htmlFor='password' className='passwordLabel' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
               <input
-                type={passwordVisible ? 'text' : 'password'}
+                type={registry.passwordVisible ? 'text' : 'password'}
                 placeholder='Password'
-                value={registryPasswordCheck}
+                value={registry.passwordRegistryCheck}
                 required
-                aria-invalid={validRegistryPassword ? 'false' : 'true'}
+                aria-invalid={registry.passwordValidRegistry ? 'false' : 'true'}
                 aria-describedby='pwdnote'
                 ref={passwordInputFieldRef}
                 onClick={() => focus()}
-                onChange={(event) => setRegistryPassword(event.target.value)}
+                onChange={(event) => setRegistry({ ...registry, passwordRegistry: event.target.value })}
               />
-              <button className='passwordLabel__visibility' onClick={() => setPasswordVisible(passwordVisible ? false : true)}>
-                {passwordVisible ? (
+              <button className='passwordLabel__visibility' onClick={() => setRegistry({ ...registry, passwordVisible: registry.passwordVisible ? false : true })}>
+                {registry.passwordVisible ? (
                   <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 14 14'>
                     <g fill='none' stroke='hsl(0, 0%, 20%)' strokeLinecap='round' strokeLinejoin='round'>
                       <path d='M13.23 6.33a1 1 0 0 1 0 1.34C12.18 8.8 9.79 11 7 11S1.82 8.8.77 7.67a1 1 0 0 1 0-1.34C1.82 5.2 4.21 3 7 3s5.18 2.2 6.23 3.33Z'></path>
@@ -196,7 +229,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 )}
               </button>
             </label>
-            {registryPassword !== registryPasswordCheck ? (
+            {registry.passwordRegistry !== registry.passwordRegistryCheck ? (
               <figure className='inputFieldErrorMessage'>
                 <figcaption>Error Message</figcaption>
                 <p>Passwords do not match.</p>
