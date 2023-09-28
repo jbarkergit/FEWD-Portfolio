@@ -12,8 +12,14 @@ const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
 const Home = lazy(() => import('./ecommerce/pages/Home'));
 const ProductCatalog = lazy(() => import('./ecommerce/pages/ProductCatalog'));
 const ProductDetailPage = lazy(() => import('./ecommerce/pages/ProductDetailPage'));
+//Skeletons
+import HomeSkeleton from './ecommerce/skeletons/pages/HomeSkeleton';
+import ProductCatalogSkeleton from './ecommerce/skeletons/pages/ProductCatalogSkeleton';
+import ProductDetailPageSkeleton from './ecommerce/skeletons/pages/ProductDetailPageSkeleton';
+//Context
 import { CategoryFilterProvider } from './ecommerce/context/CategoryFilterContext';
 import { CartProvider } from './ecommerce/context/CartContext';
+//Hooks
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
 //Hyundai-N
@@ -32,7 +38,9 @@ function App() {
           <CartProvider>
             <Routes>
               <Route path='*' element={<NotFound />} />
+
               <Route path='/' element={<Portfolio />} />
+
               <Route path='/ecommerce' element={<Home />} />
               <Route path='/ecommerce/products' element={<ProductCatalog />} />
               <Route path='/ecommerce/headphones' element={<ProductCatalog />} />
@@ -49,6 +57,10 @@ function App() {
               {uniquePolarPatterns.map((polarPattern) => (
                 <Route path={`/ecommerce/${polarPattern}`} element={<ProductCatalog />} key={polarPattern} />
               ))}
+              {/* <Route path='/home-skeleton' element={<HomeSkeleton />} /> */}
+              {/* <Route path='/product-catalog-skeleton' element={<ProductCatalogSkeleton />} /> */}
+              {/* <Route path='/product-detail-page-skeleton' element={<ProductDetailPageSkeleton />} /> */}
+
               <Route path='/hyundai-n' element={<HyundaiPageStructure />} />
             </Routes>
           </CartProvider>
