@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/SignInViaSVGS';
-import { userEmailAddressRegex, userPasswordRegex } from '../shared/authentication/userAccountRegExp';
+import { userEmailAddressRegex, userPasswordRegex } from '../authentication/userAccountRegExp';
 
 //Prop drilling
 type PropType = {
