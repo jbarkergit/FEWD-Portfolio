@@ -17,13 +17,20 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
 
   //Toggle modal
   useEffect(() => {
-    modalWrapper.current?.setAttribute('data-status', uiModal === 'shoppingCart' ? 'active' : 'false'), [uiModal];
-    shoppingCartModal.current?.setAttribute('data-status', uiModal === 'shoppingCart' ? 'active' : 'false'), [uiModal];
-  });
+    modalWrapper.current?.setAttribute('data-status', uiModal === 'shoppingCart' ? 'active' : 'false');
+    shoppingCartModal.current?.setAttribute('data-status', uiModal === 'shoppingCart' ? 'active' : 'false');
+  }, [uiModal]);
 
+  //Form Exterior Click Handler
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
-      !shoppingCartModal.current?.contains(e.target as Node) && !(e.target as HTMLButtonElement).classList.contains('ctaBtn') ? setUiModal('') : null;
+      if (
+        shoppingCartModal.current &&
+        shoppingCartModal.current.getAttribute('data-status') === 'active' &&
+        !shoppingCartModal.current?.contains(e.target as Node)
+      ) {
+        setUiModal('');
+      }
     };
 
     document.body.addEventListener('pointerdown', handleExteriorClick);

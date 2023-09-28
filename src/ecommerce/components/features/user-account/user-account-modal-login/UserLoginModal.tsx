@@ -17,8 +17,8 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
 
   //Form Toggle
   useEffect(() => {
-    modalWrapper.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal];
-    userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false'), [uiModal];
+    modalWrapper.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false');
+    userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false');
   }, [uiModal]);
 
   //Form validation state
@@ -50,14 +50,15 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
   //Form Exterior Click Handler
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
-      if (!userLoginModal.current?.contains(e.target as Node)) {
+      if (userLoginModal.current && userLoginModal.current.getAttribute('data-status') === 'active' && !userLoginModal.current?.contains(e.target as Node)) {
         setUiModal('');
         clearLoginInputValues();
       }
     };
+
     document.body.addEventListener('pointerdown', handleExteriorClick);
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
-  }, [uiModal]);
+  }, []);
 
   //RegExp test for email input value -> sets state validation boolean
   useEffect(() => {
