@@ -79,16 +79,12 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
 
   //Email validation -> sets error state boolean
   useEffect(() => {
-    formValidation.emailAddressValid && formValidation.emailAddress.length > 0
-      ? setFormError({ ...formError, emailAddressError: true })
-      : setFormError({ ...formError, emailAddressError: false });
+    formValidation.emailAddressValid ? setFormError({ ...formError, emailAddressError: false }) : setFormError({ ...formError, emailAddressError: true });
   }, [formValidation.emailAddressValid]);
 
   //Password validation -> sets error state boolean
   useEffect(() => {
-    formValidation.passwordValid && formValidation.password.length > 0
-      ? setFormError({ ...formError, passwordError: true })
-      : setFormError({ ...formError, passwordError: false });
+    formValidation.passwordValid ? setFormError({ ...formError, passwordError: false }) : setFormError({ ...formError, passwordError: true });
   }, [formValidation.passwordValid]);
 
   //Form submission hook
@@ -172,7 +168,9 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
             ) : null}
           </fieldset>
           <div className='ecoModal__container__buttons'>
-            <button type='submit'>Log in</button>
+            <button type='submit' onClick={() => SubmitEvent}>
+              Log in
+            </button>
             <button onClick={() => setUiModal('userRegistry')}>Sign up</button>
             <button id='resetPassword' onClick={(e) => e.preventDefault()}>
               Forgot your password?
