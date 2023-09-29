@@ -9,7 +9,7 @@ type UserAccountModalType = {
   setUiModal: Dispatch<SetStateAction<string>>;
 };
 
-const UserAccountModal = ({ uiModal, setUiModal }: UserAccountModalType): JSX.Element | undefined => {
+const UserAccountModal = ({ uiModal, setUiModal }: UserAccountModalType): JSX.Element => {
   //User authentication state
   const [userSignedIn, setUserSignedIn] = useState<boolean>(false);
 
@@ -24,7 +24,7 @@ const UserAccountModal = ({ uiModal, setUiModal }: UserAccountModalType): JSX.El
     case 'userActive':
       if (userSignedIn) return <UserAccountActive />;
     default:
-      null;
+      return <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} setUserSignedIn={setUserSignedIn} />;
   }
 };
 
