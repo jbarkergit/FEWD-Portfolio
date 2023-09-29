@@ -39,17 +39,8 @@
 //Feature: Shopping Cart
 @forward '../ecommerce/components/features/shopping-cart/shoppingCartModal';
 
-//Shared Feature: Reusable Modal Styling
+//Shared Feature: Account Modals
 @forward '../ecommerce/components/features/user-account/modal';
-
-//Feature: User Account Modal Active
-@forward '../ecommerce/components/features/user-account/user-account-modal-active/userAccountActive';
-
-//Feature: User Account Modal Login
-@forward '../ecommerce/components/features/user-account/user-account-modal-login/userLoginModal';
-
-//Feature: User Account Modal Registry
-@forward '../ecommerce/components/features/user-account/user-account-modal-registry/userRegistryModal';
 
 //Feature: User Account Dashboard
 @forward '../ecommerce/components/features/user-account/user-account-dashboard/userAccountDashboard';

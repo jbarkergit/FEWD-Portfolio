@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/PasskeySvgs';
 import { userEmailAddressRegex, userPasswordRegex } from '../authentication/userAccountRegExp';
 
 //Prop drill from UserAccountModal
@@ -9,12 +8,14 @@ type PropType = {
 };
 
 const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => {
+  const modalWrapper = useRef<HTMLElement>(null); //Modal Reference
   const userRegistryModal = useRef<HTMLFormElement>(null); //Form Reference
   const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Input Field Reference
   const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Input Field Reference
 
   //Form Toggle
   useEffect(() => {
+    modalWrapper.current?.setAttribute('data-status', uiModal === 'userRegistry' ? 'active' : 'false');
     userRegistryModal.current?.setAttribute('data-status', uiModal === 'userRegistry' ? 'active' : 'false');
   }, [uiModal]);
 
@@ -31,45 +32,50 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
     passwordValidRegistry: boolean;
     passwordRegistryCheck: string;
   }>({
-    firstNameRegistry: 'John',
-    lastNameRegistry: 'Doe',
+    firstNameRegistry: '',
+    lastNameRegistry: '',
     birthRegistry: '01/01/2000',
-    emailAddressRegistry: 'johndoe@email.com',
-    emailAddressValidRegistry: true,
-    emailAddressRegistryCheck: 'johndoe@email.com',
-    passwordRegistry: 'JohnDoe1!',
-    passwordVisible: true,
-    passwordValidRegistry: true,
-    passwordRegistryCheck: 'JohnDoe1!',
+    emailAddressRegistry: '',
+    emailAddressValidRegistry: false,
+    emailAddressRegistryCheck: '',
+    passwordRegistry: '',
+    passwordVisible: false,
+    passwordValidRegistry: false,
+    passwordRegistryCheck: '',
   });
 
   //Form input value clear hook
   const clearFormInputValues = (): void => {
     setRegistry({
-      firstNameRegistry: 'John',
-      lastNameRegistry: 'Doe',
+      firstNameRegistry: '',
+      lastNameRegistry: '',
       birthRegistry: '01/01/2000',
-      emailAddressRegistry: 'johndoe@email.com',
-      emailAddressValidRegistry: true,
-      emailAddressRegistryCheck: 'johndoe@email.com',
-      passwordRegistry: 'JohnDoe1!',
-      passwordVisible: true,
-      passwordValidRegistry: true,
-      passwordRegistryCheck: 'JohnDoe1!',
+      emailAddressRegistry: '',
+      emailAddressValidRegistry: false,
+      emailAddressRegistryCheck: '',
+      passwordRegistry: '',
+      passwordVisible: false,
+      passwordValidRegistry: false,
+      passwordRegistryCheck: '',
     });
   };
 
   //Form Exterior Click Handler
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
-      if (!userRegistryModal.current?.contains(e.target as Node)) {
+      if (
+        userRegistryModal.current &&
+        userRegistryModal.current.getAttribute('data-status') === 'active' &&
+        !userRegistryModal.current?.contains(e.target as Node)
+      ) {
         setUiModal('');
         clearFormInputValues();
       }
     };
+
     document.body.addEventListener('pointerdown', handleExteriorClick);
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
-  }, [uiModal]);
+  }, []);
 
   //RegExp test for email input value -> sets state validation boolean
   useEffect(() => {
@@ -108,42 +114,47 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   const useRegistryFormSubmission = () => {};
 
   return (
-    <section className='modalWrapper'>
-      <form className='ecoModal accountModal' onSubmit={useRegistryFormSubmission} data-status='false' ref={userRegistryModal}>
-        <legend>
-          <h2>Account Creation</h2>
-        </legend>
-        <>
-          <fieldset className='ecoModal__inputField'>
-            <label htmlFor='firstName' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
-              <input
-                type='text'
-                placeholder='First Name'
-                value={registry.firstNameRegistry}
-                required
-                autoFocus
-                aria-invalid={registry.firstNameRegistry ? 'false' : 'true'}
-                aria-describedby='uidnote'
-                ref={emailAddressInputFieldRef}
-                onClick={() => focus()}
-                onChange={(event) => setRegistry({ ...registry, firstNameRegistry: event.target.value })}
-              />
-            </label>
-            <label htmlFor='lastName' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
-              <input
-                type='text'
-                placeholder='Last Name'
-                value={registry.lastNameRegistry}
-                required
-                autoFocus
-                aria-invalid={registry.emailAddressValidRegistry ? 'false' : 'true'}
-                aria-describedby='uidnote'
-                ref={emailAddressInputFieldRef}
-                onClick={() => focus()}
-                onChange={(event) => setRegistry({ ...registry, lastNameRegistry: event.target.value })}
-              />
-            </label>
-            <label htmlFor='emailAddress' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
+    <section className='modalWrapper' ref={modalWrapper}>
+      <form className='ecoModal' onSubmit={useRegistryFormSubmission} data-status='false' ref={userRegistryModal}>
+        <div className='ecoModal__container'>
+          <legend>
+            <h2>Account Creation</h2>
+          </legend>
+
+          <fieldset>
+            <div className='firstLastName'>
+              <label htmlFor='firstName'>
+                <input
+                  id='capitalize'
+                  type='text'
+                  placeholder='First Name'
+                  value={registry.firstNameRegistry}
+                  required
+                  autoFocus
+                  aria-invalid={registry.firstNameRegistry ? 'false' : 'true'}
+                  aria-describedby='uidnote'
+                  ref={emailAddressInputFieldRef}
+                  onClick={() => focus()}
+                  onChange={(event) => setRegistry({ ...registry, firstNameRegistry: event.target.value })}
+                />
+              </label>
+              <label htmlFor='lastName'>
+                <input
+                  id='capitalize'
+                  type='text'
+                  placeholder='Last Name'
+                  value={registry.lastNameRegistry}
+                  required
+                  autoFocus
+                  aria-invalid={registry.emailAddressValidRegistry ? 'false' : 'true'}
+                  aria-describedby='uidnote'
+                  ref={emailAddressInputFieldRef}
+                  onClick={() => focus()}
+                  onChange={(event) => setRegistry({ ...registry, lastNameRegistry: event.target.value })}
+                />
+              </label>
+            </div>
+            <label htmlFor='emailAddress'>
               <input
                 type='text'
                 placeholder='Email Address'
@@ -163,7 +174,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 <p>Invalid Email Address</p>
               </figure>
             ) : null}
-            <label htmlFor='password' className='passwordLabel' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
+            <label htmlFor='password' className='passwordLabel'>
               <input
                 type={registry.passwordVisible ? 'text' : 'password'}
                 placeholder='Password'
@@ -204,10 +215,10 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 <p>Password must contain at least one special character, one lowercase and uppercase letter.</p>
               </figure>
             ) : null}
-            <label htmlFor='passwordCheck' className='passwordLabel' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
+            <label htmlFor='passwordCheck' className='passwordLabel'>
               <input
                 type={registry.passwordVisible ? 'text' : 'password'}
-                placeholder='Password'
+                placeholder='Retype your password'
                 value={registry.passwordRegistryCheck}
                 required
                 aria-invalid={registry.passwordValidRegistry ? 'false' : 'true'}
@@ -241,7 +252,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
               </figure>
             ) : null}
           </fieldset>
-          <div className='ecoModal__buttons'>
+          <div className='ecoModal__container__buttons'>
             <button
               onClick={() => {
                 clearFormInputValues();
@@ -250,10 +261,10 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
             </button>
             <button onClick={() => setUiModal('userLogin')}>Return to Login</button>
           </div>
-          <div className='ecoModal__notice'>
+          <div className='ecoModal__container__notice'>
             <p>This form validates input fields and aims to simulate user authentication via localStorage.</p>
           </div>
-        </>
+        </div>
       </form>
     </section>
   );

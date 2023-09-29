@@ -24,17 +24,17 @@
   position: absolute;
   top: 15%;
   right: 0;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  place-items: center;
   gap: f.rem(10);
   min-width: f.rem(425);
   max-width: f.rem(480);
   height: 80vh;
   z-index: 13;
-  padding: f.rem(20) f.rem(30);
+  padding: f.rem(50);
   border-radius: f.rem(18);
   margin: 0 8.335%;
-  background-color: var(--elemBackgroundPrimary);
+  background: var(--gradientMono);
   @media (width <= 778px) {
     top: 0;
     left: 0;
@@ -66,80 +66,125 @@
   }
 }
 
-.ecoModal fieldset,
-.ecoModal__buttons {
-  padding-bottom: f.rem(18);
-}
-
-.ecoModal legend h2 {
-  width: 100%;
-  font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.ecoModal fieldset {
-  display: grid;
-  place-items: center;
-  gap: f.rem(18);
-  width: 100%;
-  & label {
-    position: relative;
-    width: 90%;
-    height: auto;
-    outline: 1px solid hsl(0, 0%, 68%);
-    border-radius: f.rem(6);
-    &[data-error='true'] {
-      outline: 1px solid hsl(0, 100%, 80%);
-    }
-    & input {
-      width: 100%;
-      height: inherit;
-      min-height: f.rem(42);
-      padding: 1.5% 4%;
-      background-color: hsl(0, 0%, 100%);
-    }
-  }
-}
-
-.ecoModal__buttons {
+.ecoModal__container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: f.rem(6);
-  width: 90%;
-  & button {
-    @include m.ecoBtn;
-    @include m.ecoBtnDark;
+  align-items: center;
+  width: 100%;
+  & > * {
+    padding-bottom: f.rem(18);
+  }
+  & legend {
+    padding-bottom: f.rem(12);
+    & h2 {
+      width: 100%;
+      font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  }
+  & fieldset {
+    display: grid;
+    place-items: center;
+    gap: f.rem(12);
     width: 100%;
+    cursor: default;
+    & label {
+      position: relative;
+      width: 90%;
+      height: auto;
+      border-radius: f.rem(6);
+      background: var(--elemBackgroundPrimary);
+      outline: 1px solid hsl(0, 0%, 86%);
+      // box-shadow:
+      //   inset 2px 2px 4px #d1d9e6,
+      //   inset -2px -2px 4px #f9f9f9;
+      & input {
+        width: 100%;
+        height: inherit;
+        min-height: f.rem(42);
+        padding: 0 f.rem(12);
+        border-top-left-radius: f.rem(6);
+        border-bottom-left-radius: f.rem(6);
+        color: rgb(0, 0, 0);
+        font-weight: 400;
+        letter-spacing: f.rem(0.3);
+        box-shadow:
+          2px 2px 4px #d1d9e6,
+          -2px -2px 4px #f9f9f9;
+      }
+    }
+  }
+
+  #capitalize {
+    text-transform: capitalize;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: f.rem(6);
+    width: 90%;
+    padding-bottom: f.rem(24);
+    & button {
+      @include m.ecoBtn;
+      @include m.ecoBtnDark;
+      width: 100%;
+    }
+  }
+  &__passkeys {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: f.rem(18);
+    width: 100%;
+    & button svg {
+      font-size: f.rem(26);
+    }
+  }
+  &__notice {
+    position: absolute;
+    bottom: 8%;
+    padding: 0;
+    pointer-events: none;
+    text-align: center;
+    & p {
+      max-width: 30ch;
+      font-size: f.rem(16);
+      font-weight: 500;
+      line-height: f.rem(18);
+      color: var(--fontPrimary);
+    }
   }
 }
 
-.ecoModal__notice {
+.firstLastName {
   display: flex;
-  flex-direction: column;
+  gap: f.rem(12);
   width: 90%;
-  text-align: center;
-  pointer-events: none;
-  color: var(--fontPrimary);
-  & p {
-    max-width: 45ch;
-    margin: 0 auto;
-    font-size: f.rem(16);
-    font-weight: 500;
-    line-height: f.rem(18);
-  }
 }
 
 .passwordLabel {
   display: flex;
   &__visibility {
     padding: 0 f.rem(10);
-    border-left: 1px solid hsl(0, 0%, 68%);
+    border-left: 2px solid hsl(0, 0%, 91%);
+    border-top-right-radius: f.rem(6);
+    border-bottom-right-radius: f.rem(6);
+    box-shadow:
+      2px 2px 4px #d1d9e6,
+      -2px -2px 4px #f9f9f9;
     & svg {
       transform: translateY(10%);
     }
   }
+}
+
+#resetPassword {
+  background-color: transparent;
+  color: black;
 }
 
 .inputFieldErrorMessage {
