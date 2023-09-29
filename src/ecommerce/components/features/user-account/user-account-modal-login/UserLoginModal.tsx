@@ -43,7 +43,12 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
   //Form Exterior Click Handler
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
-      if (userLoginModal.current && userLoginModal.current.getAttribute('data-status') === 'active' && !userLoginModal.current?.contains(e.target as Node)) {
+      if (
+        uiModal === 'userLogin' &&
+        userLoginModal.current &&
+        userLoginModal.current.getAttribute('data-status') === 'active' &&
+        !userLoginModal.current?.contains(e.target as Node)
+      ) {
         setUiModal('');
         clearFormInputValues();
       }
@@ -51,7 +56,7 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
 
     document.body.addEventListener('pointerdown', handleExteriorClick);
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
-  }, []);
+  }, [uiModal]);
 
   //RegExp test for email input value -> sets state validation boolean
   useEffect(() => {

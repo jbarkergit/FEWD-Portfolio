@@ -25,6 +25,7 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
       if (
+        uiModal === 'shoppingCart' &&
         shoppingCartModal.current &&
         shoppingCartModal.current.getAttribute('data-status') === 'active' &&
         !shoppingCartModal.current?.contains(e.target as Node)
@@ -35,7 +36,7 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
 
     document.body.addEventListener('pointerdown', handleExteriorClick);
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
-  }, []);
+  }, [uiModal]);
 
   return (
     <section className='modalWrapper' ref={modalWrapper}>

@@ -57,6 +57,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
       if (
+        uiModal === 'userRegistry' &&
         userRegistryModal.current &&
         userRegistryModal.current.getAttribute('data-status') === 'active' &&
         !userRegistryModal.current?.contains(e.target as Node)
@@ -68,7 +69,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
 
     document.body.addEventListener('pointerdown', handleExteriorClick);
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
-  }, []);
+  }, [uiModal]);
 
   //RegExp test for email input value -> sets state validation boolean
   useEffect(() => {
