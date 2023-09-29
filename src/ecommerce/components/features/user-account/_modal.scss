@@ -27,8 +27,7 @@
   display: grid;
   place-items: center;
   gap: f.rem(10);
-  min-width: f.rem(425);
-  max-width: f.rem(480);
+  width: f.rem(480);
   height: 80vh;
   z-index: 13;
   padding: f.rem(50);
@@ -72,6 +71,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  overflow: hidden;
   & > * {
     padding-bottom: f.rem(18);
   }

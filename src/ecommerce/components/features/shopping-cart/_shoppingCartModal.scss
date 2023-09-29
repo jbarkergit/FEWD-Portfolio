@@ -12,9 +12,10 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 86%;
-    padding: f.rem(15) 0;
-    overflow-y: hidden;
+    max-height: 560px;
+    margin: 0 0 f.rem(15) 0;
+    overflow-y: auto;
+    scrollbar-width: none;
     &__emptyCart {
       display: flex;
       flex-direction: column;
@@ -40,18 +41,19 @@
   }
   &__lineItem {
     display: flex;
-    height: 100%;
+    align-items: center;
+    height: calc(560px / 3.5);
     max-height: calc((80vh - 14%) / 4);
-    margin-bottom: 5%;
+    margin-left: -2%;
     & picture {
       position: relative;
       width: 45%;
-      height: 100%;
+      height: inherit;
       z-index: 3;
+      mix-blend-mode: darken;
       & img {
         max-height: inherit;
         object-fit: scale-down;
-        mix-blend-mode: darken;
       }
     }
     &__information {
@@ -61,7 +63,7 @@
       gap: 8%;
       width: 55%;
       height: fit-content;
-      padding-left: 2%;
+      margin-top: -20px;
       & hgroup {
         display: flex;
         flex-direction: column;
@@ -113,17 +115,18 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 8%;
+    padding-bottom: 0 !important;
     & button {
       display: flex;
       justify-content: center;
       width: 100%;
-      max-height: f.rem(45);
-      padding: f.rem(12) f.rem(12);
-      border-radius: f.rem(6);
-      letter-spacing: f.rem(0.5);
-      white-space: nowrap;
+      @include m.ecoBtn;
       @include m.ecoBtnDark;
+      font-size: f.rem(14);
     }
   }
+}
+
+#shoppingCartHeader {
+  padding-bottom: f.rem(6);
 }

@@ -10,16 +10,8 @@ type PropType = {
 
 const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   const { dispatch, REDUCER_ACTIONS, shoppingCart, cartProductSubtotal, cartProductQuantity } = useCart();
-
-  //Modal reference
-  const modalWrapper = useRef<HTMLElement>(null);
-  const shoppingCartModal = useRef<HTMLDivElement>(null);
-
-  //Toggle modal
-  useEffect(() => {
-    modalWrapper.current?.setAttribute('data-status', uiModal === 'shoppingCart' ? 'active' : 'false');
-    shoppingCartModal.current?.setAttribute('data-status', uiModal === 'shoppingCart' ? 'active' : 'false');
-  }, [uiModal]);
+  const shoppingCartModal = useRef<HTMLDivElement>(null); //Shopping cart modal reference
+  const shoppingCartProducts = useRef<HTMLUListElement>(null); //Shopping cart product list reference
 
   //Form Exterior Click Handler
   useEffect(() => {
@@ -38,19 +30,36 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
   }, [uiModal]);
 
+  //Scroll product list anywhere in modal
+  useEffect(() => {
+    const userScroll = (e: WheelEvent) => {
+      if (uiModal === 'shoppingCart' && shoppingCartModal.current && shoppingCartProducts.current) {
+        e.preventDefault();
+        shoppingCartProducts.current.scrollBy(0, e.deltaY);
+      }
+    };
+
+    shoppingCartModal.current?.addEventListener('wheel', userScroll);
+    return () => shoppingCartModal.current?.removeEventListener('wheel', userScroll);
+  }, [uiModal]);
+
   return (
-    <section className='modalWrapper' ref={modalWrapper}>
-      <div className='ecoModal' data-status='false' ref={shoppingCartModal}>
-        <div className='ecoModal__header'>{cartProductQuantity > 0 ? <>{`Shopping Cart (${cartProductQuantity})`}</> : <>{'Shopping Cart'}</>}</div>
-        {shoppingCart.length > 0 ? (
-          <ul className='ecoModal__products'>
-            <CartProduct />
-          </ul>
-        ) : (
-          <EmptyCart setUiModal={setUiModal} />
-        )}
-        <div className='ecoModal__orderDetails'>
-          {shoppingCart.length > 0 ? <button onClick={() => dispatch({ type: REDUCER_ACTIONS.SUBMIT })}>Subtotal {cartProductSubtotal}</button> : null}
+    <section className='modalWrapper' data-status={uiModal === 'shoppingCart' ? 'active' : 'false'}>
+      <div className='ecoModal' data-status={uiModal === 'shoppingCart' ? 'active' : 'false'} ref={shoppingCartModal}>
+        <div className='ecoModal__container'>
+          <div className='ecoModal__header' id='shoppingCartHeader'>
+            {cartProductQuantity > 0 ? <>{`Shopping Cart (${cartProductQuantity})`}</> : <>{'Shopping Cart'}</>}
+          </div>
+          {shoppingCart.length > 0 ? (
+            <ul className='ecoModal__products' ref={shoppingCartProducts}>
+              <CartProduct />
+            </ul>
+          ) : (
+            <EmptyCart setUiModal={setUiModal} />
+          )}
+          <div className='ecoModal__orderDetails'>
+            {shoppingCart.length > 0 ? <button onClick={() => dispatch({ type: REDUCER_ACTIONS.SUBMIT })}>Subtotal {cartProductSubtotal}</button> : null}
+          </div>
         </div>
       </div>
     </section>
