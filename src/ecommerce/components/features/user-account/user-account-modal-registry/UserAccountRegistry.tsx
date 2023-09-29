@@ -31,31 +31,31 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
     passwordValidRegistry: boolean;
     passwordRegistryCheck: string;
   }>({
-    firstNameRegistry: '',
-    lastNameRegistry: '',
+    firstNameRegistry: 'John',
+    lastNameRegistry: 'Doe',
     birthRegistry: '01/01/2000',
-    emailAddressRegistry: '',
+    emailAddressRegistry: 'johndoe@email.com',
     emailAddressValidRegistry: true,
-    emailAddressRegistryCheck: '',
-    passwordRegistry: '',
+    emailAddressRegistryCheck: 'johndoe@email.com',
+    passwordRegistry: 'JohnDoe1!',
     passwordVisible: true,
     passwordValidRegistry: true,
-    passwordRegistryCheck: '',
+    passwordRegistryCheck: 'JohnDoe1!',
   });
 
   //Form input value clear hook
   const clearFormInputValues = (): void => {
     setRegistry({
-      firstNameRegistry: '',
-      lastNameRegistry: '',
+      firstNameRegistry: 'John',
+      lastNameRegistry: 'Doe',
       birthRegistry: '01/01/2000',
-      emailAddressRegistry: '',
-      emailAddressValidRegistry: false,
-      emailAddressRegistryCheck: '',
-      passwordRegistry: '',
-      passwordVisible: false,
-      passwordValidRegistry: false,
-      passwordRegistryCheck: '',
+      emailAddressRegistry: 'johndoe@email.com',
+      emailAddressValidRegistry: true,
+      emailAddressRegistryCheck: 'johndoe@email.com',
+      passwordRegistry: 'JohnDoe1!',
+      passwordVisible: true,
+      passwordValidRegistry: true,
+      passwordRegistryCheck: 'JohnDoe1!',
     });
   };
 
@@ -204,7 +204,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 <p>Password must contain at least one special character, one lowercase and uppercase letter.</p>
               </figure>
             ) : null}
-            <label htmlFor='password' className='passwordLabel' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
+            <label htmlFor='passwordCheck' className='passwordLabel' data-error={!registry.passwordValidRegistry ? 'true' : 'false'}>
               <input
                 type={registry.passwordVisible ? 'text' : 'password'}
                 placeholder='Password'
@@ -251,8 +251,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
             <button onClick={() => setUiModal('userLogin')}>Return to Login</button>
           </div>
           <div className='ecoModal__notice'>
-            <span>Notice</span>
-            <p>This registration form is solely cosmetic.</p>
+            <p>This form validates input fields and aims to simulate user authentication via localStorage.</p>
           </div>
         </>
       </form>
