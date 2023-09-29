@@ -8,16 +8,9 @@ type PropType = {
 };
 
 const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => {
-  const modalWrapper = useRef<HTMLElement>(null); //Modal Reference
   const userRegistryModal = useRef<HTMLFormElement>(null); //Form Reference
   const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Input Field Reference
   const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Input Field Reference
-
-  //Form Toggle
-  useEffect(() => {
-    modalWrapper.current?.setAttribute('data-status', uiModal === 'userRegistry' ? 'active' : 'false');
-    userRegistryModal.current?.setAttribute('data-status', uiModal === 'userRegistry' ? 'active' : 'false');
-  }, [uiModal]);
 
   //Registry validation state
   const [registry, setRegistry] = useState<{
@@ -114,8 +107,8 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   const useRegistryFormSubmission = () => {};
 
   return (
-    <section className='modalWrapper' ref={modalWrapper}>
-      <form className='ecoModal' onSubmit={useRegistryFormSubmission} data-status='false' ref={userRegistryModal}>
+    <section className='modalWrapper' data-status={uiModal === 'userRegistry' ? 'active' : 'false'}>
+      <form className='ecoModal' onSubmit={useRegistryFormSubmission} data-status={uiModal === 'userRegistry' ? 'active' : 'false'} ref={userRegistryModal}>
         <div className='ecoModal__container'>
           <legend>
             <h2>Account Creation</h2>

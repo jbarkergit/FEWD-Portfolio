@@ -10,16 +10,9 @@ type PropType = {
 };
 
 const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX.Element => {
-  const modalWrapper = useRef<HTMLElement>(null); //Modal Reference
   const userLoginModal = useRef<HTMLFormElement>(null); //Form Reference
   const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Input Field Reference
   const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Input Field Reference
-
-  //Form Toggle
-  useEffect(() => {
-    modalWrapper.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false');
-    userLoginModal.current?.setAttribute('data-status', uiModal === 'userLogin' ? 'active' : 'false');
-  }, [uiModal]);
 
   //Form validation state
   const [formValidation, setFormValidation] = useState<{
@@ -99,8 +92,8 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
   }
 
   return (
-    <section className='modalWrapper' ref={modalWrapper}>
-      <form className='ecoModal' onSubmit={useLoginFormSubmission} data-status='false' ref={userLoginModal}>
+    <section className='modalWrapper' data-status={uiModal === 'userLogin' ? 'active' : 'false'}>
+      <form className='ecoModal' onSubmit={useLoginFormSubmission} data-status={uiModal === 'userLogin' ? 'active' : 'false'} ref={userLoginModal}>
         <div className='ecoModal__container'>
           <legend>
             <h2>Account Login</h2>
