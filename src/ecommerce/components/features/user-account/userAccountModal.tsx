@@ -13,6 +13,9 @@ const UserAccountModal = ({ uiModal, setUiModal }: UserAccountModalType): JSX.El
   //User authentication state
   const [userSignedIn, setUserSignedIn] = useState<boolean>(false);
 
+  //Set user auth state in localStorage
+  useEffect(() => localStorage.setItem('userSignedIn', JSON.stringify(userSignedIn)), [userSignedIn]);
+
   switch (uiModal) {
     case 'userLogin':
       return <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} setUserSignedIn={setUserSignedIn} />;

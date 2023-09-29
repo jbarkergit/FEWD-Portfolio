@@ -10,6 +10,14 @@ type UserInteractionsType = {
 const UserInteractions = ({ uiModal, setUiModal }: UserInteractionsType): JSX.Element => {
   const path = useLocation().pathname === '/ecommerce';
 
+  const checkLoginState = (): void => {
+    if (localStorage.getItem('userSignedIn') === 'true') {
+      setUiModal('userActive');
+    } else {
+      setUiModal(uiModal === 'userLogin' ? '' : 'userLogin');
+    }
+  };
+
   return (
     <section className='navkit__section'>
       <SearchBar />
@@ -19,7 +27,7 @@ const UserInteractions = ({ uiModal, setUiModal }: UserInteractionsType): JSX.El
         style={{
           boxShadow: path ? 'none' : 'var(--shadowRefined)',
         }}
-        onClick={() => setUiModal(uiModal === 'userLogin' ? '' : 'userLogin')}>
+        onClick={() => checkLoginState()}>
         <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
           <path
             fill='#333333'
