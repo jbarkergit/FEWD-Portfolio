@@ -104,7 +104,13 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   }, [registry.passwordValidRegistry]);
 
   //Registry form submission hook
-  const useRegistryFormSubmission = () => {};
+  const useRegistryFormSubmission = () => {
+    if (registry.firstNameRegistry.length > 1 && registry.lastNameRegistry.length > 1 && registry.emailAddressValidRegistry && registry.passwordValidRegistry) {
+      setUiModal('userActive');
+    } else {
+      null;
+    }
+  };
 
   return (
     <section className='modalWrapper' data-status={uiModal === 'userRegistry' ? 'active' : 'false'}>
