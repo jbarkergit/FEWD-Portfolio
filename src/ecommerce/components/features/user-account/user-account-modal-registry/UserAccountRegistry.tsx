@@ -12,6 +12,10 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Input Field Reference
   const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Input Field Reference
 
+  //Trigger data-attribute animation
+  const [animate, setAnimate] = useState<boolean>(false);
+  useEffect(() => (uiModal === 'userRegistry' ? setAnimate(true) : setAnimate(false)), [uiModal]);
+
   //Registry validation state
   const [registry, setRegistry] = useState<{
     firstNameRegistry: string;
@@ -114,8 +118,8 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   };
 
   return (
-    <section className='modalWrapper' data-status={uiModal === 'userRegistry' ? 'active' : 'false'}>
-      <form className='ecoModal' onSubmit={useRegistryFormSubmission} data-status={uiModal === 'userRegistry' ? 'active' : 'false'} ref={userRegistryModal}>
+    <section className='modalWrapper' data-status={animate ? 'active' : 'false'}>
+      <form className='ecoModal' onSubmit={useRegistryFormSubmission} data-status={animate ? 'active' : 'false'} ref={userRegistryModal}>
         <div className='ecoModal__container'>
           <legend>
             <h2>Account Creation</h2>

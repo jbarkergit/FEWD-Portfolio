@@ -1,7 +1,7 @@
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import useCart from '../../../hooks/useCart';
 import CartProduct from './CartProduct';
 import EmptyCart from './EmptyCart';
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
 type PropType = {
   uiModal: string;
@@ -45,7 +45,7 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
 
   return (
     <section className='modalWrapper' data-status={uiModal === 'shoppingCart' ? 'active' : 'false'}>
-      <div className='ecoModal' data-status={uiModal === 'shoppingCart' ? 'active' : 'false'} ref={shoppingCartModal}>
+      <div className='ecoModal' data-status={uiModal === 'shoppingCart' ? 'active' : 'false'} ref={shoppingCartModal} style={{ display: 'block' }}>
         <div className='ecoModal__container'>
           <div className='ecoModal__header' id='shoppingCartHeader'>
             {cartProductQuantity > 0 ? <>{`Shopping Cart (${cartProductQuantity})`}</> : <>{'Shopping Cart'}</>}
