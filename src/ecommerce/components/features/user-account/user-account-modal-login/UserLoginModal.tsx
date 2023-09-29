@@ -93,7 +93,12 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
 
   //Form submission hook
   function useLoginFormSubmission(): void {
-    formValidation.emailAddressValid && formValidation.passwordValid ? setUserSignedIn(true) : setUserSignedIn(false);
+    formValidation.emailAddressValid &&
+    formValidation.passwordValid &&
+    localStorage.getItem('emailAddress') === formValidation.emailAddress &&
+    localStorage.getItem('password') === formValidation.password
+      ? setUserSignedIn(true)
+      : setUserSignedIn(false);
   }
 
   return (
