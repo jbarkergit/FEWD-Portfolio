@@ -23,7 +23,6 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
     birthRegistry: string;
     emailAddressRegistry: string;
     emailAddressValidRegistry: boolean;
-    emailAddressRegistryCheck: string;
     passwordRegistry: string;
     passwordVisible: boolean;
     passwordValidRegistry: boolean;
@@ -34,7 +33,6 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
     birthRegistry: '01/01/2000',
     emailAddressRegistry: '',
     emailAddressValidRegistry: false,
-    emailAddressRegistryCheck: '',
     passwordRegistry: '',
     passwordVisible: false,
     passwordValidRegistry: false,
@@ -49,13 +47,17 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
       birthRegistry: '01/01/2000',
       emailAddressRegistry: '',
       emailAddressValidRegistry: false,
-      emailAddressRegistryCheck: '',
       passwordRegistry: '',
       passwordVisible: false,
       passwordValidRegistry: false,
       passwordRegistryCheck: '',
     });
   };
+
+  //Testing
+  useEffect(() => {
+    console.log(registry);
+  }, [registry]);
 
   //Form Exterior Click Handler
   useEffect(() => {
@@ -96,24 +98,23 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
 
   //Email validation -> sets error state boolean
   useEffect(() => {
-    !registry.emailAddressRegistry && registry.emailAddressRegistry.length > 0
-      ? setRegistryError({ ...registryError, emailAddressRegistryError: true })
-      : setRegistryError({ ...registryError, emailAddressRegistryError: false });
+    registry.emailAddressValidRegistry
+      ? setRegistryError({ ...registryError, emailAddressRegistryError: false })
+      : setRegistryError({ ...registryError, emailAddressRegistryError: true });
   }, [registry.emailAddressValidRegistry]);
 
   //Password validation -> sets error state boolean
   useEffect(() => {
-    !registry.passwordRegistry && registry.passwordRegistry.length > 0
-      ? setRegistryError({ ...registryError, passwordRegistryError: true })
-      : setRegistryError({ ...registryError, passwordRegistryError: false });
+    registry.passwordValidRegistry
+      ? setRegistryError({ ...registryError, passwordRegistryError: false })
+      : setRegistryError({ ...registryError, passwordRegistryError: true });
   }, [registry.passwordValidRegistry]);
 
   //Registry form submission hook
-  const useRegistryFormSubmission = () => {
-    if (registry.firstNameRegistry.length > 1 && registry.lastNameRegistry.length > 1 && registry.emailAddressValidRegistry && registry.passwordValidRegistry) {
-      setUiModal('userActive');
-    } else {
-      null;
+  const useRegistryFormSubmission = (): void => {
+    if (registry.emailAddressValidRegistry && registry.passwordValidRegistry) {
+      localStorage.setItem('emailAddress', JSON.stringify(registry.emailAddressRegistry));
+      localStorage.setItem('password', JSON.stringify(registry.passwordRegistry));
     }
   };
 
@@ -150,7 +151,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                   value={registry.lastNameRegistry}
                   required
                   autoFocus
-                  aria-invalid={registry.emailAddressValidRegistry ? 'false' : 'true'}
+                  aria-invalid={registry.lastNameRegistry ? 'false' : 'true'}
                   aria-describedby='uidnote'
                   ref={emailAddressInputFieldRef}
                   onClick={() => focus()}
@@ -257,10 +258,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
             ) : null}
           </fieldset>
           <div className='ecoModal__container__buttons'>
-            <button
-              onClick={() => {
-                clearFormInputValues();
-              }}>
+            <button type='submit' onClick={() => SubmitEvent}>
               Submit
             </button>
             <button onClick={() => setUiModal('userLogin')}>Return to Login</button>
