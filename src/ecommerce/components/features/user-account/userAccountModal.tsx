@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import UserLoginModal from './user-account-modal-login/UserLoginModal';
 import UserAccountRegistry from './user-account-modal-registry/UserAccountRegistry';
 import UserAccountActive from './user-account-modal-active/UserAccountActive';
@@ -16,7 +16,7 @@ const UserAccountModal = ({ uiModal, setUiModal }: UserAccountModalType): JSX.El
     case 'userRegistry':
       return <UserAccountRegistry uiModal={uiModal} setUiModal={setUiModal} />;
     case 'userActive':
-      if (JSON.parse(localStorage.getItem('emailAddress')!)) return <UserAccountActive />;
+      if (JSON.parse(localStorage.getItem('emailAddress')!)) return <UserAccountActive uiModal={uiModal} setUiModal={setUiModal} />;
     default:
       return <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} />;
   }
