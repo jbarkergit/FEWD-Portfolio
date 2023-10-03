@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const CompanyLogos = () => {
   return (
     <div className='companyLogos__partial'>
-      <Link to='http://localhost:5173/ecommerce/Apos'>
+      <Link to='http://localhost:5173/ecommerce/Apos' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/Apos.png'
@@ -15,7 +15,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/Audient'>
+      <Link to='http://localhost:5173/ecommerce/Audient' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/Audient.svg'
@@ -27,7 +27,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/Avid'>
+      <Link to='http://localhost:5173/ecommerce/Avid' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/Avid.png'
@@ -39,7 +39,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/Beyerdynamic'>
+      <Link to='http://localhost:5173/ecommerce/Beyerdynamic' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/Beyerdynamic.svg'
@@ -51,7 +51,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/Electro-Voice'>
+      <Link to='http://localhost:5173/ecommerce/Electro-Voice' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/ElectroVoice.png'
@@ -63,7 +63,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/Evo'>
+      <Link to='http://localhost:5173/ecommerce/Evo' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/Evo.svg'
@@ -75,7 +75,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/Focusrite'>
+      <Link to='http://localhost:5173/ecommerce/Focusrite' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/Focusrite.png'
@@ -87,7 +87,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/Neumann'>
+      <Link to='http://localhost:5173/ecommerce/Neumann' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/Neumann.webp'
@@ -99,7 +99,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/Rode'>
+      <Link to='http://localhost:5173/ecommerce/Rode' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/Rode.svg'
@@ -111,7 +111,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/S.M.S.L'>
+      <Link to='http://localhost:5173/ecommerce/S.M.S.L' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/SMSL.png'
@@ -123,7 +123,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/Schiit'>
+      <Link to='http://localhost:5173/ecommerce/Schiit' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/Schiit.png'
@@ -135,7 +135,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/Shure'>
+      <Link to='http://localhost:5173/ecommerce/Shure' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/Shure.svg'
@@ -148,7 +148,7 @@ const CompanyLogos = () => {
         </picture>
       </Link>
 
-      <Link to='http://localhost:5173/ecommerce/Solid%20State%20Logic'>
+      <Link to='http://localhost:5173/ecommerce/Solid%20State%20Logic' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/SolidStateLogic.svg'
@@ -160,7 +160,7 @@ const CompanyLogos = () => {
           />
         </picture>
       </Link>
-      <Link to='http://localhost:5173/ecommerce/UAudio'>
+      <Link to='http://localhost:5173/ecommerce/UAudio' tabIndex={-1}>
         <picture>
           <img
             src='/src/ecommerce/assets/production-images/compressed-company-logos/UAudio.png'
