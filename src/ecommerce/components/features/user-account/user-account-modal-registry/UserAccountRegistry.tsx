@@ -103,11 +103,13 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   }, [registry.passwordValidRegistry]);
 
   //Registry form submission hook
-  const useRegistryFormSubmission = (): void => {
+  const useRegistryFormSubmission = (e: React.FormEvent): void => {
+    e.preventDefault();
     if (registry.emailAddressValidRegistry && registry.passwordValidRegistry) {
       localStorage.setItem('firstName', JSON.stringify(registry.firstNameRegistry));
       localStorage.setItem('emailAddress', JSON.stringify(registry.emailAddressRegistry));
       localStorage.setItem('password', JSON.stringify(registry.passwordRegistry));
+      setUiModal('userLogin');
     }
   };
 

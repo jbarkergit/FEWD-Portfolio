@@ -87,7 +87,8 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   }, [formValidation.passwordValid]);
 
   //Form submission hook
-  const useLoginFormSubmission = (): void => {
+  const useLoginFormSubmission = (e: React.FormEvent): void => {
+    e.preventDefault();
     if (
       formValidation.emailAddressValid &&
       formValidation.passwordValid &&
@@ -95,6 +96,7 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
       JSON.parse(localStorage.getItem('password')!) === formValidation.password
     ) {
       localStorage.setItem('userSignedIn', JSON.stringify(true));
+      setUiModal('userActive');
     } else {
       localStorage.setItem('userSignedIn', JSON.stringify(false));
     }
