@@ -80,7 +80,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
   }, [primaryImg.current, magnification]);
 
   return (
-    <div className='skuPage__grid__display'>
+    <section className='skuPage__grid__display'>
       <div className='skuPage__grid__display__heading'>
         {company} {unit}
       </div>
@@ -143,7 +143,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 export default ProductPageImgDisplay;

@@ -7,7 +7,6 @@
   margin-bottom: f.rem(104);
   &__grid {
     position: relative;
-    display: flex;
     width: 100%;
     max-width: f.rem(1600);
     height: 65vh;
@@ -15,27 +14,16 @@
     margin: f.rem(0) 0 f.rem(100) 0;
     @include m.productPhoto;
     box-shadow: var(--shadowSoft);
+    @media (width > 1300px) {
+      display: flex;
+    }
     @media (width <= 1300px) {
       display: grid;
       height: auto;
-      grid-template-areas: 'display' 'imgSelection' 'details';
+      grid-template-areas: 'display display' 'imgSelection details';
     }
-    &__imgSelection {
-      @media (width <= 1300px) {
-        grid-area: 'imgSelection';
-        display: flex;
-        width: 100%;
-      }
-    }
-    &__display {
-      @media (width <= 1300px) {
-        grid-area: 'display';
-      }
-    }
-    &__details {
-      @media (width <= 1300px) {
-        grid-area: 'details';
-      }
+    @media (width <= 700px) {
+      grid-template-areas: 'display display' 'imgSelection imgSelection' 'details details';
     }
   }
 }
@@ -49,11 +37,24 @@
   height: 100%;
   z-index: 1;
   border-right: var(--borderChunky);
-  border-top-left-radius: f.rem(18);
-  border-bottom-left-radius: f.rem(18);
+  border-top-left-radius: f.rem(24);
+  border-bottom-left-radius: f.rem(24);
   overflow: auto;
   scrollbar-width: none;
   cursor: pointer;
+  @media (width <= 1300px) {
+    grid-area: imgSelection;
+    width: 100%;
+    max-height: f.rem(500);
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  @media (width <= 700px) {
+    display: flex;
+    border-top: var(--borderChunky);
+    border-radius: 0;
+  }
   & picture {
     width: 100%;
     height: auto;
@@ -71,6 +72,7 @@
     }
   }
 }
+
 .skuPage__grid__display {
   position: relative;
   display: flex;
@@ -78,6 +80,11 @@
   width: calc(100% - 38%);
   height: inherit;
   overflow: hidden;
+  @media (width <= 1300px) {
+    grid-area: display;
+    width: 100%;
+    height: f.rem(450);
+  }
   &__primaryImg {
     position: absolute;
     inset: 0;
@@ -111,7 +118,7 @@
       width: f.rem(200);
       height: f.rem(200);
       z-index: 4;
-      border-radius: f.rem(18);
+      border-radius: f.rem(24);
       background-repeat: no-repeat;
       overflow: hidden;
       pointer-events: none;
@@ -216,11 +223,21 @@
   width: 38%;
   z-index: 1;
   padding: f.rem(25) 0;
-  border-top-right-radius: f.rem(18);
-  border-bottom-right-radius: f.rem(18);
+  border-top-right-radius: f.rem(24);
+  border-bottom-right-radius: f.rem(24);
   background-color: var(--elemBackgroundSecondary);
   text-align: start;
   color: var(--fontSecondary);
+  @media (width <= 1300px) {
+    grid-area: details;
+    width: 100%;
+  }
+  @media (width <= 700px) {
+    display: flex;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: f.rem(24);
+    border-bottom-left-radius: f.rem(24);
+  }
   &__block {
     width: 80%;
     padding: f.rem(25) 0;
