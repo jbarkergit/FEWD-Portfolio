@@ -14,22 +14,11 @@ const ProductProp = ({ product }: ProductPropType): JSX.Element => {
   //Set Shopping Cart array of products in local Storage
   useEffect(() => localStorage.setItem('shoppingCartState', JSON.stringify(shoppingCart)), [cartProductQuantity]);
 
-  //Optimize image rendering by dynamically setting dimensions
-  const pictureRef = useRef<HTMLElement>(null);
-  const [pictureDimensions, setPictureDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
-
-  useEffect(() => {
-    if (pictureRef.current) setPictureDimensions({ width: pictureRef.current.offsetWidth, height: pictureRef.current.offsetHeight });
-
-    // width={`${pictureDimensions.width}`}
-    // height={`${pictureDimensions.height}`}
-  }, [pictureRef.current]);
-
   return (
     <article className='productGrid__product' key={product.sku}>
       <Link to={`/ecommerce/product/${sku}`} className='productGrid__product__pictureLink'>
         <span className='productGrid__product--containedHover'>
-          <picture ref={pictureRef}>{images ? <img src={images.medium[0]} alt={unit} loading='lazy' decoding='sync' fetchpriority='high' /> : null}</picture>
+          <picture>{images ? <img src={images.medium[0]} alt={unit} decoding='async' fetchpriority='high' /> : null}</picture>
         </span>
       </Link>
       <div className='productGrid__product__information'>
