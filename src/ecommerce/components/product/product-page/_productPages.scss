@@ -15,44 +15,58 @@
     margin: f.rem(0) 0 f.rem(100) 0;
     @include m.productPhoto;
     box-shadow: var(--shadowSoft);
+    @media (width <= 1300px) {
+      display: grid;
+      height: auto;
+      grid-template-areas: 'display' 'imgSelection' 'details';
+    }
+    &__imgSelection {
+      @media (width <= 1300px) {
+        grid-area: 'imgSelection';
+        display: flex;
+        width: 100%;
+      }
+    }
+    &__display {
+      @media (width <= 1300px) {
+        grid-area: 'display';
+      }
+    }
+    &__details {
+      @media (width <= 1300px) {
+        grid-area: 'details';
+      }
+    }
   }
 }
 
 .skuPage__grid__imgSelection {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-rows: auto;
+  grid-auto-flow: row;
   width: 20%;
+  height: 100%;
   z-index: 1;
   border-right: var(--borderChunky);
   border-top-left-radius: f.rem(18);
   border-bottom-left-radius: f.rem(18);
-  overflow: hidden;
-  &:hover + &__nav {
-    opacity: 0;
-  }
-  &__images {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(calc(65vh / 4.5), 1fr));
+  overflow: auto;
+  scrollbar-width: none;
+  cursor: pointer;
+  & picture {
     width: 100%;
-    height: 100%;
-    overflow: auto;
-    cursor: pointer;
-    scrollbar-width: none;
-    & picture {
-      height: auto;
-      overflow: hidden;
-      @include m.productPhoto;
-      & img {
-        // padding: 15px 0;
-        object-fit: scale-down;
-        mix-blend-mode: darken;
-        pointer-events: all;
-        transition: transform 0.35s ease-in-out;
-        &:hover {
-          transform: scale(130%);
-        }
+    height: auto;
+    overflow: hidden;
+    @include m.productPhoto;
+    & img {
+      // padding: 15px 0;
+      object-fit: scale-down;
+      mix-blend-mode: darken;
+      pointer-events: all;
+      transition: transform 0.35s ease-in-out;
+      &:hover {
+        transform: scale(130%);
       }
     }
   }
