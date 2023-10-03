@@ -22,9 +22,9 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
     passwordVisible: boolean;
     passwordValid: boolean;
   }>({
-    emailAddress: 'test@email.com',
+    emailAddress: 'test@test.com',
     emailAddressValid: true,
-    password: 'test',
+    password: 'HelloWorld1!',
     passwordVisible: false,
     passwordValid: true,
   });
@@ -32,9 +32,9 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
   //Form input value clear hook
   const clearFormInputValues = (): void => {
     setFormValidation({
-      emailAddress: 'test@email.com',
+      emailAddress: 'test@test.com',
       emailAddressValid: true,
-      password: 'test',
+      password: 'HelloWorld1!',
       passwordVisible: false,
       passwordValid: true,
     });
@@ -65,7 +65,7 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
 
   //RegExp test for password input value -> sets state validation boolean
   useEffect(() => {
-    setFormValidation({ ...formValidation, passwordValid: userEmailAddressRegex.test(formValidation.password) });
+    setFormValidation({ ...formValidation, passwordValid: userPasswordRegex.test(formValidation.password) });
   }, [formValidation.password]);
 
   //Input field ERROR state
@@ -88,14 +88,18 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
   }, [formValidation.passwordValid]);
 
   //Form submission hook
-  function useLoginFormSubmission(): void {
-    formValidation.emailAddressValid &&
-    formValidation.passwordValid &&
-    localStorage.getItem('emailAddress') === formValidation.emailAddress &&
-    localStorage.getItem('password') === formValidation.password
-      ? setUserSignedIn(true)
-      : setUserSignedIn(false);
-  }
+  const useLoginFormSubmission = (): void => {
+    if (
+      formValidation.emailAddressValid &&
+      formValidation.passwordValid &&
+      localStorage.getItem('emailAddress') === formValidation.emailAddress &&
+      localStorage.getItem('password') === formValidation.password
+    ) {
+      setUserSignedIn(true);
+    } else {
+      setUserSignedIn(false);
+    }
+  };
 
   return (
     <section className='modalWrapper' data-status={uiModal === 'userLogin' ? 'active' : 'false'}>
@@ -116,13 +120,13 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
                 aria-describedby='uidnote'
                 ref={emailAddressInputFieldRef}
                 onClick={() => focus()}
-                onChange={(event) => setFormValidation({ ...formValidation, emailAddress: event.target.value })}
+                onChange={(event) => setFormValidation({ ...formValidation, emailAddress: event.target.value.toLowerCase() })}
               />
             </label>
             {formError.emailAddressError ? (
               <figure className='inputFieldErrorMessage'>
                 <figcaption style={{ display: 'none' }}>Error Message</figcaption>
-                <p>Invalid Email Address</p>
+                <p>Invalid email address: cannot contain special characters.</p>
               </figure>
             ) : null}
             <label htmlFor='password' className='passwordLabel'>
@@ -163,7 +167,7 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
             {formError.passwordError ? (
               <figure className='inputFieldErrorMessage'>
                 <figcaption>Error Message</figcaption>
-                <p>Password must contain at least one special character, one lowercase and uppercase letter.</p>
+                <p>Your password is invalid, please try again.</p>
               </figure>
             ) : null}
           </fieldset>

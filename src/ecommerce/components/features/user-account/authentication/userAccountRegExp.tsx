@@ -1,6 +1,5 @@
-//Username Regex Pattern //RFC2822 Standard
-export const userEmailAddressRegex: RegExp =
-  /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+//Email Address Regex Pattern
+export const userEmailAddressRegex: RegExp = /[a-zA-Z0-9]+@test.com/;
 
-//Password Regex Pattern //8 chars, 1 uppercase, 1 lowercase, 1 number, special chars enabled
-export const userPasswordRegex: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+//Nist Compliant Password Regex Pattern //8 chars, 1 uppercase, 1 lowercase, 1 number, special chars enabled
+export const userPasswordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;

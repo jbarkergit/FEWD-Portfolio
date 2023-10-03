@@ -10,13 +10,8 @@ type UserInteractionsType = {
 const UserInteractions = ({ uiModal, setUiModal }: UserInteractionsType): JSX.Element => {
   const path = useLocation().pathname === '/ecommerce';
 
-  const checkLoginState = (): void => {
-    if (localStorage.getItem('userSignedIn') === 'true') {
-      setUiModal('userActive');
-    } else {
-      setUiModal(uiModal === 'userLogin' ? '' : 'userLogin');
-    }
-  };
+  const checkLoginState = (): void =>
+    localStorage.getItem('userSignedIn') === 'true' ? setUiModal('userActive') : setUiModal(uiModal === 'userLogin' ? '' : 'userLogin');
 
   return (
     <section className='navkit__section'>

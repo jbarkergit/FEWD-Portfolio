@@ -20,7 +20,6 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   const [registry, setRegistry] = useState<{
     firstNameRegistry: string;
     lastNameRegistry: string;
-    birthRegistry: string;
     emailAddressRegistry: string;
     emailAddressValidRegistry: boolean;
     passwordRegistry: string;
@@ -28,36 +27,29 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
     passwordValidRegistry: boolean;
     passwordRegistryCheck: string;
   }>({
-    firstNameRegistry: '',
-    lastNameRegistry: '',
-    birthRegistry: '01/01/2000',
-    emailAddressRegistry: '',
-    emailAddressValidRegistry: false,
-    passwordRegistry: '',
+    firstNameRegistry: 'John',
+    lastNameRegistry: 'Doe',
+    emailAddressRegistry: 'test@test.com',
+    emailAddressValidRegistry: true,
+    passwordRegistry: 'HelloWorld1!',
     passwordVisible: false,
-    passwordValidRegistry: false,
-    passwordRegistryCheck: '',
+    passwordValidRegistry: true,
+    passwordRegistryCheck: 'HelloWorld1!',
   });
 
   //Form input value clear hook
   const clearFormInputValues = (): void => {
     setRegistry({
-      firstNameRegistry: '',
-      lastNameRegistry: '',
-      birthRegistry: '01/01/2000',
-      emailAddressRegistry: '',
-      emailAddressValidRegistry: false,
-      passwordRegistry: '',
+      firstNameRegistry: 'John',
+      lastNameRegistry: 'Doe',
+      emailAddressRegistry: 'test@test.com',
+      emailAddressValidRegistry: true,
+      passwordRegistry: 'HelloWorld1!',
       passwordVisible: false,
-      passwordValidRegistry: false,
-      passwordRegistryCheck: '',
+      passwordValidRegistry: true,
+      passwordRegistryCheck: 'HelloWorld1!',
     });
   };
-
-  //Testing
-  useEffect(() => {
-    console.log(registry);
-  }, [registry]);
 
   //Form Exterior Click Handler
   useEffect(() => {
@@ -170,7 +162,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 aria-describedby='uidnote'
                 ref={emailAddressInputFieldRef}
                 onClick={() => focus()}
-                onChange={(event) => setRegistry({ ...registry, emailAddressRegistry: event.target.value })}
+                onChange={(event) => setRegistry({ ...registry, emailAddressRegistry: event.target.value.toLowerCase() })}
               />
             </label>
             {registryError.emailAddressRegistryError ? (
@@ -217,7 +209,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
             {registryError.passwordRegistryError ? (
               <figure className='inputFieldErrorMessage'>
                 <figcaption>Error Message</figcaption>
-                <p>Password must contain at least one special character, one lowercase and uppercase letter.</p>
+                <p>Password must be eight characters minimum, contain at least one special character, one lowercase and uppercase letter.</p>
               </figure>
             ) : null}
             <label htmlFor='passwordCheck' className='passwordLabel'>
