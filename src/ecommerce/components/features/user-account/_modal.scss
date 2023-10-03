@@ -84,6 +84,9 @@
       text-transform: uppercase;
     }
   }
+  & p {
+    text-align: center;
+  }
   & fieldset {
     display: grid;
     place-items: center;
