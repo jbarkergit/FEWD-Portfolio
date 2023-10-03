@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState } from 'react';
 import { userEmailAddressRegex, userPasswordRegex } from '../authentication/userAccountRegExp';
 
 //Prop drill from UserAccountModal
@@ -103,7 +103,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   }, [registry.passwordValidRegistry]);
 
   //Registry form submission hook
-  const useRegistryFormSubmission = (e: React.FormEvent): void => {
+  const useRegistryFormSubmission = (e: FormEvent): void => {
     e.preventDefault();
     if (registry.emailAddressValidRegistry && registry.passwordValidRegistry) {
       localStorage.setItem('firstName', JSON.stringify(registry.firstNameRegistry));

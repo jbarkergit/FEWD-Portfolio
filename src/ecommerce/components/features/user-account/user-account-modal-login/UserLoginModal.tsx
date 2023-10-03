@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Apple, Google, LinkedIn } from '../../../../assets/production-images/user-account-svg/PasskeySvgs';
 import { userEmailAddressRegex, userPasswordRegex } from '../authentication/userAccountRegExp';
 
@@ -87,7 +87,7 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   }, [formValidation.passwordValid]);
 
   //Form submission hook
-  const useLoginFormSubmission = (e: React.FormEvent): void => {
+  const useLoginFormSubmission = (e: FormEvent): void => {
     e.preventDefault();
     if (
       formValidation.emailAddressValid &&
