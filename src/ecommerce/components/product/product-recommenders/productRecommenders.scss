@@ -40,7 +40,7 @@
       display: flex;
       justify-content: center;
       aspect-ratio: 0.8/1;
-      border-radius: f.rem(18);
+      border-radius: f.rem(24);
       overflow: hidden;
       box-shadow:
         -1px -1px 20px 0px #ffffff,
@@ -55,13 +55,13 @@
         align-items: flex-end;
         z-index: 3;
         // padding: 0 f.rem(15);
-        border-radius: f.rem(18);
+        border-radius: f.rem(24);
         @include m.productPhoto;
         &::before {
           content: '';
           position: absolute;
           inset: 0;
-          border-radius: f.rem(18);
+          border-radius: f.rem(24);
           background-color: var(--gradientMono);
           opacity: 0.8;
         }

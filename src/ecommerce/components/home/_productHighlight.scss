@@ -46,7 +46,7 @@
       position: relative;
       flex: 0 0 calc(1600 / 4 - 100);
       aspect-ratio: 0.8/1;
-      border-radius: f.rem(26);
+      border-radius: f.rem(24);
       overflow: hidden;
       box-shadow:
         -1px -1px 20px 0px #ececec,
@@ -103,13 +103,13 @@
         display: flex;
         align-items: flex-end;
         z-index: 3;
-        border-radius: f.rem(26);
+        border-radius: f.rem(24);
         @include m.productPhoto;
         &::before {
           content: '';
           position: absolute;
           inset: 0;
-          border-radius: f.rem(26);
+          border-radius: f.rem(24);
           background-color: var(--gradientMono);
           opacity: 0.8;
         }
@@ -141,7 +141,7 @@
         & video {
           aspect-ratio: inherit;
           border: 2px solid white;
-          border-radius: f.rem(26);
+          border-radius: f.rem(24);
           object-fit: cover;
           filter: brightness(0) invert(1) blur(4px);
         }
