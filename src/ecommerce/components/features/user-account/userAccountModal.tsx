@@ -10,21 +10,15 @@ type UserAccountModalType = {
 };
 
 const UserAccountModal = ({ uiModal, setUiModal }: UserAccountModalType): JSX.Element => {
-  //User authentication state
-  const [userSignedIn, setUserSignedIn] = useState<boolean>(false);
-
-  //Set user auth state in localStorage
-  useEffect(() => localStorage.setItem('userSignedIn', JSON.stringify(userSignedIn)), [userSignedIn]);
-
   switch (uiModal) {
     case 'userLogin':
-      return <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} setUserSignedIn={setUserSignedIn} />;
+      return <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} />;
     case 'userRegistry':
       return <UserAccountRegistry uiModal={uiModal} setUiModal={setUiModal} />;
     case 'userActive':
-      if (userSignedIn) return <UserAccountActive />;
+      if (JSON.parse(localStorage.getItem('emailAddress')!)) return <UserAccountActive />;
     default:
-      return <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} setUserSignedIn={setUserSignedIn} />;
+      return <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} />;
   }
 };
 

@@ -6,10 +6,9 @@ import { userEmailAddressRegex, userPasswordRegex } from '../authentication/user
 type PropType = {
   uiModal: string;
   setUiModal: Dispatch<SetStateAction<string>>;
-  setUserSignedIn: Dispatch<SetStateAction<boolean>>;
 };
 
-const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX.Element => {
+const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   const userLoginModal = useRef<HTMLFormElement>(null); //Form Reference
   const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Input Field Reference
   const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Input Field Reference
@@ -92,12 +91,12 @@ const UserLoginModal = ({ uiModal, setUiModal, setUserSignedIn }: PropType): JSX
     if (
       formValidation.emailAddressValid &&
       formValidation.passwordValid &&
-      localStorage.getItem('emailAddress') === formValidation.emailAddress &&
-      localStorage.getItem('password') === formValidation.password
+      JSON.parse(localStorage.getItem('emailAddress')!) === formValidation.emailAddress &&
+      JSON.parse(localStorage.getItem('password')!) === formValidation.password
     ) {
-      setUserSignedIn(true);
+      localStorage.setItem('userSignedIn', JSON.stringify(true));
     } else {
-      setUserSignedIn(false);
+      localStorage.setItem('userSignedIn', JSON.stringify(false));
     }
   };
 
