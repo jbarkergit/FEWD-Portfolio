@@ -39,7 +39,7 @@ const PortHeader = ({ stateIndex, setStateIndex }: PortHeaderType): JSX.Element 
         </nav>
       </section>
       <section className='portHeader__menu'>
-        <Link to=''>Contact</Link>
+        <Link to='/contact'>Contact</Link>
         <Link to='https://github.com/jbarkergit' target='_blank'>
           GitHub
         </Link>
