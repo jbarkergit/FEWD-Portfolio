@@ -1,5 +1,5 @@
-import { useRef, useState, RefObject, useEffect, useCallback } from 'react';
-import TechStack from '../information/TechStack';
+import { useRef, useState, useEffect, useCallback } from 'react';
+import TechStack from '../../../assets/tech-stack/TechStack';
 
 const EcommerceTechStack = () => {
   //Push every instance of techButtonRef into empty array on mount
@@ -38,8 +38,10 @@ const EcommerceTechStack = () => {
   //Attach pointer x,y coordinates to techStackTooltipRef
   useEffect(() => {
     const getPointerPos = (e: PointerEvent) => {
-      techStackTooltipRef.current!.style.top = `${e.clientY}px`;
-      techStackTooltipRef.current!.style.left = `${e.clientX}px`;
+      if (techStackTooltipRef.current) {
+        techStackTooltipRef.current.style.top = `${e.clientY}px`;
+        techStackTooltipRef.current.style.left = `${e.clientX}px`;
+      }
     };
 
     document.addEventListener('pointermove', getPointerPos);

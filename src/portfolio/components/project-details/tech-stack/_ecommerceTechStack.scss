@@ -4,10 +4,11 @@
 .projectDetails__projectSummary__techStack {
   display: flex;
   flex-wrap: wrap;
-  gap: f.rem(0.5);
-  max-width: calc(f.rem(60) * 7 + f.rem(0.5) * 7);
+  justify-content: center;
+  gap: f.rem(6);
   height: auto;
-  padding: 0 0 m.$viewportMarginTopBottom 0;
+  padding: m.$viewportMarginTopBottom 0;
+  pointer-events: none;
   & span {
     display: flex;
     justify-content: center;
@@ -19,11 +20,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 45px;
-      height: 45px;
+      width: 50px;
+      height: 50px;
       border-radius: f.rem(8);
-      outline: 0.13rem solid hsl(216, 5.2%, 19%);
-      background-color: hsl(0, 0%, 18%);
+      background: linear-gradient(145deg, hsl(0, 0%, 10%), hsl(0, 0%, 18%));
       box-shadow:
         0.3rem 0.3rem 0.6rem hsl(0, 0%, 0%),
         -0.2rem -0.2rem 0.5rem hsl(0, 0%, 20%);
@@ -31,8 +31,8 @@
       pointer-events: all;
       transition: all 0.45s ease-in-out;
       // &:hover {
-      //   background-color: linear-gradient(145deg, #171717, #1c1c1c);
-      //   outline: 0.2rem solid hsl(216, 4%, 20%);
+      // background-color: linear-gradient(145deg, #171717, #1c1c1c);
+      // outline: 0.2rem solid hsl(216, 4%, 20%);
       //   box-shadow:
       //     inset 0.1rem 0.1rem 0.3rem hsl(226, 9%, 71%),
       //     inset 0.2rem 0.2rem 0.5rem hsl(225, 39%, 85%),
@@ -57,60 +57,60 @@
 }
 
 #nodejs svg {
-  max-width: 28px;
-  max-height: 28px;
+  max-width: 32px;
+  max-height: 32px;
 }
 #npm svg {
-  max-width: 35px;
-  max-height: 35px;
+  max-width: 39px;
+  max-height: 39px;
 }
 #eslint svg {
-  max-width: 36px;
-  max-height: 36px;
+  max-width: 40px;
+  max-height: 40px;
 }
 #prettier svg {
-  max-width: 26px;
-  max-height: 26px;
-}
-#html svg {
-  max-width: 33px;
-  max-height: 33px;
-}
-#css svg {
-  max-width: 31px;
-  max-height: 31px;
-}
-#sass svg {
-  max-width: 38px;
-  max-height: 38px;
-}
-#javascript svg {
-  max-width: 50px;
-  max-height: 50px;
-}
-#typescript svg {
-  max-width: 26px;
-  max-height: 26px;
-}
-#vite svg {
-  max-width: 26px;
-  max-height: 26px;
-}
-#vitest svg {
-  max-width: 34px;
-  max-height: 34px;
-}
-#reacttestinglibrary picture img {
-  max-width: 34px;
-  max-height: 34px;
-}
-#react svg {
   max-width: 30px;
   max-height: 30px;
 }
+#html svg {
+  max-width: 37px;
+  max-height: 37px;
+}
+#css svg {
+  max-width: 35px;
+  max-height: 35px;
+}
+#sass svg {
+  max-width: 42px;
+  max-height: 42px;
+}
+#javascript svg {
+  max-width: 54px;
+  max-height: 54px;
+}
+#typescript svg {
+  max-width: 30px;
+  max-height: 30px;
+}
+#vite svg {
+  max-width: 30px;
+  max-height: 30px;
+}
+#vitest svg {
+  max-width: 38px;
+  max-height: 38px;
+}
+#reacttestinglibrary picture img {
+  max-width: 38px;
+  max-height: 38px;
+}
+#react svg {
+  max-width: 34px;
+  max-height: 34px;
+}
 #reactrouterdom svg {
-  max-width: 36px;
-  max-height: 36px;
+  max-width: 40px;
+  max-height: 40px;
 }
 
 .techStackTooltip {
