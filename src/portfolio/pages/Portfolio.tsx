@@ -15,7 +15,7 @@ const Portfolio = (): JSX.Element => {
 
   return (
     <div id='portfolio' style={projectDetailOpen ? { height: 'auto' } : { height: '100vh' }}>
-      <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} contactForm={contactForm} setContactForm={setContactForm} />
+      <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} />
       <ProjectDetails projectDetail={projectDetail} setProjectDetail={setProjectDetail} stateIndex={stateIndex} />
       <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} projectDetail={projectDetail} />
       <Contact contactForm={contactForm} />
