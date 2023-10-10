@@ -1,12 +1,14 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+//Prop drill from Portfolio page
 type PortHeaderType = {
   stateIndex: number;
   setStateIndex: Dispatch<SetStateAction<number>>;
+  setContactForm: Dispatch<SetStateAction<boolean>>;
 };
 
-const PortHeader = ({ stateIndex, setStateIndex }: PortHeaderType): JSX.Element => {
+const PortHeader = ({ stateIndex, setStateIndex, setContactForm }: PortHeaderType): JSX.Element => {
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
   const unorderedListChildrenPositionArray = unorderedListChildrenArray.map((child) => child.offsetLeft);
@@ -39,7 +41,7 @@ const PortHeader = ({ stateIndex, setStateIndex }: PortHeaderType): JSX.Element 
         </nav>
       </section>
       <section className='portHeader__menu'>
-        <Link to='/contact'>Contact</Link>
+        <button onClick={() => setContactForm(true)}>Contact</button>
         <Link to='https://github.com/jbarkergit' target='_blank'>
           GitHub
         </Link>

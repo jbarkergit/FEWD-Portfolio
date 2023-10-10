@@ -17,11 +17,12 @@ const Portfolio = (): JSX.Element => {
   const [projectDetailOpen, setProjectDetailOpen] = useState<boolean>(false);
   const [contactForm, setContactForm] = useState<boolean>(false);
 
+  // Boolean check for #portfolio height toggle
   useEffect(() => (projectDetail !== '' ? setProjectDetailOpen(true) : setProjectDetailOpen(false)), [projectDetail]);
 
   return (
     <div id='portfolio' style={projectDetailOpen ? { height: 'auto' } : { height: '100vh' }}>
-      <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} />
+      <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} setContactForm={setContactForm} />
       <ContactForm contactForm={contactForm} setContactForm={setContactForm} />
       <ProjectDetails projectDetail={projectDetail} setProjectDetail={setProjectDetail} stateIndex={stateIndex} />
       <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} projectDetail={projectDetail} />

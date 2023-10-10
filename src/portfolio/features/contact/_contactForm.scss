@@ -34,16 +34,14 @@
   position: absolute;
   top: 15%;
   right: 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: f.rem(24);
-  min-width: f.rem(425);
-  max-width: f.rem(480);
-  height: auto;
+  display: grid;
+  place-items: center;
+  gap: f.rem(10);
+  width: f.rem(480);
+  height: 80vh;
   z-index: 13;
-  padding: f.rem(80) f.rem(30);
-  border-radius: f.rem(18);
+  padding: f.rem(50);
+  border-radius: f.rem(24);
   margin: 0 8.335%;
   background-color: hsl(0, 0%, 10%);
   &[data-status='active'] {
@@ -71,28 +69,27 @@
     height: 100%;
     padding: 10% 10% 5% 10%;
     border-radius: 0;
+    margin: 0;
   }
   &__section {
-    width: auto;
+    width: 75%;
     height: fit-content;
+    &__information {
+      & h2 {
+      }
+      & h3 {
+      }
+    }
+    &__skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: f.rem(6);
+    }
   }
   & h2 {
-    padding-bottom: f.rem(24);
+    padding-bottom: f.rem(12);
     text-align: center;
   }
-}
-
-.contact__section__information {
-  & h2 {
-  }
-  & h3 {
-  }
-}
-
-.contact__section__skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: f.rem(6);
 }
 
 .contact__section__form {
