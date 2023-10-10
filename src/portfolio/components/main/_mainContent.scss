@@ -1,5 +1,5 @@
 @use '../../../sass/util/functions' as f;
-@use '../../portfolioStyles' as m;
+@use '../../scss/portfolioStyles' as m;
 
 .mainContent {
   display: grid;
@@ -24,7 +24,10 @@
   max-width: 82vw;
   max-height: 76vh;
   height: 100%;
-  transition: filter 0.35s ease-in-out, transform 0.35s ease-in-out, transform-origin 0.35s ease-in-out;
+  transition:
+    filter 0.35s ease-in-out,
+    transform 0.35s ease-in-out,
+    transform-origin 0.35s ease-in-out;
   &[data-status='disabled'] {
     transform: scale(0.8);
     transform-origin: bottom;

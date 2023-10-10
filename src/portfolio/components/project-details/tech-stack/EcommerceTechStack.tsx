@@ -230,7 +230,7 @@ const EcommerceTechStack = () => {
         <button id='reacttestinglibrary' aria-label='React Testing Library' data-status='false' ref={techButtonRef}>
           <picture>
             <img
-              src='src/portfolio/components/project-details/images/react-testing-lib-logo.png'
+              src='/src/portfolio/assets/tech-stack/react-testing-lib-logo.png'
               alt='React Testing Library'
               loading='lazy'
               decoding='async'

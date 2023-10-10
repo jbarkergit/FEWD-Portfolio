@@ -1,5 +1,5 @@
 @use '../../../../sass/util/functions' as f;
-@use '../../../portfolioStyles' as m;
+@use '../../../scss/portfolioStyles' as m;
 
 .portHeader {
   position: relative;
@@ -43,7 +43,9 @@
     gap: m.$portfolioGap;
     & button {
       color: #fff;
-      font: 500 100% / 1.25 'Manrope', sans-serif;
+      font:
+        500 100% / 1.25 'Manrope',
+        sans-serif;
       font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
       letter-spacing: f.rem(0.8);
       text-transform: capitalize;
