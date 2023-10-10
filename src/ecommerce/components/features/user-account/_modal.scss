@@ -100,22 +100,22 @@
       border-radius: f.rem(6);
       background: var(--elemBackgroundPrimary);
       outline: 1px solid hsl(0, 0%, 86%);
-      // box-shadow:
-      //   inset 2px 2px 4px #d1d9e6,
-      //   inset -2px -2px 4px #f9f9f9;
       & input {
         width: 100%;
         height: inherit;
         min-height: f.rem(42);
         padding: 0 f.rem(12);
-        border-top-left-radius: f.rem(6);
-        border-bottom-left-radius: f.rem(6);
         color: rgb(0, 0, 0);
         font-weight: 400;
         letter-spacing: f.rem(0.3);
         box-shadow:
           2px 2px 4px #d1d9e6,
           -2px -2px 4px #f9f9f9;
+        &:focus {
+          box-shadow:
+            inset 2px 2px 4px #d1d9e6,
+            inset -2px -2px 4px #f9f9f9;
+        }
       }
     }
   }

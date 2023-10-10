@@ -1,5 +1,6 @@
 import { Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState } from 'react';
 import { userEmailAddressRegex, userPasswordRegex } from '../authentication/userAccountRegExp';
+import { Google, LinkedIn, Apple } from '../../../../assets/production-images/user-account-svg/PasskeySvgs';
 
 //Prop drill from UserAccountModal
 type PropType = {
@@ -11,10 +12,6 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   const userRegistryModal = useRef<HTMLFormElement>(null); //Form Reference
   const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Input Field Reference
   const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Input Field Reference
-
-  //Trigger data-attribute animation
-  const [animate, setAnimate] = useState<boolean>(false);
-  useEffect(() => (uiModal === 'userRegistry' ? setAnimate(true) : setAnimate(false)), [uiModal]);
 
   //Registry validation state
   const [registry, setRegistry] = useState<{
@@ -60,8 +57,14 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
         userRegistryModal.current.getAttribute('data-status') === 'active' &&
         !userRegistryModal.current?.contains(e.target as Node)
       ) {
-        setUiModal('');
-        clearFormInputValues();
+        //Due to the Login and Registry modals being shared and conditionally rendered,
+        //manually set data-status and delay the uiModal state change to allow for the animation to trigger and satisfy first
+        if (userRegistryModal.current) userRegistryModal.current.setAttribute('data-status', 'false');
+
+        setTimeout(() => {
+          setUiModal('');
+          clearFormInputValues();
+        }, 255);
       }
     };
 
@@ -114,8 +117,8 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
   };
 
   return (
-    <section className='modalWrapper' data-status={animate ? 'active' : 'false'}>
-      <form className='ecoModal' onSubmit={useRegistryFormSubmission} data-status={animate ? 'active' : 'false'} ref={userRegistryModal}>
+    <section className='modalWrapper' data-status={uiModal === 'userRegistry' ? 'active' : 'false'}>
+      <form className='ecoModal' onSubmit={useRegistryFormSubmission} ref={userRegistryModal} data-status={uiModal === 'userRegistry' ? 'active' : 'false'}>
         <div className='ecoModal__container'>
           <legend>
             <h2>Account Creation</h2>
@@ -145,7 +148,6 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                   placeholder='Last Name'
                   value={registry.lastNameRegistry}
                   required
-                  autoFocus
                   aria-invalid={registry.lastNameRegistry ? 'false' : 'true'}
                   aria-describedby='uidnote'
                   ref={emailAddressInputFieldRef}
@@ -160,7 +162,6 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 placeholder='Email Address'
                 value={registry.emailAddressRegistry}
                 required
-                autoFocus
                 aria-invalid={registry.emailAddressValidRegistry ? 'false' : 'true'}
                 aria-describedby='uidnote'
                 ref={emailAddressInputFieldRef}
@@ -227,7 +228,12 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 onClick={() => focus()}
                 onChange={(event) => setRegistry({ ...registry, passwordRegistryCheck: event.target.value })}
               />
-              <button className='passwordLabel__visibility' onClick={() => setRegistry({ ...registry, passwordVisible: registry.passwordVisible ? false : true })}>
+              <button
+                className='passwordLabel__visibility'
+                onClick={(e) => {
+                  e.preventDefault();
+                  setRegistry({ ...registry, passwordVisible: registry.passwordVisible ? false : true });
+                }}>
                 {registry.passwordVisible ? (
                   <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 14 14'>
                     <g fill='none' stroke='hsl(0, 0%, 20%)' strokeLinecap='round' strokeLinejoin='round'>
@@ -257,6 +263,17 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
               Submit
             </button>
             <button onClick={() => setUiModal('userLogin')}>Return to Login</button>
+          </div>
+          <div className='ecoModal__container__passkeys'>
+            <button>
+              <Google />
+            </button>
+            <button>
+              <LinkedIn />
+            </button>
+            <button>
+              <Apple />
+            </button>
           </div>
           <div className='ecoModal__container__notice'>
             <p>This form validates input fields and aims to simulate user authentication via localStorage.</p>
