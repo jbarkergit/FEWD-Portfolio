@@ -11,8 +11,10 @@ const PortHeader = ({ stateIndex, setStateIndex }: PortHeaderType): JSX.Element 
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
   const unorderedListChildrenPositionArray = unorderedListChildrenArray.map((child) => child.offsetLeft);
 
-  //Set arrow position of project navigation by number
-  useEffect(() => unorderedListRef.current?.style.setProperty('--afterPsuedoSelector', `${unorderedListChildrenPositionArray[stateIndex]}px`), [stateIndex]);
+  useEffect(() => {
+    //Set arrow position of project navigation by number
+    unorderedListRef.current?.style.setProperty('--afterPsuedoSelector', `${unorderedListChildrenPositionArray[stateIndex]}px`);
+  }, [stateIndex]);
 
   return (
     <header className='portHeader'>
