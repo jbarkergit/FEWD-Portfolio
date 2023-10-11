@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import EcommerceTechStack from '../tech-stack/EcommerceTechStack';
+import EcommerceTechStack from '../../tech-stack/EcommerceTechStack';
 import RequestInformationStyle from './RequestInformationStyle';
 
 type EcommerceProjectInfoType = {
@@ -12,7 +12,6 @@ const EcommerceExtendedInfo = ({ projectDetail, setProjectDetail }: EcommercePro
     <article className='projectDetails__projectOverview'>
       <h2>Ecommerce Project Overview</h2>
       <RequestInformationStyle projectDetail={projectDetail} setProjectDetail={setProjectDetail} />
-      <EcommerceTechStack />
       <section className='projectDetails__projectOverview__information'>
         <p>
           This eCommerce project was developed with the primary goal of establishing a solid foundation in building dynamic web applications. Through iterative

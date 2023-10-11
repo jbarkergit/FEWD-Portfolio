@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import EcommerceTechStack from '../tech-stack/EcommerceTechStack';
+import EcommerceTechStack from '../../tech-stack/EcommerceTechStack';
 import RequestInformationStyle from './RequestInformationStyle';
 
 type EcommerceProjectInfoType = {
@@ -12,7 +12,6 @@ const EcommerceAbridgedInfo = ({ projectDetail, setProjectDetail }: EcommercePro
     <article className='projectDetails__projectSummary'>
       <h2>Ecommerce Project Summary</h2>
       <RequestInformationStyle projectDetail={projectDetail} setProjectDetail={setProjectDetail} />
-      <EcommerceTechStack />
       <section className='projectDetails__projectSummary__information'>
         <p>
           <span>Objective</span>

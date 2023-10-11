@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
-import TechStack from '../../../assets/tech-stack/TechStack';
+import TechStack from '../../assets/tech-stack/TechStack';
 
 const EcommerceTechStack = () => {
   //Push every instance of techButtonRef into empty array on mount

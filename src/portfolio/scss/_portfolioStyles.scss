@@ -13,6 +13,7 @@
     sans-serif;
   font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
   letter-spacing: f.rem(0.8);
+  letter-spacing: 0.2px;
 }
 
 .flex {

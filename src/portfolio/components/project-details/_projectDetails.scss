@@ -37,11 +37,8 @@
       align-items: center;
       p {
         width: clamp(45ch, 100%, 75ch);
-        padding-bottom: f.rem(12);
-        font-size: f.rem(16);
+        padding-bottom: f.rem(24);
         font-weight: 400;
-        line-height: 1.4rem;
-
         & span {
           font-weight: 800;
           letter-spacing: f.rem(1.2);

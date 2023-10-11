@@ -15,7 +15,7 @@ const RequestInformationStyle = ({ projectDetail, setProjectDetail }: PropType) 
         </>
       ) : (
         <>
-          Prefer to read with developer insights? <button onClick={() => setProjectDetail('projectOverview')}>{'Click here!'}</button>
+          Interested in a read with developer insights? <button onClick={() => setProjectDetail('projectOverview')}>{'Click here!'}</button>
         </>
       )}
     </nav>
