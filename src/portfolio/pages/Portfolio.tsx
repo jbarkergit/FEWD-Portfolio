@@ -10,7 +10,7 @@ import ProjectDetails from '../components/features/project-details/ProjectDetail
 
 //Features
 import ContactForm from '../components/features/contact/ContactForm';
-import EcommerceTechStack from '../components/tech-stack/EcommerceTechStack';
+import EcommerceTechStack from '../components/features/tech-stack/EcommerceTechStack';
 
 const Portfolio = (): JSX.Element => {
   const [stateIndex, setStateIndex] = useState<number>(0);

@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback, Dispatch, SetStateAction } from 'react';
-import TechStackIcons from '../../assets/tech-stack/TechStackIcons';
-import TechStack from '../../assets/tech-stack/TechStack';
+import TechStackIcons from '../../../assets/tech-stack/TechStackIcons';
+import TechStack from '../../../assets/tech-stack/TechStack';
 
 //Prop drill from Portfolio page
 type techStackType = {
