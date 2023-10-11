@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import ProjectNavProp from './ProjectNavProp';
 
-type indexStateType = { stateIndex: number; setStateIndex: Dispatch<SetStateAction<number>>; projectDetail: string };
+type indexStateType = { projectSlideIndex: number; setProjectSlideIndex: Dispatch<SetStateAction<number>>; projectInfoStyle: string };
 
 type initSliderStateType = {
   pointerDown: boolean;
@@ -31,7 +31,7 @@ type actionType =
   | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] }
   | { type: 'BUTTON_NAVIGATION' };
 
-const MainContent = ({ stateIndex, setStateIndex, projectDetail }: indexStateType): JSX.Element => {
+const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle }: indexStateType): JSX.Element => {
   const targetElementRef = useRef<HTMLDivElement>(null),
     targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
     targetElementWidth: number = targetElement?.scrollWidth as number,
@@ -130,13 +130,13 @@ const MainContent = ({ stateIndex, setStateIndex, projectDetail }: indexStateTyp
 
       case 'BUTTON_NAVIGATION':
         const targElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft);
-        const setSliderPosition: number = targetElementChildrenPositionArray[stateIndex] + targElementLeftPadding;
+        const setSliderPosition: number = targetElementChildrenPositionArray[projectSlideIndex] + targElementLeftPadding;
 
-        revealRefs.current.forEach((article, index) => article.setAttribute('data-status', index === stateIndex ? 'enabled' : 'disabled'));
+        revealRefs.current.forEach((article, index) => article.setAttribute('data-status', index === projectSlideIndex ? 'enabled' : 'disabled'));
 
         return {
           ...state,
-          closestIndex: stateIndex,
+          closestIndex: projectSlideIndex,
           trackPos: setSliderPosition,
           previousTrackPos: setSliderPosition,
           style: {
@@ -193,17 +193,17 @@ const MainContent = ({ stateIndex, setStateIndex, projectDetail }: indexStateTyp
     };
   }, []);
 
-  useEffect(() => setStateIndex(state.closestIndex), [state.closestIndex]);
-  useEffect(() => toggleSmoothenAnimation(), [stateIndex]);
-  useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [stateIndex]);
+  useEffect(() => setProjectSlideIndex(state.closestIndex), [state.closestIndex]);
+  useEffect(() => toggleSmoothenAnimation(), [projectSlideIndex]);
+  useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [projectSlideIndex]);
 
   //Adjust "main" (slider) height based on projectDetail state
   useEffect(() => {
-    if (projectDetail !== '' && targetElementRef.current) targetElementRef.current.style.width = 'auto';
+    if (projectInfoStyle !== '' && targetElementRef.current) targetElementRef.current.style.width = 'auto';
     else {
       if (targetElementRef.current) targetElementRef.current.style.width = 'max-content';
     }
-  }, [projectDetail]);
+  }, [projectInfoStyle]);
 
   return (
     <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} ref={targetElementRef} style={state.style}>

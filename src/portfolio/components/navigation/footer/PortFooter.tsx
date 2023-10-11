@@ -3,18 +3,17 @@ import CurrentTimeCDT from './CurrentTimeCDT';
 import { Dispatch, SetStateAction } from 'react';
 
 type ProjectNavPropType = {
-  stateIndex: number;
-  projectDetail: string;
-  setProjectDetail: Dispatch<SetStateAction<string>>;
+  projectSlideIndex: number;
+  setProjectInfoStyle: Dispatch<SetStateAction<string>>;
 };
 
-const PortFooter = ({ stateIndex, projectDetail, setProjectDetail }: ProjectNavPropType) => {
+const PortFooter = ({ projectSlideIndex, setProjectInfoStyle }: ProjectNavPropType) => {
   const useProjectInformation = (): {
     extended: boolean;
     summary: boolean;
     demoLink: string;
   } => {
-    switch (stateIndex) {
+    switch (projectSlideIndex) {
       case 0:
         return { extended: true, summary: true, demoLink: '/ecommerce' };
       default:
@@ -38,11 +37,11 @@ const PortFooter = ({ stateIndex, projectDetail, setProjectDetail }: ProjectNavP
         </section>
         <section className='portFooter__nav__left'>
           {useProjectInformation()?.extended ? (
-            <button onClick={() => setProjectDetail('projectOverview')}>Project Overview</button>
+            <button onClick={() => setProjectInfoStyle('projectOverview')}>Project Overview</button>
           ) : (
             <span className='projectUnavailable'>this project is unavailable</span>
           )}
-          {useProjectInformation()?.summary ? <button onClick={() => setProjectDetail('projectSummary')}>Project Summary</button> : null}
+          {useProjectInformation()?.summary ? <button onClick={() => setProjectInfoStyle('projectSummary')}>Project Summary</button> : null}
           {useProjectInformation()?.demoLink ? (
             <Link to={useProjectInformation()?.demoLink}>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 24 24'>

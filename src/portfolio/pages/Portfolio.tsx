@@ -14,29 +14,38 @@ import EcommerceTechStack from '../components/features/tech-stack/EcommerceTechS
 
 const Portfolio = (): JSX.Element => {
   // INDEX TRACKER: Current Active Project Slide
-  const [stateIndex, setStateIndex] = useState<number>(0);
+  const [projectSlideIndex, setProjectSlideIndex] = useState<number>(0);
 
   // ACTIVE STATUS TRACKER: Contact Form Modal
-  const [contactForm, setContactForm] = useState<boolean>(false);
+  const [contactFormActive, setContactFormActive] = useState<boolean>(false);
 
   // ACTIVE STATUS TRACKER: TechStack Modal
-  const [techStackFeatureOpen, setTechStackFeatureOpen] = useState<boolean>(false);
+  const [techStackActive, setTechStackActive] = useState<boolean>(false);
 
-  // Project Information Article Toggle (Abridged OR Extended with Developer Insight)
-  const [projectDetail, setProjectDetail] = useState<string>('');
+  //** */
   // ACTIVE STATUS TRACKER: Project Information Extension
-  const [projectDetailOpen, setProjectDetailOpen] = useState<boolean>(false);
-  // STYLE TOGGLE: #portfolio Height Extension
-  useEffect(() => (projectDetail !== '' ? setProjectDetailOpen(true) : setProjectDetailOpen(false)), [projectDetail]);
+  const [projectInfoActive, setProjectInfoActive] = useState<boolean>(false);
+
+  // Project Information Article Style Toggle (Abridged OR Extended with Developer Insight)
+  const [projectInfoStyle, setProjectInfoStyle] = useState<string>('');
+
+  // Project Information Style Extension Toggle: #portfolio Height Extension
+  useEffect(() => (projectInfoStyle !== '' ? setProjectInfoActive(true) : setProjectInfoActive(false)), [projectInfoStyle]);
+  //** */
 
   return (
-    <div id='portfolio' style={projectDetailOpen && stateIndex !== 1 ? { height: 'auto' } : { height: '100vh' }}>
-      <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} setContactForm={setContactForm} setTechStackFeatureOpen={setTechStackFeatureOpen} />
-      <ContactForm contactForm={contactForm} setContactForm={setContactForm} />
-      <EcommerceTechStack techStackFeatureOpen={techStackFeatureOpen} setTechStackFeatureOpen={setTechStackFeatureOpen} />
-      <ProjectDetails projectDetail={projectDetail} setProjectDetail={setProjectDetail} stateIndex={stateIndex} />
-      <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} projectDetail={projectDetail} />
-      <PortFooter stateIndex={stateIndex} projectDetail={projectDetail} setProjectDetail={setProjectDetail} />
+    <div id='portfolio' style={projectInfoActive && projectSlideIndex !== 1 ? { height: 'auto' } : { height: '100vh' }}>
+      <PortHeader
+        projectSlideIndex={projectSlideIndex}
+        setProjectSlideIndex={setProjectSlideIndex}
+        setContactFormActive={setContactFormActive}
+        setTechStackActive={setTechStackActive}
+      />
+      <ContactForm contactFormActive={contactFormActive} setContactFormActive={setContactFormActive} />
+      <EcommerceTechStack techStackActive={techStackActive} setTechStackActive={setTechStackActive} />
+      <ProjectDetails projectInfoStyle={projectInfoStyle} setProjectInfoStyle={setProjectInfoStyle} projectSlideIndex={projectSlideIndex} />
+      <MainContent projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} projectInfoStyle={projectInfoStyle} />
+      <PortFooter projectSlideIndex={projectSlideIndex} setProjectInfoStyle={setProjectInfoStyle} />
     </div>
   );
 };

@@ -4,11 +4,11 @@ import TechStackInformation from './TechStackInformation';
 
 //Prop drill from Portfolio page
 type techStackType = {
-  techStackFeatureOpen: boolean;
-  setTechStackFeatureOpen: Dispatch<SetStateAction<boolean>>;
+  techStackActive: boolean;
+  setTechStackActive: Dispatch<SetStateAction<boolean>>;
 };
 
-const EcommerceTechStack = ({ techStackFeatureOpen, setTechStackFeatureOpen }: techStackType) => {
+const EcommerceTechStack = ({ techStackActive, setTechStackActive }: techStackType) => {
   //Push every instance of techButtonRef into empty array on mount
   const arrayOfTechButtons = useRef<HTMLButtonElement[]>([]);
 
@@ -67,11 +67,11 @@ const EcommerceTechStack = ({ techStackFeatureOpen, setTechStackFeatureOpen }: t
   }, [activeTechStackButton]);
 
   //Component Render
-  if (techStackFeatureOpen === true)
+  if (techStackActive === true)
     return (
       <div id='techStackWrapper'>
-        <section className='techStackSelection' data-status={techStackFeatureOpen === true ? 'active' : 'false'}>
-          <div className='techStackTooltip' ref={techStackTooltipRef} data-status={techStackFeatureOpen === true ? 'active' : 'false'}>
+        <section className='techStackSelection' data-status={techStackActive === true ? 'active' : 'false'}>
+          <div className='techStackTooltip' ref={techStackTooltipRef} data-status={techStackActive === true ? 'active' : 'false'}>
             <span>{techName}</span>
             <span>{techDescription}</span>
           </div>
@@ -235,7 +235,7 @@ const EcommerceTechStack = ({ techStackFeatureOpen, setTechStackFeatureOpen }: t
         </section>
         <section className='techStackInformation'>
           <article>
-            <h2>{TechStackInformation.find((techObject) => techObject.id === { techStackHero })}</h2>
+            {/* <h2>{TechStackInformation.find((techObject) => techObject.id === { techStackHero })}</h2> */}
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas temporibus neque nam quia ab magnam eum quod tempore nulla numquam, voluptas minima
               impedit maiores debitis saepe quos dolores excepturi expedita. Rem, consectetur, esse fugit error, voluptas molestiae porro obcaecati vel provident

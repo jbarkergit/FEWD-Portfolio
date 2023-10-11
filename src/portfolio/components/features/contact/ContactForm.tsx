@@ -4,15 +4,15 @@ import FormLabelDialogProp from './props/FormLabelDialogProp';
 
 //Prop drill from Portfolio page
 type ContactType = {
-  contactForm: boolean;
-  setContactForm: Dispatch<SetStateAction<boolean>>;
+  contactFormActive: boolean;
+  setContactFormActive: Dispatch<SetStateAction<boolean>>;
 };
 
 type FormValuesType = {
   [key: string]: string;
 };
 
-const ContactForm = ({ contactForm, setContactForm }: ContactType) => {
+const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) => {
   const initialFormValues: FormValuesType = FormInputs.reduce((acc, input) => ({ ...acc, [input.name]: '' }), {});
   const [formValues, setFormValues] = useState<FormValuesType>(initialFormValues);
 
@@ -30,18 +30,23 @@ const ContactForm = ({ contactForm, setContactForm }: ContactType) => {
 
   useEffect(() => {
     const handleExteriorClick = (e: PointerEvent) => {
-      if (contactForm === true && contact.current && contact.current.getAttribute('data-status') === 'active' && !contact.current?.contains(e.target as Node)) {
-        setContactForm(false);
+      if (
+        contactFormActive === true &&
+        contact.current &&
+        contact.current.getAttribute('data-status') === 'active' &&
+        !contact.current?.contains(e.target as Node)
+      ) {
+        setContactFormActive(false);
       }
     };
 
     document.body.addEventListener('pointerdown', handleExteriorClick);
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
-  }, [contactForm]);
+  }, [contactFormActive]);
 
   return (
-    <div className='contactWrapper' data-status={contactForm === true ? 'active' : 'false'}>
-      <aside className='contact' data-status={contactForm === true ? 'active' : 'false'} ref={contact}>
+    <div className='contactWrapper' data-status={contactFormActive === true ? 'active' : 'false'}>
+      <aside className='contact' data-status={contactFormActive === true ? 'active' : 'false'} ref={contact}>
         <section className='contact__section' role='dialog' aria-modal='true' data-show='false' aria-label='About Developer and Developer Contact information'>
           <h2>Contact Justin</h2>
           <form method='dialog' onSubmit={handleSubmit} className='contact__section__form'>

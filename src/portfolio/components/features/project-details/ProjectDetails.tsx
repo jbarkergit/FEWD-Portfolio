@@ -2,33 +2,29 @@ import { Dispatch, SetStateAction } from 'react';
 import EcommerceExtendedInfo from './project-information/EcommerceExtendedInfo';
 import EcommerceAbridgedInfo from './project-information/EcommerceAbridgedInfo';
 
-type ProjectDetailsType = {
-  projectDetail: string;
-  setProjectDetail: Dispatch<SetStateAction<string>>;
-  stateIndex: number;
-};
+type ProjectDetailsType = { projectSlideIndex: number; projectInfoStyle: string; setProjectInfoStyle: Dispatch<SetStateAction<string>> };
 
-const ProjectDetails = ({ projectDetail, setProjectDetail, stateIndex }: ProjectDetailsType) => {
+const ProjectDetails = ({ projectSlideIndex, projectInfoStyle, setProjectInfoStyle }: ProjectDetailsType) => {
   const useProjectInfo = (): {
     extended: JSX.Element;
     summary: JSX.Element;
   } | null => {
-    switch (stateIndex) {
+    switch (projectSlideIndex) {
       case 0:
         return {
-          extended: <EcommerceExtendedInfo projectDetail={projectDetail} setProjectDetail={setProjectDetail} />,
-          summary: <EcommerceAbridgedInfo projectDetail={projectDetail} setProjectDetail={setProjectDetail} />,
+          extended: <EcommerceExtendedInfo projectDetail={projectInfoStyle} setProjectDetail={setProjectInfoStyle} />,
+          summary: <EcommerceAbridgedInfo projectDetail={projectInfoStyle} setProjectDetail={setProjectInfoStyle} />,
         };
       default:
         return null;
     }
   };
 
-  if (projectDetail !== '' && stateIndex !== 1)
+  if (projectInfoStyle !== '' && projectSlideIndex !== 1)
     return (
       <section className='projectDetails'>
-        {projectDetail === 'projectOverview' || projectDetail === 'projectSummary' ? (
-          <button className='projectDetails__close' onClick={() => setProjectDetail('')}>
+        {projectInfoStyle === 'projectOverview' || projectInfoStyle === 'projectSummary' ? (
+          <button className='projectDetails__close' onClick={() => setProjectInfoStyle('')}>
             <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
               <path
                 fill='#ffffff'
@@ -36,8 +32,8 @@ const ProjectDetails = ({ projectDetail, setProjectDetail, stateIndex }: Project
             </svg>
           </button>
         ) : null}
-        {projectDetail === 'projectOverview' ? useProjectInfo()?.extended : null}
-        {projectDetail === 'projectSummary' ? useProjectInfo()?.summary : null}
+        {projectInfoStyle === 'projectOverview' ? useProjectInfo()?.extended : null}
+        {projectInfoStyle === 'projectSummary' ? useProjectInfo()?.summary : null}
       </section>
     );
 };

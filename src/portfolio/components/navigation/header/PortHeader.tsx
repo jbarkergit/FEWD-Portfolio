@@ -3,31 +3,31 @@ import { Link } from 'react-router-dom';
 
 //Prop drill from Portfolio page
 type PortHeaderType = {
-  stateIndex: number;
-  setStateIndex: Dispatch<SetStateAction<number>>;
-  setContactForm: Dispatch<SetStateAction<boolean>>;
-  setTechStackFeatureOpen: Dispatch<SetStateAction<boolean>>;
+  projectSlideIndex: number;
+  setProjectSlideIndex: Dispatch<SetStateAction<number>>;
+  setContactFormActive: Dispatch<SetStateAction<boolean>>;
+  setTechStackActive: Dispatch<SetStateAction<boolean>>;
 };
 
-const PortHeader = ({ stateIndex, setStateIndex, setContactForm, setTechStackFeatureOpen }: PortHeaderType): JSX.Element => {
+const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormActive, setTechStackActive }: PortHeaderType): JSX.Element => {
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
   const unorderedListChildrenPositionArray = unorderedListChildrenArray.map((child) => child.offsetLeft);
 
   useEffect(() => {
     //Set arrow position of project navigation by number
-    unorderedListRef.current?.style.setProperty('--afterPsuedoSelector', `${unorderedListChildrenPositionArray[stateIndex]}px`);
-  }, [stateIndex]);
+    unorderedListRef.current?.style.setProperty('--afterPsuedoSelector', `${unorderedListChildrenPositionArray[projectSlideIndex]}px`);
+  }, [projectSlideIndex]);
 
   return (
     <header className='portHeader'>
       <section className='portHeader__index'>
-        <div className='portHeader__index__location'>{`Project 0${stateIndex + 1}.`}</div>
+        <div className='portHeader__index__location'>{`Project 0${projectSlideIndex + 1}.`}</div>
         <nav className='portHeader__index__slideNav'>
           <ul ref={unorderedListRef}>
             {Array.from({ length: 2 }).map((_, index) => (
               <li key={index}>
-                <button className='buttonNav' onClick={() => setStateIndex(index)}>
+                <button className='buttonNav' onClick={() => setProjectSlideIndex(index)}>
                   <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 24 24'>
                     <path
                       fill='#ffffff'
@@ -42,8 +42,8 @@ const PortHeader = ({ stateIndex, setStateIndex, setContactForm, setTechStackFea
         </nav>
       </section>
       <section className='portHeader__menu'>
-        <button onClick={() => setContactForm(true)}>Contact</button>
-        <button onClick={() => setTechStackFeatureOpen(true)}>Tech Stack</button>
+        <button onClick={() => setContactFormActive(true)}>Contact</button>
+        <button onClick={() => setTechStackActive(true)}>Tech Stack</button>
         <Link to='https://github.com/jbarkergit' target='_blank'>
           GitHub
         </Link>
