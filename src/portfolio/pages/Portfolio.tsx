@@ -6,10 +6,10 @@ import PortFooter from '../components/navigation/footer/PortFooter';
 
 //Main
 import MainContent from '../components/main/MainContent';
-import ProjectDetails from '../components/project-details/ProjectDetails';
+import ProjectDetails from '../components/features/project-details/ProjectDetails';
 
 //Features
-import ContactForm from '../features/contact/ContactForm';
+import ContactForm from '../components/features/contact/ContactForm';
 
 const Portfolio = (): JSX.Element => {
   const [stateIndex, setStateIndex] = useState<number>(0);
