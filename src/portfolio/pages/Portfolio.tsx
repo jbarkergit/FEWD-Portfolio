@@ -21,7 +21,7 @@ const Portfolio = (): JSX.Element => {
   useEffect(() => (projectDetail !== '' ? setProjectDetailOpen(true) : setProjectDetailOpen(false)), [projectDetail]);
 
   return (
-    <div id='portfolio' style={projectDetailOpen ? { height: 'auto' } : { height: '100vh' }}>
+    <div id='portfolio' style={projectDetailOpen && stateIndex !== 1 ? { height: 'auto' } : { height: '100vh' }}>
       <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} setContactForm={setContactForm} />
       <ContactForm contactForm={contactForm} setContactForm={setContactForm} />
       <ProjectDetails projectDetail={projectDetail} setProjectDetail={setProjectDetail} stateIndex={stateIndex} />
