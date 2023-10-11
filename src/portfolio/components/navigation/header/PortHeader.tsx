@@ -6,10 +6,10 @@ type PortHeaderType = {
   stateIndex: number;
   setStateIndex: Dispatch<SetStateAction<number>>;
   setContactForm: Dispatch<SetStateAction<boolean>>;
-  setTechStack: Dispatch<SetStateAction<boolean>>;
+  setTechStackFeatureOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const PortHeader = ({ stateIndex, setStateIndex, setContactForm, setTechStack }: PortHeaderType): JSX.Element => {
+const PortHeader = ({ stateIndex, setStateIndex, setContactForm, setTechStackFeatureOpen }: PortHeaderType): JSX.Element => {
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
   const unorderedListChildrenPositionArray = unorderedListChildrenArray.map((child) => child.offsetLeft);
@@ -43,7 +43,7 @@ const PortHeader = ({ stateIndex, setStateIndex, setContactForm, setTechStack }:
       </section>
       <section className='portHeader__menu'>
         <button onClick={() => setContactForm(true)}>Contact</button>
-        <button onClick={() => setTechStack(true)}>Tech Stack</button>
+        <button onClick={() => setTechStackFeatureOpen(true)}>Tech Stack</button>
         <Link to='https://github.com/jbarkergit' target='_blank'>
           GitHub
         </Link>

@@ -1,14 +1,14 @@
 import { useRef, useState, useEffect, useCallback, Dispatch, SetStateAction } from 'react';
 import TechStackIcons from './TechStackIcons';
-import TechStack from './TechStackInformation';
+import TechStackInformation from './TechStackInformation';
 
 //Prop drill from Portfolio page
 type techStackType = {
-  techStack: boolean;
-  setTechStack: Dispatch<SetStateAction<boolean>>;
+  techStackFeatureOpen: boolean;
+  setTechStackFeatureOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const EcommerceTechStack = ({ techStack, setTechStack }: techStackType) => {
+const EcommerceTechStack = ({ techStackFeatureOpen, setTechStackFeatureOpen }: techStackType) => {
   //Push every instance of techButtonRef into empty array on mount
   const arrayOfTechButtons = useRef<HTMLButtonElement[]>([]);
 
@@ -24,7 +24,7 @@ const EcommerceTechStack = ({ techStack, setTechStack }: techStackType) => {
   useEffect(() => {
     //Compare target.id to TechStack array of objects until it finds a match, set data
     const userPointerEnter = (e: PointerEvent) => {
-      const getTechStackId = TechStack.find((techObject) => techObject.id === (e.target as HTMLButtonElement).id)!;
+      const getTechStackId = TechStackInformation.find((techObject) => techObject.id === (e.target as HTMLButtonElement).id)!;
       setTechName(getTechStackId.name);
       setTechDescription(getTechStackId.description);
       techStackTooltipRef.current?.setAttribute('data-status', 'active'); //Enable tooltip visibility
@@ -67,11 +67,11 @@ const EcommerceTechStack = ({ techStack, setTechStack }: techStackType) => {
   }, [activeTechStackButton]);
 
   //Component Render
-  if (techStack === true)
+  if (techStackFeatureOpen === true)
     return (
       <div id='techStackWrapper'>
-        <section className='techStackSelection' data-status={techStack === true ? 'active' : 'false'}>
-          <div className='techStackTooltip' ref={techStackTooltipRef} data-status={techStack === true ? 'active' : 'false'}>
+        <section className='techStackSelection' data-status={techStackFeatureOpen === true ? 'active' : 'false'}>
+          <div className='techStackTooltip' ref={techStackTooltipRef} data-status={techStackFeatureOpen === true ? 'active' : 'false'}>
             <span>{techName}</span>
             <span>{techDescription}</span>
           </div>
@@ -235,7 +235,7 @@ const EcommerceTechStack = ({ techStack, setTechStack }: techStackType) => {
         </section>
         <section className='techStackInformation'>
           <article>
-            <h2>Lorem.</h2>
+            <h2>{TechStackInformation.find((techObject) => techObject.id === { techStackHero })}</h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas temporibus neque nam quia ab magnam eum quod tempore nulla numquam, voluptas minima
               impedit maiores debitis saepe quos dolores excepturi expedita. Rem, consectetur, esse fugit error, voluptas molestiae porro obcaecati vel provident

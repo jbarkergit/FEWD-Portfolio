@@ -1,4 +1,4 @@
-const TechStack = [
+const TechStackInformation = [
   {
     id: 'nodejs',
     name: 'Node.js',
@@ -76,4 +76,4 @@ const TechStack = [
   },
 ];
 
-export default TechStack;
+export default TechStackInformation;

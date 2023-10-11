@@ -13,20 +13,27 @@ import ContactForm from '../components/features/contact/ContactForm';
 import EcommerceTechStack from '../components/features/tech-stack/EcommerceTechStack';
 
 const Portfolio = (): JSX.Element => {
+  // INDEX TRACKER: Current Active Project Slide
   const [stateIndex, setStateIndex] = useState<number>(0);
-  const [projectDetail, setProjectDetail] = useState<string>('');
-  const [projectDetailOpen, setProjectDetailOpen] = useState<boolean>(false);
-  const [contactForm, setContactForm] = useState<boolean>(false);
-  const [techStack, setTechStack] = useState<boolean>(false);
 
-  // Boolean check for #portfolio height toggle
+  // ACTIVE STATUS TRACKER: Contact Form Modal
+  const [contactForm, setContactForm] = useState<boolean>(false);
+
+  // ACTIVE STATUS TRACKER: TechStack Modal
+  const [techStackFeatureOpen, setTechStackFeatureOpen] = useState<boolean>(false);
+
+  // Project Information Article Toggle (Abridged OR Extended with Developer Insight)
+  const [projectDetail, setProjectDetail] = useState<string>('');
+  // ACTIVE STATUS TRACKER: Project Information Extension
+  const [projectDetailOpen, setProjectDetailOpen] = useState<boolean>(false);
+  // STYLE TOGGLE: #portfolio Height Extension
   useEffect(() => (projectDetail !== '' ? setProjectDetailOpen(true) : setProjectDetailOpen(false)), [projectDetail]);
 
   return (
     <div id='portfolio' style={projectDetailOpen && stateIndex !== 1 ? { height: 'auto' } : { height: '100vh' }}>
-      <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} setContactForm={setContactForm} setTechStack={setTechStack} />
+      <PortHeader stateIndex={stateIndex} setStateIndex={setStateIndex} setContactForm={setContactForm} setTechStackFeatureOpen={setTechStackFeatureOpen} />
       <ContactForm contactForm={contactForm} setContactForm={setContactForm} />
-      <EcommerceTechStack techStack={techStack} setTechStack={setTechStack} />
+      <EcommerceTechStack techStackFeatureOpen={techStackFeatureOpen} setTechStackFeatureOpen={setTechStackFeatureOpen} />
       <ProjectDetails projectDetail={projectDetail} setProjectDetail={setProjectDetail} stateIndex={stateIndex} />
       <MainContent stateIndex={stateIndex} setStateIndex={setStateIndex} projectDetail={projectDetail} />
       <PortFooter stateIndex={stateIndex} projectDetail={projectDetail} setProjectDetail={setProjectDetail} />
