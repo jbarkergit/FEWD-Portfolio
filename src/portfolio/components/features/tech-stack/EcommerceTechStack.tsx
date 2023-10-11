@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback, Dispatch, SetStateAction } from 'react';
-import TechStackIcons from '../../../assets/tech-stack/TechStackIcons';
-import TechStack from '../../../assets/tech-stack/TechStack';
+import TechStackIcons from './TechStackIcons';
+import TechStack from './TechStackInformation';
 
 //Prop drill from Portfolio page
 type techStackType = {
@@ -56,10 +56,10 @@ const EcommerceTechStack = ({ techStack, setTechStack }: techStackType) => {
   }, []);
 
   //Toggle active buttons
-  const [activeTechStackButton, setActiveTechStackButton] = useState<string>('');
+  const [activeTechStackButton, setActiveTechStackButton] = useState<string>('nodejs');
 
   //TechStackHero State for dynamic techStackHero background image rendering
-  const [techStackHero, setTechStackHero] = useState<keyof typeof TechStackIcons>('reacttestinglibrary');
+  const [techStackHero, setTechStackHero] = useState<keyof typeof TechStackIcons>('nodejs');
 
   //Dynamically change hero picture && Reduce bloat: copy activeTechStackButton state value over to TechStackHero state value
   useEffect(() => {
