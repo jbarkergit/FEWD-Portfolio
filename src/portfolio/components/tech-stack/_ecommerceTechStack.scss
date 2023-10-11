@@ -1,117 +1,177 @@
 @use '../../../sass/util/functions' as f;
 @use '../../scss/portfolioStyles' as m;
 
-.projectDetails__projectSummary__techStack {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  gap: f.rem(6);
+#techStackWrapper {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-areas:
+    'techStackSelection techStackHero'
+    'techStackSelection techStackHero'
+    'techStackSelection techStackInformation';
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
   width: 100%;
-  height: auto;
-  padding: m.$viewportMarginTopBottom 0;
+  height: 100%;
+  z-index: 15;
+  padding: m.$viewportMarginTopBottom m.$viewportMarginRightLeft;
+  // background: url('../../assets/webm/');
+  background-color: rgba(26, 26, 26, 0.85);
+  backdrop-filter: blur(12px);
+  &[data-status='active'] {
+    opacity: 1;
+  }
+  &[data-status='false'] {
+    opacity: 0;
+  }
+}
+
+.techStackSelection {
+  grid-area: techStackSelection;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(100% / 4.5), 1fr));
+  gap: f.rem(5);
+  width: 100%;
+  height: 100%;
+  padding: calc(m.$viewportMarginTopBottom * 2) calc(m.$viewportMarginRightLeft / 2) calc(m.$viewportMarginTopBottom * 2) 0;
   pointer-events: none;
-  & span {
+  &[data-status='active'] {
+    opacity: 1;
+  }
+  &[data-status='false'] {
+    opacity: 0;
+  }
+  &:after {
+    content: 'Known Technologies';
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: calc(m.$viewportMarginTopBottom * 1.2);
+  }
+  & button {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: auto;
-    height: auto;
-    pointer-events: none;
-    & button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      aspect-ratio: 2/4;
-      width: f.rem(100);
-      border-radius: f.rem(8);
-      background: linear-gradient(145deg, hsl(0, 0%, 10%), hsl(0, 0%, 18%));
-      box-shadow:
-        0.3rem 0.3rem 0.6rem hsl(0, 0%, 0%),
-        -0.2rem -0.2rem 0.5rem hsl(0, 0%, 20%);
-      cursor: pointer;
-      pointer-events: all;
-      transition: all 0.45s ease-in-out;
-      // &:hover {
-      // background-color: linear-gradient(145deg, #171717, #1c1c1c);
-      // outline: 0.2rem solid hsl(216, 4%, 20%);
-      //   box-shadow:
-      //     inset 0.1rem 0.1rem 0.3rem hsl(226, 9%, 71%),
-      //     inset 0.2rem 0.2rem 0.5rem hsl(225, 39%, 85%),
-      //     inset -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%);
-      // }
-      & picture,
-      & picture img,
-      & svg {
-        max-width: 35px;
-        max-height: 35px;
-        pointer-events: none;
-      }
-      &[data-status='active'] {
-        outline: 0.2rem solid hsl(216, 4%, 20%);
-        box-shadow:
-          inset 0.1rem 0.1rem 0.3rem hsl(226, 9%, 71%),
-          inset 0.2rem 0.2rem 0.5rem hsl(225, 39%, 85%),
-          inset -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%);
-      }
+    width: 100%;
+    height: 100%;
+    border-radius: f.rem(6);
+    background-color: rgba(255, 255, 255, 0.144);
+    cursor: pointer;
+    pointer-events: all;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    &[data-status='active'] {
+      border-style: inset;
+      border: 0.2rem solid hsl(0, 0%, 50%);
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    & picture,
+    & picture img,
+    & svg {
+      max-width: 35px;
+      max-height: 35px;
+      pointer-events: none;
     }
   }
 }
 
+.techStackHero {
+  grid-area: techStackHero;
+  width: 100%;
+  max-width: f.rem(450);
+  height: 100%;
+  padding: 0 0 0 calc(m.$viewportMarginRightLeft / 2);
+  & picture {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    & svg {
+      filter: drop-shadow(0 0 2.75rem #4f4f4f);
+    }
+  }
+}
+
+.techStackInformation {
+  grid-area: techStackInformation;
+  display: grid;
+  place-items: start;
+  width: 100%;
+  height: 100%;
+  padding: 0 0 0 calc(m.$viewportMarginRightLeft / 2);
+  & article h2,
+  & article p {
+    width: clamp(45ch, 100%, 75ch);
+  }
+  & article h2 {
+    font-weight: 800;
+    letter-spacing: f.rem(1.2);
+    line-height: 1.2rem;
+    text-transform: uppercase;
+    padding-bottom: f.rem(12);
+  }
+  & article p {
+    font-weight: 400;
+  }
+}
+
 #nodejs svg {
-  max-width: 32px;
-  max-height: 32px;
+  max-width: 100px;
+  max-height: 100px;
 }
 #npm svg {
-  max-width: 39px;
-  max-height: 39px;
+  max-width: 100px;
+  max-height: 100px;
 }
 #eslint svg {
-  max-width: 40px;
-  max-height: 40px;
+  max-width: 100px;
+  max-height: 100px;
 }
 #prettier svg {
-  max-width: 30px;
-  max-height: 30px;
+  max-width: 100px;
+  max-height: 100px;
 }
 #html svg {
-  max-width: 37px;
-  max-height: 37px;
+  max-width: 100px;
+  max-height: 100px;
 }
 #css svg {
-  max-width: 35px;
-  max-height: 35px;
+  max-width: 100px;
+  max-height: 100px;
 }
 #sass svg {
-  max-width: 42px;
-  max-height: 42px;
+  max-width: 100px;
+  max-height: 100px;
 }
 #javascript svg {
-  max-width: 54px;
-  max-height: 54px;
+  max-width: 100px;
+  max-height: 100px;
 }
 #typescript svg {
-  max-width: 30px;
-  max-height: 30px;
+  max-width: 100px;
+  max-height: 100px;
 }
 #vite svg {
-  max-width: 30px;
-  max-height: 30px;
+  max-width: 100px;
+  max-height: 100px;
 }
 #vitest svg {
-  max-width: 38px;
-  max-height: 38px;
+  max-width: 100px;
+  max-height: 100px;
 }
-#reacttestinglibrary picture img {
-  max-width: 38px;
-  max-height: 38px;
+#reacttestinglibrary svg {
+  max-width: 100px;
+  max-height: 100px;
 }
 #react svg {
-  max-width: 34px;
-  max-height: 34px;
+  max-width: 100px;
+  max-height: 100px;
 }
 #reactrouterdom svg {
-  max-width: 40px;
-  max-height: 40px;
+  max-width: 100px;
+  max-height: 100px;
 }
 
 .techStackTooltip {
