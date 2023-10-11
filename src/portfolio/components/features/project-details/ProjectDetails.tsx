@@ -24,7 +24,7 @@ const ProjectDetails = ({ projectDetail, setProjectDetail, stateIndex }: Project
     }
   };
 
-  if (projectDetail !== '')
+  if (projectDetail !== '' && stateIndex !== 1)
     return (
       <section className='projectDetails'>
         {projectDetail === 'projectOverview' || projectDetail === 'projectSummary' ? (
