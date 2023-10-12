@@ -9,18 +9,16 @@ type TechStackType = {
 };
 
 const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackType) => {
-  //** */
   // GROUPED STATE: button attr data-status && techStackHero image, active technology information
   const [activeTechnology, setActiveTechnology] = useState<keyof typeof TechStackIcons>('nodejs');
 
   // activeTechnology setter assistant
   const technologySetterType = (e: PointerEvent) => (e.currentTarget as HTMLButtonElement)?.id as keyof typeof TechStackIcons;
-  //** */
 
-  //Component Render
+  // Component Render
   if (techStackActive === true)
     return (
-      <article id='techStackWrapper'>
+      <div id='techStackWrapper'>
         <section className='techStackSelection' data-status={techStackActive === true ? 'active' : 'false'}>
           {TechStackInformation.map((technology) => (
             <button
@@ -51,7 +49,7 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
             <p>{TechStackInformation.find((technology) => technology.id === activeTechnology)?.description}</p>
           </article>
         </section>
-      </article>
+      </div>
     );
 };
 export default EcommerceTechStack;

@@ -10,13 +10,12 @@
     'techStackSelection techStackHero'
     'techStackSelection techStackInformation';
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: 1fr 1fr 1fr;
   width: 100%;
   height: 100%;
   z-index: 15;
   padding: m.$viewportMarginTopBottom m.$viewportMarginRightLeft;
-  // background: url('../../assets/webm/');
-  background-color: rgba(26, 26, 26, 0.85);
+  background-color: rgba(26, 26, 26, 0.8);
   backdrop-filter: blur(12px);
   &[data-status='active'] {
     opacity: 1;
@@ -56,16 +55,25 @@
     &:hover {
       background-color: rgba(255, 255, 255, 0.2);
     }
+    &:hover svg {
+      scale: 1.1;
+      filter: drop-shadow(0 0 1rem #686868);
+      transition: all 0.25s ease-in;
+    }
     &[data-status='active'] {
       // border: 0.2rem solid hsl(0, 0%, 50%);
-      background-color: rgba(255, 255, 255, 0.26);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.1) 100%);
     }
     & picture,
-    & picture img,
     & svg {
-      max-width: 35px;
-      max-height: 35px;
+      width: 100%;
+      height: 100%;
+      max-width: 100px;
+      max-height: 100px;
       pointer-events: none;
+      scale: 1;
+      filter: drop-shadow(rgba(255, 255, 255, 0.26));
+      transition: all 0.25s ease-out;
     }
   }
 }
@@ -75,7 +83,7 @@
   width: 100%;
   max-width: f.rem(450);
   height: 100%;
-  padding: 0 0 0 calc(m.$viewportMarginRightLeft / 2);
+  padding: calc(m.$viewportMarginTopBottom * 2) 0 0 0;
   & picture {
     display: flex;
     justify-content: center;
@@ -90,14 +98,19 @@
 
 .techStackInformation {
   grid-area: techStackInformation;
-  display: grid;
-  place-items: start;
   width: 100%;
   height: 100%;
-  padding: 0 0 0 calc(m.$viewportMarginRightLeft / 2);
+  & article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
   & article h2,
   & article p {
-    width: clamp(45ch, 100%, 75ch);
+    height: auto;
   }
   & article h2 {
     font-weight: 800;
@@ -109,75 +122,6 @@
   & article p {
     font-weight: 400;
   }
-}
-
-#nodejs svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#npm svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#eslint svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#prettier svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#html svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#css svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#sass svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#javascript svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#typescript svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#vite svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#vitest svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#reacttestinglibrary svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#react svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#reactrouterdom svg {
-  max-width: 100px;
-  max-height: 100px;
-}
-#github svg {
-  width: 100%;
-  height: 100%;
-  max-width: 100px;
-  max-height: 100px;
-}
-#techStackReturn {
-  width: 100%;
-  height: 100%;
-  max-width: 100px;
-  max-height: 100px;
 }
 
 .techStackTooltip {
