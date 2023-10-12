@@ -20,7 +20,7 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
   //Component Render
   if (techStackActive === true)
     return (
-      <div id='techStackWrapper'>
+      <article id='techStackWrapper'>
         <section className='techStackSelection' data-status={techStackActive === true ? 'active' : 'false'}>
           {TechStackInformation.map((technology) => (
             <button
@@ -42,7 +42,7 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
             <p>{TechStackInformation.find((technology) => technology.id === activeTechnology)?.description}</p>
           </article>
         </section>
-      </div>
+      </article>
     );
 };
 export default EcommerceTechStack;
