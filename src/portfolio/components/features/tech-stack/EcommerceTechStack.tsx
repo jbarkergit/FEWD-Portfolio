@@ -2,7 +2,7 @@ import { useState, Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import TechStackIcons from './TechStackIcons';
 import TechStackInformation from './TechStackInformation';
 
-//Prop drill from Page/Portfolio
+//Prop drill from pages/Portfolio
 type TechStackType = {
   techStackActive: boolean;
   setTechStackActive: Dispatch<SetStateAction<boolean>>;
@@ -10,10 +10,10 @@ type TechStackType = {
 
 const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackType) => {
   // GROUPED STATE: button attr data-status && techStackHero image, active technology information
-  const [activeTechnology, setActiveTechnology] = useState<keyof typeof TechStackIcons>('nodejs');
+  const [activeTechnology, setActiveTechnology] = useState<number>(0);
 
   // ActiveTechnology (information) setter assistant
-  const technologySetterType = (e: PointerEvent) => (e.currentTarget as HTMLButtonElement)?.id as keyof typeof TechStackIcons;
+  const technologyIndexSetter = (e: PointerEvent) => TechStackInformation.findIndex((techObject) => techObject.id === (e.currentTarget as HTMLButtonElement)?.id);
 
   //** */ By-pass conditional rendering animation issues
   // Seperate state as an animation trigger
@@ -33,9 +33,7 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
   }, [triggerAnim]);
   //** */
 
-  //** */ By-pass dynamic rendering animation issues for Hero Picture && ActiveTechnology info
-
-  // ACTIVE techStackHeroPicture
+  //** */ By-pass dynamic rendering animation issues for dynamic rendering of Hero Picture && ActiveTechnology info upon action
   const techStackHeroPicture = useRef<HTMLPictureElement>(null);
   const previousTechStackHeroPicture = useRef<HTMLPictureElement>(null);
 
@@ -43,32 +41,15 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
     // Handle DISABLED animation
     setTimeout(() => {
       if (techStackHeroPicture.current) techStackHeroPicture.current.setAttribute('data-status', 'false');
+      if (previousTechStackHeroPicture.current) previousTechStackHeroPicture.current.setAttribute('data-status', 'false');
     }, 50);
 
     // Handle ENABLED animation
     setTimeout(() => {
       if (techStackHeroPicture.current) techStackHeroPicture.current.setAttribute('data-status', 'active');
+      if (previousTechStackHeroPicture.current) previousTechStackHeroPicture.current.setAttribute('data-status', 'active');
     }, 300);
   }, [activeTechnology]);
-
-  // // PREVIOUS techStackHeroPicture
-  // // Variable storage for previous techStackHeroPicture
-  // const previousTechStackHeroIndex: number = TechStackInformation.indexOf(TechStackInformation.find((technology) => technology.id === activeTechnology)!);
-  // // const xyz = TechStackIcons[]
-  // console.log(TechStackIcons);
-
-  // useEffect(() => {
-  //   // Handle DISABLED animation
-  //   setTimeout(() => {
-  //     if (techStackHeroPicture.current) techStackHeroPicture.current.setAttribute('data-status', 'false');
-  //   }, 50);
-
-  //   // Handle ENABLED animation
-  //   setTimeout(() => {
-  //     if (techStackHeroPicture.current) techStackHeroPicture.current.setAttribute('data-status', 'active');
-  //   }, 300);
-  // }, [activeTechnology]);
-
   // //** */
 
   // Component Render
@@ -76,14 +57,14 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
     return (
       <div id='techStackWrapper' data-status={triggerAnim ? 'active' : 'false'}>
         <section className='techStackSelection' data-status={triggerAnim ? 'active' : 'false'}>
-          {TechStackInformation.map((technology) => (
+          {TechStackInformation.map((technologyInfo) => (
             <button
-              key={technology.id}
-              id={technology.id}
-              aria-label={technology.name}
-              onClick={(e) => setActiveTechnology(technologySetterType(e as unknown as PointerEvent))}
-              data-status={activeTechnology === `${technology.id}` ? 'active' : 'false'}>
-              {TechStackIcons[technology.id as keyof typeof TechStackIcons]}
+              key={technologyInfo.id}
+              id={technologyInfo.id}
+              aria-label={technologyInfo.name}
+              onClick={(e) => setActiveTechnology(technologyIndexSetter(e as unknown as PointerEvent))}
+              data-status={TechStackIcons[activeTechnology].id === `${technologyInfo.id}` ? 'active' : 'false'}>
+              {TechStackIcons[TechStackIcons.findIndex((technologyIcon) => technologyInfo.id === technologyIcon.id)].svg}
             </button>
           ))}
           <button aria-label='Close Tech Stack Modal' onClick={() => setTriggerAnim(false)}>
@@ -103,14 +84,14 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
             data-status={'active'}>
             {TechStackIcons[activeTechnology]}
           </picture> */}
-          <picture key={TechStackInformation.find((technology) => technology.id === activeTechnology)?.id} ref={techStackHeroPicture} data-status={'active'}>
-            {TechStackIcons[activeTechnology]}
+          <picture key={'s'} ref={techStackHeroPicture} data-status={'active'}>
+            {TechStackIcons[activeTechnology].svg}
           </picture>
         </section>
         <section className='techStackInformation' data-status={triggerAnim ? 'active' : 'false'}>
           <article>
-            <h2>{TechStackInformation.find((technology) => technology.id === activeTechnology)?.name}</h2>
-            <p>{TechStackInformation.find((technology) => technology.id === activeTechnology)?.description}</p>
+            <h2>{TechStackInformation[activeTechnology].name}</h2>
+            <p>{TechStackInformation[activeTechnology].description}</p>
           </article>
         </section>
       </div>

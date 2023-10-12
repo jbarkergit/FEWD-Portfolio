@@ -1,6 +1,7 @@
 const TechStackIcons = [
   {
-    nodejs: (
+    id: 'nodejs',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 292'>
         <defs>
           <path
@@ -50,7 +51,8 @@ const TechStackIcons = [
     ),
   },
   {
-    npm: (
+    id: 'npm',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 165'>
         <path
           fill='#C12127'
@@ -59,7 +61,8 @@ const TechStackIcons = [
     ),
   },
   {
-    eslint: (
+    id: 'eslint',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
         <path
           fill='#4b32c3'
@@ -69,7 +72,8 @@ const TechStackIcons = [
     ),
   },
   {
-    prettier: (
+    id: 'prettier',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 439 512'>
         <path
           fill='#ffffff'
@@ -78,7 +82,8 @@ const TechStackIcons = [
     ),
   },
   {
-    html: (
+    id: 'html',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
         <path fill='#e44f26' d='M5.902 27.201L3.655 2h24.69l-2.25 25.197L15.985 30L5.902 27.201z'></path>
         <path fill='#f1662a' d='m16 27.858l8.17-2.265l1.922-21.532H16v23.797z'></path>
@@ -92,7 +97,8 @@ const TechStackIcons = [
     ),
   },
   {
-    css: (
+    id: 'css',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'>
         <path fill='#1572B6' d='M18.814 114.123L8.76 1.352h110.48l-10.064 112.754l-45.243 12.543l-45.119-12.526z'></path>
         <path fill='#33A9DC' d='m64.001 117.062l36.559-10.136l8.601-96.354h-45.16v106.49z'></path>
@@ -106,7 +112,8 @@ const TechStackIcons = [
     ),
   },
   {
-    sass: (
+    id: 'sass',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
         <path
           fill='#cd6799'
@@ -115,7 +122,8 @@ const TechStackIcons = [
     ),
   },
   {
-    javascript: (
+    id: 'javascript',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
         <path
           fill='#ffffff'
@@ -124,7 +132,8 @@ const TechStackIcons = [
     ),
   },
   {
-    typescript: (
+    id: 'typescript',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
         <path
           fill='#007acc'
@@ -133,7 +142,8 @@ const TechStackIcons = [
     ),
   },
   {
-    vite: (
+    id: 'vite',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 257'>
         <defs>
           <linearGradient id='logosVitejs0' x1='-.828%' x2='57.636%' y1='7.652%' y2='78.411%'>
@@ -156,7 +166,8 @@ const TechStackIcons = [
     ),
   },
   {
-    vitest: (
+    id: 'vitest',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
         <path
           fill='#fcc72b'
@@ -172,7 +183,8 @@ const TechStackIcons = [
     ),
   },
   {
-    reacttestinglibrary: (
+    id: 'reacttestinglibrary',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'>
         <defs>
           <radialGradient id='logosTestingLibrary0' cx='50.279%' cy='49.847%' r='50.334%' fx='50.279%' fy='49.847%' gradientTransform='matrix(1 0 0 .99252 0 .004)'>
@@ -489,7 +501,8 @@ const TechStackIcons = [
     ),
   },
   {
-    react: (
+    id: 'react',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 228'>
         <path
           fill='#00D8FF'
@@ -498,7 +511,8 @@ const TechStackIcons = [
     ),
   },
   {
-    reactrouterdom: (
+    id: 'reactrouterdom',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'>
         <path
           fill='#F44250'
@@ -510,7 +524,8 @@ const TechStackIcons = [
     ),
   },
   {
-    github: (
+    id: 'github',
+    svg: (
       <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 256 256'>
         <g fill='none'>
           <rect fill='#242938' rx='60'></rect>
