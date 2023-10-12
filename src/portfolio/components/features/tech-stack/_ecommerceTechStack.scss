@@ -16,6 +16,7 @@
   z-index: 15;
   padding: m.$viewportMarginTopBottom m.$viewportMarginRightLeft;
   background-color: rgba(26, 26, 26, 0.8);
+  box-shadow: inset 20px 20px 60px #000000;
   backdrop-filter: blur(12px);
   &[data-status='active'] {
     opacity: 1;
@@ -33,7 +34,7 @@
   gap: f.rem(5);
   width: 100%;
   height: 100%;
-  padding: calc(m.$viewportMarginTopBottom * 2) calc(m.$viewportMarginRightLeft / 2) calc(m.$viewportMarginTopBottom * 2) 0;
+  padding: calc(m.$viewportMarginTopBottom * 2) calc(m.$viewportMarginRightLeft / 2);
   pointer-events: none;
   &[data-status='active'] {
     opacity: 1;
@@ -57,7 +58,7 @@
     }
     &:hover svg {
       scale: 1.1;
-      filter: drop-shadow(0 0 1rem #686868);
+      filter: drop-shadow(0 0 1rem rgba(24, 24, 24, 0.65));
       transition: all 0.25s ease-in;
     }
     &[data-status='active'] {
@@ -92,6 +93,7 @@
       width: 100%;
       height: 100%;
       filter: drop-shadow(0 0 2.75rem #4f4f4f);
+      filter: drop-shadow(0 0 2.75rem #000000);
     }
   }
 }
@@ -100,6 +102,7 @@
   grid-area: techStackInformation;
   width: 100%;
   height: 100%;
+  padding: calc(m.$viewportMarginTopBottom * 2) calc(m.$viewportMarginRightLeft / 2);
   & article {
     display: flex;
     flex-direction: column;
