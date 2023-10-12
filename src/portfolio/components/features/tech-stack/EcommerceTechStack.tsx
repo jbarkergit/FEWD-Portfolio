@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import TechStackIcons from './TechStackIcons';
 import TechStackInformation from './TechStackInformation';
 
@@ -12,14 +12,31 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
   // GROUPED STATE: button attr data-status && techStackHero image, active technology information
   const [activeTechnology, setActiveTechnology] = useState<keyof typeof TechStackIcons>('nodejs');
 
-  // activeTechnology setter assistant
+  // ActiveTechnology setter assistant
   const technologySetterType = (e: PointerEvent) => (e.currentTarget as HTMLButtonElement)?.id as keyof typeof TechStackIcons;
 
+  //** */
+  // Seperate state as an animation trigger (by-pass conditional rendering issues)
+  const [triggerAnim, setTriggerAnim] = useState<boolean>(false);
+  // TriggerAnim state setter
+  useEffect(() => setTriggerAnim(techStackActive), [techStackActive]);
+
+  // Attribute Setter: ref data-status && techStackActive false boolean setter
+  useEffect(() => {
+    if (triggerAnim) {
+      setTriggerAnim(true);
+    } else {
+      setTimeout(() => setTechStackActive(false), 260);
+      setTriggerAnim(false);
+    }
+  }, [triggerAnim]);
+  //** */
+
   // Component Render
-  if (techStackActive === true)
+  if (techStackActive)
     return (
-      <div id='techStackWrapper'>
-        <section className='techStackSelection' data-status={techStackActive === true ? 'active' : 'false'}>
+      <div id='techStackWrapper' data-status={triggerAnim ? 'active' : 'false'}>
+        <section className='techStackSelection' data-status={triggerAnim ? 'active' : 'false'}>
           {TechStackInformation.map((technology) => (
             <button
               key={technology.id}
@@ -30,7 +47,7 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
               {TechStackIcons[technology.id as keyof typeof TechStackIcons]}
             </button>
           ))}
-          <button aria-label='Close Tech Stack Modal' onClick={() => setTechStackActive(false)}>
+          <button aria-label='Close Tech Stack Modal' onClick={() => setTriggerAnim(false)}>
             <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' id='techStackReturn'>
               <path
                 fill='#ffffff'

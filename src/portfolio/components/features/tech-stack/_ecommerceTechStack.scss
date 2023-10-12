@@ -20,9 +20,13 @@
   backdrop-filter: blur(12px);
   &[data-status='active'] {
     opacity: 1;
+    transition: opacity 250ms ease-in;
+    pointer-events: all;
   }
   &[data-status='false'] {
     opacity: 0;
+    transition: opacity 250ms ease-out;
+    pointer-events: none;
   }
 }
 
@@ -35,12 +39,15 @@
   width: 100%;
   height: 100%;
   padding: calc(m.$viewportMarginTopBottom * 2) calc(m.$viewportMarginRightLeft / 2);
-  pointer-events: none;
   &[data-status='active'] {
     opacity: 1;
+    transition: opacity 250ms ease-in;
+    pointer-events: all;
   }
   &[data-status='false'] {
     opacity: 0;
+    transition: opacity 250ms ease-out;
+    pointer-events: none;
   }
   & button {
     display: flex;
