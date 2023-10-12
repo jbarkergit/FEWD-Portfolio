@@ -103,8 +103,8 @@
     transition: all 200ms ease-out;
   }
   & picture {
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    inset: 0;
     width: 100%;
     &[data-status='active'] {
       opacity: 1;
@@ -115,6 +115,9 @@
       opacity: 0;
       transform: translateX(100%);
       transition: all 250ms ease-out;
+    }
+    &:nth-of-type(2) {
+      z-index: 2;
     }
     & svg {
       width: 100%;
