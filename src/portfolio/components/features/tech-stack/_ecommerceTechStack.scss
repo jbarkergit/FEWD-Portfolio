@@ -20,12 +20,12 @@
   backdrop-filter: blur(12px);
   &[data-status='active'] {
     opacity: 1;
-    transition: opacity 250ms ease-in;
+    transition: all 250ms ease-in;
     pointer-events: all;
   }
   &[data-status='false'] {
     opacity: 0;
-    transition: opacity 250ms ease-out;
+    transition: all 250ms ease-out;
     pointer-events: none;
   }
 }
@@ -41,13 +41,13 @@
   padding: calc(m.$viewportMarginTopBottom * 2) calc(m.$viewportMarginRightLeft / 2);
   &[data-status='active'] {
     opacity: 1;
-    transition: opacity 250ms ease-in;
-    pointer-events: all;
+    transform: translateX(0);
+    transition: all 250ms ease-in;
   }
   &[data-status='false'] {
     opacity: 0;
-    transition: opacity 250ms ease-out;
-    pointer-events: none;
+    transform: translateX(100%);
+    transition: all 250ms ease-out;
   }
   & button {
     display: flex;
@@ -92,10 +92,30 @@
   max-width: f.rem(450);
   height: 100%;
   padding: calc(m.$viewportMarginTopBottom * 2) 0 0 0;
+  &[data-status='active'] {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 250ms ease-in;
+  }
+  &[data-status='false'] {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 200ms ease-out;
+  }
   & picture {
     display: flex;
     justify-content: center;
     width: 100%;
+    &[data-status='active'] {
+      opacity: 1;
+      transform: translateX(0);
+      transition: all 250ms ease-in;
+    }
+    &[data-status='false'] {
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 250ms ease-out;
+    }
     & svg {
       width: 100%;
       height: 100%;
@@ -110,6 +130,16 @@
   width: 100%;
   height: 100%;
   padding: calc(m.$viewportMarginTopBottom * 2) calc(m.$viewportMarginRightLeft / 2);
+  &[data-status='active'] {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 250ms ease-in;
+  }
+  &[data-status='false'] {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 200ms ease-out;
+  }
   & article {
     display: flex;
     flex-direction: column;
@@ -123,6 +153,7 @@
     height: auto;
   }
   & article h2 {
+    font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
     font-weight: 800;
     letter-spacing: f.rem(1.2);
     line-height: 100%;
