@@ -88,10 +88,11 @@
 
 .techStackHero {
   grid-area: techStackHero;
+  position: relative;
   width: 100%;
   max-width: f.rem(450);
   height: 100%;
-  padding: calc(m.$viewportMarginTopBottom * 2) 0 0 0;
+
   &[data-status='active'] {
     opacity: 1;
     transform: translateX(0);
@@ -106,6 +107,7 @@
     position: absolute;
     inset: 0;
     width: 100%;
+    padding: calc(m.$viewportMarginTopBottom * 2) 0 0 0;
     &[data-status='active'] {
       opacity: 1;
       transform: translateX(0);
@@ -130,9 +132,9 @@
 
 .techStackInformation {
   grid-area: techStackInformation;
+  position: relative;
   width: 100%;
   height: 100%;
-  padding: calc(m.$viewportMarginTopBottom * 2) calc(m.$viewportMarginRightLeft / 2);
   &[data-status='active'] {
     opacity: 1;
     transform: translateX(0);
@@ -144,11 +146,11 @@
     transition: all 200ms ease-out;
   }
   & article {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    width: 100%;
-    height: 100%;
+    padding: calc(m.$viewportMarginTopBottom * 2) calc(m.$viewportMarginRightLeft / 2);
     text-align: center;
   }
   & article h2,

@@ -101,6 +101,10 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
             <h2>{TechStackInformation[activeTechnologyIndex].name}</h2>
             <p>{TechStackInformation[activeTechnologyIndex].description}</p>
           </article>
+          <article>
+            <h2>{TechStackInformation[activeTechnologyIndex].name}</h2>
+            <p>{TechStackInformation[activeTechnologyIndex].description}</p>
+          </article>
         </section>
       </div>
     );
