@@ -45,7 +45,7 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
   }, [contactFormActive]);
 
   return (
-    <div className='contactWrapper' data-status={contactFormActive === true ? 'active' : 'false'}>
+    <div id='contactWrapper' data-status={contactFormActive === true ? 'active' : 'false'}>
       <aside className='contact' data-status={contactFormActive === true ? 'active' : 'false'} ref={contact}>
         <section className='contact__section' role='dialog' aria-modal='true' data-show='false' aria-label='About Developer and Developer Contact information'>
           <h2>Contact Justin</h2>
