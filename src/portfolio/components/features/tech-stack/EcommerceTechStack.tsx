@@ -45,23 +45,29 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
   //** */
 
   //** */ By-pass dynamic rendering animation issues for dynamic rendering of Hero Picture && ActiveTechnology info upon action
-  const techStackHeroPicture = useRef<HTMLPictureElement>(null);
-  const previousTechStackHeroPicture = useRef<HTMLPictureElement>(null);
+  const previousTechStackHero = useRef<HTMLPictureElement>(null);
+  const techStackHero = useRef<HTMLPictureElement>(null);
+  const previousTechStackInfo = useRef<HTMLElement>(null);
+  const techStackInfo = useRef<HTMLElement>(null);
 
   useEffect(() => {
     // Handle DISABLED animation
     setTimeout(() => {
-      if (techStackHeroPicture.current) techStackHeroPicture.current.setAttribute('data-status', 'false');
-      if (previousTechStackHeroPicture.current) previousTechStackHeroPicture.current.setAttribute('data-status', 'false');
-    }, 50);
+      if (techStackHero.current) techStackHero.current.setAttribute('data-status', 'false');
+      if (previousTechStackHero.current) previousTechStackHero.current.setAttribute('data-status', 'false');
+      if (previousTechStackInfo.current) previousTechStackInfo.current.setAttribute('data-status', 'active');
+      if (techStackInfo.current) techStackInfo.current.setAttribute('data-status', 'active');
+    }, 100);
 
     // Handle ENABLED animation
     setTimeout(() => {
-      if (techStackHeroPicture.current) techStackHeroPicture.current.setAttribute('data-status', 'active');
-      if (previousTechStackHeroPicture.current) previousTechStackHeroPicture.current.setAttribute('data-status', 'active');
-    }, 300);
+      if (techStackHero.current) techStackHero.current.setAttribute('data-status', 'active');
+      if (previousTechStackHero.current) previousTechStackHero.current.setAttribute('data-status', 'active');
+      if (previousTechStackInfo.current) previousTechStackInfo.current.setAttribute('data-status', 'false');
+      if (techStackInfo.current) techStackInfo.current.setAttribute('data-status', 'false');
+    }, 350);
   }, [activeTechnologyIndex]);
-  // //** */
+  //** */
 
   // Component Render
   if (techStackActive)
@@ -89,19 +95,19 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
           </button>
         </section>
         <section className='techStackHero' data-status={triggerAnim ? 'active' : 'false'}>
-          <picture key={TechStackInformation[activeTechnologyIndex].id} ref={previousTechStackHeroPicture} data-status={'active'}>
+          <picture key={TechStackInformation[activeTechnologyIndex].id} ref={previousTechStackHero} data-status={'false'}>
             {TechStackIcons[previouslyActiveTechnology].svg}
           </picture>
-          <picture key={TechStackInformation[activeTechnologyIndex].name} ref={techStackHeroPicture} data-status={'active'}>
+          <picture key={TechStackInformation[activeTechnologyIndex].name} ref={techStackHero} data-status={'active'}>
             {TechStackIcons[activeTechnologyIndex].svg}
           </picture>
         </section>
         <section className='techStackInformation' data-status={triggerAnim ? 'active' : 'false'}>
-          <article>
+          <article ref={previousTechStackInfo} data-status={'false'}>
             <h2>{TechStackInformation[activeTechnologyIndex].name}</h2>
             <p>{TechStackInformation[activeTechnologyIndex].description}</p>
           </article>
-          <article>
+          <article ref={techStackInfo} data-status={'active'}>
             <h2>{TechStackInformation[activeTechnologyIndex].name}</h2>
             <p>{TechStackInformation[activeTechnologyIndex].description}</p>
           </article>
