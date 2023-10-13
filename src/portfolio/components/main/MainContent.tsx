@@ -1,7 +1,12 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import ProjectNavProp from './ProjectNavProp';
 
-type indexStateType = { projectSlideIndex: number; setProjectSlideIndex: Dispatch<SetStateAction<number>>; projectInfoStyle: string };
+type indexStateType = {
+  projectSlideIndex: number;
+  setProjectSlideIndex: Dispatch<SetStateAction<number>>;
+  projectInfoStyle: string;
+  mainAnimator: boolean;
+};
 
 type initSliderStateType = {
   pointerDown: boolean;
@@ -31,7 +36,7 @@ type actionType =
   | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] }
   | { type: 'BUTTON_NAVIGATION' };
 
-const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle }: indexStateType): JSX.Element => {
+const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle, mainAnimator }: indexStateType): JSX.Element => {
   const targetElementRef = useRef<HTMLDivElement>(null),
     targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
     targetElementWidth: number = targetElement?.scrollWidth as number,
@@ -193,11 +198,11 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle
     };
   }, []);
 
-  useEffect(() => setProjectSlideIndex(state.closestIndex), [state.closestIndex]);
-  useEffect(() => toggleSmoothenAnimation(), [projectSlideIndex]);
+  useEffect(() => setProjectSlideIndex(state.closestIndex), [state.closestIndex]); // Keep track of slide index globally
+  useEffect(() => toggleSmoothenAnimation(), [projectSlideIndex]); // Toggle data-attr anim
   useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [projectSlideIndex]);
 
-  //Adjust "main" (slider) height based on projectDetail state
+  // Adjust "main" (slider) height based on projectDetail state
   useEffect(() => {
     if (projectInfoStyle !== '' && targetElementRef.current) targetElementRef.current.style.width = 'auto';
     else {
@@ -205,20 +210,27 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle
     }
   }, [projectInfoStyle]);
 
+  // Main slider transitional animation
+  useEffect(() => {
+    if (mainAnimator) {
+      if (targetElementRef.current) {
+        targetElementRef.current.style.scale = '90%'; // css-only anim overrides smoothen anim due to shared props
+      }
+      setTimeout(() => {
+        // Additional 250px to accommodate scale
+        if (targetElementRef.current) targetElementRef.current.style.transform = `translateX(-${targetElementWidth + 250}px)`;
+      }, 250);
+    }
+  }, [mainAnimator]);
+
   return (
-    <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} ref={targetElementRef} style={state.style}>
-      <ProjectNavProp
-        imgSrc='src/portfolio/assets/compressed-project-images/ecommerce-preview.png'
-        dataStatus='active'
-        dataActivity='active'
-        addToRefs={addToRefs}
-      />
-      <ProjectNavProp
-        imgSrc='src/portfolio/assets/compressed-project-images/hyundai-preview.jpg'
-        dataStatus='disabled'
-        dataActivity='disabled'
-        addToRefs={addToRefs}
-      />
+    <main
+      className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''} ${mainAnimator ? 'mainAnimatorOn' : ''}`}
+      ref={targetElementRef}
+      style={state.style}
+      data-status={mainAnimator ? 'active' : 'false'}>
+      <ProjectNavProp imgSrc='src/portfolio/assets/compressed-project-images/ecommerce-preview.png' dataStatus='active' addToRefs={addToRefs} />
+      <ProjectNavProp imgSrc='src/portfolio/assets/compressed-project-images/hyundai-preview.jpg' dataStatus='disabled' addToRefs={addToRefs} />
     </main>
   );
 };

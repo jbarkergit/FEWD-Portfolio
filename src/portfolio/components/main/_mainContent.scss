@@ -4,9 +4,10 @@
 .mainContent {
   display: grid;
   grid-auto-flow: column;
-  width: max-content;
+  grid-gap: 0;
+  width: auto;
   height: 76%;
-  padding: 0 0 0 m.$viewportMarginRightLeft;
+  padding-left: m.$viewportMarginRightLeft;
   &:hover {
     cursor: grab;
   }
@@ -16,12 +17,20 @@
   &.smoothen {
     transition: transform 0.25s ease-out;
   }
+  &.mainAnimatorOn {
+    filter: blur(4px);
+    transition:
+      scale 100ms ease-out,
+      transform 300ms ease-out,
+      filter 300ms ease-in;
+  }
 }
 
 .mainContent__article {
   display: flex;
   align-self: flex-end;
-  max-width: 82vw;
+  aspect-ratio: 21/9;
+  max-width: 75vw;
   max-height: 76vh;
   height: 100%;
   transition:
@@ -31,27 +40,20 @@
   &[data-status='disabled'] {
     transform: scale(0.8);
     transform-origin: bottom;
-    filter: grayscale(85%) sepia(50%) brightness(30%) opacity(80%);
+    filter: grayscale(85%) sepia(80%) brightness(32%) opacity(80%);
   }
-  &__pictureWrapper {
-    display: flex;
+  & picture {
     width: 100%;
-    max-width: inherit;
-    max-height: inherit;
+    height: 100%;
+    border-radius: f.rem(12);
+    background-color: m.$transparentElem;
+    overflow: hidden;
     will-change: width;
-    & picture {
-      max-width: inherit;
-      max-height: inherit;
-      aspect-ratio: 1.9947497382;
-      border-radius: f.rem(18);
-      background-color: m.$transparentElem;
-      overflow: hidden;
-      @media (width <= 1444px) {
-        aspect-ratio: 4/5;
-      }
-      & img {
-        object-fit: cover;
-      }
+    @media (width <= 1444px) {
+      aspect-ratio: 4/5;
+    }
+    & img {
+      object-fit: cover;
     }
   }
 }
