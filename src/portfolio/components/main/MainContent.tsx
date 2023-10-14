@@ -225,14 +225,29 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle
           if (targetElementRef.current) targetElementRef.current.style.transform = `translateX(${targetElementWidth * -1 - 250}px)`;
         }, 250);
 
-        if (targetElementRef.current) targetElementRef.current.style.scale = '90%';
+        setTimeout(() => {
+          if (targetElementRef.current) targetElementRef.current.setAttribute('data-status', '');
+        }, 500);
+
+        if (targetElementRef.current) {
+          targetElementRef.current.setAttribute('data-status', 'mainAnimation');
+          targetElementRef.current.style.scale = '90%';
+        }
         break;
 
       case false:
         setTimeout(() => {
           if (targetElementRef.current) targetElementRef.current.style.scale = '100%';
         }, 250);
-        if (targetElementRef.current) targetElementRef.current.style.transform = `translateX(${0}px)`;
+
+        setTimeout(() => {
+          if (targetElementRef.current) targetElementRef.current.setAttribute('data-status', '');
+        }, 500);
+
+        if (targetElementRef.current) {
+          targetElementRef.current.setAttribute('data-status', 'mainAnimation');
+          targetElementRef.current.style.transform = `translateX(${0}px)`;
+        }
         break;
 
       default:
@@ -241,11 +256,7 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle
   }, [mainAnimator]);
 
   return (
-    <main
-      className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`}
-      ref={targetElementRef}
-      data-status={mainAnimator ? 'mainAnimation' : 'mainAnimationIn'}
-      style={state.style}>
+    <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} data-status='' ref={targetElementRef} style={state.style}>
       <ProjectNavProp imgSrc='src/portfolio/assets/compressed-project-images/ecommerce-preview.png' dataStatus='active' addToRefs={addToRefs} />
       <ProjectNavProp imgSrc='src/portfolio/assets/compressed-project-images/hyundai-preview.jpg' dataStatus='disabled' addToRefs={addToRefs} />
     </main>
