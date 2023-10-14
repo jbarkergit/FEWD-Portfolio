@@ -17,8 +17,13 @@
   &.smoothen {
     transition: transform 0.25s ease-out;
   }
-  &.mainAnimatorOn {
-    filter: blur(4px);
+  &[data-status='mainAnimation'] {
+    transition:
+      scale 100ms ease-out,
+      transform 300ms ease-out,
+      filter 300ms ease-in;
+  }
+  &[data-status='mainAnimationIn'] {
     transition:
       scale 100ms ease-out,
       transform 300ms ease-out,

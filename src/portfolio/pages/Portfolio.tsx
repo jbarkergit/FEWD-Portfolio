@@ -22,14 +22,16 @@ const Portfolio = (): JSX.Element => {
   // ACTIVE STATUS TRACKER: TechStack Modal
   const [techStackActive, setTechStackActive] = useState<boolean>(false);
 
+  //** */
   // ANIMATION INITIATOR: Main Slider
   const [mainAnimator, setMainAnimator] = useState<boolean>(false);
 
-  // ANIMATION INITIATION: Boolean setter (IF contactForm !== false, IF techStackActive !== false)
+  // ANIMATION INITIATION: Main Slider Boolean setter (IF contactForm !== false, IF techStackActive !== false)
   useEffect(() => {
     if (contactFormActive || techStackActive) setMainAnimator(true);
     else setMainAnimator(false);
   }, [contactFormActive, techStackActive]);
+  //* */
 
   //** */
   // ACTIVE STATUS TRACKER: Project Information Extension
@@ -58,6 +60,7 @@ const Portfolio = (): JSX.Element => {
         setProjectSlideIndex={setProjectSlideIndex}
         projectInfoStyle={projectInfoStyle}
         mainAnimator={mainAnimator}
+        setMainAnimator={setMainAnimator}
       />
       <PortFooter projectSlideIndex={projectSlideIndex} setProjectInfoStyle={setProjectInfoStyle} />
     </div>

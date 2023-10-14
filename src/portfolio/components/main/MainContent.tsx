@@ -6,6 +6,7 @@ type indexStateType = {
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
   projectInfoStyle: string;
   mainAnimator: boolean;
+  setMainAnimator: Dispatch<SetStateAction<boolean>>;
 };
 
 type initSliderStateType = {
@@ -36,26 +37,29 @@ type actionType =
   | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] }
   | { type: 'BUTTON_NAVIGATION' };
 
-const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle, mainAnimator }: indexStateType): JSX.Element => {
+const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle, mainAnimator, setMainAnimator }: indexStateType): JSX.Element => {
   const targetElementRef = useRef<HTMLDivElement>(null),
     targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
     targetElementWidth: number = targetElement?.scrollWidth as number,
     targetElementChildrenArray: HTMLElement[] = Array.from(targetElement?.children ?? []) as HTMLElement[],
     targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
+
+  //** Toggle Smooth Animation (Bug by-pass) */
   const [applySmoothenAnimation, setApplySmoothenAnimation] = useState<boolean>(false);
 
   const toggleSmoothenAnimation = () => {
     setApplySmoothenAnimation((prev) => !prev);
-    setTimeout(() => {
-      setApplySmoothenAnimation(false);
-    }, 250);
+    setTimeout(() => setApplySmoothenAnimation(false), 250);
   };
+  //** */
 
+  //** Article references */
   const revealRefs = useRef<HTMLElement[]>([]);
 
   const addToRefs = useCallback((reference: HTMLElement) => {
     if (reference && !revealRefs.current.includes(reference)) revealRefs.current.push(reference);
   }, []);
+  //** */
 
   const reducer = (state: initSliderStateType, action: actionType): initSliderStateType => {
     switch (action.type) {
@@ -157,8 +161,6 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle
   const [state, dispatch] = useReducer(reducer, initState);
 
   useEffect(() => {
-    const targetElement = targetElementRef?.current!;
-
     const userPointerDown = (e: PointerEvent) => {
       if (!state.pointerDown && e.target instanceof HTMLAnchorElement) return state;
       const pageX = e.pageX as number;
@@ -183,52 +185,68 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle
       dispatch({ type: 'SCROLL', deltaY: e.deltaY, targetElementChildrenPositionArray });
     };
 
-    targetElement?.addEventListener('pointerdown', userPointerDown);
-    targetElement?.addEventListener('pointermove', userPointerMove);
-    targetElement?.addEventListener('pointerleave', userPointerLeave);
-    targetElement?.addEventListener('pointerup', userPointerUp);
-    targetElement?.addEventListener('wheel', userWheelEvent);
+    if (targetElementRef.current) {
+      targetElementRef.current.addEventListener('pointerdown', userPointerDown);
+      targetElementRef.current.addEventListener('pointermove', userPointerMove);
+      targetElementRef.current.addEventListener('pointerleave', userPointerLeave);
+      targetElementRef.current.addEventListener('pointerup', userPointerUp);
+      targetElementRef.current.addEventListener('wheel', userWheelEvent);
+    }
 
     return () => {
-      targetElement?.removeEventListener('pointerdown', userPointerDown);
-      targetElement?.removeEventListener('pointermove', userPointerMove);
-      targetElement?.removeEventListener('pointerleave', userPointerLeave);
-      targetElement?.removeEventListener('pointerup', userPointerUp);
-      targetElement?.removeEventListener('wheel', userWheelEvent);
+      if (targetElementRef.current) {
+        targetElementRef.current.removeEventListener('pointerdown', userPointerDown);
+        targetElementRef.current.removeEventListener('pointermove', userPointerMove);
+        targetElementRef.current.removeEventListener('pointerleave', userPointerLeave);
+        targetElementRef.current.removeEventListener('pointerup', userPointerUp);
+        targetElementRef.current.removeEventListener('wheel', userWheelEvent);
+      }
     };
   }, []);
 
   useEffect(() => setProjectSlideIndex(state.closestIndex), [state.closestIndex]); // Keep track of slide index globally
   useEffect(() => toggleSmoothenAnimation(), [projectSlideIndex]); // Toggle data-attr anim
-  useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [projectSlideIndex]);
+  useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [projectSlideIndex]); // Data-attr setter
 
   // Adjust "main" (slider) height based on projectDetail state
   useEffect(() => {
-    if (projectInfoStyle !== '' && targetElementRef.current) targetElementRef.current.style.width = 'auto';
-    else {
+    if (projectInfoStyle !== '' && targetElementRef.current) {
+      targetElementRef.current.style.width = 'auto';
+    } else {
       if (targetElementRef.current) targetElementRef.current.style.width = 'max-content';
     }
   }, [projectInfoStyle]);
 
-  // Main slider transitional animation
+  // Main slider transitional animation (css-only anim overrides smoothen anim due to shared props)
   useEffect(() => {
-    if (mainAnimator) {
-      if (targetElementRef.current) {
-        targetElementRef.current.style.scale = '90%'; // css-only anim overrides smoothen anim due to shared props
-      }
-      setTimeout(() => {
-        // Additional 250px to accommodate scale
-        if (targetElementRef.current) targetElementRef.current.style.transform = `translateX(-${targetElementWidth + 250}px)`;
-      }, 250);
+    switch (mainAnimator) {
+      case true:
+        setTimeout(() => {
+          if (targetElementRef.current) targetElementRef.current.style.transform = `translateX(${targetElementWidth * -1 - 250}px)`;
+        }, 250);
+
+        if (targetElementRef.current) targetElementRef.current.style.scale = '90%';
+        break;
+
+      case false:
+        setTimeout(() => setMainAnimator(false), 250);
+        if (targetElementRef.current) {
+          targetElementRef.current.style.transform = `translateX(${0}px)`;
+          targetElementRef.current.style.scale = '100%';
+        }
+        break;
+
+      default:
+        break;
     }
   }, [mainAnimator]);
 
   return (
     <main
-      className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''} ${mainAnimator ? 'mainAnimatorOn' : ''}`}
+      className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`}
       ref={targetElementRef}
-      style={state.style}
-      data-status={mainAnimator ? 'active' : 'false'}>
+      data-status={mainAnimator ? 'mainAnimation' : 'mainAnimationIn'}
+      style={state.style}>
       <ProjectNavProp imgSrc='src/portfolio/assets/compressed-project-images/ecommerce-preview.png' dataStatus='active' addToRefs={addToRefs} />
       <ProjectNavProp imgSrc='src/portfolio/assets/compressed-project-images/hyundai-preview.jpg' dataStatus='disabled' addToRefs={addToRefs} />
     </main>
