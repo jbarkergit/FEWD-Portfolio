@@ -229,11 +229,10 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle
         break;
 
       case false:
-        setTimeout(() => setMainAnimator(false), 250);
-        if (targetElementRef.current) {
-          targetElementRef.current.style.transform = `translateX(${0}px)`;
-          targetElementRef.current.style.scale = '100%';
-        }
+        setTimeout(() => {
+          if (targetElementRef.current) targetElementRef.current.style.scale = '100%';
+        }, 250);
+        if (targetElementRef.current) targetElementRef.current.style.transform = `translateX(${0}px)`;
         break;
 
       default:
