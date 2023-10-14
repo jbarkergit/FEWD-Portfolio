@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 // Prop drill from pages/Portfolio
 type ContactType = {
@@ -6,40 +6,62 @@ type ContactType = {
   setContactFormActive: Dispatch<SetStateAction<boolean>>;
 };
 
-export type ContactFormFieldsType = Record<string, string>;
+//** Contact form field array of objects & Types */
+type ContactFormFieldsType = Array<{ [key: string]: string }>;
+type ContactFormFieldType = { [key: string]: string };
 
-const contactFormFields: ContactFormFieldsType[] = [
-  { input: 'firstName', placeholder: 'First name' },
-  { input: 'lastName', placeholder: 'Last name' },
-  { input: 'emailAddress', placeholder: 'Email address' },
-  { input: 'country', placeholder: 'Country' },
-  { input: 'company', placeholder: 'Company' },
-  { input: 'website', placeholder: 'Company website' },
-  { input: 'inquiry', placeholder: 'inquiry' },
-];
+const [contactFormFields, setContactFormFields] = useState<ContactFormFieldsType>([
+  { input: 'firstName', placeholder: 'First name', value: '' },
+  { input: 'lastName', placeholder: 'Last name', value: '' },
+  { input: 'emailAddress', placeholder: 'Email address', value: '' },
+  { input: 'country', placeholder: 'Country', value: '' },
+  { input: 'company', placeholder: 'Company', value: '' },
+  { input: 'website', placeholder: 'Company website', value: '' },
+  { input: 'inquiry', placeholder: 'inquiry', value: '' },
+]);
 
-function handleFocus() {}
+//** Store input field values in state */
+const onChangeHook = (inputParam: string, valueParam: string) => {
+  const formFieldStateIndex = contactFormFields.findIndex((field: ContactFormFieldType) => field.input === inputParam);
 
-function handleBlur() {}
+  // Ensure that the field exists
+  if (formFieldStateIndex !== -1) {
+    // Envoke state setter
+    setContactFormFields(
+      // Map shallow copy of state for safe mutation
+      [...contactFormFields].map((field: ContactFormFieldType, index: number) => {
+        // Ensure the correct field is being updated via iteration && index comparison
+        if (index === formFieldStateIndex)
+          // Update the field's key, value
+          field.value = valueParam;
+        // Satisfy the map function
+        return field;
+      })
+    );
+  }
+};
 
-function onChange() {}
+//** Handle input field animation */
+const handleFocusHook = () => {};
+
+const handleBlurHook = () => {};
+//** */
 
 const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) => {
   return (
     <div id='contactWrapper' data-status={contactFormActive === true ? 'active' : 'false'}>
       <aside className='contact' role='dialog' aria-label='Developer Contact Form' data-status={contactFormActive === true ? 'active' : 'false'}>
-        {contactFormFields.map((field: ContactFormFieldsType) => (
-          <label htmlFor={field.input}>
+        {contactFormFields.map((field: ContactFormFieldType) => (
+          <label htmlFor={field.input} key={field.input}>
             <input
-              key={field.input}
               type={'text'}
               id={field.input}
               name={field.input}
-              // value={}
+              value={field.input}
               required={field.input === 'company' || field.input === 'website' ? false : true}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              onChange={onChange}
+              onFocus={handleFocusHook}
+              onBlur={handleBlurHook}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeHook(field.input, e.target.value)}
             />
           </label>
         ))}
