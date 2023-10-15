@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEvent, Dispatch, Fragment, SetStateAction, useState } from 'react';
 
 // Prop drill from pages/Portfolio
 type ContactType = {
@@ -52,18 +52,19 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
     <div id='contactWrapper' data-status={contactFormActive === true ? 'active' : 'false'}>
       <aside className='contact' role='dialog' aria-label='Developer Contact Form' data-status={contactFormActive === true ? 'active' : 'false'}>
         {contactFormFields.map((field: ContactFormFieldType) => (
-          <label htmlFor={field.input} key={field.input}>
+          <Fragment key={field.input}>
+            <label htmlFor={field.input}>{field.placeholder}</label>
             <input
-              type={'text'}
               id={field.input}
               name={field.input}
-              value={field.input}
+              type={'text'}
+              value={field.value}
               required={field.input === 'company' || field.input === 'website' ? false : true}
               onFocus={handleFocusHook}
               onBlur={handleBlurHook}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeHook(field.input, e.target.value)}
             />
-          </label>
+          </Fragment>
         ))}
       </aside>
     </div>
