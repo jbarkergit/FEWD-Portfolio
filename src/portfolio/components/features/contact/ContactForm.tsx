@@ -34,7 +34,7 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
   const onChangeHook = (inputParam: string, valueParam: string) => {
     const formFieldStateIndex = contactFormFields.findIndex((field: ContactFormFieldsType) => field.input === inputParam);
 
-    // Ensure that the field exists
+    // Ensure that the field exists (findIndex returns -1 IF condition is false)
     if (formFieldStateIndex !== -1) {
       // Envoke state setter
       setContactFormFields(
