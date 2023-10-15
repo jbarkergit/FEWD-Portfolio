@@ -6,40 +6,9 @@ type ContactType = {
   setContactFormActive: Dispatch<SetStateAction<boolean>>;
 };
 
-//** Contact form field array of objects & Types */
+//** Contact form field array of objects types */
 type ContactFormFieldsType = Array<{ [key: string]: string }>;
 type ContactFormFieldType = { [key: string]: string };
-
-const [contactFormFields, setContactFormFields] = useState<ContactFormFieldsType>([
-  { input: 'firstName', placeholder: 'First name', value: '' },
-  { input: 'lastName', placeholder: 'Last name', value: '' },
-  { input: 'emailAddress', placeholder: 'Email address', value: '' },
-  { input: 'country', placeholder: 'Country', value: '' },
-  { input: 'company', placeholder: 'Company', value: '' },
-  { input: 'website', placeholder: 'Company website', value: '' },
-  { input: 'inquiry', placeholder: 'inquiry', value: '' },
-]);
-
-//** Store input field values in state */
-const onChangeHook = (inputParam: string, valueParam: string) => {
-  const formFieldStateIndex = contactFormFields.findIndex((field: ContactFormFieldType) => field.input === inputParam);
-
-  // Ensure that the field exists
-  if (formFieldStateIndex !== -1) {
-    // Envoke state setter
-    setContactFormFields(
-      // Map shallow copy of state for safe mutation
-      [...contactFormFields].map((field: ContactFormFieldType, index: number) => {
-        // Ensure the correct field is being updated via iteration && index comparison
-        if (index === formFieldStateIndex)
-          // Update the field's key, value
-          field.value = valueParam;
-        // Satisfy the map function
-        return field;
-      })
-    );
-  }
-};
 
 //** Handle input field animation */
 const handleFocusHook = () => {};
@@ -48,6 +17,37 @@ const handleBlurHook = () => {};
 //** */
 
 const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) => {
+  const [contactFormFields, setContactFormFields] = useState<ContactFormFieldsType>([
+    { input: 'firstName', placeholder: 'First name', value: '' },
+    { input: 'lastName', placeholder: 'Last name', value: '' },
+    { input: 'emailAddress', placeholder: 'Email address', value: '' },
+    { input: 'country', placeholder: 'Country', value: '' },
+    { input: 'company', placeholder: 'Company', value: '' },
+    { input: 'website', placeholder: 'Company website', value: '' },
+    { input: 'inquiry', placeholder: 'inquiry', value: '' },
+  ]);
+
+  //** Store input field values in state */
+  const onChangeHook = (inputParam: string, valueParam: string) => {
+    const formFieldStateIndex = contactFormFields.findIndex((field: ContactFormFieldType) => field.input === inputParam);
+
+    // Ensure that the field exists
+    if (formFieldStateIndex !== -1) {
+      // Envoke state setter
+      setContactFormFields(
+        // Map shallow copy of state for safe mutation
+        [...contactFormFields].map((field: ContactFormFieldType, index: number) => {
+          // Ensure the correct field is being updated via iteration && index comparison
+          if (index === formFieldStateIndex)
+            // Update the field's key, value
+            field.value = valueParam;
+          // Satisfy the map function
+          return field;
+        })
+      );
+    }
+  };
+
   return (
     <div id='contactWrapper' data-status={contactFormActive === true ? 'active' : 'false'}>
       <aside className='contact' role='dialog' aria-label='Developer Contact Form' data-status={contactFormActive === true ? 'active' : 'false'}>
