@@ -98,11 +98,32 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
     <aside className='contact' role='dialog' aria-label='Developer Contact Form' data-status={contactFormActive === true ? 'active' : 'false'}>
       <section className='contactFormSection'>
         <article className='contact__information'>
-          <h2>Contact information</h2>
-          <p>
-            Kindly share the requested contact information and I'll be sure to respond in a timely fashion. My availability extends throughout the entire week;
-            however, I do not respond to inquiries after business hours.
-          </p>
+          <details>
+            <summary>How long until I receive a response?</summary>
+            <p>
+              Kindly share the requested contact information and I'll be sure to respond in a timely fashion. My availability extends throughout the entire week;
+              however, I do not respond to inquiries after business hours.
+            </p>
+          </details>
+          <details>
+            <summary>Why do I need to provide my information?</summary>
+            <p>
+              Don't worry, I'm not collecting your personal data for malicious intentions! Before I respond, I like to get an idea of what your inquiry is all about!
+              This saves you and I time in the long run!
+            </p>
+          </details>
+          <details>
+            <summary>Is this message private?</summary>
+            <p>This is indeed a private message. Your inquiry will be directed to my inbox alone.</p>
+          </details>
+          <details>
+            <summary>Can I email you directly?</summary>
+            <p>
+              Absolutely! Here's my email address:
+              <br />
+              <span className='copyPaste'>jbarkerpoc@gmail.com</span>
+            </p>
+          </details>
         </article>
       </section>
       <section className='contactFormSection'>

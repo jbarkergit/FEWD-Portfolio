@@ -48,9 +48,15 @@ h4 {
 }
 p,
 article {
-  // width: clamp(45ch, 50%, 75ch);
-  font-size: clamp(f.rem(12), f.rem(10) + 1vw, f.rem(16));
+  // width: clamp(45ch, 100%, 75ch);
+  font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
   font-weight: 500;
+  list-style: none;
+}
+summary {
+  font-size: clamp(f.rem(16), f.rem(16) + 1vw, f.rem(22));
+  font-weight: 500;
+  list-style: none;
 }
 article {
   scroll-padding: f.rem(10) 0 0 0;

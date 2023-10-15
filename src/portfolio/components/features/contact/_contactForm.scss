@@ -30,15 +30,13 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+  gap: f.rem(20);
   width: clamp(45ch, 100%, 75ch);
-  & h2 {
-    font-size: clamp(f.rem(22), f.rem(34) + 1vw, f.rem(40));
-    font-weight: 600;
-  }
-  & p {
-    font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
-    font-weight: 500;
-  }
+}
+
+.copyPaste {
+  cursor: text;
+  user-select: all;
 }
 
 .contact__form {
