@@ -59,16 +59,16 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
   ]);
 
   //** Validate input fields */
-  const useContactFormValidator = (indexParam: number) => {
+  const useContactFormValidator = (changedIndexParam: number) => {
     // Contact form field input (key/name) that's being typed in
-    const updatedContactFormField: string = contactFormFields[indexParam].input;
+    const updatedContactFormField: string = contactFormFields[changedIndexParam].input;
 
     // Index of the formValidation object correlated to the form field input (key/name) that's being updated
     const verifierIndex: number = formValidation.findIndex((verifier: FormValidationStateType) => verifier.input === updatedContactFormField);
 
     // Variables referencing correct formValidation object
     const useRegExpPattern: RegExp = formValidation[verifierIndex].regExpPattern;
-    const isBooleanValid: boolean = useRegExpPattern.test(contactFormFields[indexParam].value);
+    const isBooleanValid: boolean = useRegExpPattern.test(contactFormFields[changedIndexParam].value);
 
     // Set formValidation valid state for [key: string]: boolean -> (key/name: valid) using a shallow copy
     const formValidationShallowCopy: FormValidationStateType[] = [...formValidation];
