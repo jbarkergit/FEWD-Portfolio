@@ -53,9 +53,9 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
 
   //** Form input field validation state && RegExp patterns */
   const [formValidation, setFormValidation] = useState<FormValidationStateType[]>([
-    { input: 'emailAddress', regExpPattern: /[abc]/, validBoolean: false },
-    { input: 'phoneNumber', regExpPattern: /[^0-9]/, validBoolean: false },
-    { input: 'websiteUrl', regExpPattern: /[abc]/, validBoolean: false },
+    { input: 'emailAddress', regExpPattern: /[a-zA-Z0-9]+@/, validBoolean: false },
+    { input: 'phoneNumber', regExpPattern: /^\d{10}$/, validBoolean: false },
+    { input: 'websiteUrl', regExpPattern: /^https:\/\//, validBoolean: false },
   ]);
 
   // useEffect(() => {
@@ -120,11 +120,11 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
                 value={field.value}
                 required={field.optional ? true : false}
                 onFocus={handleFocusHook}
-                onBlur={() => {
-                  handleBlurHook();
+                onBlur={() => handleBlurHook()}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  onChangeHook(field.input, e.target.value);
                   useContactFormValidator(index);
                 }}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeHook(field.input, e.target.value)}
               />
               <div className='contact__form__errorMessage'>
                 {contactFormFields[index].value.length > 0 ? (

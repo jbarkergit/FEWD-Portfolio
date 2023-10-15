@@ -34,10 +34,7 @@ const ContactFormErrorHandler = ({ contactFormFields, formValidation, indexParam
 
     //** Website URL */
     else if (updatedField.input === 'websiteUrl') {
-      // Ensure link is secure
-      if (!verifierObject.input.includes('https')) {
-        return <>Disclaimer: Insecure websites will not be considered.</>;
-      }
+      return <>Disclaimer: Insecure websites will not be considered.</>;
     }
 
     //** Fallback: Prevent error message */
