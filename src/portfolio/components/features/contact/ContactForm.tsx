@@ -1,4 +1,5 @@
 import { ChangeEvent, Dispatch, Fragment, SetStateAction, useEffect, useRef, useState } from 'react';
+import ContactFormErrorHandler from './ContactFormErrorHandler';
 
 // Prop drill from pages/Portfolio
 type ContactType = {
@@ -7,7 +8,7 @@ type ContactType = {
 };
 
 //** Contact form field array of objects types */
-type ContactFormFieldsType = {
+export type ContactFormFieldsType = {
   input: string;
   placeholder: string;
   optional?: boolean;
@@ -15,7 +16,7 @@ type ContactFormFieldsType = {
 };
 
 //** Contact form validator types */
-type FormValidationStateType = { input: string; regExpPattern: RegExp; validBoolean: boolean };
+export type FormValidationStateType = { input: string; regExpPattern: RegExp; validBoolean: boolean; errorMessage: string };
 
 const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) => {
   //** Contact form fields */
@@ -24,7 +25,6 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
     { input: 'lastName', placeholder: 'Last name', optional: false, value: '' },
     { input: 'emailAddress', placeholder: 'Email address', value: '' },
     { input: 'phoneNumber', placeholder: 'Phone number', optional: false, value: '' },
-    { input: 'country', placeholder: 'Country', optional: false, value: '' },
     { input: 'company', placeholder: 'Company', optional: true, value: '' },
     { input: 'websiteUrl', placeholder: 'Website url', optional: true, value: '' },
     { input: 'inquiry', placeholder: 'Inquiry', optional: false, value: '' },
@@ -53,10 +53,15 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
 
   //** Form input field validation state && RegExp patterns */
   const [formValidation, setFormValidation] = useState<FormValidationStateType[]>([
-    { input: 'emailAddress', regExpPattern: /[abc]/, validBoolean: false },
-    { input: 'phoneNumber', regExpPattern: /[abc]/, validBoolean: false },
-    { input: 'websiteUrl', regExpPattern: /[abc]/, validBoolean: true },
+    { input: 'emailAddress', regExpPattern: /[abc]/, validBoolean: false, errorMessage: 'The email address entered contains special characters.' },
+    { input: 'phoneNumber', regExpPattern: /[abc]/, validBoolean: false, errorMessage: 'Please enter a valid phone number.' },
+    { input: 'websiteUrl', regExpPattern: /[abc]/, validBoolean: true, errorMessage: 'I will not visit unsecure websites.' },
   ]);
+
+  // useEffect(() => {
+  //   console.log(contactFormFields);
+  //   console.log(formValidation);
+  // }, [contactFormFields, formValidation]);
 
   //** Validate input fields */
   const useContactFormValidator = (changedIndexParam: number) => {
@@ -66,13 +71,13 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
     // Index of the formValidation object correlated to the form field input (key/name) that's being updated
     const verifierIndex: number = formValidation.findIndex((verifier: FormValidationStateType) => verifier.input === updatedContactFormField);
 
-    // Variables referencing correct formValidation object
-    const useRegExpPattern: RegExp = formValidation[verifierIndex].regExpPattern;
-    const isBooleanValid: boolean = useRegExpPattern.test(contactFormFields[changedIndexParam].value);
-
     // Set formValidation valid state for [key: string]: boolean -> (key/name: valid) using a shallow copy
     const formValidationShallowCopy: FormValidationStateType[] = [...formValidation];
-    formValidationShallowCopy[verifierIndex].validBoolean = isBooleanValid;
+
+    if (formValidation[verifierIndex]) {
+      const isBooleanValid = formValidation[verifierIndex].regExpPattern.test(contactFormFields[changedIndexParam].value);
+      formValidationShallowCopy[verifierIndex].validBoolean = isBooleanValid;
+    }
 
     setFormValidation(formValidationShallowCopy);
   };
@@ -93,10 +98,10 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
     <aside className='contact' role='dialog' aria-label='Developer Contact Form' data-status={contactFormActive === true ? 'active' : 'false'}>
       <section className='contactFormSection'>
         <article className='contact__information'>
-          <h2>Contact Form</h2>
+          <h2>Contact information</h2>
           <p>
-            Kindly share the requested contact information and I'll be sure to respond in a timely fashion. Please note I do not respond to inquiries after business
-            hours.
+            Kindly share the requested contact information and I'll be sure to respond in a timely fashion. My availability extends throughout the entire week;
+            however, I do not respond to inquiries after business hours.
           </p>
         </article>
       </section>
@@ -105,7 +110,7 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
           {contactFormFields.map((field: ContactFormFieldsType, index) => (
             <Fragment key={field.input}>
               <label className='contact__form__label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
-                {field.placeholder}
+                {field.optional ? `${field.placeholder} (optional)` : field.placeholder}
               </label>
               <input
                 className='contact__form__input'
@@ -121,6 +126,9 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
                   useContactFormValidator(index);
                 }}
               />
+              <div className='contact__form__errorMessage'>
+                <ContactFormErrorHandler contactFormFields={contactFormFields} formValidation={formValidation} indexParam={index} />
+              </div>
             </Fragment>
           ))}
         </form>
