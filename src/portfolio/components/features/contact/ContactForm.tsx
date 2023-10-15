@@ -53,9 +53,9 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
 
   //** Form input field validation state && RegExp patterns */
   const [formValidation, setFormValidation] = useState<FormValidationStateType[]>([
-    { input: 'emailAddress', regExpPattern: /[abc]/, validBoolean: false, errorMessage: 'The email address entered contains special characters.' },
+    { input: 'emailAddress', regExpPattern: /[abc]/, validBoolean: false, errorMessage: 'Email address cannot contain special characters.' },
     { input: 'phoneNumber', regExpPattern: /[abc]/, validBoolean: false, errorMessage: 'Please enter a valid phone number.' },
-    { input: 'websiteUrl', regExpPattern: /[abc]/, validBoolean: true, errorMessage: 'I will not visit unsecure websites.' },
+    { input: 'websiteUrl', regExpPattern: /[abc]/, validBoolean: true, errorMessage: 'I will not visit insecure websites.' },
   ]);
 
   // useEffect(() => {
