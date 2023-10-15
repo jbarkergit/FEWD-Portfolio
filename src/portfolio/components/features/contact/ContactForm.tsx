@@ -16,7 +16,7 @@ export type ContactFormFieldsType = {
 };
 
 //** Contact form validator types */
-export type FormValidationStateType = { input: string; regExpPattern: RegExp; validBoolean: boolean; errorMessage: string };
+export type FormValidationStateType = { input: string; regExpPattern: RegExp; validBoolean: boolean };
 
 const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) => {
   //** Contact form fields */
@@ -53,9 +53,9 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
 
   //** Form input field validation state && RegExp patterns */
   const [formValidation, setFormValidation] = useState<FormValidationStateType[]>([
-    { input: 'emailAddress', regExpPattern: /[abc]/, validBoolean: false, errorMessage: 'Email address cannot contain special characters.' },
-    { input: 'phoneNumber', regExpPattern: /[abc]/, validBoolean: false, errorMessage: 'Please enter a valid phone number.' },
-    { input: 'websiteUrl', regExpPattern: /[abc]/, validBoolean: true, errorMessage: 'I will not visit insecure websites.' },
+    { input: 'emailAddress', regExpPattern: /[abc]/, validBoolean: false },
+    { input: 'phoneNumber', regExpPattern: /[^0-9]/, validBoolean: false },
+    { input: 'websiteUrl', regExpPattern: /[abc]/, validBoolean: false },
   ]);
 
   // useEffect(() => {
@@ -120,14 +120,16 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
                 value={field.value}
                 required={field.optional ? true : false}
                 onFocus={handleFocusHook}
-                onBlur={handleBlurHook}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                  onChangeHook(field.input, e.target.value);
+                onBlur={() => {
+                  handleBlurHook();
                   useContactFormValidator(index);
                 }}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeHook(field.input, e.target.value)}
               />
               <div className='contact__form__errorMessage'>
-                <ContactFormErrorHandler contactFormFields={contactFormFields} formValidation={formValidation} indexParam={index} />
+                {contactFormFields[index].value.length > 0 ? (
+                  <ContactFormErrorHandler contactFormFields={contactFormFields} formValidation={formValidation} indexParam={index} />
+                ) : null}
               </div>
             </Fragment>
           ))}
