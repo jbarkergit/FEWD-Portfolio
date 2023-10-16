@@ -99,6 +99,20 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
       <section className='contactFormSection'>
         <article className='contact__information'>
           <details>
+            <summary>What services do you provide?</summary>
+            <p>
+              I am a Front End Web Developer. I exclusively develop with the library React. I provide DRY dynamic type safe documented logic, responsive and
+              interactive UI, performance oriented component and asset rendering, BEM convention SEO-Optimized Markup, alongside screen readers for the visually
+              impaired. If you are a company interested in hiring, please reach out. If you are looking for freelance work and require a UI/UX design, I do not
+              specialize in those fields but am willing to work with you for an additional fee to ensure you find the right layout and style that suite your
+              application's needs.
+            </p>
+          </details>
+          <details>
+            <summary>What services do you not provide?</summary>
+            <p>I do not build backends, offer payment proccessing solutions nor do I handle advertisement needs. I am not a professional UI/UX/Graphic designer.</p>
+          </details>
+          <details>
             <summary>How long until I receive a response?</summary>
             <p>
               Kindly share the requested contact information and I'll be sure to respond in a timely fashion. My availability extends throughout the entire week;
@@ -108,20 +122,33 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
           <details>
             <summary>Why do I need to provide my information?</summary>
             <p>
-              Don't worry, I'm not collecting your personal data for malicious intentions! Before I respond, I like to get an idea of what your inquiry is all about!
-              This saves you and I time in the long run!
+              Don't worry, I'm not collecting your personal data for malicious intentions! Before I respond, I'd like to get a better understanding of your needs and
+              determine whether or not I can satisfy the tasks ahead.
             </p>
           </details>
           <details>
-            <summary>Is this message private?</summary>
-            <p>This is indeed a private message. Your inquiry will be directed to my inbox alone.</p>
+            <summary>Will the information I share be secure?</summary>
+            <p>
+              This form and it's contents are redirected to my personal Google Mail inbox. I have no control over what services do with said information, so please
+              only provide the information you're comfortable sharing.
+            </p>
           </details>
           <details>
             <summary>Can I email you directly?</summary>
             <p>
-              Absolutely! Here's my email address:
+              Absolutely! Below I've listed an email address that will redirect to my personal inbox.
               <br />
-              <span className='copyPaste'>jbarkerpoc@gmail.com</span>
+              <span className='copyPaste'>email@gmail.com</span>
+            </p>
+          </details>
+          <details>
+            <summary>Error?</summary>
+            <p>
+              Email address must contain no special characters with the exception of asperands (@) and a period (.).
+              <br />
+              Phone number must be ten digits in length. Please do not premise your phone number with the one (1) extension.
+              <br />
+              Website url must be secure (https://), I will, without question, reject any inquiry with an insecure url.
             </p>
           </details>
         </article>

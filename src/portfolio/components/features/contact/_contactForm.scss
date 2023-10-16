@@ -29,9 +29,11 @@
 .contact__information {
   display: flex;
   flex-direction: column;
-  text-align: center;
   gap: f.rem(20);
   width: clamp(45ch, 100%, 75ch);
+  & details {
+    width: fit-content;
+  }
 }
 
 .copyPaste {
