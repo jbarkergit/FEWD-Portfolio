@@ -1,6 +1,16 @@
 @use '../../../../sass/util/functions' as f;
 @use '../../../scss/portfolioStyles' as m;
 
+.contactFormSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  & h2 {
+    width: auto;
+    padding-bottom: f.rem(10);
+  }
+}
+
 .contact {
   position: fixed;
   display: flex;
@@ -20,29 +30,35 @@
   }
 }
 
-.contactFormSection {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  & h2 {
-    width: auto;
-    padding-bottom: f.rem(10);
-  }
-}
-
 .contact__information {
   display: flex;
   flex-direction: column;
   gap: f.rem(16);
   width: clamp(45ch, 100%, 75ch);
-  & details {
+  &__services,
+  &__nonServices,
+  &__pricing,
+  &__responseTime,
+  &__provisions,
+  &__inclusivityAccessibility,
+  &__formErrors {
     width: fit-content;
+    &--question {
+      height: auto;
+    }
+    & p {
+      height: auto;
+    }
   }
-}
-
-.copyPaste {
-  cursor: text;
-  user-select: all;
+  &__provisions p {
+    display: flex;
+    flex-direction: column;
+    & span:nth-of-type(2) {
+      width: fit-content;
+      cursor: text;
+      user-select: text;
+    }
+  }
 }
 
 .contact__form {
