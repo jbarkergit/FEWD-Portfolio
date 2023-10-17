@@ -103,11 +103,11 @@ const ContactInformation = () => {
                   <li>
                     The email address is not registered on the following domains:
                     <ol>
-                      <li>Gmail (by Google) - @gmail.com</li>
-                      <li>Outlook (by Microsoft) - @outlook.com</li>
-                      <li>Yahoo Mail (by Yahoo) - @yahoo.com</li>
-                      <li>Apple Mail (by Apple) - @icloud.com</li>
-                      <li>AOL Mail (by AOL) - @aol.com</li>
+                      <li>Gmail - @gmail.com</li>
+                      <li>Outlook - @outlook.com</li>
+                      <li>Yahoo Mail - @yahoo.com</li>
+                      <li>Apple Mail - @icloud.com</li>
+                      <li>AOL Mail - @aol.com</li>
                       <li>Mail.com - @mail.com</li>
                       <li>ProtonMail - @protonmail.com</li>
                       <li>Zoho Mail - @zoho.com</li>
