@@ -6,6 +6,7 @@
   display: flex;
   width: 100%;
   height: fit-content;
+  padding: 0 f.rem(50);
   margin: f.rem(50) 0 calc(f.rem(50) + f.rem(32)) 0;
   @media (width <= 980px) {
     flex-direction: column;
@@ -28,6 +29,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 0 auto;
     width: 50%;
     padding: 0 f.rem(50);
     @media (width <= 980px) {
@@ -37,6 +39,7 @@
       padding: f.rem(25) f.rem(50);
     }
     & h2 {
+      width: fit-content;
       font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
       font-weight: 800;
       line-height: 115%;
@@ -54,7 +57,7 @@
   }
   &__video {
     display: grid;
-    place-items: center;
+    place-items: end;
     width: 50%;
     height: inherit;
     padding: 0 f.rem(50);
