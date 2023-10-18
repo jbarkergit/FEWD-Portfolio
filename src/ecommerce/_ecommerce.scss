@@ -39,8 +39,5 @@
 //Feature: Shopping Cart
 @forward '../ecommerce/components/features/shopping-cart/shoppingCartModal';
 
-//Shared Feature: Account Modals
+/* Shared Feature: Account Modals */
 @forward '../ecommerce/components/features/user-account/modal';
-
-//Feature: User Account Dashboard
-@forward '../ecommerce/components/features/user-account/user-account-dashboard/userAccountDashboard';
