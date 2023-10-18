@@ -3,7 +3,7 @@ import { ContactFormFieldsType, ContactFormPropsType } from './ContactForm';
 import ContactFormErrorHandler from './ContactFormErrorHandler';
 
 const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
-  // Prop drill alias
+  //** Prop drill alias */
   const props = ContactFormProps;
 
   //** Handle input field label animation (not using traditional placeholder solely to animate the text) */
@@ -19,18 +19,18 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
   //** */
 
   return (
-    <section className='contactFormSection'>
-      <form className='contact__form'>
-        <fieldset className='contact__form__fieldset'>
+    <section className='contactForm__section'>
+      <form className='standardForm'>
+        <fieldset className='standardForm__fieldset'>
           {props.contactFormFields.map((field: ContactFormFieldsType, index) =>
             field.input !== 'inquiry' ? (
               <>
-                <div className='contact__form__fieldset__container' key={field.input}>
-                  <label className='contact__form__fieldset__container__label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
+                <div className='standardForm__fieldset__container' key={field.input}>
+                  <label className='standardForm__fieldset__container--label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
                     {field.optional ? `${field.placeholder} (optional)` : field.placeholder}
                   </label>
                   <input
-                    className='contact__form__fieldset__container__input'
+                    className='standardForm__fieldset__container--input'
                     id={field.input}
                     name={field.input}
                     type={'text'}
@@ -44,7 +44,7 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
                     }}
                   />
                   {props.contactFormFields[index].value.length > 0 ? (
-                    <div className='contact__form__fieldset__container__errorMessage'>
+                    <div className='standardForm__fieldset__container--errorMessage'>
                       <ContactFormErrorHandler contactFormFields={props.contactFormFields} formValidation={props.formValidation} indexParam={index} />
                     </div>
                   ) : null}
@@ -52,12 +52,12 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
               </>
             ) : (
               <>
-                <div className='contact__form__fieldset__container' key={field.input}>
-                  <label className='contact__form__fieldset__container__label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
+                <div className='standardForm__fieldset__container' key={field.input}>
+                  <label className='standardForm__fieldset__container--label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
                     {field.optional ? `${field.placeholder} (optional)` : field.placeholder}
                   </label>
                   <textarea
-                    className='contact__form__fieldset__container__input'
+                    className='standardForm__fieldset__container--input'
                     id={field.input}
                     name={field.input}
                     value={field.value}
@@ -76,7 +76,6 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
             )
           )}
         </fieldset>
-        <button className='contact__form__submit'>Send</button>
       </form>
     </section>
   );
