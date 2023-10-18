@@ -19,7 +19,7 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
   }, [paramId]);
 
   return (
-    <section className='recommenders' style={{ backgroundColor: 'transparent' }}>
+    <aside className='recommenders' style={{ backgroundColor: 'transparent' }}>
       <h2 className='recommenders__header'>
         More {findProduct.category} like <span className='highlight'>{findProduct.unit}</span>
       </h2>
@@ -42,7 +42,7 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
           </li>
         ))}
       </ul>
-    </section>
+    </aside>
   );
 };
 export default MoreLikeThis;

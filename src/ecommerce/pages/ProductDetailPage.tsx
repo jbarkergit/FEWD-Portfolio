@@ -23,9 +23,7 @@ const ProductDetailPage = (): JSX.Element => {
           <ProductPageImgDisplay findProduct={findProduct} activeDisplay={activeDisplay} setActiveDisplay={setActiveDisplay} />
           <ProductPageDetails findProduct={findProduct} />
         </main>
-        <div className='skuPage__recommendations'>
-          <MoreLikeThis findProduct={findProduct} />
-        </div>
+        <MoreLikeThis findProduct={findProduct} />
       </div>
       <Footer />
     </>
