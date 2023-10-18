@@ -1,4 +1,4 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import HomeSkeleton from '../../ecommerce/skeletons/pages/HomeSkeleton';
 import ProductCatalogSkeleton from '../../ecommerce/skeletons/pages/ProductCatalogSkeleton';
 import ProductDetailPageSkeleton from '../../ecommerce/skeletons/pages/ProductDetailPageSkeleton';

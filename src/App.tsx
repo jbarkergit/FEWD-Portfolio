@@ -2,8 +2,8 @@ import { Suspense, lazy, useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 //Shared
-const NotFound = lazy(() => import('./shared/pathing-error/NotFound'));
-import SuspensePathHandler from './shared/suspense-pathing-handler/SuspensePathHandler';
+const NotFound = lazy(() => import('./shared/pages/not-found/NotFound'));
+import SuspensePathHandler from './shared/suspense/SuspensePathHandler';
 
 //Portfolio
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));

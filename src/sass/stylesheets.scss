@@ -2,7 +2,7 @@
 @forward './boilerplate';
 
 /* Routes */
-@forward '../shared/pathing-error/notFound';
+@forward '../shared/pages/not-found/notFound';
 
 /* Projects */
 @forward '../portfolio/scss/portfolioExports';
