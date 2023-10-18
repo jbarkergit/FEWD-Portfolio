@@ -1,11 +1,9 @@
-//Base
-@forward './base/typography';
+/* Boilerplate */
 @forward './base/boilerplate';
-@forward './base/interaction';
 
-//Routes
+/* Routes */
 @forward '../shared/pathing-error/notFound';
 
-//Projects
+/* Projects */
 @forward '../portfolio/scss/portfolio';
 @forward '../ecommerce/ecommerce';
