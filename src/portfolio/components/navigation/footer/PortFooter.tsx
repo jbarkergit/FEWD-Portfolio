@@ -37,11 +37,10 @@ const PortFooter = ({ projectSlideIndex, setProjectInfoStyle }: ProjectNavPropTy
         </section>
         <section className='portFooter__nav__left'>
           {useProjectInformation()?.extended ? (
-            <button onClick={() => setProjectInfoStyle('projectOverview')}>Project Overview</button>
+            <button onClick={() => setProjectInfoStyle('projectOverview')}>Project Insights</button>
           ) : (
             <span className='projectUnavailable'>this project is unavailable</span>
           )}
-          {useProjectInformation()?.summary ? <button onClick={() => setProjectInfoStyle('projectSummary')}>Project Summary</button> : null}
           {useProjectInformation()?.demoLink ? (
             <Link to={useProjectInformation()?.demoLink}>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 24 24'>
