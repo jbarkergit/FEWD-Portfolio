@@ -37,7 +37,7 @@ const ContactFormErrorHandler = ({ contactFormFields, formValidation, indexParam
       return <>Disclaimer: Insecure websites will not be considered.</>;
     }
 
-    //** Fallback: Prevent error message */
+    //** Fallback */
     else return null;
   }
 };

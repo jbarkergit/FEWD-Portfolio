@@ -1,8 +1,9 @@
-const ContactInformation = () => {
+const ContactFormInformation = () => {
   return (
     <section className='contactFormSection'>
-      <h2>Information</h2>
+      <h2>Developer Contact Information</h2>
       <article className='contact__information'>
+        <h3>Contact Information</h3>
         <details className='contact__information__services'>
           <summary className='contact__information__services--question'>What services do you provide?</summary>
           <p>
@@ -82,11 +83,11 @@ const ContactInformation = () => {
                 <summary>I'm contacting on behalf of another person.</summary>
                 <ul>
                   <li>Step one: Fill out the form with your contact information. Do not provide anybody's information except for your own.</li>
-                  <li>Step two: Please premise your inquiry with, "I am contacting you on behalf of (person's FIRST name).".</li>
                   <li>
-                    Step three: If you have permission/consent from said person, you may provide contact details such as their first name, contact information and
-                    company name.
+                    Step two: If you have permission/consent from the inquiring person(s), please premise the inquiry with, "I am contacting you on behalf of
+                    (person's FIRST name).".
                   </li>
+                  <li>Step three: With permission/consent, you may provide contact details such as their first name, contact information and company name.</li>
                   <li>
                     Notice - A person commits the offense of identity theft of another person if he possesses or uses, through any means, identifying information of
                     another person without the consent of that other person to further any unlawful purpose.
@@ -140,4 +141,4 @@ const ContactInformation = () => {
   );
 };
 
-export default ContactInformation;
+export default ContactFormInformation;

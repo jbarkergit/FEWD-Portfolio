@@ -1,9 +1,10 @@
-import { ChangeEvent, Dispatch, Fragment, SetStateAction, useEffect, useRef, useState } from 'react';
-import ContactFormErrorHandler from './ContactFormErrorHandler';
-import ContactInformation from './ContactInformation';
+import { Dispatch, SetStateAction, useState } from 'react';
+import ContactFormStandard from './ContactFormStandard';
+import ContactFormEmail from './ContactFormEmail';
+import ContactFormInformation from './ContactInformation';
 
-// Prop drill from pages/Portfolio
-type ContactType = {
+//** Prop drill from pages/Portfolio */
+type ContactFormType = {
   contactFormActive: boolean;
   setContactFormActive: Dispatch<SetStateAction<boolean>>;
 };
@@ -19,7 +20,17 @@ export type ContactFormFieldsType = {
 //** Contact form validator types */
 export type FormValidationStateType = { input: string; regExpPattern: RegExp; validBoolean: boolean };
 
-const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) => {
+//** Prop drilling destructor types */
+export type ContactFormPropsType = {
+  contactFormFields: ContactFormFieldsType[];
+  setContactFormFields: Dispatch<SetStateAction<ContactFormFieldsType[]>>;
+  formValidation: FormValidationStateType[];
+  setFormValidation: Dispatch<SetStateAction<FormValidationStateType[]>>;
+  updateContactFormFieldsState: (inputParam: string, valueParam: string) => void;
+  useContactFormValidator: (changedIndexParam: number) => void;
+};
+
+const ContactForm = ({ contactFormActive, setContactFormActive }: ContactFormType) => {
   //** Contact form fields */
   const [contactFormFields, setContactFormFields] = useState<ContactFormFieldsType[]>([
     { input: 'firstName', placeholder: 'First name', optional: false, value: '' },
@@ -28,11 +39,11 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
     { input: 'phoneNumber', placeholder: 'Phone number', optional: true, value: '' },
     { input: 'company', placeholder: 'Company', optional: true, value: '' },
     { input: 'websiteUrl', placeholder: 'Website url', optional: true, value: '' },
-    { input: 'inquiry', placeholder: 'Inquiry', optional: false, value: '' },
+    { input: 'inquiry', placeholder: 'How may I help you?', optional: false, value: '' },
   ]);
 
   //** Stores input field values in appropriate state onChange */
-  const onChangeHook = (inputParam: string, valueParam: string) => {
+  const updateContactFormFieldsState = (inputParam: string, valueParam: string) => {
     const formFieldStateIndex = contactFormFields.findIndex((field: ContactFormFieldsType) => field.input === inputParam);
 
     // Ensure that the field exists (findIndex returns -1 IF condition is false)
@@ -59,11 +70,6 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
     { input: 'websiteUrl', regExpPattern: /^https:\/\//, validBoolean: false },
   ]);
 
-  // useEffect(() => {
-  //   console.log(contactFormFields);
-  //   console.log(formValidation);
-  // }, [contactFormFields, formValidation]);
-
   //** Validate input fields */
   const useContactFormValidator = (changedIndexParam: number) => {
     // Contact form field input (key/name) that's being typed in
@@ -83,53 +89,18 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactType) =
     setFormValidation(formValidationShallowCopy);
   };
 
-  //** Handle input field label animation (not using traditional placeholder solely to animate the text) */
-  const contactFormLabel = useRef<HTMLLabelElement>(null);
-
-  const handleFocusHook = () => {
-    if (contactFormLabel.current) contactFormLabel.current.setAttribute('data-status', 'active');
-  };
-
-  const handleBlurHook = () => {
-    if (contactFormLabel.current) contactFormLabel.current.setAttribute('data-status', 'disabled');
-  };
-  //** */
-
   return (
     <aside className='contact' role='dialog' aria-label='Developer Contact Form' data-status={contactFormActive === true ? 'active' : 'false'}>
-      <ContactInformation />
-      <section className='contactFormSection'>
-        <form className='contact__form'>
-          <fieldset className='contact__form__fieldset'>
-            {contactFormFields.map((field: ContactFormFieldsType, index) => (
-              <div className='contact__form__fieldset__container' key={field.input}>
-                <label className='contact__form__fieldset__container__label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
-                  {field.optional ? `${field.placeholder} (optional)` : field.placeholder}
-                </label>
-                <input
-                  className='contact__form__fieldset__container__input'
-                  id={field.input}
-                  name={field.input}
-                  type={'text'}
-                  value={field.value}
-                  required={field.optional ? true : false}
-                  onFocus={handleFocusHook}
-                  onBlur={() => handleBlurHook()}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    onChangeHook(field.input, e.target.value);
-                    useContactFormValidator(index);
-                  }}
-                />
-                <div className='contact__form__fieldset__container__errorMessage'>
-                  {contactFormFields[index].value.length > 0 ? (
-                    <ContactFormErrorHandler contactFormFields={contactFormFields} formValidation={formValidation} indexParam={index} />
-                  ) : null}
-                </div>
-              </div>
-            ))}
-          </fieldset>
-        </form>
-      </section>
+      <ContactFormStandard
+        contactFormFields={contactFormFields}
+        setContactFormFields={setContactFormFields}
+        formValidation={formValidation}
+        setFormValidation={setFormValidation}
+        updateContactFormFieldsState={updateContactFormFieldsState}
+        useContactFormValidator={useContactFormValidator}
+      />
+      <ContactFormEmail />
+      <ContactFormInformation />
     </aside>
   );
 };
