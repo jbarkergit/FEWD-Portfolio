@@ -17,9 +17,10 @@ const ProductProp = ({ product }: ProductPropType): JSX.Element => {
   return (
     <article className='productGrid__product' key={product.sku}>
       <Link to={`/ecommerce/product/${sku}`} className='productGrid__product__pictureLink'>
-        <span className='productGrid__product--containedHover'>
+        <figure className='productGrid__product--containedHover'>
           <picture>{images ? <img src={images.medium[0]} alt={unit} decoding='async' fetchpriority='high' /> : null}</picture>
-        </span>
+          <figcaption>{`${product.company} ${product.unit}`}</figcaption>
+        </figure>
       </Link>
       <div className='productGrid__product__information'>
         <Link to={`/ecommerce/product/${sku}`}>

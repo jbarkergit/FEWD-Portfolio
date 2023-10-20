@@ -70,21 +70,23 @@
       @media (width <= 800px) {
         height: 100%;
       }
-    }
-    & picture {
-      position: relative;
-      border-top-left-radius: f.rem(18);
-      border-top-right-radius: f.rem(18);
-      @include m.productPhoto;
-      @include m.productPhotoHover;
-      transition: ease-in-out 0.35s;
-      & img {
-        max-height: f.rem(400);
-        // padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
-        object-fit: scale-down;
-        mix-blend-mode: darken;
+      & picture {
+        position: relative;
+        border-top-left-radius: f.rem(18);
+        border-top-right-radius: f.rem(18);
+        @include m.productPhoto;
+        @include m.productPhotoHover;
+        pointer-events: all;
+        transition: ease-in-out 0.35s;
+        & img {
+          max-height: f.rem(400);
+          // padding: f.rem(10) f.rem(15) f.rem(0) f.rem(15);
+          object-fit: scale-down;
+          mix-blend-mode: darken;
+        }
       }
     }
+
     &__information {
       position: relative;
       display: flex;
