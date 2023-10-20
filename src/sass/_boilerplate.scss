@@ -126,7 +126,7 @@ strong {
 // Remove inheritance of text transform in Firefox
 button,
 select {
-  text-transform: none;
+  text-transform: capitalize;
 }
 //Corrects odd em font sizing in all browsers
 pre,
@@ -170,9 +170,18 @@ button {
   outline-color: transparent;
   background-color: transparent;
 }
-a,
-button,
+select {
+  all: unset;
+  border: none;
+}
 option {
+  all: unset;
+  display: inline-block;
+  pointer-events: all;
+  cursor: pointer;
+}
+a,
+button {
   cursor: pointer;
 }
 fieldset {
