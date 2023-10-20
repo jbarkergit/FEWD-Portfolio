@@ -30,9 +30,6 @@
 
 .skuPage__grid__imgSelection {
   position: relative;
-  display: grid;
-  grid-template-rows: auto;
-  grid-auto-flow: row;
   width: 20%;
   height: 100%;
   z-index: 1;
@@ -55,19 +52,26 @@
     border-top: var(--borderChunky);
     border-radius: 0;
   }
-  & picture {
+  & figure {
+    display: grid;
+    grid-template-rows: auto;
+    grid-auto-flow: row;
     width: 100%;
-    height: auto;
-    overflow: hidden;
-    @include m.productPhoto;
-    & img {
-      // padding: 15px 0;
-      object-fit: scale-down;
-      mix-blend-mode: darken;
-      pointer-events: all;
-      transition: transform 0.35s ease-in-out;
-      &:hover {
-        transform: scale(130%);
+    height: inherit;
+    & picture {
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      @include m.productPhoto;
+      & img {
+        // padding: 15px 0;
+        object-fit: scale-down;
+        mix-blend-mode: darken;
+        pointer-events: all;
+        transition: transform 0.35s ease-in-out;
+        &:hover {
+          transform: scale(130%);
+        }
       }
     }
   }
