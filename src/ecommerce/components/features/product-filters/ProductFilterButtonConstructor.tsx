@@ -20,14 +20,13 @@ const CompanyFilterButtons = ({ useFilterData, modalStatus, setModalStatus }: Mo
   return (
     <>
       {useFilterData.map((data: string) => (
-        <li className="selectMenu__accordion--option" key={uuidv4()}>
+        <li className='selectMenu__accordion--option' key={uuidv4()}>
           <button
             onClick={() => {
               setModalStatus(modalStatus ? false : true);
               setCategoryFilter(data);
               useNav(`/ecommerce/${data}`);
-            }}
-          >
+            }}>
             {data}
           </button>
         </li>
