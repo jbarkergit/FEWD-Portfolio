@@ -1,36 +1,37 @@
-import ENewsletter from './customer/newsletter/ENewsletter';
-import EServices from './customer/policies/EServices';
-import ESupport from './customer/policies/ESupport';
+import ENewsletter from './newsletter/ENewsletter';
+import EServices from './policies/EServices';
+import ESupport from './policies/ESupport';
 import PaymentTypes from './additions/payment-types/PaymentTypes';
 import Address from './additions/address/Address';
 import SocialMedia from './additions/social-media/SocialMedia';
 
+const FooterSplitter = (sectionHeading: string) => {
+  return (
+    <div className='eFooter__splitter'>
+      <span className='eFooter__splitter--line' />
+      <h2>{sectionHeading}</h2>
+      <span className='eFooter__splitter--line' />
+    </div>
+  );
+};
+
 const EFooter = (): JSX.Element => {
   return (
     <footer className='eFooter'>
-      <section className='eFooter__customer'>
-        <section className='eFooter__customer__marketing'>
-          <div className='eFooter__splitter'>
-            <span className='eFooter__splitter__line' />
-            <h2>News & discounts</h2>
-            <span className='eFooter__splitter__line' />
-          </div>
-          <ENewsletter />
-        </section>
+      <section className='eFooter__newsletter'>
+        {FooterSplitter('News & discounts')}
+        <ENewsletter />
+      </section>
+
+      <section className='eFooter__customerSupport'>
+        {FooterSplitter('Customer Support')}
         <nav className='eFooter__customer__policies'>
-          <div className='eFooter__splitter'>
-            <span className='eFooter__splitter__line' />
-            <h2>Customer Support</h2>
-            <span className='eFooter__splitter__line' />
-          </div>
-          <div className='eFooter__customer__policies__wrapper'>
-            <section className='eFooter__customer__policies__wrapper__support'>
-              <ESupport />
-            </section>
-            <section className='eFooter__customer__policies__wrapper__support'>
-              <EServices />
-            </section>
-          </div>
+          <section className='eFooter__customer__policies__support'>
+            <ESupport />
+          </section>
+          <section className='eFooter__customer__policies__support'>
+            <EServices />
+          </section>
         </nav>
       </section>
 

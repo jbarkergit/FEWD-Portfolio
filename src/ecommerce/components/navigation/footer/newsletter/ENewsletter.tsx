@@ -5,7 +5,7 @@ const ENewsletter = (): JSX.Element => {
         <h2>Let's stay in touch</h2>
         <div className='newsletter__field'>
           <label>
-            <input type='email' name='email' placeholder='Enter email address...' />
+            <input type='email' name='email' placeholder='Enter your email address...' />
           </label>
           <button type='submit' aria-label='Submit Email Address to Sign Up for Newsletter'>
             <svg xmlns='http://www.w3.org/2000/svg' height='1em' viewBox='0 0 512 512'>
@@ -14,11 +14,7 @@ const ENewsletter = (): JSX.Element => {
           </button>
         </div>
         <div className='newsletter__notice'>
-          <p>
-            <span>Privacy Notice: </span>
-            For demo purposes, solely cosmetic. This input field is not tied to live marketing services. Any information provided will not be stored externally nor
-            locally.
-          </p>
+          <p>Sign up for our newsletter to receive news about our latest drops, articles, and promotions!</p>
         </div>
       </form>
     </>
