@@ -1,25 +1,24 @@
 const ContactFormInformation = () => {
   return (
-    <section className='contactFormSection'>
+    <section className='contactForm__section'>
       <h2>Developer Contact Information</h2>
-      <article className='contact__information'>
-        <h3>Contact Information</h3>
-        <details className='contact__information__services'>
-          <summary className='contact__information__services--question'>What services do you provide?</summary>
-          <p>
-            I am a Front End Web Developer. I exclusively develop with the library React. I provide DRY dynamic type safe documented logic, responsive and
-            interactive UI, performance oriented component and asset rendering, BEM convention SEO-Optimized Markup and screen readers for the visually impaired. If
-            you are a company interested in my skill acquisition for employment, please reach out. If you are looking for freelance work and require a UI/UX
+      <article className='contact__about'>
+        <h3>About</h3>
+        <p>
+          My name is Justin, I am a Front End Web Developer. I exclusively develop with the library React. I provide DRY dynamic type safe documented logic,
+          responsive and interactive UI, performance oriented component and asset rendering, BEM convention SEO-Optimized Markup and screen readers for the visually
+          impaired. If you are a company interested in my skill acquisition for employment, please reach out for more information.
+          {/* If you are looking for freelance work and require a UI/UX
             designer, I do not specialize in those fields; however, for an additional fee, I will work with you to conceptualize the right layout and style that
-            suites your application's needs.
-          </p>
-        </details>
-        <details className='contact__information__nonServices'>
-          <summary className='contact__information__nonServices--question'>What services do you not provide?</summary>
-          <p>I do not build backends, offer payment proccessing solutions nor do I handle advertisement needs. I am not a professional UI/UX/Graphic designer.</p>
-        </details>
-        <details className='contact__information__pricing'>
-          <summary className='contact__information__pricing--question'>What is the pricing structure for your services?</summary>
+            suites your application's needs. */}
+        </p>
+      </article>
+      {/* <details className='contact__about__nonServices'>
+          <summary className='contact__about__nonServices--question'>What services do you not provide?</summary>
+          <p>I do not build backends, offer payment proccessing solutions nor do I handle advertisement needs.</p>
+        </details> */}
+      {/* <details className='contact__about__pricing'>
+          <summary className='contact__about__pricing--question'>What is the pricing structure for your services?</summary>
           <p>
             Thank you for considering my services. If you are a company interested in hiring me as a part of your development team, please reach out. If you are an
             individual looking for freelance services, please read on.
@@ -46,28 +45,30 @@ const ContactFormInformation = () => {
               <li>Due to the tedious nature of my craftsmanship, I do not offer discounts or promotions.</li>
             </ul>
           </p>
-        </details>
-        <details className='contact__information__responseTime'>
-          <summary className='contact__information__responseTime--question'>How long until I receive a response?</summary>
+        </details> */}
+      <article className='contact__questions'>
+        <h4>General Information</h4>
+        <details className='contact__questions__responseTime'>
+          <summary className='contact__questions__responseTime--question'>How long until I receive a response?</summary>
           <p>
             Kindly share the requested contact information and I'll be sure to respond in a timely fashion. My availability extends throughout the entire week;
             however, I do not respond to inquiries after business hours.
           </p>
         </details>
-        <details className='contact__information__provisions'>
-          <summary className='contact__information__provisions--question'>Will the information I share be secure?</summary>
+        <details className='contact__questions__provisions'>
+          <summary className='contact__questions__provisions--question'>Will the information I share be secure?</summary>
           <p>
             <span>
-              Worry not, I do not collect personal information for malicious intentions! This form and it's contents are redirected to my personal Google Mail inbox.
-              The information requested is solely to comprehend and determine whether or not I can satisfy your inquiry in advance. I have no control over what third
+              I do not collect personal information for malicious intentions. This form and it's contents are redirected to my personal Google Mail inbox. The
+              information requested is solely to comprehend and determine whether or not I can satisfy your inquiry in advance. I have no control over what third
               party services do with said information. Please provide only the information you're comfortable sharing. If you are uncomfortable with using the
               provided form, you may contact me using the following email address.
             </span>
             <span>email@gmail.com</span>
           </p>
         </details>
-        <details className='contact__information__inclusivityAccessibility'>
-          <summary className='contact__information____inclusivityAccessibility--question'>Inclusivity and Accessibility</summary>
+        <details className='contact__questions__inclusivityAccessibility'>
+          <summary className='contact__questions____inclusivityAccessibility--question'>Inclusivity and Accessibility</summary>
           <p>
             I will, without question, welcome the opportunity to connect and/or work with individuals of any race, background, disability, or circumstance. I grew up
             around children with Autism diagnoses and understand that not everybody is able to communicate in the same way. There will be no reservations or
@@ -75,8 +76,8 @@ const ContactFormInformation = () => {
             and dignity.
           </p>
         </details>
-        <details className='contact__information__formErrors'>
-          <summary className='contact__information__formErrors--question'>Form assistance</summary>
+        <details className='contact__questions__formErrors'>
+          <summary className='contact__questions__formErrors--question'>Form assistance</summary>
           <ol id='errorMessageFAQ'>
             <li>
               <details>

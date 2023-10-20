@@ -24,55 +24,51 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
         <fieldset className='standardForm__fieldset'>
           {props.contactFormFields.map((field: ContactFormFieldsType, index) =>
             field.input !== 'inquiry' ? (
-              <>
-                <div className='standardForm__fieldset__container' key={field.input}>
-                  <label className='standardForm__fieldset__container--label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
-                    {field.optional ? `${field.placeholder} (optional)` : field.placeholder}
-                  </label>
-                  <input
-                    className='standardForm__fieldset__container--input'
-                    id={field.input}
-                    name={field.input}
-                    type={'text'}
-                    value={field.value}
-                    required={field.optional ? true : false}
-                    onFocus={handleFocusHook}
-                    onBlur={handleBlurHook}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      props.updateContactFormFieldsState(field.input, e.target.value);
-                      props.useContactFormValidator(index);
-                    }}
-                  />
-                  {props.contactFormFields[index].value.length > 0 ? (
-                    <div className='standardForm__fieldset__container--errorMessage'>
-                      <ContactFormErrorHandler contactFormFields={props.contactFormFields} formValidation={props.formValidation} indexParam={index} />
-                    </div>
-                  ) : null}
-                </div>
-              </>
+              <div className='standardForm__fieldset__container' key={field.input}>
+                <label className='standardForm__fieldset__container--label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
+                  {field.optional ? `${field.placeholder} (optional)` : field.placeholder}
+                </label>
+                <input
+                  className='standardForm__fieldset__container--input'
+                  id={field.input}
+                  name={field.input}
+                  type={'text'}
+                  value={field.value}
+                  required={field.optional ? true : false}
+                  onFocus={handleFocusHook}
+                  onBlur={handleBlurHook}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    props.updateContactFormFieldsState(field.input, e.target.value);
+                    props.useContactFormValidator(index);
+                  }}
+                />
+                {props.contactFormFields[index].value.length > 0 ? (
+                  <div className='standardForm__fieldset__container--errorMessage'>
+                    <ContactFormErrorHandler contactFormFields={props.contactFormFields} formValidation={props.formValidation} indexParam={index} />
+                  </div>
+                ) : null}
+              </div>
             ) : (
-              <>
-                <div className='standardForm__fieldset__container' key={field.input}>
-                  <label className='standardForm__fieldset__container--label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
-                    {field.optional ? `${field.placeholder} (optional)` : field.placeholder}
-                  </label>
-                  <textarea
-                    className='standardForm__fieldset__container--input'
-                    id={field.input}
-                    name={field.input}
-                    value={field.value}
-                    required={field.optional ? true : false}
-                    rows={8}
-                    cols={50}
-                    onFocus={handleFocusHook}
-                    onBlur={handleBlurHook}
-                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                      props.updateContactFormFieldsState(field.input, e.target.value);
-                      props.useContactFormValidator(index);
-                    }}
-                  />
-                </div>
-              </>
+              <div className='standardForm__fieldset__container' key={field.input}>
+                <label className='standardForm__fieldset__container--label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
+                  {field.optional ? `${field.placeholder} (optional)` : field.placeholder}
+                </label>
+                <textarea
+                  className='standardForm__fieldset__container--input'
+                  id={field.input}
+                  name={field.input}
+                  value={field.value}
+                  required={field.optional ? true : false}
+                  rows={8}
+                  cols={50}
+                  onFocus={handleFocusHook}
+                  onBlur={handleBlurHook}
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                    props.updateContactFormFieldsState(field.input, e.target.value);
+                    props.useContactFormValidator(index);
+                  }}
+                />
+              </div>
             )
           )}
         </fieldset>

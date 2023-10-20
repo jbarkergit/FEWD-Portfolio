@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import ContactFormStandard from './ContactFormStandard';
-import ContactFormEmail from './ContactFormEmail';
 import ContactFormInformation from './ContactInformation';
 
 //** Prop drill from pages/Portfolio */
@@ -91,6 +90,7 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactFormTyp
 
   return (
     <aside className='contactForm' role='dialog' aria-label='Developer Contact Form' data-status={contactFormActive === true ? 'active' : 'false'}>
+      <ContactFormInformation />
       <ContactFormStandard
         contactFormFields={contactFormFields}
         setContactFormFields={setContactFormFields}
@@ -99,15 +99,6 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactFormTyp
         updateContactFormFieldsState={updateContactFormFieldsState}
         useContactFormValidator={useContactFormValidator}
       />
-      <ContactFormEmail
-        contactFormFields={contactFormFields}
-        setContactFormFields={setContactFormFields}
-        formValidation={formValidation}
-        setFormValidation={setFormValidation}
-        updateContactFormFieldsState={updateContactFormFieldsState}
-        useContactFormValidator={useContactFormValidator}
-      />
-      {/* <ContactFormInformation /> */}
     </aside>
   );
 };
