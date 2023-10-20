@@ -1,6 +1,11 @@
 @use '../../../../scss/ecommerceStyles' as m;
 @use '../../../../../sass/functions' as f;
 
+.ecoModalCart {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
 .ecoModal__simpleHeading {
   width: 100%;
   margin-bottom: 2%;

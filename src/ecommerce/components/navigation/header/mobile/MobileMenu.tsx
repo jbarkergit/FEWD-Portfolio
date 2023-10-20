@@ -25,7 +25,7 @@ const MobileMenu = ({ uiModal, setUiModal }: MobileMenuType): JSX.Element => {
 
   return (
     <div className='modalWrapper'>
-      <aside className='ecoModal' data-status='false' ref={mobileModal}>
+      <aside className='ecoModal ecoModalCart' data-status='false' ref={mobileModal}>
         <div className='ecoModal__simpleHeading'>
           <Link to='/ecommerce'>Dynamic Audio</Link>
         </div>
