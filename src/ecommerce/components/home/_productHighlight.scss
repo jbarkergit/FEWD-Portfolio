@@ -96,43 +96,40 @@
           }
         }
       }
-      & figure picture {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        display: flex;
-        align-items: flex-end;
-        z-index: 3;
-        border-radius: f.rem(24);
-        @include m.productPhoto;
-        &::before {
-          content: '';
+      & figure {
+        display: contents;
+        pointer-events: none;
+        & picture {
           position: absolute;
-          inset: 0;
+          bottom: 0;
+          left: 0;
+          display: flex;
+          align-items: flex-end;
+          z-index: 3;
           border-radius: f.rem(24);
-          background-color: var(--gradientMono);
-          opacity: 0.8;
-        }
-        &:hover {
-          opacity: 0;
-          filter: blur(4px);
-          transition: all 0.22s linear;
-          & + aside video {
-            filter: brightness(100%) invert(0) blur(0);
-            transition: filter 0.44s;
-          }
-          & ~ #productHighlightInfo {
-            opacity: 0;
-            transition: opacity 0.22s;
-          }
-        }
-        & img {
-          position: relative;
-          max-height: 68%;
-          object-fit: scale-down;
-          object-position: center bottom;
-          mix-blend-mode: darken;
+          @include m.productPhoto;
           pointer-events: all;
+          &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: f.rem(24);
+            background-color: var(--gradientMono);
+            opacity: 0.8;
+          }
+          &:hover {
+            opacity: 0;
+            filter: blur(4px);
+            transition: all 0.22s linear;
+          }
+          & img {
+            position: relative;
+            max-height: 68%;
+            object-fit: scale-down;
+            object-position: center bottom;
+            mix-blend-mode: darken;
+            pointer-events: all;
+          }
         }
       }
       & aside {
@@ -149,4 +146,14 @@
       }
     }
   }
+}
+
+.productHighlight li:hover aside video {
+  filter: brightness(100%) invert(0) blur(0);
+  transition: filter 0.44s;
+}
+
+.productHighlight li:hover hgroup {
+  opacity: 0;
+  transition: opacity 0.22s;
 }

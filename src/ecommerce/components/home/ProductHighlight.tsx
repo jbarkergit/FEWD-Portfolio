@@ -12,13 +12,13 @@ const ProductHighlight = (): JSX.Element => {
   //Play video on user pointer hover
   useEffect(() => {
     const userPointerOver = (e: PointerEvent): void => {
-      const asideTarget = (e.currentTarget as HTMLPictureElement).nextSibling as HTMLElement;
+      const asideTarget = (e.currentTarget as HTMLPictureElement).parentElement!.nextSibling as HTMLElement;
       (asideTarget.children[0] as HTMLVideoElement).play();
     };
 
     //Pause and restart video on user pointer leave
     const userPointerLeave = (e: PointerEvent): void => {
-      const asideTarget = (e.currentTarget as HTMLPictureElement).nextSibling as HTMLElement;
+      const asideTarget = (e.currentTarget as HTMLPictureElement).parentElement!.nextSibling as HTMLElement;
       const videoTarget = asideTarget.children[0] as HTMLVideoElement;
       videoTarget.pause();
       videoTarget.currentTime = 0;
@@ -62,7 +62,7 @@ const ProductHighlight = (): JSX.Element => {
                     <source src='/src/ecommerce/assets/production-videos/stock-footage-splice-374x467.webm' type='video/webm' />
                   </video>
                 </aside>
-                <hgroup id='productHighlightInfo'>
+                <hgroup className='productHighlightInfo'>
                   <h2>
                     {product.company} {product.unit}
                   </h2>
