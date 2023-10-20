@@ -1,10 +1,5 @@
 @use '../../../../sass/functions' as f;
 
-.eFooter__partners__companyLogos {
-  position: relative;
-  height: calc(1.5625rem * 2 + 1.5625rem);
-  overflow: hidden;
-}
 .companyLogos {
   position: absolute;
   bottom: 4%;

@@ -4,25 +4,10 @@ import ESupport from './customer/policies/ESupport';
 import PaymentTypes from './additions/payment-types/PaymentTypes';
 import Address from './additions/address/Address';
 import SocialMedia from './additions/social-media/SocialMedia';
-import CompanyLogos from '../shared/CompanyLogos';
 
 const EFooter = (): JSX.Element => {
   return (
     <footer className='eFooter'>
-      <section className='eFooter__partners'>
-        <div className='eFooter__splitter'>
-          <span className='eFooter__splitter__line' />
-          <h2>Partners</h2>
-          <span className='eFooter__splitter__line' />
-        </div>
-        <div className='eFooter__partners__companyLogos'>
-          <div className='companyLogos'>
-            <CompanyLogos />
-            <CompanyLogos />
-          </div>
-        </div>
-      </section>
-
       <section className='eFooter__customer'>
         <section className='eFooter__customer__marketing'>
           <div className='eFooter__splitter'>
