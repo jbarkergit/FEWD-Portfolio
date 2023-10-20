@@ -17,8 +17,8 @@ const Infographic = (): JSX.Element => {
           fetchpriority='high'
         />
       </picture>
-      <article className='infographic__information'>
-        <div className='infographic__information__details'>
+      <div className='infographic__information'>
+        <article className='infographic__information__details'>
           <hgroup>
             <h3>
               New drops from <span className='highlight'>beyerdynamic</span>
@@ -38,12 +38,12 @@ const Infographic = (): JSX.Element => {
               Save Up To 25%
             </Link>
           </div>
-        </div>
+        </article>
         <div className='companyLogos'>
           <CompanyLogos />
           <CompanyLogos />
         </div>
-      </article>
+      </div>
     </main>
   );
 };
