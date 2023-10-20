@@ -115,6 +115,9 @@ textarea,
 select {
   font: inherit;
 }
+figcaption {
+  display: none;
+}
 // Correct font weight in Chrome/Edge/Safari
 b,
 strong {
