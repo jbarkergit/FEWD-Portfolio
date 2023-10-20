@@ -51,9 +51,12 @@ const ProductHighlight = (): JSX.Element => {
           <li key={uuidv4()}>
             <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0 })}>
               <article>
-                <picture ref={pictureRef}>
-                  <img src={product.images!.medium[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchpriority='low' />
-                </picture>
+                <figure>
+                  <picture ref={pictureRef}>
+                    <img src={product.images!.medium[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchpriority='low' />
+                    <figcaption>{`${product.company} ${product.unit}`}</figcaption>
+                  </picture>
+                </figure>
                 <aside>
                   <video preload='none' playsInline loop muted aria-label='Video of joyful people wearing headphones listening to music'>
                     <source src='/src/ecommerce/assets/production-videos/stock-footage-splice-374x467.webm' type='video/webm' />

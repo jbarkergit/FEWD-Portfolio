@@ -42,7 +42,7 @@ const Carousel = (): JSX.Element => {
           const pointerTravelDistance: number = action.pageX - state.initPageX,
             latestTrackPosition = state.previousTrackPos + pointerTravelDistance,
             targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft),
-            maximumDelta = targetElementWidth * -1 + targetElement.children[0].clientWidth + targetElementLeftPadding,
+            maximumDelta = targetElementWidth * -1 + targetElement.children[0].children[0].clientWidth + targetElementLeftPadding,
             clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
 
           return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };

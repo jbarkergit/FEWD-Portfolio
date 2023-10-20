@@ -49,18 +49,9 @@
     @media (width <= 480px) {
       height: f.rem(280);
     }
-    & picture {
-      position: relative;
-      height: 100%;
-      aspect-ratio: 4/5;
-      transition: flex 0.85s ease-in-out;
-      @media (width <= 1065px) {
-        aspect-ratio: 2/4;
-      }
-      @media (width <= 690px) {
-        aspect-ratio: 1/1;
-      }
-      &:first-child {
+    & figure {
+      display: contents;
+      &:first-child picture {
         aspect-ratio: 4/2;
         @media (width <= 1815px) {
           aspect-ratio: 4/5;
@@ -72,18 +63,30 @@
           aspect-ratio: 1/1;
         }
       }
-      & img {
-        border-radius: f.rem(24);
-        object-fit: cover;
+      picture {
+        position: relative;
+        height: 100%;
+        aspect-ratio: 4/5;
+        transition: flex 0.85s ease-in-out;
+        @media (width <= 1065px) {
+          aspect-ratio: 2/4;
+        }
+        @media (width <= 690px) {
+          aspect-ratio: 1/1;
+        }
+        & img {
+          border-radius: f.rem(24);
+          object-fit: cover;
+        }
+        & a {
+          position: absolute;
+          bottom: 7.5%;
+          left: 7.5%;
+          z-index: 4;
+          @include m.ecoBtn;
+          @include m.ecoBtnLight;
+        }
       }
-    }
-    & a {
-      position: absolute;
-      bottom: 7.5%;
-      left: 7.5%;
-      z-index: 4;
-      @include m.ecoBtn;
-      @include m.ecoBtnLight;
     }
   }
 }

@@ -4,12 +4,13 @@ type carouselPropTypes = { carouselImg: string; carouselAlt: string; navCat: str
 
 const CarouselProps = ({ carouselImg, carouselAlt, navCat }: carouselPropTypes): JSX.Element => {
   return (
-    <>
+    <figure>
       <picture>
-        <img src={carouselImg} alt={carouselAlt} draggable="false" loading="lazy" decoding="async" fetchpriority="low" />
-        <Link to="">{navCat}</Link>
+        <img src={carouselImg} alt={carouselAlt} draggable='false' loading='lazy' decoding='async' fetchpriority='low' />
+        <figcaption>{`${carouselAlt}`}</figcaption>
+        <Link to=''>{navCat}</Link>
       </picture>
-    </>
+    </figure>
   );
 };
 
