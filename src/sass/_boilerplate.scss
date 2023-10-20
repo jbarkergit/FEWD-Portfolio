@@ -172,7 +172,10 @@ button,
 option {
   cursor: pointer;
 }
-fieldset,
+fieldset {
+  all: unset; // WARNING: Position priority
+  box-sizing: border-box;
+}
 input,
 textarea {
   all: unset; // WARNING: Position priority
