@@ -115,7 +115,8 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
                 type='text'
                 placeholder='Email Address'
                 value={formValidation.emailAddress}
-                required
+                required={true}
+                aria-required={'true'}
                 autoFocus
                 aria-invalid={formValidation.emailAddressValid ? 'false' : 'true'}
                 aria-describedby='uidnote'
@@ -135,7 +136,8 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
                 type={formValidation.passwordVisible ? 'text' : 'password'}
                 placeholder='Password'
                 value={formValidation.password}
-                required
+                required={true}
+                aria-required={'true'}
                 aria-invalid={formValidation.passwordValid ? 'false' : 'true'}
                 aria-describedby='pwdnote'
                 ref={passwordInputFieldRef}

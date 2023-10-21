@@ -132,7 +132,8 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                   type='text'
                   placeholder='First Name'
                   value={registry.firstNameRegistry}
-                  required
+                  required={true}
+                  aria-required={'true'}
                   autoFocus
                   aria-invalid={registry.firstNameRegistry ? 'false' : 'true'}
                   aria-describedby='uidnote'
@@ -147,7 +148,8 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                   type='text'
                   placeholder='Last Name'
                   value={registry.lastNameRegistry}
-                  required
+                  required={true}
+                  aria-required={'true'}
                   aria-invalid={registry.lastNameRegistry ? 'false' : 'true'}
                   aria-describedby='uidnote'
                   ref={emailAddressInputFieldRef}
@@ -161,7 +163,8 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 type='text'
                 placeholder='Email Address'
                 value={registry.emailAddressRegistry}
-                required
+                required={true}
+                aria-required={'true'}
                 aria-invalid={registry.emailAddressValidRegistry ? 'false' : 'true'}
                 aria-describedby='uidnote'
                 ref={emailAddressInputFieldRef}
@@ -180,7 +183,8 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 type={registry.passwordVisible ? 'text' : 'password'}
                 placeholder='Password'
                 value={registry.passwordRegistry}
-                required
+                required={true}
+                aria-required={'true'}
                 aria-invalid={registry.passwordValidRegistry ? 'false' : 'true'}
                 aria-describedby='pwdnote'
                 ref={passwordInputFieldRef}
@@ -221,7 +225,8 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
                 type={registry.passwordVisible ? 'text' : 'password'}
                 placeholder='Retype your password'
                 value={registry.passwordRegistryCheck}
-                required
+                required={true}
+                aria-required={'true'}
                 aria-invalid={registry.passwordValidRegistry ? 'false' : 'true'}
                 aria-describedby='pwdnote'
                 ref={passwordInputFieldRef}

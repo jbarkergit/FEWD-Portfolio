@@ -35,6 +35,7 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
                   type={'text'}
                   value={field.value}
                   required={field.optional ? true : false}
+                  aria-required={field.optional ? 'true' : 'false'}
                   onFocus={handleFocusHook}
                   onBlur={handleBlurHook}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +60,7 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
                   name={field.input}
                   value={field.value}
                   required={field.optional ? true : false}
+                  aria-required={field.optional ? 'true' : 'false'}
                   rows={8}
                   cols={50}
                   onFocus={handleFocusHook}
