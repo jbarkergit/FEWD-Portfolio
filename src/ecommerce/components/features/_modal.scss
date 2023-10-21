@@ -1,5 +1,5 @@
-@use '../../../scss/ecommerceStyles' as m;
-@use '../../../../sass/functions' as f;
+@use '../../scss/ecommerceStyles' as m;
+@use '../../../sass/functions' as f;
 
 .modalWrapper {
   position: fixed;
@@ -34,6 +34,8 @@
   border-radius: f.rem(24);
   margin: 0 8.335%;
   background: var(--gradientMono);
+  overflow-y: auto;
+  scrollbar-width: none;
   @media (width <= 778px) {
     top: 0;
     left: 0;
@@ -41,7 +43,7 @@
     min-width: auto;
     max-width: 100%;
     height: 100%;
-    padding: 10% 10% 5% 10%;
+    padding: 10%;
     border-radius: 0;
   }
   @media (width < 780px) {

@@ -11,22 +11,24 @@ const CartProducts = (): JSX.Element[] => {
     const shoppingCartProductQuantity: number = product.quantity;
     const databaseProductStock: number | undefined = ProductDatabase.find((product) => product.sku === shoppingCartProductSku)?.stock;
     const maximumStockMet = shoppingCartProductQuantity === databaseProductStock;
+
     return (
       <li key={uuidv4()}>
-        <article className='ecoModal__lineItem'>
+        <article className='shoppingCart__products__lineItem'>
           <figure>
             <picture>{product.images ? <img src={product.images.small[0]} alt={product.unit} loading='lazy' decoding='sync' fetchpriority='low' /> : null}</picture>
             <figcaption>{`${product.company} ${product.unit}`}</figcaption>
           </figure>
-          <div className='ecoModal__lineItem__information'>
-            <hgroup>
+
+          <div className='shoppingCart__products__lineItem__information'>
+            <hgroup className='shoppingCart__products__lineItem__information__details'>
               <h2>{`${product.company} ${product.unit} ${Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}`}</h2>
               <h3>
                 {product.company} {product.unit}
               </h3>
               <h4>{Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h4>
             </hgroup>
-            <div className='ecoModal__lineItem__information__quantity'>
+            <div className='shoppingCart__products__lineItem__information__quantity'>
               <button onClick={() => dispatch({ type: REDUCER_ACTIONS.REMOVE, payload: product })}>
                 <svg xmlns='http://www.w3.org/2000/svg' width='1.1em' height='1.1em' viewBox='0 0 24 24'>
                   <path fill='#ffffff' d='m12.37 15.835l6.43-6.63C19.201 8.79 18.958 8 18.43 8H5.57c-.528 0-.771.79-.37 1.205l6.43 6.63c.213.22.527.22.74 0Z'></path>
