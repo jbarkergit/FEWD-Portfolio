@@ -95,6 +95,9 @@
     @include m.ecoBtn;
     @include m.ecoBtnDark;
     font-size: f.rem(14);
+    & svg {
+      margin-bottom: -0.4%;
+    }
   }
 }
 
