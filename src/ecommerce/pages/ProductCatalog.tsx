@@ -12,9 +12,9 @@ const ProductCatalog = (): JSX.Element => {
     <>
       <Header />
       <section className='browseProduct'>
-        <section className='productFilters'>
+        <section className='productCatalogTopper'>
           {useBreadCrumbs()}
-          <div className='productFilters__panel'>
+          <div className='productCatalogTopper__panel'>
             <ConditionallyRenderedProductFilters />
             <CompanyFilter />
           </div>
