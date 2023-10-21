@@ -45,15 +45,18 @@
     height: calc(560px / 3.5);
     max-height: calc((80vh - 14%) / 4);
     margin-left: -2%;
-    & picture {
-      position: relative;
-      width: 45%;
-      height: inherit;
-      z-index: 3;
-      mix-blend-mode: darken;
-      & img {
-        max-height: inherit;
-        object-fit: scale-down;
+    & figure {
+      display: contents;
+      & picture {
+        position: relative;
+        width: 45%;
+        height: inherit;
+        z-index: 3;
+        mix-blend-mode: darken;
+        & img {
+          max-height: inherit;
+          object-fit: scale-down;
+        }
       }
     }
     &__information {
@@ -63,6 +66,7 @@
       gap: 8%;
       width: 55%;
       height: fit-content;
+      padding-left: f.rem(6);
       margin-top: -20px;
       & hgroup {
         display: flex;
