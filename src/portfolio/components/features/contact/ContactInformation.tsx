@@ -5,12 +5,10 @@ const ContactFormInformation = () => {
       <article className='contact__about'>
         <h3>About</h3>
         <p>
-          I'm Justin, a Front-End Developer specializing in React. I write <abbr title='Block Element Modifier'>BEM</abbr> convention,{' '}
-          <abbr title='Search Engine Optimization'>SEO</abbr>-optimized,{' '}
-          <abbr title='Web Accessibility Initiative - Accessible Rich Internet Applications'>WAI-ARIA</abbr>-compliant HTML, responsive and interactive{' '}
-          <abbr title='Sass/SCSS: Syntactically Awesome/Cascading Style Sheets'>SCSS</abbr> modules, type-safe, documented JavaScript logic, adhering to{' '}
-          <abbr title={`Don't Repeat Yourself`}>DRY</abbr>
-          practices with a focus on performance-oriented <abbr title='Largest Contentful Paint'>LCP</abbr>, <abbr title='First Input Delay'>FID</abbr>, and{' '}
+          I'm Justin, a Front-End Developer specializing in <abbr title='React: A JavaScript library for building user interfaces'>React</abbr>. I build responsive,
+          interactive, <abbr title='Search Engine Optimization'>SEO</abbr>-optimized, and{' '}
+          <abbr title='Web Accessibility Initiative - Accessible Rich Internet Applications'>WAI-ARIA</abbr>-compliant components for client-facing web applications;
+          with a focus on performance-oriented <abbr title='Largest Contentful Paint'>LCP</abbr>, <abbr title='First Input Delay'>FID</abbr>, and{' '}
           <abbr title='Cumulative Layout Shift'>CLS</abbr> metrics. If you are a company interested in my skill acquisition for employment, please reach out for more
           information.
         </p>
