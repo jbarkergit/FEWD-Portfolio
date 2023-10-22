@@ -5,47 +5,16 @@ const ContactFormInformation = () => {
       <article className='contact__about'>
         <h3>About</h3>
         <p>
-          My name is Justin, I am a Front End Web Developer. I exclusively develop with the library React. I provide DRY dynamic type safe documented logic,
-          responsive and interactive UI, performance oriented component and asset rendering, BEM convention SEO-Optimized Markup and screen readers for the visually
-          impaired. If you are a company interested in my skill acquisition for employment, please reach out for more information.
-          {/* If you are looking for freelance work and require a UI/UX
-            designer, I do not specialize in those fields; however, for an additional fee, I will work with you to conceptualize the right layout and style that
-            suites your application's needs. */}
+          I'm Justin, a Front-End Developer specializing in React. I write <abbr title='Block Element Modifier'>BEM</abbr> convention,{' '}
+          <abbr title='Search Engine Optimization'>SEO</abbr>-optimized,{' '}
+          <abbr title='Web Accessibility Initiative - Accessible Rich Internet Applications'>WAI-ARIA</abbr>-compliant HTML, responsive and interactive{' '}
+          <abbr title='Sass/SCSS: Syntactically Awesome/Cascading Style Sheets'>SCSS</abbr> modules, type-safe, documented JavaScript logic, adhering to{' '}
+          <abbr title={`Don't Repeat Yourself`}>DRY</abbr>
+          practices with a focus on performance-oriented <abbr title='Largest Contentful Paint'>LCP</abbr>, <abbr title='First Input Delay'>FID</abbr>, and{' '}
+          <abbr title='Cumulative Layout Shift'>CLS</abbr> metrics. If you are a company interested in my skill acquisition for employment, please reach out for more
+          information.
         </p>
       </article>
-      {/* <details className='contact__about__nonServices'>
-          <summary className='contact__about__nonServices--question'>What services do you not provide?</summary>
-          <p>I do not build backends, offer payment proccessing solutions nor do I handle advertisement needs.</p>
-        </details> */}
-      {/* <details className='contact__about__pricing'>
-          <summary className='contact__about__pricing--question'>What is the pricing structure for your services?</summary>
-          <p>
-            Thank you for considering my services. If you are a company interested in hiring me as a part of your development team, please reach out. If you are an
-            individual looking for freelance services, please read on.
-            <ul>
-              <li>ESTIMATE</li>
-              <li>
-                The cost associated with your website will vary dependant on what your project entails. For this reason, I ask that you reach out for a personal
-                estimate.
-              </li>
-              <li>PAYMENT</li>
-              <li>
-                Upon agreement, I ask for 60% of the estimate upfront via direct deposit. Upon completion and prior to the delivery of your website, the remaining
-                cost, which will differ from the original estimate, will be requested. The 60% down payment of the estimate will be subtracted from the new running
-                total. Additional incurred costs for services rendered must be paid prior to delivery.
-              </li>
-              <li>REFUSAL TO PAY</li>
-              <li>
-                If you refuse to pay the final total, you will not be reimbursed the 60% of the estimate down payment back nor will you receive your completed
-                project. You will receive only the written code you have paid for.
-              </li>
-              <li>ADDITIONAL SERVICES RENDERED</li>
-              <li>For additional servicing after the project has been delivered, a fixed rate will apply on an hourly basis.</li>
-              <li>DISCOUNTS & PROMOTIONS</li>
-              <li>Due to the tedious nature of my craftsmanship, I do not offer discounts or promotions.</li>
-            </ul>
-          </p>
-        </details> */}
       <article className='contact__questions'>
         <h4>General Information</h4>
         <details className='contact__questions__responseTime'>
