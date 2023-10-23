@@ -107,7 +107,6 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
           <img
             src={images?.large[activeDisplay]}
             alt={company + unit}
-            role='presentation'
             decoding='async'
             fetchpriority='high'
             ref={primaryImg}
