@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 //Prop drill from Portfolio page
@@ -10,14 +10,37 @@ type PortHeaderType = {
 };
 
 const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormActive, setTechStackActive }: PortHeaderType): JSX.Element => {
+  //** Arrow position references & logic */
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
   const unorderedListChildrenPositionArray = unorderedListChildrenArray.map((child) => child.offsetLeft);
 
+  // Set arrow position of project navigation by number
   useEffect(() => {
-    //Set arrow position of project navigation by number
-    unorderedListRef.current?.style.setProperty('--afterPsuedoSelector', `${unorderedListChildrenPositionArray[projectSlideIndex]}px`);
+    if (unorderedListRef.current) unorderedListRef.current.style.setProperty('--afterPsuedoSelector', `${unorderedListChildrenPositionArray[projectSlideIndex]}px`);
   }, [projectSlideIndex]);
+  //** */
+
+  //** Menu hover reveal effect */
+  const portHeaderMenu = useRef<HTMLElement>(null);
+  const [portHeaderMenuHovered, setPortHeaderMenuHovered] = useState<boolean>(false);
+
+  useEffect(() => {
+    const onPointerOver = (e: PointerEvent) => setPortHeaderMenuHovered(true);
+    const onPointerLeave = () => setPortHeaderMenuHovered(false);
+
+    if (portHeaderMenu.current) {
+      portHeaderMenu.current.addEventListener('pointerover', onPointerOver);
+      portHeaderMenu.current.addEventListener('pointerleave', onPointerLeave);
+    }
+
+    return () => {
+      if (portHeaderMenu.current) {
+        portHeaderMenu.current.removeEventListener('pointerover', onPointerOver);
+        portHeaderMenu.current.removeEventListener('pointerleave', onPointerLeave);
+      }
+    };
+  }, []);
 
   return (
     <header className='portHeader'>
@@ -41,12 +64,19 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormAct
           </ul>
         </nav>
       </section>
-      <section className='portHeader__menu'>
-        <button onClick={() => setContactFormActive(true)}>Contact</button>
-        <button onClick={() => setTechStackActive(true)}>Tech Stack</button>
-        <Link to='https://github.com/jbarkergit' target='_blank'>
-          GitHub
-        </Link>
+      <section className='portHeader__menu' ref={portHeaderMenu}>
+        <div className='portHeader__menu__buttons' data-status={portHeaderMenuHovered ? 'active' : 'disabled'}>
+          <button onClick={() => setContactFormActive(true)}>Contact</button>
+          <button onClick={() => setTechStackActive(true)}>Tech Stack</button>
+          <Link to='https://github.com/jbarkergit' target='_blank'>
+            GitHub
+          </Link>
+        </div>
+        <div className='portHeader__menu__navbar' data-status={portHeaderMenuHovered ? 'disabled' : 'active'}>
+          <div className='portHeader__menu__navbar--line' />
+          <div className='portHeader__menu__navbar--line' />
+          <div className='portHeader__menu__navbar--line' />
+        </div>
       </section>
     </header>
   );
