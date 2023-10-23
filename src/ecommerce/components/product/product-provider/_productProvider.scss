@@ -26,7 +26,7 @@
     gap: f.rem(40) f.rem(50);
   }
   & li {
-    display: contents;
+    display: block;
   }
   &__product {
     position: relative;

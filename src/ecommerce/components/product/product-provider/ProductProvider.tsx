@@ -1,26 +1,38 @@
 import { useEffect, useRef, useState } from 'react';
+import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
+import useCart from '../../../hooks/useCart';
 import usePaginatedSets from '../../../hooks/usePaginatedSets';
 import { ProductType } from '../../../types/ProductType';
 import ProductProp from './ProductProp';
-import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
-//usePaginatedSets utilizes useProductFilter, which uses useState[categoryFilter] Context Hook to render appropriate product arrays
-//categoryFilter is a single global state, which is used by useProductFilter -> rerenders ProductProvider Prop upon navigation
+/* 
+usePaginatedSets utilizes useProductFilter, which uses useState[categoryFilter] Context Hook to render appropriate product arrays
+categoryFilter is a single global state, which is used by useProductFilter -> rerenders ProductProvider Prop upon navigation
+*/
 
 const ProductProvider = (): JSX.Element => {
+  //** Set Shopping Cart array of products in local Storage */
+  const { shoppingCart, cartProductQuantity } = useCart();
+  useEffect(() => localStorage.setItem('shoppingCartState', JSON.stringify(shoppingCart)), [cartProductQuantity]);
+
   // @ts-ignore:
   const { categoryFilter } = useCategoryFilterContext();
-  const paginatedProducts: ProductType[][] = usePaginatedSets(); //Filtered & paginated products
-  const [visibleProducts, setVisibleProducts] = useState<ProductType[]>([]); //useState that holds current visible products to be mapped
-  const [visibleArrayIndex, setVisibleArrayIndex] = useState<number>(0); //Tracks current visible array index
-  const lastProductRef = useRef<HTMLLIElement>(null); //Reference variable to keep track of last visible product
 
-  //Push first set of products to dom on navigation
+  //** Filtered & paginated products */
+  const paginatedProducts: ProductType[][] = usePaginatedSets();
+  //** Holds current visible products to be mapped */
+  const [visibleProducts, setVisibleProducts] = useState<ProductType[]>([]);
+  //** Tracks current visible array index */
+  const [visibleArrayIndex, setVisibleArrayIndex] = useState<number>(0);
+  //** Reference variable to keep track of last visible product */
+  const lastProductRef = useRef<HTMLLIElement>(null);
+
+  //** Push first set of products to dom on navigation */
   useEffect(() => {
     if (paginatedProducts.length > 0) setVisibleProducts(paginatedProducts[0]);
   }, [categoryFilter, paginatedProducts]);
 
-  //Push new array of products when the last visible product is in the viewport
+  //** Push new array of products when the last visible product is in the viewport */
   const pushProducts = () => {
     if (visibleArrayIndex + 1 < paginatedProducts.length) {
       setVisibleProducts((prevVisibleProducts) => [...prevVisibleProducts, ...paginatedProducts[visibleArrayIndex + 1]]);
@@ -28,17 +40,17 @@ const ProductProvider = (): JSX.Element => {
     }
   };
 
-  //Envoke pushProducts when the last visible product is in the viewport
+  //** Envoke pushProducts when the last visible product is in the viewport */
   const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
     const [entry] = entries;
     if (entry.isIntersecting) pushProducts();
   };
 
-  //Observer logic
+  //** Observer logic */
   useEffect(() => {
     const observer = new IntersectionObserver(intersectionCallback, {
       root: null, //Defining null allows the observer to use the dom viewport
-      threshold: 1.0, //Physical element amount visible in viewport (10%)
+      threshold: 1.0, //Physical element amount visible in viewport (1.0 = 10%)
     });
 
     if (lastProductRef.current) observer.observe(lastProductRef.current);
@@ -50,7 +62,7 @@ const ProductProvider = (): JSX.Element => {
   }, [visibleProducts]);
 
   return (
-    <ul className="productGrid">
+    <ul className='productGrid'>
       {visibleProducts.map((product: ProductType, index: number) => {
         if (index === visibleProducts.length - 1) {
           return (
