@@ -30,9 +30,26 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
     return () => document.body.removeEventListener('pointerdown', handleExteriorClick);
   }, [uiModal]);
 
+  //** Animation handler */
+  const modalWrapper = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (uiModal === 'shoppingCart') {
+      setTimeout(() => {
+        if (modalWrapper.current && shoppingCartModal.current) {
+          modalWrapper.current.setAttribute('data-status', 'active');
+          shoppingCartModal.current.setAttribute('data-status', 'active');
+        }
+      }, 100);
+    } else {
+      if (modalWrapper.current) modalWrapper.current.setAttribute('data-status', 'false');
+      if (shoppingCartModal.current) shoppingCartModal.current.setAttribute('data-status', 'false');
+    }
+  }, [uiModal]);
+
   return (
-    <section className='modalWrapper' data-status={uiModal === 'shoppingCart' ? 'active' : 'false'}>
-      <div className='ecoModal' data-status={uiModal === 'shoppingCart' ? 'active' : 'false'} ref={shoppingCartModal} style={{ display: 'block' }}>
+    <section className='modalWrapper' ref={modalWrapper}>
+      <div className='ecoModal' ref={shoppingCartModal} style={{ display: 'block' }}>
         <div className='shoppingCart'>
           <div className='shoppingCart__header'>{cartProductQuantity > 0 ? <>{`Shopping Cart (${cartProductQuantity})`}</> : <>{'Shopping Cart'}</>}</div>
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import LogoArea from './sections/LogoArea';
 import NavigationLinks from './sections/NavigationLinks';
@@ -12,6 +12,7 @@ import UserAccountRegistry from '../../features/user-account/user-account-modal-
 const PrimaryNav = (): JSX.Element => {
   const [uiModal, setUiModal] = useState<string>('');
 
+  /** All modals, conditionally rendered for LCP */
   const conditionallyRenderedModals = () => {
     switch (uiModal) {
       case 'shoppingCart':
@@ -28,6 +29,13 @@ const PrimaryNav = (): JSX.Element => {
         return null;
     }
   };
+
+  //** Handle animations */
+  const [animState, setAnimState] = useState<boolean>(false);
+
+  // useEffect(() => {
+  //   uiModal !== '' ? setAnimState(true) : setAnimState(false);
+  // }, [uiModal]);
 
   return (
     <>
