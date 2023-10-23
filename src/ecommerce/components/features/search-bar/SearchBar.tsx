@@ -34,11 +34,11 @@ const SearchBar = (): JSX.Element => {
       }}
       ref={searchBarRef}>
       <label className='searchBar__label' htmlFor='searchBar__input'>
-        Search
+        Search Products
       </label>
       <input
         className='searchBar__input'
-        name='searchBar__input'
+        id='searchBar__input'
         type='text'
         placeholder='Search products'
         value={searchTerm}
