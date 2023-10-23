@@ -4,7 +4,7 @@ const ENewsletter = (): JSX.Element => {
       <form className='newsletter'>
         <h2>Let's stay in touch</h2>
         <div className='newsletter__field'>
-          <label>
+          <label htmlFor='email'>
             <input type='email' name='email' required={true} aria-required={'true'} placeholder='Enter your email address...' />
           </label>
           <button type='submit' aria-label='Submit Email Address to Sign Up for Newsletter'>

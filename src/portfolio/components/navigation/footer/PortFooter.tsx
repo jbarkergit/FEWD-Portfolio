@@ -26,7 +26,7 @@ const PortFooter = ({ projectSlideIndex, setProjectInfoStyle }: ProjectNavPropTy
       <nav className='portFooter__nav'>
         <section className='portFooter__nav__mobileLeft'>
           {useProjectInformation()?.demoLink ? (
-            <button>
+            <button aria-label='Open Demo Link'>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
                 <path fill='#ffffff' d='M16 18v2H5v-2h11Zm5-7v2H3v-2h18Zm-2-7v2H8V4h11Z'></path>
               </svg>
@@ -37,7 +37,9 @@ const PortFooter = ({ projectSlideIndex, setProjectInfoStyle }: ProjectNavPropTy
         </section>
         <section className='portFooter__nav__left'>
           {useProjectInformation()?.extended ? (
-            <button onClick={() => setProjectInfoStyle('projectOverview')}>Project Insights</button>
+            <button aria-label='Open Project Insights' onClick={() => setProjectInfoStyle('projectOverview')}>
+              Project Insights
+            </button>
           ) : (
             <span className='projectUnavailable'>this project is unavailable</span>
           )}

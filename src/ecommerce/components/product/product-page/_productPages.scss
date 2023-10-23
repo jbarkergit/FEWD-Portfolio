@@ -64,7 +64,7 @@
       overflow: hidden;
       @include m.productPhoto;
       & img {
-        // padding: 15px 0;
+        position: absolute;
         object-fit: scale-down;
         mix-blend-mode: darken;
         pointer-events: all;
@@ -106,6 +106,7 @@
       pointer-events: none;
       // @include m.productPhoto;
       & img {
+        position: absolute;
         width: 100%;
         height: 100%;
         object-fit: scale-down;

@@ -28,7 +28,7 @@
       object-fit: cover;
       object-position: center center;
       transform: scaleX(-1);
-      filter: contrast(108%);
+      filter: contrast(105%) saturate(108%);
     }
     & .imgFadeGradient {
       position: absolute;

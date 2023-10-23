@@ -43,7 +43,7 @@ const EmptyCart = ({ setUiModal }: EmptyCartType) => {
             </Link>
           </li>
           <li>
-            <button onClick={() => setUiModal('')}>
+            <button aria-label='Close menu' onClick={() => setUiModal('')}>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.6em' height='1.6em' viewBox='0 0 24 24'>
                 <path
                   fill='#ffffff'

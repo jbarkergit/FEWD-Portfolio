@@ -50,7 +50,7 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormAct
           <ul ref={unorderedListRef}>
             {Array.from({ length: 2 }).map((_, index) => (
               <li key={index}>
-                <button className='buttonNav' onClick={() => setProjectSlideIndex(index)}>
+                <button className='buttonNav' aria-label={`View Project ${projectSlideIndex + 1}`} onClick={() => setProjectSlideIndex(index)}>
                   <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 24 24'>
                     <path
                       fill='#ffffff'
@@ -66,8 +66,12 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormAct
       </section>
       <section className='portHeader__menu' ref={portHeaderMenu}>
         <div className='portHeader__menu__buttons' data-status={portHeaderMenuHovered ? 'active' : 'disabled'}>
-          <button onClick={() => setContactFormActive(true)}>Contact</button>
-          <button onClick={() => setTechStackActive(true)}>Tech Stack</button>
+          <button aria-label='Contact Form' onClick={() => setContactFormActive(true)}>
+            Contact
+          </button>
+          <button aria-label='Tech Stack' onClick={() => setTechStackActive(true)}>
+            Tech Stack
+          </button>
           <Link to='https://github.com/jbarkergit' target='_blank'>
             GitHub
           </Link>

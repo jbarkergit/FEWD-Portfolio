@@ -146,6 +146,7 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
               />
               <button
                 className='passwordLabel__visibility'
+                aria-label='Toggle password visibility'
                 onClick={(e) => {
                   e.preventDefault();
                   setFormValidation({ ...formValidation, passwordVisible: formValidation.passwordVisible ? false : true });
@@ -175,11 +176,14 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
             ) : null}
           </fieldset>
           <div className='ecoModal__container__buttons'>
-            <button type='submit' onClick={() => SubmitEvent}>
+            <button aria-label='Log in to your account' type='submit' onClick={() => SubmitEvent}>
               Log in
             </button>
-            <button onClick={() => setUiModal('userRegistry')}>Sign up</button>
+            <button aria-label='Create an account' onClick={() => setUiModal('userRegistry')}>
+              Sign up
+            </button>
             <button
+              aria-label='Close menu'
               onClick={(e) => {
                 e.preventDefault();
                 setUiModal('');
@@ -191,18 +195,18 @@ const UserLoginModal = ({ uiModal, setUiModal }: PropType): JSX.Element => {
               </svg>
               Return
             </button>
-            <button id='resetPassword' onClick={(e) => e.preventDefault()}>
+            <button aria-label='Reset your password' id='resetPassword' onClick={(e) => e.preventDefault()}>
               Forgot your password?
             </button>
           </div>
           <div className='ecoModal__container__passkeys'>
-            <button>
+            <button aria-label='Sign in with Google'>
               <Google />
             </button>
-            <button>
+            <button aria-label='Sign in with LinkedIn'>
               <LinkedIn />
             </button>
-            <button>
+            <button aria-label='Sign in with Apple'>
               <Apple />
             </button>
           </div>

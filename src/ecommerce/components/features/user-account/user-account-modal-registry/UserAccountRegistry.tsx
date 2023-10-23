@@ -193,6 +193,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
               />
               <button
                 className='passwordLabel__visibility'
+                aria-label='Toggle password visibility'
                 onClick={(e) => {
                   e.preventDefault();
                   setRegistry({ ...registry, passwordVisible: registry.passwordVisible ? false : true });
@@ -235,6 +236,7 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
               />
               <button
                 className='passwordLabel__visibility'
+                aria-label='Toggle password visibility'
                 onClick={(e) => {
                   e.preventDefault();
                   setRegistry({ ...registry, passwordVisible: registry.passwordVisible ? false : true });
@@ -264,19 +266,21 @@ const UserAccountRegistry = ({ uiModal, setUiModal }: PropType): JSX.Element => 
             ) : null}
           </fieldset>
           <div className='ecoModal__container__buttons'>
-            <button type='submit' onClick={() => SubmitEvent}>
+            <button aria-label='Submit form' type='submit' onClick={() => SubmitEvent}>
               Submit
             </button>
-            <button onClick={() => setUiModal('userLogin')}>Return to Login</button>
+            <button aria-label='Return to account login' onClick={() => setUiModal('userLogin')}>
+              Return to Login
+            </button>
           </div>
           <div className='ecoModal__container__passkeys'>
-            <button>
+            <button aria-label='Sign in with Google'>
               <Google />
             </button>
-            <button>
+            <button aria-label='Sign in with LinkedIn'>
               <LinkedIn />
             </button>
-            <button>
+            <button aria-label='Sign in with Apple'>
               <Apple />
             </button>
           </div>

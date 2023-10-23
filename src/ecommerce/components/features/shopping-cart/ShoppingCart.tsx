@@ -45,10 +45,14 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
           )}
 
           <div className='shoppingCart__buttons'>
-            {shoppingCart.length > 0 ? <button onClick={() => dispatch({ type: REDUCER_ACTIONS.SUBMIT })}>Subtotal {cartProductSubtotal}</button> : null}
+            {shoppingCart.length > 0 ? (
+              <button aria-label={`Checkout with subtotal of ${cartProductSubtotal}`} onClick={() => dispatch({ type: REDUCER_ACTIONS.SUBMIT })}>
+                Subtotal {cartProductSubtotal}
+              </button>
+            ) : null}
 
             {shoppingCart.length !== 0 ? (
-              <button onClick={() => setUiModal('')}>
+              <button aria-label='Close Shopping Cart' onClick={() => setUiModal('')}>
                 <svg xmlns='http://www.w3.org/2000/svg' width='1.3em' height='1.3em' viewBox='0 0 24 24'>
                   <path
                     fill='#ffffff'

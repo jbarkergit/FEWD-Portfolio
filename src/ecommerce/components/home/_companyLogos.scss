@@ -1,4 +1,4 @@
-@use '../../../../sass/functions' as f;
+@use '../../../sass/functions' as f;
 
 .companyLogos {
   position: absolute;
@@ -54,11 +54,11 @@
       min-width: f.rem(160);
     }
     & a:nth-of-type(5) picture img {
-      aspect-ratio: 1/1;
+      aspect-ratio: 4/1;
       min-width: f.rem(100);
     }
     & a:nth-of-type(6) picture img {
-      aspect-ratio: 6/1;
+      aspect-ratio: 1/1;
       min-width: auto;
       max-width: f.rem(60);
     }
@@ -74,11 +74,11 @@
       max-height: f.rem(22);
     }
     & a:nth-of-type(10) picture img {
-      aspect-ratio: 5/1;
+      aspect-ratio: 7/1;
       max-width: f.rem(166);
     }
     & a:nth-of-type(11) picture img {
-      aspect-ratio: 4/1;
+      aspect-ratio: 6/1;
       max-width: f.rem(160);
     }
     & a:nth-of-type(12) picture img {

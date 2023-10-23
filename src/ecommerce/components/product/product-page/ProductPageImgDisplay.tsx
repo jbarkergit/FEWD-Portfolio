@@ -119,7 +119,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
       {images?.large.length === 1 ? null : (
         <div className='skuPage__grid__display__nav'>
           <div className='skuPage__grid__display__nav__container'>
-            <button onClick={() => (activeDisplay === 0 ? setActiveDisplay(lastSlide) : setActiveDisplay(activeDisplay - 1))}>
+            <button aria-label='Previous Image' onClick={() => (activeDisplay === 0 ? setActiveDisplay(lastSlide) : setActiveDisplay(activeDisplay - 1))}>
               <span>
                 <svg xmlns='http://www.w3.org/2000/svg' width='1.8em' height='1.8em' viewBox='0 0 24 24'>
                   <path
@@ -131,7 +131,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
             </button>
           </div>
           <div className='skuPage__grid__display__nav__container'>
-            <button onClick={() => (activeDisplay === lastSlide ? setActiveDisplay(1) : setActiveDisplay(activeDisplay + 1))}>
+            <button aria-label='Next Image' onClick={() => (activeDisplay === lastSlide ? setActiveDisplay(1) : setActiveDisplay(activeDisplay + 1))}>
               <span>
                 <span>Next Image</span>
                 <svg xmlns='http://www.w3.org/2000/svg' width='1.8em' height='1.8em' viewBox='0 0 24 24'>

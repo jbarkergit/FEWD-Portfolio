@@ -70,6 +70,7 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
             </label>
             <button
               className='productFilter__accordion__listItem--option'
+              aria-label={`Filter by ${data}`}
               id={data}
               key={uuidv4()}
               onClick={() => {

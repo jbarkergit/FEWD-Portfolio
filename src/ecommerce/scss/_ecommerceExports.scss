@@ -4,9 +4,6 @@
 //Skeletons
 @forward '../../ecommerce/skeletons/skeletonDefaults';
 
-//Shared: Header & Footer
-@forward '../../ecommerce/components/navigation/shared/companyLogos';
-
 //Header
 @forward '../../ecommerce/components/navigation/header/ecoHeader';
 @forward '../../ecommerce/components/navigation/header/mobile/mobileMenu';
@@ -17,6 +14,8 @@
 //Home
 @forward '../../ecommerce/components/home/carousel';
 @forward '../../ecommerce/components/home/infographic';
+@forward '../../ecommerce/components/home/companyLogos';
+
 @forward '../../ecommerce/components/home/productHighlight';
 @forward '../../ecommerce/components/home/sideBySide';
 

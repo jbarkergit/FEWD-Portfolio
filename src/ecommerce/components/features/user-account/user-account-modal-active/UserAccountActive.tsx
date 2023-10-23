@@ -36,6 +36,7 @@ const UserAccountActive = ({ uiModal, setUiModal }: PropType) => {
           <p>Hello, {JSON.parse(localStorage.getItem('firstName')!)}! Thank you for testing my field validation/user authentication form simulation.</p>
           <div className='ecoModal__container__buttons'>
             <button
+              aria-label='Log out of your account'
               onClick={() => {
                 localStorage.setItem('userSignedIn', JSON.stringify(false));
                 setUiModal('userLogin');

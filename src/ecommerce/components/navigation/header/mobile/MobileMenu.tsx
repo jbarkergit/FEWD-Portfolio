@@ -57,7 +57,7 @@ const MobileMenu = ({ uiModal, setUiModal }: MobileMenuType): JSX.Element => {
               </Link>
             </li>
             <li className='ecoModal__nav__ul__li'>
-              <button onClick={() => setUiModal('')}>
+              <button aria-label='Close menu' onClick={() => setUiModal('')}>
                 <svg xmlns='http://www.w3.org/2000/svg' width='1.6em' height='1.6em' viewBox='0 0 24 24'>
                   <path
                     fill='#ffffff'

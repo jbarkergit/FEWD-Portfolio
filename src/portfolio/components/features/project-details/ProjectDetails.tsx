@@ -24,7 +24,7 @@ const ProjectDetails = ({ projectSlideIndex, projectInfoStyle, setProjectInfoSty
     return (
       <section className='projectDetails'>
         {projectInfoStyle === 'projectOverview' || projectInfoStyle === 'projectSummary' ? (
-          <button className='projectDetails__close' onClick={() => setProjectInfoStyle('')}>
+          <button className='projectDetails__close' aria-label='Close Project Details' onClick={() => setProjectInfoStyle('')}>
             <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
               <path
                 fill='#ffffff'

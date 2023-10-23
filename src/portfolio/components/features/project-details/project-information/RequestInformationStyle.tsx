@@ -11,11 +11,17 @@ const RequestInformationStyle = ({ projectDetail, setProjectDetail }: PropType) 
     <nav className='projectDetails__projectOverview__nav'>
       {projectDetail === 'projectOverview' ? (
         <>
-          Prefer a shorter read? <button onClick={() => setProjectDetail('projectSummary')}>{'Click here!'}</button>
+          Prefer a shorter read?{' '}
+          <button aria-label='Click here to view a condensed article on this project' onClick={() => setProjectDetail('projectSummary')}>
+            {'Click here!'}
+          </button>
         </>
       ) : (
         <>
-          Interested in a read with developer insights? <button onClick={() => setProjectDetail('projectOverview')}>{'Click here!'}</button>
+          Interested in a read with developer insights?{' '}
+          <button aria-label='Click here to read an article with developer insights on this project' onClick={() => setProjectDetail('projectOverview')}>
+            {'Click here!'}
+          </button>
         </>
       )}
     </nav>
