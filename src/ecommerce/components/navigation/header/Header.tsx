@@ -3,12 +3,31 @@ import { useLocation } from 'react-router-dom';
 import LogoArea from './sections/LogoArea';
 import NavigationLinks from './sections/NavigationLinks';
 import UserInteractions from './sections/UserInteractions';
-import UserAccountModal from '../../features/user-account/UserAccountModal';
 import ShoppingCart from '../../features/shopping-cart/ShoppingCart';
 import MobileMenu from './mobile/MobileMenu';
+import UserAccountActive from '../../features/user-account/user-account-modal-active/UserAccountActive';
+import UserLoginModal from '../../features/user-account/user-account-modal-login/UserLoginModal';
+import UserAccountRegistry from '../../features/user-account/user-account-modal-registry/UserAccountRegistry';
 
 const PrimaryNav = (): JSX.Element => {
   const [uiModal, setUiModal] = useState<string>('');
+
+  const conditionallyRenderedModals = () => {
+    switch (uiModal) {
+      case 'shoppingCart':
+        return <ShoppingCart uiModal={uiModal} setUiModal={setUiModal} />;
+      case 'mobileMenu':
+        return <MobileMenu uiModal={uiModal} setUiModal={setUiModal} />;
+      case 'userLogin':
+        return <UserLoginModal uiModal={uiModal} setUiModal={setUiModal} />;
+      case 'userRegistry':
+        return <UserAccountRegistry uiModal={uiModal} setUiModal={setUiModal} />;
+      case 'userActive':
+        if (JSON.parse(localStorage.getItem('emailAddress')!)) return <UserAccountActive uiModal={uiModal} setUiModal={setUiModal} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
@@ -23,9 +42,7 @@ const PrimaryNav = (): JSX.Element => {
         <NavigationLinks />
         <UserInteractions uiModal={uiModal} setUiModal={setUiModal} />
       </header>
-      <ShoppingCart uiModal={uiModal} setUiModal={setUiModal} />
-      {uiModal === 'mobileMenu' ? <MobileMenu uiModal={uiModal} setUiModal={setUiModal} /> : null}
-      <UserAccountModal uiModal={uiModal} setUiModal={setUiModal} />
+      {conditionallyRenderedModals()}
     </>
   );
 };
