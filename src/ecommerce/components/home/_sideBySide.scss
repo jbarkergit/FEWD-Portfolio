@@ -54,6 +54,12 @@
       font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
       font-weight: 500;
     }
+    & a {
+      margin-top: f.rem(18);
+      @include m.ecoBtn;
+      @include m.ecoBtnDark;
+      width: fit-content;
+    }
   }
   &__video {
     display: grid;

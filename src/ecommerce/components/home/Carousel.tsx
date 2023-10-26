@@ -121,16 +121,19 @@ const Carousel = (): JSX.Element => {
           carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg'
           carouselAlt='Slide E'
           navCat='Headphones'
+          tabIndex={-1}
         />
         <CarouselProps
           carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg'
           carouselAlt='Slide F'
           navCat='Dacs & Amps'
+          tabIndex={-1}
         />
         <CarouselProps
           carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg'
           carouselAlt='Slide G'
           navCat='Microphones'
+          tabIndex={-1}
         />
       </div>
     </section>

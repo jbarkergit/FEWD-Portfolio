@@ -12,7 +12,7 @@ const ProductProp = ({ product }: ProductPropType): JSX.Element => {
 
   return (
     <article className='productGrid__product' key={product.sku}>
-      <Link to={`/ecommerce/product/${sku}`} className='productGrid__product__pictureLink'>
+      <Link to={`/ecommerce/product/${sku}`} className='productGrid__product__pictureLink' aria-label={`Open ${product.company} ${product.unit} product page`}>
         <figure className='productGrid__product--containedHover'>
           <picture>{images ? <img src={images.medium[0]} alt={unit} decoding='async' fetchpriority='high' /> : null}</picture>
           <figcaption>{`${product.company} ${product.unit}`}</figcaption>
@@ -24,7 +24,7 @@ const ProductProp = ({ product }: ProductPropType): JSX.Element => {
             {company} {unit}
           </h2>
         </Link>
-        <p>{description}</p>
+        <p tabIndex={0}>{description}</p>
         <button aria-label={`Add to Cart for $${product.price}`} onClick={() => dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, quantity: 1 } })}>
           <svg xmlns='http://www.w3.org/2000/svg' width='1.4em' height='1.4em' viewBox='0 0 24 24'>
             <path

@@ -49,7 +49,7 @@ const ProductHighlight = (): JSX.Element => {
       <ul>
         {ProductDatabase.filter((product: ProductType) => product.productshowcase === true).map((product: ProductType) => (
           <li key={uuidv4()}>
-            <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0 })}>
+            <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0 })} tabIndex={0}>
               <article>
                 <figure>
                   <picture ref={pictureRef}>
@@ -58,7 +58,7 @@ const ProductHighlight = (): JSX.Element => {
                   </picture>
                 </figure>
                 <aside>
-                  <video preload='none' playsInline loop muted aria-label='Video of joyful people wearing headphones listening to music'>
+                  <video preload='none' playsInline loop muted aria-label='Video of joyful people wearing headphones listening to music' tabIndex={-1}>
                     <source src='/src/ecommerce/assets/production-videos/stock-footage-splice-374x467.webm' type='video/webm' />
                   </video>
                 </aside>
