@@ -13,13 +13,13 @@ const ProductPageDetails = ({ findProduct }: PropType) => {
     <article className='skuPage__grid__details'>
       <div className='skuPage__grid__details__block'>
         <hgroup>
-          <h1>
+          <h1 tabIndex={0}>
             {company} {unit}
           </h1>
-          <h2>{company}</h2>
-          <h3>{unit}</h3>
+          <h2 tabIndex={0}>{company}</h2>
+          <h3 tabIndex={0}>{unit}</h3>
         </hgroup>
-        <p>{description}</p>
+        <p tabIndex={0}>{description}</p>
         {stock > 0 ? (
           <button
             aria-label={`Add to Cart for $${findProduct.price}`}
