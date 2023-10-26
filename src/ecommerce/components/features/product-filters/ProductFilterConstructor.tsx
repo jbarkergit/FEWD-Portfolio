@@ -51,7 +51,7 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
   }, [modalStatus]);
 
   return (
-    <section className='productFilter'>
+    <section className='productFilter' tabIndex={0}>
       <div className='productFilter__select' ref={selectMenuRef} onClick={() => (modalStatus ? setModalStatus(false) : setModalStatus(true))}>
         <span className='productFilter__select--area'>{filterName}</span>
         <span className='productFilter__select--area'>

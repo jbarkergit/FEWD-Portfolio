@@ -6,7 +6,7 @@ const useBreadCrumbs = (): JSX.Element => {
   const breadCrumbs = locationPath.replace(regexPattern, ' ');
 
   return (
-    <div className='productCatalogTopper__panel breadCrumbs' aria-label={breadCrumbs}>
+    <div className='productCatalogTopper__panel breadCrumbs' aria-label={breadCrumbs} tabIndex={0}>
       <h1>{breadCrumbs}</h1>
     </div>
   );
