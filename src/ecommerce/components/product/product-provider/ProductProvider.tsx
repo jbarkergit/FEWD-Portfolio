@@ -27,7 +27,12 @@ const ProductProvider = (): JSX.Element => {
 
   //** Push first set of products to dom when paginatedProducts is updated and during navigation to prevent non-renders on initial page load */
   useEffect(() => {
-    if (paginatedProducts.length > 0) setVisibleProducts(paginatedProducts[0]);
+    if (paginatedProducts.length > 0) {
+      setVisibleProducts(paginatedProducts[0]);
+
+      //** Forgetting to reset the index will result in partial product array rendering */
+      setVisibleArrayIndex(0);
+    }
   }, [categoryFilter, paginatedProducts]);
 
   //** Push new array of products when the last visible product is in the viewport */
@@ -35,10 +40,10 @@ const ProductProvider = (): JSX.Element => {
     if (entry.isIntersecting) {
       // Ensure the dom does not receive empty objects to map into the FC (dangerous)
       if (visibleArrayIndex + 1 < paginatedProducts.length) {
+        // Push new array of products
         setVisibleProducts((prevVisibleProducts) => [...prevVisibleProducts, ...paginatedProducts[visibleArrayIndex + 1]]);
+        // Keep track of current index
         setVisibleArrayIndex((prevVisibleArrayIndex) => prevVisibleArrayIndex + 1);
-      } else {
-        null;
       }
     }
   };
