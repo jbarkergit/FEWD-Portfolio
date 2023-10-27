@@ -1,29 +1,11 @@
 import { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { ProductDatabase } from '../../../database/product-db/ProductDatabase';
-import { ProductType } from '../../../types/ProductType';
+import { useProductSearch } from '../../../hooks/useSearchProducts';
 
 const SearchBar = (): JSX.Element => {
   const searchBarRef = useRef<HTMLDivElement>(null!);
   const [searchTerm, setSearchTerm] = useState<string>('');
-
-  //** Search bar results filter logic */
-  const searchResults = () => {
-    let ProductSearchResults: ProductType[] = [];
-    let count = 0;
-
-    for (const product of ProductDatabase) {
-      if (product.sku.toLowerCase().includes(searchTerm.toLowerCase())) {
-        ProductSearchResults.push(product);
-        count++;
-
-        if (count === 9) break;
-      }
-    }
-
-    return ProductSearchResults;
-  };
 
   //** Exterior click handler */
   useEffect(() => {
@@ -66,17 +48,21 @@ const SearchBar = (): JSX.Element => {
       {searchTerm.length != 0 && (
         <div className='searchBar__return'>
           <ul className='searchBar__return__ul' tabIndex={-1}>
-            {searchTerm === ''
-              ? null
-              : searchResults().map((product) => {
-                  return (
-                    <li className='searchBar__return__ul__li' key={uuidv4()}>
-                      <a href={`/ecommerce/product/${product.sku}`} onClick={() => setSearchTerm('')}>
-                        {product.company} {product.unit}
-                      </a>
-                    </li>
-                  );
-                })}
+            {useProductSearch(searchTerm).length <= 0 ? (
+              <li className='searchBar__return__ul__li' key={uuidv4()}>
+                No results.
+              </li>
+            ) : (
+              useProductSearch(searchTerm).map((product) => {
+                return (
+                  <li className='searchBar__return__ul__li' key={uuidv4()}>
+                    <a href={`/ecommerce/product/${product.sku}`} onClick={() => setSearchTerm('')}>
+                      {product.company} {product.unit}
+                    </a>
+                  </li>
+                );
+              })
+            )}
           </ul>
         </div>
       )}
