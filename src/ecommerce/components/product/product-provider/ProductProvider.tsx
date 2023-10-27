@@ -18,49 +18,55 @@ const ProductProvider = (): JSX.Element => {
 
   //** Holds current visible products to be mapped */
   const [visibleProducts, setVisibleProducts] = useState<ProductType[]>([]);
+
   //** Tracks current visible array index */
   const [visibleArrayIndex, setVisibleArrayIndex] = useState<number>(0);
-  //** Reference variable to keep track of last visible product */
+
+  //** Last visible product reference for observer */
   const lastProductRef = useRef<HTMLLIElement>(null);
 
-  //** Push first set of products to dom on navigation */
+  //** Push first set of products to dom when paginatedProducts is updated and during navigation to prevent non-renders on initial page load */
   useEffect(() => {
     if (paginatedProducts.length > 0) setVisibleProducts(paginatedProducts[0]);
   }, [categoryFilter, paginatedProducts]);
 
   //** Push new array of products when the last visible product is in the viewport */
-  const pushProducts = () => {
-    if (visibleArrayIndex + 1 < paginatedProducts.length) {
-      setVisibleProducts((prevVisibleProducts) => [...prevVisibleProducts, ...paginatedProducts[visibleArrayIndex + 1]]);
-      setVisibleArrayIndex((prevVisibleArrayIndex) => prevVisibleArrayIndex + 1);
+  const intersectionCallback = (entry: IntersectionObserverEntry) => {
+    if (entry.isIntersecting) {
+      // Ensure the dom does not receive empty objects to map into the FC (dangerous)
+      if (visibleArrayIndex + 1 < paginatedProducts.length) {
+        setVisibleProducts((prevVisibleProducts) => [...prevVisibleProducts, ...paginatedProducts[visibleArrayIndex + 1]]);
+        setVisibleArrayIndex((prevVisibleArrayIndex) => prevVisibleArrayIndex + 1);
+      } else {
+        null;
+      }
     }
-  };
-
-  //** Envoke pushProducts when the last visible product is in the viewport */
-  const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
-    const [entry] = entries;
-    if (entry.isIntersecting) pushProducts();
   };
 
   //** Observer logic */
   useEffect(() => {
-    const observer = new IntersectionObserver(intersectionCallback, {
-      root: null, //Defining null allows the observer to use the dom viewport
-      threshold: 1.0, //Physical element amount visible in viewport (1.0 = 10%)
-    });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        intersectionCallback(entry);
+      },
+      {
+        root: null,
+        threshold: 1.0,
+      }
+    );
 
     if (lastProductRef.current) observer.observe(lastProductRef.current);
 
     return () => {
       if (lastProductRef.current) observer.unobserve(lastProductRef.current);
-      observer.disconnect(); //Prevent memory leaks
+      observer.disconnect();
     };
   }, [visibleProducts]);
 
   return (
     <ul className='productGrid'>
       {visibleProducts.map((product: ProductType, index: number) => {
-        if (index === visibleProducts.length - 1) {
+        if (visibleProducts && index === visibleProducts.length - 1) {
           return (
             <li key={product.unit} ref={lastProductRef}>
               <ProductProp product={product} />
