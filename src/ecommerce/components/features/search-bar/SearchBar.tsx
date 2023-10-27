@@ -9,16 +9,16 @@ const SearchBar = (): JSX.Element => {
 
   //** Exterior click handler */
   useEffect(() => {
-    const useSearchBar = (e: PointerEvent): void => {
+    const exteriorClickHandler = (e: PointerEvent): void => {
       if (!searchBarRef.current?.contains(e.target as HTMLElement)) setSearchTerm('');
     };
 
-    searchBarRef.current?.addEventListener('pointerup', useSearchBar);
-    document.body.addEventListener('pointerup', useSearchBar);
+    searchBarRef.current?.addEventListener('pointerup', exteriorClickHandler);
+    document.body.addEventListener('pointerup', exteriorClickHandler);
 
     return () => {
-      searchBarRef.current?.removeEventListener('pointerup', useSearchBar);
-      document.body.removeEventListener('pointerup', useSearchBar);
+      searchBarRef.current?.removeEventListener('pointerup', exteriorClickHandler);
+      document.body.removeEventListener('pointerup', exteriorClickHandler);
     };
   }, []);
 
