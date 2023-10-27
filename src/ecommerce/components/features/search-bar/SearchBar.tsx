@@ -50,7 +50,7 @@ const SearchBar = (): JSX.Element => {
           <ul className='searchBar__return__ul' tabIndex={-1}>
             {useProductSearch(searchTerm).length <= 0 ? (
               <li className='searchBar__return__ul__li' key={uuidv4()}>
-                No results.
+                <span className='searchBar__return__ul__li--noResult'>Sorry, no results.</span>
               </li>
             ) : (
               useProductSearch(searchTerm).map((product) => {
