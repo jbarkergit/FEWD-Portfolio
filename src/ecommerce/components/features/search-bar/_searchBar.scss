@@ -38,6 +38,11 @@
       padding-left: f.rem(40);
       background-position: f.rem(13) center;
     }
+    &[data-focus='true'] {
+      width: f.rem(220);
+      padding-left: f.rem(40);
+      background-position: f.rem(13) center;
+    }
   }
   &__return {
     position: absolute;
@@ -58,6 +63,8 @@
       overflow-y: auto;
       overflow-x: hidden;
       &__li {
+        display: flex;
+        justify-content: center;
         width: 100%;
         height: 100%;
         border-radius: f.rem(6);

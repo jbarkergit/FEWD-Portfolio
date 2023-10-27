@@ -269,7 +269,7 @@
       @include m.ecoBtnLight;
       gap: f.rem(5);
       width: 100%;
-      font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
+      font-size: clamp(f.rem(14), f.rem(8) + 1vw, f.rem(14));
     }
   }
 }

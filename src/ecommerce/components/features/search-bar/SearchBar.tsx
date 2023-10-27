@@ -5,13 +5,14 @@ import { ProductDatabase } from '../../../database/product-db/ProductDatabase';
 
 const SearchBar = (): JSX.Element => {
   const searchBarRef = useRef<HTMLDivElement>(null!);
-  const searchLink = useRef<HTMLAnchorElement>(null!);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
+  //** Search bar results filter logic */
   const searchResults = ProductDatabase.filter((product) => {
     return product.sku.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
+  //** Exterior click handler */
   useEffect(() => {
     const useSearchBar = (e: PointerEvent): void => {
       if (!searchBarRef.current?.contains(e.target as HTMLElement)) setSearchTerm('');
@@ -39,24 +40,25 @@ const SearchBar = (): JSX.Element => {
       <input
         className='searchBar__input'
         id='searchBar__input'
+        data-focus={searchTerm.length > 0 ? 'true' : 'false'}
         type='text'
         placeholder='Search products'
-        value={searchTerm}
+        value={searchTerm.replace('-', ' ')}
         autoCapitalize='none'
         autoComplete='none'
         autoCorrect='off'
         spellCheck='false'
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e?.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e?.target.value.replace(' ', '-'))}
       />
       {searchTerm.length != 0 && (
         <div className='searchBar__return'>
-          <ul className='searchBar__return__ul'>
+          <ul className='searchBar__return__ul' tabIndex={-1}>
             {searchTerm === ''
               ? null
               : searchResults.slice(0, 10).map((product) => {
                   return (
                     <li className='searchBar__return__ul__li' key={uuidv4()}>
-                      <a href={`/ecommerce/product/${product.sku}`} ref={searchLink} onClick={() => setSearchTerm('')}>
+                      <a href={`/ecommerce/product/${product.sku}`} onClick={() => setSearchTerm('')}>
                         {product.company} {product.unit}
                       </a>
                     </li>
