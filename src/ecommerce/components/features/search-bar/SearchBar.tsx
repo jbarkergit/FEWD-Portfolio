@@ -2,6 +2,7 @@ import { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ProductDatabase } from '../../../database/product-db/ProductDatabase';
+import { ProductType } from '../../../types/ProductType';
 
 const SearchBar = (): JSX.Element => {
   const searchBarRef = useRef<HTMLDivElement>(null!);
@@ -9,7 +10,7 @@ const SearchBar = (): JSX.Element => {
 
   //** Search bar results filter logic */
   const searchResults = () => {
-    let ProductSearchResults = [];
+    let ProductSearchResults: ProductType[] = [];
     let count = 0;
 
     for (const product of ProductDatabase) {
