@@ -18,9 +18,7 @@ const SearchBar = (): JSX.Element => {
         ProductSearchResults.push(product);
         count++;
 
-        if (count === 9) {
-          break;
-        }
+        if (count === 9) break;
       }
     }
 
