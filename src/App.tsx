@@ -1,4 +1,4 @@
-import { Suspense, lazy, useMemo } from 'react';
+import { Suspense, lazy, useEffect, useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 //Shared
@@ -21,9 +21,15 @@ import { CategoryFilterProvider } from './ecommerce/context/CategoryFilterContex
 import { CartProvider } from './ecommerce/context/CartContext';
 //Ecommerce: Hooks
 import useUniqueData from './ecommerce/hooks/useUniqueData';
+import useCart from './ecommerce/hooks/useCart';
 
 //Application
 function App() {
+  //** ECOMMERCE: Set Shopping Cart array of products in local Storage */
+  const { shoppingCart, cartProductQuantity } = useCart();
+  useEffect(() => localStorage.setItem('shoppingCartState', JSON.stringify(shoppingCart)), [cartProductQuantity]);
+
+  //** Sets for route mapping */
   const uniqueCompanies = useMemo(() => useUniqueData().useUniqueCompanies, [useUniqueData().useUniqueCompanies]);
   const uniqueWearStyles = useMemo(() => useUniqueData().useUniqueWearStyles, [useUniqueData().useUniqueCompanies]);
   const uniquePolarPatterns = useMemo(() => useUniqueData().useUniquePolarPatterns, [useUniqueData().useUniquePolarPatterns]);

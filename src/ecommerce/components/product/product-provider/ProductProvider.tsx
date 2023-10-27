@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
-import useCart from '../../../hooks/useCart';
 import usePaginatedSets from '../../../hooks/usePaginatedSets';
 import { ProductType } from '../../../types/ProductType';
 import ProductProp from './ProductProp';
@@ -11,15 +10,12 @@ categoryFilter is a single global state, which is used by useProductFilter -> re
 */
 
 const ProductProvider = (): JSX.Element => {
-  //** Set Shopping Cart array of products in local Storage */
-  const { shoppingCart, cartProductQuantity } = useCart();
-  useEffect(() => localStorage.setItem('shoppingCartState', JSON.stringify(shoppingCart)), [cartProductQuantity]);
-
   // @ts-ignore:
   const { categoryFilter } = useCategoryFilterContext();
 
   //** Filtered & paginated products */
   const paginatedProducts: ProductType[][] = usePaginatedSets();
+
   //** Holds current visible products to be mapped */
   const [visibleProducts, setVisibleProducts] = useState<ProductType[]>([]);
   //** Tracks current visible array index */
