@@ -39,10 +39,6 @@ const Infographic = (): JSX.Element => {
             </Link>
           </div>
         </article>
-        <div className='companyLogos'>
-          <CompanyLogos />
-          <CompanyLogos />
-        </div>
       </div>
     </main>
   );
