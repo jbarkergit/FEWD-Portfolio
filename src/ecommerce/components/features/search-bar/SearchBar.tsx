@@ -43,9 +43,11 @@ const SearchBar = (): JSX.Element => {
         autoComplete='none'
         autoCorrect='off'
         spellCheck='false'
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e?.target.value.replace(' ', '-'))}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          setSearchTerm(e?.target.value.replace(' ', '-'));
+        }}
       />
-      {searchTerm.length != 0 && (
+      {searchTerm.length > 0 && (
         <div className='searchBar__return'>
           <ul className='searchBar__return__ul' tabIndex={-1}>
             {useProductSearch(searchTerm).length <= 0 ? (
@@ -53,15 +55,21 @@ const SearchBar = (): JSX.Element => {
                 <span className='searchBar__return__ul__li--noResult'>Sorry, no results.</span>
               </li>
             ) : (
-              useProductSearch(searchTerm).map((product) => {
-                return (
+              useProductSearch(searchTerm).map((product, index) =>
+                index === useProductSearch(searchTerm).length - 1 ? (
+                  <li className='searchBar__return__ul__li' key={uuidv4()}>
+                    <a href={`/ecommerce/product/${product.sku}`} onClick={() => setSearchTerm('')} onBlur={() => setSearchTerm('')}>
+                      {product.company} {product.unit}
+                    </a>
+                  </li>
+                ) : (
                   <li className='searchBar__return__ul__li' key={uuidv4()}>
                     <a href={`/ecommerce/product/${product.sku}`} onClick={() => setSearchTerm('')}>
                       {product.company} {product.unit}
                     </a>
                   </li>
-                );
-              })
+                )
+              )
             )}
           </ul>
         </div>
