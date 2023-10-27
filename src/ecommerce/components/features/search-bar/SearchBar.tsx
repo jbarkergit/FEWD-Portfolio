@@ -8,9 +8,23 @@ const SearchBar = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   //** Search bar results filter logic */
-  const searchResults = ProductDatabase.filter((product) => {
-    return product.sku.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  const searchResults = () => {
+    let ProductSearchResults = [];
+    let count = 0;
+
+    for (const product of ProductDatabase) {
+      if (product.sku.toLowerCase().includes(searchTerm.toLowerCase())) {
+        ProductSearchResults.push(product);
+        count++;
+
+        if (count === 9) {
+          break;
+        }
+      }
+    }
+
+    return ProductSearchResults;
+  };
 
   //** Exterior click handler */
   useEffect(() => {
@@ -55,7 +69,7 @@ const SearchBar = (): JSX.Element => {
           <ul className='searchBar__return__ul' tabIndex={-1}>
             {searchTerm === ''
               ? null
-              : searchResults.slice(0, 10).map((product) => {
+              : searchResults().map((product) => {
                   return (
                     <li className='searchBar__return__ul__li' key={uuidv4()}>
                       <a href={`/ecommerce/product/${product.sku}`} onClick={() => setSearchTerm('')}>
