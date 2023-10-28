@@ -4,12 +4,19 @@
 .carousel {
   position: relative;
   display: block;
-  margin: f.rem(50) 0 calc(f.rem(50) + f.rem(32)) 0;
-  &:hover {
-    cursor: grab;
-  }
-  &:active {
-    cursor: grabbing;
+  padding: f.rem(50) 0 calc(f.rem(50) + f.rem(32)) 0;
+  background-color: var(--elemBackgroundPrimaryOffset);
+  &:after {
+    content: '';
+    position: absolute;
+    top: f.rem(-32);
+    left: 0;
+    width: 100%;
+    height: f.rem(32);
+    z-index: 10;
+    border-top-right-radius: f.rem(64);
+    border-top-left-radius: f.rem(64);
+    background-color: var(--elemBackgroundPrimaryOffset);
   }
   &__heading {
     width: 100%;
@@ -43,6 +50,12 @@
     margin: 0 f.rem(25);
     scrollbar-width: none;
     scroll-behavior: smooth;
+    &:hover {
+      cursor: grab;
+    }
+    &:active {
+      cursor: grabbing;
+    }
     @media (width <= 690px) {
       height: f.rem(325);
     }
