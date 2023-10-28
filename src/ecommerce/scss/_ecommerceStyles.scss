@@ -79,3 +79,11 @@
     transform: scale(1.2);
   }
 }
+@mixin pictureFade {
+  position: absolute;
+  bottom: 0;
+  z-index: 3;
+  width: inherit;
+  height: calc(100% / 2.4);
+  background-image: linear-gradient(0deg, hsl(0, 0%, 0%) 0, transparent);
+}
