@@ -6,22 +6,22 @@
   display: flex;
   width: 100%;
   height: fit-content;
-  padding: 0 f.rem(50);
-  margin: f.rem(50) 0 calc(f.rem(50) + f.rem(32)) 0;
+  padding: f.rem(50) f.rem(50) calc(f.rem(50) + f.rem(32)) f.rem(50);
+  background-color: var(--elemBackgroundPrimaryOffset);
   @media (width <= 980px) {
     flex-direction: column;
   }
   &:after {
     content: '';
     position: absolute;
-    bottom: f.rem(-114);
+    bottom: -32px;
     left: 0;
     width: 100%;
     height: f.rem(32);
     z-index: 10;
     border-bottom-right-radius: f.rem(64);
     border-bottom-left-radius: f.rem(64);
-    background-color: var(--bodyBackground);
+    background-color: var(--elemBackgroundPrimaryOffset);
     @media (width > 981px) {
     }
   }
