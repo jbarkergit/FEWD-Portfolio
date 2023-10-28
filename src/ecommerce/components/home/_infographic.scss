@@ -3,100 +3,117 @@
 
 .infographic {
   position: relative;
+  display: flex;
+  gap: f.rem(35);
   width: 100%;
-  height: calc(100vh + f.rem(32));
-  margin: 0 auto;
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: f.rem(32);
-    z-index: 10;
-    border-top-right-radius: f.rem(64);
-    border-top-left-radius: f.rem(64);
-    background-color: var(--bodyBackground);
+  height: calc(100vh - 11rem + f.rem(32));
+  padding: 0 8.335% 5.5rem 8.335%;
+  &__textArea {
+    flex: 0 1 28%;
   }
-  &__graphic {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
+  &__focus {
+    flex: 1 0 44%;
+  }
+  &__cta {
+    flex: 0 1 28%;
+  }
+  &--divider {
+    width: 85%;
+    height: 1px;
+    margin: f.rem(12) 0;
+    background-color: hsl(0, 0%, 89%);
+  }
+}
+
+.infographic__textArea {
+  &__primary {
+    display: table;
+    & strong {
+      display: inline-grid;
+      color: var(--textPrimary);
+      & span {
+        font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));
+        font-weight: 800;
+        text-transform: uppercase;
+        text-wrap: balance;
+        line-height: 115%;
+      }
+    }
+    & h1 {
+      color: var(--textPrimary);
+      font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
+      font-weight: 500;
+    }
+  }
+}
+
+.infographic__focus {
+  & figure {
+    display: contents;
+  }
+  & picture {
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      left: 0;
+      background: url('');
+    }
     & img {
-      width: 100%;
-      height: 100%;
+      border-radius: f.rem(24);
       object-fit: cover;
       object-position: center center;
       transform: scaleX(-1);
       filter: contrast(105%) saturate(108%);
     }
-    & .imgFadeGradient {
-      position: absolute;
-      bottom: 0;
-      width: inherit;
-      height: calc(100% / 2.4);
-      z-index: 2;
-      background-image: linear-gradient(0deg, hsl(0, 0%, 0%) 0, transparent);
-    }
   }
-  &__information {
-    position: relative;
+}
+
+.infographic__cta {
+  display: flex;
+  flex-direction: column;
+  &__news {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: baseline;
-    height: 100vh;
-    z-index: 2;
-    padding: 0 8vw;
-    &__details {
-      display: flex;
-      flex-direction: column;
-      max-width: f.rem(620);
-      & hgroup {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: f.rem(15);
-        @media (width <= 436px) {
-          margin-bottom: f.rem(55);
-        }
-        & h3 {
-          color: var(--fontSecondary);
-          font-size: f.rem(16);
-          font-weight: 500;
-          letter-spacing: f.rem(0.5);
-          text-transform: lowercase;
-          @media (width <= 436px) {
-            font-size: f.rem(15);
-          }
-        }
-        & h2 {
-          color: var(--fontSecondary);
-          font-size: clamp(f.rem(16), f.rem(34) + 1vw, f.rem(40));
-          font-weight: 600;
-          text-transform: uppercase;
-          @media (width <= 434px) {
-            font-size: clamp(f.rem(16), f.rem(30) + 1vw, f.rem(30));
-          }
-        }
-        & h1 {
-          color: var(--fontSecondary);
-          font-size: clamp(f.rem(16), f.rem(18) + 1vw, f.rem(21));
-          font-weight: 500;
-          letter-spacing: f.rem(0.5);
-          line-height: 115%;
-          margin-left: f.rem(4);
-          @media (width <= 434px) {
-            font-size: clamp(f.rem(16), f.rem(14) + 1vw, f.rem(20));
-            margin-bottom: -11.5%;
-          }
+    gap: f.rem(50);
+    height: 100%;
+    &--learnMore {
+      @include m.ecoBtn;
+      @include m.ecoBtnDark;
+      color: var(--fontSecondary) !important;
+    }
+    &__beyerdynamic {
+      display: grid;
+      gap: f.rem(12);
+      & p,
+      & a,
+      & figure,
+      & picture {
+        display: inline-block;
+        width: fit-content;
+        height: fit-content;
+      }
+      & p a figure picture {
+        display: contents;
+        & img {
+          height: f.rem(16);
+          width: auto;
+          border-radius: f.rem(24);
+          object-fit: cover;
+          object-position: left center;
         }
       }
-      &__cta {
-        display: flex;
-        gap: f.rem(25);
-        & a {
-          @include m.ecoBtn;
-          @include m.ecoBtnDark;
+    }
+    &__presentation {
+      height: 100%;
+      & picture {
+        display: contents;
+        & img {
+          border-radius: f.rem(24);
+          object-fit: cover;
+          object-position: left center;
         }
       }
     }
