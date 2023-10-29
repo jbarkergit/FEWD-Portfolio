@@ -58,6 +58,7 @@
         display: contents;
         & img {
           border-radius: f.rem(24);
+          box-shadow: var(--shadowSoft);
           object-fit: cover;
           object-position: center center;
         }
@@ -76,6 +77,7 @@
       display: contents;
       & img {
         border-radius: f.rem(24);
+        box-shadow: var(--shadowSoft);
         object-fit: cover;
         object-position: center center;
       }
@@ -114,6 +116,7 @@
         display: contents;
         & img {
           border-radius: f.rem(24);
+          box-shadow: var(--shadowSoft);
           object-fit: cover;
           object-position: center center;
           @media (width <= 1550px) {

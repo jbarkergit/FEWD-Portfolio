@@ -74,8 +74,9 @@
     & figure video {
       aspect-ratio: 0.8/1;
       border-radius: f.rem(24);
-      pointer-events: unset;
+      box-shadow: var(--shadowSoft);
       object-fit: contain;
+      pointer-events: unset;
     }
   }
 }

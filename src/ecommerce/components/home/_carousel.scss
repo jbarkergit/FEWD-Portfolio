@@ -43,7 +43,7 @@
     position: relative;
     display: flex;
     flex-wrap: nowrap;
-    gap: f.rem(20);
+    gap: f.rem(35);
     width: fit-content;
     height: f.rem(625);
     z-index: 4;
@@ -89,6 +89,7 @@
         }
         & img {
           border-radius: f.rem(24);
+          box-shadow: var(--shadowSoft);
           object-fit: cover;
         }
         & a {
