@@ -16,14 +16,7 @@ const UserInteractions = ({ uiModal, setUiModal }: UserInteractionsType): JSX.El
   return (
     <section className='navkit__section'>
       <SearchBar />
-      <button
-        className='ctaBtn'
-        aria-label='Account'
-        id='myAccountBtn'
-        style={{
-          boxShadow: path ? 'none' : 'var(--shadowRefined)',
-        }}
-        onClick={() => checkLoginState()}>
+      <button className='ctaBtn' aria-label='Account' id='myAccountBtn' onClick={() => checkLoginState()}>
         <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
           <path
             fill='#333333'
@@ -31,13 +24,7 @@ const UserInteractions = ({ uiModal, setUiModal }: UserInteractionsType): JSX.El
         </svg>
         <span className='text'>Account</span>
       </button>
-      <button
-        className='ctaBtn'
-        aria-label='Shopping Cart'
-        style={{
-          boxShadow: path ? 'none' : 'var(--shadowRefined)',
-        }}
-        onClick={() => setUiModal(uiModal === 'shoppingCart' ? '' : 'shoppingCart')}>
+      <button className='ctaBtn' aria-label='Shopping Cart' onClick={() => setUiModal(uiModal === 'shoppingCart' ? '' : 'shoppingCart')}>
         <svg xmlns='http://www.w3.org/2000/svg' width='1.6em' height='1.6em' viewBox='0 0 24 24'>
           <path
             fill='hsl(0, 0%, 100%)'

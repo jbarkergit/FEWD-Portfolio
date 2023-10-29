@@ -23,12 +23,7 @@ const SearchBar = (): JSX.Element => {
   }, []);
 
   return (
-    <div
-      className='searchBar'
-      style={{
-        boxShadow: useLocation().pathname === '/ecommerce' ? 'none' : 'var(--shadowRefined)',
-      }}
-      ref={searchBarRef}>
+    <div className='searchBar' ref={searchBarRef}>
       <label className='searchBar__label' htmlFor='searchBar__input'>
         Search Products
       </label>

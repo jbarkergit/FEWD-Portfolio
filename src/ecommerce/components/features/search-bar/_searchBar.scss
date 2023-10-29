@@ -10,6 +10,7 @@
   height: f.rem(38);
   z-index: 6;
   border-radius: f.rem(6);
+  box-shadow: var(--shadowRefined);
   @include m.ecoBtnLight;
   &__label {
     display: none;
