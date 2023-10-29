@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const SectionOne = () => {
   return (
     <section className='infographic__textArea'>
-      <article className='infographic__textArea__primary'>
+      <article>
         <strong>
           <span>THE NEW</span>
           <span>HiFi AUDIO</span>
@@ -14,18 +14,18 @@ const SectionOne = () => {
           <span className='highlight'>premium </span>
           materials, meticulous <span className='highlight'>craftsmanship</span>, and lasting durability.
         </h1>
+        <figure>
+          <picture>
+            <img
+              src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-1.jpg'
+              alt='Dynamic Audio - Your new go-to source for audiophile grade HiFi audio equipment'
+              decoding='async'
+              fetchpriority='high'
+            />
+            <figcaption>Dynamic Audio - Your new go-to source for audiophile grade HiFi audio equipment</figcaption>
+          </picture>
+        </figure>
       </article>
-      <figure className='infographic__textArea__presentation'>
-        <picture>
-          <img
-            src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-1.jpg'
-            alt='Dynamic Audio - Your new go-to source for audiophile grade HiFi audio equipment'
-            decoding='async'
-            fetchpriority='high'
-          />
-          <figcaption>Dynamic Audio - Your new go-to source for audiophile grade HiFi audio equipment</figcaption>
-        </picture>
-      </figure>
     </section>
   );
 };
@@ -33,7 +33,7 @@ const SectionOne = () => {
 const SectionTwo = () => {
   return (
     <section className='infographic__focus'>
-      <h2></h2>
+      <h2>Presentation Image</h2>
       <figure>
         <picture>
           {/* <source
@@ -56,20 +56,18 @@ const SectionTwo = () => {
 const SectionThree = () => {
   return (
     <section className='infographic__cta'>
-      <article className='infographic__cta__news'>
-        <div className='infographic__cta__news__beyerdynamic'>
-          <h2>
-            <span className='highlight'>NEW </span>DROPS
-          </h2>
-          <p>
-            Thanks to our friends over at <Link to='http://localhost:5173/ecommerce/Beyerdynamic'>Beyerdynamic</Link>, we're proud to introduce a new line of
-            headphones sporting all new Tesla technology.
-          </p>
-          <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__cta__news--learnMore'>
-            Shop Tesla enhanced Headphones
-          </Link>
-        </div>
-        <figure className='infographic__cta__news__presentation'>
+      <article>
+        <h2>
+          <span className='highlight'>NEW </span>DROPS
+        </h2>
+        <p>
+          Thanks to our friends over at <Link to='http://localhost:5173/ecommerce/Beyerdynamic'>Beyerdynamic</Link>, we're proud to introduce a new line of
+          headphones sporting all new Tesla technology.
+        </p>
+        <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__cta--shopNow'>
+          Shop Tesla enhanced Headphones
+        </Link>
+        <figure>
           <picture>
             <img
               src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-3.jpg'
