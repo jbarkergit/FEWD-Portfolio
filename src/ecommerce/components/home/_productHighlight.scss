@@ -4,7 +4,7 @@
 .productHighlight {
   display: grid;
   place-items: center;
-  padding: calc(f.rem(50) + f.rem(32)) f.rem(50) f.rem(150) f.rem(50);
+  padding: calc(var(--sectionYPadding) + f.rem(32)) var(--sectionXPadding) calc(var(--sectionYPadding) + f.rem(32)) var(--sectionXPadding);
   @media (width <= 530px) {
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    padding: f.rem(25) 0 calc(f.rem(15) * 3) 0;
+    padding-bottom: calc(var(--sectionYPadding) / 2);
     color: var(--textPrimary);
     font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
     font-weight: 800;
@@ -31,6 +31,7 @@
     grid-template-rows: 1fr;
     gap: f.rem(35);
     max-width: f.rem(1600);
+    padding-bottom: var(--sectionYPadding);
     @media (width <= 1265px) {
       grid-template-columns: repeat(3, 1fr);
     }

@@ -6,7 +6,7 @@
   gap: f.rem(35);
   width: 100%;
   height: calc(100vh - 11rem + f.rem(32));
-  padding: 0 8.335% calc(5.5rem + f.rem(25)) 8.335%;
+  padding: 0 var(--sectionXPadding) calc(var(--sectionYPadding) + f.rem(32)) var(--sectionXPadding);
   margin-bottom: f.rem(25);
   &__textArea {
     flex: 0 1 23%;

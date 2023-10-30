@@ -4,7 +4,7 @@
 .carousel {
   position: relative;
   display: block;
-  padding: f.rem(50) 0 calc(f.rem(50) + f.rem(32)) 0;
+  padding: f.rem(32) var(--sectionXPadding) var(--sectionYPadding) f.rem(35); //Replaced top w/ after height, left w/ gap
   background-color: var(--elemBackgroundPrimaryOffset);
   &:after {
     content: '';

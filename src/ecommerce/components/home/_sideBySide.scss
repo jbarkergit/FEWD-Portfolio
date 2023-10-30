@@ -6,7 +6,7 @@
   display: flex;
   width: 100%;
   height: fit-content;
-  padding: f.rem(50) f.rem(50) calc(f.rem(50) + f.rem(32)) f.rem(50);
+  padding: var(--sectionYPadding) var(--sectionXPadding) calc(var(--sectionYPadding)) var(--sectionXPadding);
   background-color: var(--elemBackgroundPrimaryOffset);
   @media (width <= 980px) {
     flex-direction: column;
