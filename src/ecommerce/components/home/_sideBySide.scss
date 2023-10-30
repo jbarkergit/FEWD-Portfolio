@@ -39,6 +39,7 @@
       padding: f.rem(25) f.rem(50);
     }
     & h2 {
+      display: contents;
       width: fit-content;
       font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
       font-weight: 800;

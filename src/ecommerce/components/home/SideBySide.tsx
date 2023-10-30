@@ -6,7 +6,10 @@ const SideBySide = (): JSX.Element => {
       <article className='sideBySide'>
         <div className='sideBySide__textArea'>
           <h2>
-            Groundbreaking Tech, <span className='highlight'>superior</span> audio
+            <span>Groundbreaking Tech,</span>
+            <span>
+              <span className='highlight'>superior</span> audio
+            </span>
           </h2>
           <p>
             Our mission at Dynamic Audio is to offer a diverse selection of superior HiFi audio products from renowned brands, to ensure top-notch sound quality for
