@@ -11,7 +11,7 @@
   border-top-left-radius: f.rem(30);
   margin-top: f.rem(-32);
   background-color: var(--elemBackgroundSecondary);
-  background: radial-gradient(circle, rgba(13, 18, 26, 1) 0%, rgba(20, 26, 37, 1) 100%);
+  background: radial-gradient(circle, rgb(26, 26, 26) 0%, rgb(28, 32, 40) 100%);
   @media (width <= 1250px) {
     display: flex;
     flex-direction: column;
