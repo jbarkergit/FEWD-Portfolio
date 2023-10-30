@@ -8,49 +8,82 @@
   height: calc(100vh - 11rem + f.rem(32));
   padding: 0 var(--sectionXPadding) calc(var(--sectionYPadding) + f.rem(32)) var(--sectionXPadding);
   margin-bottom: f.rem(25);
+  @media (width <= 1550px) {
+    gap: 0;
+  }
   &__textArea {
     flex: 0 1 23%;
     @media (width <= 1550px) {
+      flex: 0 0 50%;
+      padding-right: calc(f.rem(32) / 2);
+    }
+    @media (width < 880px) {
       flex: 0 0 100%;
     }
   }
   &__focus {
-    flex: 1 0 49%;
+    flex: 1 0 52%;
     @media (width <= 1550px) {
       display: none;
     }
   }
   &__cta {
-    flex: 0 1 28%;
+    flex: 0 1 25%;
     @media (width <= 1550px) {
-      flex: 0 0 100%;
+      flex: 0 0 50%;
+      padding-left: calc(f.rem(32) / 2);
+    }
+    @media (width < 880px) {
+      display: none;
     }
   }
 }
 
 .infographic__textArea {
+  position: relative;
   & article {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: f.rem(6);
     height: 100%;
     & strong {
+      z-index: 3;
       display: inline-grid;
       padding-bottom: f.rem(6);
       color: var(--textPrimary);
+      @media (width < 880px) {
+        position: absolute;
+        z-index: 3;
+        top: calc(var(--sectionYPadding) / 2);
+        left: calc(var(--sectionXPadding) / 2);
+      }
       & span {
         font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));
         font-weight: 800;
         text-transform: uppercase;
         text-wrap: balance;
         line-height: 115%;
+        @media (width < 880px) {
+          color: var(--fontSecondary);
+        }
       }
     }
     & h1 {
+      position: relative;
+      z-index: 3;
       margin-bottom: f.rem(35);
       color: var(--textPrimary);
       font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
       font-weight: 500;
+      @media (width < 880px) {
+        color: var(--fontSecondary);
+        position: absolute;
+        z-index: 3;
+        bottom: calc(var(--sectionYPadding) / 2);
+        left: calc(var(--sectionXPadding) / 2);
+        margin: 0;
+      }
     }
     & figure {
       display: contents;
@@ -61,6 +94,12 @@
           box-shadow: var(--shadowSoft);
           object-fit: cover;
           object-position: center center;
+          @media (width < 880px) {
+            position: absolute;
+          }
+          @media (width < 560px) {
+            object-position: center right;
+          }
         }
       }
     }
