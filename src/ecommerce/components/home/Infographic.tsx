@@ -4,12 +4,12 @@ const SectionOne = () => {
   return (
     <section className='infographic__textArea'>
       <article>
-        <strong>
+        <strong tabIndex={0}>
           <span>THE NEW</span>
           <span>HiFi AUDIO</span>
           <span className='highlight'>EXPERIENCE</span>
         </strong>
-        <h1>
+        <h1 tabIndex={0}>
           Unparalleled HiFi audio and <span className='highlight'>superior</span> manufacturing for discerning audiophiles. Crystal-clear sound,{' '}
           <span className='highlight'>premium </span>
           materials, meticulous <span className='highlight'>craftsmanship</span>, and lasting durability.
@@ -17,12 +17,13 @@ const SectionOne = () => {
         <figure>
           <picture>
             <img
+              tabIndex={0}
               src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-1.jpg'
-              alt='Dynamic Audio - Your new go-to source for audiophile grade HiFi audio equipment'
+              alt='Man wearing Marshal headphones'
               decoding='async'
               fetchpriority='high'
             />
-            <figcaption>Dynamic Audio - Your new go-to source for audiophile grade HiFi audio equipment</figcaption>
+            <figcaption>Man wearing Marshal headphones</figcaption>
           </picture>
         </figure>
       </article>
@@ -42,11 +43,12 @@ const SectionTwo = () => {
           /> */}
           <img
             src='src/ecommerce/assets/production-images/compressed-home-page/infographic\infographic-2.jpg'
-            alt='Dynamic Audio - Your new go-to source for audiophile grade HiFi audio equipment'
+            alt='Man listening to notes he is playing'
             decoding='async'
             fetchpriority='high'
+            tabIndex={0}
           />
-          <figcaption>Dynamic Audio - Your new go-to source for audiophile grade HiFi audio equipment</figcaption>
+          <figcaption>Man listening to notes he is playing</figcaption>
         </picture>
       </figure>
     </section>
@@ -57,25 +59,29 @@ const SectionThree = () => {
   return (
     <section className='infographic__cta'>
       <article>
-        <h2>
+        <h2 tabIndex={0}>
           <span className='highlight'>NEW </span>DROPS
         </h2>
-        <p>
-          Thanks to our friends over at <Link to='http://localhost:5173/ecommerce/Beyerdynamic'>Beyerdynamic</Link>, we're proud to introduce a new line of
-          headphones sporting all new Tesla technology.
+        <p tabIndex={0}>
+          Thanks to our friends over at{' '}
+          <Link to='http://localhost:5173/ecommerce/Beyerdynamic' aria-label='View Beyerdynamic Products'>
+            Beyerdynamic
+          </Link>
+          , we're proud to introduce a new line of headphones sporting all new Tesla technology.
         </p>
-        <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__cta--shopNow'>
+        <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__cta--shopNow' aria-label='Shop Tesla enhanced Headphones'>
           Shop Tesla enhanced Headphones
         </Link>
         <figure>
           <picture>
             <img
               src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-3.jpg'
-              alt='Beyerdynamic'
+              alt='Man singing on stage'
               decoding='async'
               fetchpriority='high'
+              tabIndex={0}
             />
-            <figcaption>Beyerdynamic</figcaption>
+            <figcaption>Man singing on stage</figcaption>
           </picture>
         </figure>
       </article>
