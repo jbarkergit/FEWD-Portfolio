@@ -89,6 +89,7 @@
   &--shopNow {
     @include m.ecoBtn;
     @include m.ecoBtnDark;
+    box-shadow: var(--ecoBtnShadow);
     color: var(--fontSecondary) !important;
   }
   & article {
