@@ -13,7 +13,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, calc(100% / 3 - f.rem(24)));
   grid-auto-rows: 1fr;
-  gap: f.rem(36);
+  gap: var(--productGap);
   justify-content: center;
   max-width: f.rem(1600);
   margin-bottom: f.rem(50);

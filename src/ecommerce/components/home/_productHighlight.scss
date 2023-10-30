@@ -29,7 +29,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
-    gap: f.rem(35);
+    gap: var(--productGap);
     max-width: f.rem(1600);
     padding-bottom: var(--sectionYPadding);
     @media (width <= 1265px) {
