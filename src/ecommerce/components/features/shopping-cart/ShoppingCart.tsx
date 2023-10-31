@@ -10,6 +10,10 @@ type PropType = {
 
 const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
   const { dispatch, REDUCER_ACTIONS, shoppingCart, cartProductSubtotal, cartProductQuantity } = useCart();
+
+  /** Ecommerce Shopping Cart localStorage setter */
+  useEffect(() => localStorage.setItem('shoppingCartState', JSON.stringify(shoppingCart)), [cartProductQuantity]);
+
   const shoppingCartModal = useRef<HTMLDivElement>(null); //Shopping cart modal reference
   const shoppingCartProducts = useRef<HTMLUListElement>(null); //Shopping cart product list reference
 

@@ -21,13 +21,10 @@ import { CategoryFilterProvider } from './ecommerce/context/CategoryFilterContex
 import { CartProvider } from './ecommerce/context/CartContext';
 // Pathing via Hooks
 import useUniqueData from './ecommerce/hooks/useUniqueData';
-import useCart from './ecommerce/hooks/useCart';
 
 /** Suspense */
 function SuspensePathHandler() {
-  const location = useLocation();
-
-  switch (location.pathname) {
+  switch (useLocation().pathname) {
     case '/ecommerce':
       return <HomeSkeleton />;
     case '/ecommerce/products':
@@ -41,11 +38,8 @@ function SuspensePathHandler() {
   }
 }
 
+/** Application */
 function App() {
-  /** Ecommerce Shopping Cart localStorage setter */
-  const { shoppingCart, cartProductQuantity } = useCart();
-  useEffect(() => localStorage.setItem('shoppingCartState', JSON.stringify(shoppingCart)), [cartProductQuantity]);
-
   /** Ecommerce Route mapping hooks */
   const uniqueCompanies = useMemo(() => useUniqueData().useUniqueCompanies, [useUniqueData().useUniqueCompanies]);
   const uniqueWearStyles = useMemo(() => useUniqueData().useUniqueWearStyles, [useUniqueData().useUniqueCompanies]);
