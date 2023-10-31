@@ -35,12 +35,10 @@ const ShoppingCart = ({ uiModal, setUiModal }: PropType): JSX.Element => {
 
   useEffect(() => {
     if (uiModal === 'shoppingCart') {
-      setTimeout(() => {
-        if (modalWrapper.current && shoppingCartModal.current) {
-          modalWrapper.current.setAttribute('data-status', 'active');
-          shoppingCartModal.current.setAttribute('data-status', 'active');
-        }
-      }, 100);
+      if (modalWrapper.current && shoppingCartModal.current) {
+        modalWrapper.current.setAttribute('data-status', 'active');
+        shoppingCartModal.current.setAttribute('data-status', 'active');
+      }
     } else {
       if (modalWrapper.current) modalWrapper.current.setAttribute('data-status', 'false');
       if (shoppingCartModal.current) shoppingCartModal.current.setAttribute('data-status', 'false');
