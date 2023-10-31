@@ -1,16 +1,7 @@
-import { Dispatch, SetStateAction } from 'react';
-import RequestInformationStyle from './RequestInformationStyle';
-
-type EcommerceProjectInfoType = {
-  projectDetail: string;
-  setProjectDetail: Dispatch<SetStateAction<string>>;
-};
-
-const EcommerceAbridgedInfo = ({ projectDetail, setProjectDetail }: EcommerceProjectInfoType): JSX.Element => {
+const EcommerceAbridgedInfo = (): JSX.Element => {
   return (
     <article className='projectDetails__projectSummary'>
       <h2>Ecommerce Project Summary</h2>
-      <RequestInformationStyle projectDetail={projectDetail} setProjectDetail={setProjectDetail} />
       <section className='projectDetails__projectSummary__information'>
         <p>
           <span>Objective</span>

@@ -4,7 +4,6 @@ import ProjectNavProp from './ProjectNavProp';
 type indexStateType = {
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
-  projectInfoStyle: string;
   mainAnimator: boolean;
   setMainAnimator: Dispatch<SetStateAction<boolean>>;
 };
@@ -37,29 +36,27 @@ type actionType =
   | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] }
   | { type: 'BUTTON_NAVIGATION' };
 
-const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle, mainAnimator, setMainAnimator }: indexStateType): JSX.Element => {
-  const targetElementRef = useRef<HTMLDivElement>(null),
-    targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
-    targetElementWidth: number = targetElement?.scrollWidth as number,
-    targetElementChildrenArray: HTMLElement[] = Array.from(targetElement?.children ?? []) as HTMLElement[],
-    targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
+const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator }: indexStateType): JSX.Element => {
+  const targetElementRef = useRef<HTMLDivElement>(null);
+  const targetElement: HTMLElement | null = targetElementRef.current as HTMLElement;
+  const targetElementWidth: number = targetElement?.scrollWidth as number;
+  const targetElementChildrenArray: HTMLElement[] = Array.from(targetElement?.children ?? []) as HTMLElement[];
+  const targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
 
-  //** Toggle Smooth Animation (Bug by-pass) */
+  //** Array of articles */
+  const revealRefs = useRef<HTMLElement[]>([]);
+
+  const addToRefs = useCallback((reference: HTMLElement) => {
+    if (reference && !revealRefs.current.includes(reference)) revealRefs.current.push(reference);
+  }, []);
+
+  //** Toggle Smooth Animation (Native behavior by-pass) */
   const [applySmoothenAnimation, setApplySmoothenAnimation] = useState<boolean>(false);
 
   const toggleSmoothenAnimation = () => {
     setApplySmoothenAnimation((prev) => !prev);
     setTimeout(() => setApplySmoothenAnimation(false), 250);
   };
-  //** */
-
-  //** Article references */
-  const revealRefs = useRef<HTMLElement[]>([]);
-
-  const addToRefs = useCallback((reference: HTMLElement) => {
-    if (reference && !revealRefs.current.includes(reference)) revealRefs.current.push(reference);
-  }, []);
-  //** */
 
   const reducer = (state: initSliderStateType, action: actionType): initSliderStateType => {
     switch (action.type) {
@@ -207,15 +204,6 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, projectInfoStyle
   useEffect(() => setProjectSlideIndex(state.closestIndex), [state.closestIndex]); // Keep track of slide index globally
   useEffect(() => toggleSmoothenAnimation(), [projectSlideIndex]); // Toggle data-attr anim
   useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [projectSlideIndex]); // Data-attr setter
-
-  // Adjust "main" (slider) height based on projectDetail state
-  useEffect(() => {
-    if (projectInfoStyle !== '' && targetElementRef.current) {
-      targetElementRef.current.style.width = 'auto';
-    } else {
-      if (targetElementRef.current) targetElementRef.current.style.width = 'max-content';
-    }
-  }, [projectInfoStyle]);
 
   // Main slider transitional animation (css-only anim overrides smoothen anim due to shared props)
   useEffect(() => {
