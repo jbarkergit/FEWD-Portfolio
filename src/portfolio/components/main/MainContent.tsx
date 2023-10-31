@@ -17,11 +17,6 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator, la
   const targetElementRef = useRef<HTMLDivElement>(null);
   const targetElement: HTMLElement | null = targetElementRef.current as HTMLElement;
 
-  //** Reducer global scoped variables */
-  const targetElementWidth: number = targetElement?.scrollWidth as number; // Slider track width
-  const targetElementChildrenArray: HTMLElement[] = Array.from(targetElement?.children ?? []) as HTMLElement[]; // Array of articles
-  const targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1); // PX Position of all slides
-
   //** Toggle Sliding Smooth Animation (Native behavior by-pass) */
   const [applySmoothenAnimation, setApplySmoothenAnimation] = useState<boolean>(false);
 
@@ -70,6 +65,14 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator, la
         break;
     }
   }, [layout]);
+
+  //** Reducer global scoped reference information variables */
+  // Slider track width
+  const targetElementWidth: number = targetElement?.scrollWidth as number;
+  // Array of articles
+  const targetElementChildrenArray: HTMLElement[] = Array.from(targetElement?.children ?? []) as HTMLElement[];
+  // PX Positions of all articles
+  const targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
 
   //** Reducer: slider logic */
   const reducer = (state: initSliderStateType, action: actionType): initSliderStateType => {
