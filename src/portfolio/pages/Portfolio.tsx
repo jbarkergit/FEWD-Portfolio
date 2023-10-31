@@ -30,6 +30,9 @@ const Portfolio = (): JSX.Element => {
     else setMainAnimator(false);
   }, [contactFormActive, techStackActive]);
 
+  //** LAYOUT TRACKER */
+  const [layout, setLayout] = useState<string>('column');
+
   return (
     <div id='portfolio'>
       <PortHeader
@@ -42,7 +45,7 @@ const Portfolio = (): JSX.Element => {
       <EcommerceTechStack techStackActive={techStackActive} setTechStackActive={setTechStackActive} />
       {/* <ProjectDetails projectSlideIndex={projectSlideIndex} /> */}
       <MainContent projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} mainAnimator={mainAnimator} setMainAnimator={setMainAnimator} />
-      <PortFooter projectSlideIndex={projectSlideIndex} />
+      <PortFooter projectSlideIndex={projectSlideIndex} layout={layout} setLayout={setLayout} />
     </div>
   );
 };

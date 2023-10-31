@@ -245,7 +245,7 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator }: 
 
   return (
     <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} data-status='' ref={targetElementRef} style={state.style}>
-      <ProjectNavProp imgSrc='src/portfolio/assets/compressed-project-images/ecommerce-preview.png' dataStatus='active' addToRefs={addToRefs} />
+      <ProjectNavProp imgSrc='src/portfolio/assets/compressed-project-images/Ecommerce-Landing.png' dataStatus='active' addToRefs={addToRefs} />
       <ProjectNavProp imgSrc='src/portfolio/assets/compressed-project-images/hyundai-preview.jpg' dataStatus='disabled' addToRefs={addToRefs} />
     </main>
   );

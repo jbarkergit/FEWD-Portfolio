@@ -53,6 +53,7 @@
     background-color: m.$transparentElem;
     overflow: hidden;
     will-change: width;
+    filter: brightness(85%);
     @media (width <= 1444px) {
       aspect-ratio: 4/5;
     }

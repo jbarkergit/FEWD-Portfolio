@@ -1,11 +1,14 @@
+import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentTimeCDT from './CurrentTimeCDT';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;
+  layout: string;
+  setLayout: Dispatch<SetStateAction<string>>;
 };
 
-const PortFooter = ({ projectSlideIndex }: ProjectNavPropType) => {
+const PortFooter = ({ projectSlideIndex, layout, setLayout }: ProjectNavPropType) => {
   const useProjectInformation = (): {
     extended: boolean;
     summary: boolean;
@@ -35,7 +38,9 @@ const PortFooter = ({ projectSlideIndex }: ProjectNavPropType) => {
         </section>
         <section className='portFooter__nav__left'>
           {useProjectInformation()?.extended ? (
-            <button aria-label='Open Project Insights'>Project Insights</button>
+            <button aria-label='Open Project Insights' onClick={() => setLayout(layout === 'column' ? 'row' : 'column')}>
+              Project Insights
+            </button>
           ) : (
             <span className='projectUnavailable'>this project is unavailable</span>
           )}
