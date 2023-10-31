@@ -24,17 +24,17 @@
     grid-auto-flow: column;
     width: max-content;
     height: 76%;
-    //   transition:
-    //     grid-auto-flow 100ms ease,
-    //     transform 100ms ease;
+    transition:
+      grid-auto-flow 100ms ease,
+      transform 100ms ease;
   }
   &[data-layout='row'] {
     grid-auto-flow: row;
     width: 100%;
     height: max-content;
-    //   transition:
-    //     grid-auto-flow 100ms ease,
-    //     transform 100ms ease;
+    transition:
+      grid-auto-flow 100ms ease,
+      transform 100ms ease;
   }
 }
 
