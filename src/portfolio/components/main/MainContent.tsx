@@ -25,7 +25,7 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator, la
     setTimeout(() => setApplySmoothenAnimation(false), 250);
   };
 
-  //** Main slider transitional animation (css-only anim overrides smoothen anim due to shared props) */
+  //** Main slider transition animation (css-only anim overrides smoothen anim due to shared props) */
   useEffect(() => {
     const target = targetElementRef.current;
 
@@ -63,10 +63,13 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator, la
       case 'row':
         if (targetElementRef.current) targetElementRef.current.setAttribute('data-layout', 'row');
         break;
+
+      default:
+        break;
     }
   }, [layout]);
 
-  //** Reducer global scoped reference information variables */
+  //** Reference information variables */
   // Slider track width
   const targetElementWidth: number = targetElement?.scrollWidth as number;
   // Array of articles
@@ -89,6 +92,7 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator, la
             targetElementLeftPadding: number = parseInt(window.getComputedStyle(targetElement).paddingLeft),
             maximumDelta = targetElementWidth * -1 + (targetElementChildrenArray[1].offsetWidth + targetElementLeftPadding),
             clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
+
           return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
         }
 

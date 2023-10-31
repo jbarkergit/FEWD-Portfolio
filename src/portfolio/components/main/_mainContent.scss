@@ -24,13 +24,13 @@
     grid-auto-flow: column;
     width: max-content;
     height: 76%;
-    transition: all 250ms ease;
+    // transition: all 250ms ease;
   }
   &[data-layout='row'] {
     grid-auto-flow: row;
     width: 100%;
     height: max-content;
-    transition: all 250ms ease;
+    // transition: all 250ms ease;
   }
 }
 
@@ -41,6 +41,7 @@
   max-width: 75vw;
   max-height: 76vh;
   height: 100%;
+  pointer-events: none;
   transition:
     filter 0.35s ease-in-out,
     transform 0.35s ease-in-out,
@@ -52,7 +53,6 @@
   }
   & figure {
     display: contents;
-    pointer-events: none;
     & picture {
       width: 100%;
       height: 100%;
