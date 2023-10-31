@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useMemo } from 'react';
+import { Suspense, lazy, useMemo } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 /** 404 Error */
