@@ -1,48 +1,11 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useReducer, useRef, useState } from 'react';
-import ProjectNavProp from './ProjectNavProp';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import { myProjects } from './data/myProjects';
+import { initState } from './initial-state/initState';
+import { actionType } from './types/actionType';
+import { indexStateType } from './types/indexStateType';
+import { initSliderStateType } from './types/initSliderStateType';
 
-type indexStateType = {
-  projectSlideIndex: number;
-  setProjectSlideIndex: Dispatch<SetStateAction<number>>;
-  mainAnimator: boolean;
-  setMainAnimator: Dispatch<SetStateAction<boolean>>;
-};
-
-type initSliderStateType = {
-  pointerDown: boolean;
-  initPageX: number;
-  pageX: number;
-  trackPos: number;
-  previousTrackPos: number;
-  closestIndex: number;
-  style: React.CSSProperties;
-};
-
-export const initState: initSliderStateType = {
-  pointerDown: false,
-  initPageX: 0,
-  pageX: 0,
-  trackPos: 0,
-  previousTrackPos: 0,
-  closestIndex: 0,
-  style: { transform: `translateX(0px)` },
-};
-
-type actionType =
-  | { type: 'POINTER_DOWN'; pointerDown: boolean; initPageX: number; pageX: number }
-  | { type: 'POINTER_MOVE'; pointerDown: boolean; pageX: number }
-  | { type: 'POINTER_LEAVE'; pointerDown: boolean; previousTrackPos: number }
-  | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number }
-  | { type: 'SCROLL'; deltaY: number; targetElementChildrenPositionArray: number[] }
-  | { type: 'BUTTON_NAVIGATION' };
-
-const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator }: indexStateType): JSX.Element => {
-  const targetElementRef = useRef<HTMLDivElement>(null);
-  const targetElement: HTMLElement | null = targetElementRef.current as HTMLElement;
-  const targetElementWidth: number = targetElement?.scrollWidth as number;
-  const targetElementChildrenArray: HTMLElement[] = Array.from(targetElement?.children ?? []) as HTMLElement[];
-  const targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
-
+const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator, layout, setLayout }: indexStateType): JSX.Element => {
   //** Array of articles */
   const revealRefs = useRef<HTMLElement[]>([]);
 
@@ -50,7 +13,16 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator }: 
     if (reference && !revealRefs.current.includes(reference)) revealRefs.current.push(reference);
   }, []);
 
-  //** Toggle Smooth Animation (Native behavior by-pass) */
+  //** References */
+  const targetElementRef = useRef<HTMLDivElement>(null);
+  const targetElement: HTMLElement | null = targetElementRef.current as HTMLElement;
+
+  //** Reducer global scoped variables */
+  const targetElementWidth: number = targetElement?.scrollWidth as number; // Slider track width
+  const targetElementChildrenArray: HTMLElement[] = Array.from(targetElement?.children ?? []) as HTMLElement[]; // Array of articles
+  const targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1); // PX Position of all slides
+
+  //** Toggle Sliding Smooth Animation (Native behavior by-pass) */
   const [applySmoothenAnimation, setApplySmoothenAnimation] = useState<boolean>(false);
 
   const toggleSmoothenAnimation = () => {
@@ -58,6 +30,48 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator }: 
     setTimeout(() => setApplySmoothenAnimation(false), 250);
   };
 
+  //** Main slider transitional animation (css-only anim overrides smoothen anim due to shared props) */
+  useEffect(() => {
+    const target = targetElementRef.current;
+
+    switch (mainAnimator) {
+      case true:
+        if (target) {
+          setTimeout(() => (target.style.transform = `translateX(${targetElementWidth * -1 - 250}px)`), 250);
+          setTimeout(() => target.setAttribute('data-status', ''), 500);
+          target.setAttribute('data-status', 'mainAnimation');
+          target.style.scale = '90%';
+        }
+        break;
+
+      case false:
+        if (target) {
+          setTimeout(() => (target.style.scale = '100%'), 250);
+          setTimeout(() => target.setAttribute('data-status', ''), 500);
+          target.setAttribute('data-status', 'mainAnimation');
+          target.style.transform = `translateX(${0}px)`;
+        }
+        break;
+
+      default:
+        break;
+    }
+  }, [mainAnimator]);
+
+  //** Layout animator */
+  useEffect(() => {
+    switch (layout) {
+      case 'column':
+        if (targetElementRef.current) targetElementRef.current.setAttribute('data-layout', 'column');
+        break;
+
+      case 'row':
+        if (targetElementRef.current) targetElementRef.current.setAttribute('data-layout', 'row');
+        break;
+    }
+  }, [layout]);
+
+  //** Reducer: slider logic */
   const reducer = (state: initSliderStateType, action: actionType): initSliderStateType => {
     switch (action.type) {
       case 'POINTER_DOWN':
@@ -201,52 +215,26 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator }: 
     };
   }, []);
 
-  useEffect(() => setProjectSlideIndex(state.closestIndex), [state.closestIndex]); // Keep track of slide index globally
-  useEffect(() => toggleSmoothenAnimation(), [projectSlideIndex]); // Toggle data-attr anim
-  useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [projectSlideIndex]); // Data-attr setter
+  //** Index Tracker: current slide */
+  useEffect(() => setProjectSlideIndex(state.closestIndex), [state.closestIndex]);
 
-  // Main slider transitional animation (css-only anim overrides smoothen anim due to shared props)
-  useEffect(() => {
-    switch (mainAnimator) {
-      case true:
-        setTimeout(() => {
-          if (targetElementRef.current) targetElementRef.current.style.transform = `translateX(${targetElementWidth * -1 - 250}px)`;
-        }, 250);
-
-        setTimeout(() => {
-          if (targetElementRef.current) targetElementRef.current.setAttribute('data-status', '');
-        }, 500);
-
-        if (targetElementRef.current) {
-          targetElementRef.current.setAttribute('data-status', 'mainAnimation');
-          targetElementRef.current.style.scale = '90%';
-        }
-        break;
-
-      case false:
-        setTimeout(() => {
-          if (targetElementRef.current) targetElementRef.current.style.scale = '100%';
-        }, 250);
-
-        setTimeout(() => {
-          if (targetElementRef.current) targetElementRef.current.setAttribute('data-status', '');
-        }, 500);
-
-        if (targetElementRef.current) {
-          targetElementRef.current.setAttribute('data-status', 'mainAnimation');
-          targetElementRef.current.style.transform = `translateX(${0}px)`;
-        }
-        break;
-
-      default:
-        break;
-    }
-  }, [mainAnimator]);
+  //** Toggle data-status attribute (Resize of currently active element) */
+  useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [projectSlideIndex]);
 
   return (
-    <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} data-status='' ref={targetElementRef} style={state.style}>
-      <ProjectNavProp imgSrc='src/portfolio/assets/compressed-project-images/Ecommerce-Landing.png' dataStatus='active' addToRefs={addToRefs} />
-      <ProjectNavProp imgSrc='src/portfolio/assets/compressed-project-images/hyundai-preview.jpg' dataStatus='disabled' addToRefs={addToRefs} />
+    <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} ref={targetElementRef} style={state.style} data-status='' data-layout='column'>
+      {myProjects.map((project) => {
+        return (
+          <article className='mainContent__article' data-status={project.dataStatus} ref={addToRefs} key={project.key}>
+            <figure>
+              <picture>
+                <img src={project.imageSrc} alt={project.imageAlt} draggable='false' loading='lazy' decoding='async' fetchpriority='high' />
+                <figcaption>{project.imageAlt}</figcaption>
+              </picture>
+            </figure>
+          </article>
+        );
+      })}
     </main>
   );
 };

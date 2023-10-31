@@ -44,7 +44,14 @@ const Portfolio = (): JSX.Element => {
       <ContactForm contactFormActive={contactFormActive} setContactFormActive={setContactFormActive} />
       <EcommerceTechStack techStackActive={techStackActive} setTechStackActive={setTechStackActive} />
       {/* <ProjectDetails projectSlideIndex={projectSlideIndex} /> */}
-      <MainContent projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} mainAnimator={mainAnimator} setMainAnimator={setMainAnimator} />
+      <MainContent
+        projectSlideIndex={projectSlideIndex}
+        setProjectSlideIndex={setProjectSlideIndex}
+        mainAnimator={mainAnimator}
+        setMainAnimator={setMainAnimator}
+        layout={layout}
+        setLayout={setLayout}
+      />
       <PortFooter projectSlideIndex={projectSlideIndex} layout={layout} setLayout={setLayout} />
     </div>
   );

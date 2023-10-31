@@ -3,10 +3,7 @@
 
 .mainContent {
   display: grid;
-  grid-auto-flow: column;
   grid-gap: 0;
-  width: max-content;
-  height: 76%;
   padding-left: m.$viewportMarginRightLeft;
   &:hover {
     cursor: grab;
@@ -23,9 +20,16 @@
       transform 300ms ease-out,
       filter 300ms ease-in;
   }
-  &[data-test='test'] {
+  &[data-layout='column'] {
+    grid-auto-flow: column;
+    width: max-content;
+    height: 76%;
+    transition: all 250ms ease;
+  }
+  &[data-layout='row'] {
     grid-auto-flow: row;
-    height: auto;
+    width: 100%;
+    height: max-content;
     transition: all 250ms ease;
   }
 }
@@ -46,19 +50,23 @@
     transform-origin: bottom;
     filter: grayscale(85%) sepia(80%) brightness(32%) opacity(80%);
   }
-  & picture {
-    width: 100%;
-    height: 100%;
-    border-radius: f.rem(12);
-    background-color: m.$transparentElem;
-    overflow: hidden;
-    will-change: width;
-    filter: brightness(85%);
-    @media (width <= 1444px) {
-      aspect-ratio: 4/5;
-    }
-    & img {
-      object-fit: cover;
+  & figure {
+    display: contents;
+    pointer-events: none;
+    & picture {
+      width: 100%;
+      height: 100%;
+      border-radius: f.rem(12);
+      background-color: m.$transparentElem;
+      overflow: hidden;
+      will-change: width;
+      filter: brightness(92%);
+      @media (width <= 1444px) {
+        aspect-ratio: 4/5;
+      }
+      & img {
+        object-fit: cover;
+      }
     }
   }
 }
