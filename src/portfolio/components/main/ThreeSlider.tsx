@@ -32,7 +32,8 @@ const ThreeSlider = () => {
     /** Object Constructor */
     myProjects.forEach((project, index) => {
       // Dynamically load textures from myProjects array of objects into textureLoader
-      const texture = new THREE.TextureLoader().load(project.imageSrc);
+      const textureLoader = new THREE.TextureLoader();
+      const texture = textureLoader.load(project.imageSrc);
 
       // Create material with loaded textures
       const material = new THREE.MeshStandardMaterial({ map: texture, side: THREE.FrontSide });
