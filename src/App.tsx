@@ -2,7 +2,7 @@ import { Suspense, lazy, useMemo } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 /** 404 Error */
-const NotFound = lazy(() => import('./shared/pages/not-found/NotFound'));
+const NotFound = lazy(() => import('./protocol-errors/404/NotFound'));
 
 /** Portfolio */
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
