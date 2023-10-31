@@ -24,13 +24,17 @@
     grid-auto-flow: column;
     width: max-content;
     height: 76%;
-    // transition: all 250ms ease;
+    //   transition:
+    //     grid-auto-flow 100ms ease,
+    //     transform 100ms ease;
   }
   &[data-layout='row'] {
     grid-auto-flow: row;
     width: 100%;
     height: max-content;
-    // transition: all 250ms ease;
+    //   transition:
+    //     grid-auto-flow 100ms ease,
+    //     transform 100ms ease;
   }
 }
 
@@ -50,6 +54,11 @@
     transform: scale(0.8);
     transform-origin: bottom;
     filter: grayscale(85%) sepia(80%) brightness(32%) opacity(80%);
+  }
+  &[data-layout='column'] {
+  }
+  &[data-layout='row'] {
+    transform: skew(-0.06turn, 18deg);
   }
   & figure {
     display: contents;
