@@ -1,0 +1,11 @@
+@use '../../../sass/functions' as f;
+@use '../../scss/portfolioStyles' as m;
+
+#threeSlider {
+  // background-color: hsl(0, 0%, 10%);
+  overflow: hidden;
+  & canvas {
+    position: relative;
+    z-index: 10;
+  }
+}

@@ -23,6 +23,8 @@ import { CartProvider } from './ecommerce/context/CartContext';
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 import useCart from './ecommerce/hooks/useCart';
 
+const ThreeSlider = lazy(() => import('./portfolio/components/main/ThreeSlider'));
+
 //Application
 function App() {
   //** ECOMMERCE: Set Shopping Cart array of products in local Storage */
@@ -43,6 +45,8 @@ function App() {
               <Route path='*' element={<NotFound />} />
 
               <Route path='/' element={<Portfolio />} />
+
+              <Route path='/three' element={<ThreeSlider />} />
 
               <Route path='/ecommerce' element={<Home />} />
               <Route path='/ecommerce/products' element={<ProductCatalog />} />
