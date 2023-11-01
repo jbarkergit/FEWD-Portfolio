@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { myProjects } from './data/myProjects';
 
@@ -13,16 +13,16 @@ const ThreeSlider = () => {
 
     /** Lighting */
     // Ambient light
-    scene.add(new THREE.AmbientLight(0xffffff, 1));
+    scene.add(new THREE.AmbientLight(0xffffff, 0.2));
 
     // Directional Light
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 10); // Color, Intensity
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Color, Intensity
     directionalLight.position.set(0, 0, 1); // Set the light's position
     scene.add(directionalLight);
 
     /** Camera */
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, 10); // Set camera position
+    camera.position.set(0, 0, 2); // Set camera position
     camera.lookAt(0, 0, 1);
 
     /** Renderer */
@@ -31,34 +31,31 @@ const ThreeSlider = () => {
 
     /** Object Constructor */
     myProjects.forEach((project, index) => {
-      // Dynamically load textures from myProjects array of objects into textureLoader
+      //Texture Loader
       const textureLoader = new THREE.TextureLoader();
-      const texture = textureLoader.load(project.imageSrc);
-
-      // Create material with loaded textures
-      const material = new THREE.MeshStandardMaterial({ map: texture, side: THREE.FrontSide });
+      textureLoader.setCrossOrigin('anonymous');
 
       // Geometry
       const planeGeometry = new THREE.PlaneGeometry(1, 1);
 
-      // Geometry object
-      const object = new THREE.Mesh(planeGeometry, material);
+      // Dynamically load textures from myProjects array of objects into textureLoader
+      textureLoader.load(project.imageSrc, (texture) => {
+        // Create material with loaded textures
+        const material = new THREE.MeshStandardMaterial({ map: texture, side: THREE.FrontSide });
 
-      // Geometry object positioning
-      object.position.x = index * 2;
+        // Geometry object
+        const object = new THREE.Mesh(planeGeometry, material);
 
-      // Add new geometry object to scene
-      scene.add(object);
-    });
+        // Geometry object positioning
+        object.position.y = index * -2;
 
-    /** Render Scene && attach to DOM element */
-    if (canvas.current) {
-      renderer.render(scene, camera);
-    } else {
-      setTimeout(() => {
+        // Add new geometry object to scene
+        scene.add(object);
+
+        /** Render Scene && attach to DOM element */
         renderer.render(scene, camera);
-      }, 500);
-    }
+      });
+    });
 
     /** Window resize handler */
     // const windowResizeHandler = () => {
