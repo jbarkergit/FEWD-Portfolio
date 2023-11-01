@@ -38,9 +38,10 @@ const ThreeSlider = () => {
 
     // Lighting Helper
     const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-    // scene.add(spotLightHelper);
+    scene.add(spotLightHelper);
 
     /** Geometry */
+    // const geometryAspectRatio = ;
     const planeGeometry = new THREE.PlaneGeometry(1, 1, 1);
 
     /** Texture Loader */
@@ -53,8 +54,6 @@ const ThreeSlider = () => {
         const material = new THREE.MeshStandardMaterial({ map: texture, side: THREE.FrontSide });
         const object = new THREE.Mesh(planeGeometry, material);
         object.position.set(index * 2, 0, 0);
-        // object.rotation.set(0, 0, 0);
-        // object.scale.set(1, 1, 1);
         scene.add(object);
         renderer.render(scene, camera);
       });
