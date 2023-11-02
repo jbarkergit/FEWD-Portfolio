@@ -37,6 +37,8 @@ const PortFooter = ({ projectSlideIndex, layout, setLayout }: ProjectNavPropType
           )}
         </section>
         <section className='portFooter__nav__left'>
+          {projectSlideIndex === 0 ? <h2>Ecommerce</h2> : <h2>Ideation Phase</h2>}
+
           {useProjectInformation()?.extended ? (
             <button aria-label='Open Project Insights' onClick={() => setLayout(layout === 'column' ? 'row' : 'column')}>
               Project Insights

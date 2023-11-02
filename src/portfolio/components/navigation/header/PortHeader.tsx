@@ -72,7 +72,7 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormAct
           <button aria-label='Tech Stack' onClick={() => setTechStackActive(true)}>
             Tech Stack
           </button>
-          <Link to='https://github.com/jbarkergit' target='_blank'>
+          <Link to='https://github.com/jbarkergit' target='_blank' aria-label='GitHub'>
             GitHub
           </Link>
         </div>

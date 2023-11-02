@@ -8,10 +8,11 @@
   height: 100%;
   max-height: 12%;
   z-index: 10;
-  padding: m.$viewportMarginTopBottom calc(m.$viewportMarginRightLeft * 2) 0 m.$viewportMarginRightLeft;
+  padding: 0 calc(m.$viewportMarginRightLeft * 2) 0 m.$viewportMarginRightLeft;
   &__index {
     display: flex;
     flex: 1 1 calc(100% / 2);
+    align-items: center;
     &__location {
       display: flex;
       align-content: flex-start;
@@ -37,12 +38,13 @@
   }
   &__menu {
     display: flex;
-    align-items: flex-start;
     justify-content: flex-end;
     flex: 1 1 calc(100% / 2);
     &__buttons {
       display: flex;
+      align-items: center;
       gap: m.$portfolioGap;
+      height: 100%;
       opacity: 0;
       pointer-events: none;
       &[data-status='active'] {
@@ -62,6 +64,7 @@
     &__navbar {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       gap: f.rem(4);
       width: fit-content;
       height: 100%;
