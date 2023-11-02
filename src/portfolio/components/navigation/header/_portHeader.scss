@@ -70,7 +70,7 @@
       gap: f.rem(4);
       width: fit-content;
       height: 100%;
-      padding: f.rem(0) 0 0 m.$portfolioGap;
+      padding: f.rem(0) 0 0 calc(m.$portfolioGap * 2);
       opacity: 1;
       pointer-events: all;
       &--line {
