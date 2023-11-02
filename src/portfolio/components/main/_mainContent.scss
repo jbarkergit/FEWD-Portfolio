@@ -2,9 +2,7 @@
 @use '../../scss/portfolioStyles' as m;
 
 .mainContent {
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 0;
+  display: flex;
   width: max-content;
   height: 76%;
   padding-left: m.$viewportMarginRightLeft;
