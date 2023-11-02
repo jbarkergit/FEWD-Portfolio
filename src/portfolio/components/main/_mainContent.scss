@@ -42,11 +42,6 @@
     transform-origin: bottom;
     filter: grayscale(85%) sepia(80%) brightness(32%) opacity(80%);
   }
-  &[data-layout='column'] {
-  }
-  &[data-layout='row'] {
-    transform: skew(-0.06turn, 18deg);
-  }
   & figure {
     display: contents;
     & picture {

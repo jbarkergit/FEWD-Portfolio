@@ -53,28 +53,6 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator, la
     }
   }, [mainAnimator]);
 
-  //** Layout animator */
-  useEffect(() => {
-    switch (layout) {
-      case 'column':
-        if (targetElementRef.current) targetElementRef.current.setAttribute('data-layout', 'column');
-        revealRefs.current.forEach((ref) => {
-          ref.setAttribute('data-layout', 'column');
-        });
-        break;
-
-      case 'row':
-        if (targetElementRef.current) targetElementRef.current.setAttribute('data-layout', 'row');
-        revealRefs.current.forEach((ref) => {
-          ref.setAttribute('data-layout', 'row');
-        });
-        break;
-
-      default:
-        break;
-    }
-  }, [layout]);
-
   //** Reference information variables */
   // Slider track width
   const targetElementWidth: number = targetElement?.scrollWidth as number;
