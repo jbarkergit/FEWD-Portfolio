@@ -45,11 +45,13 @@
       align-items: center;
       gap: m.$portfolioGap;
       height: 100%;
-      opacity: 0;
       pointer-events: none;
-      &[data-status='active'] {
-        opacity: 1;
+      clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+      transition: clip-path 0.65s cubic-bezier(0.7, 0, 0, 1);
+      &[data-transform='true'] {
         pointer-events: all;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        transition: clip-path 0.65s cubic-bezier(0.7, 0, 0, 1);
       }
       & button {
         color: #fff;
@@ -71,16 +73,27 @@
       padding: f.rem(0) 0 0 m.$portfolioGap;
       opacity: 1;
       pointer-events: all;
-      &[data-status='disabled'] {
-        opacity: 0;
-        pointer-events: none;
-      }
       &--line {
-        width: 1.3em;
+        width: 22px;
         height: 2px;
         background-color: hsl(0, 0%, 100%);
-        transition: transform 0.5s cubic-bezier(0.7, 0, 0, 1);
+        transition: transform 0.65s cubic-bezier(0.7, 0, 0, 1);
         pointer-events: none;
+        &:nth-of-type(1) {
+          &[data-transform='true'] {
+            transform: rotate(45deg) translate(0px, 8px);
+          }
+        }
+        &:nth-of-type(2) {
+          &[data-transform='true'] {
+            transform: translate(min(0, -500px));
+          }
+        }
+        &:nth-of-type(3) {
+          &[data-transform='true'] {
+            transform: rotate(-45deg) translate(0px, -8px);
+          }
+        }
       }
     }
   }

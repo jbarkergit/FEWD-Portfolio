@@ -21,26 +21,12 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormAct
   }, [projectSlideIndex]);
   //** */
 
-  //** Menu hover reveal effect */
-  const portHeaderMenu = useRef<HTMLElement>(null);
-  const [portHeaderMenuHovered, setPortHeaderMenuHovered] = useState<boolean>(false);
-
-  useEffect(() => {
-    const onPointerOver = (e: PointerEvent) => setPortHeaderMenuHovered(true);
-    const onPointerLeave = () => setPortHeaderMenuHovered(false);
-
-    if (portHeaderMenu.current) {
-      portHeaderMenu.current.addEventListener('pointerover', onPointerOver);
-      portHeaderMenu.current.addEventListener('pointerleave', onPointerLeave);
-    }
-
-    return () => {
-      if (portHeaderMenu.current) {
-        portHeaderMenu.current.removeEventListener('pointerover', onPointerOver);
-        portHeaderMenu.current.removeEventListener('pointerleave', onPointerLeave);
-      }
-    };
-  }, []);
+  //** Menu hover reveal effect array of references */
+  const menuButtons = useRef<HTMLDivElement>(null);
+  const lines = useRef<HTMLDivElement[]>([]);
+  const line = (reference: HTMLDivElement) => {
+    if (lines.current && !lines.current.includes(reference)) lines.current.push(reference);
+  };
 
   return (
     <header className='portHeader'>
@@ -64,8 +50,21 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormAct
           </ul>
         </nav>
       </section>
-      <section className='portHeader__menu' ref={portHeaderMenu}>
-        <div className='portHeader__menu__buttons' data-status={portHeaderMenuHovered ? 'active' : 'disabled'}>
+      <section
+        className='portHeader__menu'
+        onPointerOver={() => {
+          lines.current.forEach((line) => {
+            if (line) line.setAttribute('data-transform', 'true');
+          });
+          if (menuButtons.current) menuButtons.current.setAttribute('data-transform', 'true');
+        }}
+        onPointerLeave={() => {
+          lines.current.forEach((line) => {
+            if (line) line.setAttribute('data-transform', 'false');
+          });
+          if (menuButtons.current) menuButtons.current.setAttribute('data-transform', 'false');
+        }}>
+        <div className='portHeader__menu__buttons' ref={menuButtons} data-transform={'false'}>
           <button aria-label='Contact Form' onClick={() => setContactFormActive(true)}>
             Contact
           </button>
@@ -76,10 +75,10 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormAct
             GitHub
           </Link>
         </div>
-        <div className='portHeader__menu__navbar' data-status={portHeaderMenuHovered ? 'disabled' : 'active'}>
-          <div className='portHeader__menu__navbar--line' />
-          <div className='portHeader__menu__navbar--line' />
-          <div className='portHeader__menu__navbar--line' />
+        <div className='portHeader__menu__navbar'>
+          <div className='portHeader__menu__navbar--line' data-transform={'false'} ref={line} />
+          <div className='portHeader__menu__navbar--line' data-transform={'false'} ref={line} />
+          <div className='portHeader__menu__navbar--line' data-transform={'false'} ref={line} />
         </div>
       </section>
     </header>
