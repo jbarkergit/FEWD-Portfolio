@@ -51,9 +51,13 @@ const ModalFeatures = ({ uiModal, setUiModal }: ModalFeatureType) => {
 
   //** Animation mount animation handler */
   useEffect(() => {
-    if (uiModal !== '' && unmount === false && modalWrapper.current && ecoModal.current) {
-      modalWrapper.current.setAttribute('data-status', 'active');
-      ecoModal.current.setAttribute('data-status', 'active');
+    if (uiModal !== '' && unmount === false) {
+      setTimeout(() => {
+        if (modalWrapper.current && ecoModal.current) {
+          modalWrapper.current.setAttribute('data-status', 'active');
+          ecoModal.current.setAttribute('data-status', 'active');
+        }
+      }, 50);
     }
   }, [uiModal]);
 
