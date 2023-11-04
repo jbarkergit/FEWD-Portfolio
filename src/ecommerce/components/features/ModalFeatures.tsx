@@ -1,9 +1,9 @@
 import { useRef, useEffect, Dispatch, SetStateAction, useState } from 'react';
-import ShoppingCart from '../../features/shopping-cart/ShoppingCart';
-import UserAccountActive from '../../features/user-account/user-account-modal-active/UserAccountActive';
-import UserLoginModal from '../../features/user-account/user-account-modal-login/UserLoginModal';
-import UserAccountRegistry from '../../features/user-account/user-account-modal-registry/UserAccountRegistry';
-import MobileMenu from './mobile/MobileMenu';
+import ShoppingCart from './shopping-cart/ShoppingCart';
+import UserAccountActive from './user-account/user-account-modal-active/UserAccountActive';
+import UserLoginModal from './user-account/user-account-modal-login/UserLoginModal';
+import UserAccountRegistry from './user-account/user-account-modal-registry/UserAccountRegistry';
+import MobileMenu from '../navigation/header/mobile/MobileMenu';
 
 type ModalFeatureType = {
   uiModal: string;
@@ -51,7 +51,7 @@ const ModalFeatures = ({ uiModal, setUiModal }: ModalFeatureType) => {
 
   //** Animation mount animation handler */
   useEffect(() => {
-    if (uiModal !== '' && modalWrapper.current && ecoModal.current) {
+    if (uiModal !== '' && unmount === false && modalWrapper.current && ecoModal.current) {
       modalWrapper.current.setAttribute('data-status', 'active');
       ecoModal.current.setAttribute('data-status', 'active');
     }
@@ -71,20 +71,20 @@ const ModalFeatures = ({ uiModal, setUiModal }: ModalFeatureType) => {
       <section
         className='modalWrapper'
         ref={modalWrapper}
-        onAnimationEnd={() => {
+        onTransitionEnd={() => {
           if (modalWrapper.current?.getAttribute('data-status') === 'disabled') {
-            setUiModal('');
             setUnmount(false);
+            setUiModal('');
           }
         }}>
         <div
           className='ecoModal'
           ref={ecoModal}
           style={uiModal === 'shoppingCart' ? { display: 'block' } : {}}
-          onAnimationEnd={() => {
+          onTransitionEnd={() => {
             if (ecoModal.current?.getAttribute('data-status') === 'disabled') {
-              setUiModal('');
               setUnmount(false);
+              setUiModal('');
             }
           }}>
           {conditionallyRenderedModals()}

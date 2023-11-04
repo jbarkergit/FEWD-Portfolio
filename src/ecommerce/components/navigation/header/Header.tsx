@@ -2,7 +2,7 @@ import { useState } from 'react';
 import LogoArea from './sections/LogoArea';
 import NavigationLinks from './sections/NavigationLinks';
 import UserInteractions from './sections/UserInteractions';
-import ModalFeatures from './ModalFeatures';
+import ModalFeatures from '../../features/ModalFeatures';
 
 const PrimaryNav = (): JSX.Element => {
   const [uiModal, setUiModal] = useState<string>('');
