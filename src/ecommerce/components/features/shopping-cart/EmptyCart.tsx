@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 type EmptyCartType = {
-  setUiModal: Dispatch<SetStateAction<string>>;
+  setUnmount: Dispatch<SetStateAction<boolean>>;
 };
 
-const EmptyCart = ({ setUiModal }: EmptyCartType) => {
+const EmptyCart = ({ setUnmount }: EmptyCartType) => {
   // @ts-ignore:
   const { setCategoryFilter } = useCategoryFilterContext();
 
@@ -43,7 +43,7 @@ const EmptyCart = ({ setUiModal }: EmptyCartType) => {
             </Link>
           </li>
           <li>
-            <button aria-label='Close menu' onClick={() => setUiModal('')}>
+            <button aria-label='Close menu' onClick={() => setUnmount(true)}>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.6em' height='1.6em' viewBox='0 0 24 24'>
                 <path
                   fill='#ffffff'
