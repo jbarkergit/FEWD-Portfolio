@@ -35,14 +35,14 @@ const UserAccountRegistry = ({ setUiModal }: PropType): JSX.Element => {
   //Form input value clear hook
   const clearFormInputValues = (): void => {
     setRegistry({
-      firstNameRegistry: 'John',
-      lastNameRegistry: 'Doe',
-      emailAddressRegistry: 'test@test.com',
-      emailAddressValidRegistry: true,
-      passwordRegistry: 'HelloWorld1!',
+      firstNameRegistry: '',
+      lastNameRegistry: '',
+      emailAddressRegistry: '',
+      emailAddressValidRegistry: false,
+      passwordRegistry: '',
       passwordVisible: false,
-      passwordValidRegistry: true,
-      passwordRegistryCheck: 'HelloWorld1!',
+      passwordValidRegistry: false,
+      passwordRegistryCheck: '',
     });
   };
 
@@ -243,6 +243,9 @@ const UserAccountRegistry = ({ setUiModal }: PropType): JSX.Element => {
         </button>
         <button aria-label='Return to account login' onClick={() => setUiModal('userLogin')}>
           Return to Login
+        </button>
+        <button aria-label='Clear form input values' onClick={() => clearFormInputValues()}>
+          Clear Form
         </button>
       </div>
       <div className='ecoModal__container__passkeys'>
