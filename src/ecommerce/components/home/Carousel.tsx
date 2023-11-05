@@ -110,29 +110,34 @@ const Carousel = (): JSX.Element => {
         <CarouselProps
           carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg'
           carouselAlt='Slide A'
-          navCat='Speakers'
-        />
-        <CarouselProps
-          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg'
-          carouselAlt='Slide C'
-          navCat='Mixing Consoles'
+          navCat='All Products'
+          linkTo='products'
         />
         <CarouselProps
           carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg'
-          carouselAlt='Slide E'
+          carouselAlt='Slide C'
           navCat='Headphones'
-          tabIndex={-1}
+          linkTo='headphones'
         />
         <CarouselProps
-          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg'
-          carouselAlt='Slide F'
-          navCat='Dacs & Amps'
+          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg'
+          carouselAlt='Slide E'
+          navCat='Amps & Dacs'
+          linkTo='amps-dacs'
           tabIndex={-1}
         />
         <CarouselProps
           carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg'
-          carouselAlt='Slide G'
+          carouselAlt='Slide F'
           navCat='Microphones'
+          linkTo='microphones'
+          tabIndex={-1}
+        />
+        <CarouselProps
+          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg'
+          carouselAlt='Slide G'
+          navCat='Interfaces'
+          linkTo='interfaces'
           tabIndex={-1}
         />
       </div>
