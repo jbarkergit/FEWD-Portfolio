@@ -131,6 +131,7 @@
       justify-content: center;
       width: inherit;
       & input {
+        height: f.rem(42);
         padding: 0 0 0 f.rem(12);
         border: 1px solid hsl(0, 0%, 100%);
         border-radius: f.rem(6);
