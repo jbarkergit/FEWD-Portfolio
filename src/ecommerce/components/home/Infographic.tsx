@@ -59,19 +59,21 @@ const SectionThree = () => {
   return (
     <section className='infographic__cta'>
       <article>
-        <h2 tabIndex={0}>
-          <span className='highlight'>NEW </span>DROPS
-        </h2>
-        <p tabIndex={0}>
-          Thanks to our friends over at{' '}
-          <Link to='http://localhost:5173/ecommerce/Beyerdynamic' aria-label='View Beyerdynamic Products'>
-            Beyerdynamic
+        <div>
+          <h2 tabIndex={0}>
+            <span className='highlight'>NEW </span>DROPS
+          </h2>
+          <p tabIndex={0}>
+            Thanks to our friends over at{' '}
+            <Link to='http://localhost:5173/ecommerce/Beyerdynamic' aria-label='View Beyerdynamic Products'>
+              Beyerdynamic
+            </Link>
+            , we're proud to introduce a new line of headphones sporting all new Tesla technology.
+          </p>
+          <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__cta--shopNow' aria-label='Shop Tesla enhanced Headphones'>
+            Shop Tesla enhanced Headphones
           </Link>
-          , we're proud to introduce a new line of headphones sporting all new Tesla technology.
-        </p>
-        <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__cta--shopNow' aria-label='Shop Tesla enhanced Headphones'>
-          Shop Tesla enhanced Headphones
-        </Link>
+        </div>
         <figure>
           <picture>
             <img
