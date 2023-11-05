@@ -125,7 +125,7 @@
 
   &__buttons {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
     gap: f.rem(6);
     width: 90%;
@@ -133,7 +133,10 @@
     & button {
       @include m.ecoBtn;
       @include m.ecoBtnDark;
-      width: 100%;
+      width: 49%;
+      &:nth-of-type(1) {
+        width: 100%;
+      }
     }
   }
   &__passkeys {
