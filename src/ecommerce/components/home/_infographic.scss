@@ -11,6 +11,9 @@
   @media (width <= 1550px) {
     gap: 0;
   }
+  @media (width <= 600px) {
+    padding: 0 f.rem(12) calc(var(--sectionYPadding) + f.rem(32)) f.rem(12);
+  }
   &__textArea {
     flex: 0 1 23%;
     @media (width <= 1550px) {
@@ -41,6 +44,12 @@
 
 .infographic__textArea {
   position: relative;
+  @media (width <= 1550px) {
+    color: var(--fontSecondary);
+  }
+  @media (width <= 880px) {
+    padding: 0;
+  }
   & article {
     position: relative;
     display: flex;
@@ -52,7 +61,7 @@
       display: inline-grid;
       padding-bottom: f.rem(6);
       color: var(--textPrimary);
-      @media (width < 880px) {
+      @media (width <= 1550px) {
         position: absolute;
         z-index: 3;
         top: calc(var(--sectionYPadding) / 2);
@@ -76,7 +85,7 @@
       color: var(--textPrimary);
       font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
       font-weight: 500;
-      @media (width < 880px) {
+      @media (width <= 1550px) {
         color: var(--fontSecondary);
         position: absolute;
         z-index: 3;
@@ -89,6 +98,12 @@
       display: contents;
       & picture {
         display: contents;
+        @media (width <= 1550px) {
+          position: absolute;
+          bottom: 0;
+          display: block;
+          height: 100%;
+        }
         & img {
           border-radius: f.rem(24);
           box-shadow: var(--shadowSoft);
@@ -126,19 +141,40 @@
 }
 
 .infographic__cta {
+  @media (width <= 1550px) {
+    color: var(--fontSecondary);
+  }
   &--shopNow {
     @include m.ecoBtn;
     @include m.ecoBtnDark;
     box-shadow: var(--ecoBtnShadow);
     color: var(--fontSecondary) !important;
+    @media (width <= 1550px) {
+      box-shadow: none;
+      width: fit-content;
+    }
   }
   & article {
+    position: relative;
     height: 100%;
+    @media (width <= 1550px) {
+      display: flex;
+      justify-content: center;
+    }
     & div {
       display: flex;
       flex-direction: column;
       gap: f.rem(6);
-      height: 33%;
+      height: 100%;
+      max-height: 40%;
+      padding-bottom: f.rem(35);
+      @media (width <= 1550px) {
+        position: absolute;
+        bottom: 7%;
+        width: 90%;
+        height: auto;
+        padding-bottom: 0;
+      }
       & h2 {
         font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));
         font-weight: 800;
@@ -157,7 +193,10 @@
       display: contents;
       & picture {
         width: 100%;
-        height: calc(100% - 33%);
+        height: calc(100% - 40%);
+        @media (width <= 1550px) {
+          height: 100%;
+        }
         & img {
           border-radius: f.rem(24);
           box-shadow: var(--shadowSoft);

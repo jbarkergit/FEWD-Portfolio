@@ -99,6 +99,7 @@
           z-index: 4;
           @include m.ecoBtn;
           @include m.ecoBtnLight;
+          font-size: f.rem(14);
         }
       }
     }
