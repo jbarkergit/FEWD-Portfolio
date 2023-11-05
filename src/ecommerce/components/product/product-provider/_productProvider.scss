@@ -233,9 +233,10 @@
       @include m.ecoBtn;
       @include m.ecoBtnDark;
       width: 90%;
-      font-size: clamp(f.rem(12), f.rem(9) + 1vw, f.rem(15));
+      font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
       font-weight: 500;
       letter-spacing: var(--navigationLetterSpacing);
+      text-transform: lowercase;
     }
   }
 }
