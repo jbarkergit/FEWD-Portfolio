@@ -3,26 +3,32 @@ import { ContactFormFieldsType, ContactFormPropsType } from './ContactForm';
 import ContactFormErrorHandler from './ContactFormErrorHandler';
 
 const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
-  //** Prop drill alias */
+  // Prop drill alias
   const props = ContactFormProps;
 
+  // useRef
+  const contactFormLabels: HTMLLabelElement[] = [];
+
+  const contactFormLabel = (reference: HTMLLabelElement) => {
+    if (reference && !contactFormLabels.includes(reference)) {
+      contactFormLabels.push(reference);
+    }
+  };
+
   //** Handle input field label animation (not using traditional placeholder solely to animate the text) */
-  const contactFormLabel = useRef<HTMLLabelElement>(null);
-
-  const handleFocusHook = () => {
-    if (contactFormLabel.current) contactFormLabel.current.setAttribute('data-status', 'active');
+  const handleFocusHook = (index: number) => {
+    contactFormLabels[index].setAttribute('data-status', 'active');
   };
 
-  const handleBlurHook = () => {
-    if (contactFormLabel.current) contactFormLabel.current.setAttribute('data-status', 'disabled');
+  const handleBlurHook = (index: number) => {
+    contactFormLabels[index].setAttribute('data-status', 'disabled');
   };
-  //** */
 
   return (
     <section className='contactForm__section'>
       <form className='standardForm'>
         <fieldset className='standardForm__fieldset'>
-          {props.contactFormFields.map((field: ContactFormFieldsType, index) =>
+          {props.contactFormFields.map((field: ContactFormFieldsType, index: number) =>
             field.input !== 'inquiry' ? (
               <div className='standardForm__fieldset__container' key={field.input}>
                 <label className='standardForm__fieldset__container--label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
@@ -36,8 +42,8 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
                   value={field.value}
                   required={field.optional ? true : false}
                   aria-required={field.optional ? 'true' : 'false'}
-                  onFocus={handleFocusHook}
-                  onBlur={handleBlurHook}
+                  onFocus={() => handleFocusHook(index)}
+                  onBlur={() => handleBlurHook(index)}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     props.updateContactFormFieldsState(field.input, e.target.value);
                     props.useContactFormValidator(index);
@@ -63,8 +69,8 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
                   aria-required={field.optional ? 'true' : 'false'}
                   rows={8}
                   cols={50}
-                  onFocus={handleFocusHook}
-                  onBlur={handleBlurHook}
+                  onFocus={() => handleFocusHook(index)}
+                  onBlur={() => handleBlurHook(index)}
                   onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
                     props.updateContactFormFieldsState(field.input, e.target.value);
                     props.useContactFormValidator(index);
