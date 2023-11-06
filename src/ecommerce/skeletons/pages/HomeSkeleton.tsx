@@ -5,20 +5,16 @@ const HomeSkeleton = () => {
     <div className='skeleton'>
       <HeaderSkeleton />
       <div className='skeleton__infographic'>
-        <div className='skeleton--subHeading' />
-        <div className='skeleton--heading' />
-        <div className='skeleton--text' />
-        <div className='skeleton__genericFlex'>
-          <div className='skeleton--button' />
-          <div className='skeleton--button' />
+        <div className='skeleton__infographic__section'>
+          <div className='skeleton__infographic__section--textPrimary' />
+          <div className='skeleton__infographic__section--card' />
         </div>
-        <div className='skeleton__infographic__carousel'>
-          <div className='skeleton__infographic__carousel--partner' />
-          <div className='skeleton__infographic__carousel--partner' />
-          <div className='skeleton__infographic__carousel--partner' />
-          <div className='skeleton__infographic__carousel--partner' />
-          <div className='skeleton__infographic__carousel--partner' />
-          <div className='skeleton__infographic__carousel--partner' />
+        <div className='skeleton__infographic__section'>
+          <div className='skeleton__infographic__section--cardFocus' />
+        </div>
+        <div className='skeleton__infographic__section'>
+          <div className='skeleton__infographic__section--text' />
+          <div className='skeleton__infographic__section--card' />
         </div>
       </div>
     </div>

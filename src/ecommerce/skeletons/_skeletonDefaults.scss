@@ -70,6 +70,7 @@
 }
 
 .skeleton {
+  position: relative;
   background-color: hsl(0, 0%, 12%);
   width: 100%;
   height: 100vh;
@@ -175,7 +176,6 @@
   }
 }
 
-.skeleton__infographic,
 .skeleton__catalog,
 .skeleton__detailPage {
   position: absolute;
@@ -190,20 +190,66 @@
 }
 
 .skeleton__infographic {
-  top: 0;
-  left: 0;
-  &__carousel {
+  display: flex;
+  gap: f.rem(35);
+  width: 100%;
+  padding: 0;
+  &__section:nth-of-type(1) {
+    flex: 0 1 23%;
+    @media (width <= 1550px) {
+      flex: 0 0 50%;
+      padding-right: calc(f.rem(32) / 2);
+    }
+    @media (width < 880px) {
+      flex: 0 0 100%;
+    }
+  }
+  &__section:nth-of-type(2) {
+    flex: 1 0 52%;
+    @media (width <= 1550px) {
+      display: none;
+    }
+  }
+  &__section:nth-of-type(3) {
+    flex: 0 1 25%;
+    @media (width <= 1550px) {
+      flex: 0 0 50%;
+      padding-left: calc(f.rem(32) / 2);
+    }
+    @media (width < 880px) {
+      display: none;
+    }
+  }
+  &__section {
     display: flex;
-    gap: 24px;
-    width: 100%;
-    height: 100px;
-    margin-top: 100px;
-    &--partner {
-      width: calc(100% - 8.335% / 10);
+    flex-direction: column;
+    gap: 32px;
+    height: inherit;
+    &--textPrimary,
+    &--text {
+      border-radius: 16px;
+      background-color: hsl(0, 0%, 23%);
+      animation: colorShiftLink 1.8s infinite;
+    }
+    &--textPrimary {
+      height: 85%;
+    }
+    &--text {
+      height: 50%;
+    }
+    &--card,
+    &--cardFocus {
+      border-radius: 32px;
+      background-color: hsl(0, 0%, 26%);
+      animation: colorShiftLogo 1.8s infinite;
+    }
+    &--card {
+      width: 100%;
       height: 100%;
-      border-radius: 12px;
-      background-color: hsl(0, 0%, 28%);
-      animation: colorShiftLogo 3.2s infinite;
+    }
+    &--cardFocus {
+      width: 824.6px;
+      height: 709px;
     }
   }
 }
