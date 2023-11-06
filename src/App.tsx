@@ -22,6 +22,9 @@ import { CartProvider } from './ecommerce/context/CartContext';
 // Pathing via Hooks
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
+/** Discord Clone */
+import DiscordClone from './discord-clone/pages/DiscordClone';
+
 /** Suspense */
 function SuspensePathHandler() {
   switch (useLocation().pathname) {
@@ -169,6 +172,8 @@ function App() {
           {/* <Route path='/home-skeleton' element={<HomeSkeleton />} /> */}
           {/* <Route path='/product-catalog-skeleton' element={<ProductCatalogSkeleton />} /> */}
           {/* <Route path='/product-detail-page-skeleton' element={<ProductDetailPageSkeleton />} /> */}
+
+          <Route path='/ecommerce/discord-clone' element={<DiscordClone />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
