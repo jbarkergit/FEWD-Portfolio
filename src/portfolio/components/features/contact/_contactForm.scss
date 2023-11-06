@@ -21,6 +21,9 @@
 
 .contactForm {
   display: flex;
+  aspect-ratio: 21/9;
+  max-width: 75vw;
+  max-height: 76vh;
   height: 100%;
   border-radius: f.rem(24);
   background-color: hsl(0, 0, 8%);
