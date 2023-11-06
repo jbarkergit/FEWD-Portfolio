@@ -6,7 +6,6 @@ const NotFound = lazy(() => import('./protocol-errors/404/NotFound'));
 
 /** Portfolio */
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
-const ThreeSlider = lazy(() => import('./threejs/ThreeSlider'));
 
 /** Ecommerce */
 const Home = lazy(() => import('./ecommerce/pages/Home'));
@@ -58,7 +57,6 @@ function App() {
         <Routes>
           <Route path='*' element={<NotFound />} />
           <Route path='/' element={<Portfolio />} />
-          {/* <Route path='/threejs' element={<ThreeSlider />} /> */}
 
           <Route
             path='/ecommerce'
