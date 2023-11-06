@@ -1,9 +1,8 @@
 @use '../../../../sass/functions' as f;
 @use '../../../scss/portfolioStyles' as m;
 
-.contactForm {
+.contactFormWrapper {
   position: fixed;
-  display: flex;
   width: 100%;
   height: 100vh;
   padding: 6% m.$viewportMarginRightLeft;
@@ -18,17 +17,28 @@
   @media (width <= 778px) {
     margin: 0;
   }
+}
+
+.contactForm {
+  display: flex;
+  height: 100%;
+  border-radius: f.rem(24);
+  background-color: hsl(0, 0, 8%);
   &__section {
     display: flex;
     height: 100%;
     align-items: center;
     &:nth-of-type(1) {
-      flex: 0 1 40%;
+      flex: 1 0 45%;
       flex-direction: column;
       justify-content: center;
     }
     &:nth-of-type(2) {
-      flex: 1 1 60%;
+      flex: 0 1 55%;
+      padding: 3% f.rem(50);
+      border-top-right-radius: f.rem(24);
+      border-bottom-right-radius: f.rem(24);
+      background-color: hsl(0, 0, 50%);
     }
     & h2 {
       display: none;
@@ -36,34 +46,16 @@
   }
 }
 
-.contact__about,
 .contact__questions {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   width: clamp(45ch, 100%, 75ch);
   height: fit-content;
+  border-radius: f.rem(12);
+  background-color: hsl(0, 0, 60%);
   overflow: scroll;
   scrollbar-width: none;
-}
-
-.contact__about {
-  margin-bottom: f.rem(24);
-  & h3 {
-    font-size: clamp(f.rem(20), f.rem(24) + 1vw, f.rem(30));
-    font-weight: 500;
-  }
-  & p {
-    width: clamp(45ch, 100%, 65ch);
-  }
-}
-
-.contact__questions {
-  & h4 {
-    font-size: clamp(f.rem(20), f.rem(24) + 1vw, f.rem(30));
-    font-weight: 500;
-    padding-bottom: f.rem(6);
-  }
   &__services,
   &__nonServices,
   &__pricing,
@@ -71,8 +63,11 @@
   &__provisions,
   &__inclusivityAccessibility,
   &__formErrors {
-    width: fit-content;
-    padding-bottom: f.rem(6);
+    width: 100%;
+    padding: f.rem(12) f.rem(24);
+    border-bottom: 1px solid hsl(0, 0%, 56%);
+    height: auto;
+    transition: height 150ms ease-in-out;
     &--question {
       height: auto;
       font-size: clamp(f.rem(18), f.rem(16) + 1vw, f.rem(22));
@@ -82,6 +77,7 @@
     & p {
       height: auto;
       padding-bottom: f.rem(6);
+      pointer-events: none;
     }
   }
   &__provisions p {
@@ -95,24 +91,6 @@
   }
 }
 
-#errorMessageFAQ {
-  & li details summary {
-    font-size: f.rem(20);
-    font-weight: 400;
-  }
-  & li ul {
-    display: flex;
-    flex-direction: column;
-    gap: f.rem(6);
-    & li:first-child {
-      padding-top: f.rem(3);
-    }
-    & li:last-child {
-      padding-bottom: f.rem(12);
-    }
-  }
-}
-
 .standardForm {
   display: contents;
   &__fieldset {
@@ -120,11 +98,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: f.rem(12);
     width: 100%;
-    height: 100%;
+    height: auto;
+    padding: f.rem(35) f.rem(70);
+    border-radius: f.rem(12);
     &__container {
       position: relative;
-      width: min-content;
+      width: 100%;
       min-width: f.rem(320);
       height: auto;
       &--label {
@@ -157,6 +138,8 @@
         width: 100%;
         height: 100%;
         padding: f.rem(20) 0 f.rem(20) f.rem(12);
+        border-radius: f.rem(12);
+        background-color: hsl(0, 0%, 14%);
       }
       &--errorMessage {
         padding: 0 0 0 f.rem(12);
@@ -164,6 +147,27 @@
         font-weight: 500;
         color: rgba(255, 255, 101, 0.85);
       }
+    }
+  }
+}
+
+#errorMessageFAQ {
+  & li details {
+    pointer-events: all;
+  }
+  & li details summary {
+    font-size: f.rem(20);
+    font-weight: 400;
+  }
+  & li ul {
+    display: flex;
+    flex-direction: column;
+    gap: f.rem(6);
+    & li:first-child {
+      padding-top: f.rem(3);
+    }
+    & li:last-child {
+      padding-bottom: f.rem(12);
     }
   }
 }

@@ -1,28 +1,83 @@
+import { useEffect, useRef } from 'react';
+
 const ContactFormInformation = () => {
+  // Storage for <details> with "open" attr
+  let activePrimaryQuestionRef = useRef<HTMLDetailsElement>();
+  let activeAssistanceQuestionRef = useRef<HTMLDetailsElement>();
+
+  // Storage for all primary <details>
+  const primaryQuestions: HTMLDetailsElement[] = [];
+
+  const primaryQuestionRef = (reference: HTMLDetailsElement) => {
+    if (reference && !primaryQuestions.includes(reference)) primaryQuestions.push(reference);
+  };
+
+  // Storage for all form assistance <details>
+  const assistanceQuestions: HTMLDetailsElement[] = [];
+
+  const assistanceQuestionRef = (reference: HTMLDetailsElement) => {
+    if (reference && !assistanceQuestions.includes(reference)) assistanceQuestions.push(reference);
+  };
+
+  useEffect(() => {
+    // Store active <details> references on mount
+    if (primaryQuestions.length > 0) activePrimaryQuestionRef.current = primaryQuestions[0];
+
+    // Initialize useRef by using an absolute falsey ref
+    if (assistanceQuestions.length > 0) activeAssistanceQuestionRef.current = primaryQuestions[0];
+
+    /**
+     * Remove open attribute from previous <details> with open attr
+     * Update reference with new <details> that's now open
+     */
+    const handlePrimaryQuestions = (e: PointerEvent) => {
+      const currentTarget = e.currentTarget as HTMLDetailsElement;
+
+      // Prevent event bubbling down the tree
+      e.stopPropagation();
+
+      if (activePrimaryQuestionRef.current && currentTarget !== activePrimaryQuestionRef.current) {
+        activePrimaryQuestionRef.current.removeAttribute('open');
+        activePrimaryQuestionRef.current = currentTarget;
+      }
+    };
+
+    /**
+     * Prevent updateOpenedDetails from removing form assistance question <details> open attr
+     * Remove open attribute from previously opened assistance question
+     */
+    const handleAssistanceQuestions = (e: PointerEvent) => {
+      const currentTarget = e.currentTarget as HTMLDetailsElement;
+
+      if (activeAssistanceQuestionRef.current && currentTarget !== activeAssistanceQuestionRef.current) {
+        activeAssistanceQuestionRef.current.removeAttribute('open');
+        activeAssistanceQuestionRef.current = currentTarget;
+      }
+    };
+
+    // Event listeners mount
+    if (primaryQuestions) primaryQuestions.forEach((child: HTMLDetailsElement) => child.addEventListener('pointerup', handlePrimaryQuestions));
+    if (assistanceQuestions) assistanceQuestions.forEach((child: HTMLDetailsElement) => child.addEventListener('pointerup', handleAssistanceQuestions));
+
+    // Event listeners unmount
+    return () => {
+      if (primaryQuestions) primaryQuestions.forEach((child: HTMLDetailsElement) => child.removeEventListener('pointerup', handlePrimaryQuestions));
+      if (assistanceQuestions) assistanceQuestions.forEach((child: HTMLDetailsElement) => child.removeEventListener('pointerup', handleAssistanceQuestions));
+    };
+  }, [primaryQuestions, assistanceQuestions]);
+
   return (
     <section className='contactForm__section'>
-      <h2>Developer Contact Information</h2>
-      <article className='contact__about'>
-        <h3>About</h3>
-        <p>
-          I'm Justin, a Front-End Developer specializing in <abbr title='React: A JavaScript library for building user interfaces'>React</abbr>. I build responsive,
-          interactive, <abbr title='Search Engine Optimization'>SEO</abbr>-optimized, and{' '}
-          <abbr title='Web Accessibility Initiative - Accessible Rich Internet Applications'>WAI-ARIA</abbr>-compliant components for client-facing web applications;
-          with a focus on performance-oriented <abbr title='Largest Contentful Paint'>LCP</abbr>, <abbr title='First Input Delay'>FID</abbr>, and{' '}
-          <abbr title='Cumulative Layout Shift'>CLS</abbr> metrics. If you are a company interested in my skill acquisition for employment, please reach out for more
-          information.
-        </p>
-      </article>
+      <h2>General Contact Information</h2>
       <article className='contact__questions'>
-        <h4>General Information</h4>
-        <details className='contact__questions__responseTime'>
+        <details className='contact__questions__responseTime' ref={primaryQuestionRef} open>
           <summary className='contact__questions__responseTime--question'>How long until I receive a response?</summary>
           <p>
             Kindly share the requested contact information and I'll be sure to respond in a timely fashion. My availability extends throughout the entire week;
             however, I do not respond to inquiries after business hours.
           </p>
         </details>
-        <details className='contact__questions__provisions'>
+        <details className='contact__questions__provisions' ref={primaryQuestionRef}>
           <summary className='contact__questions__provisions--question'>Will the information I share be secure?</summary>
           <p>
             <span>
@@ -34,8 +89,8 @@ const ContactFormInformation = () => {
             <span>email@gmail.com</span>
           </p>
         </details>
-        <details className='contact__questions__inclusivityAccessibility'>
-          <summary className='contact__questions____inclusivityAccessibility--question'>Inclusivity and Accessibility</summary>
+        <details className='contact__questions__inclusivityAccessibility' ref={primaryQuestionRef}>
+          <summary className='contact__questions__inclusivityAccessibility--question'>Inclusivity and Accessibility</summary>
           <p>
             I will, without question, welcome the opportunity to connect and/or work with individuals of any race, background, disability, or circumstance. I grew up
             around children with Autism diagnoses and understand that not everybody is able to communicate in the same way. There will be no reservations or
@@ -43,11 +98,11 @@ const ContactFormInformation = () => {
             and dignity.
           </p>
         </details>
-        <details className='contact__questions__formErrors'>
+        <details className='contact__questions__formErrors' ref={primaryQuestionRef}>
           <summary className='contact__questions__formErrors--question'>Form assistance</summary>
           <ol id='errorMessageFAQ'>
             <li>
-              <details>
+              <details ref={assistanceQuestionRef}>
                 <summary>I'm contacting on behalf of another person.</summary>
                 <ul>
                   <li>Step one: Fill out the form with your contact information. Do not provide anybody's information except for your own.</li>
@@ -64,7 +119,7 @@ const ContactFormInformation = () => {
               </details>
             </li>
             <li>
-              <details>
+              <details ref={assistanceQuestionRef}>
                 <summary>I'm having issues with the email address.</summary>
                 <ul>
                   <li>You will be prompted with an error in the event that:</li>
@@ -86,7 +141,7 @@ const ContactFormInformation = () => {
               </details>
             </li>
             <li>
-              <details>
+              <details ref={assistanceQuestionRef}>
                 <summary>My contact number is being rejected.</summary>
                 <ul>
                   <li>Your contact number must be ten digits in length excluding the extension.</li>
@@ -95,7 +150,7 @@ const ContactFormInformation = () => {
               </details>
             </li>
             <li>
-              <details>
+              <details ref={assistanceQuestionRef}>
                 <summary>I can't submit my website url.</summary>
                 <ul>
                   <li>I will not visit insecure URLS; therefore, any provided URL must be secure (https://).</li>

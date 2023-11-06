@@ -89,16 +89,18 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactFormTyp
   };
 
   return (
-    <aside className='contactForm' role='dialog' aria-label='Developer Contact Form' data-status={contactFormActive === true ? 'active' : 'false'}>
-      <ContactFormInformation />
-      <ContactFormStandard
-        contactFormFields={contactFormFields}
-        setContactFormFields={setContactFormFields}
-        formValidation={formValidation}
-        setFormValidation={setFormValidation}
-        updateContactFormFieldsState={updateContactFormFieldsState}
-        useContactFormValidator={useContactFormValidator}
-      />
+    <aside className='contactFormWrapper' role='dialog' aria-label='Developer Contact Form' data-status={contactFormActive === true ? 'active' : 'false'}>
+      <div className='contactForm'>
+        <ContactFormStandard
+          contactFormFields={contactFormFields}
+          setContactFormFields={setContactFormFields}
+          formValidation={formValidation}
+          setFormValidation={setFormValidation}
+          updateContactFormFieldsState={updateContactFormFieldsState}
+          useContactFormValidator={useContactFormValidator}
+        />
+        <ContactFormInformation />
+      </div>
     </aside>
   );
 };
