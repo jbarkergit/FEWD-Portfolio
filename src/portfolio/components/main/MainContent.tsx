@@ -219,8 +219,8 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator, la
           <article className='mainContent__article' data-status={project.dataStatus} ref={addToRefs} key={project.key}>
             <figure>
               <picture>
-                <img src={project.imageSrc} alt={project.imageAlt} draggable='false' loading='lazy' decoding='async' fetchpriority='high' />
-                <figcaption>{project.imageAlt}</figcaption>
+                <img src={project.projectImageSrc} alt={project.projectImageAlt} draggable='false' loading='lazy' decoding='async' fetchpriority='high' />
+                <figcaption>{project.projectImageAlt}</figcaption>
               </picture>
             </figure>
           </article>
