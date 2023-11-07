@@ -3,7 +3,7 @@ import { initState } from './initial-state/initState';
 import { actionType } from './types/actionType';
 import { indexStateType } from './types/indexStateType';
 import { initSliderStateType } from './types/initSliderStateType';
-import { myProjects } from './data/myProjects';
+import { myProjects } from '../../assets/projects-data/myProjects';
 
 const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator, layout, setLayout }: indexStateType): JSX.Element => {
   //** Array of articles */

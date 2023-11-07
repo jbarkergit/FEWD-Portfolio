@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentTimeCDT from './CurrentTimeCDT';
-import { myProjects } from '../../main/data/myProjects';
+import { myProjects } from '../../../assets/projects-data/myProjects';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;
