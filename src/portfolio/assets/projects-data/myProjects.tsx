@@ -4,7 +4,7 @@ export const myProjects = [
     projectUrl: 'http://localhost:5173/ecommerce',
     projectExtended: true,
     projectSummary: true,
-    projectImageSrc: '/src/portfolio/assets/compressed-project-images/Ecommerce-Landing.png',
+    projectImageSrc: '/src/portfolio/assets/compressed-project-images/eco-landing-page.png',
     projectImageAlt: 'Ecommerce Web Development Project',
     dataStatus: 'active',
   },
