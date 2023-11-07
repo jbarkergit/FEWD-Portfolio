@@ -7,7 +7,7 @@
   height: 100%;
   max-height: 12%;
   z-index: 10;
-  padding: 0 calc(m.$viewportMarginRightLeft * 2) 0 m.$viewportMarginRightLeft;
+  padding: 0 calc(m.$box-model-viewport-x * 2) 0 m.$box-model-viewport-x;
   &__nav {
     display: flex;
     align-items: center;
@@ -18,21 +18,16 @@
     &__mobileLeft {
       display: flex;
       align-items: flex-end;
-      gap: m.$portfolioGap;
+      gap: m.$portfolio-gap;
       flex: 1 1 50%;
       & button {
-        color: #fff;
-        font-family: 'Manrope', sans-serif;
-        font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
-        font-weight: 500;
-        letter-spacing: f.rem(0.8);
         text-transform: capitalize;
         white-space: nowrap;
       }
       & a {
         display: flex;
         align-items: center;
-        gap: calc(m.$portfolioGap / 3);
+        gap: calc(m.$portfolio-gap / 3);
         white-space: nowrap;
       }
     }
@@ -41,8 +36,6 @@
         display: none;
       }
       & h2 {
-        font-size: f.rem(18);
-        font-weight: 500;
         text-transform: uppercase;
       }
     }

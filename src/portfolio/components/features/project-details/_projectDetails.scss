@@ -2,48 +2,36 @@
 @use '../../../scss/portfolioStyles' as m;
 
 .projectDetails {
-  padding: m.$viewportMarginTopBottom calc(m.$viewportMarginRightLeft * 2) m.$viewportMarginTopBottom m.$viewportMarginRightLeft;
+  padding: m.$box-model-viewport-y calc(m.$box-model-viewport-x * 2) m.$box-model-viewport-y m.$box-model-viewport-x;
   &__projectOverview,
   &__projectSummary {
     display: flex;
     flex-direction: column;
     align-items: center;
-    h2 {
-      font-size: clamp(f.rem(16), f.rem(18) + 1vw, f.rem(24));
-      font-weight: 500;
-    }
     h3 {
       width: 65ch;
       padding-bottom: f.rem(24);
-      font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
-      font-weight: 700;
     }
     &__nav {
       display: flex;
-      gap: f.rem(4);
-      padding: calc(m.$viewportMarginTopBottom / 6) 0 calc(m.$viewportMarginTopBottom * 1.5) 0;
+      padding: calc(m.$box-model-viewport-y / 6) 0 calc(m.$box-model-viewport-y * 1.5) 0;
       & button {
         cursor: pointer;
         text-transform: capitalize;
         white-space: nowrap;
-        color: var(--fontSecondary);
         padding-bottom: f.rem(2);
-        border-bottom: 1px solid m.$messageYellow;
+        border-bottom: 1px solid m.$font-color-issue;
       }
     }
     &__information {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-bottom: calc(m.$viewportMarginTopBottom * 1.5);
+      padding-bottom: calc(m.$box-model-viewport-y * 1.5);
       p {
         width: clamp(45ch, 100%, 75ch);
         padding-bottom: f.rem(24);
-        font-weight: 400;
         & span {
-          font-weight: 800;
-          letter-spacing: f.rem(1.2);
-          line-height: 1.2rem;
           text-transform: uppercase;
         }
       }

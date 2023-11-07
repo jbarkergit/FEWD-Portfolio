@@ -91,6 +91,7 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactFormTyp
   return (
     <aside className='contactFormWrapper' role='dialog' aria-label='Developer Contact Form' data-status={contactFormActive === true ? 'active' : 'false'}>
       <div className='contactForm'>
+        <ContactFormInformation />
         <ContactFormStandard
           contactFormFields={contactFormFields}
           setContactFormFields={setContactFormFields}
@@ -99,7 +100,6 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactFormTyp
           updateContactFormFieldsState={updateContactFormFieldsState}
           useContactFormValidator={useContactFormValidator}
         />
-        <ContactFormInformation />
       </div>
     </aside>
   );

@@ -5,32 +5,33 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: #1c1c19;
   overflow: hidden;
-  background-color: hsl(0, 0%, 10%);
-  color: #fff;
+  color: hsl(0, 0%, 100%);
+  // Property: [Optional: style, variant, weight], size, line-height, family, fallback (font, font type)
   font:
-    500 100% / 1.25 'Manrope',
+    normal no-common-ligatures proportional-nums 500 1rem / 1.25em 'Helvetica',
+    PT Sans,
     sans-serif;
-  font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
-  letter-spacing: f.rem(0.8);
-  letter-spacing: 0.2px;
+
+  & button {
+    color: hsl(0, 0%, 100%);
+  }
 }
 
-.flex {
-  display: flex;
-}
+// Background colors
+$background-color-primary: hsl(49, 26%, 92%);
+$background-color-transparent-fallback: rgba(90, 90, 90, 0.5);
 
-//Color
-$transparentElem: rgba(0, 0, 0, 0.5);
-$transparentElemLight: rgba(209, 209, 209, 0.25);
-$messageYellow: hsl(48, 56%, 54%);
+// Font Colors
+$font-color-primary: hsl(0, 0%, 100%);
+$font-color-issue: hsl(48, 56%, 54%);
 
-//Spacing
-$viewportMarginTopBottom: f.rem(40);
-$viewportMarginRightLeft: f.rem(160);
-// $viewportMarginTopBottom: calc(2.963% / 1.5);
-// $viewportMarginRightLeft: 8.33%;
-$portfolioGap: f.rem(24);
+// Box Model Spacing
+$box-model-viewport-y: f.rem(40);
+$box-model-viewport-x: f.rem(160);
+// $box-model-viewport-y-percentage: calc(2.963% / 1.5);
+// $box-model-viewport-x-percentage: 8.33%;
 
-//Border
-$portfolioBorder: 2px solid hsl(0, 0%, 14%);
+// Gaps
+$portfolio-gap: f.rem(24);

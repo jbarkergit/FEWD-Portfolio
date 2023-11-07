@@ -8,7 +8,7 @@
   height: 100%;
   max-height: 12%;
   z-index: 10;
-  padding: 0 calc(m.$viewportMarginRightLeft * 2) 0 m.$viewportMarginRightLeft;
+  padding: 0 calc(m.$box-model-viewport-x * 2) 0 m.$box-model-viewport-x;
   &__index {
     display: flex;
     flex: 1 1 calc(100% / 2);
@@ -17,13 +17,13 @@
       display: flex;
       align-content: flex-start;
       width: f.rem(120);
-      padding-right: m.$portfolioGap;
+      padding-right: m.$portfolio-gap;
       white-space: nowrap;
     }
     &__slideNav ul {
       position: relative;
       display: flex;
-      gap: m.$portfolioGap;
+      gap: m.$portfolio-gap;
       padding: f.rem(1) 0 0 0;
       &:after {
         content: url(https://api.iconify.design/solar:alt-arrow-up-bold.svg?color=%23ffffff);
@@ -43,7 +43,7 @@
     &__buttons {
       display: flex;
       align-items: center;
-      gap: m.$portfolioGap;
+      gap: m.$portfolio-gap;
       height: 100%;
       pointer-events: none;
       clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
@@ -54,12 +54,6 @@
         transition: clip-path 0.65s cubic-bezier(0.7, 0, 0, 1);
       }
       & button {
-        color: #fff;
-        font:
-          500 100% / 1.25 'Manrope',
-          sans-serif;
-        font-size: clamp(f.rem(14), f.rem(10) + 1vw, f.rem(16));
-        letter-spacing: f.rem(0.8);
         text-transform: capitalize;
       }
     }
@@ -67,16 +61,16 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: f.rem(4);
+      gap: calc(m.$portfolio-gap / 4);
       width: fit-content;
       height: 100%;
-      padding: f.rem(0) 0 0 calc(m.$portfolioGap * 2);
+      padding: f.rem(0) 0 0 calc(m.$portfolio-gap * 2);
       opacity: 1;
       pointer-events: all;
       &--line {
         width: 22px;
         height: 2px;
-        background-color: hsl(0, 0%, 100%);
+        background-color: hsl(48, 49%, 44%);
         transition: transform 0.65s cubic-bezier(0.7, 0, 0, 1);
         pointer-events: none;
         &:nth-of-type(1) {
