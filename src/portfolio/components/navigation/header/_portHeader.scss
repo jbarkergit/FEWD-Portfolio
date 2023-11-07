@@ -23,7 +23,7 @@
     &__slideNav ul {
       position: relative;
       display: flex;
-      gap: calc(m.$portfolio-gap / 2);
+      gap: calc(m.$portfolio-gap / 1.5);
       padding: f.rem(1) 0 0 0;
       &:after {
         content: url(https://api.iconify.design/solar:alt-arrow-up-bold.svg?color=%23ffffff);
