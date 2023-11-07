@@ -1,7 +1,8 @@
-@forward '../../portfolio/scss/portfolioStyles';
-@forward '../../portfolio/components/navigation/header/portHeader';
-@forward '../../portfolio/components/navigation/footer/portFooter';
-@forward '../../portfolio/components/main/mainContent';
-@forward '../../portfolio/components/features/contact/contactForm';
-@forward '../../portfolio/components/features/project-details/projectDetails';
-@forward '../../portfolio/components/features/tech-stack/ecommerceTechStack';
+@forward '/src/portfolio/scss/portfolioStyles';
+@forward '/src/portfolio/pages/portfolioPage';
+@forward '/src/portfolio/components/navigation/header/portHeader';
+@forward '/src/portfolio/components/navigation/footer/portFooter';
+@forward '/src/portfolio/components/main/mainContent';
+@forward '/src/portfolio/components/features/contact/contactForm';
+@forward '/src/portfolio/components/features/project-details/projectDetails';
+@forward '/src/portfolio/components/features/tech-stack/ecommerceTechStack';

@@ -1,29 +1,11 @@
 @use '../../sass/functions' as f;
 
-#portfolio {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background-color: hsl(60, 6%, 10%);
-  overflow: hidden;
-  color: hsl(0, 0%, 100%);
-  // Property: [Optional: style, variant, weight], size, line-height, family, fallback (font, font type)
-  font:
-    normal no-common-ligatures proportional-nums 500 1rem / 1.25em 'Helvetica',
-    PT Sans,
-    sans-serif;
-  & button {
-    color: hsl(0, 0%, 100%);
-  }
-}
-
 // Background colors
 $background-color-primary: hsl(60, 6%, 10%);
 $background-color-transparent-fallback: rgba(90, 90, 90, 0.5);
 
 // Font Colors
-$font-color-primary: hsl(0, 0%, 100%);
+$font-color-primary: hsl(0, 0%, 96%);
 $font-color-indicate-warning: hsl(48, 56%, 54%);
 
 // Box Model Spacing

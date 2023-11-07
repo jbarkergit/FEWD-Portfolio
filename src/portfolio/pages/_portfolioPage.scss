@@ -1,0 +1,20 @@
+@use '../../sass/functions' as f;
+@use '../scss/portfolioStyles' as m;
+
+#portfolio {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: m.$background-color-primary;
+  overflow: hidden;
+  color: m.$font-color-primary;
+  // Property: [Optional: style, variant, weight], size, line-height, family, fallback (font, font type)
+  font:
+    normal no-common-ligatures proportional-nums 500 1rem / 1.25em 'Helvetica',
+    PT Sans,
+    sans-serif;
+  & button {
+    color: m.$font-color-primary;
+  }
+}
