@@ -1,5 +1,7 @@
 @forward '/src/portfolio/scss/portfolioStyles';
+@forward '/src/portfolio/scss/portfolioMixins';
 @forward '/src/portfolio/pages/portfolioPage';
+@forward '/src/portfolio/components/landing/portfolioLanding';
 @forward '/src/portfolio/components/navigation/header/portHeader';
 @forward '/src/portfolio/components/navigation/footer/portFooter';
 @forward '/src/portfolio/components/main/mainContent';
