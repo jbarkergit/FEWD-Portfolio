@@ -1,0 +1,29 @@
+@use '/src/sass/functions' as f;
+@use '/src/portfolio/scss/portfolioStyles' as s;
+
+.portfolioLanding {
+  position: absolute;
+  z-index: 15;
+  width: 100%;
+  height: 100vh;
+  padding: s.$box-model-viewport-y calc(s.$box-model-viewport-x * 2);
+  background-color: s.$background-color-primary;
+  &[data-transition='true'] {
+  }
+  &[data-transition='false'] {
+  }
+  &--mandatoryHeading {
+    display: none;
+  }
+  &__article {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    &--h3 {
+    }
+    &--p {
+      width: clamp(45ch, 100%, 65ch);
+    }
+  }
+}
