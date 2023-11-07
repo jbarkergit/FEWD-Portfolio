@@ -5,13 +5,12 @@ import PortHeader from '../components/navigation/header/PortHeader';
 import PortFooter from '../components/navigation/footer/PortFooter';
 
 //Main
-import PortfolioLanding from '../components/landing/PortfolioLanding';
 import MainContent from '../components/main/MainContent';
-import ProjectDetails from '../components/features/project-details/ProjectDetails';
 
 //Features
 import ContactForm from '../components/features/contact/ContactForm';
 import EcommerceTechStack from '../components/features/tech-stack/EcommerceTechStack';
+import ProjectDetails from '../components/features/project-details/ProjectDetails';
 
 const Portfolio = (): JSX.Element => {
   //** INDEX TRACKER: Current Active Project Slide */
@@ -36,7 +35,6 @@ const Portfolio = (): JSX.Element => {
 
   return (
     <div id='portfolio'>
-      <PortfolioLanding />
       <PortHeader
         projectSlideIndex={projectSlideIndex}
         setProjectSlideIndex={setProjectSlideIndex}

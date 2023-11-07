@@ -1,10 +1,13 @@
 @forward '/src/portfolio/scss/portfolioStyles';
 @forward '/src/portfolio/scss/portfolioMixins';
 @forward '/src/portfolio/pages/portfolioPage';
-@forward '/src/portfolio/components/landing/portfolioLanding';
+
 @forward '/src/portfolio/components/navigation/header/portHeader';
 @forward '/src/portfolio/components/navigation/footer/portFooter';
+
 @forward '/src/portfolio/components/main/mainContent';
+
 @forward '/src/portfolio/components/features/contact/contactForm';
-@forward '/src/portfolio/components/features/project-details/projectDetails';
 @forward '/src/portfolio/components/features/tech-stack/ecommerceTechStack';
+
+@forward '/src/portfolio/components/features/project-details/projectDetails';
