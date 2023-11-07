@@ -185,7 +185,7 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex }: indexStateType
   useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [projectSlideIndex]);
 
   return (
-    <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} ref={targetElementRef} style={state.style} data-status='' data-layout='column'>
+    <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} ref={targetElementRef} style={state.style} data-status=''>
       {myProjects.map((project) => {
         return (
           <article className='mainContent__article' data-status={project.dataStatus} ref={addToRefs} key={project.key}>
