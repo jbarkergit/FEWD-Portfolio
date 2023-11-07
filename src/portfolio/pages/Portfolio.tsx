@@ -30,7 +30,7 @@ const Portfolio = (): JSX.Element => {
         setContactFormActive={setContactFormActive}
         setTechStackActive={setTechStackActive}
       />
-      <ContactForm contactFormActive={contactFormActive} setContactFormActive={setContactFormActive} />
+      {/* <ContactForm contactFormActive={contactFormActive} setContactFormActive={setContactFormActive} /> */}
       <EcommerceTechStack techStackActive={techStackActive} setTechStackActive={setTechStackActive} />
       {/* <ProjectDetails projectSlideIndex={projectSlideIndex} /> */}
       <MainContent projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
