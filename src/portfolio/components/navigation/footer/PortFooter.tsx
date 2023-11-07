@@ -25,15 +25,16 @@ const PortFooter = ({ projectSlideIndex, layout, setLayout }: ProjectNavPropType
           )}
         </section>
         <section className='portFooter__nav__left'>
-          {projectSlideIndex === 0 ? <h2>Ecommerce</h2> : null}
-
+          {myProjects[projectSlideIndex].projectUrl !== '' ? (
+            <h2>{myProjects[projectSlideIndex].key}</h2>
+          ) : (
+            <span className='projectUnavailable'>This project is unavailable</span>
+          )}
           {myProjects[projectSlideIndex].projectExtended ? (
             <button aria-label='Open Project Insights' onClick={() => setLayout(layout === 'column' ? 'row' : 'column')}>
               Project Insights
             </button>
-          ) : (
-            <span className='projectUnavailable'>This project is unavailable</span>
-          )}
+          ) : null}
           {myProjects[projectSlideIndex].projectUrl ? (
             <Link to={myProjects[projectSlideIndex].projectUrl}>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 24 24'>
