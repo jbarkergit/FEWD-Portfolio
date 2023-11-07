@@ -5,7 +5,7 @@ import { indexStateType } from './types/indexStateType';
 import { initSliderStateType } from './types/initSliderStateType';
 import { myProjects } from '../../assets/projects-data/myProjects';
 
-const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator, layout, setLayout }: indexStateType): JSX.Element => {
+const MainContent = ({ projectSlideIndex, setProjectSlideIndex }: indexStateType): JSX.Element => {
   //** Array of articles */
   const revealRefs = useRef<HTMLElement[]>([]);
 
@@ -24,34 +24,6 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex, mainAnimator, la
     setApplySmoothenAnimation((prev) => !prev);
     setTimeout(() => setApplySmoothenAnimation(false), 250);
   };
-
-  //** Main slider transition animation (css-only anim overrides smoothen anim due to shared props) */
-  useEffect(() => {
-    const target = targetElementRef.current;
-
-    switch (mainAnimator) {
-      case true:
-        if (target) {
-          setTimeout(() => (target.style.transform = `translateX(${targetElementWidth * -1 - 250}px)`), 250);
-          setTimeout(() => target.setAttribute('data-status', ''), 500);
-          target.setAttribute('data-status', 'mainAnimation');
-          target.style.scale = '90%';
-        }
-        break;
-
-      case false:
-        if (target) {
-          setTimeout(() => (target.style.scale = '100%'), 250);
-          setTimeout(() => target.setAttribute('data-status', ''), 500);
-          target.setAttribute('data-status', 'mainAnimation');
-          target.style.transform = `translateX(${0}px)`;
-        }
-        break;
-
-      default:
-        break;
-    }
-  }, [mainAnimator]);
 
   //** Reference information variables */
   // Slider track width

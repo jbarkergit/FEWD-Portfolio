@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 //Navigation
 import PortHeader from '../components/navigation/header/PortHeader';
@@ -22,17 +22,6 @@ const Portfolio = (): JSX.Element => {
   //** ACTIVE STATUS TRACKER: TechStack Modal */
   const [techStackActive, setTechStackActive] = useState<boolean>(false);
 
-  //** ANIMATION INITIATOR: Main Slider Boolean setter (IF contactForm !== false, IF techStackActive !== false) */
-  const [mainAnimator, setMainAnimator] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (contactFormActive || techStackActive) setMainAnimator(true);
-    else setMainAnimator(false);
-  }, [contactFormActive, techStackActive]);
-
-  //** LAYOUT TRACKER */
-  const [layout, setLayout] = useState<string>('column');
-
   return (
     <div id='portfolio'>
       <PortHeader
@@ -44,15 +33,8 @@ const Portfolio = (): JSX.Element => {
       <ContactForm contactFormActive={contactFormActive} setContactFormActive={setContactFormActive} />
       <EcommerceTechStack techStackActive={techStackActive} setTechStackActive={setTechStackActive} />
       {/* <ProjectDetails projectSlideIndex={projectSlideIndex} /> */}
-      <MainContent
-        projectSlideIndex={projectSlideIndex}
-        setProjectSlideIndex={setProjectSlideIndex}
-        mainAnimator={mainAnimator}
-        setMainAnimator={setMainAnimator}
-        layout={layout}
-        setLayout={setLayout}
-      />
-      <PortFooter projectSlideIndex={projectSlideIndex} layout={layout} setLayout={setLayout} />
+      <MainContent projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
+      <PortFooter projectSlideIndex={projectSlideIndex} />
     </div>
   );
 };

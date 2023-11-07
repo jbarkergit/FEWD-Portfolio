@@ -5,11 +5,9 @@ import { myProjects } from '../../../assets/projects-data/myProjects';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;
-  layout: string;
-  setLayout: Dispatch<SetStateAction<string>>;
 };
 
-const PortFooter = ({ projectSlideIndex, layout, setLayout }: ProjectNavPropType) => {
+const PortFooter = ({ projectSlideIndex }: ProjectNavPropType) => {
   return (
     <footer className='portFooter'>
       <nav className='portFooter__nav'>
@@ -30,11 +28,7 @@ const PortFooter = ({ projectSlideIndex, layout, setLayout }: ProjectNavPropType
           ) : (
             <span className='projectUnavailable'>This project is unavailable</span>
           )}
-          {myProjects[projectSlideIndex].projectExtended ? (
-            <button aria-label='Open Project Insights' onClick={() => setLayout(layout === 'column' ? 'row' : 'column')}>
-              Project Insights
-            </button>
-          ) : null}
+          {myProjects[projectSlideIndex].projectExtended ? <button aria-label='Open Project Insights'>Project Insights</button> : null}
           {myProjects[projectSlideIndex].projectUrl ? (
             <Link to={myProjects[projectSlideIndex].projectUrl}>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 24 24'>
