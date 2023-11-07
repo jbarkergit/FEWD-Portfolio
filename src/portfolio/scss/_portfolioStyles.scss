@@ -13,7 +13,6 @@
     normal no-common-ligatures proportional-nums 500 1rem / 1.25em 'Helvetica',
     PT Sans,
     sans-serif;
-
   & button {
     color: hsl(0, 0%, 100%);
   }
@@ -28,10 +27,8 @@ $font-color-primary: hsl(0, 0%, 100%);
 $font-color-issue: hsl(48, 56%, 54%);
 
 // Box Model Spacing
-$box-model-viewport-y: f.rem(40);
-$box-model-viewport-x: f.rem(160);
-// $box-model-viewport-y-percentage: calc(2.963% / 1.5);
-// $box-model-viewport-x-percentage: 8.33%;
+$box-model-viewport-x: f.rem(160); // 8.33%
+$box-model-viewport-y: f.rem(40); // calc(2.963% / 1.5)
 
 // Gaps
 $portfolio-gap: f.rem(24);
