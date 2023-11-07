@@ -118,7 +118,7 @@
           letter-spacing 150ms ease-in,
           transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
         &[data-status='active'] {
-          color: m.$font-color-issue;
+          color: m.$font-color-indicate-warning;
           font-size: f.rem(16);
           letter-spacing: 0.08em;
           transform: translateY(f.rem(4));
@@ -137,7 +137,7 @@
       }
       &--errorMessage {
         padding: 0 0 0 f.rem(12);
-        color: m.$font-color-issue;
+        color: m.$font-color-indicate-warning;
       }
     }
   }

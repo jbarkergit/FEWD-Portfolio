@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #1c1c19;
+  background-color: hsl(60, 6%, 10%);
   overflow: hidden;
   color: hsl(0, 0%, 100%);
   // Property: [Optional: style, variant, weight], size, line-height, family, fallback (font, font type)
@@ -19,12 +19,12 @@
 }
 
 // Background colors
-$background-color-primary: hsl(49, 26%, 92%);
+$background-color-primary: hsl(60, 6%, 10%);
 $background-color-transparent-fallback: rgba(90, 90, 90, 0.5);
 
 // Font Colors
 $font-color-primary: hsl(0, 0%, 100%);
-$font-color-issue: hsl(48, 56%, 54%);
+$font-color-indicate-warning: hsl(48, 56%, 54%);
 
 // Box Model Spacing
 $box-model-viewport-x: f.rem(160); // 8.33%
