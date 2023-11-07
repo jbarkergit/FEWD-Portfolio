@@ -25,7 +25,7 @@
   max-width: 75vw;
   max-height: 76vh;
   height: 100%;
-  background-color: hsl(0, 0, 8%);
+  background-color: hsl(0, 0%, 8%);
   &__section {
     display: flex;
     align-items: center;
@@ -40,7 +40,7 @@
       flex: 0 1 45%;
       border-top-right-radius: f.rem(24);
       border-bottom-right-radius: f.rem(24);
-      background-color: hsl(0, 0, 50%);
+      background-color: hsl(0, 0%, 50%);
     }
     & h2 {
       display: none;
@@ -54,7 +54,7 @@
   justify-content: flex-start;
   width: clamp(45ch, 100%, 75ch);
   height: fit-content;
-  background-color: hsl(0, 0, 60%);
+  background-color: hsl(0, 0%, 60%);
   overflow: scroll;
   scrollbar-width: none;
   &__services,
