@@ -32,7 +32,7 @@ const PortFooter = ({ projectSlideIndex, layout, setLayout }: ProjectNavPropType
               Project Insights
             </button>
           ) : (
-            <span className='projectUnavailable'>this project is unavailable</span>
+            <span className='projectUnavailable'>This project is unavailable</span>
           )}
           {myProjects[projectSlideIndex].projectUrl ? (
             <Link to={myProjects[projectSlideIndex].projectUrl}>
