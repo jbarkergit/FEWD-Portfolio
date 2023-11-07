@@ -70,7 +70,7 @@
       &--line {
         width: 22px;
         height: 2px;
-        background-color: hsl(48, 49%, 44%);
+        background-color: m.$font-color-primary;
         transition: transform 0.65s cubic-bezier(0.7, 0, 0, 1);
         pointer-events: none;
         &:nth-of-type(1) {
