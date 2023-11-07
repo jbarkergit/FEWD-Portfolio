@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentTimeCDT from './CurrentTimeCDT';
+import { myProjects } from '../../main/data/myProjects';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;
@@ -9,45 +10,32 @@ type ProjectNavPropType = {
 };
 
 const PortFooter = ({ projectSlideIndex, layout, setLayout }: ProjectNavPropType) => {
-  const useProjectInformation = (): {
-    extended: boolean;
-    summary: boolean;
-    demoLink: string;
-  } => {
-    switch (projectSlideIndex) {
-      case 0:
-        return { extended: true, summary: true, demoLink: '/ecommerce' };
-      default:
-        return { extended: false, summary: false, demoLink: '' };
-    }
-  };
-
   return (
     <footer className='portFooter'>
       <nav className='portFooter__nav'>
         <section className='portFooter__nav__mobileLeft'>
-          {useProjectInformation()?.demoLink ? (
+          {myProjects[projectSlideIndex].projectUrl !== '' ? (
             <button aria-label='Open Demo Link'>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
                 <path fill='#ffffff' d='M16 18v2H5v-2h11Zm5-7v2H3v-2h18Zm-2-7v2H8V4h11Z'></path>
               </svg>
             </button>
           ) : (
-            <span className='projectUnavailable'>this project is unavailable</span>
+            <span className='projectUnavailable'>This project is unavailable</span>
           )}
         </section>
         <section className='portFooter__nav__left'>
           {projectSlideIndex === 0 ? <h2>Ecommerce</h2> : null}
 
-          {useProjectInformation()?.extended ? (
+          {myProjects[projectSlideIndex].projectExtended ? (
             <button aria-label='Open Project Insights' onClick={() => setLayout(layout === 'column' ? 'row' : 'column')}>
               Project Insights
             </button>
           ) : (
             <span className='projectUnavailable'>this project is unavailable</span>
           )}
-          {useProjectInformation()?.demoLink ? (
-            <Link to={useProjectInformation()?.demoLink}>
+          {myProjects[projectSlideIndex].projectUrl ? (
+            <Link to={myProjects[projectSlideIndex].projectUrl}>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 24 24'>
                 <g fill='none' stroke='#ffffff' strokeLinecap='round' strokeWidth='1.5'>
                   <path d='m12.792 15.8l1.43-1.432a6.076 6.076 0 0 0 0-8.59a6.067 6.067 0 0 0-8.583 0L2.778 8.643A6.076 6.076 0 0 0 6.732 19'></path>
