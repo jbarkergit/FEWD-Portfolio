@@ -1,0 +1,11 @@
+@use '/src/sass/functions' as f;
+
+#threeSlider {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  & canvas {
+    position: relative;
+    z-index: 10;
+  }
+}
