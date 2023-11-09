@@ -16,10 +16,10 @@ const Portfolio = (): JSX.Element => {
   //** INDEX TRACKER: Current Active Project Slide */
   const [projectSlideIndex, setProjectSlideIndex] = useState<number>(0);
 
-  //** ACTIVE STATUS TRACKER: Contact Form Modal */
+  //** Contact Form Modal render state */
   const [contactFormActive, setContactFormActive] = useState<boolean>(false);
 
-  //** ACTIVE STATUS TRACKER: TechStack Modal */
+  //** TechStack Modal render state */
   const [techStackActive, setTechStackActive] = useState<boolean>(false);
 
   return (
