@@ -182,10 +182,17 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex }: indexStateType
   useEffect(() => setProjectSlideIndex(state.closestIndex), [state.closestIndex]);
 
   //** Toggle data-status attribute (Resize of currently active element) */
-  useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [projectSlideIndex]);
+  useEffect(() => {
+    (e: PointerEvent) => {
+      console.log(e.target);
+      if (e.target instanceof HTMLButtonElement) {
+        dispatch({ type: 'BUTTON_NAVIGATION' });
+      }
+    };
+  }, [projectSlideIndex]);
 
   return (
-    <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} ref={targetElementRef} style={state.style} data-status=''>
+    <main className={`mainContent ${applySmoothenAnimation ? 'smoothen' : ''}`} ref={targetElementRef} style={state.style} data-status='' data-mount-anim='true'>
       {myProjects.map((project) => {
         return (
           <article className='mainContent__article' data-status={project.dataStatus} ref={addToRefs} key={project.key}>

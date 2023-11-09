@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { myProjects } from '../../../assets/projects-data/myProjects';
 
 //Prop drill from Portfolio page
 type PortHeaderType = {
@@ -28,13 +29,22 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormAct
     if (lines.current && !lines.current.includes(reference)) lines.current.push(reference);
   };
 
+  /** Map project length array */
+  const projectIndexArray: number[] = [];
+
+  myProjects.forEach((project, index) => {
+    if (!projectIndexArray.includes(index)) {
+      projectIndexArray.push(index);
+    }
+  });
+
   return (
     <header className='portHeader'>
       <section className='portHeader__index'>
         <div className='portHeader__index__location'>{`Project 0${projectSlideIndex + 1}.`}</div>
         <nav className='portHeader__index__slideNav'>
           <ul ref={unorderedListRef}>
-            {Array.from({ length: 2 }).map((_, index) => (
+            {projectIndexArray.map((_, index) => (
               <li key={index}>
                 <button className='buttonNav' aria-label={`View Project ${projectSlideIndex + 1}`} onClick={() => setProjectSlideIndex(index)}>
                   <svg xmlns='http://www.w3.org/2000/svg' width='1.2em' height='1.2em' viewBox='0 0 24 24'>
