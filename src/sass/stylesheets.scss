@@ -1,10 +1,10 @@
 /* Boilerplate */
-@forward './boilerplate';
+@forward '/src/sass/boilerplate';
 
 /* HTTP Protocol Errors */
-@forward '../protocol-errors/404/notFound';
+@forward '/src/protocol-errors/404/notFound';
 
 /* Projects */
-@forward '../portfolio/scss/portfolioExports';
-@forward '../ecommerce/scss/ecommerceExports';
-@forward '../discord-clone/scss/discord-clone-exports.scss';
+@forward '/src/portfolio/scss/portfolioExports';
+@forward '/src/ecommerce/scss/ecommerceExports';
+@forward '/src/discord-clone/scss/discord-clone-exports.scss';
