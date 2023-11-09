@@ -13,13 +13,13 @@ import EcommerceTechStack from '../components/features/tech-stack/EcommerceTechS
 import ProjectDetails from '../components/features/project-details/ProjectDetails';
 
 const Portfolio = (): JSX.Element => {
-  //** INDEX TRACKER: Current Active Project Slide */
+  /** INDEX TRACKER: Current Active Project Slide */
   const [projectSlideIndex, setProjectSlideIndex] = useState<number>(0);
 
-  //** Contact Form Modal render state */
+  /** Contact Form Modal render state */
   const [contactFormActive, setContactFormActive] = useState<boolean>(false);
 
-  //** TechStack Modal render state */
+  /** TechStack Modal render state */
   const [techStackActive, setTechStackActive] = useState<boolean>(false);
 
   return (
