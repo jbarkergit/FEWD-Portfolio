@@ -114,7 +114,6 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex }: indexStateType
         const setSliderPosition: number = targetElementChildrenPositionArray[projectSlideIndex] + targElementLeftPadding;
 
         arrayOfArticles.current.forEach((article, index) => article.setAttribute('data-status', index === projectSlideIndex ? 'enabled' : 'disabled'));
-
         toggleSmoothenAnimation();
 
         return {
@@ -181,13 +180,13 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex }: indexStateType
   /** Index Tracker: current slide */
   useEffect(() => setProjectSlideIndex(state.closestIndex), [state.closestIndex]);
 
-  /** Toggle data-status attribute (Resize of currently active element) */
+  /** Dispatch 'BUTTON_NAVIGATION' whenever projectSlideIndex changes */
   useEffect(() => {
     dispatch({ type: 'BUTTON_NAVIGATION' });
   }, [projectSlideIndex]);
 
   return (
-    <main className={`mainContent ${smoothenCarousel ? 'smoothen' : ''}`} ref={carouselContainerRef} style={state.style} data-status='' data-mount-anim='true'>
+    <main className={`mainContent ${smoothenCarousel ? 'smoothen' : ''}`} ref={carouselContainerRef} style={state.style}>
       {myProjects.map((project) => {
         return (
           <article className='mainContent__article' data-status={project.dataStatus} ref={articleRef} key={project.key}>
