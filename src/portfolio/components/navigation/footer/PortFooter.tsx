@@ -23,8 +23,7 @@ const PortFooter = ({ projectSlideIndex }: ProjectNavPropType) => {
       } else {
         setNavigationIndicator({ key: 'This project is unavailable', insights: '', demoLink: '' });
       }
-      footerNavigation.current?.setAttribute('data-transition', 'false');
-    }, 150);
+    }, 300);
   }, [projectSlideIndex]);
 
   return (
@@ -42,7 +41,7 @@ const PortFooter = ({ projectSlideIndex }: ProjectNavPropType) => {
           )}
         </section>
 
-        <section className='portFooter__nav__left' ref={footerNavigation} data-transition=''>
+        <section className='portFooter__nav__left' ref={footerNavigation}>
           <h2>{navigationIndicator.key}</h2>
           <button aria-label='Open Project Insights'>{navigationIndicator.insights}</button>
           <Link to={myProjects[projectSlideIndex].projectUrl}>{navigationIndicator.demoLink}</Link>
