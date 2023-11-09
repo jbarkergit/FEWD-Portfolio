@@ -5,7 +5,7 @@ import { indexStateType } from './types/indexStateType';
 import { initSliderStateType } from './types/initSliderStateType';
 import { myProjects } from '../../assets/projects-data/myProjects';
 
-const MainContent = ({ projectSlideIndex, setProjectSlideIndex }: indexStateType): JSX.Element => {
+const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }: indexStateType): JSX.Element => {
   /** References */
   const carouselContainerRef = useRef<HTMLDivElement>(null);
 
@@ -186,7 +186,10 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex }: indexStateType
   }, [projectSlideIndex]);
 
   return (
-    <main className={`mainContent ${smoothenCarousel ? 'smoothen' : ''}`} ref={carouselContainerRef} style={state.style}>
+    <main
+      className={`mainContent ${smoothenCarousel ? 'smoothen' : ''} ${mountAnimation ? 'data-mount-animation' : ''}`}
+      ref={carouselContainerRef}
+      style={state.style}>
       {myProjects.map((project) => {
         return (
           <article className='mainContent__article' data-status={project.dataStatus} ref={articleRef} key={project.key}>

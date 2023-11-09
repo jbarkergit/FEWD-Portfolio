@@ -4,13 +4,14 @@ import { myProjects } from '../../../assets/projects-data/myProjects';
 
 //Prop drill from Portfolio page
 type PortHeaderType = {
+  mountAnimation: boolean;
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
   setContactFormActive: Dispatch<SetStateAction<boolean>>;
   setTechStackActive: Dispatch<SetStateAction<boolean>>;
 };
 
-const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormActive, setTechStackActive }: PortHeaderType): JSX.Element => {
+const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, setContactFormActive, setTechStackActive }: PortHeaderType): JSX.Element => {
   //** Arrow position references & logic */
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
@@ -39,7 +40,7 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, setContactFormAct
   });
 
   return (
-    <header className='portHeader'>
+    <header className={`portHeader ${mountAnimation ? 'data-mount-animation' : ''}`}>
       <section className='portHeader__index'>
         <div className='portHeader__index__location'>{`Project 0${projectSlideIndex + 1}.`}</div>
         <nav className='portHeader__index__slideNav'>

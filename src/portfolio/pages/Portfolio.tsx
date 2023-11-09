@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 //Navigation
 import PortHeader from '../components/navigation/header/PortHeader';
@@ -13,18 +13,28 @@ import EcommerceTechStack from '../components/features/tech-stack/EcommerceTechS
 import ProjectDetails from '../components/features/project-details/ProjectDetails';
 
 const Portfolio = (): JSX.Element => {
-  /** INDEX TRACKER: Current Active Project Slide */
+  /** Global state trackers
+   * Current Active Project Slide
+   * Contact Form Modal render state
+   * TechStack Modal render state
+   */
+
   const [projectSlideIndex, setProjectSlideIndex] = useState<number>(0);
-
-  /** Contact Form Modal render state */
   const [contactFormActive, setContactFormActive] = useState<boolean>(false);
-
-  /** TechStack Modal render state */
   const [techStackActive, setTechStackActive] = useState<boolean>(false);
 
+  /** Mount Animation */
+  const portfolioRef = useRef<HTMLDivElement>(null);
+  const [mountAnimation, setMountAnimation] = useState<boolean>(true);
+
+  useEffect(() => {
+    setTimeout(() => setMountAnimation(false), 350);
+  }, [portfolioRef.current]);
+
   return (
-    <div id='portfolio'>
+    <div id='portfolio' ref={portfolioRef}>
       <PortHeader
+        mountAnimation={mountAnimation}
         projectSlideIndex={projectSlideIndex}
         setProjectSlideIndex={setProjectSlideIndex}
         setContactFormActive={setContactFormActive}
@@ -33,8 +43,8 @@ const Portfolio = (): JSX.Element => {
       {/* <ContactForm contactFormActive={contactFormActive} setContactFormActive={setContactFormActive} /> */}
       <EcommerceTechStack techStackActive={techStackActive} setTechStackActive={setTechStackActive} />
       {/* <ProjectDetails projectSlideIndex={projectSlideIndex} /> */}
-      <MainContent projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
-      <PortFooter projectSlideIndex={projectSlideIndex} />
+      <MainContent mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
+      <PortFooter mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} />
     </div>
   );
 };

@@ -4,10 +4,11 @@ import CurrentTimeCDT from './CurrentTimeCDT';
 import { myProjects } from '../../../assets/projects-data/myProjects';
 
 type ProjectNavPropType = {
+  mountAnimation: boolean;
   projectSlideIndex: number;
 };
 
-const PortFooter = ({ projectSlideIndex }: ProjectNavPropType) => {
+const PortFooter = ({ mountAnimation, projectSlideIndex }: ProjectNavPropType) => {
   const footerNavigation = useRef<HTMLElement>(null);
 
   const [navigationIndicator, setNavigationIndicator] = useState({ key: myProjects[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Demo Link' });
@@ -27,7 +28,7 @@ const PortFooter = ({ projectSlideIndex }: ProjectNavPropType) => {
   }, [projectSlideIndex]);
 
   return (
-    <footer className='portFooter'>
+    <footer className={`portFooter ${mountAnimation ? 'data-mount-animation' : ''}`}>
       <nav className='portFooter__nav'>
         <section className='portFooter__nav__mobileLeft'>
           {myProjects[projectSlideIndex].projectUrl !== '' ? (
