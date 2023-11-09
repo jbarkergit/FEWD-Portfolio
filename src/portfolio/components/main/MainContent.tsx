@@ -20,7 +20,7 @@ const MainContent = ({ projectSlideIndex, setProjectSlideIndex }: indexStateType
 
   const toggleSmoothenAnimation = () => {
     setSmoothenCarousel((prev) => !prev);
-    setTimeout(() => setSmoothenCarousel(false), 250);
+    setTimeout(() => setSmoothenCarousel(false), 360);
   };
 
   /** Reference information variables */

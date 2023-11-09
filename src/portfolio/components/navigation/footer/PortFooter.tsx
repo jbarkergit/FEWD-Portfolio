@@ -23,7 +23,7 @@ const PortFooter = ({ projectSlideIndex }: ProjectNavPropType) => {
       } else {
         setNavigationIndicator({ key: 'This project is unavailable', insights: '', demoLink: '' });
       }
-    }, 300);
+    }, 360);
   }, [projectSlideIndex]);
 
   return (
