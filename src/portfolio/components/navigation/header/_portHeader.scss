@@ -14,11 +14,10 @@
     flex: 1 1 calc(100% / 2);
     align-items: center;
     &__location {
-      display: flex;
-      align-content: flex-start;
-      width: f.rem(120);
-      padding-right: m.$portfolio-gap;
+      width: f.rem(145);
+      padding-right: calc(m.$portfolio-gap * 2);
       white-space: nowrap;
+      text-transform: capitalize;
     }
     &__slideNav ul {
       position: relative;
@@ -33,6 +32,17 @@
         display: block;
         transform: translateX(var(--afterPsuedoSelector));
         transition: transform 0.35s ease;
+      }
+      & li button {
+        font-size: 1rem !important;
+        filter: brightness(80%);
+        transition:
+          filter 350ms ease-in-out,
+          font-weight 350ms ease-in-out;
+        &.projectNavButtonActive {
+          filter: brightness(100%);
+          font-weight: 600 !important;
+        }
       }
     }
   }
