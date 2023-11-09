@@ -28,7 +28,7 @@ const PortFooter = ({ mountAnimation, projectSlideIndex }: ProjectNavPropType) =
   }, [projectSlideIndex]);
 
   return (
-    <footer className={`portFooter ${mountAnimation ? 'data-mount-animation' : ''}`}>
+    <footer className={`portFooter ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`}>
       <nav className='portFooter__nav'>
         <section className='portFooter__nav__mobileLeft'>
           {myProjects[projectSlideIndex].projectUrl !== '' ? (

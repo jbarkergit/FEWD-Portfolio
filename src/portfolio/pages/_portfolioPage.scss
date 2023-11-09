@@ -25,10 +25,6 @@
   }
 }
 
-.data-mount-animation {
-  animation: opacityFade 350ms ease-in;
-}
-
 @keyframes opacityFade {
   0% {
     opacity: 0;
@@ -36,4 +32,8 @@
   100% {
     opacity: 1;
   }
+}
+
+.data-mount-animation-fade-in {
+  animation: opacityFade 350ms ease-in;
 }

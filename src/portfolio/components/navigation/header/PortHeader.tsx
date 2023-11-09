@@ -40,7 +40,7 @@ const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, s
   });
 
   return (
-    <header className={`portHeader ${mountAnimation ? 'data-mount-animation' : ''}`}>
+    <header className={`portHeader ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`}>
       <section className='portHeader__index'>
         <div className='portHeader__index__location'>{`Project 0${projectSlideIndex + 1}.`}</div>
         <nav className='portHeader__index__slideNav'>

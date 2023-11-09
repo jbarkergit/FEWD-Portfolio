@@ -187,7 +187,7 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
 
   return (
     <main
-      className={`mainContent ${smoothenCarousel ? 'smoothen' : ''} ${mountAnimation ? 'data-mount-animation' : ''}`}
+      className={`mainContent ${smoothenCarousel ? 'smoothen' : ''} ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`}
       ref={carouselContainerRef}
       style={state.style}>
       {myProjects.map((project) => {
