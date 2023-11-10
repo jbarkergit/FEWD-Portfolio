@@ -1,6 +1,13 @@
 @use './functions' as f;
 
-/* Standard Document Selectors */
+/* Custom Properties */
+:root {
+  --fontPrimary: hsl(0, 0%, 20%);
+  --fontSecondary: hsl(0, 0%, 100%);
+  --fontSecondaryOffset: hsl(0, 7%, 76%);
+}
+
+/* Document Selectors */
 html {
   box-sizing: border-box;
   font-size: 100%;
@@ -10,10 +17,10 @@ body {
   margin: 0;
   background-color: hsl(0, 0%, 96%);
   overflow-x: hidden;
+  user-select: none; // Disable text highlighting
   cursor: default;
   text-rendering: optimizeSpeed;
   color: var(--darkFont);
-  user-select: none; // Disable text highlighting
 }
 *,
 *::before,
@@ -31,7 +38,7 @@ button {
   user-select: none;
 }
 
-// Property: [Optional: style, variant, weight], size, line-height, family, fallback (font, font type)
+/* Font imports */
 @font-face {
   font-optical-sizing: auto;
   font-family: 'Plus Jakarta Sans';
@@ -53,7 +60,11 @@ button {
   font-variant-ligatures: common-ligatures;
 }
 
-/* Typography Selectors */
+/**
+Typography Selectors
+font: {optional: style variant weight} size line-height "family", "fallback-font", fallback-font-type
+*/
+
 html {
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -61,7 +72,8 @@ html {
 body {
   font:
     400 100% / 1.25 'Plus Jakarta Sans',
-    'PT Sans';
+    'PT Sans',
+    sans-serif;
 }
 h1 {
   font-size: clamp(f.rem(24), f.rem(34) + 1vw, f.rem(36));
@@ -86,17 +98,17 @@ p,
 summary {
   font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
 }
-article {
-  scroll-padding: f.rem(10) 0 0 0;
-}
 summary {
   list-style: none;
+}
+abbr {
+  text-decoration: none;
 }
 address {
   font-style: normal;
 }
-abbr {
-  text-decoration: none;
+article {
+  scroll-padding: f.rem(10) 0 0 0;
 }
 a,
 a:hover,
