@@ -11,14 +11,13 @@ const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
 const Home = lazy(() => import('./ecommerce/pages/Home'));
 const ProductCatalog = lazy(() => import('./ecommerce/pages/ProductCatalog'));
 const ProductDetailPage = lazy(() => import('./ecommerce/pages/ProductDetailPage'));
-// Ecommerce Dynamic Pathing Hook
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
 /** Discord Clone */
 const DiscordClone = lazy(() => import('./discord-clone/pages/DiscordClone'));
 
 /** Suspense Path Handler */
-import { SuspensePathHandler } from './app/hooks/SuspensePathHandler';
+import { SuspensePathHandler } from './app/suspense/SuspensePathHandler';
 
 /** Application */
 function App() {
