@@ -1,5 +1,4 @@
-import { useMemo } from 'react';
-import { ProductDatabase } from '../database/product-db/ProductDatabase';
+import { useEffect, useMemo, useState } from 'react';
 import { ProductType } from '../types/ProductType';
 
 const useUniqueData: () => {
@@ -9,8 +8,26 @@ const useUniqueData: () => {
   useUniqueHeadphoneCompanies: string[];
   useUniqueMicrophoneCompanies: string[];
 } = () => {
-  // Filters string and array properties from ProductDatabase out into sets
-  const uniqueDataProps = ProductDatabase.reduce(
+  /**
+   * Dynamic import of ProductDatabase
+   * Note: I'm utilizing this hook to dynamically map Ecommerce Routes;
+   * therefore, we need to remove ProductDatabase from Network Queue
+   * Async import removes ProductDatabase from Network Queue outside of '/ecommerce' path
+   *  */
+  const location = window.location.pathname;
+  const [productDB, setProductDB] = useState<ProductType[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { ProductDatabase } = await import('../database/product-db/ProductDatabase');
+      setProductDB(ProductDatabase);
+    };
+
+    if (location.startsWith('/ecommerce')) fetchData();
+  }, [location]);
+
+  /** Filters array string properties from productDB state into sets */
+  const uniqueDataProps = productDB.reduce(
     (
       result: {
         uniqueCompanySet: Set<string>;
