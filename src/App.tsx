@@ -1,5 +1,5 @@
-import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Suspense, lazy, useMemo } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 /** 404 Error */
 const NotFound = lazy(() => import('./app/protocol-error-404/NotFound'));
