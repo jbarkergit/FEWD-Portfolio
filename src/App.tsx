@@ -4,6 +4,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 /** 404 Error */
 const NotFound = lazy(() => import('./app/protocol-error-404/NotFound'));
 
+/** Suspense Path Handler */
+import { SuspensePathHandler } from './app/suspense/SuspensePathHandler';
+
 /** Portfolio */
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
 
@@ -15,9 +18,6 @@ import useUniqueData from './ecommerce/hooks/useUniqueData';
 
 /** Discord Clone */
 const DiscordClone = lazy(() => import('./discord-clone/pages/DiscordClone'));
-
-/** Suspense Path Handler */
-import { SuspensePathHandler } from './app/suspense/SuspensePathHandler';
 
 /** Application */
 function App() {
