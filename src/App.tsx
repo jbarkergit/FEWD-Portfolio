@@ -1,4 +1,4 @@
-import { Suspense, lazy, useMemo } from 'react';
+import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 /** 404 Error */
@@ -11,37 +11,35 @@ const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
 const Home = lazy(() => import('./ecommerce/pages/Home'));
 const ProductCatalog = lazy(() => import('./ecommerce/pages/ProductCatalog'));
 const ProductDetailPage = lazy(() => import('./ecommerce/pages/ProductDetailPage'));
-// Skeletons
-import HomeSkeleton from './ecommerce/skeletons/pages/HomeSkeleton';
-import ProductCatalogSkeleton from './ecommerce/skeletons/pages/ProductCatalogSkeleton';
-import ProductDetailPageSkeleton from './ecommerce/skeletons/pages/ProductDetailPageSkeleton';
+// Pathing via Hooks
+import useUniqueData from './ecommerce/hooks/useUniqueData';
 // Context
 import { CategoryFilterProvider } from './ecommerce/context/CategoryFilterContext';
 import { CartProvider } from './ecommerce/context/CartContext';
-// Pathing via Hooks
-import useUniqueData from './ecommerce/hooks/useUniqueData';
 
 /** Discord Clone */
-import DiscordClone from './discord-clone/pages/DiscordClone';
+const DiscordClone = lazy(() => import('./discord-clone/pages/DiscordClone'));
 
 /** Suspense */
 function SuspensePathHandler() {
-  switch (useLocation().pathname) {
-    case '/ecommerce':
-      return <HomeSkeleton />;
-    case '/ecommerce/products':
-    case '/ecommerce/headphones':
-    case '/ecommerce/amps-dacs':
-    case '/ecommerce/microphones':
-    case '/ecommerce/interfaces':
-      return <ProductCatalogSkeleton />;
-    default:
-      if (useLocation().pathname.startsWith('/ecommerce')) {
-        return <ProductDetailPageSkeleton />;
-      } else {
-        return <div id='defaultSuspense' style={{ height: '100vh', width: '100%', backgroundColor: 'hsl(0, 0%, 10%)' }} />;
-      }
-  }
+  const path = useLocation().pathname;
+  const [Skeleton, setSkeleton] = useState<JSX.Element | null>(null);
+
+  useEffect(() => {
+    // Ecommerce
+    if (path === '/ecommerce') {
+      import('./ecommerce/skeletons/pages/HomeSkeleton').then((module) => setSkeleton(<module.default />));
+    } else if (['/ecommerce/products', '/ecommerce/headphones', '/ecommerce/amps-dacs', '/ecommerce/microphones', '/ecommerce/interfaces'].includes(path)) {
+      import('./ecommerce/skeletons/pages/ProductCatalogSkeleton').then((module) => setSkeleton(<module.default />));
+    } else if (path.startsWith('/ecommerce')) {
+      import('./ecommerce/skeletons/pages/ProductDetailPageSkeleton').then((module) => setSkeleton(<module.default />));
+    } else {
+      // Portfolio
+      setSkeleton(<div id='defaultSuspense' style={{ height: '100vh', width: '100%', backgroundColor: 'hsl(0, 0%, 10%)' }} />);
+    }
+  }, [path]);
+
+  return Skeleton;
 }
 
 /** Application */
