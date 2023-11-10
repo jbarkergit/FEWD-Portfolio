@@ -8,205 +8,70 @@
   height: calc(100vh - 11rem + f.rem(32));
   padding: 0 var(--sectionXPadding) calc(var(--sectionYPadding) + f.rem(32)) var(--sectionXPadding);
   margin-bottom: f.rem(25);
-  @media (width <= 1550px) {
-    gap: 0;
-  }
-  @media (width <= 600px) {
-    padding: 0 f.rem(12) calc(var(--sectionYPadding) + f.rem(32)) f.rem(12);
-  }
-  &__textArea {
-    flex: 0 1 23%;
-    @media (width <= 1550px) {
-      flex: 0 0 50%;
-      padding-right: calc(f.rem(32) / 2);
+  & > * {
+    &:nth-child(1) {
+      flex: 1 0 25%;
     }
-    @media (width < 880px) {
-      flex: 0 0 100%;
+    &:nth-child(2) {
+      flex: 0 1 50%;
+    }
+    &:nth-child(3) {
+      flex: 1 0 25%;
     }
   }
-  &__focus {
-    flex: 1 0 52%;
-    @media (width <= 1550px) {
-      display: none;
-    }
-  }
-  &__cta {
-    flex: 0 1 25%;
-    @media (width <= 1550px) {
-      flex: 0 0 50%;
-      padding-left: calc(f.rem(32) / 2);
-    }
-    @media (width < 880px) {
-      display: none;
-    }
-  }
-}
-
-.infographic__textArea {
-  position: relative;
-  @media (width <= 1550px) {
-    color: var(--fontSecondary);
-  }
-  @media (width <= 880px) {
-    padding: 0;
-  }
-  & article {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: f.rem(6);
-    height: 100%;
-    & strong {
-      z-index: 3;
-      display: inline-grid;
-      padding-bottom: f.rem(6);
-      color: var(--textPrimary);
-      @media (width <= 1550px) {
-        position: absolute;
-        z-index: 3;
-        top: calc(var(--sectionYPadding) / 2);
-        left: calc(var(--sectionXPadding) / 2);
-      }
-      & span {
-        font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));
-        font-weight: 800;
-        text-transform: uppercase;
-        text-wrap: balance;
-        line-height: 115%;
-        @media (width < 880px) {
-          color: var(--fontSecondary);
-        }
-      }
-    }
-    & h1 {
-      position: relative;
-      z-index: 3;
-      margin-bottom: f.rem(35);
-      color: var(--textPrimary);
-      font-size: clamp(f.rem(12), f.rem(12) + 1vw, f.rem(18));
-      font-weight: 500;
-      @media (width <= 1550px) {
-        color: var(--fontSecondary);
-        position: absolute;
-        z-index: 3;
-        bottom: calc(var(--sectionYPadding) / 2);
-        left: calc(var(--sectionXPadding) / 2);
-        margin: 0;
-      }
-    }
-    & figure {
-      display: contents;
-      & picture {
-        display: contents;
-        @media (width <= 1550px) {
-          position: absolute;
-          bottom: 0;
-          display: block;
-          height: 100%;
-        }
-        & img {
-          border-radius: f.rem(24);
-          box-shadow: var(--shadowSoft);
-          object-fit: cover;
-          object-position: center center;
-          @media (width < 880px) {
-            position: absolute;
-          }
-          @media (width < 560px) {
-            object-position: center right;
-          }
-        }
-      }
-    }
-  }
-}
-
-.infographic__focus {
-  & h2 {
+  & section h2 {
     display: none;
   }
-  & figure {
+  & section figure {
     display: contents;
     & picture {
-      display: contents;
+      display: inline-grid;
+      place-items: center;
+      height: 100%;
       & img {
         border-radius: f.rem(24);
         box-shadow: var(--shadowSoft);
-        object-fit: cover;
-        object-position: center center;
-        filter: contrast(94%) brightness(96%);
       }
     }
   }
 }
 
-.infographic__cta {
-  @media (width <= 1550px) {
-    color: var(--fontSecondary);
-  }
-  &--shopNow {
+.infographic__section__textBlock {
+  &--cta {
     @include m.ecoBtn;
     @include m.ecoBtnDark;
-    box-shadow: var(--ecoBtnShadow);
-    color: var(--fontSecondary) !important;
-    @media (width <= 1550px) {
-      box-shadow: none;
-      width: fit-content;
+    margin-top: calc(2.1875rem / 3);
+  }
+  & strong,
+  .infographic__section__textBlock--strong {
+    display: inline-grid;
+    text-wrap: balance;
+    & span {
+      font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 115%;
     }
   }
-  & article {
-    position: relative;
-    height: 100%;
-    @media (width <= 1550px) {
-      display: flex;
-      justify-content: center;
-    }
-    & div {
-      display: flex;
-      flex-direction: column;
-      gap: f.rem(6);
-      height: 100%;
-      max-height: 40%;
-      padding-bottom: f.rem(35);
-      @media (width <= 1550px) {
-        position: absolute;
-        bottom: 7%;
-        width: 90%;
-        height: auto;
-        padding-bottom: 0;
-      }
-      & h2 {
-        font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));
-        font-weight: 800;
-        text-transform: uppercase;
-        text-wrap: balance;
-        line-height: 115%;
-      }
-      & p {
-        padding-bottom: f.rem(6);
-      }
-    }
-    & a {
-      font-weight: 600;
-    }
-    & figure {
-      display: contents;
-      & picture {
-        width: 100%;
-        height: calc(100% - 40%);
-        @media (width <= 1550px) {
-          height: 100%;
-        }
-        & img {
-          border-radius: f.rem(24);
-          box-shadow: var(--shadowSoft);
-          object-fit: cover;
-          object-position: center center;
-          @media (width <= 1550px) {
-            object-position: top center;
-          }
-        }
-      }
-    }
+}
+
+.infographic__section__dynamicAudio h1,
+.infographic__section__news p {
+  font-size: clamp(f.rem(16), f.rem(14) + 1vw, f.rem(20));
+  font-weight: 500;
+}
+
+.infographic__section__dynamicAudio,
+.infographic__section__news {
+  display: flex;
+  flex-direction: column;
+  gap: 2.1875rem;
+  height: 100%;
+}
+
+.infographic__section__presentation {
+  display: contents;
+  & figure picture img {
+    filter: contrast(94%) brightness(96%);
   }
 }

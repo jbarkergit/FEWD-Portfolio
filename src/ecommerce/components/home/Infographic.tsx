@@ -1,19 +1,28 @@
 import { Link } from 'react-router-dom';
 
-const SectionOne = () => {
+{
+  /* <source
+            media='(max-width: 1528px)'
+            srcSet='/src/ecommerce/assets/production-images/compressed-home-page/infographic/1528x915/img-by-ilias-chebbi-on-unsplash.jpg'
+          /> */
+}
+
+const InfographicSectionOne = () => {
   return (
-    <section className='infographic__textArea'>
-      <article>
-        <strong tabIndex={0}>
-          <span>THE NEW</span>
-          <span>HiFi AUDIO</span>
-          <span className='highlight'>EXPERIENCE</span>
-        </strong>
-        <h1 tabIndex={0}>
-          Unparalleled HiFi audio and <span className='highlight'>superior</span> manufacturing for discerning audiophiles. Crystal-clear sound,{' '}
-          <span className='highlight'>premium </span>
-          materials, meticulous <span className='highlight'>craftsmanship</span>, and lasting durability.
-        </h1>
+    <section className='infographic__section'>
+      <article className='infographic__section__dynamicAudio'>
+        <div className='infographic__section__textBlock'>
+          <strong tabIndex={0}>
+            <span>THE NEW </span>
+            <span>HiFi AUDIO </span>
+            <span className='highlight'>EXPERIENCE</span>
+          </strong>
+          <h1 tabIndex={0}>
+            Unparalleled HiFi audio and <span className='highlight'>superior</span> manufacturing for discerning audiophiles. Crystal-clear sound,{' '}
+            <span className='highlight'>premium </span>
+            materials, meticulous <span className='highlight'>craftsmanship</span>, and lasting durability.
+          </h1>
+        </div>
         <figure>
           <picture>
             <img
@@ -31,37 +40,36 @@ const SectionOne = () => {
   );
 };
 
-const SectionTwo = () => {
+const InfographicSectionTwo = () => {
   return (
-    <section className='infographic__focus'>
-      <h2>Presentation Image</h2>
-      <figure>
-        <picture>
-          {/* <source
-            media='(max-width: 1528px)'
-            srcSet='/src/ecommerce/assets/production-images/compressed-home-page/infographic/1528x915/img-by-ilias-chebbi-on-unsplash.jpg'
-          /> */}
-          <img
-            src='src/ecommerce/assets/production-images/compressed-home-page/infographic\infographic-2.jpg'
-            alt='Man listening to notes he is playing'
-            decoding='async'
-            fetchpriority='high'
-            tabIndex={0}
-          />
-          <figcaption>Man listening to notes he is playing</figcaption>
-        </picture>
-      </figure>
+    <section className='infographic__section'>
+      <h2>Presentation Image of man listening to notes he is playing</h2>
+      <article className='infographic__section__presentation'>
+        <figure>
+          <picture>
+            <img
+              src='src/ecommerce/assets/production-images/compressed-home-page/infographic\infographic-2.jpg'
+              alt='Man listening to notes he is playing'
+              decoding='async'
+              fetchpriority='high'
+              tabIndex={0}
+            />
+            <figcaption>Man listening to notes he is playing</figcaption>
+          </picture>
+        </figure>
+      </article>
     </section>
   );
 };
 
-const SectionThree = () => {
+const InfographicSectionThree = () => {
   return (
-    <section className='infographic__cta'>
-      <article>
-        <div>
-          <h2 tabIndex={0}>
-            <span className='highlight'>NEW </span>DROPS
+    <section className='infographic__section'>
+      <article className='infographic__section__news'>
+        <div className='infographic__section__textBlock'>
+          <h2 className='infographic__section__textBlock--strong' tabIndex={0}>
+            <span>NEW TECH FROM</span>
+            <span className='highlight'>Beyerdynamic</span>
           </h2>
           <p tabIndex={0}>
             Thanks to our friends over at{' '}
@@ -70,7 +78,7 @@ const SectionThree = () => {
             </Link>
             , we're proud to introduce a new line of headphones sporting all new Tesla technology.
           </p>
-          <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__cta--shopNow' aria-label='Shop Tesla enhanced Headphones'>
+          <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__section__textBlock--cta' aria-label='Shop Tesla enhanced Headphones'>
             Shop Tesla enhanced Headphones
           </Link>
         </div>
@@ -94,9 +102,9 @@ const SectionThree = () => {
 const Infographic = (): JSX.Element => {
   return (
     <main className='infographic'>
-      <SectionOne />
-      <SectionTwo />
-      <SectionThree />
+      <InfographicSectionOne />
+      <InfographicSectionTwo />
+      <InfographicSectionThree />
     </main>
   );
 };
