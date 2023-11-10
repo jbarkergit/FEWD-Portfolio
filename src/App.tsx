@@ -2,7 +2,7 @@ import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 /** 404 Error */
-const NotFound = lazy(() => import('./protocol-errors/404/NotFound'));
+const NotFound = lazy(() => import('./app/protocol-error-404/NotFound'));
 
 /** Portfolio */
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
@@ -11,36 +11,19 @@ const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
 const Home = lazy(() => import('./ecommerce/pages/Home'));
 const ProductCatalog = lazy(() => import('./ecommerce/pages/ProductCatalog'));
 const ProductDetailPage = lazy(() => import('./ecommerce/pages/ProductDetailPage'));
-// Pathing via Hooks
+
+// Ecommerce Pathing via Hooks
 import useUniqueData from './ecommerce/hooks/useUniqueData';
-// Context
+
+// Ecommerce Context
 import { CategoryFilterProvider } from './ecommerce/context/CategoryFilterContext';
 import { CartProvider } from './ecommerce/context/CartContext';
 
 /** Discord Clone */
 const DiscordClone = lazy(() => import('./discord-clone/pages/DiscordClone'));
 
-/** Suspense */
-function SuspensePathHandler() {
-  const path = useLocation().pathname;
-  const [Skeleton, setSkeleton] = useState<JSX.Element | null>(null);
-
-  useEffect(() => {
-    // Ecommerce
-    if (path === '/ecommerce') {
-      import('./ecommerce/skeletons/pages/HomeSkeleton').then((module) => setSkeleton(<module.default />));
-    } else if (['/ecommerce/products', '/ecommerce/headphones', '/ecommerce/amps-dacs', '/ecommerce/microphones', '/ecommerce/interfaces'].includes(path)) {
-      import('./ecommerce/skeletons/pages/ProductCatalogSkeleton').then((module) => setSkeleton(<module.default />));
-    } else if (path.startsWith('/ecommerce')) {
-      import('./ecommerce/skeletons/pages/ProductDetailPageSkeleton').then((module) => setSkeleton(<module.default />));
-    } else {
-      // Portfolio
-      setSkeleton(<div id='defaultSuspense' style={{ height: '100vh', width: '100%', backgroundColor: 'hsl(0, 0%, 10%)' }} />);
-    }
-  }, [path]);
-
-  return Skeleton;
-}
+/** Suspense Path Handler */
+import { SuspensePathHandler } from './app/hooks/SuspensePathHandler';
 
 /** Application */
 function App() {
