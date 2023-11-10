@@ -11,13 +11,8 @@ const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
 const Home = lazy(() => import('./ecommerce/pages/Home'));
 const ProductCatalog = lazy(() => import('./ecommerce/pages/ProductCatalog'));
 const ProductDetailPage = lazy(() => import('./ecommerce/pages/ProductDetailPage'));
-
-// Ecommerce Pathing via Hooks
+// Ecommerce Route mapping hooks
 import useUniqueData from './ecommerce/hooks/useUniqueData';
-
-// Ecommerce Context
-import { CategoryFilterProvider } from './ecommerce/context/CategoryFilterContext';
-import { CartProvider } from './ecommerce/context/CartContext';
 
 /** Discord Clone */
 const DiscordClone = lazy(() => import('./discord-clone/pages/DiscordClone'));
@@ -39,118 +34,22 @@ function App() {
           <Route path='*' element={<NotFound />} />
           <Route path='/' element={<Portfolio />} />
 
-          <Route
-            path='/ecommerce'
-            element={
-              <CategoryFilterProvider>
-                <CartProvider>
-                  <Home />
-                </CartProvider>
-              </CategoryFilterProvider>
-            }
-          />
-          <Route
-            path='/ecommerce/products'
-            element={
-              <CategoryFilterProvider>
-                <CartProvider>
-                  <ProductCatalog />
-                </CartProvider>
-              </CategoryFilterProvider>
-            }
-          />
-          <Route
-            path='/ecommerce/headphones'
-            element={
-              <CategoryFilterProvider>
-                <CartProvider>
-                  <ProductCatalog />
-                </CartProvider>
-              </CategoryFilterProvider>
-            }
-          />
-          <Route
-            path='/ecommerce/amps-dacs'
-            element={
-              <CategoryFilterProvider>
-                <CartProvider>
-                  <ProductCatalog />
-                </CartProvider>
-              </CategoryFilterProvider>
-            }
-          />
-          <Route
-            path='/ecommerce/microphones'
-            element={
-              <CategoryFilterProvider>
-                <CartProvider>
-                  <ProductCatalog />
-                </CartProvider>
-              </CategoryFilterProvider>
-            }
-          />
-          <Route
-            path='/ecommerce/interfaces'
-            element={
-              <CategoryFilterProvider>
-                <CartProvider>
-                  <ProductCatalog />
-                </CartProvider>
-              </CategoryFilterProvider>
-            }
-          />
-          <Route
-            path='/ecommerce/product/:paramId'
-            element={
-              <CategoryFilterProvider>
-                <CartProvider>
-                  <ProductDetailPage />
-                </CartProvider>
-              </CategoryFilterProvider>
-            }
-          />
+          <Route path='/ecommerce' element={<Home />} />
+          <Route path='/ecommerce/products' element={<ProductCatalog />} />
+          <Route path='/ecommerce/headphones' element={<ProductCatalog />} />
+          <Route path='/ecommerce/amps-dacs' element={<ProductCatalog />} />
+          <Route path='/ecommerce/microphones' element={<ProductCatalog />} />
+          <Route path='/ecommerce/interfaces' element={<ProductCatalog />} />
+          <Route path='/ecommerce/product/:paramId' element={<ProductDetailPage />} />
           {uniqueCompanies.map((company: string) => (
-            <Route
-              path={`/ecommerce/${company}`}
-              element={
-                <CategoryFilterProvider>
-                  <CartProvider>
-                    <ProductCatalog />
-                  </CartProvider>
-                </CategoryFilterProvider>
-              }
-              key={company}
-            />
+            <Route path={`/ecommerce/${company}`} element={<ProductCatalog />} key={company} />
           ))}
           {uniqueWearStyles.map((wearStyle) => (
-            <Route
-              path={`/ecommerce/${wearStyle}`}
-              element={
-                <CategoryFilterProvider>
-                  <CartProvider>
-                    <ProductCatalog />
-                  </CartProvider>
-                </CategoryFilterProvider>
-              }
-              key={wearStyle}
-            />
+            <Route path={`/ecommerce/${wearStyle}`} element={<ProductCatalog />} key={wearStyle} />
           ))}
           {uniquePolarPatterns.map((polarPattern) => (
-            <Route
-              path={`/ecommerce/${polarPattern}`}
-              element={
-                <CategoryFilterProvider>
-                  <CartProvider>
-                    <ProductCatalog />
-                  </CartProvider>
-                </CategoryFilterProvider>
-              }
-              key={polarPattern}
-            />
+            <Route path={`/ecommerce/${polarPattern}`} element={<ProductCatalog />} key={polarPattern} />
           ))}
-          {/* <Route path='/home-skeleton' element={<HomeSkeleton />} /> */}
-          {/* <Route path='/product-catalog-skeleton' element={<ProductCatalogSkeleton />} /> */}
-          {/* <Route path='/product-detail-page-skeleton' element={<ProductDetailPageSkeleton />} /> */}
 
           <Route path='/ecommerce/discord-clone' element={<DiscordClone />} />
         </Routes>

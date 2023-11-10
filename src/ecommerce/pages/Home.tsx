@@ -1,3 +1,8 @@
+// Context
+import { CategoryFilterProvider } from '../context/CategoryFilterContext';
+import { CartProvider } from '../context/CartContext';
+
+// Components
 import Header from '../components/navigation/header/Header';
 import EFooter from '../components/navigation/footer/EFooter';
 import Infographic from '../components/home/Infographic';
@@ -7,14 +12,16 @@ import ProductHighlight from '../components/home/ProductHighlight';
 
 const Home = (): JSX.Element => {
   return (
-    <>
-      <Header />
-      <Infographic />
-      <Carousel />
-      <SideBySide />
-      <ProductHighlight />
-      <EFooter />
-    </>
+    <CategoryFilterProvider>
+      <CartProvider>
+        <Header />
+        <Infographic />
+        <Carousel />
+        <SideBySide />
+        <ProductHighlight />
+        <EFooter />
+      </CartProvider>
+    </CategoryFilterProvider>
   );
 };
 

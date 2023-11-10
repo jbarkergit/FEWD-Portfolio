@@ -1,5 +1,12 @@
+// React
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+
+// Context
+import { CategoryFilterProvider } from '../context/CategoryFilterContext';
+import { CartProvider } from '../context/CartContext';
+
+// Components
 import Header from '../components/navigation/header/Header';
 import Footer from '../components/navigation/footer/EFooter';
 import { ProductDatabase } from '../database/product-db/ProductDatabase';
@@ -15,18 +22,20 @@ const ProductDetailPage = (): JSX.Element => {
   const [activeDisplay, setActiveDisplay] = useState<number>(0);
 
   return (
-    <>
-      <Header />
-      <div className='skuPage'>
-        <main className='skuPage__grid'>
-          {findProduct.images!.small.length > 1 ? <ProductPageImgSelect findProduct={findProduct} setActiveDisplay={setActiveDisplay} /> : null}
-          <ProductPageImgDisplay findProduct={findProduct} activeDisplay={activeDisplay} setActiveDisplay={setActiveDisplay} />
-          <ProductPageDetails findProduct={findProduct} />
-        </main>
-        <MoreLikeThis findProduct={findProduct} />
-      </div>
-      <Footer />
-    </>
+    <CategoryFilterProvider>
+      <CartProvider>
+        <Header />
+        <div className='skuPage'>
+          <main className='skuPage__grid'>
+            {findProduct.images!.small.length > 1 ? <ProductPageImgSelect findProduct={findProduct} setActiveDisplay={setActiveDisplay} /> : null}
+            <ProductPageImgDisplay findProduct={findProduct} activeDisplay={activeDisplay} setActiveDisplay={setActiveDisplay} />
+            <ProductPageDetails findProduct={findProduct} />
+          </main>
+          <MoreLikeThis findProduct={findProduct} />
+        </div>
+        <Footer />
+      </CartProvider>
+    </CategoryFilterProvider>
   );
 };
 

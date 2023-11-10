@@ -1,3 +1,8 @@
+// Context
+import { CategoryFilterProvider } from '../context/CategoryFilterContext';
+import { CartProvider } from '../context/CartContext';
+
+// Components
 import Header from '../components/navigation/header/Header';
 import Footer from '../components/navigation/footer/EFooter';
 import ProductProvider from '../components/product/product-provider/ProductProvider';
@@ -9,22 +14,24 @@ import useBreadCrumbs from '../hooks/useBreadCrumbs';
 const ProductCatalog = (): JSX.Element => {
   const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData().useUniqueCompanies);
   return (
-    <>
-      <Header />
-      <section className='browseProduct'>
-        <section className='productCatalogTopper'>
-          {useBreadCrumbs()}
-          <div className='productCatalogTopper__panel'>
-            <ConditionallyRenderedProductFilters />
-            <CompanyFilter />
-          </div>
+    <CategoryFilterProvider>
+      <CartProvider>
+        <Header />
+        <section className='browseProduct'>
+          <section className='productCatalogTopper'>
+            {useBreadCrumbs()}
+            <div className='productCatalogTopper__panel'>
+              <ConditionallyRenderedProductFilters />
+              <CompanyFilter />
+            </div>
+          </section>
+          <main>
+            <ProductProvider />
+          </main>
         </section>
-        <main>
-          <ProductProvider />
-        </main>
-      </section>
-      <Footer />
-    </>
+        <Footer />
+      </CartProvider>
+    </CategoryFilterProvider>
   );
 };
 
