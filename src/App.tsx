@@ -44,10 +44,10 @@ function App() {
           {uniqueCompanies.map((company: string) => (
             <Route path={`/ecommerce/${company}`} element={<ProductCatalog />} key={company} />
           ))}
-          {uniqueWearStyles.map((wearStyle) => (
+          {uniqueWearStyles.map((wearStyle: string) => (
             <Route path={`/ecommerce/${wearStyle}`} element={<ProductCatalog />} key={wearStyle} />
           ))}
-          {uniquePolarPatterns.map((polarPattern) => (
+          {uniquePolarPatterns.map((polarPattern: string) => (
             <Route path={`/ecommerce/${polarPattern}`} element={<ProductCatalog />} key={polarPattern} />
           ))}
 
