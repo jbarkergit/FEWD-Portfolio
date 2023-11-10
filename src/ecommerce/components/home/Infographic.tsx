@@ -68,7 +68,7 @@ const InfographicSectionThree = () => {
       <article className='infographic__section__news'>
         <div className='infographic__section__textBlock'>
           <h2 className='infographic__section__textBlock--strong' tabIndex={0}>
-            <span>NEW TECH FROM</span>
+            <span>NEW TECH FROM </span>
             <span className='highlight'>Beyerdynamic</span>
           </h2>
           <p tabIndex={0}>
