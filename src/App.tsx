@@ -1,4 +1,4 @@
-import { Suspense, lazy, useMemo } from 'react';
+import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 /** 404 Error */
@@ -11,7 +11,7 @@ const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
 const Home = lazy(() => import('./ecommerce/pages/Home'));
 const ProductCatalog = lazy(() => import('./ecommerce/pages/ProductCatalog'));
 const ProductDetailPage = lazy(() => import('./ecommerce/pages/ProductDetailPage'));
-// Ecommerce Route mapping hooks
+// Ecommerce Dynamic Pathing Hook
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
 /** Discord Clone */
@@ -22,11 +22,6 @@ import { SuspensePathHandler } from './app/hooks/SuspensePathHandler';
 
 /** Application */
 function App() {
-  /** Ecommerce Route mapping hooks */
-  const uniqueCompanies = useMemo(() => useUniqueData().useUniqueCompanies, [useUniqueData().useUniqueCompanies]);
-  const uniqueWearStyles = useMemo(() => useUniqueData().useUniqueWearStyles, [useUniqueData().useUniqueCompanies]);
-  const uniquePolarPatterns = useMemo(() => useUniqueData().useUniquePolarPatterns, [useUniqueData().useUniquePolarPatterns]);
-
   return (
     <BrowserRouter>
       <Suspense fallback={<SuspensePathHandler />}>
@@ -41,13 +36,13 @@ function App() {
           <Route path='/ecommerce/microphones' element={<ProductCatalog />} />
           <Route path='/ecommerce/interfaces' element={<ProductCatalog />} />
           <Route path='/ecommerce/product/:paramId' element={<ProductDetailPage />} />
-          {uniqueCompanies.map((company: string) => (
+          {useUniqueData().useUniqueCompanies.map((company: string) => (
             <Route path={`/ecommerce/${company}`} element={<ProductCatalog />} key={company} />
           ))}
-          {uniqueWearStyles.map((wearStyle: string) => (
+          {useUniqueData().useUniqueWearStyles.map((wearStyle: string) => (
             <Route path={`/ecommerce/${wearStyle}`} element={<ProductCatalog />} key={wearStyle} />
           ))}
-          {uniquePolarPatterns.map((polarPattern: string) => (
+          {useUniqueData().useUniquePolarPatterns.map((polarPattern: string) => (
             <Route path={`/ecommerce/${polarPattern}`} element={<ProductCatalog />} key={polarPattern} />
           ))}
 

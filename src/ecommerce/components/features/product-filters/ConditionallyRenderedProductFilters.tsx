@@ -1,26 +1,25 @@
-import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import useUniqueData from '../../../hooks/useUniqueData';
 import ProductFilterConstructor from './ProductFilterConstructor';
 
 const ConditionallyRenderedProductFilters = () => {
-  //Memoized data dependencies
-  const uniqueWearStyles: string[] = useMemo(() => useUniqueData().useUniqueWearStyles, [useUniqueData().useUniqueCompanies]);
-  const uniquePolarPatterns: string[] = useMemo(() => useUniqueData().useUniquePolarPatterns, [useUniqueData().useUniquePolarPatterns]);
+  // Memoized data dependencies
+  const uniqueWearStyles: string[] = useUniqueData().useUniqueWearStyles;
+  const uniquePolarPatterns: string[] = useUniqueData().useUniquePolarPatterns;
 
-  //Filter Components built with ProductFilterConstructor: takes initial filter name and custom hook that returns data
+  // Filter Components built with ProductFilterConstructor: takes initial filter name and custom hook that returns data
   const WearStyleFilter = (): JSX.Element => ProductFilterConstructor('Filter by Wear Style', uniqueWearStyles);
   const PolarPatternFilter = (): JSX.Element => ProductFilterConstructor('Filter by Polar Pattern', uniquePolarPatterns);
 
-  //Memoized conditional data dependencies for conditional rendering
-  const uniqueHeadphoneCompanies: string[] = useMemo(() => useUniqueData().useUniqueHeadphoneCompanies, [useUniqueData().useUniqueHeadphoneCompanies]);
-  const uniqueMicrophoneCompanies: string[] = useMemo(() => useUniqueData().useUniqueMicrophoneCompanies, [useUniqueData().useUniqueMicrophoneCompanies]);
+  // Memoized conditional data dependencies for conditional rendering
+  const uniqueHeadphoneCompanies: string[] = useUniqueData().useUniqueHeadphoneCompanies;
+  const uniqueMicrophoneCompanies: string[] = useUniqueData().useUniqueMicrophoneCompanies;
 
-  //Variable dependencies for conditional rendering
+  // Variable dependencies for conditional rendering
   const regexPattern: RegExp = /\/ecommerce\//g;
   const location: string = useLocation().pathname.replace(regexPattern, '');
 
-  //Conditional rendering
+  // Conditional rendering
   if (location === 'products')
     return (
       <>
