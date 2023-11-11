@@ -4,10 +4,13 @@ import { actionType } from './types/actionType';
 import { indexStateType } from './types/indexStateType';
 import { initSliderStateType } from './types/initSliderStateType';
 import { myProjects } from '../../assets/projects-data/myProjects';
+import { Link } from 'react-router-dom';
 
 const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }: indexStateType): JSX.Element => {
   /** References */
-  const carouselContainerRef = useRef<HTMLDivElement>(null);
+  const carouselContainerRef = useRef<HTMLElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const projectLinkRef = useRef<HTMLAnchorElement>(null);
 
   const arrayOfArticles = useRef<HTMLElement[]>([]);
 
@@ -25,9 +28,9 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
 
   /** Reference information variables */
   // Slider track width
-  const targetElementWidth: number = carouselContainerRef.current?.scrollWidth as number;
+  const targetElementWidth: number = carouselRef.current?.scrollWidth as number;
   // Array of articles
-  const targetElementChildrenArray: HTMLElement[] = Array.from(carouselContainerRef.current?.children ?? []) as HTMLElement[];
+  const targetElementChildrenArray: HTMLElement[] = Array.from(carouselRef.current?.children ?? []) as HTMLElement[];
   // PX Positions of all articles
   const targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
 
@@ -43,8 +46,8 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
         } else {
           const pointerTravelDistance: number = action.pageX - state.initPageX,
             latestTrackPosition = state.previousTrackPos + pointerTravelDistance,
-            targetElementLeftPadding: number = parseInt(window.getComputedStyle(carouselContainerRef.current as HTMLElement).paddingLeft),
-            maximumDelta = targetElementWidth * -1 + (targetElementChildrenArray[1].offsetWidth + targetElementLeftPadding),
+            targetElementLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLElement).paddingLeft),
+            maximumDelta = targetElementWidth * -1 + (targetElementChildrenArray[1].offsetWidth + targetElementLeftPadding * 2),
             clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
 
           return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
@@ -58,9 +61,13 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
           for (let i = 0; i < targetElementChildrenPositionArray.length; i++) {
             const distanceFromTrackPos = Math.abs(targetElementChildrenPositionArray[i] - state.trackPos);
             const previousIndex = Math.abs(targetElementChildrenPositionArray[state.closestIndex] - state.trackPos);
-            if (distanceFromTrackPos < previousIndex) state.closestIndex = i;
+
+            if (distanceFromTrackPos < previousIndex) {
+              state.closestIndex = i;
+            }
           }
-          const targetElementLeftPadding: number = parseInt(window.getComputedStyle(carouselContainerRef.current as HTMLElement).paddingLeft);
+
+          const targetElementLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLElement).paddingLeft);
           const closestChild: number = targetElementChildrenPositionArray[state.closestIndex] + targetElementLeftPadding;
 
           arrayOfArticles.current.forEach((article, index) => {
@@ -83,7 +90,7 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
 
       case 'SCROLL':
         const scrollDirection = Math.sign(action.deltaY);
-        const targetElementLeftPadding: number = parseInt(window.getComputedStyle(carouselContainerRef.current as HTMLElement).paddingLeft);
+        const targetElementLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLElement).paddingLeft);
         let nextClosestIndex = state.closestIndex;
 
         scrollDirection === -1
@@ -110,7 +117,7 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
         };
 
       case 'BUTTON_NAVIGATION':
-        const targElementLeftPadding: number = parseInt(window.getComputedStyle(carouselContainerRef.current as HTMLElement).paddingLeft);
+        const targElementLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLElement).paddingLeft);
         const setSliderPosition: number = targetElementChildrenPositionArray[projectSlideIndex] + targElementLeftPadding;
 
         arrayOfArticles.current.forEach((article, index) => article.setAttribute('data-status', index === projectSlideIndex ? 'enabled' : 'disabled'));
@@ -186,22 +193,23 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
   }, [projectSlideIndex]);
 
   return (
-    <main
-      className={`mainContent ${smoothenCarousel ? 'smoothen' : ''} ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`}
-      ref={carouselContainerRef}
-      style={state.style}>
-      {myProjects.map((project) => {
-        return (
-          <article className='mainContent__article' data-status={project.dataStatus} ref={articleRef} key={project.key}>
-            <figure>
-              <picture>
-                <img src={project.projectImageSrc} alt={project.projectImageAlt} draggable='false' loading='lazy' decoding='async' fetchpriority='high' />
-                <figcaption>{project.projectImageAlt}</figcaption>
-              </picture>
-            </figure>
-          </article>
-        );
-      })}
+    <main className={`mainContent ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`} ref={carouselContainerRef}>
+      <div className={`mainContent__track ${smoothenCarousel ? 'smoothen' : ''}`} ref={carouselRef} style={state.style}>
+        {myProjects.map((project) => {
+          return (
+            <article className='project' data-status={project.dataStatus} ref={articleRef} key={project.key}>
+              <Link to={`${project.projectUrl}`} ref={projectLinkRef}>
+                <figure>
+                  <picture>
+                    <img src={project.projectImageSrc} alt={project.projectImageAlt} draggable='false' loading='lazy' decoding='async' fetchpriority='high' />
+                    <figcaption>{project.projectImageAlt}</figcaption>
+                  </picture>
+                </figure>
+              </Link>
+            </article>
+          );
+        })}
+      </div>
     </main>
   );
 };

@@ -8,6 +8,7 @@
   height: 100%;
   max-height: 12%;
   z-index: 10;
+  padding: 0 m.$box-model-viewport-x;
   &__index {
     display: flex;
     flex: 1 1 calc(100% / 2);
