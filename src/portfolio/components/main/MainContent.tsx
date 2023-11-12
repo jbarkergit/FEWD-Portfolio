@@ -28,19 +28,7 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
     }
   };
 
-  const setProjectAnchors = () => {
-    arrayOfProjectAnchors.forEach((anchor, index) => {
-      if (myProjects[index].projectUrl) {
-        anchor.setAttribute('href', myProjects[index].projectUrl);
-      }
-    });
-  };
-
-  const removeProjectAnchors = () => {
-    arrayOfProjectAnchors.forEach((anchor) => {
-      anchor.setAttribute('href', ``);
-    });
-  };
+  const [anchorUrl, setAnchorUrl] = useState<boolean>(true);
 
   /** Toggle Carousel 'Smooth' Animation (Native behavior by-pass) */
   const [smoothenCarousel, setSmoothenCarousel] = useState<boolean>(false);
@@ -166,12 +154,14 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
 
   useEffect(() => {
     const userPointerDown = (e: PointerEvent) => {
+      setAnchorUrl(true);
+
       const pageX = e.pageX as number;
       dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageX: pageX, pageX: pageX });
     };
 
     const userPointerMove = (e: PointerEvent) => {
-      removeProjectAnchors();
+      setAnchorUrl(false);
 
       const pageX = e.pageX as number;
       dispatch({
@@ -182,12 +172,11 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
     };
 
     const userPointerLeave = () => {
-      setProjectAnchors();
+      setAnchorUrl(false);
       dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
     };
 
     const userPointerUp = () => {
-      setProjectAnchors();
       dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
     };
 
@@ -229,7 +218,15 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
         {myProjects.map((project) => {
           return (
             <article className='project' data-status={project.dataStatus} ref={articleRef} key={project.key}>
-              <Link to='' ref={projectAnchor} onDragStart={(e) => e.preventDefault()}>
+              <Link
+                to={`${anchorUrl ? project.projectUrl : ''}`}
+                ref={projectAnchor}
+                onDragStart={(e) => {
+                  e.preventDefault();
+                }}
+                onDrag={(e) => {
+                  e.stopPropagation();
+                }}>
                 <figure>
                   <picture>
                     <img src={project.projectImageSrc} alt={project.projectImageAlt} draggable='false' loading='lazy' decoding='async' fetchpriority='high' />
