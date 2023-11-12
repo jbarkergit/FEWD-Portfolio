@@ -7,44 +7,45 @@ import { myProjects } from '../../assets/projects-data/myProjects';
 import { Link } from 'react-router-dom';
 
 const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }: indexStateType): JSX.Element => {
-  /** References */
-  const carouselContainerRef = useRef<HTMLElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
-
+  /** Mapped article references */
   const arrayOfArticles = useRef<HTMLElement[]>([]);
-
   const articleRef = (reference: HTMLElement) => {
-    if (reference && !arrayOfArticles.current.includes(reference)) {
-      arrayOfArticles.current.push(reference);
-    }
+    if (reference && !arrayOfArticles.current.includes(reference)) arrayOfArticles.current.push(reference);
   };
 
-  /** Prevent anchor navigation while dragging carousel */
+  /** Mapped anchor element references */
   const arrayOfProjectAnchors: HTMLAnchorElement[] = [];
-
-  const projectAnchor = (reference: HTMLAnchorElement) => {
-    if (reference && !arrayOfProjectAnchors.includes(reference)) {
-      arrayOfProjectAnchors.push(reference);
-    }
+  const projectAnchorRef = (reference: HTMLAnchorElement) => {
+    if (reference && !arrayOfProjectAnchors.includes(reference)) arrayOfProjectAnchors.push(reference);
   };
 
+  /** State Toggles */
+  // Conditional rendering anchor urls
   const [anchorUrl, setAnchorUrl] = useState<boolean>(true);
-
-  /** Toggle Carousel 'Smooth' Animation (Native behavior by-pass) */
+  // Toggle Carousel 'Smooth' Animation (Native behavior by-pass)
   const [smoothenCarousel, setSmoothenCarousel] = useState<boolean>(false);
-
   const toggleSmoothenAnimation = () => {
     setSmoothenCarousel((prev) => !prev);
     setTimeout(() => setSmoothenCarousel(false), 360);
   };
 
-  /** Reference information variables */
-  // Slider track width
-  const targetElementWidth: number = carouselRef.current?.scrollWidth as number;
-  // Array of articles
-  const targetElementChildrenArray: HTMLElement[] = Array.from(carouselRef.current?.children ?? []) as HTMLElement[];
-  // PX Positions of all articles
-  const targetElementChildrenPositionArray: number[] = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
+  /** Component References && Information Variables */
+  const carouselContainerRef = useRef<HTMLElement | null>(null);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+
+  const [carouselVars, setCarouselVars] = useState({ leftPadding: 0, width: 0, maxTravelDelta: 0 });
+
+  useEffect(() => {
+    const carouselLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLDivElement).paddingLeft);
+    const carouselWidth: number = carouselRef.current?.scrollWidth as number;
+    const carouselMaxTravelDelta: number = carouselWidth * -1 + (arrayOfArticles.current[0].offsetWidth + carouselLeftPadding * 2 + 1);
+
+    if (carouselRef.current && arrayOfArticles.current) {
+      setCarouselVars({ leftPadding: carouselLeftPadding, width: carouselWidth, maxTravelDelta: carouselMaxTravelDelta });
+    }
+  }, [carouselRef.current, arrayOfArticles.current]);
+
+  const arrayOfArticlePositions: number[] = arrayOfArticles.current.map((child) => child.offsetLeft * -1);
 
   /** Reducer: slider logic */
   const reducer = (state: initSliderStateType, action: actionType): initSliderStateType => {
@@ -56,12 +57,9 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
         if (!state.pointerDown) {
           return state;
         } else {
-          const pointerTravelDistance: number = action.pageX - state.initPageX,
-            latestTrackPosition = state.previousTrackPos + pointerTravelDistance,
-            targetElementLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLElement).paddingLeft),
-            maximumDelta = targetElementWidth * -1 + (targetElementChildrenArray[1].offsetWidth + targetElementLeftPadding * 2 + 1),
-            clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
-
+          const pointerTravelDistance: number = action.pageX - state.initPageX;
+          const latestTrackPosition: number = state.previousTrackPos + pointerTravelDistance;
+          const clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), carouselVars.maxTravelDelta);
           return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
         }
 
@@ -70,17 +68,11 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
         if (!state.pointerDown) {
           return state;
         } else {
-          for (let i = 0; i < targetElementChildrenPositionArray.length; i++) {
-            const distanceFromTrackPos = Math.abs(targetElementChildrenPositionArray[i] - state.trackPos);
-            const previousIndex = Math.abs(targetElementChildrenPositionArray[state.closestIndex] - state.trackPos);
-
-            if (distanceFromTrackPos < previousIndex) {
-              state.closestIndex = i;
-            }
+          for (let i = 0; i < arrayOfArticlePositions.length; i++) {
+            const distanceFromTrackPos = Math.abs(arrayOfArticlePositions[i] - state.trackPos);
+            const previousIndex = Math.abs(arrayOfArticlePositions[state.closestIndex] - state.trackPos);
+            if (distanceFromTrackPos < previousIndex) state.closestIndex = i;
           }
-
-          const targetElementLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLElement).paddingLeft);
-          const closestChild: number = targetElementChildrenPositionArray[state.closestIndex] + targetElementLeftPadding;
 
           arrayOfArticles.current.forEach((article, index) => {
             const dataStatus = index === state.closestIndex ? 'enabled' : 'disabled';
@@ -88,6 +80,8 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
           });
 
           toggleSmoothenAnimation();
+
+          const closestChild: number = arrayOfArticlePositions[state.closestIndex] + carouselVars.leftPadding;
 
           return {
             ...state,
@@ -102,14 +96,11 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
 
       case 'SCROLL':
         const scrollDirection = Math.sign(action.deltaY);
-        const targetElementLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLElement).paddingLeft);
         let nextClosestIndex = state.closestIndex;
 
         scrollDirection === -1
-          ? (nextClosestIndex = Math.min(nextClosestIndex + 1, targetElementChildrenPositionArray.length - 1))
+          ? (nextClosestIndex = Math.min(nextClosestIndex + 1, arrayOfArticlePositions.length - 1))
           : (nextClosestIndex = Math.max(nextClosestIndex - 1, 0));
-
-        const closestChild: number = targetElementChildrenPositionArray[nextClosestIndex] + targetElementLeftPadding;
 
         arrayOfArticles.current.forEach((article, index) => {
           const dataStatus = index === nextClosestIndex ? 'enabled' : 'disabled';
@@ -117,6 +108,8 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
         });
 
         toggleSmoothenAnimation();
+
+        const closestChild: number = arrayOfArticlePositions[nextClosestIndex] + carouselVars.leftPadding;
 
         return {
           ...state,
@@ -129,11 +122,13 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
         };
 
       case 'BUTTON_NAVIGATION':
-        const targElementLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLElement).paddingLeft);
-        const setSliderPosition: number = targetElementChildrenPositionArray[projectSlideIndex] + targElementLeftPadding;
+        arrayOfArticles.current.forEach((article, index) => {
+          article.setAttribute('data-status', index === projectSlideIndex ? 'enabled' : 'disabled');
+        });
 
-        arrayOfArticles.current.forEach((article, index) => article.setAttribute('data-status', index === projectSlideIndex ? 'enabled' : 'disabled'));
         toggleSmoothenAnimation();
+
+        const setSliderPosition: number = arrayOfArticlePositions[projectSlideIndex] + carouselVars.leftPadding;
 
         return {
           ...state,
@@ -155,18 +150,14 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
   useEffect(() => {
     const userPointerDown = (e: PointerEvent) => {
       setAnchorUrl(true);
-
-      const pageX = e.pageX as number;
-      dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageX: pageX, pageX: pageX });
+      dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageX: e.pageX as number, pageX: e.pageX as number });
     };
 
     const userPointerMove = (e: PointerEvent) => {
       setAnchorUrl(false);
-
-      const pageX = e.pageX as number;
       dispatch({
         type: 'POINTER_MOVE',
-        pageX: pageX,
+        pageX: e.pageX as number,
         pointerDown: state.pointerDown,
       });
     };
@@ -176,31 +167,24 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
       dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
     };
 
-    const userPointerUp = () => {
-      dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
-    };
+    const userPointerUp = () => dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
 
-    const userWheelEvent = (e: WheelEvent) => {
-      const targetElementChildrenPositionArray = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
-      dispatch({ type: 'SCROLL', deltaY: e.deltaY, targetElementChildrenPositionArray });
-    };
+    const userWheelEvent = (e: WheelEvent) => dispatch({ type: 'SCROLL', deltaY: e.deltaY });
 
-    if (carouselContainerRef.current) {
-      carouselContainerRef.current.addEventListener('pointerdown', userPointerDown);
-      carouselContainerRef.current.addEventListener('pointermove', userPointerMove);
-      carouselContainerRef.current.addEventListener('pointerleave', userPointerLeave);
-      carouselContainerRef.current.addEventListener('pointerup', userPointerUp);
-      carouselContainerRef.current.addEventListener('wheel', userWheelEvent);
-    }
+    /** Mount */
+    carouselContainerRef.current?.addEventListener('pointerdown', userPointerDown);
+    carouselContainerRef.current?.addEventListener('pointermove', userPointerMove);
+    carouselContainerRef.current?.addEventListener('pointerleave', userPointerLeave);
+    carouselContainerRef.current?.addEventListener('pointerup', userPointerUp);
+    carouselContainerRef.current?.addEventListener('wheel', userWheelEvent);
 
+    /** Unmount */
     return () => {
-      if (carouselContainerRef.current) {
-        carouselContainerRef.current.removeEventListener('pointerdown', userPointerDown);
-        carouselContainerRef.current.removeEventListener('pointermove', userPointerMove);
-        carouselContainerRef.current.removeEventListener('pointerleave', userPointerLeave);
-        carouselContainerRef.current.removeEventListener('pointerup', userPointerUp);
-        carouselContainerRef.current.removeEventListener('wheel', userWheelEvent);
-      }
+      carouselContainerRef.current?.removeEventListener('pointerdown', userPointerDown);
+      carouselContainerRef.current?.removeEventListener('pointermove', userPointerMove);
+      carouselContainerRef.current?.removeEventListener('pointerleave', userPointerLeave);
+      carouselContainerRef.current?.removeEventListener('pointerup', userPointerUp);
+      carouselContainerRef.current?.removeEventListener('wheel', userWheelEvent);
     };
   }, []);
 
@@ -208,9 +192,7 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
   useEffect(() => setProjectSlideIndex(state.closestIndex), [state.closestIndex]);
 
   /** Dispatch 'BUTTON_NAVIGATION' whenever projectSlideIndex changes */
-  useEffect(() => {
-    dispatch({ type: 'BUTTON_NAVIGATION' });
-  }, [projectSlideIndex]);
+  useEffect(() => dispatch({ type: 'BUTTON_NAVIGATION' }), [projectSlideIndex]);
 
   return (
     <main className={`mainContent ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`} ref={carouselContainerRef}>
@@ -220,7 +202,7 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
             <article className='project' data-status={project.dataStatus} ref={articleRef} key={project.key}>
               <Link
                 to={`${anchorUrl ? project.projectUrl : ''}`}
-                ref={projectAnchor}
+                ref={projectAnchorRef}
                 onDragStart={(e) => {
                   e.preventDefault();
                 }}
