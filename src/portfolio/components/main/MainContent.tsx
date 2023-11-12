@@ -10,12 +10,36 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
   /** References */
   const carouselContainerRef = useRef<HTMLElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const projectLinkRef = useRef<HTMLAnchorElement>(null);
 
   const arrayOfArticles = useRef<HTMLElement[]>([]);
 
   const articleRef = (reference: HTMLElement) => {
-    if (reference && !arrayOfArticles.current.includes(reference)) arrayOfArticles.current.push(reference);
+    if (reference && !arrayOfArticles.current.includes(reference)) {
+      arrayOfArticles.current.push(reference);
+    }
+  };
+
+  /** Prevent anchor navigation while dragging carousel */
+  const arrayOfProjectAnchors: HTMLAnchorElement[] = [];
+
+  const projectAnchor = (reference: HTMLAnchorElement) => {
+    if (reference && !arrayOfProjectAnchors.includes(reference)) {
+      arrayOfProjectAnchors.push(reference);
+    }
+  };
+
+  const setProjectAnchors = () => {
+    arrayOfProjectAnchors.forEach((anchor, index) => {
+      if (myProjects[index].projectUrl) {
+        anchor.setAttribute('href', myProjects[index].projectUrl);
+      }
+    });
+  };
+
+  const removeProjectAnchors = () => {
+    arrayOfProjectAnchors.forEach((anchor) => {
+      anchor.setAttribute('href', ``);
+    });
   };
 
   /** Toggle Carousel 'Smooth' Animation (Native behavior by-pass) */
@@ -142,12 +166,13 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
 
   useEffect(() => {
     const userPointerDown = (e: PointerEvent) => {
-      if (!state.pointerDown && e.target instanceof HTMLAnchorElement) return state;
       const pageX = e.pageX as number;
       dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageX: pageX, pageX: pageX });
     };
 
     const userPointerMove = (e: PointerEvent) => {
+      removeProjectAnchors();
+
       const pageX = e.pageX as number;
       dispatch({
         type: 'POINTER_MOVE',
@@ -156,9 +181,15 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
       });
     };
 
-    const userPointerLeave = () => dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
+    const userPointerLeave = () => {
+      setProjectAnchors();
+      dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
+    };
 
-    const userPointerUp = () => dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
+    const userPointerUp = () => {
+      setProjectAnchors();
+      dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
+    };
 
     const userWheelEvent = (e: WheelEvent) => {
       const targetElementChildrenPositionArray = targetElementChildrenArray.map((child) => child.offsetLeft * -1);
@@ -198,7 +229,7 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
         {myProjects.map((project) => {
           return (
             <article className='project' data-status={project.dataStatus} ref={articleRef} key={project.key}>
-              <Link to={`${project.projectUrl}`} ref={projectLinkRef}>
+              <Link to='' ref={projectAnchor} onDragStart={(e) => e.preventDefault()}>
                 <figure>
                   <picture>
                     <img src={project.projectImageSrc} alt={project.projectImageAlt} draggable='false' loading='lazy' decoding='async' fetchpriority='high' />
