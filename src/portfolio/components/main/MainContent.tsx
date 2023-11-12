@@ -59,7 +59,7 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
           const pointerTravelDistance: number = action.pageX - state.initPageX,
             latestTrackPosition = state.previousTrackPos + pointerTravelDistance,
             targetElementLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLElement).paddingLeft),
-            maximumDelta = targetElementWidth * -1 + (targetElementChildrenArray[1].offsetWidth + targetElementLeftPadding * 2),
+            maximumDelta = targetElementWidth * -1 + (targetElementChildrenArray[1].offsetWidth + targetElementLeftPadding * 2 + 1),
             clampedTrackPosition: number = Math.max(Math.min(latestTrackPosition, 0), maximumDelta);
 
           return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };

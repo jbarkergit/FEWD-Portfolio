@@ -12,9 +12,9 @@
     height: inherit;
     max-height: inherit;
     padding: 0 m.$box-model-viewport-x;
-    // &:hover {
-    //   cursor: grab;
-    // }
+    &:hover {
+      cursor: grab;
+    }
     &:active {
       cursor: grabbing;
     }
