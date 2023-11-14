@@ -208,6 +208,15 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
     dispatch({ type: 'BUTTON_NAVIGATION' });
   }, [projectSlideIndex]);
 
+  /**
+   * Functionality: Update project information externally
+   * Use Case 0: Footer Links
+   * */
+
+  useEffect(() => {
+    setProjectSlideIndex(state.closestIndex);
+  }, [state.closestIndex]);
+
   /** Component */
   return (
     <main className={`mainContent ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`} ref={carouselContainerRef}>

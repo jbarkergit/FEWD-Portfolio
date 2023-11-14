@@ -10,13 +10,14 @@ type ProjectNavPropType = {
 
 const PortFooter = ({ mountAnimation, projectSlideIndex }: ProjectNavPropType) => {
   const footerNavigation = useRef<HTMLElement>(null);
-
   const [navigationIndicator, setNavigationIndicator] = useState({ key: myProjects[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Demo Link' });
 
   useEffect(() => {
-    if (footerNavigation.current?.getAttribute('data-transition') === 'false') {
-      footerNavigation.current?.setAttribute('data-transition', 'true');
-    }
+    const setFooterDataAttr = (transitionStatus: string) => {
+      footerNavigation.current?.setAttribute('data-transition', transitionStatus);
+    };
+
+    footerNavigation.current?.getAttribute('data-transition') === 'false' ? setFooterDataAttr('true') : setFooterDataAttr('false');
 
     setTimeout(() => {
       if (myProjects[projectSlideIndex].projectUrl !== '') {
