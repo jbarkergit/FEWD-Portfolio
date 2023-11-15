@@ -1,12 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import ContactFormStandard from './ContactFormStandard';
-import ContactFormInformation from './ContactInformation';
-
-//** Prop drill from pages/Portfolio */
-type ContactFormType = {
-  contactFormActive: boolean;
-  setContactFormActive: Dispatch<SetStateAction<boolean>>;
-};
+import ContactFormStandard from '../components/contact/ContactFormStandard';
+import ContactFormInformation from '../components/contact/ContactInformation';
 
 //** Contact form field array of objects types */
 export type ContactFormFieldsType = {
@@ -29,7 +23,7 @@ export type ContactFormPropsType = {
   useContactFormValidator: (changedIndexParam: number) => void;
 };
 
-const ContactForm = ({ contactFormActive, setContactFormActive }: ContactFormType) => {
+const ContactForm = () => {
   //** Contact form fields */
   const [contactFormFields, setContactFormFields] = useState<ContactFormFieldsType[]>([
     { input: 'firstName', placeholder: 'First name', optional: false, value: '' },
@@ -89,7 +83,7 @@ const ContactForm = ({ contactFormActive, setContactFormActive }: ContactFormTyp
   };
 
   return (
-    <aside className='contactFormWrapper' role='dialog' aria-label='Developer Contact Form' data-status={contactFormActive === true ? 'active' : 'false'}>
+    <aside className='contactFormWrapper' role='dialog' aria-label='Developer Contact Form'>
       <div className='contactForm'>
         <ContactFormInformation />
         <ContactFormStandard

@@ -7,11 +7,10 @@ type PortHeaderType = {
   mountAnimation: boolean;
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
-  setContactFormActive: Dispatch<SetStateAction<boolean>>;
   setTechStackActive: Dispatch<SetStateAction<boolean>>;
 };
 
-const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, setContactFormActive, setTechStackActive }: PortHeaderType): JSX.Element => {
+const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, setTechStackActive }: PortHeaderType): JSX.Element => {
   //** Arrow position references & logic */
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
@@ -73,9 +72,9 @@ const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, s
           if (menuButtons.current) menuButtons.current.setAttribute('data-transform', 'false');
         }}>
         <div className='portHeader__menu__buttons' ref={menuButtons} data-transform={'false'}>
-          <button aria-label='Contact Form' onClick={() => setContactFormActive(true)}>
+          <Link to='/contact' aria-label='Contact Form'>
             Contact
-          </button>
+          </Link>
           <button aria-label='Tech Stack' onClick={() => setTechStackActive(true)}>
             Tech Stack
           </button>

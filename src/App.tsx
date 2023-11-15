@@ -9,6 +9,7 @@ import { SuspensePathHandler } from './app/suspense/SuspensePathHandler';
 
 /** Portfolio */
 const Portfolio = lazy(() => import('./portfolio/pages/Portfolio'));
+const ContactForm = lazy(() => import('./portfolio/pages/ContactForm'));
 
 /** Ecommerce */
 const Home = lazy(() => import('./ecommerce/pages/Home'));
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route path='*' element={<NotFound />} />
           <Route path='/' element={<Portfolio />} />
+          <Route path='/contact' element={<ContactForm />} />
 
           <Route path='/ecommerce' element={<Home />} />
           <Route path='/ecommerce/products' element={<ProductCatalog />} />

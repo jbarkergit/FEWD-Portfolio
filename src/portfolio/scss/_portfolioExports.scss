@@ -1,13 +1,20 @@
+// Styles
 @forward '/src/portfolio/scss/portfolioStyles';
 @forward '/src/portfolio/scss/portfolioMixins';
 @forward '/src/portfolio/pages/portfolioPage';
 
+// Header && Footer Navigation
 @forward '/src/portfolio/components/navigation/header/portHeader';
 @forward '/src/portfolio/components/navigation/footer/portFooter';
 
+// Carousel
 @forward '/src/portfolio/components/main/mainContent';
 
-@forward '/src/portfolio/components/features/contact/contactForm';
+// Contact
+@forward '/src/portfolio/components/contact/contactForm';
+
+// Feature: Technologies
 @forward '/src/portfolio/components/features/tech-stack/ecommerceTechStack';
 
+// Feature: Project details
 @forward '/src/portfolio/components/features/project-details/projectDetails';
