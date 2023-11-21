@@ -109,7 +109,6 @@ function App() {
 
   useEffect(() => {
     useRouteSetter(useKeyValuePairs());
-
     if (location.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
     else if (location.startsWith('/discord-clone')) useRouteSetter(discordCloneKeyValuePairs.slice(0));
     else if (location === '/') useRouteSetter(portfolioKeyValuePairs.slice(0));
