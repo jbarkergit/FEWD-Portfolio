@@ -2,7 +2,7 @@
 @forward '/src/sass/boilerplate';
 
 /* HTTP Protocol Errors */
-@forward '/src/app/protocol-error-404/notFound';
+@forward '/src/app/protocol-error/protocolErrorHandler';
 
 /* Projects */
 @forward '/src/portfolio/scss/portfolioExports';

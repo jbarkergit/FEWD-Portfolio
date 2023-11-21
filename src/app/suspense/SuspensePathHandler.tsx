@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export function SuspensePathHandler() {
+export const SuspenseSkeletonHandler = () => {
   const path = useLocation().pathname;
   const [Skeleton, setSkeleton] = useState<JSX.Element | null>(null);
 
@@ -20,4 +20,6 @@ export function SuspensePathHandler() {
   }, [path]);
 
   return Skeleton;
-}
+};
+
+export default SuspenseSkeletonHandler;
