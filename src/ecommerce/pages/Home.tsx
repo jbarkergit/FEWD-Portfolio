@@ -10,7 +10,7 @@ import Carousel from '../components/home/Carousel';
 import SideBySide from '../components/home/SideBySide';
 import ProductHighlight from '../components/home/ProductHighlight';
 
-const Home = (): JSX.Element => {
+const EcommerceHome = (): JSX.Element => {
   return (
     <CategoryFilterProvider>
       <CartProvider>
@@ -25,4 +25,4 @@ const Home = (): JSX.Element => {
   );
 };
 
-export default Home;
+export default EcommerceHome;
