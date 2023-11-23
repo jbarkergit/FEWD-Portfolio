@@ -234,7 +234,15 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
                 }}>
                 <figure>
                   <picture>
-                    <img src={project.projectImageSrc} alt={project.projectImageAlt} draggable='false' loading='lazy' decoding='async' fetchpriority='high' />
+                    <img
+                      src={project.projectImageSrc}
+                      alt={project.projectImageAlt}
+                      rel='preload'
+                      loading='eager'
+                      draggable='false'
+                      decoding='async'
+                      fetchpriority='high'
+                    />
                     <figcaption>{project.projectImageAlt}</figcaption>
                   </picture>
                 </figure>
