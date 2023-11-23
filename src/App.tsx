@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Lazy load hook required for ecommerce dynamic routes
  */
 import { SuspenseSkeletonHandler } from './app/suspense/SuspenseSkeletonHandler';
-const ProtocolErrorHandler = lazy(() => import('./app/protocol-error/ProtocolErrorHandler'));
+// const ProtocolErrorHandler = lazy(() => import('./app/protocol-error/ProtocolErrorHandler'));
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
 /** Key value pair arrays */
@@ -72,8 +72,8 @@ function App() {
     const initialKeyValuePaths: string[] = initialKeyValuePairs.map((keyValuePair) => keyValuePair.path as string);
     let routeKeyValuePairs: GlobalKeyValuePairsType = [];
 
-    // Prioritize all project landing pages during initial load
-    if (!sessionStoredRoutePaths.includes(location) && initialKeyValuePaths.includes(location)) {
+    // Prioritize all project landing pages during initial load if pathname is '/'
+    if (location === '/' && !sessionStoredRoutePaths.includes(location) && initialKeyValuePaths.includes(location)) {
       routeKeyValuePairs = initialKeyValuePairs;
       sessionStorage.setItem('sessionStoredRoutePaths', JSON.stringify([...initialKeyValuePaths]));
     } else {
@@ -113,7 +113,8 @@ function App() {
   return (
     <Suspense fallback={<SuspenseSkeletonHandler />}>
       <Routes>
-        <Route path='*' element={<ProtocolErrorHandler />} />
+        <Route path='*' element={<SuspenseSkeletonHandler />} />
+
         {routes.map((NewRoute: RoutesType) => (
           <Route path={NewRoute.path} element={NewRoute.module} key={uuidv4()} />
         ))}
@@ -127,8 +128,6 @@ function App() {
         {useUniqueData().useUniquePolarPatterns.map((polarPattern: string) => (
           <Route path={`/ecommerce/${polarPattern}`} key={polarPattern} />
         ))}
-
-        <Route path='/ecommerce/discord-clone' />
       </Routes>
     </Suspense>
   );
