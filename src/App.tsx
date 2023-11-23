@@ -110,6 +110,12 @@ function App() {
     return () => window.removeEventListener('beforeunload', useClearSessionStorageFlag);
   }, []);
 
+  /* 
+  TODO:
+  Replace protocol error handler (404) with progress loader.
+  This would bypass the path='*' issue, allowing the user to be notified that the page may not load
+  */
+
   return (
     <Suspense fallback={<SuspenseSkeletonHandler />}>
       <Routes>
