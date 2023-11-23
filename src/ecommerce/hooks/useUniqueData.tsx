@@ -9,25 +9,22 @@ const useUniqueData: () => {
   useUniqueMicrophoneCompanies: string[];
 } = () => {
   /**
-   * Dynamic import of ProductDatabase
-   * Note: I'm utilizing this hook to dynamically map Ecommerce Routes;
-   * therefore, we need to remove ProductDatabase from Network Queue
-   * Async import removes ProductDatabase from Network Queue outside of '/ecommerce' path
-   *  */
-  const location = window.location.pathname;
-  const [productDB, setProductDB] = useState<ProductType[]>([]);
+   * This hook utilizes ProductDatabase; therefore, it needs to be removed from Network Queue until called upon.
+   * Note: This hook returns data to dynamically map PRODUCT FILTERS && ECOMMERCE ROUTES
+   */
+  const [productDatabase, setProductDatabase] = useState<ProductType[]>([]);
+
+  const fetchData = async () => {
+    const { ProductDatabase } = await import('../database/product-db/ProductDatabase');
+    setProductDatabase(ProductDatabase);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { ProductDatabase } = await import('../database/product-db/ProductDatabase');
-      setProductDB(ProductDatabase);
-    };
-
-    if (location.startsWith('/ecommerce')) fetchData();
+    if ((window.location.pathname as string).startsWith('/ecommerce')) fetchData();
   }, [location]);
 
-  /** Filters array string properties from productDB state into sets */
-  const uniqueDataProps = productDB.reduce(
+  /** Filters array string properties from productDatabase state into sets */
+  const uniqueDataProps = productDatabase.reduce(
     (
       result: {
         uniqueCompanySet: Set<string>;
