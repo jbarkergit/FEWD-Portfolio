@@ -9,7 +9,7 @@ type MoreLikeThisType = {
 };
 
 const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
-  const filteredRecommenders = ProductDatabase.filter((product) => product.sku !== findProduct.sku);
+  const filteredRecommenders = ProductDatabase.filter((product) => product.sku !== findProduct.sku && product.category === findProduct.category);
 
   //Force page refresh upon component change
   const { paramId } = useParams() as { paramId: string };
@@ -19,7 +19,7 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
   }, [paramId]);
 
   return (
-    <aside className='recommenders' style={{ backgroundColor: 'transparent' }}>
+    <aside className='recommenders'>
       <h2 className='recommenders__header'>
         More {findProduct.category} like <span className='highlight'>{findProduct.unit}</span>
       </h2>
