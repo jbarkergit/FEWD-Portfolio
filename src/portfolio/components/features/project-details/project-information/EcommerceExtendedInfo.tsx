@@ -1,8 +1,8 @@
 const EcommerceExtendedInfo = (): JSX.Element => {
   return (
-    <article className='projectDetails__projectOverview'>
+    <section className='projectDetails__projectOverview'>
       <h2>Ecommerce Project Overview</h2>
-      <section className='projectDetails__projectOverview__information'>
+      <article className='projectDetails__projectOverview__information'>
         <p>
           This eCommerce project was developed with the primary goal of establishing a solid foundation in building dynamic web applications. Through iterative
           processes, I successfully achieved this objective without relying on third-party libraries to enforce stronger problem solving and critical thinking
@@ -51,8 +51,8 @@ const EcommerceExtendedInfo = (): JSX.Element => {
           improvement through exploration of JavaScript topics like the Big O via articles and books while I build muscle memory on a professional level. Eventually,
           I plan to slowly transition into becoming a more rounded developer by learning mySQL and exploring the back end of web development.
         </p>
-      </section>
-    </article>
+      </article>
+    </section>
   );
 };
 

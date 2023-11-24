@@ -1,8 +1,8 @@
 const EcommerceAbridgedInfo = (): JSX.Element => {
   return (
-    <article className='projectDetails__projectSummary'>
+    <section className='projectDetails__projectSummary'>
       <h2>Ecommerce Project Summary</h2>
-      <section className='projectDetails__projectSummary__information'>
+      <article className='projectDetails__projectSummary__information'>
         <p>
           <span>Objective</span>
           <span>
@@ -60,8 +60,8 @@ const EcommerceAbridgedInfo = (): JSX.Element => {
             industry and expanding upon my knowledge. As of now, I am exploring advanced JavaScript concepts and eventually, hope to expand into backend development.
           </span>
         </p>
-      </section>
-    </article>
+      </article>
+    </section>
   );
 };
 

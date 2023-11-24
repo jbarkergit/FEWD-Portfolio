@@ -2,7 +2,6 @@
 @use '../../scss/portfolioStyles' as m;
 
 .contactFormWrapper {
-  position: fixed;
   width: 100%;
   height: 100vh;
   padding: 6% m.$box-model-viewport-x;
@@ -16,6 +15,9 @@
   }
   @media (width <= 778px) {
     margin: 0;
+  }
+  & h2 {
+    display: none;
   }
 }
 

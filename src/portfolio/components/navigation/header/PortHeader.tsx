@@ -51,6 +51,7 @@ const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, f
   return (
     <header className={`portHeader ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`}>
       <section className='portHeader__index'>
+        <h2>Navigate projects by number</h2>
         <div className='portHeader__index__location'>{`Project 0${projectSlideIndex + 1}.`}</div>
         <nav className='portHeader__index__slideNav'>
           <ul ref={unorderedListRef}>
@@ -81,6 +82,7 @@ const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, f
           });
           if (menuButtons.current) menuButtons.current.setAttribute('data-transform', 'false');
         }}>
+        <h2>Contact Form, Tech Stack, GitHub Links</h2>
         <div className='portHeader__menu__buttons' ref={menuButtons} data-transform={'false'}>
           <button
             aria-label='Contact Form'

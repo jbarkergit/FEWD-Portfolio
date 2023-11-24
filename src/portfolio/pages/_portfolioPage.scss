@@ -1,6 +1,15 @@
 @use '../../sass/functions' as f;
 @use '../scss/portfolioStyles' as m;
 
+#portfolioWrapper {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: auto;
+  height: 100vh;
+  overflow: hidden;
+}
+
 #portfolio {
   position: relative;
   display: flex;
@@ -22,6 +31,9 @@
     color: inherit;
     font: inherit;
     letter-spacing: inherit;
+  }
+  & h2 {
+    display: none;
   }
 }
 

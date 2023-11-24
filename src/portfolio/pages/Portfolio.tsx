@@ -33,7 +33,8 @@ const Portfolio = (): JSX.Element => {
 
   return (
     <div id='portfolioWrapper'>
-      <div id='portfolio' ref={portfolioRef}>
+      <section id='portfolio' ref={portfolioRef}>
+        <h2>Project Hub</h2>
         <PortHeader
           mountAnimation={mountAnimation}
           projectSlideIndex={projectSlideIndex}
@@ -41,11 +42,9 @@ const Portfolio = (): JSX.Element => {
           featureState={featureState}
           setFeatureState={setFeatureState}
         />
-
         <MainContent mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
-
         <PortFooter mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
-      </div>
+      </section>
       <ContactForm />
       <EcommerceTechStack featureState={featureState} setFeatureState={setFeatureState} />
       <ProjectDetails projectSlideIndex={projectSlideIndex} />

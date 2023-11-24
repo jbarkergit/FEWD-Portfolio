@@ -44,6 +44,7 @@ const PortFooter = ({ mountAnimation, projectSlideIndex, featureState, setFeatur
     <footer className={`portFooter ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`}>
       <nav className='portFooter__nav'>
         <section className='portFooter__nav__mobileLeft'>
+          <h2>Project links and information</h2>
           {myProjects[projectSlideIndex].projectUrl !== '' ? (
             <button aria-label='Open Demo Link'>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
@@ -56,7 +57,7 @@ const PortFooter = ({ mountAnimation, projectSlideIndex, featureState, setFeatur
         </section>
 
         <section className='portFooter__nav__left' ref={footerNavigation}>
-          <h2>{navigationIndicator.key}</h2>
+          <h2>{navigationIndicator.key} Project</h2>
           <button
             aria-label='Open Project Insights'
             onClick={() =>
@@ -70,6 +71,7 @@ const PortFooter = ({ mountAnimation, projectSlideIndex, featureState, setFeatur
         </section>
 
         <section className='portFooter__nav__right'>
+          <h2>Developer's timezone</h2>
           <span className='portFooter__nav__right--timezone'>
             <CurrentTimeCDT />
           </span>

@@ -83,7 +83,8 @@ const ContactForm = () => {
   };
 
   return (
-    <aside className='contactFormWrapper' role='dialog' aria-label='Developer Contact Form'>
+    <section className='contactFormWrapper' role='dialog' aria-label='Developer Contact Form'>
+      <h2>Contact Form</h2>
       <div className='contactForm'>
         <ContactFormInformation />
         <ContactFormStandard
@@ -95,7 +96,7 @@ const ContactForm = () => {
           useContactFormValidator={useContactFormValidator}
         />
       </div>
-    </aside>
+    </section>
   );
 };
 

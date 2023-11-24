@@ -21,6 +21,7 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
 
   return (
     <section className='projectDetails'>
+      <h2>Project Details</h2>
       <button className='projectDetails__close' aria-label='Close Project Details'>
         <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
           <path
