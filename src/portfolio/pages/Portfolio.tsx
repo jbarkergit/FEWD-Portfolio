@@ -41,13 +41,14 @@ const Portfolio = (): JSX.Element => {
       });
   };
 
-  const portfolioScrollWidth: number = portfolioWrapper.current?.scrollWidth || 0;
-  const featureXPos: number = portfolioScrollWidth / Object.values(featureState).length;
-
   useEffect(() => {
+    const portfolioWrapperWidth: number = portfolioWrapper.current?.scrollWidth as number;
+    const featureStateLength: number = Object.values(featureState).length + 1;
+    const featureXPos = portfolioWrapperWidth / featureStateLength;
+
     switch (true) {
       case featureState.projectDetailsActive:
-        setPortfolioCoordinates(0, 'smooth');
+        setPortfolioCoordinates(featureXPos, 'smooth');
         break;
       case featureState.contactFormActive:
         setPortfolioCoordinates(featureXPos * 2, 'smooth');
@@ -59,7 +60,13 @@ const Portfolio = (): JSX.Element => {
         setPortfolioCoordinates(0, 'instant');
         break;
     }
-  }, [featureState]);
+  }, [featureState, portfolioWrapper.current]);
+
+  useEffect(() => {
+    const resetPortfolioCoordinates = () => setPortfolioCoordinates(0, 'instant');
+    window.addEventListener('unload', resetPortfolioCoordinates);
+    return () => window.removeEventListener('unload', resetPortfolioCoordinates);
+  }, []);
 
   return (
     <div id='portfolioWrapper' ref={portfolioWrapper}>
