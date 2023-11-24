@@ -26,6 +26,7 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
 
   return (
     <section className='contactForm__section'>
+      <h2>Contact Form</h2>
       <form className='standardForm'>
         <fieldset className='standardForm__fieldset'>
           {props.contactFormFields.map((field: ContactFormFieldsType, index: number) =>

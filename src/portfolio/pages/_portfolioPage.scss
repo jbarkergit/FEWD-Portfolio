@@ -39,8 +39,9 @@
     overflow: hidden;
   }
   &__features {
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden scroll;
+    display: grid;
+    place-items: center;
   }
 }
 

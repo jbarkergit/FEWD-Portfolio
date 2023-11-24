@@ -83,19 +83,17 @@ const ContactForm = () => {
   };
 
   return (
-    <section className='contactFormWrapper' role='dialog' aria-label='Developer Contact Form'>
-      <h2>Contact Form</h2>
-      <div className='contactForm'>
-        <ContactFormInformation />
-        <ContactFormStandard
-          contactFormFields={contactFormFields}
-          setContactFormFields={setContactFormFields}
-          formValidation={formValidation}
-          setFormValidation={setFormValidation}
-          updateContactFormFieldsState={updateContactFormFieldsState}
-          useContactFormValidator={useContactFormValidator}
-        />
-      </div>
+    <section className='contactForm' aria-label='Developer contact form and general information'>
+      <h2>Developer Contact Form and general information</h2>
+      <ContactFormInformation />
+      <ContactFormStandard
+        contactFormFields={contactFormFields}
+        setContactFormFields={setContactFormFields}
+        formValidation={formValidation}
+        setFormValidation={setFormValidation}
+        updateContactFormFieldsState={updateContactFormFieldsState}
+        useContactFormValidator={useContactFormValidator}
+      />
     </section>
   );
 };

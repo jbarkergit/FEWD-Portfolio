@@ -1,26 +1,6 @@
 @use '../../../../sass/functions' as f;
 @use '../../../scss/portfolioStyles' as m;
 
-.contactFormWrapper {
-  width: 100vw;
-  height: 100vh;
-  padding: 6% m.$box-model-viewport-x;
-  opacity: 1;
-  pointer-events: all;
-  transition: backdrop-filter 200ms ease-in;
-  &[data-status='false'] {
-    pointer-events: none;
-    opacity: 0;
-    transition: backdrop-filter 200ms ease-in;
-  }
-  @media (width <= 778px) {
-    margin: 0;
-  }
-  & h2 {
-    display: none;
-  }
-}
-
 .contactForm {
   display: flex;
   aspect-ratio: 21/9;
