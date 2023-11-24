@@ -57,7 +57,7 @@ const PortFooter = ({ mountAnimation, projectSlideIndex, featureState, setFeatur
         </section>
 
         <section className='portFooter__nav__left' ref={footerNavigation}>
-          <h2>{navigationIndicator.key} Project</h2>
+          <h2>{navigationIndicator.key}</h2>
           <button
             aria-label='Open Project Insights'
             onClick={() =>

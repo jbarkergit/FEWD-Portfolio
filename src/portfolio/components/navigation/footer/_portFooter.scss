@@ -32,6 +32,9 @@
       }
     }
     &__left {
+      & h2 {
+        display: block !important;
+      }
       @media (width <= 1200px) {
         display: none;
       }
