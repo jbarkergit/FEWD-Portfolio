@@ -12,10 +12,7 @@ import { SuspenseSkeletonHandler } from './app/suspense/SuspenseSkeletonHandler'
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
 /** Key value pair arrays */
-const portfolioKeyValuePairs = [
-  { path: '/', element: './portfolio/pages/Portfolio' },
-  { path: '/contact', element: './portfolio/pages/ContactForm' },
-];
+const portfolioKeyValuePairs = [{ path: '/', element: './portfolio/pages/Portfolio' }];
 
 const ecommerceKeyValuePairs = [
   { path: '/ecommerce', element: './ecommerce/pages/Home' },
@@ -97,9 +94,9 @@ function App() {
    */
   useEffect(() => {
     useRouteSetter(useKeyValuePairs());
-    if (location.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
-    else if (location.startsWith('/discord-clone')) useRouteSetter(discordCloneKeyValuePairs.slice(0));
-    else if (location === '/') useRouteSetter(portfolioKeyValuePairs.slice(0));
+    if (location.startsWith('/ecommerce') && ecommerceKeyValuePairs.length > 1) useRouteSetter(ecommerceKeyValuePairs.slice(0));
+    else if (location.startsWith('/discord-clone') && discordCloneKeyValuePairs.length > 1) useRouteSetter(discordCloneKeyValuePairs.slice(0));
+    else if (location === '/' && portfolioKeyValuePairs.length > 1) useRouteSetter(portfolioKeyValuePairs.slice(0));
     else null;
   }, [location]);
 
