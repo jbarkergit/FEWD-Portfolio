@@ -33,35 +33,33 @@ const Portfolio = (): JSX.Element => {
     techStackActive: false,
   });
 
-  const setPortfolioCoordinates = (xCoordinate: number, behaviorType: ScrollBehavior, yCoordinate?: number) => {
+  const setPortfolioCoordinates = (xCoordinate: number, behaviorType: ScrollBehavior) => {
     if (portfolioWrapper.current)
       portfolioWrapper.current.scrollTo({
         left: xCoordinate,
-        top: yCoordinate,
         behavior: behaviorType,
       });
   };
 
-  const portfolioWidth = portfolioWrapper.current?.scrollWidth || 0;
-  const featurePosition = portfolioWidth / 3;
+  const portfolioScrollWidth: number = portfolioWrapper.current?.scrollWidth || 0;
+  const featureXPos: number = portfolioScrollWidth / Object.values(featureState).length;
 
   useEffect(() => {
     switch (true) {
       case featureState.projectDetailsActive:
-        setPortfolioCoordinates(featurePosition * 1, 'smooth');
+        setPortfolioCoordinates(0, 'smooth');
         break;
       case featureState.contactFormActive:
-        setPortfolioCoordinates(featurePosition * 2, 'smooth');
+        setPortfolioCoordinates(featureXPos * 2, 'smooth');
         break;
       case featureState.techStackActive:
-        setPortfolioCoordinates(featurePosition * 3, 'smooth');
+        setPortfolioCoordinates(featureXPos * 3, 'smooth');
         break;
       default:
+        setPortfolioCoordinates(0, 'instant');
         break;
     }
   }, [featureState]);
-
-  useEffect(() => setPortfolioCoordinates(featurePosition * 1, 'instant'), []);
 
   return (
     <div id='portfolioWrapper' ref={portfolioWrapper}>

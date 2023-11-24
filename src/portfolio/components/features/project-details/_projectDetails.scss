@@ -2,6 +2,7 @@
 @use '../../../scss/portfolioStyles' as m;
 
 .projectDetails {
+  width: 100vw;
   height: 100vh;
   padding: m.$box-model-viewport-y calc(m.$box-model-viewport-x * 2) m.$box-model-viewport-y m.$box-model-viewport-x;
   &__projectOverview,

@@ -1,8 +1,8 @@
-@use '../../../sass/functions' as f;
-@use '../../scss/portfolioStyles' as m;
+@use '../../../../sass/functions' as f;
+@use '../../../scss/portfolioStyles' as m;
 
 .contactFormWrapper {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   padding: 6% m.$box-model-viewport-x;
   opacity: 1;
