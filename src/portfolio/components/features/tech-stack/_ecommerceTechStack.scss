@@ -2,8 +2,6 @@
 @use '../../../scss/portfolioStyles' as m;
 
 #techStackWrapper {
-  position: absolute;
-  inset: 0;
   display: grid;
   grid-template-areas:
     'techStackSelection techStackHero'
@@ -18,16 +16,6 @@
   background-color: rgba(26, 26, 26, 0.8);
   box-shadow: inset 20px 20px 60px #000000;
   backdrop-filter: blur(12px);
-  &[data-status='active'] {
-    opacity: 1;
-    transition: all 250ms ease-in;
-    pointer-events: all;
-  }
-  &[data-status='false'] {
-    opacity: 0;
-    transition: all 250ms ease-out;
-    pointer-events: none;
-  }
 }
 
 .techStackSelection {
@@ -39,16 +27,6 @@
   width: 100%;
   height: 100%;
   padding: calc(m.$box-model-viewport-y * 2) calc(m.$box-model-viewport-x / 2);
-  &[data-status='active'] {
-    opacity: 1;
-    transform: translateX(0);
-    transition: all 250ms ease-in;
-  }
-  &[data-status='false'] {
-    opacity: 0;
-    transform: translateX(100%);
-    transition: all 250ms ease-out;
-  }
   & button {
     display: flex;
     justify-content: center;
