@@ -8,18 +8,9 @@
   justify-content: flex-start;
   width: max-content;
   height: 100vh;
-  overflow: hidden;
-}
-
-#portfolio {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100vh;
   background-color: m.$background-color-primary;
-  overflow: hidden;
   color: m.$font-color-primary;
+  overflow: hidden;
   // font: [font-style] [font-variant] [font-weight] font-size/line-height font-family;
   font:
     normal normal 500 1.1rem / 1.25em 'Helvetica',
@@ -39,6 +30,15 @@
   }
 }
 
+#portfolio {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
 @keyframes opacityFade {
   0% {
     opacity: 0;
@@ -50,4 +50,12 @@
 
 .data-mount-animation-fade-in {
   animation: opacityFade 350ms ease-in;
+}
+
+#features {
+  height: 100vh;
+  background-color: m.$background-color-primary;
+}
+h2 {
+  display: none;
 }

@@ -43,8 +43,8 @@ const Portfolio = (): JSX.Element => {
 
   useEffect(() => {
     const portfolioWrapperWidth: number = portfolioWrapper.current?.scrollWidth as number;
-    const featureStateLength: number = Object.values(featureState).length + 1;
-    const featureXPos = portfolioWrapperWidth / featureStateLength;
+    // const featureStateLength: number = Object.values(featureState).length + 1;
+    const featureXPos = portfolioWrapperWidth / 2;
 
     switch (true) {
       case featureState.projectDetailsActive:
@@ -54,7 +54,7 @@ const Portfolio = (): JSX.Element => {
         setPortfolioCoordinates(featureXPos * 2, 'smooth');
         break;
       case featureState.techStackActive:
-        setPortfolioCoordinates(featureXPos * 3, 'smooth');
+        setPortfolioCoordinates(featureXPos * 2, 'smooth');
         break;
       default:
         setPortfolioCoordinates(0, 'instant');
@@ -82,9 +82,12 @@ const Portfolio = (): JSX.Element => {
         <MainContent mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
         <PortFooter mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
       </section>
-      <ProjectDetails projectSlideIndex={projectSlideIndex} />
-      <ContactForm />
-      <EcommerceTechStack featureState={featureState} setFeatureState={setFeatureState} />
+      <section id='features'>
+        <h2>Features</h2>
+        <ProjectDetails projectSlideIndex={projectSlideIndex} />
+        <ContactForm />
+        <EcommerceTechStack featureState={featureState} setFeatureState={setFeatureState} />
+      </section>
     </div>
   );
 };

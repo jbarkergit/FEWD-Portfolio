@@ -62,8 +62,9 @@ const EcommerceTechStack = ({ featureState, setFeatureState }: TechStackType) =>
 
   // Component Render
   return (
-    <div id='techStackWrapper'>
-      <section className='techStackSelection'>
+    <section id='techStackWrapper'>
+      <h2>Tech Stack</h2>
+      <div className='techStackSelection'>
         {TechStackInformation.map((technologyInfo) => (
           <button
             key={technologyInfo.id}
@@ -83,16 +84,16 @@ const EcommerceTechStack = ({ featureState, setFeatureState }: TechStackType) =>
               clipRule='evenodd'></path>
           </svg>
         </button>
-      </section>
-      <section className='techStackHero' data-status={triggerAnim ? 'active' : 'false'}>
+      </div>
+      <div className='techStackHero' data-status={triggerAnim ? 'active' : 'false'}>
         <picture key={TechStackInformation[activeTechnologyIndex].id} ref={previousTechStackHero} data-status={'false'}>
           {TechStackIcons[previouslyActiveTechnology].svg}
         </picture>
         <picture key={TechStackInformation[activeTechnologyIndex].name} ref={techStackHero} data-status={'active'}>
           {TechStackIcons[activeTechnologyIndex].svg}
         </picture>
-      </section>
-      <section className='techStackInformation' data-status={triggerAnim ? 'active' : 'false'}>
+      </div>
+      <div className='techStackInformation' data-status={triggerAnim ? 'active' : 'false'}>
         <article ref={previousTechStackInfo} data-status={'false'}>
           <h2>{TechStackInformation[activeTechnologyIndex].name}</h2>
           <p>{TechStackInformation[activeTechnologyIndex].description}</p>
@@ -101,8 +102,8 @@ const EcommerceTechStack = ({ featureState, setFeatureState }: TechStackType) =>
           <h2>{TechStackInformation[activeTechnologyIndex].name}</h2>
           <p>{TechStackInformation[activeTechnologyIndex].description}</p>
         </article>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 export default EcommerceTechStack;
