@@ -7,10 +7,29 @@ type PortHeaderType = {
   mountAnimation: boolean;
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
+  techStackActive: boolean;
   setTechStackActive: Dispatch<SetStateAction<boolean>>;
+  contactFormActive: boolean;
+  setContactFormActive: Dispatch<SetStateAction<boolean>>;
 };
 
-const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, setTechStackActive }: PortHeaderType): JSX.Element => {
+/** Map project length array */
+const projectIndexArray: number[] = [];
+
+myProjects.forEach((_, index) => {
+  if (!projectIndexArray.includes(index)) projectIndexArray.push(index);
+});
+
+/** Component */
+const PortHeader = ({
+  mountAnimation,
+  projectSlideIndex,
+  setProjectSlideIndex,
+  contactFormActive,
+  setContactFormActive,
+  techStackActive,
+  setTechStackActive,
+}: PortHeaderType): JSX.Element => {
   //** Arrow position references & logic */
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
@@ -28,15 +47,6 @@ const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, s
   const line = (reference: HTMLDivElement) => {
     if (lines.current && !lines.current.includes(reference)) lines.current.push(reference);
   };
-
-  /** Map project length array */
-  const projectIndexArray: number[] = [];
-
-  myProjects.forEach((project, index) => {
-    if (!projectIndexArray.includes(index)) {
-      projectIndexArray.push(index);
-    }
-  });
 
   return (
     <header className={`portHeader ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`}>
@@ -72,10 +82,10 @@ const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, s
           if (menuButtons.current) menuButtons.current.setAttribute('data-transform', 'false');
         }}>
         <div className='portHeader__menu__buttons' ref={menuButtons} data-transform={'false'}>
-          <Link to='/contact' aria-label='Contact Form'>
+          <button aria-label='Contact Form' onClick={() => (contactFormActive ? setContactFormActive(false) : setContactFormActive(true))}>
             Contact
-          </Link>
-          <button aria-label='Tech Stack' onClick={() => setTechStackActive(true)}>
+          </button>
+          <button aria-label='Tech Stack' onClick={() => (techStackActive ? setTechStackActive(false) : setTechStackActive(true))}>
             Tech Stack
           </button>
           <Link to='https://github.com/jbarkergit' target='_blank' aria-label='GitHub'>
