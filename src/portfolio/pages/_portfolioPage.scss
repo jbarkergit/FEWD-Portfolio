@@ -1,11 +1,10 @@
 @use '../../sass/functions' as f;
 @use '../scss/portfolioStyles' as m;
 
-#portfolioWrapper {
+.portfolio {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: flex-start;
   width: max-content;
   height: 100vh;
   background-color: m.$background-color-primary;
@@ -25,18 +24,24 @@
     font: inherit;
     letter-spacing: inherit;
   }
-  & h2 {
-    display: none;
+  &__projectHub,
+  &__features {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: inherit;
+    & h2 {
+      display: none;
+    }
   }
-}
-
-#portfolio {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  &__projectHub {
+    overflow: hidden;
+  }
+  &__features {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 }
 
 @keyframes opacityFade {
@@ -50,12 +55,4 @@
 
 .data-mount-animation-fade-in {
   animation: opacityFade 350ms ease-in;
-}
-
-#features {
-  height: 100vh;
-  background-color: m.$background-color-primary;
-}
-h2 {
-  display: none;
 }

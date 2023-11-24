@@ -25,8 +25,6 @@ const Portfolio = (): JSX.Element => {
   }, [portfolioRef.current]);
 
   /** Component transitions */
-  const portfolioWrapper = useRef<HTMLDivElement>(null);
-
   const [featureState, setFeatureState] = useState({
     projectDetailsActive: false,
     contactFormActive: false,
@@ -34,17 +32,17 @@ const Portfolio = (): JSX.Element => {
   });
 
   const setPortfolioCoordinates = (xCoordinate: number, behaviorType: ScrollBehavior) => {
-    if (portfolioWrapper.current)
-      portfolioWrapper.current.scrollTo({
+    if (portfolioRef.current)
+      portfolioRef.current.scrollTo({
         left: xCoordinate,
         behavior: behaviorType,
       });
   };
 
   useEffect(() => {
-    const portfolioWrapperWidth: number = portfolioWrapper.current?.scrollWidth as number;
+    const portfolioRefWidth: number = portfolioRef.current?.scrollWidth as number;
     // const featureStateLength: number = Object.values(featureState).length + 1;
-    const featureXPos = portfolioWrapperWidth / 2;
+    const featureXPos = portfolioRefWidth / 2;
 
     switch (true) {
       case featureState.projectDetailsActive:
@@ -60,7 +58,7 @@ const Portfolio = (): JSX.Element => {
         setPortfolioCoordinates(0, 'instant');
         break;
     }
-  }, [featureState, portfolioWrapper.current]);
+  }, [featureState, portfolioRef.current]);
 
   useEffect(() => {
     const resetPortfolioCoordinates = () => setPortfolioCoordinates(0, 'instant');
@@ -69,9 +67,9 @@ const Portfolio = (): JSX.Element => {
   }, []);
 
   return (
-    <div id='portfolioWrapper' ref={portfolioWrapper}>
-      <section id='portfolio' ref={portfolioRef}>
-        <h2>Project Hub</h2>
+    <div className='portfolio' ref={portfolioRef}>
+      <section className='portfolio__projectHub'>
+        <h2>Project hub</h2>
         <PortHeader
           mountAnimation={mountAnimation}
           projectSlideIndex={projectSlideIndex}
@@ -82,11 +80,12 @@ const Portfolio = (): JSX.Element => {
         <MainContent mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
         <PortFooter mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
       </section>
-      <section id='features'>
+
+      <section className='portfolio__features'>
         <h2>Features</h2>
-        <ProjectDetails projectSlideIndex={projectSlideIndex} />
-        <ContactForm />
-        <EcommerceTechStack featureState={featureState} setFeatureState={setFeatureState} />
+        {featureState.projectDetailsActive ? <ProjectDetails projectSlideIndex={projectSlideIndex} /> : null}
+        {featureState.contactFormActive ? <ContactForm /> : null}
+        {featureState.techStackActive ? <EcommerceTechStack featureState={featureState} setFeatureState={setFeatureState} /> : null}
       </section>
     </div>
   );
