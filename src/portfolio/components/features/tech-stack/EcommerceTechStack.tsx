@@ -4,11 +4,21 @@ import TechStackInformation from './TechStackInformation';
 
 //Prop drill from pages/Portfolio
 type TechStackType = {
-  techStackActive: boolean;
-  setTechStackActive: Dispatch<SetStateAction<boolean>>;
+  featureState: {
+    projectDetailsActive: boolean;
+    contactFormActive: boolean;
+    techStackActive: boolean;
+  };
+  setFeatureState: Dispatch<
+    SetStateAction<{
+      projectDetailsActive: boolean;
+      contactFormActive: boolean;
+      techStackActive: boolean;
+    }>
+  >;
 };
 
-const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackType) => {
+const EcommerceTechStack = ({ featureState, setFeatureState }: TechStackType) => {
   // GROUPED STATE: button attr data-status && techStackHero image, active technology information
   const [activeTechnologyIndex, setActiveTechnologyIndex] = useState<number>(0);
 
@@ -31,14 +41,14 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
   const [triggerAnim, setTriggerAnim] = useState<boolean>(false);
 
   // TriggerAnim state setter
-  useEffect(() => setTriggerAnim(techStackActive), [techStackActive]);
+  useEffect(() => setTriggerAnim(featureState.techStackActive), [featureState.techStackActive]);
 
   // Attribute Setter: ref data-status && techStackActive false boolean setter
   useEffect(() => {
     if (triggerAnim) {
       setTriggerAnim(true);
     } else {
-      setTimeout(() => setTechStackActive(false), 260);
+      setTimeout(() => setFeatureState({ ...featureState, techStackActive: false }), 260);
       setTriggerAnim(false);
     }
   }, [triggerAnim]);
@@ -70,7 +80,7 @@ const EcommerceTechStack = ({ techStackActive, setTechStackActive }: TechStackTy
   //** */
 
   // Component Render
-  if (techStackActive)
+  if (featureState.techStackActive)
     return (
       <div id='techStackWrapper' data-status={triggerAnim ? 'active' : 'false'}>
         <section className='techStackSelection' data-status={triggerAnim ? 'active' : 'false'}>

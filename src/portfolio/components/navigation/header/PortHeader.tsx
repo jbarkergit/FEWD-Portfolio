@@ -7,10 +7,18 @@ type PortHeaderType = {
   mountAnimation: boolean;
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
-  techStackActive: boolean;
-  setTechStackActive: Dispatch<SetStateAction<boolean>>;
-  contactFormActive: boolean;
-  setContactFormActive: Dispatch<SetStateAction<boolean>>;
+  featureState: {
+    projectDetailsActive: boolean;
+    contactFormActive: boolean;
+    techStackActive: boolean;
+  };
+  setFeatureState: Dispatch<
+    SetStateAction<{
+      projectDetailsActive: boolean;
+      contactFormActive: boolean;
+      techStackActive: boolean;
+    }>
+  >;
 };
 
 /** Map project length array */
@@ -21,15 +29,7 @@ myProjects.forEach((_, index) => {
 });
 
 /** Component */
-const PortHeader = ({
-  mountAnimation,
-  projectSlideIndex,
-  setProjectSlideIndex,
-  contactFormActive,
-  setContactFormActive,
-  techStackActive,
-  setTechStackActive,
-}: PortHeaderType): JSX.Element => {
+const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PortHeaderType): JSX.Element => {
   //** Arrow position references & logic */
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
@@ -82,10 +82,22 @@ const PortHeader = ({
           if (menuButtons.current) menuButtons.current.setAttribute('data-transform', 'false');
         }}>
         <div className='portHeader__menu__buttons' ref={menuButtons} data-transform={'false'}>
-          <button aria-label='Contact Form' onClick={() => (contactFormActive ? setContactFormActive(false) : setContactFormActive(true))}>
+          <button
+            aria-label='Contact Form'
+            onClick={() =>
+              featureState.contactFormActive
+                ? setFeatureState({ ...featureState, contactFormActive: false })
+                : setFeatureState({ ...featureState, contactFormActive: true })
+            }>
             Contact
           </button>
-          <button aria-label='Tech Stack' onClick={() => (techStackActive ? setTechStackActive(false) : setTechStackActive(true))}>
+          <button
+            aria-label='Tech Stack'
+            onClick={() =>
+              featureState.techStackActive
+                ? setFeatureState({ ...featureState, techStackActive: false })
+                : setFeatureState({ ...featureState, techStackActive: true })
+            }>
             Tech Stack
           </button>
           <Link to='https://github.com/jbarkergit' target='_blank' aria-label='GitHub'>

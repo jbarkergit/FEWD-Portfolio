@@ -24,26 +24,31 @@ const Portfolio = (): JSX.Element => {
     setTimeout(() => setMountAnimation(false), 350);
   }, [portfolioRef.current]);
 
-  /** Page transitions */
-  const [contactFormActive, setContactFormActive] = useState<boolean>(false);
-  const [techStackActive, setTechStackActive] = useState<boolean>(false);
+  /** Component transitions */
+  const [featureState, setFeatureState] = useState({
+    projectDetailsActive: false,
+    contactFormActive: false,
+    techStackActive: false,
+  });
 
   return (
-    <div id='portfolio' ref={portfolioRef}>
-      <PortHeader
-        mountAnimation={mountAnimation}
-        projectSlideIndex={projectSlideIndex}
-        setProjectSlideIndex={setProjectSlideIndex}
-        contactFormActive={contactFormActive}
-        setContactFormActive={setContactFormActive}
-        techStackActive={techStackActive}
-        setTechStackActive={setTechStackActive}
-      />
+    <div id='portfolioWrapper'>
+      <div id='portfolio' ref={portfolioRef}>
+        <PortHeader
+          mountAnimation={mountAnimation}
+          projectSlideIndex={projectSlideIndex}
+          setProjectSlideIndex={setProjectSlideIndex}
+          featureState={featureState}
+          setFeatureState={setFeatureState}
+        />
+
+        <MainContent mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
+
+        <PortFooter mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
+      </div>
       <ContactForm />
-      <EcommerceTechStack techStackActive={techStackActive} setTechStackActive={setTechStackActive} />
-      {/* <ProjectDetails projectSlideIndex={projectSlideIndex} /> */}
-      <MainContent mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
-      <PortFooter mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} />
+      <EcommerceTechStack featureState={featureState} setFeatureState={setFeatureState} />
+      <ProjectDetails projectSlideIndex={projectSlideIndex} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentTimeCDT from './CurrentTimeCDT';
 import { myProjects } from '../../../assets/projects-data/myProjects';
@@ -6,9 +6,21 @@ import { myProjects } from '../../../assets/projects-data/myProjects';
 type ProjectNavPropType = {
   mountAnimation: boolean;
   projectSlideIndex: number;
+  featureState: {
+    projectDetailsActive: boolean;
+    contactFormActive: boolean;
+    techStackActive: boolean;
+  };
+  setFeatureState: Dispatch<
+    SetStateAction<{
+      projectDetailsActive: boolean;
+      contactFormActive: boolean;
+      techStackActive: boolean;
+    }>
+  >;
 };
 
-const PortFooter = ({ mountAnimation, projectSlideIndex }: ProjectNavPropType) => {
+const PortFooter = ({ mountAnimation, projectSlideIndex, featureState, setFeatureState }: ProjectNavPropType) => {
   const footerNavigation = useRef<HTMLElement>(null);
   const [navigationIndicator, setNavigationIndicator] = useState({ key: myProjects[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Demo Link' });
 
@@ -45,7 +57,15 @@ const PortFooter = ({ mountAnimation, projectSlideIndex }: ProjectNavPropType) =
 
         <section className='portFooter__nav__left' ref={footerNavigation}>
           <h2>{navigationIndicator.key}</h2>
-          <button aria-label='Open Project Insights'>{navigationIndicator.insights}</button>
+          <button
+            aria-label='Open Project Insights'
+            onClick={() =>
+              featureState.projectDetailsActive
+                ? setFeatureState({ ...featureState, projectDetailsActive: false })
+                : setFeatureState({ ...featureState, projectDetailsActive: true })
+            }>
+            {navigationIndicator.insights}
+          </button>
           <Link to={myProjects[projectSlideIndex].projectUrl}>{navigationIndicator.demoLink}</Link>
         </section>
 
