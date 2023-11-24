@@ -8,7 +8,7 @@ import PortFooter from '../components/navigation/footer/PortFooter';
 import MainContent from '../components/main/MainContent';
 
 //Features
-import ContactForm from './ContactForm';
+import ContactForm from '../components/features/contact/ContactForm';
 import EcommerceTechStack from '../components/features/tech-stack/EcommerceTechStack';
 import ProjectDetails from '../components/features/project-details/ProjectDetails';
 
