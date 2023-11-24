@@ -3,17 +3,20 @@
 
 #portfolioWrapper {
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
   flex-wrap: wrap;
+  justify-content: flex-start;
   width: auto;
   height: 100vh;
   overflow: hidden;
+  transform: translateX(0%);
 }
 
 #portfolio {
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 100vh;
   background-color: m.$background-color-primary;
   overflow: hidden;
