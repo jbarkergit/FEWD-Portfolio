@@ -3,29 +3,27 @@
 
 .contactForm {
   display: flex;
-  aspect-ratio: 21/9;
-  max-width: 75vw;
-  max-height: 76vh;
+  align-items: center;
+  color: m.$font-color-secondary;
   height: 100%;
-  background-color: hsl(0, 0%, 8%);
+  max-height: 76vh;
+  overflow: hidden;
   &__section {
     display: flex;
-    align-items: center;
-    height: 100%;
-    padding: 3% f.rem(50);
     &:nth-of-type(1) {
-      flex: 1 0 55%;
+      flex: 0 0 53%;
       flex-direction: column;
-      justify-content: center;
+      align-items: flex-end;
+      max-height: inherit;
+      padding: f.rem(48) f.rem(84) f.rem(48) f.rem(0);
     }
     &:nth-of-type(2) {
-      flex: 0 1 45%;
+      flex: 0 0 47%;
+      max-height: inherit;
+      padding: f.rem(48) f.rem(48);
       border-top-right-radius: f.rem(24);
       border-bottom-right-radius: f.rem(24);
-      background-color: hsl(0, 0%, 50%);
-    }
-    & h2 {
-      display: none;
+      background-color: m.$background-color-primary;
     }
   }
 }
@@ -36,9 +34,23 @@
   justify-content: flex-start;
   width: clamp(45ch, 100%, 75ch);
   height: fit-content;
-  background-color: hsl(0, 0%, 60%);
+  // background-color: hsl(0, 0%, 60%);
   overflow: scroll;
   scrollbar-width: none;
+  will-change: height;
+  transform-origin: top;
+  &__intro {
+    padding-bottom: f.rem(30);
+    &--welcome {
+      font-size: clamp(f.rem(24), f.rem(36) + 1vw, f.rem(42));
+      font-weight: 800;
+      line-height: 135%;
+    }
+    &--prompt {
+      font-size: f.rem(20);
+    }
+  }
+
   &__services,
   &__nonServices,
   &__pricing,
@@ -47,18 +59,27 @@
   &__inclusivityAccessibility,
   &__formErrors {
     width: 100%;
-    padding: f.rem(12) f.rem(24);
-    border-bottom: 1px solid hsl(0, 0%, 56%);
+    padding: f.rem(12) f.rem(12);
+    border-bottom: 1px solid m.$background-color-cream-complementary;
     height: auto;
-    transition: height 150ms ease-in-out;
+    transition: height 360ms ease-in-out;
     &--question {
+      display: flex;
+      align-items: flex-end;
       height: auto;
+      font-size: f.rem(18);
+      & svg {
+        font-size: f.rem(24);
+      }
     }
     & p {
       height: auto;
       padding-bottom: f.rem(6);
       pointer-events: none;
     }
+  }
+  &__formErrors {
+    border-bottom: 0px;
   }
   &__provisions p {
     display: flex;
@@ -115,7 +136,8 @@
         width: 100%;
         height: 100%;
         padding: f.rem(20) 0 f.rem(20) f.rem(12);
-        background-color: hsl(0, 0%, 14%);
+        // background-color: m.$background-color-cream;
+        border: 1px solid m.$background-color-cream-complementary;
       }
       &--errorMessage {
         padding: 0 0 0 f.rem(12);

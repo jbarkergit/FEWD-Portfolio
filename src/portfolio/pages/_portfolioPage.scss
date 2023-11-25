@@ -39,9 +39,10 @@
     overflow: hidden;
   }
   &__features {
-    overflow: hidden scroll;
     display: grid;
     place-items: center;
+    background-color: m.$background-color-cream;
+    overflow: hidden scroll;
   }
 }
 

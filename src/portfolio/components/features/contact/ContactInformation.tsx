@@ -70,15 +70,28 @@ const ContactFormInformation = () => {
     <section className='contactForm__section'>
       <h2>General Contact Information</h2>
       <article className='contact__questions'>
-        <details className='contact__questions__responseTime' ref={primaryQuestionRef} open>
-          <summary className='contact__questions__responseTime--question'>How long until I receive a response?</summary>
-          <p>
-            Kindly share the requested contact information and I'll be sure to respond in a timely fashion. My availability extends throughout the entire week;
-            however, I do not respond to inquiries after business hours.
+        <div className='contact__questions__intro'>
+          <h3 className='contact__questions__intro--welcome'>Let's link up.</h3>
+          <p className='contact__questions__intro--prompt'>
+            👋 Kindly share the requested contact information and I'll be sure to respond in a timely fashion. Thank you.
           </p>
+        </div>
+        <details className='contact__questions__responseTime' ref={primaryQuestionRef} open>
+          <summary className='contact__questions__responseTime--question'>
+            How long until I receive a response?
+            <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+              <path fill='currentColor' d='m12 15l-5-5h10l-5 5Z'></path>
+            </svg>
+          </summary>
+          <p>My availability extends throughout the entire week; however, I do not respond to inquiries after business hours.</p>
         </details>
         <details className='contact__questions__provisions' ref={primaryQuestionRef}>
-          <summary className='contact__questions__provisions--question'>Will the information I share be secure?</summary>
+          <summary className='contact__questions__provisions--question'>
+            Will the information I share be secure?
+            <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+              <path fill='currentColor' d='m12 15l-5-5h10l-5 5Z'></path>
+            </svg>
+          </summary>
           <p>
             <span>
               I do not collect personal information for malicious intentions. This form and it's contents are redirected to my personal Google Mail inbox. The
@@ -90,16 +103,25 @@ const ContactFormInformation = () => {
           </p>
         </details>
         <details className='contact__questions__inclusivityAccessibility' ref={primaryQuestionRef}>
-          <summary className='contact__questions__inclusivityAccessibility--question'>Inclusivity and Accessibility</summary>
+          <summary className='contact__questions__inclusivityAccessibility--question'>
+            Inclusivity and Accessibility
+            <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+              <path fill='currentColor' d='m12 15l-5-5h10l-5 5Z'></path>
+            </svg>
+          </summary>
           <p>
-            I will, without question, welcome the opportunity to connect and/or work with individuals of any race, background, disability, or circumstance. I grew up
-            around children with Autism diagnoses and understand that not everybody is able to communicate in the same way. There will be no reservations or
-            communication barriers between any person(s) who may employ me. I will adapt to ensure you or an individual you know is treated with the utmost respect
-            and dignity.
+            I will, without question, welcome the opportunity to connect and/or work with individuals of any race, background, disability, or circumstance. There
+            will be no reservations or communication barriers between any person(s) who may employ me. I will adapt to ensure you or an individual you know is
+            treated with the utmost respect and dignity.
           </p>
         </details>
         <details className='contact__questions__formErrors' ref={primaryQuestionRef}>
-          <summary className='contact__questions__formErrors--question'>Form assistance</summary>
+          <summary className='contact__questions__formErrors--question'>
+            Form assistance
+            <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+              <path fill='currentColor' d='m12 15l-5-5h10l-5 5Z'></path>
+            </svg>
+          </summary>
           <ol id='errorMessageFAQ'>
             <li>
               <details ref={assistanceQuestionRef}>
