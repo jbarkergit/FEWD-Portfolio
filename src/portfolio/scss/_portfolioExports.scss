@@ -3,6 +3,9 @@
 @forward '/src/portfolio/scss/portfolioMixins';
 @forward '/src/portfolio/pages/portfolioPage';
 
+// Landing
+@forward '/src/portfolio/components/landing/portfolioLanding';
+
 // Header && Footer Navigation
 @forward '/src/portfolio/components/navigation/header/portHeader';
 @forward '/src/portfolio/components/navigation/footer/portFooter';

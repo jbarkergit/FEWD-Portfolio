@@ -1,0 +1,16 @@
+@use '/src/sass/functions' as f;
+@use '/src/portfolio/scss/portfolioStyles' as s;
+
+.portfolio__landing {
+  position: absolute;
+  z-index: 15;
+  width: 100%;
+  padding: s.$box-model-viewport-y calc(s.$box-model-viewport-x * 2);
+  background-color: s.$background-color-primary;
+  &[data-transition='true'] {
+    height: 100vh;
+  }
+  &[data-transition='false'] {
+    height: 0;
+  }
+}

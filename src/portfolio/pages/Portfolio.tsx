@@ -5,6 +5,7 @@ import PortHeader from '../components/navigation/header/PortHeader';
 import PortFooter from '../components/navigation/footer/PortFooter';
 
 //Main
+import PortfolioLanding from '../components/landing/PortfolioLanding';
 import MainContent from '../components/main/MainContent';
 
 //Features
@@ -68,6 +69,8 @@ const Portfolio = (): JSX.Element => {
 
   return (
     <div className='portfolio' ref={portfolioRef}>
+      <PortfolioLanding />
+
       <section className='portfolio__projectHub'>
         <h2>Project hub</h2>
         <PortHeader
