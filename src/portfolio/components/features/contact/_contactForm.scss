@@ -28,6 +28,24 @@
   }
 }
 
+.contact__introduction {
+  width: clamp(45ch, 100%, 75ch);
+  padding-bottom: f.rem(30);
+  & h3 {
+    font-size: clamp(f.rem(24), f.rem(36) + 1vw, f.rem(42));
+    font-weight: 800;
+    line-height: 135%;
+  }
+  & p {
+    display: flex;
+    flex-direction: column;
+    font-size: f.rem(20);
+    & span:nth-of-type(1) {
+      padding-bottom: f.rem(12);
+    }
+  }
+}
+
 .contact__questions {
   display: flex;
   flex-direction: column;
@@ -39,18 +57,6 @@
   scrollbar-width: none;
   will-change: height;
   transform-origin: top;
-  &__intro {
-    padding-bottom: f.rem(30);
-    &--welcome {
-      font-size: clamp(f.rem(24), f.rem(36) + 1vw, f.rem(42));
-      font-weight: 800;
-      line-height: 135%;
-    }
-    &--prompt {
-      font-size: f.rem(20);
-    }
-  }
-
   &__services,
   &__nonServices,
   &__pricing,
