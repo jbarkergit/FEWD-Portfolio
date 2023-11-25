@@ -2,9 +2,9 @@
 @use '../../../scss/portfolioStyles' as m;
 
 .projectDetails {
-  width: 100vw;
-  height: 100vh;
   padding: m.$box-model-viewport-y calc(m.$box-model-viewport-x * 2) m.$box-model-viewport-y m.$box-model-viewport-x;
+  background-color: hsl(0, 0%, 97%);
+  color: m.$font-color-secondary;
   &__projectOverview,
   &__projectSummary {
     display: flex;
@@ -29,11 +29,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: fit-content;
       padding-bottom: calc(m.$box-model-viewport-y * 1.5);
       p {
+        display: flex;
+        flex-direction: column;
         width: clamp(45ch, 100%, 75ch);
         padding-bottom: f.rem(24);
-        & span {
+        & span:nth-of-type(1) {
           text-transform: uppercase;
         }
       }
