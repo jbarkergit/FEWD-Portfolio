@@ -82,7 +82,7 @@ const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, f
           });
           if (menuButtons.current) menuButtons.current.setAttribute('data-transform', 'false');
         }}>
-        <h2>Contact Form, Tech Stack, GitHub Links</h2>
+        <h2>About the Developer and Contact Form, Tech Stack and GitHub Links</h2>
         <div className='portHeader__menu__buttons' ref={menuButtons} data-transform={'false'}>
           <button
             aria-label='Contact Form'
@@ -91,7 +91,7 @@ const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, f
                 ? setFeatureState({ ...featureState, contactFormActive: false })
                 : setFeatureState({ ...featureState, contactFormActive: true })
             }>
-            Contact
+            About & Contact
           </button>
           <button
             aria-label='Tech Stack'
