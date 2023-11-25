@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import ContactFormStandard from './ContactFormStandard';
+import AboutDeveloper from './AboutDeveloper';
 import ContactFormInformation from './ContactInformation';
+import ContactFormStandard from './ContactFormStandard';
 
 //** Contact form field array of objects types */
 export type ContactFormFieldsType = {
@@ -85,6 +86,7 @@ const ContactForm = () => {
   return (
     <section className='contactForm' aria-label='Developer contact form and general information'>
       <h2>Developer Contact Form and general information</h2>
+      <AboutDeveloper />
       <ContactFormInformation />
       <ContactFormStandard
         contactFormFields={contactFormFields}
