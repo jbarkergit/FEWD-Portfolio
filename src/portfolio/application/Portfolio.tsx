@@ -52,11 +52,16 @@ const Portfolio = (): JSX.Element => {
   useEffect(() => featureScrollHandler('smooth'), [featureState]);
 
   useEffect(() => {
-    useFeatureScroll(0, 'instant');
+    const resetFeatureScroll = () => useFeatureScroll(0, 'instant');
     const invokeFeatureScroll = () => featureScrollHandler('instant');
 
     window.addEventListener('resize', invokeFeatureScroll);
-    return () => window.removeEventListener('resize', invokeFeatureScroll);
+    window.addEventListener('beforeunload', resetFeatureScroll);
+
+    return () => {
+      window.removeEventListener('resize', invokeFeatureScroll);
+      window.removeEventListener('beforeunload', resetFeatureScroll);
+    };
   }, []);
 
   return (
