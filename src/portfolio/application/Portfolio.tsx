@@ -4,9 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import PortfolioLanding from './landing-section/PortfolioLanding';
 
 // Project Hub
-import PortHeader from './project-hub/header/PortHeader';
-import ProjectCarousel from './project-hub/carousel/ProjectCarousel';
-import PortFooter from './project-hub/footer/PortFooter';
+import ProjectHub from './project-hub/ProjectHub';
 
 // Project Details
 import ProjectDetails from './project-details/ProjectDetails';
@@ -74,20 +72,13 @@ const Portfolio = (): JSX.Element => {
   return (
     <div className='portfolio' ref={portfolioRef}>
       <PortfolioLanding />
-
-      <section className='projectHub'>
-        <h2>Project hub</h2>
-        <PortHeader
-          mountAnimation={mountAnimation}
-          projectSlideIndex={projectSlideIndex}
-          setProjectSlideIndex={setProjectSlideIndex}
-          featureState={featureState}
-          setFeatureState={setFeatureState}
-        />
-        <ProjectCarousel mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
-        <PortFooter mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
-      </section>
-
+      <ProjectHub
+        mountAnimation={mountAnimation}
+        projectSlideIndex={projectSlideIndex}
+        setProjectSlideIndex={setProjectSlideIndex}
+        featureState={featureState}
+        setFeatureState={setFeatureState}
+      />
       <ProjectDetails projectSlideIndex={projectSlideIndex} />
       <ContactForm />
       <EcommerceTechStack featureState={featureState} setFeatureState={setFeatureState} />
