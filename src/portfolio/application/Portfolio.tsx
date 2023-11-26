@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import PortfolioLanding from './landing-section/PortfolioLanding';
 import ProjectHub from './project-hub/ProjectHub';
 import ProjectDetails from './project-details/ProjectDetails';
 import ContactForm from './contact-form/ContactForm';
@@ -66,7 +65,6 @@ const Portfolio = (): JSX.Element => {
 
   return (
     <div className='portfolio' ref={portfolioRef}>
-      <PortfolioLanding />
       <ProjectHub
         mountAnimation={mountAnimation}
         projectSlideIndex={projectSlideIndex}

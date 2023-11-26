@@ -3,12 +3,12 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
- * Suspense Path Handler
+ * Suspense Skeleton Route Path Handler
  * Protocol Error Handler
  * Lazy load hook required for ecommerce dynamic routes
  */
-import { SuspenseSkeletonHandler } from './app/suspense/SuspenseSkeletonHandler';
-// const ProtocolErrorHandler = lazy(() => import('./app/protocol-error/ProtocolErrorHandler'));
+import SuspenseSkeletonHandler from './app/suspense/SuspenseSkeletonHandler';
+const ProtocolErrorHandler = lazy(() => import('./app/protocol-error/ProtocolErrorHandler'));
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
 /** Key value pair arrays */
@@ -28,7 +28,6 @@ const discordCloneKeyValuePairs = [{ path: '/discord-clone', element: './discord
 const initialKeyValuePairs = [portfolioKeyValuePairs[0], ecommerceKeyValuePairs[0], discordCloneKeyValuePairs[0]];
 
 type GlobalKeyValuePairsType = typeof portfolioKeyValuePairs | typeof ecommerceKeyValuePairs | typeof discordCloneKeyValuePairs;
-
 const globalKeyValuePairs: GlobalKeyValuePairsType = [...portfolioKeyValuePairs, ...ecommerceKeyValuePairs, ...discordCloneKeyValuePairs];
 
 /** Module loader hook */
@@ -46,10 +45,44 @@ type RoutesType = { path: string; module: JSX.Element };
 
 /** Application */
 function App() {
+  /** Network Performance Loader
+   * https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver
+   * https://microsoft.github.io/PowerBI-JavaScript/modules/_node_modules__types_node_perf_hooks_d_._perf_hooks_.html#entrytype
+   */
+  const [networkPerformance, setNetworkPerformance] = useState({
+    script: { totalSize: 0, transferred: 0 },
+    html: { totalSize: 0, transferred: 0 },
+    css: { totalSize: 0, transferred: 0 },
+    img: { totalSize: 0, transferred: 0 },
+    other: { totalSize: 0, transferred: 0 },
+  });
+
+  useEffect(() => {
+    const perfObserver = (list: PerformanceObserverEntryList): void => {
+      list.getEntries().forEach((entry: PerformanceEntry) => {
+        const resourceEntry = entry as PerformanceResourceTiming;
+        const stateKey = resourceEntry.initiatorType as keyof typeof networkPerformance;
+
+        setNetworkPerformance((prevState) => ({
+          ...prevState,
+          [stateKey]: {
+            totalSize: resourceEntry.transferSize,
+            transferred: resourceEntry.transferSize,
+          },
+        }));
+      });
+    };
+
+    const observer: PerformanceObserver = new PerformanceObserver(perfObserver);
+    observer.observe({ entryTypes: ['resource'] });
+
+    return () => observer.disconnect();
+  }, []);
+
+  /** Dynamic Route Setter */
   const [routes, setRoutes] = useState<RoutesType[]>([]);
   const location: string = useLocation().pathname;
 
-  /** Route setter */
   const useRouteSetter = (keyValuePairs: GlobalKeyValuePairsType): void => {
     keyValuePairs.map((keyValuePair) => {
       useModuleLoader(keyValuePair.element as string).then((Module: JSX.Element) => {
@@ -107,16 +140,10 @@ function App() {
     return () => window.removeEventListener('beforeunload', useClearSessionStorageFlag);
   }, []);
 
-  /* 
-  TODO:
-  Replace protocol error handler (404) with progress loader.
-  This would bypass the path='*' issue, allowing the user to be notified that the page may not load
-  */
-
   return (
-    <Suspense fallback={<SuspenseSkeletonHandler />}>
+    <Suspense fallback={<SuspenseSkeletonHandler networkPerformance={networkPerformance} />}>
       <Routes>
-        <Route path='*' element={<SuspenseSkeletonHandler />} />
+        <Route path='*' element={<ProtocolErrorHandler />} />
 
         {routes.map((NewRoute: RoutesType) => (
           <Route path={NewRoute.path} element={NewRoute.module} key={uuidv4()} />
