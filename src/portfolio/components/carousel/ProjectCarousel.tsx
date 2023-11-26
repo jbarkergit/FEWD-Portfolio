@@ -10,7 +10,7 @@ import { initSliderStateType } from './types/initSliderStateType';
 import { actionType } from './types/actionType';
 import { initState } from './initial-state/initState';
 
-const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }: indexStateType): JSX.Element => {
+const ProjectCarousel = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }: indexStateType): JSX.Element => {
   /** Mapped carousel children (<article />) references */
   const arrayOfArticles = useRef<HTMLElement[]>([]);
   const articleRef = (reference: HTMLElement) => {
@@ -255,4 +255,4 @@ const MainContent = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }
   );
 };
 
-export default MainContent;
+export default ProjectCarousel;

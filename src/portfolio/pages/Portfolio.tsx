@@ -6,7 +6,7 @@ import PortFooter from '../components/navigation/footer/PortFooter';
 
 //Main
 import PortfolioLanding from '../components/landing/PortfolioLanding';
-import MainContent from '../components/main/MainContent';
+import MainContent from '../components/carousel/ProjectCarousel';
 
 //Features
 import ContactForm from '../components/features/contact/ContactForm';
