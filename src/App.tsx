@@ -169,10 +169,6 @@ function App() {
         ))}
 
         <Route path='/ecommerce/discord-clone' element={useModule('/ecommerce/discord-clone')?.module} />
-
-        {/* {routes.map((NewRoute: RoutesType) => (
-          <Route path={NewRoute.path} element={NewRoute.module} key={uuidv4()} />
-        ))} */}
       </Routes>
     </Suspense>
   );
