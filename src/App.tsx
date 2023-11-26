@@ -140,15 +140,24 @@ function App() {
     return () => window.removeEventListener('beforeunload', useClearSessionStorageFlag);
   }, []);
 
+  /** useModule hook */
+  const useModule = (path: string) => routes.find((route) => route.path === path);
+
   return (
     <Suspense fallback={<SuspenseSkeletonHandler networkPerformance={networkPerformance} />}>
       <Routes>
         <Route path='*' element={<ProtocolErrorHandler />} />
 
-        {routes.map((NewRoute: RoutesType) => (
-          <Route path={NewRoute.path} element={NewRoute.module} key={uuidv4()} />
-        ))}
+        <Route path='/' element={useModule('/')?.module} />
+        <Route path='/contact' element={useModule('/')?.module} />
 
+        <Route path='/ecommerce' element={useModule('/ecommerce')?.module} />
+        <Route path='/ecommerce/products' element={useModule('/ecommerce/products')?.module} />
+        <Route path='/ecommerce/headphones' element={useModule('/ecommerce/headphones')?.module} />
+        <Route path='/ecommerce/amps-dacs' element={useModule('/ecommerce/amps-dacs')?.module} />
+        <Route path='/ecommerce/microphones' element={useModule('/ecommerce/microphones')?.module} />
+        <Route path='/ecommerce/interfaces' element={useModule('/ecommerce/interfaces')?.module} />
+        <Route path='/ecommerce/product/:paramId' element={useModule('/ecommerce/product/:paramId')?.module} />
         {useUniqueData().useUniqueCompanies.map((company: string) => (
           <Route path={`/ecommerce/${company}`} key={company} />
         ))}
@@ -158,6 +167,12 @@ function App() {
         {useUniqueData().useUniquePolarPatterns.map((polarPattern: string) => (
           <Route path={`/ecommerce/${polarPattern}`} key={polarPattern} />
         ))}
+
+        <Route path='/ecommerce/discord-clone' element={useModule('/ecommerce/discord-clone')?.module} />
+
+        {/* {routes.map((NewRoute: RoutesType) => (
+          <Route path={NewRoute.path} element={NewRoute.module} key={uuidv4()} />
+        ))} */}
       </Routes>
     </Suspense>
   );
