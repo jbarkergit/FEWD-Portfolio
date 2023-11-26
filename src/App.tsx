@@ -12,7 +12,7 @@ import { SuspenseSkeletonHandler } from './app/suspense/SuspenseSkeletonHandler'
 import useUniqueData from './ecommerce/hooks/useUniqueData';
 
 /** Key value pair arrays */
-const portfolioKeyValuePairs = [{ path: '/', element: './portfolio/pages/Portfolio' }];
+const portfolioKeyValuePairs = [{ path: '/', element: './portfolio/application/Portfolio' }];
 
 const ecommerceKeyValuePairs = [
   { path: '/ecommerce', element: './ecommerce/pages/Home' },

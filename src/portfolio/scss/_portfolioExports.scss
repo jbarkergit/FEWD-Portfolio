@@ -1,23 +1,21 @@
 // Styles
 @forward '/src/portfolio/scss/portfolioStyles';
 @forward '/src/portfolio/scss/portfolioMixins';
-@forward '/src/portfolio/pages/portfolioPage';
+@forward '/src/portfolio/application/portfolioPage';
 
-// Landing
-@forward '/src/portfolio/components/landing/portfolioLanding';
+// Landing Section
+@forward '/src/portfolio/application/landing-section/portfolioLanding';
 
-// Header && Footer Navigation
-@forward '/src/portfolio/components/navigation/header/portHeader';
-@forward '/src/portfolio/components/navigation/footer/portFooter';
+// Project Hub
+@forward '/src/portfolio/application/project-hub/header/portHeader';
+@forward '/src/portfolio/application/project-hub/carousel/projectCarousel.scss';
+@forward '/src/portfolio/application/project-hub/footer/portFooter';
 
-// Carousel
-@forward '/src/portfolio/components/carousel/projectCarousel.scss';
+// Project Details
+@forward '/src/portfolio/application/project-details/projectDetails';
 
-// Feature: Contact
-@forward '/src/portfolio/components/features/contact/contactForm';
+// Contact Form
+@forward '/src/portfolio/application/contact-form/contactForm';
 
-// Feature: Technologies
-@forward '/src/portfolio/components/features/tech-stack/ecommerceTechStack';
-
-// Feature: Project details
-@forward '/src/portfolio/components/features/project-details/projectDetails';
+// Technology Stack
+@forward '/src/portfolio/application/technology-stack/ecommerceTechStack';

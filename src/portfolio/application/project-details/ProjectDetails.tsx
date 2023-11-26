@@ -1,5 +1,5 @@
-import EcommerceExtendedInfo from './project-information/EcommerceExtendedInfo';
-import EcommerceAbridgedInfo from './project-information/EcommerceAbridgedInfo';
+import EcommerceExtendedInfo from './components/EcommerceExtendedInfo';
+import EcommerceAbridgedInfo from './components/EcommerceAbridgedInfo';
 
 type ProjectDetailsType = { projectSlideIndex: number };
 

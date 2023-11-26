@@ -1,6 +1,6 @@
 import { useState, Dispatch, SetStateAction, useEffect, useRef } from 'react';
-import TechStackIcons from './TechStackIcons';
-import TechStackInformation from './TechStackInformation';
+import TechStackIcons from './components/TechStackIcons';
+import TechStackInformation from './components/TechStackInformation';
 
 //Prop drill from pages/Portfolio
 type TechStackType = {
@@ -62,9 +62,9 @@ const EcommerceTechStack = ({ featureState, setFeatureState }: TechStackType) =>
 
   // Component Render
   return (
-    <section id='techStackWrapper'>
+    <section className='techStack'>
       <h2>Tech Stack</h2>
-      <div className='techStackSelection'>
+      <div className='techStack__selection'>
         {TechStackInformation.map((technologyInfo) => (
           <button
             key={technologyInfo.id}
@@ -85,7 +85,7 @@ const EcommerceTechStack = ({ featureState, setFeatureState }: TechStackType) =>
           </svg>
         </button>
       </div>
-      <div className='techStackHero' data-status={triggerAnim ? 'active' : 'false'}>
+      <div className='techStack__hero' data-status={triggerAnim ? 'active' : 'false'}>
         <picture key={TechStackInformation[activeTechnologyIndex].id} ref={previousTechStackHero} data-status={'false'}>
           {TechStackIcons[previouslyActiveTechnology].svg}
         </picture>
@@ -93,7 +93,7 @@ const EcommerceTechStack = ({ featureState, setFeatureState }: TechStackType) =>
           {TechStackIcons[activeTechnologyIndex].svg}
         </picture>
       </div>
-      <div className='techStackInformation' data-status={triggerAnim ? 'active' : 'false'}>
+      <div className='techStack__information' data-status={triggerAnim ? 'active' : 'false'}>
         <article ref={previousTechStackInfo} data-status={'false'}>
           <h2>{TechStackInformation[activeTechnologyIndex].name}</h2>
           <p>{TechStackInformation[activeTechnologyIndex].description}</p>

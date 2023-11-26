@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 // Component
 import { indexStateType } from './types/indexStateType';
-import { myProjects } from '../../assets/projects-data/myProjects';
+import { myProjects } from './../../../assets/projects-data/myProjects';
 
 // Reducer
 import { initSliderStateType } from './types/initSliderStateType';

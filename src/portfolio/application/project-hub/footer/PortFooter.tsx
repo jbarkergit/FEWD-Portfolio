@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import CurrentTimeCDT from './CurrentTimeCDT';
+import CurrentTimeCDT from './components/CurrentTimeCDT';
 import { myProjects } from '../../../assets/projects-data/myProjects';
 
 type ProjectNavPropType = {

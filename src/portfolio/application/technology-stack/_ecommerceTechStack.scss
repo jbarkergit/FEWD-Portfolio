@@ -1,7 +1,7 @@
-@use '../../../../sass/functions' as f;
-@use '../../../scss/portfolioStyles' as m;
+@use '/src/sass/functions' as f;
+@use '/src/portfolio/scss/portfolioStyles' as m;
 
-#techStackWrapper {
+.techStack {
   display: grid;
   grid-template-areas:
     'techStackSelection techStackHero'
@@ -19,7 +19,7 @@
   overflow: hidden;
 }
 
-.techStackSelection {
+.techStack__selection {
   grid-area: techStackSelection;
   position: relative;
   display: grid;
@@ -65,7 +65,7 @@
   }
 }
 
-.techStackHero {
+.techStack__hero {
   grid-area: techStackHero;
   position: relative;
   width: 100%;
@@ -121,7 +121,7 @@
   }
 }
 
-.techStackInformation {
+.techStack__information {
   grid-area: techStackInformation;
   position: relative;
   width: 100%;

@@ -1,5 +1,5 @@
-@use '../../../sass/functions' as f;
-@use '../../scss/portfolioStyles' as m;
+@use '/src/sass/functions' as f;
+@use '/src/portfolio/scss/portfolioStyles' as s;
 
 .mainContent {
   width: 100vw;
@@ -11,7 +11,7 @@
     width: max-content;
     height: inherit;
     max-height: inherit;
-    padding: 0 m.$box-model-viewport-x;
+    padding: 0 s.$box-model-viewport-x;
     &:hover {
       cursor: grab;
     }
@@ -29,7 +29,7 @@
   max-height: inherit;
   aspect-ratio: 1.99/1;
   will-change: width;
-  background-color: m.$background-color-transparent-fallback;
+  background-color: s.$background-color-transparent-fallback;
   transition:
     filter 350ms ease-in-out,
     transform 350ms ease-in-out,

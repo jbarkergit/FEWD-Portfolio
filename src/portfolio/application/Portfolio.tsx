@@ -1,17 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 
-//Navigation
-import PortHeader from '../components/navigation/header/PortHeader';
-import PortFooter from '../components/navigation/footer/PortFooter';
+// Landing Section
+import PortfolioLanding from './landing-section/PortfolioLanding';
 
-//Main
-import PortfolioLanding from '../components/landing/PortfolioLanding';
-import MainContent from '../components/carousel/ProjectCarousel';
+// Project Hub
+import PortHeader from './project-hub/header/PortHeader';
+import ProjectCarousel from './project-hub/carousel/ProjectCarousel';
+import PortFooter from './project-hub/footer/PortFooter';
 
-//Features
-import ContactForm from '../components/features/contact/ContactForm';
-import EcommerceTechStack from '../components/features/tech-stack/EcommerceTechStack';
-import ProjectDetails from '../components/features/project-details/ProjectDetails';
+// Project Details
+import ProjectDetails from './project-details/ProjectDetails';
+
+// Contact Form
+import ContactForm from './contact-form/ContactForm';
+
+// Technology Stack
+import EcommerceTechStack from './technology-stack/EcommerceTechStack';
 
 const Portfolio = (): JSX.Element => {
   const portfolioRef = useRef<HTMLDivElement>(null);
@@ -80,7 +84,7 @@ const Portfolio = (): JSX.Element => {
           featureState={featureState}
           setFeatureState={setFeatureState}
         />
-        <MainContent mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
+        <ProjectCarousel mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
         <PortFooter mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
       </section>
 

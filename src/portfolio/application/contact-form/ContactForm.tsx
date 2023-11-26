@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import AboutDeveloper from './AboutDeveloper';
-import ContactFormInformation from './ContactInformation';
-import ContactFormStandard from './ContactFormStandard';
+import AboutDeveloper from './components/AboutDeveloper';
+import ContactFormInformation from './components/ContactInformation';
+import ContactFormStandard from './components/ContactFormStandard';
 
 //** Contact form field array of objects types */
 export type ContactFormFieldsType = {

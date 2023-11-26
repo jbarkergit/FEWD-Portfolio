@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef } from 'react';
-import { ContactFormFieldsType, ContactFormPropsType } from './ContactForm';
+import { ContactFormFieldsType, ContactFormPropsType } from '../ContactForm';
 import ContactFormErrorHandler from './ContactFormErrorHandler';
 
 const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
