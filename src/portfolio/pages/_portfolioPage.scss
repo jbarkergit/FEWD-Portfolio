@@ -2,10 +2,10 @@
 @use '../scss/portfolioStyles' as m;
 
 .portfolio {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  width: max-content;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  width: 100vw;
   height: 100vh;
   background-color: m.$background-color-primary;
   color: m.$font-color-primary;
@@ -24,25 +24,38 @@
     font: inherit;
     letter-spacing: inherit;
   }
-  &__projectHub,
-  &__features {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: inherit;
-    & h2 {
-      display: none;
-    }
-  }
-  &__projectHub {
-    overflow: hidden;
-  }
-  &__features {
-    display: grid;
-    place-items: center;
-    background-color: m.$background-color-cream;
-    overflow: hidden scroll;
+}
+
+.projectHub {
+  grid-area: 1 / 2 / 2 / 3;
+  width: 100vw;
+  height: 100vh;
+}
+.projectDetails {
+  grid-area: 2 / 2 / 3 / 3;
+  width: 100vw;
+  height: 100vh;
+}
+.contactForm {
+  grid-area: 1 / 3 / 2 / 4;
+  width: 100vw;
+  height: 100vh;
+}
+#techStackWrapper {
+  grid-area: 1 / 1 / 2 / 2;
+  width: 100vw;
+  height: 100vh;
+}
+
+.projectHub {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: inherit;
+  overflow: hidden;
+  & h2 {
+    display: none;
   }
 }
 

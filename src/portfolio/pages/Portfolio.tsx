@@ -14,11 +14,12 @@ import EcommerceTechStack from '../components/features/tech-stack/EcommerceTechS
 import ProjectDetails from '../components/features/project-details/ProjectDetails';
 
 const Portfolio = (): JSX.Element => {
+  const portfolioRef = useRef<HTMLDivElement>(null);
+
   /** Active project slide index tracker */
   const [projectSlideIndex, setProjectSlideIndex] = useState<number>(0);
 
   /** Mount Animation */
-  const portfolioRef = useRef<HTMLDivElement>(null);
   const [mountAnimation, setMountAnimation] = useState<boolean>(true);
 
   useEffect(() => {
@@ -32,46 +33,45 @@ const Portfolio = (): JSX.Element => {
     techStackActive: false,
   });
 
-  const setPortfolioCoordinates = (xCoordinate: number, behaviorType: ScrollBehavior) => {
-    if (portfolioRef.current)
-      portfolioRef.current.scrollTo({
-        left: xCoordinate,
-        behavior: behaviorType,
-      });
+  const useFeatureScroll = (index: number, scrollBehavior: ScrollBehavior) => {
+    if (portfolioRef.current) {
+      const project = portfolioRef.current.children[index] as HTMLElement;
+      portfolioRef.current.scrollTo({ left: project.offsetLeft, top: project.offsetTop, behavior: scrollBehavior });
+    }
   };
 
-  useEffect(() => {
-    const portfolioRefWidth: number = portfolioRef.current?.scrollWidth as number;
-    // const featureStateLength: number = Object.values(featureState).length + 1;
-    const featureXPos = portfolioRefWidth / 2;
-
+  const featureScrollHandler = (scrollBehavior: ScrollBehavior) => {
     switch (true) {
       case featureState.projectDetailsActive:
-        setPortfolioCoordinates(featureXPos, 'smooth');
+        useFeatureScroll(1, scrollBehavior);
         break;
       case featureState.contactFormActive:
-        setPortfolioCoordinates(featureXPos * 2, 'smooth');
+        useFeatureScroll(2, scrollBehavior);
         break;
       case featureState.techStackActive:
-        setPortfolioCoordinates(featureXPos * 2, 'smooth');
+        useFeatureScroll(3, scrollBehavior);
         break;
       default:
-        setPortfolioCoordinates(0, 'instant');
+        useFeatureScroll(0, scrollBehavior);
         break;
     }
-  }, [featureState, portfolioRef.current]);
+  };
+
+  useEffect(() => featureScrollHandler('smooth'), [featureState]);
 
   useEffect(() => {
-    const resetPortfolioCoordinates = () => setPortfolioCoordinates(0, 'instant');
-    window.addEventListener('unload', resetPortfolioCoordinates);
-    return () => window.removeEventListener('unload', resetPortfolioCoordinates);
+    useFeatureScroll(0, 'instant');
+    const invokeFeatureScroll = () => featureScrollHandler('instant');
+
+    window.addEventListener('resize', invokeFeatureScroll);
+    return () => window.removeEventListener('resize', invokeFeatureScroll);
   }, []);
 
   return (
     <div className='portfolio' ref={portfolioRef}>
       <PortfolioLanding />
 
-      <section className='portfolio__projectHub'>
+      <section className='projectHub'>
         <h2>Project hub</h2>
         <PortHeader
           mountAnimation={mountAnimation}
@@ -84,12 +84,9 @@ const Portfolio = (): JSX.Element => {
         <PortFooter mountAnimation={mountAnimation} projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
       </section>
 
-      <section className='portfolio__features'>
-        <h2>Features</h2>
-        {featureState.projectDetailsActive ? <ProjectDetails projectSlideIndex={projectSlideIndex} /> : null}
-        {featureState.contactFormActive ? <ContactForm /> : null}
-        {featureState.techStackActive ? <EcommerceTechStack featureState={featureState} setFeatureState={setFeatureState} /> : null}
-      </section>
+      <ProjectDetails projectSlideIndex={projectSlideIndex} />
+      <ContactForm />
+      <EcommerceTechStack featureState={featureState} setFeatureState={setFeatureState} />
     </div>
   );
 };
