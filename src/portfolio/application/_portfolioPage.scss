@@ -5,11 +5,10 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  width: 100vw;
   height: 100vh;
   background-color: m.$background-color-primary;
-  color: m.$font-color-primary;
   overflow: hidden;
+  color: m.$font-color-primary;
   // font: [font-style] [font-variant] [font-weight] font-size/line-height font-family;
   font:
     normal normal 500 1.1rem / 1.25em 'Helvetica',

@@ -1,18 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-
-// Landing Section
 import PortfolioLanding from './landing-section/PortfolioLanding';
-
-// Project Hub
 import ProjectHub from './project-hub/ProjectHub';
-
-// Project Details
 import ProjectDetails from './project-details/ProjectDetails';
-
-// Contact Form
 import ContactForm from './contact-form/ContactForm';
-
-// Technology Stack
 import EcommerceTechStack from './technology-stack/EcommerceTechStack';
 
 const Portfolio = (): JSX.Element => {
