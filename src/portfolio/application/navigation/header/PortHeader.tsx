@@ -4,7 +4,6 @@ import { myProjects } from '../../../assets/projects-data/myProjects';
 
 //Prop drill from Portfolio page
 type PortHeaderType = {
-  mountAnimation: boolean;
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
   featureState: {
@@ -29,7 +28,7 @@ myProjects.forEach((_, index) => {
 });
 
 /** Component */
-const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PortHeaderType): JSX.Element => {
+const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PortHeaderType): JSX.Element => {
   //** Arrow position references & logic */
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
@@ -49,7 +48,7 @@ const PortHeader = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex, f
   };
 
   return (
-    <header className={`portHeader ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`}>
+    <header className='portHeader'>
       <section className='portHeader__index'>
         <h2>Navigate projects by number</h2>
         <div className='portHeader__index__location'>{`Project 0${projectSlideIndex + 1}.`}</div>

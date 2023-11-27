@@ -10,7 +10,7 @@ import { initSliderStateType } from './types/initSliderStateType';
 import { actionType } from './types/actionType';
 import { initState } from './initial-state/initState';
 
-const ProjectCarousel = ({ mountAnimation, projectSlideIndex, setProjectSlideIndex }: indexStateType): JSX.Element => {
+const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: indexStateType): JSX.Element => {
   /** Mapped carousel children (<article />) references */
   const arrayOfArticles = useRef<HTMLElement[]>([]);
   const articleRef = (reference: HTMLElement) => {
@@ -219,7 +219,7 @@ const ProjectCarousel = ({ mountAnimation, projectSlideIndex, setProjectSlideInd
 
   /** Component */
   return (
-    <main className={`mainContent ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`} ref={carouselContainerRef}>
+    <main className='mainContent' ref={carouselContainerRef}>
       <div className={`mainContent__track ${carouselAnimation ? 'smoothen' : ''}`} ref={carouselRef} style={state.style}>
         {myProjects.map((project) => {
           return (
