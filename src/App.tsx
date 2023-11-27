@@ -1,6 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Suspense Skeleton Route Path Handler
@@ -81,8 +80,10 @@ function App() {
 
   /** Dynamic Route Setter */
   const [routes, setRoutes] = useState<RoutesType[]>([]);
+  const useModule = (path: string) => routes.find((route) => route.path === path);
   const location: string = useLocation().pathname;
 
+  /** Route setter */
   const useRouteSetter = (keyValuePairs: GlobalKeyValuePairsType): void => {
     keyValuePairs.map((keyValuePair) => {
       useModuleLoader(keyValuePair.element as string).then((Module: JSX.Element) => {
@@ -121,27 +122,24 @@ function App() {
 
   /**
    * Grab key value pairs from useKeyValuePairs hook utilizing useLocation()
-   * Send data to useRouteSetter
-   * Invokes useModuleLoader to get <Module.default /> as JSX.Elements (async await promise conversion)
+   * Send data to useRouteSetter which invokes useModuleLoader to get <Module.default /> as JSX.Elements (async await promise conversion)
    * Then map new array of Routes to JSX component
+   * Note: Portfolio && Discord Clone are currently SPAs, remove from network queue
    */
   useEffect(() => {
     useRouteSetter(useKeyValuePairs());
+    // if (location === '/' && portfolioKeyValuePairs.length > 1) useRouteSetter(portfolioKeyValuePairs.slice(0));
     if (location.startsWith('/ecommerce') && ecommerceKeyValuePairs.length > 1) useRouteSetter(ecommerceKeyValuePairs.slice(0));
-    else if (location.startsWith('/discord-clone') && discordCloneKeyValuePairs.length > 1) useRouteSetter(discordCloneKeyValuePairs.slice(0));
-    else if (location === '/' && portfolioKeyValuePairs.length > 1) useRouteSetter(portfolioKeyValuePairs.slice(0));
+    // else if (location.startsWith('/discord-clone') && discordCloneKeyValuePairs.length > 1) useRouteSetter(discordCloneKeyValuePairs.slice(0));
     else null;
   }, [location]);
 
-  /** Clear sessionStorage in the event that the page is refreshed to ensure users aren't greeted with a failed importation */
+  /** Clear sessionStorage on unload event to ensure users aren't greeted with a failed importation */
   useEffect(() => {
     const useClearSessionStorageFlag = () => sessionStorage.clear();
     window.addEventListener('beforeunload', useClearSessionStorageFlag);
     return () => window.removeEventListener('beforeunload', useClearSessionStorageFlag);
   }, []);
-
-  /** useModule hook */
-  const useModule = (path: string) => routes.find((route) => route.path === path);
 
   return (
     <Suspense fallback={<SuspenseSkeletonHandler networkPerformance={networkPerformance} />}>
@@ -149,7 +147,6 @@ function App() {
         <Route path='*' element={<ProtocolErrorHandler />} />
 
         <Route path='/' element={useModule('/')?.module} />
-        <Route path='/contact' element={useModule('/')?.module} />
 
         <Route path='/ecommerce' element={useModule('/ecommerce')?.module} />
         <Route path='/ecommerce/products' element={useModule('/ecommerce/products')?.module} />
@@ -159,13 +156,13 @@ function App() {
         <Route path='/ecommerce/interfaces' element={useModule('/ecommerce/interfaces')?.module} />
         <Route path='/ecommerce/product/:paramId' element={useModule('/ecommerce/product/:paramId')?.module} />
         {useUniqueData().useUniqueCompanies.map((company: string) => (
-          <Route path={`/ecommerce/${company}`} key={company} />
+          <Route path={`/ecommerce/${company}`} element={useModule(`/ecommerce/${company}`)?.module} key={company} />
         ))}
         {useUniqueData().useUniqueWearStyles.map((wearStyle: string) => (
-          <Route path={`/ecommerce/${wearStyle}`} key={wearStyle} />
+          <Route path={`/ecommerce/${wearStyle}`} element={useModule(`/ecommerce/${wearStyle}`)?.module} key={wearStyle} />
         ))}
         {useUniqueData().useUniquePolarPatterns.map((polarPattern: string) => (
-          <Route path={`/ecommerce/${polarPattern}`} key={polarPattern} />
+          <Route path={`/ecommerce/${polarPattern}`} element={useModule(`/ecommerce/${polarPattern}`)?.module} key={polarPattern} />
         ))}
 
         <Route path='/ecommerce/discord-clone' element={useModule('/ecommerce/discord-clone')?.module} />
