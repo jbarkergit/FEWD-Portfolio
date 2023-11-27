@@ -1,0 +1,50 @@
+@use '../../../../sass/functions' as f;
+@use '../../../scss/portfolioStyles' as m;
+
+.portFooter {
+  height: 100%;
+  max-height: 12%;
+  padding: 0 m.$box-model-viewport-x;
+  &__nav {
+    display: flex;
+    align-items: center;
+    height: inherit;
+    & > * {
+      display: flex;
+      align-items: center;
+      gap: m.$portfolio-gap;
+      flex: 1 1 50%;
+      height: 100%;
+      & button,
+      & a {
+        text-transform: capitalize;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+.portFooter__nav__left {
+  @media (width <= 1200px) {
+    display: none;
+  }
+  & h2 {
+    display: block;
+    text-transform: uppercase;
+  }
+}
+
+.portFooter__nav__right {
+  justify-content: flex-end;
+  &--timezone {
+    width: fit-content;
+    margin: 0;
+    text-transform: capitalize;
+  }
+}
+
+.portFooter__nav__mobileLeft {
+  @media (width > 1200px) {
+    display: none;
+  }
+}

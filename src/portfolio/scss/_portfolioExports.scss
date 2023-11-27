@@ -3,10 +3,12 @@
 @forward '/src/portfolio/scss/portfolioMixins';
 @forward '/src/portfolio/application/portfolioPage';
 
+// Navigation
+@forward '/src/portfolio/application/navigation/header/portHeader';
+@forward '/src/portfolio/application/navigation/footer/portFooter';
+
 // Project Hub
-@forward '/src/portfolio/application/project-hub/header/portHeader';
 @forward '/src/portfolio/application/project-hub/carousel/projectCarousel.scss';
-@forward '/src/portfolio/application/project-hub/footer/portFooter';
 
 // Project Details
 @forward '/src/portfolio/application/project-details/projectDetails';

@@ -71,10 +71,7 @@ const PortFooter = ({ mountAnimation, projectSlideIndex, featureState, setFeatur
         </section>
 
         <section className='portFooter__nav__right'>
-          <h2>Developer's timezone</h2>
-          <span className='portFooter__nav__right--timezone'>
-            <CurrentTimeCDT />
-          </span>
+          <CurrentTimeCDT />
         </section>
       </nav>
     </footer>

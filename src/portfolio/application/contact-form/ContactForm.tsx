@@ -86,6 +86,7 @@ const ContactForm = () => {
   return (
     <section className='contactForm' aria-label='Developer contact form and general information'>
       <h2>Developer Contact Form and general information</h2>
+      {/* <FeatureHeader /> */}
       <AboutDeveloper />
       <ContactFormInformation />
       <ContactFormStandard

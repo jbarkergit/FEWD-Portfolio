@@ -5,8 +5,7 @@ const CurrentTimeCDT = (): JSX.Element => {
 
   useEffect(() => {
     const getTime = () => {
-      const currentDate: Date = new Date();
-      const formattedTime: string = currentDate.toLocaleTimeString('en-US', {
+      const formattedTime: string = new Date().toLocaleTimeString('en-US', {
         timeZone: 'America/Chicago',
         hour12: true,
         hour: 'numeric',
@@ -19,15 +18,13 @@ const CurrentTimeCDT = (): JSX.Element => {
     getTime();
     const interval = setInterval(getTime, 60000);
 
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <>
+    <div className='portFooter__nav__right--timezone'>
       {currentTime} • CDT (GMT-5) <h2 style={{ display: 'none' }}>Current time in Central Daylight Time, GMT-5</h2>
-    </>
+    </div>
   );
 };
 

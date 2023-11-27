@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
-import PortHeader from './header/PortHeader';
+import PortHeader from '../navigation/header/PortHeader';
 import ProjectCarousel from './carousel/ProjectCarousel';
-import PortFooter from './footer/PortFooter';
+import PortFooter from '../navigation/footer/PortFooter';
 
 type ProjectHubType = {
   mountAnimation: boolean;
