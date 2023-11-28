@@ -1,4 +1,4 @@
-import useCart from '../../../hooks/useCart';
+import { useCart } from '../../../hooks/useCart';
 import { ProductType } from '../../../types/ProductType';
 
 type PropType = {

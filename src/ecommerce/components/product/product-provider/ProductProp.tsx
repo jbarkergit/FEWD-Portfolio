@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ProductType } from '../../../types/ProductType';
-import useCart from '../../../hooks/useCart';
+import { useCart } from '../../../hooks/useCart';
 
 type ProductPropType = {
   product: ProductType;
