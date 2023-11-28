@@ -8,8 +8,8 @@ import { CartProvider } from '../context/CartContext';
 
 // Components
 import Header from '../components/navigation/header/Header';
-import Footer from '../components/navigation/footer/EFooter';
-import { ProductDatabase } from '../database/product-db/ProductDatabase';
+import EFooter from '../components/navigation/footer/eFooter';
+import { useProductDatabase } from '../hooks/useProductDatabase';
 import { ProductType } from '../types/ProductType';
 import ProductPageDetails from '../components/product/product-page/ProductPageDetails';
 import ProductPageImgDisplay from '../components/product/product-page/ProductPageImgDisplay';
@@ -18,7 +18,7 @@ import MoreLikeThis from '../components/product/product-recommenders/MoreLikeThi
 
 const ProductDetailPage = (): JSX.Element => {
   const { paramId } = useParams() as { paramId: string };
-  const findProduct = ProductDatabase.find((product: ProductType) => product.sku === paramId)!;
+  const findProduct = useProductDatabase.find((product: ProductType) => product.sku === paramId)!;
   const [activeDisplay, setActiveDisplay] = useState<number>(0);
 
   return (
@@ -33,7 +33,7 @@ const ProductDetailPage = (): JSX.Element => {
           </main>
           <MoreLikeThis findProduct={findProduct} />
         </div>
-        <Footer />
+        <EFooter />
       </CartProvider>
     </CategoryFilterProvider>
   );
