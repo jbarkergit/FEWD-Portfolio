@@ -1,8 +1,17 @@
 import { useMemo } from 'react';
 import { ProductType } from '../types/ProductType';
 
-const response = await fetch('../database/productDatabase.json');
-const ProductDatabase: ProductType[] = await response.json();
+const fetchProductDatabase = async (): Promise<ProductType[]> => {
+  try {
+    const productDatabase = await fetch('/src/ecommerce/database/productDatabase.json');
+    return (await productDatabase.json()) as ProductType[];
+  } catch (error) {
+    console.error('Error fetching product database JSON data', error);
+    throw error;
+  }
+};
+
+const ProductDatabase = await fetchProductDatabase();
 
 /** Filters array string properties from ProductDatabase into sets */
 const uniqueDataProps = ProductDatabase.reduce(
@@ -19,8 +28,9 @@ const uniqueDataProps = ProductDatabase.reduce(
     // uniqueCompanies
     result.uniqueCompanySet.add(product.company as string);
     // uniquePolarPatterns
-    if (typeof product.polarPattern === 'string') result.uniquePolarPatternSet.add(product.polarPattern as string);
-    else if (Array.isArray(product.polarPattern)) product.polarPattern.forEach((pattern: string) => result.uniquePolarPatternSet.add(pattern as string));
+    Array.isArray(product.polarPattern)
+      ? product.polarPattern.forEach((pattern: string) => result.uniquePolarPatternSet.add(pattern as string))
+      : result.uniquePolarPatternSet.add(product.polarPattern as string);
     // uniqueWearStyles
     if (product.wearStyle !== undefined) result.uniqueWearStyleSet.add(product.wearStyle as string);
     // uniqueHeadphoneCompanies
