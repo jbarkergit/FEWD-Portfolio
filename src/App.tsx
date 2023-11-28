@@ -156,13 +156,13 @@ function App() {
         <Route path='/ecommerce/interfaces' element={useModule('/ecommerce/interfaces')?.module} />
         <Route path='/ecommerce/product/:paramId' element={useModule('/ecommerce/product/:paramId')?.module} />
         {useUniqueData().useUniqueCompanies.map((company: string) => (
-          <Route path={`/ecommerce/${company}`} element={useModule(`/ecommerce/${company}`)?.module} key={company} />
+          <Route path={`/ecommerce/${company}`} element={useModule('/ecommerce/products')?.module} key={company} />
         ))}
         {useUniqueData().useUniqueWearStyles.map((wearStyle: string) => (
-          <Route path={`/ecommerce/${wearStyle}`} element={useModule(`/ecommerce/${wearStyle}`)?.module} key={wearStyle} />
+          <Route path={`/ecommerce/${wearStyle}`} element={useModule('/ecommerce/products')?.module} key={wearStyle} />
         ))}
         {useUniqueData().useUniquePolarPatterns.map((polarPattern: string) => (
-          <Route path={`/ecommerce/${polarPattern}`} element={useModule(`/ecommerce/${polarPattern}`)?.module} key={polarPattern} />
+          <Route path={`/ecommerce/${polarPattern}`} element={useModule('/ecommerce/products')?.module} key={polarPattern} />
         ))}
 
         <Route path='/ecommerce/discord-clone' element={useModule('/ecommerce/discord-clone')?.module} />
