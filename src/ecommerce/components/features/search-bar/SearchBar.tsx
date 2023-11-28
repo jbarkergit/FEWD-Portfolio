@@ -1,5 +1,4 @@
 import { useState, ChangeEvent, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useProductSearch } from '../../../hooks/useSearchProducts';
 

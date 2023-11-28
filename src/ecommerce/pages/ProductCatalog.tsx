@@ -4,12 +4,12 @@ import { CartProvider } from '../context/CartContext';
 
 // Components
 import Header from '../components/navigation/header/Header';
-import Footer from '../components/navigation/footer/EFooter';
+import EFooter from '../components/navigation/footer/eFooter';
 import ProductProvider from '../components/product/product-provider/ProductProvider';
 import ProductFilterConstructor from '../components/features/product-filters/ProductFilterConstructor';
-import useUniqueData from '../hooks/useUniqueData';
+import { useUniqueData } from '../hooks/useUniqueData';
 import ConditionallyRenderedProductFilters from '../components/features/product-filters/ConditionallyRenderedProductFilters';
-import useBreadCrumbs from '../hooks/useBreadCrumbs';
+import useBreadCrumbs from '../hooks/useBreadcrumbs';
 
 const ProductCatalog = (): JSX.Element => {
   const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData().useUniqueCompanies);
@@ -29,7 +29,7 @@ const ProductCatalog = (): JSX.Element => {
             <ProductProvider />
           </main>
         </section>
-        <Footer />
+        <EFooter />
       </CartProvider>
     </CategoryFilterProvider>
   );
