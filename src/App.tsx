@@ -26,19 +26,18 @@ const discordCloneKeyValuePairs = [{ path: '/discord-clone', element: './discord
 
 const initialKeyValuePairs = [portfolioKeyValuePairs[0], ecommerceKeyValuePairs[0], discordCloneKeyValuePairs[0]];
 
-type GlobalKeyValuePairsType = typeof portfolioKeyValuePairs | typeof ecommerceKeyValuePairs | typeof discordCloneKeyValuePairs;
-const globalKeyValuePairs: GlobalKeyValuePairsType = [...portfolioKeyValuePairs, ...ecommerceKeyValuePairs, ...discordCloneKeyValuePairs];
+type GlobalKeyValuePairsType = (
+  | {
+      path: string;
+      element: string;
+    }
+  | {
+      path: string[];
+      element: string;
+    }
+)[];
 
-/** Module loader hook */
-const useModuleLoader = async (element: string): Promise<JSX.Element> => {
-  try {
-    const Module = await import(element);
-    return (<Module.default />) as JSX.Element;
-  } catch (error) {
-    console.error(`Error returning route path ${element}`, error);
-    throw error;
-  }
-};
+const globalKeyValuePairs: GlobalKeyValuePairsType = [...portfolioKeyValuePairs, ...ecommerceKeyValuePairs, ...discordCloneKeyValuePairs];
 
 type RoutesType = { path: string; module: JSX.Element };
 
@@ -58,7 +57,7 @@ function App() {
 
   useEffect(() => {
     const perfObserver = (list: PerformanceObserverEntryList): void => {
-      list.getEntries().forEach((entry: PerformanceEntry) => {
+      list.getEntries().map((entry: PerformanceEntry) => {
         const resourceEntry = entry as PerformanceResourceTiming;
         const stateKey = resourceEntry.initiatorType as keyof typeof networkPerformance;
 
@@ -78,14 +77,26 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  /** Module loader hook */
+  const useModuleLoader = async (element: string): Promise<JSX.Element> => {
+    try {
+      const Module = await import(element);
+      return (<Module.default />) as JSX.Element;
+    } catch (error) {
+      console.error(`Error returning route path ${element}`, error);
+      throw error;
+    }
+  };
+
   /** Dynamic Route Setter */
-  const [routes, setRoutes] = useState<RoutesType[]>([]);
-  const useModule = (path: string) => routes.find((route) => route.path === path);
   const location: string = useLocation().pathname;
+  const [routes, setRoutes] = useState<RoutesType[]>([]);
+
+  console.log(routes);
 
   /** Route setter */
   const useRouteSetter = (keyValuePairs: GlobalKeyValuePairsType): void => {
-    keyValuePairs.map((keyValuePair) => {
+    for (const keyValuePair of keyValuePairs) {
       useModuleLoader(keyValuePair.element as string).then((Module: JSX.Element) => {
         setRoutes((previousRoutes) => [
           ...previousRoutes,
@@ -94,53 +105,43 @@ function App() {
             : [{ path: keyValuePair.path, module: Module }]),
         ]);
       });
-    });
+    }
   };
 
-  /** Key value pair getter hook */
-  const useKeyValuePairs = (): GlobalKeyValuePairsType => {
-    const sessionStoredRoutePaths = JSON.parse(sessionStorage.getItem('sessionStoredRoutePaths') || '[]');
-    const initialKeyValuePaths: string[] = initialKeyValuePairs.map((keyValuePair) => keyValuePair.path as string);
+  /** Dynamic module loader queue - Minimizing variable storage for optimal memory usage. */
+  useEffect(() => {
     let routeKeyValuePairs: GlobalKeyValuePairsType = [];
 
-    // Prioritize all project landing pages during initial load if pathname is '/'
-    if (location === '/' && !sessionStoredRoutePaths.includes(location) && initialKeyValuePaths.includes(location)) {
+    // Prioritize importation of project landing pages on initial load
+    if (location === '/') {
       routeKeyValuePairs = initialKeyValuePairs;
-      sessionStorage.setItem('sessionStoredRoutePaths', JSON.stringify([...initialKeyValuePaths]));
-    } else {
-      // Handle anything else
-      if (!sessionStoredRoutePaths.includes(location)) {
-        routeKeyValuePairs = globalKeyValuePairs.filter((keyValuePair) => {
-          keyValuePair.path === location || (Array.isArray(keyValuePair.path) && keyValuePair.path.includes(location));
-        });
-        if (!sessionStoredRoutePaths.includes(location)) sessionStorage.setItem('sessionStoredRoutePaths', JSON.stringify([...sessionStoredRoutePaths, location]));
-      }
+    } // Handle individual landing page imports if user didn't visit '/'
+    else {
+      routeKeyValuePairs = globalKeyValuePairs.filter(
+        (keyValuePair) => keyValuePair.path === location || (Array.isArray(keyValuePair.path) && keyValuePair.path.includes(location))
+      );
     }
 
-    return routeKeyValuePairs;
-  };
+    // Check if all modules have been imported and stored in routes State to prevent useEffect from firing without cause
+    if (!globalKeyValuePairs.every((globalKeyValuePair) => routes.some((route) => route.path === globalKeyValuePair.path))) {
+      // Check if route module has been imported and stored in routes state to prevent unnecessary fires
+      if (!routes.some((route: RoutesType) => route.path === location))
+        // Pass arrays of route paths and elements from routeKeyValuePairs to useRouteSetter
+        // useRouteSetter then invokes useModuleLoader to store modules as JSX.Elements (async await promise conversion) in routes state
+        useRouteSetter(routeKeyValuePairs);
+      // Background Loading Queue order
+      // Note: Portfolio && Discord Clone handle their imports locally because they're SPAs
+      // IMPORTANT NOTE: DON'T FORGET TO SLICE LANDING PAGES!
 
-  /**
-   * Grab key value pairs from useKeyValuePairs hook utilizing useLocation()
-   * Send data to useRouteSetter which invokes useModuleLoader to get <Module.default /> as JSX.Elements (async await promise conversion)
-   * Then map new array of Routes to JSX component
-   * Note: Portfolio && Discord Clone are currently SPAs, remove from network queue
-   */
-  useEffect(() => {
-    useRouteSetter(useKeyValuePairs());
-    // if (location === '/' && portfolioKeyValuePairs.length > 1) useRouteSetter(portfolioKeyValuePairs.slice(0));
-    if (location.startsWith('/ecommerce') && ecommerceKeyValuePairs.length > 1) useRouteSetter(ecommerceKeyValuePairs.slice(0));
-    // else if (location.startsWith('/discord-clone') && discordCloneKeyValuePairs.length > 1) useRouteSetter(discordCloneKeyValuePairs.slice(0));
-    else null;
+      // TO DO: PORTFOLIO IS NO LONGER AN SPA -- NEED TO QUEUE BACKGROUND LOADER
+      if (location.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
+    }
   }, [location]);
 
-  /** Clear sessionStorage on unload event to ensure users aren't greeted with a failed importation */
-  useEffect(() => {
-    const useClearSessionStorageFlag = () => sessionStorage.clear();
-    window.addEventListener('beforeunload', useClearSessionStorageFlag);
-    return () => window.removeEventListener('beforeunload', useClearSessionStorageFlag);
-  }, []);
+  /** Simple hook to fetch JSX element from route state */
+  const useModule = (path: string) => routes.find((route) => route.path === path);
 
+  /** Application */
   return (
     <Suspense fallback={<SuspenseSkeletonHandler networkPerformance={networkPerformance} />}>
       <Routes>
