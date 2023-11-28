@@ -14,14 +14,15 @@ import ConditionallyRenderedProductFilters from '../components/features/product-
 
 const ProductCatalog = (): JSX.Element => {
   const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData().useUniqueCompanies);
+  const breadcrumb: string = useLocation().pathname.replace(/(ecommerce|\W)+/g, ' ');
   return (
     <CategoryFilterProvider>
       <CartProvider>
         <Header />
         <section className='browseProduct'>
           <section className='productCatalogTopper'>
-            <div className='productCatalogTopper__panel breadCrumbs' aria-label={useLocation().pathname.replace(/(ecommerce|\W)+/g, ' ')} tabIndex={0}>
-              <h1>{useLocation().pathname.replace(/(ecommerce|\W)+/g, ' ')}</h1>
+            <div className='productCatalogTopper__panel breadCrumbs' aria-label={breadcrumb} tabIndex={0}>
+              <h1>{breadcrumb}</h1>
             </div>
             <div className='productCatalogTopper__panel'>
               <ConditionallyRenderedProductFilters />
@@ -37,5 +38,4 @@ const ProductCatalog = (): JSX.Element => {
     </CategoryFilterProvider>
   );
 };
-
 export default ProductCatalog;
