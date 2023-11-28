@@ -2,7 +2,14 @@ export const myProjects = [
   {
     key: 'ecommerce',
     projectUrl: 'http://localhost:5173/ecommerce',
-    projectTechnology: ['Sass', 'TypeScript'],
+    technologies: {
+      libraries: ['react', 'react router'],
+      webTechnologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
+      codeQuality: ['eslint', 'prettier'],
+      buildtools: ['vite'],
+      packageManagers: ['npm'],
+      versionControl: ['git', 'github'],
+    },
     projectExtended: true,
     projectSummary: true,
     projectImageSrc: '/src/portfolio/assets/compressed-project-images/eco-landing-page.png',
