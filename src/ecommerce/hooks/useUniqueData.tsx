@@ -17,9 +17,12 @@ const uniqueDataProps = useProductDatabase.reduce(
     // uniqueCompanies
     result.uniqueCompanySet.add(product.company as string);
     // uniquePolarPatterns
-    Array.isArray(product.polarPattern)
-      ? product.polarPattern.forEach((pattern: string) => result.uniquePolarPatternSet.add(pattern as string))
-      : result.uniquePolarPatternSet.add(product.polarPattern as string);
+    if (Array.isArray(product.polarPattern)) {
+      product.polarPattern.forEach((pattern: string) => {
+        if (pattern) result.uniquePolarPatternSet.add(pattern);
+      });
+    } else if (product.polarPattern) result.uniquePolarPatternSet.add(product.polarPattern as string);
+
     // uniqueWearStyles
     if (product.wearStyle !== undefined) result.uniqueWearStyleSet.add(product.wearStyle as string);
     // uniqueHeadphoneCompanies
