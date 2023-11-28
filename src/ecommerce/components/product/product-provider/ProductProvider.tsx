@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
-import usePaginatedSets from '../../../hooks/usePaginatedSets';
+import { usePaginatedSets } from '../../../hooks/usePaginatedSets';
 import { ProductType } from '../../../types/ProductType';
 import ProductProp from './ProductProp';
 

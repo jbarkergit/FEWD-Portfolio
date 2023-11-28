@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ProductType } from '../types/ProductType';
-import useProductFilter from './useProductFilter';
+import { useProductFilter } from './useProductFilter';
 import { useCategoryFilterContext } from '../context/CategoryFilterContext';
 
 export const usePaginatedSets = (): ProductType[][] => {
