@@ -3,7 +3,6 @@ import { useCategoryFilterContext } from '../../../context/CategoryFilterContext
 import usePaginatedSets from '../../../hooks/usePaginatedSets';
 import { ProductType } from '../../../types/ProductType';
 import ProductProp from './ProductProp';
-import { ProductDatabase } from '../../../database/product-db/ProductDatabase';
 
 /* 
 usePaginatedSets utilizes useProductFilter, which uses useState[categoryFilter] Context Hook to render appropriate product arrays

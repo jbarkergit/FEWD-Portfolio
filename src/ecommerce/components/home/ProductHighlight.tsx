@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { ProductDatabase } from '../../database/product-db/ProductDatabase';
 import { ProductType } from '../../types/ProductType';
+import { useProductDatabase } from '../../hooks/useProductDatabase';
 
 const ProductHighlight = (): JSX.Element => {
   //Push all instances of pictureRef references into useRef array
@@ -47,31 +47,33 @@ const ProductHighlight = (): JSX.Element => {
         </span>
       </h2>
       <ul>
-        {ProductDatabase.filter((product: ProductType) => product.productshowcase === true).map((product: ProductType) => (
-          <li key={uuidv4()}>
-            <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0 })} tabIndex={0}>
-              <article>
-                <figure>
-                  <picture ref={pictureRef}>
-                    <img src={product.images!.medium[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchpriority='low' />
-                    <figcaption>{`${product.company} ${product.unit}`}</figcaption>
-                  </picture>
-                </figure>
-                <aside>
-                  <video preload='none' playsInline loop muted aria-label='Video of joyful people wearing headphones listening to music' tabIndex={-1}>
-                    <source src='/src/ecommerce/assets/production-videos/stock-footage-splice-374x467.webm' type='video/webm' />
-                  </video>
-                </aside>
-                <hgroup className='productHighlightInfo'>
-                  <h2>
-                    {product.company} {product.unit}
-                  </h2>
-                  <h3>Starting at {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h3>
-                </hgroup>
-              </article>
-            </Link>
-          </li>
-        ))}
+        {useProductDatabase
+          .filter((product: ProductType) => product.productshowcase === true)
+          .map((product: ProductType) => (
+            <li key={uuidv4()}>
+              <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0 })} tabIndex={0}>
+                <article>
+                  <figure>
+                    <picture ref={pictureRef}>
+                      <img src={product.images!.medium[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchpriority='low' />
+                      <figcaption>{`${product.company} ${product.unit}`}</figcaption>
+                    </picture>
+                  </figure>
+                  <aside>
+                    <video preload='none' playsInline loop muted aria-label='Video of joyful people wearing headphones listening to music' tabIndex={-1}>
+                      <source src='/src/ecommerce/assets/production-videos/stock-footage-splice-374x467.webm' type='video/webm' />
+                    </video>
+                  </aside>
+                  <hgroup className='productHighlightInfo'>
+                    <h2>
+                      {product.company} {product.unit}
+                    </h2>
+                    <h3>Starting at {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h3>
+                  </hgroup>
+                </article>
+              </Link>
+            </li>
+          ))}
       </ul>
     </section>
   );

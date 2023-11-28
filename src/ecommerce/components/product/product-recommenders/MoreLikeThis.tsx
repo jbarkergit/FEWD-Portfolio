@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { ProductType } from '../../../types/ProductType';
-import { ProductDatabase } from '../../../database/product-db/ProductDatabase';
+import { useProductDatabase } from '../../../hooks/useProductDatabase';
 
 type MoreLikeThisType = {
   findProduct: ProductType;
 };
 
 const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
-  const filteredRecommenders = ProductDatabase.filter((product) => product.sku !== findProduct.sku && product.category === findProduct.category);
+  const filteredRecommenders = useProductDatabase.filter((product) => product.sku !== findProduct.sku && product.category === findProduct.category);
 
   //Force page refresh upon component change
   const { paramId } = useParams() as { paramId: string };

@@ -1,20 +1,9 @@
 import { useMemo } from 'react';
 import { ProductType } from '../types/ProductType';
-
-const fetchProductDatabase = async (): Promise<ProductType[]> => {
-  try {
-    const productDatabase = await fetch('/src/ecommerce/database/productDatabase.json');
-    return (await productDatabase.json()) as ProductType[];
-  } catch (error) {
-    console.error('Error fetching product database JSON data', error);
-    throw error;
-  }
-};
-
-const ProductDatabase = await fetchProductDatabase();
+import { useProductDatabase } from './useProductDatabase';
 
 /** Filters array string properties from ProductDatabase into sets */
-const uniqueDataProps = ProductDatabase.reduce(
+const uniqueDataProps = useProductDatabase.reduce(
   (
     result: {
       uniqueCompanySet: Set<string>;

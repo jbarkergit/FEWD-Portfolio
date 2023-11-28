@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import useCart from '../../../hooks/useCart';
 import { CartProductType } from '../../../context/CartContext';
-import { ProductDatabase } from '../../../database/product-db/ProductDatabase';
+import { useProductDatabase } from '../../../hooks/useProductDatabase';
 
 const CartProducts = (): JSX.Element[] => {
   const { dispatch, REDUCER_ACTIONS, shoppingCart } = useCart();
@@ -9,7 +9,7 @@ const CartProducts = (): JSX.Element[] => {
   return shoppingCart.map((product: CartProductType) => {
     const shoppingCartProductSku: string = product.sku;
     const shoppingCartProductQuantity: number = product.quantity;
-    const databaseProductStock: number | undefined = ProductDatabase.find((product) => product.sku === shoppingCartProductSku)?.stock;
+    const databaseProductStock: number | undefined = useProductDatabase.find((product) => product.sku === shoppingCartProductSku)?.stock;
     const maximumStockMet = shoppingCartProductQuantity === databaseProductStock;
 
     return (

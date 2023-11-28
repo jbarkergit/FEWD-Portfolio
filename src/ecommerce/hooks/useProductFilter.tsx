@@ -1,4 +1,4 @@
-import { ProductDatabase } from '../database/product-db/ProductDatabase';
+import { useProductDatabase } from './useProductDatabase';
 import { useCategoryFilterContext } from '../context/CategoryFilterContext';
 import { ProductType } from '../types/ProductType';
 
@@ -6,7 +6,7 @@ const useProductFilter = () => {
   // @ts-ignore:
   const { categoryFilter } = useCategoryFilterContext();
 
-  const getReducedProductArray = ProductDatabase.reduce(
+  const getReducedProductArray = useProductDatabase.reduce(
     (result: { filteredData: ProductType[] }, product: ProductType) => {
       switch (categoryFilter) {
         case 'headphones':
@@ -28,7 +28,7 @@ const useProductFilter = () => {
     { filteredData: [] }
   );
 
-  if (categoryFilter === 'products') return ProductDatabase.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
+  if (categoryFilter === 'products') return useProductDatabase.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
   else return getReducedProductArray.filteredData.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
 };
 
