@@ -1,21 +1,22 @@
-import ENewsletter from './newsletter/ENewsletter';
-import EServices from './policies/EServices';
-import ESupport from './policies/ESupport';
-import PaymentTypes from './additions/payment-types/PaymentTypes';
-import Address from './additions/address/Address';
-import SocialMedia from './additions/social-media/SocialMedia';
+import { Link } from 'react-router-dom';
+import ENewsletter from './ENewsletter';
+import SocialMedia from './SocialMedia';
+import { Klarna, Mastercard, Visa, Discover, Paypal } from '../../../assets/production-images/user-account-svg/PaymentMethodSVGS';
 
 const FooterSplitter = (sectionHeading: string) => {
   return (
     <div className='eFooter__splitter'>
       <span className='eFooter__splitter--line' />
-      <h2>{sectionHeading}</h2>
+      <span>{sectionHeading}</span>
       <span className='eFooter__splitter--line' />
     </div>
   );
 };
 
 const EFooter = (): JSX.Element => {
+  const support: string[] = ['My Account', 'Dynamic Rewards', 'Teacher Discount', 'FAQ', 'Shipping', 'International', 'Returns', 'Find a Store'];
+  const services: string[] = ['Data Privacy', 'Ethics', 'EULA', 'General Conditions', 'Payment Processing', 'Terms and Conditions'];
+
   return (
     <footer className='eFooter'>
       <section className='eFooter__newsletter'>
@@ -27,20 +28,38 @@ const EFooter = (): JSX.Element => {
         {FooterSplitter('Customer Support')}
         <nav className='eFooter__customer__policies'>
           <section className='eFooter__customer__policies__support'>
-            <ESupport />
+            <ul>
+              {support.map((listItem: string) => (
+                <li key={listItem}>
+                  <Link to={`/${listItem}`}>{listItem}</Link>
+                </li>
+              ))}
+            </ul>
           </section>
           <section className='eFooter__customer__policies__support'>
-            <EServices />
+            <ul>
+              {support.map((listItem: string) => (
+                <li key={listItem}>
+                  <Link to={`/${listItem}`}>{listItem}</Link>
+                </li>
+              ))}
+            </ul>
           </section>
         </nav>
       </section>
 
       <section className='eFooter__additions'>
         <section className='eFooter__additions__paymentTypes'>
-          <PaymentTypes />
+          <Klarna />
+          <Mastercard />
+          <Visa />
+          <Discover />
+          <Paypal />
         </section>
         <section className='eFooter__additions__address'>
-          <Address />
+          <small>2023 Dynamic Audio</small>
+          <address>1800 DAUDIO</address>
+          <address>support@dynamicaudio.com</address>
         </section>
         <section className='eFooter__additions__socialMedia'>
           <SocialMedia />

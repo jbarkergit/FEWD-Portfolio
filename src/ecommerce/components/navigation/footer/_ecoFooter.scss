@@ -89,7 +89,7 @@
     background-color: var(--fontAccent);
     flex-grow: 1;
   }
-  & h2 {
+  & span {
     display: block;
     flex-basis: 1;
     margin-bottom: 0;
@@ -200,7 +200,7 @@
           color: var(--fontSecondary);
           white-space: nowrap;
         }
-        & a h3 {
+        & a {
           font-size: f.rem(16);
           font-weight: 500;
           color: var(--fontSecondary);
