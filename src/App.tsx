@@ -8,7 +8,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
  */
 import SuspenseSkeletonHandler from './app/suspense/SuspenseSkeletonHandler';
 const ProtocolErrorHandler = lazy(() => import('./app/protocol-error/ProtocolErrorHandler'));
-import useUniqueData from './ecommerce/hooks/useUniqueData';
+import { useUniqueData } from './ecommerce/hooks/useUniqueData';
 
 /** Key value pair arrays */
 const portfolioKeyValuePairs = [{ path: '/', element: './portfolio/application/Portfolio' }];
@@ -40,6 +40,17 @@ type GlobalKeyValuePairsType = (
 const globalKeyValuePairs: GlobalKeyValuePairsType = [...portfolioKeyValuePairs, ...ecommerceKeyValuePairs, ...discordCloneKeyValuePairs];
 
 type RoutesType = { path: string; module: JSX.Element };
+
+/** Module loader hook */
+const useModuleLoader = async (element: string): Promise<JSX.Element> => {
+  try {
+    const Module = await import(element);
+    return (<Module.default />) as JSX.Element;
+  } catch (error) {
+    console.error(`Error returning route path ${element}`, error);
+    throw error;
+  }
+};
 
 /** Application */
 function App() {
@@ -77,22 +88,9 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
-  /** Module loader hook */
-  const useModuleLoader = async (element: string): Promise<JSX.Element> => {
-    try {
-      const Module = await import(element);
-      return (<Module.default />) as JSX.Element;
-    } catch (error) {
-      console.error(`Error returning route path ${element}`, error);
-      throw error;
-    }
-  };
-
   /** Dynamic Route Setter */
   const location: string = useLocation().pathname;
   const [routes, setRoutes] = useState<RoutesType[]>([]);
-
-  console.log(routes);
 
   /** Route setter */
   const useRouteSetter = (keyValuePairs: GlobalKeyValuePairsType): void => {
@@ -108,7 +106,7 @@ function App() {
     }
   };
 
-  /** Dynamic module loader queue - Minimizing variable storage for optimal memory usage. */
+  /** Dynamic module loader queue */
   useEffect(() => {
     let routeKeyValuePairs: GlobalKeyValuePairsType = [];
 
@@ -142,6 +140,7 @@ function App() {
   const useModule = (path: string) => routes.find((route) => route.path === path);
 
   /** Application */
+  // Note: Minimizing all logic variable storage for optimal memory usage
   return (
     <Suspense fallback={<SuspenseSkeletonHandler networkPerformance={networkPerformance} />}>
       <Routes>
