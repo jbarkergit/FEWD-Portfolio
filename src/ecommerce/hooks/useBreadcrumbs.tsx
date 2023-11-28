@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
-const useBreadCrumbs = (): JSX.Element => {
+export const useBreadCrumbs = (): JSX.Element => {
   const locationPath = useLocation().pathname;
   const regexPattern = /(ecommerce|\W)+/g;
   const breadCrumbs = locationPath.replace(regexPattern, ' ');
@@ -11,5 +11,3 @@ const useBreadCrumbs = (): JSX.Element => {
     </div>
   );
 };
-
-export default useBreadCrumbs;

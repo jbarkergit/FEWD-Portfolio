@@ -2,7 +2,7 @@ import { useProductDatabase } from './useProductDatabase';
 import { useCategoryFilterContext } from '../context/CategoryFilterContext';
 import { ProductType } from '../types/ProductType';
 
-const useProductFilter = () => {
+export const useProductFilter = () => {
   // @ts-ignore:
   const { categoryFilter } = useCategoryFilterContext();
 
@@ -31,5 +31,3 @@ const useProductFilter = () => {
   if (categoryFilter === 'products') return useProductDatabase.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
   else return getReducedProductArray.filteredData.sort((a: ProductType, b: ProductType) => (a.company > b.company ? 1 : -1));
 };
-
-export default useProductFilter;

@@ -3,7 +3,7 @@ import { ProductType } from '../types/ProductType';
 import useProductFilter from './useProductFilter';
 import { useCategoryFilterContext } from '../context/CategoryFilterContext';
 
-const usePaginatedSets = (): ProductType[][] => {
+export const usePaginatedSets = (): ProductType[][] => {
   // @ts-ignore
   const { categoryFilter } = useCategoryFilterContext();
   const filteredData: ProductType[] = useProductFilter(); //Localize variable in FC, pass to useEffect
@@ -22,5 +22,3 @@ const usePaginatedSets = (): ProductType[][] => {
 
   return paginatedProducts;
 };
-
-export default usePaginatedSets;
