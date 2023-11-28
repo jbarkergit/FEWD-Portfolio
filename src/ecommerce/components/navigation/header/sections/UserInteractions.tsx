@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from 'react';
-import { useLocation } from 'react-router-dom';
 import SearchBar from '../../../features/search-bar/SearchBar';
 
 type UserInteractionsType = {
@@ -8,8 +7,6 @@ type UserInteractionsType = {
 };
 
 const UserInteractions = ({ uiModal, setUiModal }: UserInteractionsType): JSX.Element => {
-  const path = useLocation().pathname === '/ecommerce';
-
   const checkLoginState = (): void =>
     localStorage.getItem('userSignedIn') === 'true' ? setUiModal('userActive') : setUiModal(uiModal === 'userLogin' ? '' : 'userLogin');
 
