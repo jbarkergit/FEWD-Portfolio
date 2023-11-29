@@ -20,6 +20,11 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
 
   const project = myProjects[projectSlideIndex];
 
+  const useProjectTechnologies = () => {
+    if (project && project.technologies) return Object.entries(project.technologies);
+    else return [];
+  };
+
   /** Handle page scrolling */
   const projectDetailsRef = useRef<HTMLElement>(null);
   const projectInsightsRef = useRef<HTMLElement>(null);
@@ -40,7 +45,7 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
 
           <div className='projectDetails__article__general__technology'>
             <>
-              {Object.entries(project.technologies!).map(([category, techArray]) => (
+              {useProjectTechnologies().map(([category, techArray]) => (
                 <div key={category}>
                   <span>{category}</span>
                   {techArray.map((technology) => (
