@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import { Link, useLocation } from 'react-router-dom';
 import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 const ProductFilterConstructor = (initFilterName: string, filterData: string[] | Set<string>): JSX.Element => {
@@ -9,7 +8,6 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
 
   //** react-router-dom hooks (must be stored in variable) */
   const location: string = useLocation().pathname.replace('/ecommerce/', '');
-  const useNav: NavigateFunction = useNavigate();
 
   /** Modal References */
   const selectMenuRef = useRef<HTMLDivElement>(null);
@@ -21,19 +19,19 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
   //** Toggle State Dependency */
   const [modalStatus, setModalStatus] = useState<boolean>(false);
 
-  /** Conditionally returns filterData for types Array & Set (converts Set to an Array) */
+  /** Checks filterData for array and set data structures */
   const useFilterData: () => string[] = () => {
     if (Array.isArray(filterData)) return filterData;
     else if (filterData instanceof Set) throw new Error('useFilterData only accepts Arrays');
     else throw new Error('Filter Data Type may be void or returning null');
   };
 
-  //** If useLocation isn't found (in useFilterData), setFilterName to initFilterName param. Else, setFilterName to useFilterData item ("data" generic term) */
+  /** Handle naming of product filters */
   useEffect(() => {
-    const locName = useFilterData().find((data) => data === location);
-    if (locName) setFilterName(locName);
+    const locationName = useFilterData().find((data) => data === location);
+    if (locationName) setFilterName(locationName);
     else setFilterName(initFilterName);
-  }, [useLocation().pathname]);
+  }, [window.location.pathname]);
 
   //** Modal data-attr toggle && external click handler */
   useEffect(() => {
@@ -64,22 +62,21 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
       </div>
       <ul className='productFilter__accordion' data-status='false' ref={accordionRef}>
         {useFilterData().map((data: string) => (
-          <li className='productFilter__accordion__listItem' key={uuidv4()}>
+          <li className='productFilter__accordion__listItem' key={data}>
             <label className='productFilter__accordion__listItem--label' htmlFor={data}>
               {data}
             </label>
-            <button
+            <Link
+              to={`/ecommerce/${data}`}
               className='productFilter__accordion__listItem--option'
               aria-label={`Filter by ${data}`}
               id={data}
-              key={uuidv4()}
               onClick={() => {
                 setModalStatus(modalStatus ? false : true);
                 setCategoryFilter(data);
-                useNav(`/ecommerce/${data}`);
               }}>
               {data}
-            </button>
+            </Link>
           </li>
         ))}
       </ul>
