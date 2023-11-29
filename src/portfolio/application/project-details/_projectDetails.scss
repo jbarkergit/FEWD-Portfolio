@@ -2,22 +2,50 @@
 @use '/src/portfolio/scss/portfolioStyles' as m;
 
 .projectDetails {
-  padding: m.$box-model-viewport-y calc(m.$box-model-viewport-x * 2) m.$box-model-viewport-y m.$box-model-viewport-x;
+  position: relative;
+  padding: calc(m.$box-model-viewport-y * 2 + f.rem(60)) calc(m.$box-model-viewport-x * 2) m.$box-model-viewport-y m.$box-model-viewport-x;
   background-color: hsl(0, 0%, 97%);
-  color: m.$font-color-secondary;
-  overflow-y: scroll;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    height: calc(m.$box-model-viewport-y * 2 + f.rem(60) * 1.5);
+    z-index: 2;
+    margin-left: calc(m.$box-model-viewport-x * -1);
+  }
   &__article {
     position: relative;
     display: flex;
-    gap: f.rem(24);
+    height: 100%;
+    &__general,
+    &__insights {
+      height: calc(100vh - (m.$box-model-viewport-y * 2 + f.rem(60)));
+    }
     &__general {
+      position: relative;
       flex: 1 0 30%;
-      height: 100vh;
-      margin-top: calc(m.$box-model-viewport-y * -1);
+      height: calc(100% - (m.$box-model-viewport-y * 2.5));
+      padding-right: calc(m.$box-model-viewport-x / 6);
+      &::before {
+        content: '';
+        position: absolute;
+        width: calc(100% + (m.$box-model-viewport-x));
+        height: 100vh;
+        background-color: m.$background-color-primary;
+        margin-top: calc((m.$box-model-viewport-y * 2 + f.rem(60)) * -1);
+        margin-left: calc(m.$box-model-viewport-x * -1);
+      }
     }
     &__insights {
       flex: 0 1 70%;
-      height: auto;
+      height: calc(100% - (m.$box-model-viewport-y * 2.5));
+      padding-left: calc(m.$box-model-viewport-x / 6);
+      overflow: hidden;
+      color: m.$font-color-secondary;
+      cursor: text;
+      user-select: text;
     }
   }
 }
@@ -30,9 +58,15 @@
     width: 100%;
     height: 100%;
   }
+  &__title,
+  &__technology {
+    position: relative;
+    z-index: 2;
+  }
   &__title {
     align-items: end;
-    h2 {
+    padding-bottom: calc(m.$box-model-viewport-y / 2);
+    & h2 {
       font-size: clamp(f.rem(46), f.rem(50) + 1vw, f.rem(56));
       line-height: 80%;
       text-transform: uppercase;
@@ -40,10 +74,15 @@
     }
   }
   &__technology {
-    display: flex;
-    flex-wrap: wrap;
+    display: table;
     gap: f.rem(6);
+    & div {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: f.rem(18);
+    }
     &--tech {
+      background-color: red;
     }
     &--libraries {
     }
@@ -65,7 +104,36 @@
   }
 }
 
+.projectDetails__article__menu {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  z-index: 3;
+  & > * {
+    height: f.rem(60);
+    border-radius: f.rem(8);
+    background-color: white; //remove once the menu is built
+  }
+  &__return {
+    flex: 0 0 25%;
+    width: fit-content;
+    aspect-ratio: 1/1;
+  }
+  &__selection {
+    flex: 0 0 75%;
+    width: fit-content;
+  }
+}
+
 .projectDetails__article__insights {
-  cursor: text;
-  user-select: text;
+  display: flex;
+  justify-content: center;
+  overflow-y: scroll;
+  &__projectOverview {
+    width: clamp(45ch, 100%, 75ch);
+    & p {
+    }
+  }
 }

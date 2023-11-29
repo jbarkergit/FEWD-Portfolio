@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import EcommerceExtendedInfo from './components/EcommerceExtendedInfo';
 import EcommerceAbridgedInfo from './components/EcommerceAbridgedInfo';
 import { myProjects } from '../../assets/projects-data/myProjects';
@@ -19,8 +20,18 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
 
   const project = myProjects[projectSlideIndex];
 
+  /** Handle page scrolling */
+  const projectDetailsRef = useRef<HTMLElement>(null);
+  const projectInsightsRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const useInsightScroll = (event: WheelEvent) => projectInsightsRef.current?.scrollBy({ top: event.deltaY, behavior: 'smooth' });
+    projectDetailsRef?.current?.addEventListener('wheel', useInsightScroll);
+    return () => projectDetailsRef?.current?.removeEventListener('wheel', useInsightScroll);
+  }, []);
+
   return (
-    <section className='projectDetails'>
+    <section className='projectDetails' ref={projectDetailsRef}>
       <article className='projectDetails__article'>
         <section className='projectDetails__article__general'>
           <div className='projectDetails__article__general__title'>
@@ -45,12 +56,15 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
           </div>
         </section>
 
-        <section className='projectDetails__article__insights'>
+        <section className='projectDetails__article__insights' ref={projectInsightsRef}>
           {useProjectInfo()?.extended}
-          {useProjectInfo()?.summary}
+          {/* {useProjectInfo()?.summary} */}
         </section>
 
-        {/* <div className='projectDetails__menu'></div> */}
+        <div className='projectDetails__article__menu'>
+          <div className='projectDetails__article__menu__return'></div>
+          <div className='projectDetails__article__menu__selection'></div>
+        </div>
       </article>
     </section>
   );
