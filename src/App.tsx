@@ -41,52 +41,52 @@ const globalKeyValuePairs: GlobalKeyValuePairsType = [...portfolioKeyValuePairs,
 
 type RoutesType = { path: string; module: JSX.Element };
 
-/** Module loader hook */
-const useModuleLoader = async (element: string): Promise<JSX.Element> => {
-  try {
-    const Module = await import(element);
-    return (<Module.default />) as JSX.Element;
-  } catch (error) {
-    console.error(`Error returning route path ${element}`, error);
-    throw error;
-  }
-};
-
 /** Application */
 function App() {
   /** Network Performance Loader
    * https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver
    * https://microsoft.github.io/PowerBI-JavaScript/modules/_node_modules__types_node_perf_hooks_d_._perf_hooks_.html#entrytype
    */
-  const [networkPerformance, setNetworkPerformance] = useState({
-    script: { totalSize: 0, transferred: 0 },
-    html: { totalSize: 0, transferred: 0 },
-    css: { totalSize: 0, transferred: 0 },
-    img: { totalSize: 0, transferred: 0 },
-    other: { totalSize: 0, transferred: 0 },
-  });
+  // const [networkPerformance, setNetworkPerformance] = useState({
+  //   script: { totalSize: 0, transferred: 0 },
+  //   html: { totalSize: 0, transferred: 0 },
+  //   css: { totalSize: 0, transferred: 0 },
+  //   img: { totalSize: 0, transferred: 0 },
+  //   other: { totalSize: 0, transferred: 0 },
+  // });
 
-  useEffect(() => {
-    const perfObserver = (list: PerformanceObserverEntryList): void => {
-      list.getEntries().map((entry: PerformanceEntry) => {
-        const resourceEntry = entry as PerformanceResourceTiming;
-        const stateKey = resourceEntry.initiatorType as keyof typeof networkPerformance;
+  // useEffect(() => {
+  //   const perfObserver = (list: PerformanceObserverEntryList): void => {
+  //     list.getEntries().map((entry: PerformanceEntry) => {
+  //       const resourceEntry = entry as PerformanceResourceTiming;
+  //       const stateKey = resourceEntry.initiatorType as keyof typeof networkPerformance;
 
-        setNetworkPerformance((prevState) => ({
-          ...prevState,
-          [stateKey]: {
-            totalSize: resourceEntry.transferSize,
-            transferred: resourceEntry.transferSize,
-          },
-        }));
-      });
-    };
+  //       setNetworkPerformance((prevState) => ({
+  //         ...prevState,
+  //         [stateKey]: {
+  //           totalSize: resourceEntry.transferSize,
+  //           transferred: resourceEntry.transferSize,
+  //         },
+  //       }));
+  //     });
+  //   };
 
-    const observer: PerformanceObserver = new PerformanceObserver(perfObserver);
-    observer.observe({ entryTypes: ['resource'] });
+  //   const observer: PerformanceObserver = new PerformanceObserver(perfObserver);
+  //   observer.observe({ entryTypes: ['resource'] });
 
-    return () => observer.disconnect();
-  }, []);
+  //   return () => observer.disconnect();
+  // }, []);
+
+  /** Module loader hook */
+  const useModuleLoader = async (element: string): Promise<JSX.Element> => {
+    try {
+      const Module = await import(element);
+      return (<Module.default />) as JSX.Element;
+    } catch (error) {
+      console.error(`Error returning route path ${element}`, error);
+      throw error;
+    }
+  };
 
   /** Dynamic Route Setter */
   const location: string = useLocation().pathname;
@@ -130,8 +130,6 @@ function App() {
       // Background Loading Queue order
       // Note: Portfolio && Discord Clone handle their imports locally because they're SPAs
       // IMPORTANT NOTE: DON'T FORGET TO SLICE LANDING PAGES!
-
-      // TO DO: PORTFOLIO IS NO LONGER AN SPA -- NEED TO QUEUE BACKGROUND LOADER
       if (location.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
     }
   }, [location]);
@@ -142,7 +140,7 @@ function App() {
   /** Application */
   // Note: Minimizing all logic variable storage for optimal memory usage
   return (
-    <Suspense fallback={<SuspenseSkeletonHandler networkPerformance={networkPerformance} />}>
+    <Suspense fallback={<SuspenseSkeletonHandler />}>
       <Routes>
         <Route path='*' element={<ProtocolErrorHandler />} />
 
