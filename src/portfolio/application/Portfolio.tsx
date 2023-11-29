@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import ProjectHub from './project-hub/ProjectHub';
 import ProjectDetails from './project-details/ProjectDetails';
 import ContactForm from './contact-form/ContactForm';
-import EcommerceTechStack from './technology-stack/EcommerceTechStack';
 
 const Portfolio = (): JSX.Element => {
   const portfolioRef = useRef<HTMLDivElement>(null);
@@ -63,7 +62,6 @@ const Portfolio = (): JSX.Element => {
       <ProjectHub projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
       <ProjectDetails projectSlideIndex={projectSlideIndex} />
       <ContactForm />
-      <EcommerceTechStack featureState={featureState} setFeatureState={setFeatureState} />
     </div>
   );
 };

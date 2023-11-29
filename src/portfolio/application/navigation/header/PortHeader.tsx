@@ -81,7 +81,7 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
           });
           if (menuButtons.current) menuButtons.current.setAttribute('data-transform', 'false');
         }}>
-        <h2>About the Developer and Contact Form, Tech Stack and GitHub Links</h2>
+        <h2>About the Developer, Contact Form and GitHub Links</h2>
         <div className='portHeader__menu__buttons' ref={menuButtons} data-transform={'false'}>
           <button
             aria-label='Contact Form'
@@ -91,15 +91,6 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
                 : setFeatureState({ ...featureState, contactFormActive: true })
             }>
             About & Contact
-          </button>
-          <button
-            aria-label='Tech Stack'
-            onClick={() =>
-              featureState.techStackActive
-                ? setFeatureState({ ...featureState, techStackActive: false })
-                : setFeatureState({ ...featureState, techStackActive: true })
-            }>
-            Tech Stack
           </button>
           <Link to='https://github.com/jbarkergit' target='_blank' aria-label='GitHub'>
             GitHub

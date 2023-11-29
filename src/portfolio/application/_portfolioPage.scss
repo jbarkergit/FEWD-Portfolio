@@ -26,22 +26,18 @@
 }
 
 .projectHub {
-  grid-area: 1 / 2 / 2 / 3;
+  grid-area: 1 / 1 / 2 / 2;
 }
 .projectDetails {
-  grid-area: 2 / 2 / 3 / 3;
+  grid-area: 2 / 1 / 3 / 2;
 }
 .contactForm {
-  grid-area: 1 / 3 / 2 / 4;
-}
-#techStackWrapper {
-  grid-area: 1 / 1 / 2 / 2;
+  grid-area: 1 / 2 / 2 / 3;
 }
 
 .projectHub,
 .projectDetails,
-.contactForm,
-.techStack {
+.contactForm {
   width: 100vw;
   height: 100vh;
 }
