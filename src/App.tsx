@@ -54,42 +54,7 @@ const useModuleLoader = async (element: string): Promise<JSX.Element> => {
 
 /** Application */
 function App() {
-  /** Network Performance Loader
-   * https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver
-   * https://microsoft.github.io/PowerBI-JavaScript/modules/_node_modules__types_node_perf_hooks_d_._perf_hooks_.html#entrytype
-   */
-  // const [networkPerformance, setNetworkPerformance] = useState({
-  //   script: { totalSize: 0, transferred: 0 },
-  //   html: { totalSize: 0, transferred: 0 },
-  //   css: { totalSize: 0, transferred: 0 },
-  //   img: { totalSize: 0, transferred: 0 },
-  //   other: { totalSize: 0, transferred: 0 },
-  // });
-
-  // useEffect(() => {
-  //   const perfObserver = (list: PerformanceObserverEntryList): void => {
-  //     list.getEntries().map((entry: PerformanceEntry) => {
-  //       const resourceEntry = entry as PerformanceResourceTiming;
-  //       const stateKey = resourceEntry.initiatorType as keyof typeof networkPerformance;
-
-  //       setNetworkPerformance((prevState) => ({
-  //         ...prevState,
-  //         [stateKey]: {
-  //           totalSize: resourceEntry.transferSize,
-  //           transferred: resourceEntry.transferSize,
-  //         },
-  //       }));
-  //     });
-  //   };
-
-  //   const observer: PerformanceObserver = new PerformanceObserver(perfObserver);
-  //   observer.observe({ entryTypes: ['resource'] });
-
-  //   return () => observer.disconnect();
-  // }, []);
-
   /** Dynamic Route Setter */
-  const location: string = useLocation().pathname;
   const [routes, setRoutes] = useState<RoutesType[]>([]);
 
   /** Route setter */
@@ -111,19 +76,19 @@ function App() {
     let routeKeyValuePairs: GlobalKeyValuePairsType = [];
 
     // Prioritize importation of project landing pages on initial load
-    if (location === '/') {
+    if (useLocation().pathname === '/') {
       routeKeyValuePairs = initialKeyValuePairs;
     } // Handle individual landing page imports if user didn't visit '/'
     else {
       routeKeyValuePairs = globalKeyValuePairs.filter(
-        (keyValuePair) => keyValuePair.path === location || (Array.isArray(keyValuePair.path) && keyValuePair.path.includes(location))
+        (keyValuePair) => keyValuePair.path === useLocation().pathname || (Array.isArray(keyValuePair.path) && keyValuePair.path.includes(useLocation().pathname))
       );
     }
 
     // Check if all modules have been imported and stored in routes State to prevent useEffect from firing without cause
     if (!globalKeyValuePairs.every((globalKeyValuePair) => routes.some((route) => route.path === globalKeyValuePair.path))) {
       // Check if route module has been imported and stored in routes state to prevent unnecessary fires
-      if (!routes.some((route: RoutesType) => route.path === location))
+      if (!routes.some((route: RoutesType) => route.path === useLocation().pathname))
         // Pass arrays of route paths and elements from routeKeyValuePairs to useRouteSetter
         // useRouteSetter then invokes useModuleLoader to store modules as JSX.Elements (async await promise conversion) in routes state
         useRouteSetter(routeKeyValuePairs);
@@ -132,9 +97,9 @@ function App() {
       // IMPORTANT NOTE: DON'T FORGET TO SLICE LANDING PAGES!
 
       // TO DO: PORTFOLIO IS NO LONGER AN SPA -- NEED TO QUEUE BACKGROUND LOADER
-      if (location.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
+      if (useLocation().pathname.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
     }
-  }, [location]);
+  }, [useLocation().pathname]);
 
   /** Simple hook to fetch JSX element from route state */
   const useModule = (path: string) => routes.find((route) => route.path === path);
