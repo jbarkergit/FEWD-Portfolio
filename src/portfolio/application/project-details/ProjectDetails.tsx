@@ -1,18 +1,14 @@
 import { useEffect, useRef } from 'react';
-import EcommerceExtendedInfo from './components/EcommerceExtendedInfo';
-import EcommerceAbridgedInfo from './components/EcommerceAbridgedInfo';
+import EcommerceInsights from './components/EcommerceInsights';
 import { myProjects } from '../../assets/projects-data/myProjects';
 
 type ProjectDetailsType = { projectSlideIndex: number };
 
 const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
-  const useProjectInfo = () => {
+  const useProjectInsights = () => {
     switch (projectSlideIndex) {
       case 0:
-        return {
-          extended: <EcommerceExtendedInfo />,
-          summary: <EcommerceAbridgedInfo />,
-        };
+        return <EcommerceInsights />;
       default:
         break;
     }
@@ -62,8 +58,7 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
         </section>
 
         <section className='projectDetails__article__insights' ref={projectInsightsRef}>
-          {useProjectInfo()?.extended}
-          {/* {useProjectInfo()?.summary} */}
+          {useProjectInsights()}
         </section>
 
         <div className='projectDetails__article__menu'>

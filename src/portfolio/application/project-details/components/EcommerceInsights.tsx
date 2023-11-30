@@ -1,4 +1,4 @@
-const EcommerceExtendedInfo = (): JSX.Element => {
+const EcommerceInsights = (): JSX.Element => {
   return (
     <section className='projectDetails__article__insights__projectOverview'>
       <h2>An eCommerce shop with all the bells and whistles.</h2>
@@ -41,4 +41,4 @@ const EcommerceExtendedInfo = (): JSX.Element => {
   );
 };
 
-export default EcommerceExtendedInfo;
+export default EcommerceInsights;
