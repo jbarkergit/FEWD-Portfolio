@@ -4,32 +4,28 @@
 .contactForm {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   overflow: hidden;
   background-color: m.$background-color-cream;
   color: m.$font-color-secondary;
+  & h2 {
+    display: none;
+  }
   &__section {
     display: flex;
+    height: 100%;
     &:nth-of-type(1) {
-      grid-area: 1 / 1 / 2 / 3;
-      height: 12vh;
+      grid-area: 1 / 1 / 2 / 2;
+      justify-content: center;
+      align-items: flex-end;
     }
     &:nth-of-type(2) {
       grid-area: 2 / 1 / 3 / 2;
-      justify-content: flex-end;
-      align-items: flex-end;
-      height: calc((100vh - 12vh) / 2);
+      justify-content: center;
     }
     &:nth-of-type(3) {
-      grid-area: 3 / 1 / 4 / 2;
-      justify-content: flex-end;
-      height: calc((100vh - 12vh) / 2);
-      overflow-y: scroll;
-    }
-    &:nth-of-type(4) {
-      grid-area: 2 / 2 / 4 / 3;
-      height: calc(100vh - 12vh);
-      margin: 0 f.rem(48);
+      grid-area: 1 / 2 / 3 / 3;
+      justify-content: center;
     }
     & h2 {
       display: none;
@@ -74,7 +70,7 @@
   &__formErrors {
     width: 100%;
     padding: f.rem(12) f.rem(12);
-    border-bottom: 1px solid m.$background-color-cream-complementary;
+    // border-bottom: 1px solid m.$background-color-cream-complementary;
     height: auto;
     transition: height 360ms ease-in-out;
     &--question {
@@ -151,7 +147,7 @@
       }
       &--input {
         // background-color: m.$background-color-cream;
-        border: 1px solid m.$background-color-cream-complementary;
+        // border: 1px solid m.$background-color-cream-complementary;
       }
       &--errorMessage {
         padding: 0 0 0 f.rem(12);
