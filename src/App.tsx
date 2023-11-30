@@ -41,6 +41,17 @@ const globalKeyValuePairs: GlobalKeyValuePairsType = [...portfolioKeyValuePairs,
 
 type RoutesType = { path: string; module: JSX.Element };
 
+/** Module loader hook */
+const useModuleLoader = async (element: string): Promise<JSX.Element> => {
+  try {
+    const Module = await import(element);
+    return (<Module.default />) as JSX.Element;
+  } catch (error) {
+    console.error(`Error returning route path ${element}`, error);
+    throw error;
+  }
+};
+
 /** Application */
 function App() {
   /** Network Performance Loader
@@ -76,17 +87,6 @@ function App() {
 
   //   return () => observer.disconnect();
   // }, []);
-
-  /** Module loader hook */
-  const useModuleLoader = async (element: string): Promise<JSX.Element> => {
-    try {
-      const Module = await import(element);
-      return (<Module.default />) as JSX.Element;
-    } catch (error) {
-      console.error(`Error returning route path ${element}`, error);
-      throw error;
-    }
-  };
 
   /** Dynamic Route Setter */
   const location: string = useLocation().pathname;
@@ -130,6 +130,8 @@ function App() {
       // Background Loading Queue order
       // Note: Portfolio && Discord Clone handle their imports locally because they're SPAs
       // IMPORTANT NOTE: DON'T FORGET TO SLICE LANDING PAGES!
+
+      // TO DO: PORTFOLIO IS NO LONGER AN SPA -- NEED TO QUEUE BACKGROUND LOADER
       if (location.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
     }
   }, [location]);
