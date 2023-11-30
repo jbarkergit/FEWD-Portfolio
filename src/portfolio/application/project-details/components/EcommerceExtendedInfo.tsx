@@ -1,52 +1,41 @@
 const EcommerceExtendedInfo = (): JSX.Element => {
   return (
     <section className='projectDetails__article__insights__projectOverview'>
+      <h2>An eCommerce shop with all the bells and whistles.</h2>
       <p>
-        This eCommerce project was developed with the primary goal of establishing a solid foundation in building dynamic web applications. Through iterative
-        processes, I successfully achieved this objective without relying on third-party libraries to enforce stronger problem solving and critical thinking
-        skill-sets.
+        This simple application was idealized with performance in mind. To start off, I paired useContext and useState to track component changes. This would go on
+        to satisfy conditionals of all dynamic components throughout the application. Which lead to the first few challenges: Routing and peristing data site-wide.
+        The solutions were out of reach as to create this dynamic, streamlined environment, I'd first need a product database to gather unique data.
+      </p>
+      <h3>Product Database</h3>
+      <p>
+        A simple API fetch would fix my problems; however, I opted to build my own database. I didn't think it would be all that tedious until I realized I'd have to
+        partially scrape the database, touch-up and resize product images in Adobe Photoshop, queue batch exports in three device dimensions and finally compress the
+        batches to adhere to best Web Core Vital practices. Did I waste my time? Absolutely. Did I go mad? Slightly. On the upside, I love audio gear and it was
+        quite fun to boot up a Spotify playlist while I researched the products I'd be presenting for no real monetary gain; until I had to create the JSON file. Fun
+        fact: I initially wrote the database in TSX format, then post-application completion, converted to JSON.
       </p>
       <p>
-        The implementation of Dynamic Audio was influenced by React Native behaviors and code splitting methodology. I utilized a single useState hook within context
-        to streamline logic and complexity, ultimately reducing initial page load times. This approach posed challenges, such as the need to persist data across page
-        loads, individual product category pages, filtered pages and managing React Router Dom routes which are mapped by gathering unique sets of companies, product
-        categories and styles. All of which were explored, rethought and refactored until I could no longer improve upon performance.
+        Utilizing my newly built product database, I built numerous hooks to filter data for route mapping, product search functionality, product filters and product
+        mapping by category. In doing so, used numerous data structures to store, convert and return alphabetized data. Which left only conceptualization of the
+        application's style. Having had owned an eCommerce LLC, I seated the user experience at the table of consideration. I minimalized the UI and UX by blending
+        style structures from miscellaneous domains for both the desktop layout and the mobile layout. I did not aim to re-invent the wheel, nor make anything grand
+        and unique; rather, learn and have fun. So calibrate your monitors, because I leaned into neumorphic design despite knowing it's a poor decision for
+        in-production applications.
       </p>
       <p>
-        A deeper knowledge of React's behaviors and mannerisms was required to implement better code practices such as DRY methodology, splitting nested code into
-        individual components, component prop drilling, and more, to avoid unnecessary re-renders and to manage side effects across the application. I've come to
-        find I'm more opinionated on topics now but still challenge myself, opinions and knowledge. Naturally, unit testing become a topic of concern. Given I opted
-        into using Vite to bundle my application, I also chose to use Vitest to help me produce reliable code. Along the journey, I learned to counteract warnings
-        and bugs prompted by React and learned its opinionated rules such as not using indexes from maps for unique keys.
+        I crafted DRY, SEO-optimized, WAI-ARIA-compliant, reusable components (deep breath here) that appreciated React's opinionated rules and native mannerisms to
+        avoid unnecessary re-renders (another deep breath here) and minimalize side effects. Then, refactored component architecture until performance was
+        satisfactory by carefully opting into React's performance hooks such as useCallback and useMemo. I used fallbacks for any event in which functional
+        components fail to return data through use of undefined checks and conditional rendering. I avoided JavaScript animations where possible, employed
+        constructor patterns for reusability and even implemented Intersectional Observer API and utilized useState setter rerenders for optimized infinite scroll
+        querying. The logic behind these components is explicit, type safe and documented for legibility and maintaince.
       </p>
       <p>
-        To address this, I updated the mentioned state, which was then processed by a custom reduce hook to filter an array of self-generated product objects. This
-        array was then divided into smaller segments, each pushed into useState as the last product element entered the viewport. This was facilitated by
-        JavaScript's Intersectional Observer API, leading to efficient component re-renders via the useState setter.
-      </p>
-      <p>
-        For product filters, I employed the constructor pattern to craft reusable functional components. These components are conditionally rendered based on the
-        useState context utilized for product filtering.
-      </p>
-      <p>
-        The shopping cart functionality was realized using React's useReducer. Actions were dispatched, and local storage was employed to maintain data across page
-        loads. While my backend learning journey is in its early stages, I have yet to integrate Stripe as initially planned or transition the product database to
-        mySQL.
-      </p>
-      <p>
-        This project was time absorbent, given I stitched together design styles through an array of inspirational resources. Additionally, I spent as much time as
-        possible refactoring code structure to conceptualize and test complex layouts. Having had owned an eCommerce business prior to this web development journey,
-        I seated the user experience at the table of consideration, ultimately settling on a blend of my own ideas and pieces of style structures from other domains
-        such as Apple, RollieNation, NewEgg and miscellaneous domains from awwwards for both the desktop layout and the mobile layout. I did not aim to re-invent the
-        wheel, nor make anything grand and unique; rather, learn. I did; however, find myself questioning the lack of 2K monitor scaling support, which I believe to
-        be lacking in the industry given the comparison of statistics from when developers stop supporting browsers based on user usage and Steam's user data.
-      </p>
-      <p>
-        From articles and courses to coding challenges, my primary focus has been on understanding how to tackle pending issues rather than memorizing solutions.
-        This project encapsulates my dedication to idealizing potential solutions, seeking more sound solutions and becoming a better craftsman of the development
-        trade. Moving forward, I am determined to further expand my knowledge, bridge gaps, and cultivate a stronger, more robust foundation for continuous
-        improvement through exploration of JavaScript topics like the Big O via articles and books while I build muscle memory on a professional level. Eventually, I
-        plan to slowly transition into becoming a more rounded developer by learning mySQL and exploring the back end of web development.
+        Finally, to truly make this an eCommerce project, I needed to build account registry and login forms with field validation that simulated user authentication
+        and a shopping cart. The form validation uses Regular Expressions and handles error prompts. The shopping cart functionality was written using React's
+        useReducer. Both the account forms and shopping cart utilize local storage to maintain data across page loads. I have yet to integrate Stripe as initially
+        planned.
       </p>
     </section>
   );
