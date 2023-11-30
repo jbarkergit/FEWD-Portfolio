@@ -1,41 +1,34 @@
 const EcommerceInsights = (): JSX.Element => {
   return (
     <section className='projectDetails__article__insights__projectOverview'>
-      <h2>An eCommerce shop with all the bells and whistles.</h2>
+      <h2>A simple eCommerce application with a performance-first approach.</h2>
       <p>
-        This simple application was idealized with performance in mind. To start off, I paired useContext and useState to track component changes. This would go on
-        to satisfy conditionals of all dynamic components throughout the application. Which lead to the first few challenges: Routing and peristing data site-wide.
-        The solutions were out of reach as to create this dynamic, streamlined environment, I'd first need a product database to gather unique data.
-      </p>
-      <h3>Product Database</h3>
-      <p>
-        A simple API fetch would fix my problems; however, I opted to build my own database. I didn't think it would be all that tedious until I realized I'd have to
-        partially scrape the database, touch-up and resize product images in Adobe Photoshop, queue batch exports in three device dimensions and finally compress the
-        batches to adhere to best Web Core Vital practices. Did I waste my time? Absolutely. Did I go mad? Slightly. On the upside, I love audio gear and it was
-        quite fun to boot up a Spotify playlist while I researched the products I'd be presenting for no real monetary gain; until I had to create the JSON file. Fun
-        fact: I initially wrote the database in TSX format, then post-application completion, converted to JSON.
+        To create a dynamic environment, `useContext` and `useState` were paired to track component changes. The provider streamlines potential complexities and
+        challenges while satisfying conditional logic. This brought about three pending issues: routing, persisting data site-wide, and component re-renders.
       </p>
       <p>
-        Utilizing my newly built product database, I built numerous hooks to filter data for route mapping, product search functionality, product filters and product
-        mapping by category. In doing so, used numerous data structures to store, convert and return alphabetized data. Which left only conceptualization of the
-        application's style. Having had owned an eCommerce LLC, I seated the user experience at the table of consideration. I minimalized the UI and UX by blending
-        style structures from miscellaneous domains for both the desktop layout and the mobile layout. I did not aim to re-invent the wheel, nor make anything grand
-        and unique; rather, learn and have fun. So calibrate your monitors, because I leaned into neumorphic design despite knowing it's a poor decision for
-        in-production applications.
+        Both issues were put on the back burner since the solutions required filtering product data. I decided to opt out of using an API. Instead, like a glutton
+        for punishment, I chose to partially scrape images and data. This involved image touch-ups, resizing, and large batch exports in three device dimensions and
+        size compression to adhere to Web Core Vital best practices. Fun fact: I initially wrote the database in TSX format, then post-application completion,
+        converted it to JSON. Couldn't tell you why.
       </p>
       <p>
-        I crafted DRY, SEO-optimized, WAI-ARIA-compliant, reusable components (deep breath here) that appreciated React's opinionated rules and native mannerisms to
-        avoid unnecessary re-renders (another deep breath here) and minimalize side effects. Then, refactored component architecture until performance was
-        satisfactory by carefully opting into React's performance hooks such as useCallback and useMemo. I used fallbacks for any event in which functional
-        components fail to return data through use of undefined checks and conditional rendering. I avoided JavaScript animations where possible, employed
-        constructor patterns for reusability and even implemented Intersectional Observer API and utilized useState setter rerenders for optimized infinite scroll
-        querying. The logic behind these components is explicit, type safe and documented for legibility and maintaince.
+        Utilizing the product database, I built numerous custom hooks that filtered and returned alphabetized unique data. This paved the way for dynamic route
+        mapping, product search functionality, product filters, and product categories. That left data persistence and re-renders as pending issues, ultimately
+        resolved with `useEffect` triggering `useState` to render components when required.
       </p>
       <p>
-        Finally, to truly make this an eCommerce project, I needed to build account registry and login forms with field validation that simulated user authentication
-        and a shopping cart. The form validation uses Regular Expressions and handles error prompts. The shopping cart functionality was written using React's
-        useReducer. Both the account forms and shopping cart utilize local storage to maintain data across page loads. I have yet to integrate Stripe as initially
-        planned.
+        Reusable, type-safe functional components became an imperative integration to reduce bloat and optimize performance. With React's performance hooks,
+        constructor patterns, data structures, BEM methodology, and DRY, documented logic, refactoring component architecture was less an issue than SEO and
+        WAI-ARIA-compliance. Side effect management, event propagation, and conditional rendering conflicts with animations took the most effort; yet, nothing worth
+        mentioning. Conceptualization of the application's UX and UI was the next big priority. By blending style structures from miscellaneous domains, I created
+        something imperfect, experimental, and fun; despite not being suitable for production nor grand in fashion. Please note this project contains neumorphic
+        components; therefore, if your monitors aren't calibrated, the styling may be lost.
+      </p>
+      <p>
+        Finally, to truly call this an eCommerce project, I had to simulate account authentication, account registry, and implement shopping cart functionality. Both
+        the account forms and shopping cart utilize localStorage to persist data across page loads. The shopping cart bestowed the great pleasure of writing
+        `useReducer` boilerplate enough times to build muscle memory. LocalStorage handles data for both features. I have yet to integrate Stripe.
       </p>
     </section>
   );
