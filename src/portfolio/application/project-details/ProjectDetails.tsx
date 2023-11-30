@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import EcommerceInsights from './components/EcommerceInsights';
+import EcommerceInsights from './data/EcommerceInsights';
 import { myProjects } from '../../assets/projects-data/myProjects';
 
 type ProjectDetailsType = { projectSlideIndex: number };
