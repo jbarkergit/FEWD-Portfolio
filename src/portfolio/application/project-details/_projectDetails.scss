@@ -4,7 +4,7 @@
 .projectDetails {
   position: relative;
   padding: calc(m.$box-model-viewport-y * 2 + f.rem(60)) calc(m.$box-model-viewport-x * 2) m.$box-model-viewport-y m.$box-model-viewport-x;
-  background-color: m.$background-color-cream;
+  background-color: m.$background-color-secondary;
   &::after {
     content: '';
     position: absolute;
