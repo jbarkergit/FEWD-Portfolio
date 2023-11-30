@@ -55,6 +55,7 @@ const useModuleLoader = async (element: string): Promise<JSX.Element> => {
 /** Application */
 function App() {
   /** Dynamic Route Setter */
+  const location = useLocation().pathname as string;
   const [routes, setRoutes] = useState<RoutesType[]>([]);
 
   /** Route setter */
@@ -76,19 +77,19 @@ function App() {
     let routeKeyValuePairs: GlobalKeyValuePairsType = [];
 
     // Prioritize importation of project landing pages on initial load
-    if (useLocation().pathname === '/') {
+    if (location === '/') {
       routeKeyValuePairs = initialKeyValuePairs;
     } // Handle individual landing page imports if user didn't visit '/'
     else {
       routeKeyValuePairs = globalKeyValuePairs.filter(
-        (keyValuePair) => keyValuePair.path === useLocation().pathname || (Array.isArray(keyValuePair.path) && keyValuePair.path.includes(useLocation().pathname))
+        (keyValuePair) => keyValuePair.path === location || (Array.isArray(keyValuePair.path) && keyValuePair.path.includes(location))
       );
     }
 
     // Check if all modules have been imported and stored in routes State to prevent useEffect from firing without cause
     if (!globalKeyValuePairs.every((globalKeyValuePair) => routes.some((route) => route.path === globalKeyValuePair.path))) {
       // Check if route module has been imported and stored in routes state to prevent unnecessary fires
-      if (!routes.some((route: RoutesType) => route.path === useLocation().pathname))
+      if (!routes.some((route: RoutesType) => route.path === location))
         // Pass arrays of route paths and elements from routeKeyValuePairs to useRouteSetter
         // useRouteSetter then invokes useModuleLoader to store modules as JSX.Elements (async await promise conversion) in routes state
         useRouteSetter(routeKeyValuePairs);
@@ -97,9 +98,9 @@ function App() {
       // IMPORTANT NOTE: DON'T FORGET TO SLICE LANDING PAGES!
 
       // TO DO: PORTFOLIO IS NO LONGER AN SPA -- NEED TO QUEUE BACKGROUND LOADER
-      if (useLocation().pathname.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
+      if (location.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
     }
-  }, [useLocation().pathname]);
+  }, [location]);
 
   /** Simple hook to fetch JSX element from route state */
   const useModule = (path: string) => routes.find((route) => route.path === path);
