@@ -1,6 +1,6 @@
 const EcommerceInsights = (): JSX.Element => {
   return (
-    <section className='projectDetails__article__insights__projectOverview'>
+    <>
       <h2>A dynamic eCommerce application with monochromatic and neumorphic styling.</h2>
       <p>
         This audio shop was built with a dynamic foundation, keeping production maintenance and performance in mind. To streamline potential complexities, site-wide
@@ -29,7 +29,7 @@ const EcommerceInsights = (): JSX.Element => {
         to handle data and Regular Expressions to handle field validation. The last step was shopping cart functionality, which gave me the great pleasure of writing
         useReducer boilerplate. I, of course, have not built out user account pages nor integrated Stripe due to a lack of a back-end.
       </p>
-    </section>
+    </>
   );
 };
 

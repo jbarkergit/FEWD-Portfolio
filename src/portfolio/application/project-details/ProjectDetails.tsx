@@ -47,7 +47,7 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
               {useProjectTechnologies().map(([category, techArray]) => (
                 <div key={category}>
                   <span>{category}</span>
-                  {techArray.map((technology) => (
+                  {techArray.map((technology: string) => (
                     <span
                       className={`projectDetails__article__general__technology--tech projectDetails__article__general__technology--${technology}`}
                       key={`${category}-${technology}`}>
@@ -61,7 +61,7 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
         </section>
 
         <section className='projectDetails__article__insights' ref={projectInsightsRef}>
-          {useProjectInsights()}
+          <div className='projectDetails__article__insights__projectOverview'>{useProjectInsights()}</div>
         </section>
 
         <div className='projectDetails__article__menu'>
