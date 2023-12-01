@@ -5,8 +5,8 @@ const EcommerceInsights = (): JSX.Element => {
       <p>
         This audio shop was built with a dynamic foundation, keeping production maintenance and performance in mind. To streamline potential complexities, site-wide
         conditionals had to be satisfied prior to building components. This posed the challenge building a product database with key value pairs that would allow for
-        filtering of unique, alphabetized data. Pending issues ensued from routing to persisting data site-wide and component re-renders. I quickly understood the
-        real challenge of this application was idealizing solutions before writing any code.
+        filtering of data. Pending issues ensued from routing to persisting data site-wide and component re-renders. I quickly understood the real challenge of this
+        application was idealizing solutions before writing any code.
       </p>
       <p>
         If I wasn't a glutton for punishment, I would have opted for the use of an API. Instead, I chose to partially scrape images and data. This involved image
