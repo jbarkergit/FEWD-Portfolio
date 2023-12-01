@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
-import EcommerceInsights from './data/EcommerceInsights';
 import { myProjects } from '../../assets/projects-data/myProjects';
+import EcommerceInsights from './data/EcommerceInsights';
+import PortfolioInsights from './data/PortfolioInsights';
 
 type ProjectDetailsType = { projectSlideIndex: number };
 
@@ -9,6 +10,8 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
     switch (projectSlideIndex) {
       case 0:
         return <EcommerceInsights />;
+      case 1:
+        return <PortfolioInsights />;
       default:
         break;
     }
