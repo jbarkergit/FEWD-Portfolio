@@ -21,7 +21,15 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
   return (
     <aside className='recommenders'>
       <h2 className='recommenders__header'>
-        More {findProduct.category} like <span className='highlight'>{findProduct.unit}</span>
+        {findProduct.category !== 'amps-dacs' ? (
+          <>
+            More {findProduct.category} like <span className='highlight'>{findProduct.unit}</span>
+          </>
+        ) : (
+          <>
+            More Amps & Dacs like <span className='highlight'>{findProduct.unit}</span>
+          </>
+        )}
       </h2>
       <ul className='recommenders__unorderedList'>
         {filteredRecommenders.splice(0, 8).map((product) => (

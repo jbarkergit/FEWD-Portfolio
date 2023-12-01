@@ -79,6 +79,9 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
       setMagnifierBackgroundSize({ width: `${primaryImg.current.width * magnification}px`, height: `${primaryImg.current.height * magnification}px` });
   }, [primaryImg.current, magnification]);
 
+  // Reset active display index on location change
+  useEffect(() => setActiveDisplay(0), [window.location.pathname]);
+
   return (
     <section className='skuPage__grid__display'>
       <div className='skuPage__grid__display__heading'>
