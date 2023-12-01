@@ -1,5 +1,4 @@
 // Context
-import { CategoryFilterProvider } from '../context/CategoryFilterContext';
 import { CartProvider } from '../context/CartContext';
 
 // Components
@@ -12,16 +11,14 @@ import ProductHighlight from '../components/home/ProductHighlight';
 
 const EcommerceHome = (): JSX.Element => {
   return (
-    <CategoryFilterProvider>
-      <CartProvider>
-        <Header />
-        <Infographic />
-        <Carousel />
-        <SideBySide />
-        <ProductHighlight />
-        <EFooter />
-      </CartProvider>
-    </CategoryFilterProvider>
+    <CartProvider>
+      <Header />
+      <Infographic />
+      <Carousel />
+      <SideBySide />
+      <ProductHighlight />
+      <EFooter />
+    </CartProvider>
   );
 };
 

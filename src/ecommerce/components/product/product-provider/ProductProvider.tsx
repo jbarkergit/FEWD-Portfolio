@@ -1,18 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 import { usePaginatedSets } from '../../../hooks/usePaginatedSets';
 import { ProductType } from '../../../types/ProductType';
 import ProductProp from './ProductProp';
 
-/* 
-usePaginatedSets utilizes useProductFilter, which uses useState[categoryFilter] Context Hook to render appropriate product arrays
-categoryFilter is a single global state, which is used by useProductFilter -> rerenders ProductProvider Prop upon navigation
-*/
+/* usePaginatedSets utilizes useProductFilter, which uses window.location.pathname to render appropriate product arrays */
 
 const ProductProvider = (): JSX.Element => {
-  // @ts-ignore:
-  const { categoryFilter } = useCategoryFilterContext();
-
   //** Filtered & paginated products */
   const paginatedProducts: ProductType[][] = usePaginatedSets();
 
@@ -44,7 +37,7 @@ const ProductProvider = (): JSX.Element => {
       //** Forgetting to reset the index will result in partial product array rendering */
       setVisibleArrayIndex(0);
     }
-  }, [categoryFilter, paginatedProducts]);
+  }, [window.location.pathname, paginatedProducts]);
 
   //** Push new array of products when the last visible product is in the viewport */
   const intersectionCallback = (entry: IntersectionObserverEntry) => {

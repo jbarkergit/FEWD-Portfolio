@@ -1,15 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 type EmptyCartType = {
   setUnmount: Dispatch<SetStateAction<boolean>>;
 };
 
 const EmptyCart = ({ setUnmount }: EmptyCartType) => {
-  // @ts-ignore:
-  const { setCategoryFilter } = useCategoryFilterContext();
-
   return (
     <section className='shoppingCart__products__emptyCart'>
       <div className='shoppingCart__products__emptyCart__header'>
@@ -18,29 +14,19 @@ const EmptyCart = ({ setUnmount }: EmptyCartType) => {
       <nav>
         <ul className='shoppingCart__products__emptyCart__nav'>
           <li>
-            <Link to='/ecommerce/headphones' onClick={() => setCategoryFilter('')}>
-              {'Shop Headphones'}
-            </Link>
+            <Link to='/ecommerce/headphones'>{'Shop Headphones'}</Link>
           </li>
           <li>
-            <Link to='/ecommerce/amps-dacs' onClick={() => setCategoryFilter('headphone')}>
-              {'Shop Amps & Dacs'}
-            </Link>
+            <Link to='/ecommerce/amps-dacs'>{'Shop Amps & Dacs'}</Link>
           </li>
           <li>
-            <Link to='/ecommerce/microphones' onClick={() => setCategoryFilter('amp', 'dac')}>
-              {'Shop Microphones'}
-            </Link>
+            <Link to='/ecommerce/microphones'>{'Shop Microphones'}</Link>
           </li>
           <li>
-            <Link to='/ecommerce/interfaces' onClick={() => setCategoryFilter('microphone')}>
-              {'Shop Interfaces'}
-            </Link>
+            <Link to='/ecommerce/interfaces'>{'Shop Interfaces'}</Link>
           </li>
           <li>
-            <Link to='/ecommerce/products' onClick={() => setCategoryFilter('interface')}>
-              {'Browse All Products'}
-            </Link>
+            <Link to='/ecommerce/products'>{'Browse All Products'}</Link>
           </li>
           <li>
             <button aria-label='Close menu' onClick={() => setUnmount(true)}>

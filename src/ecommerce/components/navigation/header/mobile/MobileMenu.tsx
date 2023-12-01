@@ -1,15 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../../context/CategoryFilterContext';
 
 type MobileMenuType = {
   setUnmount: Dispatch<SetStateAction<boolean>>;
 };
 
 const MobileMenu = ({ setUnmount }: MobileMenuType): JSX.Element => {
-  // @ts-ignore:
-  const { setCategoryFilter } = useCategoryFilterContext();
-
   return (
     <aside className='ecoModalCart'>
       <div className='ecoModal__simpleHeading'>
@@ -18,29 +14,19 @@ const MobileMenu = ({ setUnmount }: MobileMenuType): JSX.Element => {
       <nav className='ecoModal__nav'>
         <ul className='ecoModal__nav__ul'>
           <li className='ecoModal__nav__ul__li'>
-            <Link to='/ecommerce/headphones' onClick={() => setCategoryFilter('')}>
-              {'Shop Headphones'}
-            </Link>
+            <Link to='/ecommerce/headphones'>{'Shop Headphones'}</Link>
           </li>
           <li className='ecoModal__nav__ul__li'>
-            <Link to='/ecommerce/amps-dacs' onClick={() => setCategoryFilter('headphone')}>
-              {'Shop Amps & Dacs'}
-            </Link>
+            <Link to='/ecommerce/amps-dacs'>{'Shop Amps & Dacs'}</Link>
           </li>
           <li className='ecoModal__nav__ul__li'>
-            <Link to='/ecommerce/microphones' onClick={() => setCategoryFilter('amp', 'dac')}>
-              {'Shop Microphones'}
-            </Link>
+            <Link to='/ecommerce/microphones'>{'Shop Microphones'}</Link>
           </li>
           <li className='ecoModal__nav__ul__li'>
-            <Link to='/ecommerce/interfaces' onClick={() => setCategoryFilter('microphone')}>
-              {'Shop Interfaces'}
-            </Link>
+            <Link to='/ecommerce/interfaces'>{'Shop Interfaces'}</Link>
           </li>
           <li className='ecoModal__nav__ul__li'>
-            <Link to='/ecommerce/products' onClick={() => setCategoryFilter('interface')}>
-              {'Browse All Products'}
-            </Link>
+            <Link to='/ecommerce/products'>{'Browse All Products'}</Link>
           </li>
           <li className='ecoModal__nav__ul__li'>
             <button aria-label='Close menu' onClick={() => setUnmount(true)}>

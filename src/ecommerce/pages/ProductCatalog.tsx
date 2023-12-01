@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
 // Context
-import { CategoryFilterProvider } from '../context/CategoryFilterContext';
 import { CartProvider } from '../context/CartContext';
 
 // Components
@@ -16,26 +15,24 @@ const ProductCatalog = (): JSX.Element => {
   const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData().useUniqueCompanies);
   const breadcrumb: string = useLocation().pathname.replace(/(ecommerce|\W)+/g, ' ');
   return (
-    <CategoryFilterProvider>
-      <CartProvider>
-        <Header />
-        <section className='browseProduct'>
-          <section className='productCatalogTopper'>
-            <div className='productCatalogTopper__panel breadCrumbs' aria-label={breadcrumb} tabIndex={0}>
-              <h1>{breadcrumb}</h1>
-            </div>
-            <div className='productCatalogTopper__panel'>
-              <ConditionallyRenderedProductFilters />
-              <CompanyFilter />
-            </div>
-          </section>
-          <main>
-            <ProductProvider />
-          </main>
+    <CartProvider>
+      <Header />
+      <section className='browseProduct'>
+        <section className='productCatalogTopper'>
+          <div className='productCatalogTopper__panel breadCrumbs' aria-label={breadcrumb} tabIndex={0}>
+            <h1>{breadcrumb}</h1>
+          </div>
+          <div className='productCatalogTopper__panel'>
+            <ConditionallyRenderedProductFilters />
+            <CompanyFilter />
+          </div>
         </section>
-        <EFooter />
-      </CartProvider>
-    </CategoryFilterProvider>
+        <main>
+          <ProductProvider />
+        </main>
+      </section>
+      <EFooter />
+    </CartProvider>
   );
 };
 export default ProductCatalog;

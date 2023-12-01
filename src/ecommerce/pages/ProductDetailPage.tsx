@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 // Context
-import { CategoryFilterProvider } from '../context/CategoryFilterContext';
 import { CartProvider } from '../context/CartContext';
 
 // Components
@@ -22,20 +21,18 @@ const ProductDetailPage = (): JSX.Element => {
   const [activeDisplay, setActiveDisplay] = useState<number>(0);
 
   return (
-    <CategoryFilterProvider>
-      <CartProvider>
-        <Header />
-        <div className='skuPage'>
-          <main className='skuPage__grid'>
-            {findProduct.images!.small.length > 1 ? <ProductPageImgSelect findProduct={findProduct} setActiveDisplay={setActiveDisplay} /> : null}
-            <ProductPageImgDisplay findProduct={findProduct} activeDisplay={activeDisplay} setActiveDisplay={setActiveDisplay} />
-            <ProductPageDetails findProduct={findProduct} />
-          </main>
-          <MoreLikeThis findProduct={findProduct} />
-        </div>
-        <EFooter />
-      </CartProvider>
-    </CategoryFilterProvider>
+    <CartProvider>
+      <Header />
+      <div className='skuPage'>
+        <main className='skuPage__grid'>
+          {findProduct.images!.small.length > 1 ? <ProductPageImgSelect findProduct={findProduct} setActiveDisplay={setActiveDisplay} /> : null}
+          <ProductPageImgDisplay findProduct={findProduct} activeDisplay={activeDisplay} setActiveDisplay={setActiveDisplay} />
+          <ProductPageDetails findProduct={findProduct} />
+        </main>
+        <MoreLikeThis findProduct={findProduct} />
+      </div>
+      <EFooter />
+    </CartProvider>
   );
 };
 

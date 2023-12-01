@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { ProductType } from '../types/ProductType';
 import { useProductFilter } from './useProductFilter';
-import { useCategoryFilterContext } from '../context/CategoryFilterContext';
 
+/**
+ * Iterates over filteredProducts
+ * Slices products into arrays with a length of 7
+ * Pushes to storage array state
+ */
 export const usePaginatedSets = (): ProductType[][] => {
-  // @ts-ignore
-  const { categoryFilter } = useCategoryFilterContext();
-  const filteredData: ProductType[] = useProductFilter(); //Localize variable in FC, pass to useEffect
-
-  //Iterate over filteredProducts, slice into arrays of 7, push to storage array, setPaginatedProducts(storage array)
+  const filteredData: ProductType[] = useProductFilter();
   const [paginatedProducts, setPaginatedProducts] = useState<ProductType[][]>([]);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export const usePaginatedSets = (): ProductType[][] => {
       paginatedData.push(setItems);
     }
     setPaginatedProducts(paginatedData);
-  }, [categoryFilter]);
+  }, [window.location.pathname]);
 
   return paginatedProducts;
 };

@@ -1,11 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../context/CategoryFilterContext';
 
 const ProductFilterConstructor = (initFilterName: string, filterData: string[] | Set<string>): JSX.Element => {
-  // @ts-ignore
-  const { setCategoryFilter } = useCategoryFilterContext<StateContextType | undefined>();
-
   //** react-router-dom hooks (must be stored in variable) */
   const location: string = useLocation().pathname.replace('/ecommerce/', '');
 
@@ -73,7 +69,6 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
               id={data}
               onClick={() => {
                 setModalStatus(modalStatus ? false : true);
-                setCategoryFilter(data);
               }}>
               {data}
             </Link>

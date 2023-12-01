@@ -1,14 +1,6 @@
-import { Link, useLocation } from 'react-router-dom';
-import { useCategoryFilterContext } from '../../../../context/CategoryFilterContext';
-import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const NavigationLinks = (): JSX.Element => {
-  // @ts-ignore:
-  const { setCategoryFilter } = useCategoryFilterContext();
-
-  const path = useLocation().pathname.replace('/ecommerce/', '');
-  useEffect(() => setCategoryFilter(path), [path]);
-
   return (
     <section className='navkit__section'>
       <nav className='navkit__section'>
