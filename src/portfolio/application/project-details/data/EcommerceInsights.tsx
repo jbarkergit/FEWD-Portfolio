@@ -1,10 +1,11 @@
 const EcommerceInsights = (): JSX.Element => {
   return (
     <section className='projectDetails__article__insights__projectOverview'>
-      <h2>A simple eCommerce application with a performance-first approach.</h2>
+      <h2>Full-fledged eCommerce front-end with neumorphic inspiration.</h2>
       <p>
-        To create a dynamic environment, `useContext` and `useState` were paired to track component changes. The provider streamlines potential complexities and
-        challenges while satisfying conditional logic. This brought about three pending issues: routing, persisting data site-wide, and component re-renders.
+        To create a dynamic foundation, useContext and useState were paired to track component changes. The provider streamlines potential complexities and
+        challenges while satisfying conditional logic throughout the application. This brought about three pending issues: routing, persisting data site-wide, and
+        component re-renders.
       </p>
       <p>
         Both issues were put on the back burner since the solutions required filtering product data. I decided to opt out of using an API. Instead, like a glutton
@@ -15,7 +16,7 @@ const EcommerceInsights = (): JSX.Element => {
       <p>
         Utilizing the product database, I built numerous custom hooks that filtered and returned alphabetized unique data. This paved the way for dynamic route
         mapping, product search functionality, product filters, and product categories. That left data persistence and re-renders as pending issues, ultimately
-        resolved with `useEffect` triggering `useState` to render components when required.
+        resolved with useEffect triggering useState to render components when required.
       </p>
       <p>
         Reusable, type-safe functional components became an imperative integration to reduce bloat and optimize performance. With React's performance hooks,
@@ -28,7 +29,7 @@ const EcommerceInsights = (): JSX.Element => {
       <p>
         Finally, to truly call this an eCommerce project, I had to simulate account authentication, account registry, and implement shopping cart functionality. Both
         the account forms and shopping cart utilize localStorage to persist data across page loads. The shopping cart bestowed the great pleasure of writing
-        `useReducer` boilerplate enough times to build muscle memory. LocalStorage handles data for both features. I have yet to integrate Stripe.
+        useReducer boilerplate enough times to build muscle memory. LocalStorage handles data for both features. I have yet to integrate Stripe.
       </p>
     </section>
   );

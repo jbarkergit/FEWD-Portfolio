@@ -132,6 +132,9 @@
   justify-content: center;
   overflow-y: scroll;
   &__projectOverview {
+    display: flex;
+    flex-direction: column;
+    gap: f.rem(12);
     width: clamp(45ch, 100%, 75ch);
     & p {
     }
