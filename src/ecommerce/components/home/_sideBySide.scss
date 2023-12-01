@@ -32,7 +32,7 @@
     justify-content: center;
     width: 50%;
     height: fit-content;
-    padding: 0 f.rem(50);
+    padding-right: f.rem(50);
     @media (width <= 980px) {
       width: 100%;
       height: auto;
@@ -66,11 +66,11 @@
     }
   }
   &__video {
-    display: grid;
-    place-items: end;
+    display: flex;
+    justify-content: flex-end;
     width: 50%;
     height: inherit;
-    padding: 0 f.rem(50);
+    padding-left: f.rem(50);
     @media (width <= 980px) {
       width: 100%;
       height: auto;
