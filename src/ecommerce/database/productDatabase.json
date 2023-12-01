@@ -1281,7 +1281,7 @@
     "description": "Magni+: Exotic, current-feedback, all-discrete design, high-spec sorted potentiometer, high-end thin-film resistors, silicon capacitors. ",
     "price": 145.0,
     "productshowcase": false,
-    "category": "amps",
+    "category": "amps-dacs",
     "images": {
       "small": [
         "/src/ecommerce/assets/production-images/compressed-products-300x300/Schiit/amp/magni+-black/schiit-magni+-black-1.jpg",
@@ -1304,7 +1304,7 @@
     "unit": "Magni+ (Silver)",
     "description": "Magni+: Exotic, current-feedback, all-discrete design, high-spec sorted potentiometer, high-end thin-film resistors, silicon capacitors. ",
     "price": 145.0,
-    "category": "amps",
+    "category": "amps-dacs",
     "productshowcase": false,
     "images": {
       "small": [
@@ -1329,7 +1329,7 @@
     "description": "Magnius delivers high power, superb measurements, and best volume control in its price class. It is also designed and built in California, USA. ",
     "price": 262.0,
     "productshowcase": false,
-    "category": "amps",
+    "category": "amps-dacs",
     "images": {
       "small": [
         "/src/ecommerce/assets/production-images/compressed-products-300x300/Schiit/amp/magnius/schiit-magnius-1.jpg",
@@ -1355,7 +1355,7 @@
     "unit": "Topping A90 Discrete (Black)",
     "description": "“Mr. Clean.” “The Giant Killer.” “The Best Amp Ever.” These are a few of nicknames the TOPPING A90, our best-selling amplifier, has gained since its release. At its most basic level, it’s a balanced amp and pre-amp with tremendously clean and powerful output. At its broadest level, it’s become the benchmark by which all other solid state amplifiers below $1,000 are judged.",
     "price": 599.0,
-    "category": "amps",
+    "category": "amps-dacs",
     "productshowcase": false,
     "images": {
       "small": ["/src/ecommerce/assets/production-images/compressed-products-300x300/Apos/amp/topping-a90-discrete/apos-topping-a90-discrete-1.jpg"],
@@ -1386,7 +1386,7 @@
     "description": "Ultra-low distortion precision feedback circuit, distortion as low as 0.00006%! ",
     "price": 119.99,
     "productshowcase": false,
-    "category": "amps",
+    "category": "amps-dacs",
     "images": {
       "small": [
         "/src/ecommerce/assets/production-images/compressed-products-300x300/S.M.S.L/sh-6-black/smsl-sh-6-black-1.jpg",
@@ -1413,7 +1413,7 @@
     "description": "Ultra-low distortion precision feedback circuit, distortion as low as 0.00006%! ",
     "price": 119.99,
     "productshowcase": false,
-    "category": "amps",
+    "category": "amps-dacs",
     "images": {
       "small": [
         "/src/ecommerce/assets/production-images/compressed-products-300x300/S.M.S.L/sh-6-silver/smsl-sh-6-silver-1.jpg",

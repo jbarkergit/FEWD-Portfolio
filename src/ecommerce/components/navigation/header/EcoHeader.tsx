@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import UserInteractions from './sections/UserInteractions';
 import ModalFeatures from '../../features/ModalFeatures';
+import { useUniqueData } from '../../../hooks/useUniqueData';
 
 const EcoHeader = (): JSX.Element => {
   const [uiModal, setUiModal] = useState<string>('');
@@ -16,20 +17,23 @@ const EcoHeader = (): JSX.Element => {
           <nav className='navkit__section'>
             <ul className='navkit__section__links'>
               <li>
-                <Link to='/ecommerce/products'>{'All Products'}</Link>
+                <Link to='/ecommerce/products'>All Products</Link>
               </li>
-              <li>
-                <Link to='/ecommerce/headphones'>{'Headphones'}</Link>
-              </li>
-              <li>
-                <Link to='/ecommerce/amps-dacs'>{'Amps & Dacs'}</Link>
-              </li>
-              <li>
-                <Link to='/ecommerce/microphones'>{'Microphones'}</Link>
-              </li>
-              <li>
-                <Link to='/ecommerce/interfaces'>{'Interfaces'}</Link>
-              </li>
+              {useUniqueData().useUniqueCategories.map((category) => {
+                if (category === 'amps-dacs') {
+                  return (
+                    <li key={category}>
+                      <Link to={`/ecommerce/${category}`}>Amps & Dacs</Link>
+                    </li>
+                  );
+                } else {
+                  return (
+                    <li key={category}>
+                      <Link to={`/ecommerce/${category}`}>{category}</Link>
+                    </li>
+                  );
+                }
+              })}
             </ul>
           </nav>
         </section>

@@ -11,6 +11,7 @@ const uniqueDataProps = useProductDatabase.reduce(
       uniqueWearStyleSet: Set<string>;
       uniqueHeadphoneCompanies: Set<string>;
       uniqueMicrophoneCompanies: Set<string>;
+      uniqueCategories: Set<string>;
     },
     product: ProductType
   ) => {
@@ -29,6 +30,8 @@ const uniqueDataProps = useProductDatabase.reduce(
     if (product.category === 'headphones') result.uniqueHeadphoneCompanies.add(product.company as string);
     // uniqueMicrophoneCompanies
     if (product.category === 'microphones') result.uniqueMicrophoneCompanies.add(product.company as string);
+    // uniqueCategories
+    if (product.category) result.uniqueCategories.add(product.category as string);
     // Return accumulator (stores filtered data)
     return result;
   },
@@ -38,6 +41,7 @@ const uniqueDataProps = useProductDatabase.reduce(
     uniqueWearStyleSet: new Set<string>(),
     uniqueHeadphoneCompanies: new Set<string>(),
     uniqueMicrophoneCompanies: new Set<string>(),
+    uniqueCategories: new Set<string>(),
   }
 );
 
@@ -64,5 +68,9 @@ export const useUniqueData = () => {
     return Array.from(uniqueDataProps.uniqueMicrophoneCompanies).sort((a, b) => (a > b ? 1 : -1));
   }, [uniqueDataProps.uniqueMicrophoneCompanies]);
 
-  return { useUniqueCompanies, useUniquePolarPatterns, useUniqueWearStyles, useUniqueHeadphoneCompanies, useUniqueMicrophoneCompanies };
+  const useUniqueCategories = useMemo(() => {
+    return Array.from(uniqueDataProps.uniqueCategories).sort((a, b) => (a > b ? 1 : -1));
+  }, [uniqueDataProps.uniqueCategories]);
+
+  return { useUniqueCompanies, useUniquePolarPatterns, useUniqueWearStyles, useUniqueHeadphoneCompanies, useUniqueMicrophoneCompanies, useUniqueCategories };
 };
