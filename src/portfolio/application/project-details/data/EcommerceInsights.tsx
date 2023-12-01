@@ -32,8 +32,8 @@ const EcommerceInsights = (): JSX.Element => {
       <p>
         To truly mark this as an eCommerce project, user registry and authentication had to be simulated. Given I am a front-end developer, I employed localStorage
         to handle data and Regular Expressions to handle field validation. The last step was shopping cart functionality, which gave me the great pleasure of writing
-        useReducer boilerplate enough times to build muscle memory 🙄. I, of course, have not built out user account pages nor integrated Stripe due to a lack of a
-        back-end.
+        useReducer boilerplate enough times to understand the frustration associated with this hook 🙄. I, of course, have not built out user account pages nor
+        integrated Stripe due to a lack of a back-end.
       </p>
     </section>
   );
