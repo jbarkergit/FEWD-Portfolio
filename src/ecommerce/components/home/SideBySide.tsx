@@ -16,7 +16,7 @@ const SideBySide = (): JSX.Element => {
             all. Our curated collection features high-fidelity headphones crafted by industry-leading manufacturers known for their commitment to excellence. With
             every purchase, enjoy instant satisfaction knowing you're backed by the expertise and craftsmanship of the brands we represent.
           </p>
-          <Link to='/ecommerce/products' aria-label='Browse Products Now'>
+          <Link to='/ecommerce/products' aria-label='Browse Products Now' onClick={() => scrollTo({ top: 0 })}>
             Browse Products Now
           </Link>
         </div>
