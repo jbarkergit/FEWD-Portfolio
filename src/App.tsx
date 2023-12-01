@@ -96,8 +96,6 @@ function App() {
       // Background Loading Queue order
       // Note: Portfolio && Discord Clone handle their imports locally because they're SPAs
       // IMPORTANT NOTE: DON'T FORGET TO SLICE LANDING PAGES!
-
-      // TO DO: PORTFOLIO IS NO LONGER AN SPA -- NEED TO QUEUE BACKGROUND LOADER
       if (location.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
     }
   }, [location]);
@@ -106,7 +104,6 @@ function App() {
   const useModule = (path: string) => routes.find((route) => route.path === path);
 
   /** Application */
-  // Note: Minimizing all logic variable storage for optimal memory usage
   return (
     <Suspense fallback={<SuspenseSkeletonHandler />}>
       <Routes>
