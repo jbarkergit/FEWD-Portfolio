@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
+import EcoNavigationLinks from '../../links/EcoNavigationLinks';
 
 type MobileMenuType = {
   setUnmount: Dispatch<SetStateAction<boolean>>;
@@ -13,21 +14,7 @@ const MobileMenu = ({ setUnmount }: MobileMenuType): JSX.Element => {
       </div>
       <nav className='ecoModal__nav'>
         <ul className='ecoModal__nav__ul'>
-          <li className='ecoModal__nav__ul__li'>
-            <Link to='/ecommerce/headphones'>{'Shop Headphones'}</Link>
-          </li>
-          <li className='ecoModal__nav__ul__li'>
-            <Link to='/ecommerce/amps-dacs'>{'Shop Amps & Dacs'}</Link>
-          </li>
-          <li className='ecoModal__nav__ul__li'>
-            <Link to='/ecommerce/microphones'>{'Shop Microphones'}</Link>
-          </li>
-          <li className='ecoModal__nav__ul__li'>
-            <Link to='/ecommerce/interfaces'>{'Shop Interfaces'}</Link>
-          </li>
-          <li className='ecoModal__nav__ul__li'>
-            <Link to='/ecommerce/products'>{'Browse All Products'}</Link>
-          </li>
+          <EcoNavigationLinks />
           <li className='ecoModal__nav__ul__li'>
             <button aria-label='Close menu' onClick={() => setUnmount(true)}>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.6em' height='1.6em' viewBox='0 0 24 24'>

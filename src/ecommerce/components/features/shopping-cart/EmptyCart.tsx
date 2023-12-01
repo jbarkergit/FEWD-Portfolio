@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Link } from 'react-router-dom';
+import EcoNavigationLinks from '../../navigation/links/EcoNavigationLinks';
 
 type EmptyCartType = {
   setUnmount: Dispatch<SetStateAction<boolean>>;
@@ -13,21 +13,7 @@ const EmptyCart = ({ setUnmount }: EmptyCartType) => {
       </div>
       <nav>
         <ul className='shoppingCart__products__emptyCart__nav'>
-          <li>
-            <Link to='/ecommerce/headphones'>{'Shop Headphones'}</Link>
-          </li>
-          <li>
-            <Link to='/ecommerce/amps-dacs'>{'Shop Amps & Dacs'}</Link>
-          </li>
-          <li>
-            <Link to='/ecommerce/microphones'>{'Shop Microphones'}</Link>
-          </li>
-          <li>
-            <Link to='/ecommerce/interfaces'>{'Shop Interfaces'}</Link>
-          </li>
-          <li>
-            <Link to='/ecommerce/products'>{'Browse All Products'}</Link>
-          </li>
+          <EcoNavigationLinks />
           <li>
             <button aria-label='Close menu' onClick={() => setUnmount(true)}>
               <svg xmlns='http://www.w3.org/2000/svg' width='1.6em' height='1.6em' viewBox='0 0 24 24'>

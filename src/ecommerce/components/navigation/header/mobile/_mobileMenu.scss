@@ -17,11 +17,11 @@
 .ecoModal__nav {
   width: 100%;
   height: auto;
-  &__ul {
+  & ul {
     display: flex;
     flex-direction: column;
     gap: f.rem(10);
-    &__li {
+    & li {
       & a,
       & button {
         @include m.ecoBtn;
