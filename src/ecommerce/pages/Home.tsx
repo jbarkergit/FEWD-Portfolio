@@ -2,7 +2,7 @@
 import { CartProvider } from '../context/CartContext';
 
 // Components
-import Header from '../components/navigation/header/Header';
+import Header from '../components/navigation/header/EcoHeader';
 import EFooter from '../components/navigation/footer/eFooter';
 import Infographic from '../components/home/Infographic';
 import Carousel from '../components/home/Carousel';

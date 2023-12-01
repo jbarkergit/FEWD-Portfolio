@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { usePaginatedSets } from '../../../hooks/usePaginatedSets';
+import { usePaginatedProductSets } from '../../../hooks/usePaginatedProductSets';
 import { ProductType } from '../../../types/ProductType';
 import ProductProp from './ProductProp';
 
@@ -7,7 +7,7 @@ import ProductProp from './ProductProp';
 
 const ProductProvider = (): JSX.Element => {
   //** Filtered & paginated products */
-  const paginatedProducts: ProductType[][] = usePaginatedSets();
+  const paginatedProducts: ProductType[][] = usePaginatedProductSets();
 
   //** Holds current visible products to be mapped */
   const [visibleProducts, setVisibleProducts] = useState<ProductType[]>([

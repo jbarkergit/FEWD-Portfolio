@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { CartProvider } from '../context/CartContext';
 
 // Components
-import Header from '../components/navigation/header/Header';
+import Header from '../components/navigation/header/EcoHeader';
 import EFooter from '../components/navigation/footer/eFooter';
 import ProductProvider from '../components/product/product-provider/ProductProvider';
 import ProductFilterConstructor from '../components/features/product-filters/ProductFilterConstructor';

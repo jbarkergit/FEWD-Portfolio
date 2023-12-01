@@ -2,12 +2,8 @@ import { useEffect, useState } from 'react';
 import { ProductType } from '../types/ProductType';
 import { useProductFilter } from './useProductFilter';
 
-/**
- * Iterates over filteredProducts
- * Slices products into arrays with a length of 7
- * Pushes to storage array state
- */
-export const usePaginatedSets = (): ProductType[][] => {
+/** Utilizes useProductFilter hook to create product arrays with a length of 7 */
+export const usePaginatedProductSets = (): ProductType[][] => {
   const filteredData: ProductType[] = useProductFilter();
   const [paginatedProducts, setPaginatedProducts] = useState<ProductType[][]>([]);
 
