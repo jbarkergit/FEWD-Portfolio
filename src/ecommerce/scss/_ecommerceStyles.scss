@@ -1,24 +1,30 @@
 @use '../../sass/functions' as f;
 
 :root {
-  --bodyBackground: hsl(0, 0%, 96%);
+  // Backgrounds
   --elemBackgroundPrimary: hsl(0, 0%, 100%);
   --elemBackgroundSecondary: hsl(0, 0%, 20%);
   --elemBackgroundPrimaryOffset: hsl(0, 0%, 91%);
   --gradientMono: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(0, 0%, 94%));
-  --gradientColored: linear-gradient(145deg, hsl(11, 52%, 96%), hsl(0, 0%, 86%));
+
+  // Fonts
+  --ecoFontAccent: #ff5900;
+
+  // Styles
   --ecoBtnShadow: -2px -3px 1px hsla(0, 0%, 100%, 0.4), 2px 3px 4px hsl(0, 0%, 78%);
   --shadowRefined: -2px -3px 3px hsl(0, 0%, 100%), 2px 3px 3px hsl(0, 0%, 65%);
   --shadowSoft: 0.3rem 0.3rem 0.6rem hsl(0, 0%, 80.8%), -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%);
   --borderChunky: 0.13rem solid hsl(0, 0%, 94%);
-  --fontAccent: #ff5900;
+
+  // Box Model
+  --ecoGap: 2.25rem;
   --sectionYPadding: 4.375rem;
   --sectionXPadding: 8.335%;
-  --productGap: 2.25rem;
+  --ecoBorderRadius: 1.5rem;
 }
 
 .highlight {
-  color: var(--fontAccent);
+  color: var(--ecoFontAccent);
 }
 
 @mixin ecoBtn {
@@ -28,7 +34,7 @@
   gap: f.rem(3);
   max-height: f.rem(45);
   padding: f.rem(10) f.rem(14);
-  border-radius: f.rem(6);
+  border-radius: calc(var(--ecoBorderRadius) / 4);
   cursor: pointer;
   font-size: f.rem(12);
   font-weight: 600;

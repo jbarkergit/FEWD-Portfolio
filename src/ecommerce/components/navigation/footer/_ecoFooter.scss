@@ -86,14 +86,14 @@
     display: block;
     width: 100%;
     height: 1px;
-    background-color: var(--fontAccent);
+    background-color: var(--ecoFontAccent);
     flex-grow: 1;
   }
   & span {
     display: block;
     flex-basis: 1;
     margin-bottom: 0;
-    color: var(--fontAccent);
+    color: var(--ecoFontAccent);
     font-size: f.rem(14);
     font-weight: 700;
     text-align: center;
@@ -134,7 +134,7 @@
         height: f.rem(42);
         padding: 0 0 0 f.rem(12);
         border: 1px solid hsl(0, 0%, 100%);
-        border-radius: f.rem(6);
+        border-radius: calc(var(--ecoBorderRadius) / 4);
         line-height: f.rem(40);
         color: var(--fontSecondary);
         cursor: text;
@@ -244,7 +244,7 @@
     align-items: center;
     gap: f.rem(25);
     & a svg:nth-child(1) {
-      border-radius: f.rem(6);
+      border-radius: calc(var(--ecoBorderRadius) / 4);
     }
     @media (width <= 1600px) {
       justify-content: center;

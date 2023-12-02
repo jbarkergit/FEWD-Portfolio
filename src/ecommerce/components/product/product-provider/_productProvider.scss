@@ -13,7 +13,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, calc(100% / 3 - f.rem(24)));
   grid-auto-rows: 1fr;
-  gap: var(--productGap);
+  gap: var(--ecoGap);
   justify-content: center;
   max-width: f.rem(1600);
   margin-bottom: f.rem(50);
@@ -32,7 +32,7 @@
     position: relative;
     height: 100%;
     aspect-ratio: 4/5;
-    border-radius: f.rem(24);
+    border-radius: var(--ecoBorderRadius);
     box-shadow: var(--shadowSoft);
     transition: 0.55s ease-in-out;
     @media (width <= 966px) {

@@ -31,7 +31,7 @@
   height: 80vh;
   z-index: 13;
   padding: f.rem(50);
-  border-radius: f.rem(24);
+  border-radius: var(--ecoBorderRadius);
   margin: 0 8.335%;
   background: var(--gradientMono);
   overflow-y: auto;
@@ -94,7 +94,7 @@
       position: relative;
       width: 90%;
       height: auto;
-      border-radius: f.rem(6);
+      border-radius: calc(var(--ecoBorderRadius) / 4);
       background: var(--elemBackgroundPrimary);
       outline: 1px solid hsl(0, 0%, 86%);
       & input {

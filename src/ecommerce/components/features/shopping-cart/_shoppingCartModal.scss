@@ -59,7 +59,7 @@
         display: flex;
         gap: f.rem(6);
         width: fit-content;
-        border-radius: f.rem(6);
+        border-radius: calc(var(--ecoBorderRadius) / 4);
         @include m.ecoBtnDark;
         & button,
         & span {

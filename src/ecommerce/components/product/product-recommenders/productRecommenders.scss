@@ -23,7 +23,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
-    gap: var(--productGap);
+    gap: var(--ecoGap);
     max-width: f.rem(1600);
     @media (width <= 1265px) {
       grid-template-columns: repeat(3, 1fr);
@@ -40,7 +40,7 @@
       display: flex;
       justify-content: center;
       aspect-ratio: 0.8/1;
-      border-radius: f.rem(24);
+      border-radius: var(--ecoBorderRadius);
       overflow: hidden;
       box-shadow:
         -1px -1px 20px 0px #ffffff,
@@ -55,13 +55,13 @@
         align-items: flex-end;
         z-index: 3;
         // padding: 0 f.rem(15);
-        border-radius: f.rem(24);
+        border-radius: var(--ecoBorderRadius);
         @include m.productPhoto;
         &::before {
           content: '';
           position: absolute;
           inset: 0;
-          border-radius: f.rem(24);
+          border-radius: var(--ecoBorderRadius);
           background-color: var(--gradientMono);
           opacity: 0.8;
         }
