@@ -5,6 +5,9 @@
   position: relative;
   padding: 0 10.335% f.rem(50) 10.335%;
   margin-bottom: f.rem(104);
+  @media (width <= 500px) {
+    padding: 0 calc(10.335% / 2) f.rem(50) calc(10.335% / 2);
+  }
   &__grid {
     position: relative;
     width: 100%;
@@ -20,7 +23,7 @@
     @media (width <= 1300px) {
       display: grid;
       height: auto;
-      grid-template-areas: 'display display' 'imgSelection details';
+      grid-template-areas: 'display display' 'details details';
     }
     @media (width <= 700px) {
       grid-template-areas: 'display display' 'imgSelection imgSelection' 'details details';
@@ -41,11 +44,7 @@
   cursor: pointer;
   @media (width <= 1300px) {
     grid-area: imgSelection;
-    width: 100%;
-    max-height: f.rem(500);
-    border-right: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    display: none;
   }
   @media (width <= 700px) {
     display: flex;
@@ -236,6 +235,9 @@
   @media (width <= 1300px) {
     grid-area: details;
     width: 100%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: f.rem(24);
+    border-bottom-left-radius: f.rem(24);
   }
   @media (width <= 700px) {
     display: flex;

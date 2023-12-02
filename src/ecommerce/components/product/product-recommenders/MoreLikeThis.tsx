@@ -43,9 +43,7 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
                   </picture>
                 </figure>
                 <hgroup>
-                  <h2>
-                    {product.company} {product.unit}
-                  </h2>
+                  <h2>{product.unit}</h2>
                   <h3>Starting at {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h3>
                 </hgroup>
               </article>
