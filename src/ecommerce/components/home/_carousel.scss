@@ -4,7 +4,7 @@
 .carousel {
   position: relative;
   display: block;
-  padding: calc(f.rem(32) + f.rem(32)) var(--sectionXPadding) var(--sectionYPadding) var(--sectionXPadding);
+  padding: calc(var(--sectionYPadding) - f.rem(32)) var(--sectionXPadding) var(--sectionYPadding) var(--sectionYPadding);
   background-color: var(--elemBackgroundPrimaryOffset);
   &:after {
     content: '';

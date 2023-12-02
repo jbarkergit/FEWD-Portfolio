@@ -8,7 +8,7 @@
   gap: var(--ecoGap);
   width: 100%;
   height: fit-content;
-  padding: f.rem(32) var(--sectionXPadding) calc(var(--sectionYPadding)) var(--sectionXPadding);
+  padding: 0 var(--sectionXPadding) var(--sectionYPadding) var(--sectionXPadding);
   background-color: var(--elemBackgroundPrimaryOffset);
   @media (width <= 980px) {
     flex-direction: column;
