@@ -4,7 +4,7 @@
 .carousel {
   position: relative;
   display: block;
-  padding: f.rem(32) var(--sectionXPadding) var(--sectionYPadding) f.rem(35); //Replaced top w/ after height, left w/ gap
+  padding: calc(f.rem(32) + f.rem(32)) var(--sectionXPadding) var(--sectionYPadding) var(--sectionXPadding);
   background-color: var(--elemBackgroundPrimaryOffset);
   &:after {
     content: '';
@@ -20,7 +20,7 @@
   }
   &__heading {
     width: 100%;
-    padding: f.rem(25) 0 f.rem(15) f.rem(50);
+    padding-bottom: calc(var(--productGap) / 2);
     & p {
       padding-left: f.rem(2);
       font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
@@ -43,11 +43,10 @@
     position: relative;
     display: flex;
     flex-wrap: nowrap;
-    gap: f.rem(35);
+    gap: var(--productGap);
     width: fit-content;
     height: f.rem(625);
     z-index: 4;
-    margin: 0 f.rem(25);
     scrollbar-width: none;
     scroll-behavior: smooth;
     &:hover {

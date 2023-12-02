@@ -3,20 +3,19 @@
 
 .infographic {
   display: flex;
-  gap: f.rem(35);
-  width: 100%;
+  gap: var(--productGap);
   height: calc(100vh - 11rem + f.rem(32));
-  padding: 0 var(--sectionXPadding) calc(var(--sectionYPadding) + f.rem(32)) var(--sectionXPadding);
+  padding: 0 var(--sectionXPadding) calc(f.rem(32) + var(--sectionYPadding)) var(--sectionXPadding);
   @media (width <= 1000px) {
     flex-direction: column;
     gap: calc(f.rem(35) / 2);
-    height: auto;
   }
   & > * {
+    height: 100%;
     &:nth-child(1) {
       flex: 1 0 25%;
       @media (width <= 1620px) {
-        flex: 0 0 50%;
+        flex: 0 0 calc(50% - var(--productGap) / 2);
       }
       @media (width <= 1000px) {
         height: 50%;
@@ -24,78 +23,30 @@
     }
     &:nth-child(2) {
       flex: 0 1 50%;
+      & h2 {
+        display: none;
+      }
+      @media (width <= 1620px) {
+        display: none;
+      }
     }
     &:nth-child(3) {
       flex: 1 0 25%;
       @media (width <= 1620px) {
-        flex: 0 0 50%;
+        flex: 0 0 calc(50% - var(--productGap) / 2);
       }
       @media (width <= 1000px) {
         height: 50%;
       }
     }
-  }
-  & section h2 {
-    display: none;
-  }
-  & section figure {
-    display: contents;
-    & picture {
-      display: inline-grid;
-      place-items: center;
-      height: 100%;
-      & img {
-        border-radius: f.rem(24);
-        box-shadow: var(--shadowSoft);
+    & > * {
+      height: inherit;
+      & figure picture,
+      & figure picture img {
+        width: auto;
+        border-radius: 1.5rem;
       }
     }
-  }
-}
-
-.infographic__section__textBlock {
-  @media (width <= 1620px) {
-    position: absolute;
-    bottom: 5%;
-    left: 3%;
-  }
-  &--cta {
-    @include m.ecoBtn;
-    @include m.ecoBtnDark;
-    margin-top: calc(2.1875rem / 3);
-    @media (width <= 1620px) {
-      display: none;
-    }
-  }
-  & strong,
-  .infographic__section__textBlock--strong {
-    display: inline-grid;
-    text-wrap: balance;
-    @media (width <= 1620px) {
-      position: relative;
-      z-index: 2;
-      color: var(--fontSecondary);
-    }
-    & span {
-      font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));
-      font-weight: 800;
-      text-transform: uppercase;
-      line-height: 115%;
-      @media (height <= 935px) {
-        font-size: clamp(f.rem(26), f.rem(26) + 1vw, f.rem(32));
-      }
-    }
-  }
-}
-
-.infographic__section__dynamicAudio h1,
-.infographic__section__news p {
-  font-size: clamp(f.rem(16), f.rem(14) + 1vw, f.rem(20));
-  font-weight: 500;
-  @media (width <= 1620px) {
-    position: relative;
-    width: inherit;
-    z-index: 2;
-    color: var(--fontSecondary);
   }
 }
 
@@ -104,8 +55,78 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 2.1875rem;
-  height: 100%;
+  justify-content: space-between;
+  @media (width <= 1620px) {
+    flex-direction: row;
+  }
+  @media (width <= 1000px) {
+    height: 100%;
+  }
+  &__textBlock {
+    @media (width <= 1620px) {
+      position: absolute;
+      bottom: 5%;
+      left: 3%;
+    }
+    & h1,
+    & p {
+      font-size: clamp(f.rem(16), f.rem(14) + 1vw, f.rem(20));
+      font-weight: 500;
+      @media (width <= 1620px) {
+        position: relative;
+        width: inherit;
+        z-index: 2;
+        color: var(--fontSecondary);
+      }
+    }
+    &--cta {
+      @include m.ecoBtn;
+      @include m.ecoBtnDark;
+      margin-top: calc(2.1875rem / 3);
+      @media (width <= 1620px) {
+        display: none;
+      }
+    }
+    &--strong,
+    .infographic__section__textBlock--strong {
+      display: inline-grid;
+      text-wrap: balance;
+      @media (width <= 1620px) {
+        position: relative;
+        z-index: 2;
+        color: var(--fontSecondary);
+      }
+      & span {
+        font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));
+        font-weight: 800;
+        text-transform: uppercase;
+        line-height: 115%;
+        @media (height <= 935px) {
+          font-size: clamp(f.rem(26), f.rem(26) + 1vw, f.rem(32));
+        }
+      }
+    }
+  }
+  & figure {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    @media (width <= 1620px) {
+      width: 100%;
+    }
+    & picture {
+      width: 100%;
+      height: calc(100% - var(--productGap));
+      @media (width <= 1620px) {
+        height: 100%;
+      }
+      & img {
+        width: 100%;
+        height: 100%;
+        box-shadow: var(--shadowSoft);
+      }
+    }
+  }
 }
 
 .infographic__section__dynamicAudio figure picture img {
@@ -114,20 +135,33 @@
   }
 }
 
-.infographic__section__news {
-  & figure picture img {
-    @media (width <= 1315px) {
-      object-position: center left;
-    }
+.infographic__section__news figure picture img {
+  @media (width <= 1315px) {
+    object-position: center left;
+  }
+  @media (width <= 1000px) {
+    object-position: center -80px;
+  }
+  @media (width <= 700px) {
+    object-position: center -50px;
   }
 }
 
 .infographic__section__presentation {
-  display: contents;
+  display: grid;
+  place-items: center;
+  width: 100%;
   @media (width <= 1620px) {
     display: none;
   }
-  & figure picture img {
-    filter: contrast(94%) brightness(96%);
+  & figure {
+    height: 100%;
+    padding-top: 0;
+    & picture {
+      height: 100%;
+      & img {
+        filter: contrast(94%) brightness(96%);
+      }
+    }
   }
 }

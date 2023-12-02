@@ -11,8 +11,8 @@ const InfographicSectionOne = () => {
   return (
     <section className='infographic__section'>
       <article className='infographic__section__dynamicAudio'>
-        <div className='infographic__section__textBlock'>
-          <strong tabIndex={0}>
+        <div className='infographic__section__dynamicAudio__textBlock'>
+          <strong className='infographic__section__dynamicAudio__textBlock--strong' tabIndex={0}>
             <span>THE NEW </span>
             <span>HiFi AUDIO </span>
             <span className='highlight'>EXPERIENCE</span>
@@ -66,19 +66,13 @@ const InfographicSectionThree = () => {
   return (
     <section className='infographic__section'>
       <article className='infographic__section__news'>
-        <div className='infographic__section__textBlock'>
-          <h2 className='infographic__section__textBlock--strong' tabIndex={0}>
+        <div className='infographic__section__news__textBlock'>
+          <h2 className='infographic__section__news__textBlock--strong' tabIndex={0}>
             <span>NEW TECH FROM </span>
             <span className='highlight'>Beyerdynamic</span>
           </h2>
-          <p tabIndex={0}>
-            Thanks to our friends over at{' '}
-            <Link to='http://localhost:5173/ecommerce/Beyerdynamic' aria-label='View Beyerdynamic Products'>
-              Beyerdynamic
-            </Link>
-            , we're proud to introduce a new line of headphones sporting all new Tesla technology.
-          </p>
-          <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__section__textBlock--cta' aria-label='Shop Tesla enhanced Headphones'>
+          <p tabIndex={0}>Thanks to our friends over at Beyerdynamic, we're proud to introduce a new line of headphones sporting all new Tesla technology.</p>
+          <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__section__news__textBlock--cta' aria-label='Shop Tesla enhanced Headphones'>
             Shop Tesla enhanced Headphones
           </Link>
         </div>
