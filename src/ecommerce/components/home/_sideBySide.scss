@@ -5,6 +5,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  gap: var(--ecoGap);
   width: 100%;
   height: fit-content;
   padding: f.rem(32) var(--sectionXPadding) calc(var(--sectionYPadding)) var(--sectionXPadding);
@@ -32,12 +33,9 @@
     justify-content: center;
     width: 50%;
     height: fit-content;
-    padding-right: f.rem(50);
     @media (width <= 980px) {
       width: 100%;
       height: auto;
-      padding-bottom: f.rem(50);
-      padding: f.rem(25) f.rem(50);
     }
     & h2 {
       display: flex;
@@ -54,7 +52,6 @@
     }
     & p {
       width: clamp(20ch, 100%, 55ch);
-      padding: 0 f.rem(4);
       font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
       font-weight: 500;
     }
@@ -70,10 +67,10 @@
     justify-content: flex-end;
     width: 50%;
     height: inherit;
-    padding-left: f.rem(50);
     @media (width <= 980px) {
       width: 100%;
       height: auto;
+      justify-content: center;
     }
     & figure video {
       aspect-ratio: 0.8/1;
