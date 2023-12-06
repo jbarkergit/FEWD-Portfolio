@@ -85,7 +85,7 @@ const ContactForm = () => {
 
   return (
     <section className='contactForm'>
-      <h2>Developer Contact Form and general information</h2>
+      <h2 className='contactForm--h2'>Developer Contact Form and general information</h2>
       <AboutDeveloper />
       <ContactFormInformation />
       <ContactFormStandard

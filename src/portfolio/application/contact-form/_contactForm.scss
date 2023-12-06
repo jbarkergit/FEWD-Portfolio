@@ -8,7 +8,7 @@
   overflow: hidden;
   background-color: m.$background-color-cream;
   color: m.$font-color-secondary;
-  & h2 {
+  &--h2 {
     display: none;
   }
   &__section {
@@ -16,16 +16,17 @@
     height: 100%;
     &:nth-of-type(1) {
       grid-area: 1 / 1 / 2 / 2;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: flex-end;
+      padding: m.$box-model-viewport-y calc(m.$box-model-viewport-x / 2);
     }
     &:nth-of-type(2) {
       grid-area: 2 / 1 / 3 / 2;
-      justify-content: center;
+      justify-content: flex-end;
+      padding: 0 calc(m.$box-model-viewport-x / 2) m.$box-model-viewport-y calc(m.$box-model-viewport-x / 2);
     }
     &:nth-of-type(3) {
       grid-area: 1 / 2 / 3 / 3;
-      justify-content: center;
     }
     & h2 {
       display: none;
@@ -35,8 +36,8 @@
 
 .contact__introduction {
   width: clamp(45ch, 100%, 75ch);
-  padding-bottom: f.rem(30);
-  & h3 {
+  & h2 {
+    display: block;
     font-size: clamp(f.rem(24), f.rem(36) + 1vw, f.rem(42));
     font-weight: 800;
     line-height: 135%;
@@ -57,6 +58,9 @@
   justify-content: flex-start;
   width: clamp(45ch, 100%, 75ch);
   height: fit-content;
+  padding: f.rem(8) 0;
+  border-radius: f.rem(16);
+  background-color: m.$background-color-secondary;
   overflow: scroll;
   scrollbar-width: none;
   will-change: height;
@@ -69,14 +73,14 @@
   &__inclusivityAccessibility,
   &__formErrors {
     width: 100%;
-    padding: f.rem(12) f.rem(12);
-    // border-bottom: 1px solid m.$background-color-cream-complementary;
     height: auto;
+    padding: f.rem(8) f.rem(12);
+    border-bottom: 1px solid hsl(54, 33%, 85%);
     transition: height 360ms ease-in-out;
     &--question {
       display: flex;
       align-items: flex-end;
-      height: auto;
+      padding-bottom: f.rem(6);
       font-size: f.rem(18);
       & svg {
         font-size: f.rem(24);
@@ -103,20 +107,41 @@
 }
 
 .standardForm {
-  display: contents;
+  display: grid;
+  place-items: center;
   &__fieldset {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: calc(m.$portfolio-gap / 2);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    // gap: m.$portfolio-gap;
     width: 100%;
-    height: auto;
+    padding: m.$box-model-viewport-y calc(m.$box-model-viewport-x / 2) m.$box-model-viewport-y 0;
     &__container {
       position: relative;
-      width: 100%;
       min-width: f.rem(320);
-      height: auto;
+      border: 1px solid hsl(54, 33%, 85%);
+      &:nth-child(1) {
+        grid-area: 1 / 1 / 2 / 2;
+      }
+      &:nth-child(2) {
+        grid-area: 1 / 2 / 2 / 3;
+      }
+      &:nth-child(3) {
+        grid-area: 2 / 1 / 3 / 2;
+      }
+      &:nth-child(4) {
+        grid-area: 2 / 2 / 3 / 3;
+      }
+      &:nth-child(5) {
+        grid-area: 3 / 1 / 4 / 2;
+      }
+      &:nth-child(6) {
+        grid-area: 3 / 2 / 4 / 3;
+      }
+      &:nth-child(7) {
+        grid-area: 4 / 1 / 6 / 3;
+        max-height: f.rem(465);
+      }
       &--label,
       &--input {
         width: 100%;
@@ -146,8 +171,7 @@
         }
       }
       &--input {
-        // background-color: m.$background-color-cream;
-        // border: 1px solid m.$background-color-cream-complementary;
+        background-color: m.$background-color-secondary;
       }
       &--errorMessage {
         padding: 0 0 0 f.rem(12);

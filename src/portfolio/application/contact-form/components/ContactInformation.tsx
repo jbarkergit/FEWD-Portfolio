@@ -70,7 +70,7 @@ const ContactFormInformation = () => {
     <section className='contactForm__section'>
       <h2>Contact information</h2>
       <article className='contact__questions'>
-        <details className='contact__questions__responseTime' ref={primaryQuestionRef}>
+        <details className='contact__questions__responseTime' ref={primaryQuestionRef} open>
           <summary className='contact__questions__responseTime--question'>
             How long until I receive a response?
             <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
