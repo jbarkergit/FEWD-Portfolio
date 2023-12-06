@@ -22,7 +22,7 @@ export const myProjects = [
       packageManagers: ['npm'],
       versionControl: ['git', 'github'],
     },
-    projectImageSrc: '/src/portfolio/assets/compressed-project-images/hyundai-preview.jpg',
+    projectImageSrc: '/src/portfolio/assets/compressed-project-images/portfolio-landing.png',
     projectImageAlt: 'Portfolio Project Hub',
     dataStatus: 'disabled',
   },
