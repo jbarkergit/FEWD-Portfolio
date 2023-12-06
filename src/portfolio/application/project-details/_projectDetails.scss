@@ -40,12 +40,22 @@
     }
     &__insights {
       flex: 0 1 70%;
-      height: calc(100% - (m.$box-model-viewport-y * 2.5));
+      display: flex;
+      justify-content: center;
+      height: 100%;
       padding-left: calc(m.$box-model-viewport-x / 6);
-      overflow: hidden;
+      overflow: scroll;
       color: m.$font-color-secondary;
       cursor: text;
       user-select: text;
+      &__projectOverview {
+        display: flex;
+        flex-direction: column;
+        gap: f.rem(12);
+        width: clamp(45ch, 100%, 75ch);
+        & p {
+        }
+      }
     }
   }
 }
@@ -124,19 +134,5 @@
   &__selection {
     flex: 0 0 75%;
     width: fit-content;
-  }
-}
-
-.projectDetails__article__insights {
-  display: flex;
-  justify-content: center;
-  overflow-y: scroll;
-  &__projectOverview {
-    display: flex;
-    flex-direction: column;
-    gap: f.rem(12);
-    width: clamp(45ch, 100%, 75ch);
-    & p {
-    }
   }
 }

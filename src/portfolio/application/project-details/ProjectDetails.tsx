@@ -25,17 +25,17 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
   };
 
   /** Handle page scrolling */
-  const projectDetailsRef = useRef<HTMLElement>(null);
-  const projectInsightsRef = useRef<HTMLElement>(null);
+  // const projectDetailsRef = useRef<HTMLElement>(null);
+  // const projectInsightsRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    const useInsightScroll = (event: WheelEvent) => projectInsightsRef.current?.scrollBy({ top: event.deltaY, behavior: 'smooth' });
-    projectDetailsRef?.current?.addEventListener('wheel', useInsightScroll);
-    return () => projectDetailsRef?.current?.removeEventListener('wheel', useInsightScroll);
-  }, []);
+  // useEffect(() => {
+  //   const useInsightScroll = (event: WheelEvent) => projectInsightsRef.current?.scrollBy({ top: event.deltaY, behavior: 'smooth' });
+  //   projectDetailsRef?.current?.addEventListener('wheel', useInsightScroll);
+  //   return () => projectDetailsRef?.current?.removeEventListener('wheel', useInsightScroll);
+  // }, []);
 
   return (
-    <section className='projectDetails' ref={projectDetailsRef}>
+    <section className='projectDetails'>
       <article className='projectDetails__article'>
         <section className='projectDetails__article__general'>
           <div className='projectDetails__article__general__title'>
@@ -60,7 +60,7 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
           </div>
         </section>
 
-        <section className='projectDetails__article__insights' ref={projectInsightsRef}>
+        <section className='projectDetails__article__insights'>
           <div className='projectDetails__article__insights__projectOverview'>{useProjectInsights()}</div>
         </section>
 
