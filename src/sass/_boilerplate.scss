@@ -71,9 +71,10 @@ html {
 }
 body {
   font:
-    400 100% / 1.25 'Plus Jakarta Sans',
+    normal normal 500 1.1rem / 1.25em 'Helvetica',
     'PT Sans',
     sans-serif;
+  letter-spacing: 0.04rem;
 }
 h1 {
   font-size: clamp(f.rem(24), f.rem(34) + 1vw, f.rem(36));

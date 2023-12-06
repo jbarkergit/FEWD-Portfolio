@@ -15,11 +15,7 @@
     justify-content: center;
     width: 100%;
     padding-bottom: calc(var(--sectionYPadding) / 2);
-    color: var(--textPrimary);
-    font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
-    font-weight: 800;
-    line-height: 115%;
-    text-transform: uppercase;
+    @include m.ecoSectionHeader;
     @media (width <= 416px) {
       padding: f.rem(25) 0;
     }
@@ -73,6 +69,7 @@
           width: 100%;
           font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
           font-weight: 700;
+          line-height: 115%;
           @media (width <= 700px) {
             font-size: clamp(f.rem(18), f.rem(16) + 1vw, f.rem(22));
           }

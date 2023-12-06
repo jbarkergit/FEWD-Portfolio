@@ -70,10 +70,10 @@
   width: 100%;
   overflow: hidden;
   & > * {
-    padding-bottom: f.rem(18);
+    padding-bottom: var(--ecoGap);
   }
   & legend {
-    padding-bottom: f.rem(12);
+    padding-bottom: calc(var(--ecoGap) / 2);
     & h2 {
       width: 100%;
       font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
@@ -87,7 +87,8 @@
   & fieldset {
     display: grid;
     place-items: center;
-    gap: f.rem(12);
+    gap: calc(var(--ecoGap) / 2.5);
+    padding-bottom: calc(var(--ecoGap) / 1.5);
     width: 100%;
     cursor: default;
     & label {
@@ -127,15 +128,16 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: f.rem(6);
+    gap: calc(var(--ecoGap) / 4);
     width: 90%;
-    padding-bottom: f.rem(24);
+    padding-bottom: var(--ecoGap);
     & button {
       @include m.ecoBtn;
       @include m.ecoBtnDark;
-      width: 49%;
-      &:nth-of-type(1) {
-        width: 100%;
+      width: 99%;
+      &:nth-of-type(2),
+      &:nth-of-type(3) {
+        width: 48%;
       }
     }
   }
@@ -145,6 +147,7 @@
     align-items: center;
     gap: f.rem(18);
     width: 100%;
+    padding-bottom: 0;
     & button svg {
       font-size: f.rem(26);
     }

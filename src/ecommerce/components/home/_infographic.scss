@@ -90,6 +90,7 @@
     &--strong,
     .infographic__section__textBlock--strong {
       display: inline-grid;
+      padding-bottom: f.rem(6);
       text-wrap: balance;
       @media (width <= 1620px) {
         position: relative;
@@ -97,10 +98,7 @@
         color: var(--fontSecondary);
       }
       & span {
-        font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));
-        font-weight: 800;
-        text-transform: uppercase;
-        line-height: 115%;
+        @include m.ecoSectionHeader;
         @media (height <= 935px) {
           font-size: clamp(f.rem(26), f.rem(26) + 1vw, f.rem(32));
         }

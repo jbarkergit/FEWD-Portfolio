@@ -41,12 +41,9 @@
       display: flex;
       flex-direction: column;
       width: fit-content;
-      padding-bottom: f.rem(6);
-      font-size: clamp(f.rem(26), f.rem(16) + 2vw, f.rem(40));
-      font-weight: 800;
-      line-height: 115%;
-      text-transform: uppercase;
-      @media (width >= 467px) {
+      padding-bottom: f.rem(12);
+      @include m.ecoSectionHeader;
+      @media (width <= 467px) {
         font-size: clamp(f.rem(20), f.rem(28) + 1vw, f.rem(34));
       }
     }
@@ -56,7 +53,7 @@
       font-weight: 500;
     }
     & a {
-      margin-top: f.rem(18);
+      margin-top: f.rem(24);
       @include m.ecoBtn;
       @include m.ecoBtnDark;
       width: fit-content;

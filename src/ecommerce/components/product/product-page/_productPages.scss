@@ -252,18 +252,21 @@
     & hgroup {
       & h1 {
         display: none;
+        line-height: 115%;
       }
       & h2 {
         font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(18));
         font-weight: 600;
+        line-height: 115%;
       }
       & h3 {
         font-size: clamp(f.rem(18), f.rem(28) + 1vw, f.rem(34));
         font-weight: 700;
+        line-height: 115%;
       }
     }
     & p {
-      margin: f.rem(5) 0 f.rem(25) 0;
+      margin: f.rem(12) 0 f.rem(25) 0;
     }
     & button {
       @include m.ecoBtn;

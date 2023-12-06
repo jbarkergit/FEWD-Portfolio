@@ -16,22 +16,24 @@ const ProductCatalog = (): JSX.Element => {
   const breadcrumb: string = useLocation().pathname.replace(/(ecommerce|\W)+/g, ' ');
   return (
     <CartProvider>
-      <Header />
-      <section className='browseProduct'>
-        <section className='productCatalogTopper'>
-          <div className='productCatalogTopper__panel breadCrumbs' aria-label={breadcrumb} tabIndex={0}>
-            <h1>{breadcrumb}</h1>
-          </div>
-          <div className='productCatalogTopper__panel'>
-            <ConditionallyRenderedProductFilters />
-            <CompanyFilter />
-          </div>
+      <div id='ecommerce'>
+        <Header />
+        <section className='browseProduct'>
+          <section className='productCatalogTopper'>
+            <div className='productCatalogTopper__panel breadCrumbs' aria-label={breadcrumb} tabIndex={0}>
+              <h1>{breadcrumb}</h1>
+            </div>
+            <div className='productCatalogTopper__panel'>
+              <ConditionallyRenderedProductFilters />
+              <CompanyFilter />
+            </div>
+          </section>
+          <main>
+            <ProductProvider />
+          </main>
         </section>
-        <main>
-          <ProductProvider />
-        </main>
-      </section>
-      <EFooter />
+        <EFooter />
+      </div>
     </CartProvider>
   );
 };

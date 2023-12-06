@@ -12,12 +12,14 @@ import ProductHighlight from '../components/home/ProductHighlight';
 const EcommerceHome = (): JSX.Element => {
   return (
     <CartProvider>
-      <Header />
-      <Infographic />
-      <Carousel />
-      <SideBySide />
-      <ProductHighlight />
-      <EFooter />
+      <div id='ecommerce'>
+        <Header />
+        <Infographic />
+        <Carousel />
+        <SideBySide />
+        <ProductHighlight />
+        <EFooter />
+      </div>
     </CartProvider>
   );
 };

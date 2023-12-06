@@ -22,16 +22,18 @@ const ProductDetailPage = (): JSX.Element => {
 
   return (
     <CartProvider>
-      <Header />
-      <div className='skuPage'>
-        <main className='skuPage__grid'>
-          {findProduct.images!.small.length > 1 ? <ProductPageImgSelect findProduct={findProduct} setActiveDisplay={setActiveDisplay} /> : null}
-          <ProductPageImgDisplay findProduct={findProduct} activeDisplay={activeDisplay} setActiveDisplay={setActiveDisplay} />
-          <ProductPageDetails findProduct={findProduct} />
-        </main>
-        <MoreLikeThis findProduct={findProduct} />
+      <div id='ecommerce'>
+        <Header />
+        <div className='skuPage'>
+          <main className='skuPage__grid'>
+            {findProduct.images!.small.length > 1 ? <ProductPageImgSelect findProduct={findProduct} setActiveDisplay={setActiveDisplay} /> : null}
+            <ProductPageImgDisplay findProduct={findProduct} activeDisplay={activeDisplay} setActiveDisplay={setActiveDisplay} />
+            <ProductPageDetails findProduct={findProduct} />
+          </main>
+          <MoreLikeThis findProduct={findProduct} />
+        </div>
+        <EFooter />
       </div>
-      <EFooter />
     </CartProvider>
   );
 };

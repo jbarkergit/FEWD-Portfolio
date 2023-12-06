@@ -49,6 +49,7 @@
     grid-template-columns: 85% 15%;
     width: inherit;
     padding: f.rem(14);
+    line-height: 100%;
     & span {
       white-space: nowrap;
       &:nth-of-type(2) {

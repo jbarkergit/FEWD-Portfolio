@@ -23,8 +23,24 @@
   --ecoBorderRadius: 1.5rem;
 }
 
+#ecommerce {
+  //font: {optional: style variant weight} size line-height "family", "fallback-font", fallback-font-type
+  font:
+    normal normal 400 100% / 1.25em 'Plus Jakarta Sans',
+    'PT Sans',
+    sans-serif;
+  letter-spacing: 0.04rem;
+}
+
 .highlight {
   color: var(--ecoFontAccent);
+}
+
+@mixin ecoSectionHeader {
+  font-size: clamp(f.rem(26), f.rem(36) + 1vw, f.rem(42));
+  font-weight: 800;
+  line-height: 105%;
+  text-transform: uppercase;
 }
 
 @mixin ecoBtn {

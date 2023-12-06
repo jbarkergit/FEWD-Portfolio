@@ -187,7 +187,7 @@ const UserAccountRegistry = ({ setUiModal }: PropType): JSX.Element => {
             )}
           </button>
         </label>
-        {registryError.passwordRegistryError ? (
+        {registryError.passwordRegistryError && registry.passwordRegistry.length > 3 ? (
           <figure className='inputFieldErrorMessage'>
             <figcaption>Error Message</figcaption>
             <p>Password must be eight characters minimum, contain at least one special character, one lowercase and uppercase letter.</p>
@@ -230,7 +230,7 @@ const UserAccountRegistry = ({ setUiModal }: PropType): JSX.Element => {
             )}
           </button>
         </label>
-        {registry.passwordRegistry !== registry.passwordRegistryCheck ? (
+        {registry.passwordRegistry !== registry.passwordRegistryCheck && registry.passwordRegistry.length > 3 ? (
           <figure className='inputFieldErrorMessage'>
             <figcaption>Error Message</figcaption>
             <p>Passwords do not match.</p>
