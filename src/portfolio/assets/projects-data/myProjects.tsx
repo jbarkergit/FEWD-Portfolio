@@ -7,7 +7,7 @@ export const myProjects = [
       webTechnologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
       codeQuality: ['eslint', 'prettier'],
     },
-    projectImageSrc: '/src/portfolio/assets/compressed-project-images/eco-landing-page.png',
+    projectImageSrc: '/src/portfolio/assets/compressed-project-images/ecommerce-landing.png',
     projectImageAlt: 'Ecommerce Web Development Project',
     dataStatus: 'active',
   },
