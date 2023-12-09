@@ -8,13 +8,11 @@ type ProjectNavPropType = {
   featureState: {
     projectDetailsActive: boolean;
     contactFormActive: boolean;
-    techStackActive: boolean;
   };
   setFeatureState: Dispatch<
     SetStateAction<{
       projectDetailsActive: boolean;
       contactFormActive: boolean;
-      techStackActive: boolean;
     }>
   >;
 };

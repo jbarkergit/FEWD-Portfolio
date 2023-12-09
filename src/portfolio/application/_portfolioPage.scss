@@ -3,7 +3,7 @@
 
 .portfolio {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   height: 100vh;
   background-color: m.$background-color-primary;
@@ -32,12 +32,11 @@
   grid-area: 2 / 1 / 3 / 2;
 }
 .contactForm {
-  grid-area: 1 / 2 / 2 / 3;
+  grid-area: 1 / 2 / 3 / 3;
 }
 
 .projectHub,
-.projectDetails,
-.contactForm {
+.projectDetails {
   width: 100vw;
   height: 100vh;
 }

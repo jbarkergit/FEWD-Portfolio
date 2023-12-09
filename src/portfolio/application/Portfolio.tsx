@@ -17,10 +17,11 @@ const Portfolio = (): JSX.Element => {
   }, [portfolioRef.current]);
 
   /** Component transitions */
+  const [featureScrollIndex, setFeatureScrollIndex] = useState<number>(0);
+
   const [featureState, setFeatureState] = useState({
     projectDetailsActive: false,
     contactFormActive: false,
-    techStackActive: false,
   });
 
   const useFeatureScroll = (index: number, scrollBehavior: ScrollBehavior) => {
@@ -30,19 +31,24 @@ const Portfolio = (): JSX.Element => {
     }
   };
 
-  const featureScrollHandler = (scrollBehavior: ScrollBehavior) => {
+  const featureScrollHandler = (scrollBehavior: ScrollBehavior, index?: number) => {
     switch (true) {
       case featureState.projectDetailsActive:
         useFeatureScroll(1, scrollBehavior);
+        setFeatureScrollIndex(1);
         break;
       case featureState.contactFormActive:
         useFeatureScroll(2, scrollBehavior);
-        break;
-      case featureState.techStackActive:
-        useFeatureScroll(3, scrollBehavior);
+        setFeatureScrollIndex(2);
         break;
       default:
-        useFeatureScroll(0, scrollBehavior);
+        if (index) {
+          useFeatureScroll(index, scrollBehavior);
+          setFeatureScrollIndex(index);
+        } else {
+          useFeatureScroll(0, scrollBehavior);
+          setFeatureScrollIndex(0);
+        }
         break;
     }
   };
@@ -51,7 +57,7 @@ const Portfolio = (): JSX.Element => {
 
   useEffect(() => {
     useFeatureScroll(0, 'instant');
-    const invokeFeatureScroll = () => featureScrollHandler('instant');
+    const invokeFeatureScroll = () => featureScrollHandler('instant', 2);
 
     window.addEventListener('resize', invokeFeatureScroll);
     return () => window.removeEventListener('resize', invokeFeatureScroll);

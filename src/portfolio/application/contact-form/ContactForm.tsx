@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import AboutDeveloper from './components/AboutDeveloper';
 import ContactFormInformation from './components/ContactInformation';
 import ContactFormStandard from './components/ContactFormStandard';
@@ -85,17 +85,19 @@ const ContactForm = () => {
 
   return (
     <section className='contactForm'>
-      <h2 className='contactForm--h2'>Developer Contact Form and general information</h2>
-      <AboutDeveloper />
-      <ContactFormInformation />
-      <ContactFormStandard
-        contactFormFields={contactFormFields}
-        setContactFormFields={setContactFormFields}
-        formValidation={formValidation}
-        setFormValidation={setFormValidation}
-        updateContactFormFieldsState={updateContactFormFieldsState}
-        useContactFormValidator={useContactFormValidator}
-      />
+      <h2 className='contactForm--h2'>Developer contact form and general information</h2>
+      <div className='contactForm__grid'>
+        <AboutDeveloper />
+        <ContactFormStandard
+          contactFormFields={contactFormFields}
+          setContactFormFields={setContactFormFields}
+          formValidation={formValidation}
+          setFormValidation={setFormValidation}
+          updateContactFormFieldsState={updateContactFormFieldsState}
+          useContactFormValidator={useContactFormValidator}
+        />
+        <ContactFormInformation />
+      </div>
     </section>
   );
 };

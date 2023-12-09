@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from 'react';
+import { ChangeEvent } from 'react';
 import { ContactFormFieldsType, ContactFormPropsType } from '../ContactForm';
 import ContactFormErrorHandler from './ContactFormErrorHandler';
 
@@ -81,6 +81,9 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
             )
           )}
         </fieldset>
+        <div className='standardForm__controls'>
+          <button></button> Form Assistance
+        </div>
       </form>
     </section>
   );
