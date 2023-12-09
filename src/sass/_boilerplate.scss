@@ -216,6 +216,8 @@ input,
 textarea {
   all: unset; // WARNING: Position priority
   box-sizing: border-box;
+  white-space: normal;
+  word-wrap: break-word;
   cursor: text;
 }
 input {
