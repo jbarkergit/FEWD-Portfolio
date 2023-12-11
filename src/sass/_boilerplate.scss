@@ -216,6 +216,7 @@ input,
 textarea {
   all: unset; // WARNING: Position priority
   box-sizing: border-box;
+  width: clamp(45ch, 100%, 75ch);
   white-space: normal;
   word-wrap: break-word;
   cursor: text;
