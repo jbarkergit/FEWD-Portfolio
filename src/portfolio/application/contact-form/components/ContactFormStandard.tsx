@@ -1,35 +1,35 @@
 import { ChangeEvent } from 'react';
-import { ContactFormFieldsType, ContactFormPropsType } from '../ContactForm';
+import { ContactFormFieldsType, ContactFormPropsType, FormValidationStateType } from '../ContactForm';
 import ContactFormErrorHandler from './ContactFormErrorHandler';
 
 const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
-  // Prop drill alias
-  const props = ContactFormProps;
-
-  // useRef
   const contactFormLabels: HTMLLabelElement[] = [];
-
   const contactFormLabel = (reference: HTMLLabelElement) => {
-    if (reference && !contactFormLabels.includes(reference)) {
-      contactFormLabels.push(reference);
-    }
+    if (reference && !contactFormLabels.includes(reference)) contactFormLabels.push(reference);
   };
 
   //** Handle input field label animation (not using traditional placeholder solely to animate the text) */
-  const handleFocusHook = (index: number) => {
-    contactFormLabels[index].setAttribute('data-status', 'active');
-  };
+  const handleFocusHook = (index: number) => contactFormLabels[index].setAttribute('data-status', 'active');
+  const handleBlurHook = (index: number) => contactFormLabels[index].setAttribute('data-status', 'disabled');
 
-  const handleBlurHook = (index: number) => {
-    contactFormLabels[index].setAttribute('data-status', 'disabled');
+  /** Submit Form */
+  const submitForm = () => {
+    const formValidation: FormValidationStateType[] = ContactFormProps.formValidation;
+    const validatorArray: boolean[] = [];
+
+    formValidation.forEach((validation, index) => {
+      validation.validBoolean ? (validatorArray[index] = true) : (validatorArray[index] = false);
+    });
+
+    if (validatorArray.includes(false as boolean)) null;
   };
 
   return (
     <section className='contactForm__section'>
-      <h2>Contact Form</h2>
+      <h2 className='contactForm--h2'>Contact Form</h2>
       <form className='standardForm'>
         <fieldset className='standardForm__fieldset'>
-          {props.contactFormFields.map((field: ContactFormFieldsType, index: number) =>
+          {ContactFormProps.contactFormFields.map((field: ContactFormFieldsType, index: number) =>
             field.input !== 'inquiry' ? (
               <div className='standardForm__fieldset__container' key={field.input}>
                 <label className='standardForm__fieldset__container--label' htmlFor={field.input} ref={contactFormLabel} data-status='disabled'>
@@ -41,18 +41,24 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
                   name={field.input}
                   type={'text'}
                   value={field.value}
-                  required={field.optional ? true : false}
+                  required={field.optional ? false : true}
                   aria-required={field.optional ? 'true' : 'false'}
                   onFocus={() => handleFocusHook(index)}
-                  onBlur={() => handleBlurHook(index)}
+                  onBlur={() => {
+                    if (field.value.length === 0) handleBlurHook(index);
+                  }}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    props.updateContactFormFieldsState(field.input, e.target.value);
-                    props.useContactFormValidator(index);
+                    ContactFormProps.updateContactFormFieldsState(field.input, e.target.value);
+                    ContactFormProps.useContactFormValidator(index);
                   }}
                 />
-                {props.contactFormFields[index].value.length > 0 ? (
+                {ContactFormProps.contactFormFields[index].value.length > 0 ? (
                   <div className='standardForm__fieldset__container--errorMessage'>
-                    <ContactFormErrorHandler contactFormFields={props.contactFormFields} formValidation={props.formValidation} indexParam={index} />
+                    <ContactFormErrorHandler
+                      contactFormFields={ContactFormProps.contactFormFields}
+                      formValidation={ContactFormProps.formValidation}
+                      indexParam={index}
+                    />
                   </div>
                 ) : null}
               </div>
@@ -73,17 +79,15 @@ const ContactFormStandard = ({ ...ContactFormProps }: ContactFormPropsType) => {
                   onFocus={() => handleFocusHook(index)}
                   onBlur={() => handleBlurHook(index)}
                   onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                    props.updateContactFormFieldsState(field.input, e.target.value);
-                    props.useContactFormValidator(index);
+                    ContactFormProps.updateContactFormFieldsState(field.input, e.target.value);
+                    ContactFormProps.useContactFormValidator(index);
                   }}
                 />
               </div>
             )
           )}
         </fieldset>
-        <div className='standardForm__controls'>
-          <button></button> Form Assistance
-        </div>
+        <button onClick={() => submitForm()}>Send Message</button>
       </form>
     </section>
   );

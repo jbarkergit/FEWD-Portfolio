@@ -1,6 +1,5 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import AboutDeveloper from './components/AboutDeveloper';
-import ContactFormInformation from './components/ContactInformation';
 import ContactFormStandard from './components/ContactFormStandard';
 
 //** Contact form field array of objects types */
@@ -96,7 +95,6 @@ const ContactForm = () => {
           updateContactFormFieldsState={updateContactFormFieldsState}
           useContactFormValidator={useContactFormValidator}
         />
-        <ContactFormInformation />
       </div>
     </section>
   );
