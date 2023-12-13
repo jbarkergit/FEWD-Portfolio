@@ -8,7 +8,7 @@ const assistanceData = [
   },
   {
     summary: `Form Security`,
-    details: `I do not collect personal information for malicious intentions. This form and it's contents are redirected to my personal Google Mail inbox via Netlify. The information requested is solely to comprehend and determine whether or not I can satisfy your inquiry in advance. I have no control over what third party services do with said information. Please provide only the information you're comfortable sharing. If you are uncomfortable with using the provided form, you may contact me here: `,
+    details: `I do not collect personal information for malicious intentions. This form and it's contents are redirected to my personal Google Mail inbox via Netlify. The information requested is solely to comprehend and determine whether or not I can satisfy your inquiry in advance. I have no control over what third party services do with said information. Please provide only the information you're comfortable sharing.`,
   },
   {
     summary: `Inclusivity & Accessibility`,
@@ -38,8 +38,8 @@ const AboutDeveloper = () => {
   const parentArticleRef = useRef<HTMLDivElement>(null);
   const detailsInformation = useRef<HTMLParagraphElement>(null);
 
-  const arrayOfDetails = useRef<HTMLDivElement[]>([]);
-  const detailsReference = (reference: HTMLDivElement) => {
+  const arrayOfDetails = useRef<HTMLButtonElement[]>([]);
+  const detailsReference = (reference: HTMLButtonElement) => {
     if (reference && !arrayOfDetails.current.includes(reference)) arrayOfDetails.current.push(reference);
   };
 
@@ -75,9 +75,9 @@ const AboutDeveloper = () => {
 
   return (
     <section className='contactForm__section'>
-      <article className='contact__introduction'>
+      <section className='contactForm__section__block'>
         {!userQuestion ? (
-          <>
+          <article className='contactForm__section__block__article'>
             <h2>Looking to hire?</h2>
             <p>
               Hey there! I'm Justin, a <abbr title='React: A JavaScript library for building user interfaces'>React</abbr> Front End Developer. I create responsive,
@@ -86,28 +86,34 @@ const AboutDeveloper = () => {
               Core Web Vitals for a smooth user experience. For any inquiries, kindly share the requested contact information and I'll be sure to respond in a timely
               fashion.
             </p>
-          </>
+          </article>
         ) : (
-          <>
-            <h2>Have questions?</h2>
+          <article className='contactForm__section__article__block'>
+            <h2>{assistanceData[activeDetailsIndex[1]].summary}</h2>
             <p ref={detailsInformation}>{assistanceData[activeDetailsIndex[1]].details}</p>
-          </>
+          </article>
         )}
-        <div className='contact__questions__selection' ref={parentArticleRef}>
-          {assistanceData.map((object, index: number) => (
-            <div
-              className='contact__questions__selection__details'
-              ref={detailsReference}
-              key={object.summary}
-              onClick={() => {
-                setActiveDetailsIndex([activeDetailsIndex[1], index]);
-                setUserQuestion(true);
-              }}>
-              <div className='contact__questions__selection__details--summary'>{object.summary}</div>
-            </div>
-          ))}
-        </div>
-      </article>
+      </section>
+
+      <section className='contactForm__section__compartment' ref={parentArticleRef}>
+        <h2>Have questions?</h2>
+        {assistanceData.map((object, index: number) => (
+          <button
+            ref={detailsReference}
+            key={object.summary}
+            onClick={() => {
+              setActiveDetailsIndex([activeDetailsIndex[1], index]);
+              setUserQuestion(true);
+            }}>
+            {object.summary}
+          </button>
+        ))}
+        {userQuestion === true ? (
+          <button ref={detailsReference} onClick={() => setUserQuestion(false)}>
+            About
+          </button>
+        ) : null}
+      </section>
     </section>
   );
 };

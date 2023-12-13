@@ -9,12 +9,6 @@
   background-color: m.$background-color-primary;
   overflow: hidden;
   color: m.$font-color-primary;
-  // font: [font-style] [font-variant] [font-weight] font-size/line-height font-family;
-  font:
-    normal normal 500 1.1rem / 1.25em 'Helvetica',
-    'PT Sans',
-    sans-serif;
-  letter-spacing: 0.04rem;
   & button,
   & a,
   & span,

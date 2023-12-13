@@ -1,4 +1,4 @@
-import { ContactFormFieldsType, FormValidationStateType } from '../ContactForm';
+import { ContactFormFieldsType, FormValidationStateType } from './ContactFormStandard';
 
 type ContactFormErrorHandlerType = {
   contactFormFields: ContactFormFieldsType[];
