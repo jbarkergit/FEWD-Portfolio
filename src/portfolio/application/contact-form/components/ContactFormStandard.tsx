@@ -4,6 +4,7 @@ import ContactFormErrorHandler from './ContactFormErrorHandler';
 //** Contact form field array of objects types */
 export type ContactFormFieldsType = {
   input: string;
+  title: string;
   placeholder: string;
   optional?: boolean;
   value: string;
@@ -29,13 +30,11 @@ const ContactFormStandard = () => {
 
   //** Contact form fields */
   const [contactFormFields, setContactFormFields] = useState<ContactFormFieldsType[]>([
-    { input: 'firstName', placeholder: 'First name', optional: false, value: '' },
-    { input: 'lastName', placeholder: 'Last name', optional: true, value: '' },
-    { input: 'emailAddress', placeholder: 'Email address', optional: false, value: '' },
-    { input: 'phoneNumber', placeholder: 'Phone number', optional: true, value: '' },
-    { input: 'company', placeholder: 'Company', optional: true, value: '' },
-    { input: 'websiteUrl', placeholder: 'Website url', optional: true, value: '' },
-    { input: 'inquiry', placeholder: 'How may I help you?', optional: false, value: '' },
+    { input: 'fullName', title: `What's your name?`, placeholder: 'Full name', optional: false, value: '' },
+    { input: 'emailAddress', title: `What's your email?`, placeholder: 'Email address', optional: false, value: '' },
+    { input: 'company', title: `What's your company's name?`, placeholder: 'Company', optional: true, value: '' },
+    { input: 'websiteUrl', title: `What's your company's website URL?`, placeholder: 'Website url', optional: true, value: '' },
+    { input: 'inquiry', title: `How may I help you?`, placeholder: `I'm interested in...`, optional: false, value: '' },
   ]);
 
   //** Stores input field values in appropriate state onChange */
@@ -85,10 +84,6 @@ const ContactFormStandard = () => {
     // if (isFormValid)
   };
 
-  //** Handle input field label animation (not using traditional placeholder solely to animate the text) */
-  const handleFocusHook = (index: number) => arrayOfFormLabels[index].setAttribute('data-status', 'active');
-  const handleBlurHook = (index: number) => arrayOfFormLabels[index].setAttribute('data-status', 'disabled');
-
   return (
     <section className='contactForm__section'>
       <h2 className='contactForm--h2'>Contact Form</h2>
@@ -98,20 +93,17 @@ const ContactFormStandard = () => {
             field.input !== 'inquiry' ? (
               <div className='contactForm__section__standardForm__fieldset__container' key={field.input}>
                 <label className='contactForm__section__standardForm__fieldset__container--label' htmlFor={field.input} ref={pushFormLabel} data-status='disabled'>
-                  {field.optional ? `${field.placeholder} (optional)` : field.placeholder}
+                  {field.optional ? `${field.title} (optional)` : field.title}
                 </label>
                 <input
                   className='contactForm__section__standardForm__fieldset__container--input'
                   id={field.input}
                   name={field.input}
                   type={'text'}
+                  placeholder={field.placeholder}
                   value={field.value}
                   required={field.optional ? false : true}
                   aria-required={field.optional ? 'true' : 'false'}
-                  onFocus={() => handleFocusHook(index)}
-                  onBlur={() => {
-                    if (field.value.length === 0) handleBlurHook(index);
-                  }}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     updateContactFormFieldsState(field.input, e.target.value);
                     useContactFormValidator(index);
@@ -126,19 +118,17 @@ const ContactFormStandard = () => {
             ) : (
               <div className='contactForm__section__standardForm__fieldset__container' key={field.input}>
                 <label className='contactForm__section__standardForm__fieldset__container--label' htmlFor={field.input} ref={pushFormLabel} data-status='disabled'>
-                  {field.placeholder}
+                  {field.title}
                 </label>
                 <textarea
                   className='contactForm__section__standardForm__fieldset__container--input'
                   id={field.input}
                   name={field.input}
+                  placeholder={field.placeholder}
                   value={field.value}
                   required={field.optional ? true : false}
                   aria-required={field.optional ? 'true' : 'false'}
-                  rows={8}
-                  cols={50}
-                  onFocus={() => handleFocusHook(index)}
-                  onBlur={() => handleBlurHook(index)}
+                  rows={4}
                   onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
                     updateContactFormFieldsState(field.input, e.target.value);
                     useContactFormValidator(index);
