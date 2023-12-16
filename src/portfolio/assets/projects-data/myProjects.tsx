@@ -28,8 +28,10 @@ export const myProjects = [
       versionControl: ['git', 'github'],
     },
     insights: <PortfolioInsights />,
-    imgSrc: '/src/portfolio/assets/compressed-project-images/portfolio-landing.png',
-    posterSrc: '',
+    imgSrc:
+      'https://images.unsplash.com/photo-1594904351111-a072f80b1a71?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    posterSrc:
+      'https://images.unsplash.com/photo-1594904351111-a072f80b1a71?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     imgAlt: 'Portfolio Project Hub',
     dataStatus: 'disabled',
   },
