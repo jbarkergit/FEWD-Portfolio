@@ -1,9 +1,6 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { myProjects } from '../../assets/projects-data/myProjects';
-import EcommerceInsights from './data/EcommerceInsights';
-import PortfolioInsights from './data/PortfolioInsights';
 
-/** Types */
 type ProjectDetailsType = { projectSlideIndex: number };
 
 type StateType = {
@@ -21,42 +18,19 @@ type ActionType =
   | { type: 'POINTER_LEAVE'; pointerDown: boolean; previousTrackPos: number }
   | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number };
 
-/** Component */
 const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
-  /** Project information */
-  const useProjectInsights = () => {
-    switch (projectSlideIndex) {
-      case 0:
-        return <EcommerceInsights />;
-      case 1:
-        return <PortfolioInsights />;
-      default:
-        break;
-    }
-  };
-
-  /** Active project data */
-  const project = myProjects[projectSlideIndex];
-
-  const useProjectTechnologies = () => {
-    if (project && project.technologies) return Object.entries(project.technologies);
-    else return [];
-  };
-
-  /** Page scroll */
+  /** Page scroll anywhere */
   const projectDetails = useRef<HTMLElement>(null);
   const insights = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const useInsightScroll = (event: WheelEvent) => insights.current?.scrollBy({ top: event.deltaY, behavior: 'smooth' });
-
     projectDetails.current?.addEventListener('wheel', useInsightScroll);
     return () => projectDetails.current?.removeEventListener('wheel', useInsightScroll);
   }, []);
 
   /** Carousel */
   const carousel = useRef<HTMLElement>(null);
-
   const carouselSlides = useRef<HTMLElement[]>([]);
   const carouselSlide = (reference: HTMLElement) => {
     if (reference && !carouselSlides.current.includes(reference)) carouselSlides.current.push(reference);
@@ -74,14 +48,14 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
   const reducer = (state: StateType, action: ActionType): StateType => {
     switch (action.type) {
       case 'POINTER_DOWN':
-        return { ...carouselState };
+        return { ...state };
 
       case 'POINTER_MOVE':
-        return { ...carouselState };
+        return { ...state };
 
       case 'POINTER_LEAVE':
       case 'POINTER_UP':
-        return { ...carouselState };
+        return { ...state };
 
       default:
         throw new Error('FAILURE: Action Type may be missing or returning null');
@@ -128,14 +102,14 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
         <section className='projectDetails__article__general'>
           <div className='projectDetails__article__general__header'>
             <button>
-              <span>{project.key}</span>
+              <span>{myProjects[projectSlideIndex].key}</span>
               <span>Insights</span>
             </button>
           </div>
 
           <div className='projectDetails__article__general__technology'>
             <>
-              {useProjectTechnologies().map(([category, techArray]) => (
+              {Object.entries(myProjects[projectSlideIndex].technologies).map(([category, techArray]) => (
                 <div key={category}>
                   <span>{category}</span>
                   {techArray.map((technology: string) => (
@@ -163,7 +137,7 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
         </section>
 
         <section className='projectDetails__article__insights' ref={insights}>
-          <div className='projectDetails__article__insights__projectOverview'>{useProjectInsights()}</div>
+          <div className='projectDetails__article__insights__projectOverview'>{myProjects[projectSlideIndex].insights}</div>
         </section>
       </article>
     </section>
