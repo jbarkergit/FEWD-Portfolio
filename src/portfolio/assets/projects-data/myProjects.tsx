@@ -1,19 +1,20 @@
 export const myProjects = [
   {
     key: 'ecommerce',
-    projectUrl: 'http://localhost:5173/ecommerce',
+    url: 'http://localhost:5173/ecommerce',
     technologies: {
       libraries: ['react', 'react router'],
       webTechnologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
       codeQuality: ['eslint', 'prettier'],
     },
-    projectImageSrc: '/src/portfolio/assets/compressed-project-images/ecommerce-landing.png',
-    projectImageAlt: 'Ecommerce Web Development Project',
+    imgSrc: '/src/portfolio/assets/compressed-project-images/ecommerce-landing.png',
+    posterSrc: 'src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-3.jpg',
+    imgAlt: 'Ecommerce Web Development Project',
     dataStatus: 'active',
   },
   {
     key: '2024 portfolio',
-    projectUrl: '',
+    url: '',
     technologies: {
       libraries: ['react', 'react router'],
       webTechnologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
@@ -22,8 +23,9 @@ export const myProjects = [
       packageManagers: ['npm'],
       versionControl: ['git', 'github'],
     },
-    projectImageSrc: '/src/portfolio/assets/compressed-project-images/portfolio-landing.png',
-    projectImageAlt: 'Portfolio Project Hub',
+    imgSrc: '/src/portfolio/assets/compressed-project-images/portfolio-landing.png',
+    posterSrc: '',
+    imgAlt: 'Portfolio Project Hub',
     dataStatus: 'disabled',
   },
 ];

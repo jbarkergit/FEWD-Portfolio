@@ -225,7 +225,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: indexState
           return (
             <article className='project' data-status={project.dataStatus} ref={articleRef} key={project.key}>
               <Link
-                to={`${anchorUrl ? project.projectUrl : ''}`}
+                to={`${anchorUrl ? project.url : ''}`}
                 onDragStart={(e) => {
                   e.preventDefault();
                 }}
@@ -234,16 +234,8 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: indexState
                 }}>
                 <figure>
                   <picture>
-                    <img
-                      src={project.projectImageSrc}
-                      alt={project.projectImageAlt}
-                      rel='preload'
-                      loading='eager'
-                      draggable='false'
-                      decoding='async'
-                      fetchpriority='high'
-                    />
-                    <figcaption>{project.projectImageAlt}</figcaption>
+                    <img src={project.imgSrc} alt={project.imgAlt} rel='preload' loading='eager' draggable='false' decoding='async' fetchpriority='high' />
+                    <figcaption>{project.imgAlt}</figcaption>
                   </picture>
                 </figure>
               </Link>
