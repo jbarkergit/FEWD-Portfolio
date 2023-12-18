@@ -98,48 +98,44 @@ const ProjectDetails = ({ projectSlideIndex }: ProjectDetailsType) => {
 
   return (
     <section className='projectDetails' ref={projectDetails}>
-      <article className='projectDetails__article'>
-        <section className='projectDetails__article__general'>
-          <div className='projectDetails__article__general__header'>
-            <button>
-              <span>{myProjects[projectSlideIndex].key}</span>
-              <span>Insights</span>
-            </button>
-          </div>
+      <section className='projectDetails__general'>
+        <div className='projectDetails__general__header'>
+          <button>
+            <span>{myProjects[projectSlideIndex].key}</span>
+            <span>Insights</span>
+          </button>
+        </div>
 
-          <div className='projectDetails__article__general__technology'>
-            <>
-              {Object.entries(myProjects[projectSlideIndex].technologies).map(([category, techArray]) => (
-                <div key={category}>
-                  <span>{category}</span>
-                  {techArray.map((technology: string) => (
-                    <span
-                      className={`projectDetails__article__general__technology--tech projectDetails__article__general__technology--${technology}`}
-                      key={`${category}-${technology}`}>
-                      {technology}
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </>
-          </div>
-        </section>
+        <div className='projectDetails__general__technology'>
+          <>
+            {Object.entries(myProjects[projectSlideIndex].technologies).map(([category, techArray]) => (
+              <div key={category}>
+                <span>{category}</span>
+                {techArray.map((technology: string) => (
+                  <span className={`projectDetails__general__technology--tech projectDetails__general__technology--${technology}`} key={`${category}-${technology}`}>
+                    {technology}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </>
+        </div>
+      </section>
 
-        <section className='projectDetails__article__projects' ref={carousel}>
-          {myProjects.map((project) => (
-            <figure key={project.key} ref={carouselSlide}>
-              <picture>
-                <img src={project.posterSrc} decoding='async' fetchpriority='high' tabIndex={0} alt={project.imgAlt} />
-                <figcaption>{project.imgAlt}</figcaption>
-              </picture>
-            </figure>
-          ))}
-        </section>
+      <section className='projectDetails__projects' ref={carousel}>
+        {myProjects.map((project) => (
+          <figure key={project.key} ref={carouselSlide}>
+            <picture>
+              <img src={project.posterSrc} decoding='async' fetchpriority='high' tabIndex={0} alt={project.imgAlt} />
+              <figcaption>{project.imgAlt}</figcaption>
+            </picture>
+          </figure>
+        ))}
+      </section>
 
-        <section className='projectDetails__article__insights' ref={insights}>
-          <div className='projectDetails__article__insights__projectOverview'>{myProjects[projectSlideIndex].insights}</div>
-        </section>
-      </article>
+      <section className='projectDetails__insights' ref={insights}>
+        <article className='projectDetails__insights__projectOverview'>{myProjects[projectSlideIndex].insights}</article>
+      </section>
     </section>
   );
 };
