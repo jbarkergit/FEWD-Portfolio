@@ -36,50 +36,60 @@
   }
   &__projects {
     flex: 0 1 24%;
-    display: flex;
-    flex-direction: column;
-    padding: 0 calc(m.$box-model-viewport-x / 2);
-    & figure {
-      display: contents;
-      & picture {
-        position: relative;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 4/5;
-        overflow: hidden;
-        &::before {
-          content: '';
-          position: absolute;
-          top: 5%;
-          left: 5%;
-          display: block;
-          width: 90%;
-          height: 90%;
-          z-index: -1;
-          background: rgba(#000000, 0.5);
-          box-shadow: 0 6px 12px 12px rgba(#000000, 0.4);
-          transform: skewX(0.001deg);
-          transform-origin: top center;
-          transition: transform 0.35s ease-in-out;
-        }
-        &::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          display: block;
+    height: max-content;
+    padding: calc(m.$box-model-viewport-x / 4);
+    overflow: clip;
+    cursor: grab;
+    &:active {
+      cursor: grabbing;
+    }
+    &__slider {
+      display: flex;
+      flex-direction: column;
+      gap: m.$portfolio-gap;
+      height: 100%;
+      & figure {
+        // display: contents;
+        & picture {
+          position: relative;
           width: 100%;
-          height: 120%;
-          z-index: 4;
-          background: linear-gradient(226deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 35%, rgba(255, 255, 255, 0.2) 42%, rgba(255, 255, 255, 0) 60%);
-          transform: translateY(-20%);
-          transition: transform 0.65s cubic-bezier(0.18, 0.9, 0.58, 1);
-        }
-        & img {
-          height: 100%;
-        }
-        & figcaption {
-          display: none;
+          height: auto;
+          aspect-ratio: 4/5;
+          overflow: hidden;
+          &::before {
+            content: '';
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            display: block;
+            width: 90%;
+            height: 90%;
+            z-index: -1;
+            background: rgba(#000000, 0.5);
+            box-shadow: 0 6px 12px 12px rgba(#000000, 0.4);
+            transform: skewX(0.001deg);
+            transform-origin: top center;
+            transition: transform 0.35s ease-in-out;
+          }
+          &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 120%;
+            z-index: 4;
+            background: linear-gradient(226deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 35%, rgba(255, 255, 255, 0.2) 42%, rgba(255, 255, 255, 0) 60%);
+            transform: translateY(-20%);
+            transition: transform 0.65s cubic-bezier(0.18, 0.9, 0.58, 1);
+          }
+          & img {
+            height: 100%;
+          }
+          & figcaption {
+            display: none;
+          }
         }
       }
     }

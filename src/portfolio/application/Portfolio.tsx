@@ -66,7 +66,7 @@ const Portfolio = (): JSX.Element => {
   return (
     <div className={`portfolio ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`} ref={portfolioRef}>
       <ProjectHub projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
-      <ProjectDetails projectSlideIndex={projectSlideIndex} />
+      <ProjectDetails projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
       <ContactForm />
     </div>
   );
