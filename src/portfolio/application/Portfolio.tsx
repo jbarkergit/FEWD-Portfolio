@@ -72,7 +72,7 @@ const Portfolio = (): JSX.Element => {
 
     // Cursor trail
     const useCursorTrail = (e: PointerEvent) => {
-      if (portfolioCursorTrail.current && window.location.pathname === '/') {
+      if (portfolioCursorTrail.current) {
         const defaultAnimatePositions = { top: e.clientY, left: e.clientX };
         let animatePositions = defaultAnimatePositions;
 
@@ -96,7 +96,26 @@ const Portfolio = (): JSX.Element => {
           setActiveGridFeature(0);
         }
 
-        portfolioCursorTrail.current.animate({ top: `${animatePositions.top}px`, left: `${animatePositions.left}px` }, { delay: 15, fill: 'both' });
+        portfolioCursorTrail.current.animate({ top: `${animatePositions.top}px`, left: `${animatePositions.left}px` }, { duration: 15, fill: 'forwards' });
+
+        // Type interactions
+        const target = e.target as HTMLButtonElement | HTMLAnchorElement;
+
+        if (target.closest !== null) {
+          switch (true) {
+            case target instanceof HTMLButtonElement:
+              portfolioCursorTrail.current.setAttribute('data-status', 'button');
+              break;
+
+            case target instanceof HTMLAnchorElement:
+              portfolioCursorTrail.current.setAttribute('data-status', 'anchor');
+              break;
+
+            default:
+              portfolioCursorTrail.current.removeAttribute('data-status');
+              break;
+          }
+        }
       }
     };
 

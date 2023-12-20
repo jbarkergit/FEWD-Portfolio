@@ -25,17 +25,20 @@
     z-index: 20;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
-
+    outline: 2px solid white;
+    opacity: 0;
     pointer-events: none;
     transition: all 0.3s ease;
+    &[data-status='button'] {
+      background-color: red;
+    }
+    &[data-status='anchor'] {
+      background-color: blue;
+    }
   }
-}
-
-.portfolio button:hover ~ .portfolio__cursorTrail,
-.portfolio a:hover ~ .portfolio__cursorTrail {
-  width: 35px;
-  opacity: 0.7;
+  &:hover > &__cursorTrail {
+    opacity: 1;
+  }
 }
 
 .projectHub {
