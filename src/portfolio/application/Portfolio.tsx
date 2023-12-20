@@ -100,21 +100,20 @@ const Portfolio = (): JSX.Element => {
 
         // Type interactions
         const target = e.target as HTMLButtonElement | HTMLAnchorElement;
+        portfolioCursorTrail.current.removeAttribute('data-status');
 
-        if (target.closest !== null) {
-          switch (true) {
-            case target instanceof HTMLButtonElement:
-              portfolioCursorTrail.current.setAttribute('data-status', 'button');
-              break;
+        switch (true) {
+          case target instanceof HTMLButtonElement:
+            portfolioCursorTrail.current.setAttribute('data-status', 'button');
+            break;
 
-            case target instanceof HTMLAnchorElement:
-              portfolioCursorTrail.current.setAttribute('data-status', 'anchor');
-              break;
+          case target instanceof HTMLAnchorElement:
+            portfolioCursorTrail.current.setAttribute('data-status', 'anchor');
+            break;
 
-            default:
-              portfolioCursorTrail.current.removeAttribute('data-status');
-              break;
-          }
+          default:
+            portfolioCursorTrail.current.removeAttribute('data-status');
+            break;
         }
       }
     };

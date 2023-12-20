@@ -24,16 +24,16 @@
     aspect-ratio: 1/1;
     z-index: 20;
     border-radius: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-40%, -40%);
     outline: 2px solid white;
-    opacity: 0;
+    // opacity: 0;
     pointer-events: none;
     transition: all 0.3s ease;
     &[data-status='button'] {
-      background-color: red;
+      width: 30px;
     }
     &[data-status='anchor'] {
-      background-color: blue;
+      width: 20px;
     }
   }
   &:hover > &__cursorTrail {
