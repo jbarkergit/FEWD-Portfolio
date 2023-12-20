@@ -109,11 +109,8 @@
         font-size: clamp(f.rem(20), f.rem(28) + 1vw, f.rem(32));
         line-height: 115%;
       }
-      & p {
-        font-size: f.rem(20);
-        &:last-child {
-          padding-bottom: calc(m.$box-model-viewport-x / 2);
-        }
+      & p:last-child {
+        padding-bottom: calc(m.$box-model-viewport-x / 2);
       }
     }
   }
