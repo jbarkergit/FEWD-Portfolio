@@ -37,7 +37,7 @@
   &__projects {
     flex: 0 1 24%;
     height: 100vh;
-    padding: calc(m.$box-model-viewport-x / 4);
+    padding: calc(m.$box-model-viewport-x / 2) 0;
     overflow: clip;
     cursor: grab;
     &:active {
@@ -48,7 +48,7 @@
       flex-direction: column;
       height: max-content;
       & figure {
-        // display: contents;
+        display: block;
         & picture {
           position: relative;
           width: 100%;
@@ -96,14 +96,13 @@
   &__insights {
     flex: 1 0 54%;
     display: flex;
-    justify-content: center;
     overflow-y: scroll;
     &__projectOverview {
       display: flex;
       flex-direction: column;
       gap: m.$portfolio-gap;
       width: clamp(45ch, 100%, 75ch);
-      padding-top: calc(m.$box-model-viewport-x / 2);
+      padding: calc(m.$box-model-viewport-x / 2) 0 0 calc(m.$portfolio-gap * 2);
       user-select: text;
       cursor: text;
       & h2 {

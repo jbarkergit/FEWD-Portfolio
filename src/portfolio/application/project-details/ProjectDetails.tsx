@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useReducer, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useReducer, useRef } from 'react';
 import { myProjects } from '../../assets/projects-data/myProjects';
 
 type ProjectDetailsType = { projectSlideIndex: number; setProjectSlideIndex: Dispatch<SetStateAction<number>> };
@@ -18,7 +18,8 @@ type ActionType =
   | { type: 'POINTER_DOWN'; pointerDown: boolean; initPageY: number; pageY: number }
   | { type: 'POINTER_MOVE'; pageY: number }
   | { type: 'POINTER_LEAVE'; pointerDown: boolean; previousTrackPos: number }
-  | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number };
+  | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number }
+  | { type: 'SET_INITIAL_STATE'; initialPosition: number };
 
 /** Component */
 const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDetailsType) => {
@@ -32,30 +33,37 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
   const carouselSlide = (reference: HTMLElement) => {
     if (reference && !carouselSlides.current.includes(reference)) carouselSlides.current.push(reference);
   };
-  const slidePositionsArray: number[] = carouselSlides.current?.map((slide: HTMLElement) => slide.offsetTop) || [];
+
+  const slidePositionsArray: number[] = carouselSlides.current?.map((slide: HTMLElement) => slide.offsetTop * -1) || [];
+
+  /** Page scroll anywhere references */
+  const projectDetails = useRef<HTMLElement>(null);
+  const insights = useRef<HTMLElement>(null);
 
   /** useReducer State */
-  let initialSlidePosition: number;
-
-  if (slidePositionsArray.length > 0) initialSlidePosition = slidePositionsArray[projectSlideIndex];
-  else initialSlidePosition = 0;
-
   const carouselState: StateType = {
     activeSlideIndex: projectSlideIndex,
     pointerDown: false,
     initPageY: 0,
     pageY: 0,
-    prevTrackPos: initialSlidePosition,
-    trackPos: initialSlidePosition,
-    style: { transform: `translateY(${initialSlidePosition}px)` },
+    prevTrackPos: 0,
+    trackPos: 0,
+    style: { transform: `translateY(${0}px)` },
   };
 
   /** Reducer */
   const reducer = (state: StateType, action: ActionType): StateType => {
     const carouselTopPadding: number = parseInt(window.getComputedStyle(carousel.current as HTMLElement).paddingTop);
-    const travelDelta: number = carouselSliderHeight / 2 + carouselTopPadding * 2;
 
     switch (action.type) {
+      case 'SET_INITIAL_STATE':
+        return {
+          ...state,
+          prevTrackPos: action.initialPosition,
+          trackPos: action.initialPosition,
+          style: { transform: `translateY(${action.initialPosition}px)` },
+        };
+
       case 'POINTER_DOWN':
         return { ...state, pointerDown: true, initPageY: action.initPageY, pageY: action.pageY };
 
@@ -63,6 +71,7 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
         if (state.pointerDown) {
           const pointerTravelDistance: number = action.pageY - state.initPageY;
           const newTrackPosition: number = state.prevTrackPos + pointerTravelDistance;
+          const travelDelta: number = carouselSliderHeight / 2 + carouselTopPadding * 2;
           const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, travelDelta), travelDelta * -1);
 
           return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateY(${clampedTrackPosition}px)` } };
@@ -76,19 +85,17 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
           for (let i = 0; i < slidePositionsArray.length; i++) {
             const slideDistanceIteration = Math.abs(slidePositionsArray[i] - state.trackPos);
             const activeSlideDistance = Math.abs(slidePositionsArray[state.activeSlideIndex] - state.trackPos);
-            if (slideDistanceIteration > activeSlideDistance) state.activeSlideIndex = i;
+            if (slideDistanceIteration < activeSlideDistance) state.activeSlideIndex = i;
           }
 
-          const activeSlide = slidePositionsArray[state.activeSlideIndex];
-          const activeSlideDistance = activeSlide - state.trackPos;
-          const newSlidePosition = activeSlide - activeSlideDistance;
+          const newSliderPosition = slidePositionsArray[state.activeSlideIndex] - carouselTopPadding * 2 + carouselSlides.current[0]?.offsetHeight / 2;
 
           return {
             ...state,
             pointerDown: false,
-            prevTrackPos: newSlidePosition,
-            trackPos: newSlidePosition,
-            style: { transform: `translateY(${newSlidePosition}px)` },
+            prevTrackPos: newSliderPosition,
+            trackPos: newSliderPosition,
+            style: { transform: `translateY(${newSliderPosition}px)` },
           };
         } else {
           return state;
@@ -101,12 +108,19 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
 
   const [state, dispatch] = useReducer(reducer, carouselState);
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
+  /** Dispatch initial useReducer state action */
+  const booleanFlag = useRef<boolean>(false);
 
-  /** Update global project index state */
-  useEffect(() => setProjectSlideIndex(state.activeSlideIndex), [state.activeSlideIndex]);
+  useEffect(() => {
+    const carouselTopPadding: number = parseInt(window.getComputedStyle(carousel.current as HTMLElement).paddingTop);
+    if (slidePositionsArray.length > 0 && !booleanFlag.current) {
+      dispatch({
+        type: 'SET_INITIAL_STATE',
+        initialPosition: slidePositionsArray[projectSlideIndex] - carouselTopPadding * 2 + carouselSlides.current[0]?.offsetHeight / 2,
+      });
+      booleanFlag.current = true;
+    }
+  }, [slidePositionsArray.length]);
 
   /** Dispatch Actions */
   useEffect(() => {
@@ -114,12 +128,14 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
     const userPointerMove = (e: PointerEvent) => dispatch({ type: 'POINTER_MOVE', pageY: e.pageY });
     const userPointerLeave = () => dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
     const userPointerUp = () => dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
+    const useInsightScroll = (event: WheelEvent) => insights.current?.scrollBy({ top: event.deltaY, behavior: 'smooth' });
 
     /** Event Listeners Mount */
     carousel.current?.addEventListener('pointerdown', userPointerDown);
     carousel.current?.addEventListener('pointermove', userPointerMove);
     carousel.current?.addEventListener('pointerleave', userPointerLeave);
     carousel.current?.addEventListener('pointerup', userPointerUp);
+    projectDetails.current?.addEventListener('wheel', useInsightScroll);
 
     /** Event Listeners Unmount */
     return () => {
@@ -127,18 +143,12 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
       carousel.current?.removeEventListener('pointermove', userPointerMove);
       carousel.current?.removeEventListener('pointerleave', userPointerLeave);
       carousel.current?.removeEventListener('pointerup', userPointerUp);
+      projectDetails.current?.removeEventListener('wheel', useInsightScroll);
     };
   }, []);
 
-  /** Page scroll anywhere */
-  const projectDetails = useRef<HTMLElement>(null);
-  const insights = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const useInsightScroll = (event: WheelEvent) => insights.current?.scrollBy({ top: event.deltaY, behavior: 'smooth' });
-    projectDetails.current?.addEventListener('wheel', useInsightScroll);
-    return () => projectDetails.current?.removeEventListener('wheel', useInsightScroll);
-  }, []);
+  /** Update global project index state */
+  useEffect(() => setProjectSlideIndex(state.activeSlideIndex), [state.activeSlideIndex]);
 
   return (
     <section className='projectDetails' ref={projectDetails}>
