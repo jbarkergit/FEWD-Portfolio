@@ -52,14 +52,14 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
         return { ...state, pointerDown: true, initPageY: action.initPageY, pageY: action.pageY };
 
       case 'POINTER_MOVE':
-        const minimumTravelDownDelta: number = carouselHeight / 2 + carouselTopPadding * 2;
-        const maximumTravelUpDelta: number = (carouselHeight / 2) * -1 + carouselTopPadding * 2;
-
-        const pointerTravelDistance: number = action.pageY - state.initPageY;
-        const newTrackPosition: number = state.prevTrackPos + pointerTravelDistance;
-        const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, minimumTravelDownDelta), maximumTravelUpDelta);
-
         if (state.pointerDown) {
+          const minimumTravelDownDelta: number = carouselHeight / 2 + carouselTopPadding * 2;
+          const maximumTravelUpDelta: number = (carouselHeight / 2) * -1 + carouselTopPadding * 2;
+
+          const pointerTravelDistance: number = action.pageY - state.initPageY;
+          const newTrackPosition: number = state.prevTrackPos + pointerTravelDistance;
+          const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, minimumTravelDownDelta), maximumTravelUpDelta);
+
           return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateY(${clampedTrackPosition}px)` } };
         } else {
           return state;
@@ -67,23 +67,25 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
 
       case 'POINTER_LEAVE':
       case 'POINTER_UP':
-        for (let i = 0; i < slidePositionsArray.length; i++) {
-          const distanceFromTrackPos = Math.abs(slidePositionsArray[i] - state.trackPos);
-          const previousIndex = Math.abs(slidePositionsArray[state.activeSlideIndex] - state.trackPos);
-          if (distanceFromTrackPos < previousIndex) state.activeSlideIndex = i;
+        if (state.pointerDown) {
+          for (let i = 0; i < slidePositionsArray.length; i++) {
+            const findDistanceFromTrackPos = Math.abs(slidePositionsArray[i] - state.trackPos);
+            const findPreviousIndex = Math.abs(slidePositionsArray[state.activeSlideIndex] - state.trackPos);
+            if (findDistanceFromTrackPos < findPreviousIndex) state.activeSlideIndex = i;
+          }
+
+          const closestSlidePosition: number = slidePositionsArray[state.activeSlideIndex] + carouselTopPadding;
+
+          return {
+            ...state,
+            pointerDown: false,
+            prevTrackPos: closestSlidePosition,
+            trackPos: closestSlidePosition,
+            style: { transform: `translateY(${closestSlidePosition}px)` },
+          };
+        } else {
+          return state;
         }
-
-        const closestSlidePosition: number = slidePositionsArray[state.activeSlideIndex] + carouselTopPadding;
-        const closestSlidePositionIndex: number = slidePositionsArray.findIndex((position) => position === closestSlidePosition);
-
-        return {
-          ...state,
-          pointerDown: false,
-          activeSlideIndex: closestSlidePositionIndex,
-          prevTrackPos: closestSlidePosition,
-          trackPos: closestSlidePosition,
-          style: { transform: `translateY(${closestSlidePosition}px)` },
-        };
 
       default:
         throw new Error('FAILURE: Action Type may be missing or returning null');
@@ -95,6 +97,9 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
   useEffect(() => {
     console.log(state);
   }, [state]);
+
+  /** Update global project index state */
+  useEffect(() => setProjectSlideIndex(state.activeSlideIndex), [state.activeSlideIndex]);
 
   /** Dispatch Actions */
   useEffect(() => {

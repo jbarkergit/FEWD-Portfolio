@@ -105,6 +105,8 @@
       gap: m.$portfolio-gap;
       width: clamp(45ch, 100%, 75ch);
       padding-top: calc(m.$box-model-viewport-x / 2);
+      user-select: text;
+      cursor: text;
       & h2 {
         font-size: clamp(f.rem(20), f.rem(28) + 1vw, f.rem(32));
         line-height: 115%;
