@@ -16,8 +16,8 @@ const PortfolioInsights = () => {
 
       <p>
         To create a module loading queue, I dynamically generated routes and spread them in state. Challenges arose, particularly with the 404 protocol error handler
-        loading before the requested page. Attempting to address this led to a somewhat hacky solution involving dismissing the handler, mounting an Observer to the
-        Network, and prop drilling data to the Suspense loader just to prompt the user that the requested page couldn't be found.
+        loading before the requested page. Attempting to address this led to a somewhat hacky solution involving dismissal of the handler, mounting an Observer to
+        the Network, and prop drilling data to the Suspense loader just to prompt the user that the requested page couldn't be found.
       </p>
 
       <p>
@@ -27,7 +27,7 @@ const PortfolioInsights = () => {
       </p>
 
       <p>
-        Following this evaluation and implementation, I streamlined logic, even reducing variable memory caching, to reduce web core vital metrics. Accepting a
+        Following this evaluation and implementation, I streamlined logic and minimalized variable memory caching to reduce Web Core Vital metrics. Accepting a
         minuscule performance impact on initial load, the trade-off would be a synchronous background queue and seamless page transitions. While I do intend on
         revisiting a more custom solution, the current solution is satisfactory.
       </p>
