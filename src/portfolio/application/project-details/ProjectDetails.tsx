@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useReducer, useRef } from 'react';
+import { Dispatch, SetStateAction, useEffect, useReducer, useRef, useState } from 'react';
 import { myProjects } from '../../assets/projects-data/myProjects';
 
 type ProjectDetailsType = { projectSlideIndex: number; setProjectSlideIndex: Dispatch<SetStateAction<number>> };
@@ -74,26 +74,21 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
       case 'POINTER_UP':
         if (state.pointerDown) {
           for (let i = 0; i < slidePositionsArray.length; i++) {
-            const slidePositionIteration = Math.abs(slidePositionsArray[i] - state.trackPos);
-            const activeSlidePosition = Math.abs(slidePositionsArray[state.activeSlideIndex] - state.trackPos);
-            if (slidePositionIteration < activeSlidePosition) state.activeSlideIndex = i;
+            const slideDistanceIteration = Math.abs(slidePositionsArray[i] - state.trackPos);
+            const activeSlideDistance = Math.abs(slidePositionsArray[state.activeSlideIndex] - state.trackPos);
+            if (slideDistanceIteration > activeSlideDistance) state.activeSlideIndex = i;
           }
 
-          const activeSlidePosition = slidePositionsArray[state.activeSlideIndex];
-          const activeSlideDistanceFromCarouselSliderCenter = Math.abs(activeSlidePosition - carouselSliderHeight / 2);
-          const halfOfSlideHeight = carouselSlides.current[0]?.offsetHeight / 2;
-
-          const useNewSlidePosition = (): number => {
-            const adjustment = state.activeSlideIndex === 0 ? 1 : -1;
-            return activeSlidePosition + adjustment * (activeSlideDistanceFromCarouselSliderCenter + halfOfSlideHeight);
-          };
+          const activeSlide = slidePositionsArray[state.activeSlideIndex];
+          const activeSlideDistance = activeSlide - state.trackPos;
+          const newSlidePosition = activeSlide - activeSlideDistance;
 
           return {
             ...state,
             pointerDown: false,
-            prevTrackPos: useNewSlidePosition(),
-            trackPos: useNewSlidePosition(),
-            style: { transform: `translateY(${useNewSlidePosition()}px)` },
+            prevTrackPos: newSlidePosition,
+            trackPos: newSlidePosition,
+            style: { transform: `translateY(${newSlidePosition}px)` },
           };
         } else {
           return state;
@@ -117,21 +112,21 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
   useEffect(() => {
     const userPointerDown = (e: PointerEvent) => dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageY: e.pageY, pageY: e.pageY });
     const userPointerMove = (e: PointerEvent) => dispatch({ type: 'POINTER_MOVE', pageY: e.pageY });
-    // const userPointerLeave = () => dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
-    // const userPointerUp = () => dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
+    const userPointerLeave = () => dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
+    const userPointerUp = () => dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
 
     /** Event Listeners Mount */
     carousel.current?.addEventListener('pointerdown', userPointerDown);
     carousel.current?.addEventListener('pointermove', userPointerMove);
-    // carousel.current?.addEventListener('pointerleave', userPointerLeave);
-    // carousel.current?.addEventListener('pointerup', userPointerUp);
+    carousel.current?.addEventListener('pointerleave', userPointerLeave);
+    carousel.current?.addEventListener('pointerup', userPointerUp);
 
     /** Event Listeners Unmount */
     return () => {
       carousel.current?.removeEventListener('pointerdown', userPointerDown);
       carousel.current?.removeEventListener('pointermove', userPointerMove);
-      // carousel.current?.removeEventListener('pointerleave', userPointerLeave);
-      // carousel.current?.removeEventListener('pointerup', userPointerUp);
+      carousel.current?.removeEventListener('pointerleave', userPointerLeave);
+      carousel.current?.removeEventListener('pointerup', userPointerUp);
     };
   }, []);
 
