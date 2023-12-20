@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useReducer, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { myProjects } from './../../../assets/projects-data/myProjects';
+import { myProjects } from '../../../assets/projects-data/myProjects';
 
 /** useReducer Types & State */
 type indexStateType = {

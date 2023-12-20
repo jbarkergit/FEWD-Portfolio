@@ -90,6 +90,8 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: ProjectDeta
 
           const newSliderPosition = slidePositionsArray[state.activeSlideIndex] - carouselTopPadding * 2 + carouselSlides.current[0]?.offsetHeight / 2;
 
+          carouselSlider.current?.animate({ top: `${slidePositionsArray[state.activeSlideIndex]}px` }, { duration: 6000, fill: 'forwards' });
+
           return {
             ...state,
             pointerDown: false,
