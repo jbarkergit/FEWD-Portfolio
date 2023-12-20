@@ -29,9 +29,9 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
     footerNavigation.current?.getAttribute('data-transition') === 'false' ? setFooterDataAttr('true') : setFooterDataAttr('false');
 
     setTimeout(() => {
-      if (myProjects[projectSlideIndex].key !== '' && myProjects[projectSlideIndex].projectUrl !== '') {
+      if (myProjects[projectSlideIndex].key !== '' && myProjects[projectSlideIndex].url !== '') {
         setNavigationIndicator({ key: myProjects[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Demo Link' });
-      } else if (myProjects[projectSlideIndex].key !== '' && myProjects[projectSlideIndex].projectUrl === '') {
+      } else if (myProjects[projectSlideIndex].key !== '' && myProjects[projectSlideIndex].url === '') {
         setNavigationIndicator({ key: myProjects[projectSlideIndex].key, insights: 'Project Insights', demoLink: '' });
       } else {
         setNavigationIndicator({ key: 'This project is unavailable', insights: '', demoLink: '' });
@@ -66,7 +66,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
             }>
             {navigationIndicator.insights}
           </button>
-          <Link to={myProjects[projectSlideIndex].projectUrl}>{navigationIndicator.demoLink}</Link>
+          <Link to={myProjects[projectSlideIndex].url}>{navigationIndicator.demoLink}</Link>
         </section>
 
         <section className='portFooter__nav__right'>
