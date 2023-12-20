@@ -6,16 +6,8 @@ import { myProjects } from '../../../assets/projects-data/myProjects';
 type PortHeaderType = {
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
-  featureState: {
-    projectDetailsActive: boolean;
-    contactFormActive: boolean;
-  };
-  setFeatureState: Dispatch<
-    SetStateAction<{
-      projectDetailsActive: boolean;
-      contactFormActive: boolean;
-    }>
-  >;
+  featureState: Record<string, boolean>;
+  setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
 };
 
 /** Map project length array */

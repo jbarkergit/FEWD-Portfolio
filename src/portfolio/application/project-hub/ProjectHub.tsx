@@ -6,16 +6,8 @@ import PortFooter from '../navigation/footer/PortFooter';
 type ProjectHubType = {
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
-  featureState: {
-    projectDetailsActive: boolean;
-    contactFormActive: boolean;
-  };
-  setFeatureState: Dispatch<
-    SetStateAction<{
-      projectDetailsActive: boolean;
-      contactFormActive: boolean;
-    }>
-  >;
+  featureState: Record<string, boolean>;
+  setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
 };
 
 const ProjectHub = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: ProjectHubType) => {

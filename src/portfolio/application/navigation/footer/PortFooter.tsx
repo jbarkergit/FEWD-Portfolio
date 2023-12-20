@@ -5,16 +5,8 @@ import { myProjects } from '../../../assets/projects-data/myProjects';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;
-  featureState: {
-    projectDetailsActive: boolean;
-    contactFormActive: boolean;
-  };
-  setFeatureState: Dispatch<
-    SetStateAction<{
-      projectDetailsActive: boolean;
-      contactFormActive: boolean;
-    }>
-  >;
+  featureState: Record<string, boolean>;
+  setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
 };
 
 const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: ProjectNavPropType) => {
