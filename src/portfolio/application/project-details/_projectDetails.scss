@@ -2,27 +2,30 @@
 @use '/src/portfolio/scss/portfolioStyles' as m;
 
 .projectDetails {
+  position: relative;
   display: flex;
   gap: m.$portfolio-gap;
   height: 100vh;
+  background-size: cover;
+  background-position: center center;
   & > * {
     height: 100%;
     overflow: hidden;
   }
   &__general {
-    flex: 0 1 22%;
-    display: inline-flex;
+    padding: calc(m.$box-model-viewport-x / 2) calc(m.$portfolio-gap * 2) calc(m.$box-model-viewport-x / 2) m.$box-model-viewport-x;
+    flex: 0 1 25%;
+    display: flex;
     flex-direction: column;
     gap: m.$portfolio-gap;
-    padding: calc(m.$box-model-viewport-x / 2) 0 calc(m.$box-model-viewport-x / 2) calc(m.$box-model-viewport-x / 2);
     &__header {
       align-self: start;
-      height: 60%;
-      & button {
+      height: 35%;
+      & div {
         display: flex;
         flex-direction: column;
         & span {
-          font-size: clamp(f.rem(20), f.rem(20) + 1vw, f.rem(26));
+          font-size: calc(2.6em / 1.5);
           font-weight: 600;
           text-transform: uppercase;
           line-height: 125%;
@@ -30,12 +33,29 @@
         }
       }
     }
+    &__return {
+      height: 5%;
+    }
     &__technology {
-      height: 40%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: calc(m.$portfolio-gap / 1.5);
+      height: 60%;
+      &__tech {
+        display: table;
+        text-transform: capitalize;
+        &--type {
+          display: block;
+          width: 100%;
+          padding-bottom: f.rem(1.5);
+          font-weight: 600;
+        }
+      }
     }
   }
   &__projects {
-    flex: 0 1 24%;
+    flex: 0 1 25%;
     height: 100vh;
     padding: calc(m.$box-model-viewport-x / 2) 0;
     overflow: clip;
@@ -103,9 +123,10 @@
     }
   }
   &__insights {
-    flex: 1 0 54%;
+    flex: 1 0 50%;
     display: flex;
     overflow-y: scroll;
+    padding-right: m.$box-model-viewport-x;
     &__projectOverview {
       display: flex;
       flex-direction: column;
@@ -115,7 +136,7 @@
       user-select: text;
       cursor: text;
       & h2 {
-        font-size: clamp(f.rem(20), f.rem(28) + 1vw, f.rem(32));
+        font-size: 2.6em;
         line-height: 115%;
       }
       & p:last-child {

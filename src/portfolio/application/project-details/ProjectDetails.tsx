@@ -147,18 +147,27 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillTy
     <section className='projectDetails' ref={projectDetails}>
       <section className='projectDetails__general'>
         <div className='projectDetails__general__header'>
-          <button>
+          <div>
             <span>{myProjects[projectSlideIndex].key}</span>
             <span>Insights</span>
+          </div>
+        </div>
+        <div className='projectDetails__general__return'>
+          <button aria-label='Return to project hub'>
+            <svg xmlns='http://www.w3.org/2000/svg' width='3em' height='3em' viewBox='0 0 24 24'>
+              <path
+                fill='#ffffff'
+                d='M9.42 7.41L4.83 12l4.59 4.59L8 18l-6-6l6-6zm6 0L10.83 12l4.59 4.59L14 18l-6-6l6-6zm6 0L16.83 12l4.59 4.59L20 18l-6-6l6-6z'></path>
+            </svg>
           </button>
         </div>
         <div className='projectDetails__general__technology'>
           {Object.entries(myProjects[projectSlideIndex].technologies).map(([category, techArray]) => (
-            <div key={category}>
-              <span>{category}</span>
+            <div className='projectDetails__general__technology__tech' key={category}>
+              <div className='projectDetails__general__technology__tech--type'>{category.replace('_', ' ')}</div>
               {techArray.map((technology: string) => (
                 <span className={`projectDetails__general__technology--tech projectDetails__general__technology--${technology}`} key={`${category}-${technology}`}>
-                  {technology}
+                  {technology}{' '}
                 </span>
               ))}
             </div>

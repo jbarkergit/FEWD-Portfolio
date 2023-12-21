@@ -7,8 +7,8 @@ export const myProjects = [
     url: 'http://localhost:5173/ecommerce',
     technologies: {
       libraries: ['react', 'react router'],
-      webTechnologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
-      codeQuality: ['eslint', 'prettier'],
+      web_technologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
+      code_quality: ['eslint', 'prettier'],
     },
     insights: <EcommerceInsights />,
     imgSrc: '/src/portfolio/assets/compressed-project-images/ecommerce-landing.png',
@@ -21,11 +21,11 @@ export const myProjects = [
     url: '',
     technologies: {
       libraries: ['react', 'react router'],
-      webTechnologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
-      codeQuality: ['eslint', 'prettier'],
-      buildtools: ['vite'],
-      packageManagers: ['npm'],
-      versionControl: ['git', 'github'],
+      web_technologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
+      code_quality: ['eslint', 'prettier'],
+      build_tools: ['vite'],
+      package_managers: ['npm'],
+      version_control: ['git', 'github'],
     },
     insights: <PortfolioInsights />,
     imgSrc:
