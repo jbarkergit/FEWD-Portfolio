@@ -52,8 +52,6 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
     const carouselLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLDivElement).paddingLeft);
     const arrayOfArticlePositions: number[] = arrayOfArticles.current.map((child) => child.offsetLeft * -1);
     const activeSlidePosition: number = arrayOfArticlePositions[projectSlideIndex];
-    const activeSlidePositionWithPadding: number = activeSlidePosition + carouselLeftPadding;
-
     /** Reducer cases */
     switch (action.type) {
       case 'POINTER_DOWN':
@@ -82,10 +80,10 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
           return {
             ...state,
             pointerDown: false,
-            previousTrackPos: activeSlidePositionWithPadding,
-            trackPos: activeSlidePositionWithPadding,
+            previousTrackPos: arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding,
+            trackPos: arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding,
             style: {
-              transform: `translateX(${activeSlidePositionWithPadding}px)`,
+              transform: `translateX(${arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding}px)`,
             },
           };
         } else {
@@ -123,10 +121,10 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
         return {
           ...state,
           activeSlideIndex: projectSlideIndex,
-          previousTrackPos: activeSlidePositionWithPadding,
-          trackPos: activeSlidePositionWithPadding,
+          previousTrackPos: activeSlidePosition + carouselLeftPadding,
+          trackPos: activeSlidePosition + carouselLeftPadding,
           style: {
-            transform: `translateX(${activeSlidePositionWithPadding}px)`,
+            transform: `translateX(${activeSlidePosition + carouselLeftPadding}px)`,
           },
         };
 
@@ -173,6 +171,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
   /** Sync global active project index tracker and useReducer state */
   useEffect(() => {
     if (state.activeSlideIndex !== projectSlideIndex) dispatch({ type: 'EXTERNAL_NAVIGATION' });
+    console.log(projectSlideIndex);
   }, [projectSlideIndex]);
 
   useEffect(() => {
