@@ -60,7 +60,7 @@ const Portfolio = (): JSX.Element => {
 
   // Maintain current grid position on window resize
   useEffect(() => {
-    const invokeFeatureScroll = () => featureScrollHandler('smooth', activeGridFeature);
+    const invokeFeatureScroll = () => featureScrollHandler('instant', activeGridFeature);
     window.addEventListener('resize', invokeFeatureScroll);
     return () => window.removeEventListener('resize', invokeFeatureScroll);
   }, [activeGridFeature]);
@@ -99,7 +99,7 @@ const Portfolio = (): JSX.Element => {
         portfolioCursorTrail.current.animate({ top: `${animatePositions.top}px`, left: `${animatePositions.left}px` }, { duration: 15, fill: 'forwards' });
 
         // Type interactions
-        const target = e.target as HTMLButtonElement | HTMLAnchorElement;
+        const target = e.target;
         portfolioCursorTrail.current.removeAttribute('data-status');
 
         switch (true) {
@@ -118,8 +118,8 @@ const Portfolio = (): JSX.Element => {
       }
     };
 
-    window.addEventListener('pointermove', useCursorTrail);
-    return () => window.removeEventListener('pointermove', useCursorTrail);
+    portfolioRef.current?.addEventListener('pointermove', useCursorTrail);
+    return () => portfolioRef.current?.removeEventListener('pointermove', useCursorTrail);
   }, [featureState]);
 
   /** Portfolio */
