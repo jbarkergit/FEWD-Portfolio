@@ -171,7 +171,6 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
   /** Sync global active project index tracker and useReducer state */
   useEffect(() => {
     if (state.activeSlideIndex !== projectSlideIndex) dispatch({ type: 'EXTERNAL_NAVIGATION' });
-    console.log(projectSlideIndex);
   }, [projectSlideIndex]);
 
   useEffect(() => {
