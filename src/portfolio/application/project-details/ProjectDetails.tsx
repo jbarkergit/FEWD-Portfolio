@@ -23,10 +23,6 @@ type ActionType =
 
 /** Component */
 const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillType) => {
-  /** Page scroll anywhere references */
-  const projectDetails = useRef<HTMLElement>(null);
-  const insights = useRef<HTMLElement>(null);
-
   /** Carousel References */
   const carousel = useRef<HTMLDivElement>(null);
   const carouselSlider = useRef<HTMLDivElement>(null);
@@ -36,6 +32,10 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillTy
     if (reference && !carouselSlides.current.includes(reference)) carouselSlides.current.push(reference);
   };
   const slidePositionsArray: number[] = carouselSlides.current?.map((slide: HTMLElement) => slide.offsetTop * -1) || [];
+
+  /** Page scroll anywhere references */
+  const projectDetails = useRef<HTMLElement>(null);
+  const insights = useRef<HTMLElement>(null);
 
   /** useReducer State */
   const carouselState: StateType = {
@@ -56,6 +56,7 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillTy
       case 'SET_INITIAL_STATE':
         return {
           ...state,
+          activeSlideIndex: projectSlideIndex,
           prevTrackPos: action.initialPosition,
           trackPos: action.initialPosition,
           style: { transform: `translateY(${action.initialPosition}px)` },
@@ -168,7 +169,7 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillTy
       <section className='projectDetails__projects' ref={carousel}>
         <div className='projectDetails__projects__slider' style={state.style} ref={carouselSlider}>
           {myProjects.map((project, index) => (
-            <figure key={project.key} ref={carouselSlide} data-status={index === projectSlideIndex ? 'active' : 'disabled'}>
+            <figure key={project.key} ref={carouselSlide} data-status={index === state.activeSlideIndex ? 'active' : 'disabled'}>
               <picture>
                 <img src={project.posterSrc} decoding='async' fetchpriority='high' tabIndex={0} alt={project.imgAlt} />
                 <figcaption>{project.imgAlt}</figcaption>
