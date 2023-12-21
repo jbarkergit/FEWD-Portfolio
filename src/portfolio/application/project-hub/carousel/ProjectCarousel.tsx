@@ -18,10 +18,10 @@ type StateType = {
 };
 
 type ActionType =
-  | { type: 'POINTER_DOWN'; pointerDown: boolean; initPageX: number; pageX: number }
-  | { type: 'POINTER_MOVE'; anchorEnabled: boolean; pointerDown: boolean; pageX: number }
-  | { type: 'POINTER_LEAVE'; anchorEnabled: boolean; pointerDown: boolean; previousTrackPos: number }
-  | { type: 'POINTER_UP'; anchorEnabled: boolean; pointerDown: boolean; previousTrackPos: number }
+  | { type: 'POINTER_DOWN'; pointerDown: boolean; anchorEnabled: boolean; initPageX: number; pageX: number }
+  | { type: 'POINTER_MOVE'; pointerDown: boolean; anchorEnabled: boolean; pageX: number }
+  | { type: 'POINTER_LEAVE'; pointerDown: boolean; anchorEnabled: boolean; previousTrackPos: number }
+  | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number }
   | { type: 'WHEEL_SCROLL'; deltaY: number; wheelEventActive: boolean }
   | { type: 'EXTERNAL_NAVIGATION' };
 
@@ -57,7 +57,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
     /** Reducer cases */
     switch (action.type) {
       case 'POINTER_DOWN':
-        return { ...state, pointerDown: true, initPageX: action.initPageX, pageX: action.pageX };
+        return { ...state, pointerDown: true, anchorEnabled: action.anchorEnabled, initPageX: action.initPageX, pageX: action.pageX };
 
       case 'POINTER_MOVE':
         if (state.pointerDown) {
@@ -65,7 +65,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
           const newTrackPosition: number = state.previousTrackPos + pointerTravelDistance;
           const maxTravelDelta: number = (carouselRef.current?.scrollWidth as number) * -1 + (arrayOfArticles.current[0].offsetWidth + carouselLeftPadding * 2 + 1);
           const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, 0), maxTravelDelta);
-          return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
+          return { ...state, anchorEnabled: action.anchorEnabled, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
         } else {
           return state;
         }
@@ -140,7 +140,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
   /** Dispatch Actions */
   useEffect(() => {
     const userPointerDown = (e: PointerEvent) => {
-      dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageX: e.pageX as number, pageX: e.pageX as number });
+      dispatch({ type: 'POINTER_DOWN', anchorEnabled: true, pointerDown: true, initPageX: e.pageX as number, pageX: e.pageX as number });
     };
     const userPointerMove = (e: PointerEvent) => {
       dispatch({ type: 'POINTER_MOVE', anchorEnabled: false, pointerDown: state.pointerDown, pageX: e.pageX as number });
@@ -149,7 +149,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
       dispatch({ type: 'POINTER_LEAVE', anchorEnabled: true, pointerDown: false, previousTrackPos: state.trackPos });
     };
     const userPointerUp = () => {
-      dispatch({ type: 'POINTER_UP', anchorEnabled: true, pointerDown: false, previousTrackPos: state.trackPos });
+      dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
     };
     const userWheelEvent = (e: WheelEvent) => {
       dispatch({ type: 'WHEEL_SCROLL', wheelEventActive: true, deltaY: e.deltaY });
