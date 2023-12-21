@@ -18,7 +18,7 @@
     &:active {
       cursor: grabbing;
     }
-    &.smoothen {
+    &[data-status='smoothen'] {
       transition: transform 360ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
   }
