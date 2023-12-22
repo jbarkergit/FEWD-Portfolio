@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useReducer, useRef } from 'react';
 import { myProjects } from '../../assets/projects-data/myProjects';
+import { useCarouselSlideAnimator } from '../../hooks/useCarouselSlideAnimator';
 
 type PropDrillType = { projectSlideIndex: number; setProjectSlideIndex: Dispatch<SetStateAction<number>> };
 
@@ -67,11 +68,13 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillTy
 
       case 'POINTER_MOVE':
         if (state.pointerDown) {
+          const carouselSliderHeight: number = carouselSlider.current?.scrollHeight as number;
           const pointerTravelDistance: number = action.pageY - state.initPageY;
           const newTrackPosition: number = state.prevTrackPos + pointerTravelDistance;
-          const carouselSliderHeight: number = carouselSlider.current?.scrollHeight as number;
           const travelDelta: number = carouselSliderHeight / 2 + carouselTopPadding * 2;
           const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, travelDelta), travelDelta * -1);
+
+          useCarouselSlideAnimator(carousel, carouselSlides, false);
           return { ...state, trackPos: clampedTrackPosition, style: { transform: `translateY(${clampedTrackPosition}px)` } };
         } else {
           return state;
@@ -86,6 +89,8 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillTy
             if (slideDistanceIteration < activeSlideDistance) state.activeSlideIndex = i;
           }
           const newSliderPosition: number = slidePositionsArray[state.activeSlideIndex] - carouselTopPadding * 2 + carouselSlides.current[0]?.offsetHeight / 2;
+
+          useCarouselSlideAnimator(carousel, carouselSlides, false);
           return {
             ...state,
             pointerDown: false,
@@ -106,11 +111,21 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillTy
 
   /** Dispatch Actions */
   useEffect(() => {
-    const userPointerDown = (e: PointerEvent) => dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageY: e.pageY, pageY: e.pageY });
-    const userPointerMove = (e: PointerEvent) => dispatch({ type: 'POINTER_MOVE', pageY: e.pageY });
-    const userPointerLeave = () => dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
-    const userPointerUp = () => dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
-    const useInsightScroll = (e: WheelEvent) => insights.current?.scrollBy({ top: e.deltaY, behavior: 'smooth' });
+    const userPointerDown = (e: PointerEvent) => {
+      dispatch({ type: 'POINTER_DOWN', pointerDown: true, initPageY: e.pageY, pageY: e.pageY });
+    };
+    const userPointerMove = (e: PointerEvent) => {
+      dispatch({ type: 'POINTER_MOVE', pageY: e.pageY });
+    };
+    const userPointerLeave = () => {
+      dispatch({ type: 'POINTER_LEAVE', pointerDown: false, previousTrackPos: state.trackPos });
+    };
+    const userPointerUp = () => {
+      dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
+    };
+    const useInsightScroll = (e: WheelEvent) => {
+      insights.current?.scrollBy({ top: e.deltaY, behavior: 'smooth' });
+    };
 
     carousel.current?.addEventListener('pointerdown', userPointerDown);
     carousel.current?.addEventListener('pointermove', userPointerMove);
@@ -176,10 +191,10 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillTy
       </section>
 
       <section className='projectDetails__projects' ref={carousel}>
-        <div className='projectDetails__projects__slider' style={state.style} ref={carouselSlider}>
+        <div className='projectDetails__projects__slider' ref={carouselSlider} style={state.style} data-status={!state.pointerDown ? 'smooth' : ''}>
           {myProjects.map((project, index) => (
-            <figure key={project.key} ref={carouselSlide} data-status={index === state.activeSlideIndex ? 'active' : 'disabled'}>
-              <picture>
+            <figure ref={carouselSlide} key={project.key}>
+              <picture data-status={index === state.activeSlideIndex ? 'active' : 'disabled'}>
                 <img src={project.posterSrc} decoding='async' fetchpriority='high' tabIndex={0} alt={project.imgAlt} />
                 <figcaption>{project.imgAlt}</figcaption>
               </picture>

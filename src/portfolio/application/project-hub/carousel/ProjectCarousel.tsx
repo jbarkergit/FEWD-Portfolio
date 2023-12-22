@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useReducer, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { myProjects } from '../../../assets/projects-data/myProjects';
+import { useCarouselSlideAnimator } from '../../../hooks/useCarouselSlideAnimator';
 
 type PropDrillType = { projectSlideIndex: number; setProjectSlideIndex: Dispatch<SetStateAction<number>> };
 
@@ -28,6 +29,7 @@ type ActionType =
 /** Component */
 const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillType): JSX.Element => {
   /** References */
+  const mainRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const arrayOfArticles = useRef<HTMLElement[]>([]);
   const articleRef = (reference: HTMLElement) => {
@@ -52,6 +54,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
     const carouselLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLDivElement).paddingLeft);
     const arrayOfArticlePositions: number[] = arrayOfArticles.current.map((child) => child.offsetLeft * -1);
     const activeSlidePosition: number = arrayOfArticlePositions[projectSlideIndex];
+
     /** Reducer cases */
     switch (action.type) {
       case 'POINTER_DOWN':
@@ -63,6 +66,8 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
           const newTrackPosition: number = state.previousTrackPos + pointerTravelDistance;
           const maxTravelDelta: number = (carouselRef.current?.scrollWidth as number) * -1 + (arrayOfArticles.current[0].offsetWidth + carouselLeftPadding * 2 + 1);
           const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, 0), maxTravelDelta);
+
+          useCarouselSlideAnimator(mainRef, arrayOfArticles, true);
           return { ...state, anchorEnabled: action.anchorEnabled, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
         } else {
           return state;
@@ -77,6 +82,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
             if (slideDistanceIteration < activeSlideDistance) state.activeSlideIndex = i;
           }
 
+          useCarouselSlideAnimator(mainRef, arrayOfArticles, true);
           return {
             ...state,
             pointerDown: false,
@@ -179,10 +185,10 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
 
   /** Component */
   return (
-    <main className='mainContent'>
-      <div className='mainContent__track' ref={carouselRef} style={state.style} data-status={!state.pointerDown ? 'smoothen' : ''}>
-        {myProjects.map((project, index) => (
-          <article className='project' ref={articleRef} key={project.key} data-status={index === state.activeSlideIndex ? 'enabled' : 'disabled'}>
+    <main className='mainContent' ref={mainRef}>
+      <div className='mainContent__track' ref={carouselRef} style={state.style} data-status={!state.pointerDown ? 'smooth' : ''}>
+        {myProjects.map((project) => (
+          <article className='mainContent__track__project' ref={articleRef} key={project.key}>
             <Link to={`${state.anchorEnabled ? project.url : ''}`} onDragStart={(e) => e.preventDefault()} onDrag={(e) => e.stopPropagation()}>
               <figure>
                 <picture>
