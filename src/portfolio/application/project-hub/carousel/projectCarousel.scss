@@ -28,9 +28,6 @@
       background-color: s.$background-color-transparent-fallback;
       will-change: width, transform, filter;
       transform-origin: bottom;
-      &:nth-of-type(1) {
-        filter: scale(1);
-      }
       & a {
         display: block;
         height: inherit;

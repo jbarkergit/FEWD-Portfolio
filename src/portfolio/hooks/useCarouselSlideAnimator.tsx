@@ -3,17 +3,17 @@ import { MutableRefObject } from 'react';
 export const useCarouselSlideAnimator = (
   container: MutableRefObject<HTMLDivElement | null>,
   arrayOfSlides: MutableRefObject<HTMLElement[]>,
-  widthNotHeight: boolean
+  horizontalCarousel: boolean
 ): void => {
   if (container.current && arrayOfSlides.current) {
-    const carouselSliderWidth: number = container.current.scrollWidth as number;
-    const carouselSliderHeight: number = container.current.scrollHeight as number;
+    const carouselSliderWidth: number = container.current.clientWidth as number;
+    const carouselSliderHeight: number = container.current.clientHeight as number;
 
     arrayOfSlides.current.forEach((slide: HTMLElement) => {
       // Resize Slides
       const slideBound: DOMRect = slide.getBoundingClientRect();
-      const slideCenterX: number = slideBound.left + slideBound.width / 2;
-      const slideCenterY: number = slideBound.top + slideBound.height / 2;
+      const slideCenterX: number = slideBound.right - slideBound.width / 2;
+      const slideCenterY: number = slideBound.top - slideBound.height / 2;
 
       const exponentData: Record<string, number> = {
         carouselPaddingX: parseInt(window.getComputedStyle(container.current as HTMLElement).paddingLeft),
@@ -23,36 +23,36 @@ export const useCarouselSlideAnimator = (
       };
 
       const exponents: Record<string, number> = {
-        carouselPadding: widthNotHeight ? exponentData.carouselPaddingX : exponentData.carouselPaddingY,
-        slideMaximumDistance: widthNotHeight ? exponentData.slideDistanceFromViewportCenterX : exponentData.slideDistanceFromViewportCenterY,
-        scaleMaximumDistance: widthNotHeight ? carouselSliderWidth : carouselSliderHeight,
+        carouselPadding: horizontalCarousel ? exponentData.carouselPaddingX : exponentData.carouselPaddingY,
+        slideDistanceFromViewport: horizontalCarousel ? exponentData.slideDistanceFromViewportCenterX : exponentData.slideDistanceFromViewportCenterY,
+        containerDimensions: horizontalCarousel ? carouselSliderWidth : carouselSliderHeight,
       };
 
       const scale: Record<string, number> = {
-        minimumScale: 0.85,
-        maximumScale: 1,
-        maximumDistance: exponents.scaleMaximumDistance / 2 + exponents.carouselPadding,
-        scaleExponent: 1.5,
+        filterMinimum: 0.8,
+        filterMaximum: 1,
+        maximumDistance: exponents.containerDimensions / 2 + exponents.carouselPadding,
+        scaleExponent: 3,
       };
 
       // New Values
-      const newScaleValue: number = Math.min(
-        1,
-        Math.max(scale.minimumScale, scale.maximumScale - Math.pow(exponents.slideMaximumDistance / scale.maximumDistance, scale.scaleExponent))
+      const scaleFilterClamp: number = Math.min(
+        scale.filterMaximum,
+        Math.max(scale.filterMinimum, scale.filterMaximum - Math.pow(exponents.slideDistanceFromViewport / scale.maximumDistance, scale.scaleExponent))
       );
 
-      const filterIntensity: number = (newScaleValue - scale.minimumScale) / (scale.maximumScale - scale.minimumScale);
+      // Calculate filter intensity: distance between slide and viewport center
+      const filterIntensity: number = (scaleFilterClamp - scale.filterMinimum) / (scale.filterMaximum - scale.filterMinimum);
 
       const saturationFilter: Record<string, number> = {
         grayscale: 85 - filterIntensity * 85,
         sepia: 80 - filterIntensity * 80,
-        brightness: 65 - filterIntensity * 65,
-        opacity: 80 - filterIntensity * 80,
+        brightness: 50 - filterIntensity * 50 * -1,
       };
 
       // Scale && Filter
-      slide.style.transform = `scale(${newScaleValue})`;
-      slide.style.filter = `grayscale(${saturationFilter.grayscale}%) sepia(${saturationFilter.sepia}%) brightness(${saturationFilter.brightness}%) opacity(${saturationFilter.opacity}%)`;
+      slide.style.transform = `scale(${scaleFilterClamp})`;
+      slide.style.filter = `grayscale(${saturationFilter.grayscale}%) sepia(${saturationFilter.sepia}%) brightness(${saturationFilter.brightness}%)`;
     });
   } else {
     return;
