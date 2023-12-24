@@ -28,6 +28,14 @@
       background-color: s.$background-color-transparent-fallback;
       will-change: width, transform, filter;
       transform-origin: bottom;
+      &[data-status='smooth'] {
+        transition: all 360ms ease-in-out;
+      }
+      &[data-status='disabled'] {
+        transform: scale(0.8);
+        transform-origin: bottom;
+        filter: grayscale(85%) sepia(80%) brightness(50%);
+      }
       & a {
         display: block;
         height: inherit;

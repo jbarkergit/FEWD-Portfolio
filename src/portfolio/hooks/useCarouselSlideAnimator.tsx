@@ -1,10 +1,19 @@
 import { MutableRefObject } from 'react';
 
+type StyleDistancesType = {
+  scale: number;
+  filter: string;
+};
+
 export const useCarouselSlideAnimator = (
   container: MutableRefObject<HTMLDivElement | null>,
   arrayOfSlides: MutableRefObject<HTMLElement[]>,
   horizontalCarousel: boolean
-): void => {
+): StyleDistancesType[] => {
+  // Accumulator array to return
+  const styleDistancesArray: StyleDistancesType[] = [];
+
+  // Logic
   if (container.current && arrayOfSlides.current) {
     const carouselSliderWidth: number = container.current.clientWidth as number;
     const carouselSliderHeight: number = container.current.clientHeight as number;
@@ -32,7 +41,7 @@ export const useCarouselSlideAnimator = (
         filterMinimum: 0.8,
         filterMaximum: 1,
         maximumDistance: exponents.containerDimensions / 2 + exponents.carouselPadding,
-        scaleExponent: 3,
+        scaleExponent: 8,
       };
 
       // New Values
@@ -50,11 +59,18 @@ export const useCarouselSlideAnimator = (
         brightness: 50 - filterIntensity * 50 * -1,
       };
 
-      // Scale && Filter
-      slide.style.transform = `scale(${scaleFilterClamp})`;
-      slide.style.filter = `grayscale(${saturationFilter.grayscale}%) sepia(${saturationFilter.sepia}%) brightness(${saturationFilter.brightness}%)`;
+      // Calculate scale && filter
+      const styleDistances: StyleDistancesType = {
+        scale: scaleFilterClamp,
+        filter: `grayscale(${Math.abs(saturationFilter.grayscale - 1)}%) sepia(${Math.abs(saturationFilter.sepia - 1)}%) brightness(${Math.abs(
+          saturationFilter.brightness - 1
+        )}%)`,
+      };
+
+      // Storage
+      styleDistancesArray.push(styleDistances);
     });
-  } else {
-    return;
   }
+
+  return styleDistancesArray;
 };

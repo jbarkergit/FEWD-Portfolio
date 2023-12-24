@@ -15,7 +15,7 @@ type StateType = {
   pageX: number;
   trackPos: number;
   previousTrackPos: number;
-  style: React.CSSProperties;
+  trackStyle: React.CSSProperties;
 };
 
 type ActionType =
@@ -31,9 +31,9 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
   /** References */
   const mainRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
-  const arrayOfArticles = useRef<HTMLElement[]>([]);
+  const articleArray = useRef<HTMLElement[]>([]);
   const articleRef = (reference: HTMLElement) => {
-    if (reference && !arrayOfArticles.current.includes(reference)) arrayOfArticles.current.push(reference);
+    if (reference && !articleArray.current.includes(reference)) articleArray.current.push(reference);
   };
 
   /** useReducer State */
@@ -46,13 +46,14 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
     pageX: 0,
     previousTrackPos: 0,
     trackPos: 0,
-    style: { transform: `translateX(0px)` },
+    trackStyle: { transform: `translateX(0px)` },
   };
 
   /** Reducer */
   const reducer = (state: StateType, action: ActionType): StateType => {
+    const carouselSliderWidth: number = mainRef.current?.clientWidth as number;
     const carouselLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLDivElement).paddingLeft);
-    const arrayOfArticlePositions: number[] = arrayOfArticles.current.map((child) => child.offsetLeft * -1);
+    const arrayOfArticlePositions: number[] = articleArray.current.map((child) => child.offsetLeft * -1);
     const activeSlidePosition: number = arrayOfArticlePositions[projectSlideIndex];
 
     /** Reducer cases */
@@ -62,13 +63,34 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
 
       case 'POINTER_MOVE':
         if (state.pointerDown) {
+          // Calculate track position
           const pointerTravelDistance: number = action.pageX - state.initPageX;
           const newTrackPosition: number = state.previousTrackPos + pointerTravelDistance;
-          const maxTravelDelta: number = (carouselRef.current?.scrollWidth as number) * -1 + (arrayOfArticles.current[0].offsetWidth + carouselLeftPadding * 2 + 1);
+          const maxTravelDelta: number = (carouselRef.current?.scrollWidth as number) * -1 + (articleArray.current[0].offsetWidth + carouselLeftPadding * 2 + 1);
           const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, 0), maxTravelDelta);
 
-          useCarouselSlideAnimator(mainRef, arrayOfArticles, true);
-          return { ...state, anchorEnabled: action.anchorEnabled, trackPos: clampedTrackPosition, style: { transform: `translateX(${clampedTrackPosition}px)` } };
+          articleArray.current?.forEach((article: HTMLElement) => article.removeAttribute('data-status'));
+          useCarouselSlideAnimator(mainRef, articleArray, true);
+
+          // Scale && Filter
+          const styleDistancesArray: { scale: number; filter: string }[] = useCarouselSlideAnimator(mainRef, articleArray, true);
+
+          articleArray.current?.forEach((article: HTMLElement, index: number) => {
+            const styleDistances = styleDistancesArray[index];
+
+            if (styleDistances) {
+              article.style.transform = `scale(${styleDistances.scale})`;
+              article.style.filter = styleDistances.filter;
+            }
+          });
+
+          // State
+          return {
+            ...state,
+            anchorEnabled: action.anchorEnabled,
+            trackPos: clampedTrackPosition,
+            trackStyle: { transform: `translateX(${clampedTrackPosition}px)` },
+          };
         } else {
           return state;
         }
@@ -76,19 +98,30 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
       case 'POINTER_LEAVE':
       case 'POINTER_UP':
         if (state.pointerDown) {
+          // Active slide index
           for (let i = 0; i < arrayOfArticlePositions.length; i++) {
             const slideDistanceIteration = Math.abs(arrayOfArticlePositions[i] - state.trackPos);
             const activeSlideDistance = Math.abs(activeSlidePosition - state.trackPos);
             if (slideDistanceIteration < activeSlideDistance) state.activeSlideIndex = i;
           }
 
-          useCarouselSlideAnimator(mainRef, arrayOfArticles, true);
+          // Scale && Filter
+          articleArray.current?.forEach((article: HTMLElement, index: number) => {
+            article.setAttribute('data-status', 'smooth');
+
+            setTimeout(() => {
+              article.style.transform = index === state.activeSlideIndex ? `scale(${1})` : `scale(${0.8})`;
+              article.style.filter = index === state.activeSlideIndex ? `grayscale(0%) sepia(0%) brightness(100%)` : `grayscale(85%) sepia(80) brightness(50%)`;
+            }, 50);
+          });
+
+          // State
           return {
             ...state,
             pointerDown: false,
             previousTrackPos: arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding,
             trackPos: arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding,
-            style: {
+            trackStyle: {
               transform: `translateX(${arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding}px)`,
             },
           };
@@ -115,7 +148,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
             wheelEventActive: true,
             previousTrackPos: closestChildPos,
             trackPos: closestChildPos,
-            style: {
+            trackStyle: {
               transform: `translateX(${closestChildPos}px)`,
             },
           };
@@ -129,7 +162,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
           activeSlideIndex: projectSlideIndex,
           previousTrackPos: activeSlidePosition + carouselLeftPadding,
           trackPos: activeSlidePosition + carouselLeftPadding,
-          style: {
+          trackStyle: {
             transform: `translateX(${activeSlidePosition + carouselLeftPadding}px)`,
           },
         };
@@ -174,6 +207,13 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
     };
   }, []);
 
+  /** Initial slider scale && filter */
+  useEffect(() => {
+    articleArray.current?.forEach((article: HTMLElement, index: number) => {
+      projectSlideIndex === index ? article.setAttribute('data-status', '') : article.setAttribute('data-status', 'disabled');
+    });
+  }, []);
+
   /** Sync global active project index tracker and useReducer state */
   useEffect(() => {
     if (state.activeSlideIndex !== projectSlideIndex) dispatch({ type: 'EXTERNAL_NAVIGATION' });
@@ -186,7 +226,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
   /** Component */
   return (
     <main className='mainContent' ref={mainRef}>
-      <div className='mainContent__track' ref={carouselRef} style={state.style} data-status={!state.pointerDown ? 'smooth' : ''}>
+      <div className='mainContent__track' ref={carouselRef} style={state.trackStyle} data-status={!state.pointerDown ? 'smooth' : ''}>
         {myProjects.map((project) => (
           <article className='mainContent__track__project' ref={articleRef} key={project.key}>
             <Link to={`${state.anchorEnabled ? project.url : ''}`} onDragStart={(e) => e.preventDefault()} onDrag={(e) => e.stopPropagation()}>
