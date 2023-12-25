@@ -49,8 +49,6 @@
     }
     & p {
       width: clamp(20ch, 100%, 55ch);
-      font-size: clamp(f.rem(12), f.rem(14) + 1vw, f.rem(20));
-      font-weight: 500;
     }
     & a {
       margin-top: f.rem(24);

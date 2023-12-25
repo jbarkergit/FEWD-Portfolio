@@ -73,7 +73,7 @@
   position: relative;
   background-color: hsl(0, 0%, 12%);
   width: 100%;
-  height: 100vh;
+  height: 100svh;
   padding: 0 8.335%;
   overflow: hidden;
   &--logo,
@@ -310,7 +310,7 @@
     display: flex;
     width: 100%;
     max-width: f.rem(1600);
-    height: 65vh;
+    height: 65svh;
     border-radius: f.rem(28);
     background-color: hsl(0, 0%, 20%);
     animation: colorShiftText 3.2s infinite;

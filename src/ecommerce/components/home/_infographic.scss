@@ -4,7 +4,7 @@
 .infographic {
   display: flex;
   gap: var(--ecoGap);
-  height: calc(100vh - 11rem + f.rem(32));
+  height: calc(100svh - 11rem + f.rem(32));
   padding: 0 var(--sectionXPadding) calc(f.rem(32) + var(--sectionYPadding)) var(--sectionXPadding);
   @media (width <= 1000px) {
     flex-direction: column;
@@ -70,7 +70,7 @@
     }
     & h1,
     & p {
-      font-size: clamp(f.rem(16), f.rem(14) + 1vw, f.rem(20));
+      font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
       font-weight: 500;
       @media (width <= 1620px) {
         position: relative;

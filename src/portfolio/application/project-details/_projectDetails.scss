@@ -4,7 +4,7 @@
 .projectDetails {
   display: flex;
   gap: m.$portfolio-gap;
-  height: 100vh;
+  height: 100svh;
   & > * {
     height: 100%;
     overflow: hidden;
@@ -53,7 +53,7 @@
   }
   &__projects {
     flex: 0 1 25%;
-    height: 100vh;
+    height: 100svh;
     padding: calc(m.$box-model-viewport-x / 2) 0;
     overflow: clip;
     cursor: grab;

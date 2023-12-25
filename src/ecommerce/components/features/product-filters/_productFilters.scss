@@ -9,12 +9,12 @@
   padding: 0 0 f.rem(50) 0;
   @media (width <= 1370px) {
     flex-direction: column;
-    gap: f.rem(25);
+    gap: var(--ecoGap);
   }
   &__panel {
     display: flex;
     flex: 1 1 auto;
-    gap: f.rem(25);
+    gap: var(--ecoGap);
     height: fit-content;
     @media (width <= 870px) {
       flex-direction: column;
@@ -29,11 +29,8 @@
 }
 
 .breadCrumbs h1 {
-  font-size: clamp(f.rem(14), f.rem(30) + 1vw, f.rem(36));
+  font-size: clamp(f.rem(16), f.rem(30) + 1vw, f.rem(36));
   text-transform: capitalize;
-  @media (width <= 1000px) {
-    text-transform: uppercase;
-  }
 }
 
 .productFilter {
@@ -86,8 +83,7 @@
         padding: 1em 0.8em;
         border-radius: 0.5em;
         color: var(--fontSecondary);
-        font-size: clamp(f.rem(12), f.rem(9) + 1vw, f.rem(15));
-        font-weight: 400;
+        font-size: f.rem(16);
         text-transform: capitalize;
         text-align: start;
         &:hover {

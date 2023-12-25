@@ -14,7 +14,7 @@ const SuspenseSkeletonHandler = () => {
     } else if (path.startsWith('/ecommerce')) {
       import('../../ecommerce/skeletons/pages/ProductDetailPageSkeleton').then((module) => setSkeleton(<module.default />));
     } else {
-      setSkeleton(<div id='defaultSuspense' style={{ height: '100vh', width: '100%', backgroundColor: 'hsl(0, 0%, 10%)' }} />);
+      setSkeleton(<div id='defaultSuspense' style={{ height: '100svh', width: '100%', backgroundColor: 'hsl(0, 0%, 10%)' }} />);
     }
   }, [path]);
 

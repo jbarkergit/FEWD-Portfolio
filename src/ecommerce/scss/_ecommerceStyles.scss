@@ -1,22 +1,18 @@
 @use '../../sass/functions' as f;
 
 :root {
-  // Backgrounds
   --elemBackgroundPrimary: hsl(0, 0%, 100%);
   --elemBackgroundSecondary: hsl(0, 0%, 20%);
   --elemBackgroundPrimaryOffset: hsl(0, 0%, 91%);
   --gradientMono: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(0, 0%, 94%));
 
-  // Fonts
   --ecoFontAccent: #ff5900;
 
-  // Styles
   --ecoBtnShadow: -2px -3px 1px hsla(0, 0%, 100%, 0.4), 2px 3px 4px hsl(0, 0%, 78%);
   --shadowRefined: -2px -3px 3px hsl(0, 0%, 100%), 2px 3px 3px hsl(0, 0%, 65%);
   --shadowSoft: 0.3rem 0.3rem 0.6rem hsl(0, 0%, 80.8%), -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%);
   --borderChunky: 0.13rem solid hsl(0, 0%, 94%);
 
-  // Box Model
   --ecoGap: 2.25rem;
   --sectionYPadding: 4.375rem;
   --sectionXPadding: 8.335%;
@@ -26,10 +22,10 @@
 #ecommerce {
   //font: {optional: style variant weight} size line-height "family", "fallback-font", fallback-font-type
   font:
-    normal normal 400 100% / 1.25em 'Plus Jakarta Sans',
+    normal normal 500 100% / 1.5em 'Plus Jakarta Sans',
     'PT Sans',
     sans-serif;
-  letter-spacing: 0.04rem;
+  font-size: f.rem(16);
 }
 
 .highlight {
@@ -54,7 +50,7 @@
   cursor: pointer;
   font-size: f.rem(12);
   font-weight: 600;
-  letter-spacing: f.rem(0.7);
+  letter-spacing: f.rem(1);
   text-transform: uppercase;
   white-space: nowrap;
 }

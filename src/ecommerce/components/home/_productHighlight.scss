@@ -74,7 +74,7 @@
             font-size: clamp(f.rem(18), f.rem(16) + 1vw, f.rem(22));
           }
           @media (width <= 700px) {
-            font-size: clamp(f.rem(14), f.rem(12) + 1vw, f.rem(18));
+            font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
           }
           @media (width <= 530px) {
             font-size: clamp(f.rem(18), f.rem(16) + 1vw, f.rem(22));
@@ -83,8 +83,7 @@
         }
         & h3 {
           width: 100%;
-          font-size: clamp(f.rem(14), f.rem(12) + 1vw, f.rem(18));
-          font-weight: 500;
+          font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
           @media (width <= 605px) {
             font-size: f.rem(15);
           }
