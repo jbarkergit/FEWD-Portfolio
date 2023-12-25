@@ -10,9 +10,7 @@ const Portfolio = (): JSX.Element => {
   /** Active Project Slide Index Tracker */
   const [projectSlideIndex, setProjectSlideIndex] = useState<number>(0);
 
-  /** Active grid position trackers */
-  const [activeGridFeature, setActiveGridFeature] = useState<number>(0);
-
+  /** Active grid position tracker */
   const [featureState, setFeatureState] = useState<Record<string, boolean>>({
     projectDetailsActive: false,
     contactFormActive: false,
@@ -29,7 +27,7 @@ const Portfolio = (): JSX.Element => {
   };
 
   // useFeatureScroll invoker - handles all cases based on featureState
-  const featureScrollHandler = (scrollBehavior: ScrollBehavior, index?: number) => {
+  const useFeatureScrollHandler = (scrollBehavior: ScrollBehavior, index?: number) => {
     switch (true) {
       case featureState.projectDetailsActive:
         useFeatureScroll(1, scrollBehavior);
@@ -51,17 +49,33 @@ const Portfolio = (): JSX.Element => {
 
   // Maintain current grid position on window resize
   useEffect(() => {
-    const invokeFeatureScroll = () => featureScrollHandler('instant', activeGridFeature);
+    let activeGridFeature: number = 0;
+
+    if (Object.keys(featureState).some((value) => featureState[value] === true)) {
+      switch (true) {
+        case featureState.projectDetailsActive:
+          activeGridFeature = 1;
+          break;
+        case featureState.contactFormActive:
+          activeGridFeature = 2;
+          break;
+        default:
+          activeGridFeature = 0;
+          break;
+      }
+    }
+
+    const invokeFeatureScroll = () => useFeatureScrollHandler('instant', activeGridFeature);
     window.addEventListener('resize', invokeFeatureScroll);
     return () => window.removeEventListener('resize', invokeFeatureScroll);
-  }, [activeGridFeature]);
+  }, [featureState]);
 
   /** */
   const portfolioCursorTrail = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // featureScrollHandler (utilizes featureState)
-    featureScrollHandler('smooth');
+    // useFeatureScrollHandler (utilizes featureState)
+    useFeatureScrollHandler('smooth');
 
     // Cursor trail
     const useCursorTrail = (e: PointerEvent) => {
@@ -73,20 +87,16 @@ const Portfolio = (): JSX.Element => {
           switch (true) {
             case featureState.projectDetailsActive:
               animatePositions = { top: e.clientY + window.innerHeight, left: e.clientX };
-              setActiveGridFeature(1);
               break;
             case featureState.contactFormActive:
               animatePositions = { top: e.clientY, left: e.clientX + window.innerWidth };
-              setActiveGridFeature(2);
               break;
             default:
               animatePositions = defaultAnimatePositions;
-              setActiveGridFeature(0);
               break;
           }
         } else {
           animatePositions = defaultAnimatePositions;
-          setActiveGridFeature(0);
         }
 
         portfolioCursorTrail.current.animate({ top: `${animatePositions.top}px`, left: `${animatePositions.left}px` }, { duration: 15, fill: 'forwards' });
