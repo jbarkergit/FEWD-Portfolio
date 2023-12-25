@@ -3,7 +3,9 @@
 
 .carousel {
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ecoGap) / 2);
   padding: calc(var(--sectionYPadding) - f.rem(32)) var(--sectionXPadding) var(--sectionYPadding) var(--sectionYPadding);
   background-color: var(--elemBackgroundPrimaryOffset);
   &:after {
@@ -20,9 +22,8 @@
   }
   &__heading {
     width: 100%;
-    padding-bottom: var(--ecoGap);
     & p {
-      padding: 0 0 0 f.rem(2);
+      padding: 0 0 0 f.rem(4);
     }
     & h2 {
       @include m.ecoSectionHeader;

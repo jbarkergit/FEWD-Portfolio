@@ -31,6 +31,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: calc(var(--ecoGap) / 4);
     width: 50%;
     height: fit-content;
     @media (width <= 980px) {
@@ -41,7 +42,6 @@
       display: flex;
       flex-direction: column;
       width: fit-content;
-      padding-bottom: f.rem(12);
       @include m.ecoSectionHeader;
       @media (width <= 467px) {
         font-size: clamp(f.rem(20), f.rem(28) + 1vw, f.rem(34));
@@ -51,7 +51,7 @@
       width: clamp(20ch, 100%, 55ch);
     }
     & a {
-      margin-top: f.rem(24);
+      margin-top: calc(var(--ecoGap) / 4);
       @include m.ecoBtn;
       @include m.ecoBtnDark;
       width: fit-content;
