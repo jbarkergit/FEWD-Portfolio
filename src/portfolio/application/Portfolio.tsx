@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import ProjectDetails from './project-details/ProjectDetails';
-import ContactForm from './contact-form/ContactForm';
-import PortFooter from './navigation/footer/PortFooter';
+
+/** Project Hub */
 import PortHeader from './navigation/header/PortHeader';
 import ProjectCarousel from './project-hub/ProjectCarousel';
+import PortFooter from './navigation/footer/PortFooter';
 
+/** Contact Form */
+import AboutDeveloper from './contact-form/AboutDeveloper';
+import ContactFormStandard from './contact-form/ContactFormStandard';
+
+/** Project Insights */
+import ProjectDetails from './project-details/ProjectDetails';
+
+/** Component */
 const Portfolio = (): JSX.Element => {
   const portfolioRef = useRef<HTMLDivElement>(null);
 
@@ -144,7 +152,23 @@ const Portfolio = (): JSX.Element => {
 
       <ProjectDetails projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
 
-      <ContactForm featureState={featureState} setFeatureState={setFeatureState} />
+      <section className='contactForm'>
+        <h2>Developer contact form and general information</h2>
+        <section className='contactForm__container'>
+          <AboutDeveloper />
+          <ContactFormStandard />
+          <button
+            className='contactForm__container__return'
+            aria-label='Return to project hub'
+            onClick={() => setFeatureState({ ...featureState, contactFormActive: false })}>
+            <svg xmlns='http://www.w3.org/2000/svg' width='1.6em' height='1.6em' viewBox='0 0 512 512'>
+              <path
+                d='M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z'
+                fill='#ffffff'></path>
+            </svg>
+          </button>
+        </section>
+      </section>
 
       <div className='portfolio__cursorTrail' ref={portfolioCursorTrail} />
     </div>
