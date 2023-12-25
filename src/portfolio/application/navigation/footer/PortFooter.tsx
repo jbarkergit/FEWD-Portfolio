@@ -1,7 +1,8 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, MutableRefObject, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentTimeCDT from './components/CurrentTimeCDT';
 import { myProjects } from '../../../assets/projects-data/myProjects';
+import { usePortNavigationAnimator } from '../../../hooks/usePortNavigationAnimator';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;
@@ -10,15 +11,17 @@ type ProjectNavPropType = {
 };
 
 const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: ProjectNavPropType) => {
-  const footerNavigation = useRef<HTMLElement>(null);
+  const footerNavigationLeft = useRef<HTMLElement>(null);
+  const footerNavigationRight = useRef<HTMLElement>(null);
+
   const [navigationIndicator, setNavigationIndicator] = useState({ key: myProjects[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Demo Link' });
 
   useEffect(() => {
     const setFooterDataAttr = (transitionStatus: string) => {
-      footerNavigation.current?.setAttribute('data-transition', transitionStatus);
+      footerNavigationLeft.current?.setAttribute('data-transition', transitionStatus);
     };
 
-    footerNavigation.current?.getAttribute('data-transition') === 'false' ? setFooterDataAttr('true') : setFooterDataAttr('false');
+    footerNavigationLeft.current?.getAttribute('data-transition') === 'false' ? setFooterDataAttr('true') : setFooterDataAttr('false');
 
     setTimeout(() => {
       if (myProjects[projectSlideIndex].key !== '' && myProjects[projectSlideIndex].url !== '') {
@@ -30,6 +33,13 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
       }
     }, 360);
   }, [projectSlideIndex]);
+
+  /** Component Transition Out */
+  useEffect(() => {
+    if (Object.values(featureState).some((value) => value === true) && footerNavigationLeft.current && footerNavigationRight.current) {
+      usePortNavigationAnimator([footerNavigationLeft, footerNavigationRight] as RefObject<HTMLElement>[]);
+    }
+  }, [featureState]);
 
   return (
     <footer className='portFooter'>
@@ -47,7 +57,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
           )}
         </section> */}
 
-        <section className='portFooter__nav__left' ref={footerNavigation}>
+        <section className='portFooter__nav__left' ref={footerNavigationLeft}>
           <h2>{navigationIndicator.key}</h2>
           <button
             aria-label='Open Project Insights'
@@ -61,7 +71,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
           <Link to={myProjects[projectSlideIndex].url}>{navigationIndicator.demoLink}</Link>
         </section>
 
-        <section className='portFooter__nav__right'>
+        <section className='portFooter__nav__right' ref={footerNavigationRight}>
           <CurrentTimeCDT />
         </section>
       </nav>

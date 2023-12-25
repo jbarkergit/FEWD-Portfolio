@@ -21,6 +21,15 @@
         white-space: nowrap;
       }
     }
+    &__left,
+    &__right {
+      opacity: 1;
+      transition: all 0.5s cubic-bezier(0.5, 0.1, 0, 1);
+      &[data-status='fade-out'] {
+        transform: translateY(20%);
+        opacity: 0;
+      }
+    }
   }
 }
 

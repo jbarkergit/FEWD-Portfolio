@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { myProjects } from '../../../assets/projects-data/myProjects';
+import { usePortNavigationAnimator } from '../../../hooks/usePortNavigationAnimator';
 
 //Prop drill from Portfolio page
 type PortHeaderType = {
@@ -44,11 +45,8 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
   };
 
   useEffect(() => {
-    if (Object.values(featureState).some((value) => value === true)) {
-      portHeaderSections.current?.forEach((section: HTMLElement) => section.setAttribute('data-status', 'fade-out'));
-      setTimeout(() => portHeaderSections.current?.forEach((section: HTMLElement) => section.removeAttribute('data-status')), 500);
-    } else {
-      portHeaderSections.current?.forEach((section: HTMLElement) => section.removeAttribute('data-status'));
+    if (Object.values(featureState).some((value) => value === true) && portHeaderSections) {
+      usePortNavigationAnimator(portHeaderSections);
     }
   }, [featureState]);
 
