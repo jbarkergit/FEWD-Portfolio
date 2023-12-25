@@ -37,9 +37,24 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
     if (lines.current && !lines.current.includes(reference)) lines.current.push(reference);
   };
 
+  /** Component Transition Out */
+  const portHeaderSections = useRef<HTMLElement[]>([]);
+  const portHeaderSection = (reference: HTMLElement) => {
+    if (reference && !portHeaderSections.current.includes(reference)) portHeaderSections.current?.push(reference);
+  };
+
+  useEffect(() => {
+    if (Object.values(featureState).some((value) => value === true)) {
+      portHeaderSections.current?.forEach((section: HTMLElement) => section.setAttribute('data-status', 'fade-out'));
+      setTimeout(() => portHeaderSections.current?.forEach((section: HTMLElement) => section.removeAttribute('data-status')), 500);
+    } else {
+      portHeaderSections.current?.forEach((section: HTMLElement) => section.removeAttribute('data-status'));
+    }
+  }, [featureState]);
+
   return (
     <header className='portHeader'>
-      <section className='portHeader__index'>
+      <section className='portHeader__index' ref={portHeaderSection}>
         <h2>Navigate projects by number</h2>
         <div className='portHeader__index__location'>{`Project 0${projectSlideIndex + 1}.`}</div>
         <nav className='portHeader__index__slideNav'>
@@ -70,7 +85,8 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
             if (line) line.setAttribute('data-transform', 'false');
           });
           if (menuButtons.current) menuButtons.current.setAttribute('data-transform', 'false');
-        }}>
+        }}
+        ref={portHeaderSection}>
         <h2>Contact Form and GitHub Links</h2>
         <div className='portHeader__menu__buttons' ref={menuButtons} data-transform={'false'}>
           <button

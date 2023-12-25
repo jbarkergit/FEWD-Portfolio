@@ -25,10 +25,12 @@ const Portfolio = (): JSX.Element => {
 
   /** Component transition animation */
   const useFeatureScroll = (index: number, scrollBehavior: ScrollBehavior) => {
-    if (portfolioRef.current) {
-      const project = portfolioRef.current.children[index] as HTMLElement;
-      portfolioRef.current.scrollTo({ left: project.offsetLeft, top: project.offsetTop, behavior: scrollBehavior });
-    }
+    setTimeout(() => {
+      if (portfolioRef.current) {
+        const project = portfolioRef.current?.children[index] as HTMLElement;
+        portfolioRef.current.scrollTo({ left: project.offsetLeft, top: project.offsetTop, behavior: scrollBehavior });
+      }
+    }, 500);
   };
 
   // Track active grid feature position
