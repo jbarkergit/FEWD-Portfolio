@@ -14,24 +14,6 @@
   & h2 {
     display: none;
   }
-  &__blob {
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    z-index: -1;
-    &--blob {
-      position: absolute;
-      aspect-ratio: 1/1;
-      border-radius: 50%;
-      background-color: m.$background-color-dark-blue;
-      transform: translate(-50%, -50%);
-    }
-    &--blur {
-      width: inherit;
-      height: inherit;
-      backdrop-filter: blur(200px);
-    }
-  }
   &__container {
     position: relative;
     display: flex;
