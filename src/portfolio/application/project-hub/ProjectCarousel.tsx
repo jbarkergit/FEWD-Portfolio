@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useReducer, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { myProjects } from '../../../assets/projects-data/myProjects';
-import { useCarouselSlideAnimator } from '../../../hooks/useCarouselSlideAnimator';
+import { myProjects } from '../../assets/projects-data/myProjects';
+import { useCarouselSlideAnimator } from '../../hooks/useCarouselSlideAnimator';
 
 type PropDrillType = { projectSlideIndex: number; setProjectSlideIndex: Dispatch<SetStateAction<number>> };
 

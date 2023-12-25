@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import ProjectHub from './project-hub/ProjectHub';
 import ProjectDetails from './project-details/ProjectDetails';
 import ContactForm from './contact-form/ContactForm';
+import PortFooter from './navigation/footer/PortFooter';
+import PortHeader from './navigation/header/PortHeader';
+import ProjectCarousel from './project-hub/ProjectCarousel';
 
 const Portfolio = (): JSX.Element => {
   const portfolioRef = useRef<HTMLDivElement>(null);
@@ -128,9 +130,22 @@ const Portfolio = (): JSX.Element => {
   /** Portfolio */
   return (
     <div className={`portfolio ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`} ref={portfolioRef}>
-      <ProjectHub projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
+      <section className='projectHub'>
+        <h2>Project hub</h2>
+        <PortHeader
+          projectSlideIndex={projectSlideIndex}
+          setProjectSlideIndex={setProjectSlideIndex}
+          featureState={featureState}
+          setFeatureState={setFeatureState}
+        />
+        <ProjectCarousel projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
+        <PortFooter projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
+      </section>
+
       <ProjectDetails projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
+
       <ContactForm featureState={featureState} setFeatureState={setFeatureState} />
+
       <div className='portfolio__cursorTrail' ref={portfolioCursorTrail} />
     </div>
   );
