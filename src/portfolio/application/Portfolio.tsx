@@ -1,16 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-
-/** Project Hub */
-import PortHeader from './navigation/header/PortHeader';
-import ProjectCarousel from './project-hub/ProjectCarousel';
-import PortFooter from './navigation/footer/PortFooter';
-
-/** Contact Form */
-import AboutDeveloper from './contact-form/AboutDeveloper';
-import ContactFormStandard from './contact-form/ContactFormStandard';
-
-/** Project Insights */
+import ProjectHub from './project-hub/ProjectHub';
 import ProjectDetails from './project-details/ProjectDetails';
+import ContactForm from './contact-form/ContactForm';
 
 /** Component */
 const Portfolio = (): JSX.Element => {
@@ -138,38 +129,9 @@ const Portfolio = (): JSX.Element => {
   /** Portfolio */
   return (
     <div className={`portfolio ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`} ref={portfolioRef}>
-      <section className='projectHub'>
-        <h2>Project hub</h2>
-        <PortHeader
-          projectSlideIndex={projectSlideIndex}
-          setProjectSlideIndex={setProjectSlideIndex}
-          featureState={featureState}
-          setFeatureState={setFeatureState}
-        />
-        <ProjectCarousel projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
-        <PortFooter projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
-      </section>
-
+      <ProjectHub projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
       <ProjectDetails projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
-
-      <section className='contactForm'>
-        <h2>Developer contact form and general information</h2>
-        <section className='contactForm__container'>
-          <AboutDeveloper />
-          <ContactFormStandard />
-          <button
-            className='contactForm__container__return'
-            aria-label='Return to project hub'
-            onClick={() => setFeatureState({ ...featureState, contactFormActive: false })}>
-            <svg xmlns='http://www.w3.org/2000/svg' width='1.6em' height='1.6em' viewBox='0 0 512 512'>
-              <path
-                d='M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z'
-                fill='#ffffff'></path>
-            </svg>
-          </button>
-        </section>
-      </section>
-
+      <ContactForm featureState={featureState} setFeatureState={setFeatureState} />
       <div className='portfolio__cursorTrail' ref={portfolioCursorTrail} />
     </div>
   );

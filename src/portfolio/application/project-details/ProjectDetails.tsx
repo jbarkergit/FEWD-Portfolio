@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useReducer, useRef } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { myProjects } from '../../assets/projects-data/myProjects';
 
 type PropDrillType = { projectSlideIndex: number; featureState: Record<string, boolean>; setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>> };
