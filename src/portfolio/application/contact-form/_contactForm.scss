@@ -33,6 +33,7 @@
     }
   }
   &__container {
+    position: relative;
     display: flex;
     gap: m.$portfolio-gap;
     height: 100%;
@@ -41,6 +42,11 @@
     padding: calc(m.$box-model-viewport-x / 2);
     border: 2px solid hsl(0, 0%, 20%);
     background-color: m.$background-color-primary;
+    &__return {
+      position: absolute;
+      top: 5%;
+      right: 5%;
+    }
   }
   &__section {
     color: m.$font-color-primary;
