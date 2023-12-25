@@ -10,20 +10,15 @@ const Portfolio = (): JSX.Element => {
   /** Active Project Slide Index Tracker */
   const [projectSlideIndex, setProjectSlideIndex] = useState<number>(0);
 
-  /** Application Mount Animation */
-  const [mountAnimation, setMountAnimation] = useState<boolean>(true);
+  /** Active grid position trackers */
+  const [activeGridFeature, setActiveGridFeature] = useState<number>(0);
 
-  useEffect(() => {
-    setTimeout(() => setMountAnimation(false), 360);
-  }, [portfolioRef.current]);
-
-  /** Component transition state */
   const [featureState, setFeatureState] = useState<Record<string, boolean>>({
     projectDetailsActive: false,
     contactFormActive: false,
   });
 
-  /** Component transition animation */
+  /** Grid position transitions && animators */
   const useFeatureScroll = (index: number, scrollBehavior: ScrollBehavior) => {
     setTimeout(() => {
       if (portfolioRef.current) {
@@ -32,9 +27,6 @@ const Portfolio = (): JSX.Element => {
       }
     }, 500);
   };
-
-  // Track active grid feature position
-  const [activeGridFeature, setActiveGridFeature] = useState<number>(0);
 
   // useFeatureScroll invoker - handles all cases based on featureState
   const featureScrollHandler = (scrollBehavior: ScrollBehavior, index?: number) => {
@@ -54,11 +46,8 @@ const Portfolio = (): JSX.Element => {
     }
   };
 
-  /** Transitional animations */
   // Reset grid position on mount
-  useEffect(() => {
-    useFeatureScroll(0, 'instant');
-  }, []);
+  useEffect(() => useFeatureScroll(0, 'instant'), []);
 
   // Maintain current grid position on window resize
   useEffect(() => {
@@ -102,7 +91,7 @@ const Portfolio = (): JSX.Element => {
 
         portfolioCursorTrail.current.animate({ top: `${animatePositions.top}px`, left: `${animatePositions.left}px` }, { duration: 15, fill: 'forwards' });
 
-        // Type interactions
+        // Cursor trail type interactions
         const target = e.target;
         portfolioCursorTrail.current.removeAttribute('data-status');
 
@@ -128,7 +117,7 @@ const Portfolio = (): JSX.Element => {
 
   /** Portfolio */
   return (
-    <div className={`portfolio ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`} ref={portfolioRef}>
+    <div className='portfolio' ref={portfolioRef}>
       <ProjectHub projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
       <ProjectDetails projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
       <ContactForm featureState={featureState} setFeatureState={setFeatureState} />
