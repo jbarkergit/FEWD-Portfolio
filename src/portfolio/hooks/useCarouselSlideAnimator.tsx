@@ -37,20 +37,28 @@ export const useCarouselSlideAnimator = (
         containerDimensions: horizontalCarousel ? carouselSliderWidth : carouselSliderHeight,
       };
 
+      /**
+       * scale: Default values
+       * How far the slide is from the maximum distance
+       * Scale distance value
+       * Scale range difference
+       * New scale value
+       * Clamped scale value
+       */
       const scale: Record<string, number> = {
         filterMinimum: 0.8,
         filterMaximum: 1,
         maximumDistance: exponents.containerDimensions / 2 + exponents.carouselPadding,
-        scaleExponent: 8,
+        scaleExponent: 2,
       };
 
-      // New Values
-      const scaleFilterClamp: number = Math.min(
-        scale.filterMaximum,
-        Math.max(scale.filterMinimum, scale.filterMaximum - Math.pow(exponents.slideDistanceFromViewport / scale.maximumDistance, scale.scaleExponent))
-      );
+      const scaleDistanceRatio = exponents.slideDistanceFromViewport / scale.maximumDistance;
+      const scaledDistance = Math.pow(scaleDistanceRatio, scale.scaleExponent);
+      const scaleRangeDifference = scale.filterMaximum - scale.filterMinimum;
+      const newScaleValue = scale.filterMinimum + scaleRangeDifference * (1 - scaledDistance);
+      const scaleFilterClamp = Math.min(scale.filterMaximum, Math.max(scale.filterMinimum, newScaleValue));
 
-      // Calculate filter intensity: distance between slide and viewport center
+      /** Calculate filter intensity: distance between slide and viewport center */
       const filterIntensity: number = (scaleFilterClamp - scale.filterMinimum) / (scale.filterMaximum - scale.filterMinimum);
 
       const saturationFilter: Record<string, number> = {
@@ -59,15 +67,14 @@ export const useCarouselSlideAnimator = (
         brightness: 50 - filterIntensity * 50 * -1,
       };
 
-      // Calculate scale && filter
+      /** Calculate scale && filter data, store */
       const styleDistances: StyleDistancesType = {
         scale: scaleFilterClamp,
-        filter: `grayscale(${Math.abs(saturationFilter.grayscale - 1)}%) sepia(${Math.abs(saturationFilter.sepia - 1)}%) brightness(${Math.abs(
-          saturationFilter.brightness - 1
+        filter: `grayscale(${Math.abs(saturationFilter.grayscale)}%) sepia(${Math.abs(saturationFilter.sepia)}%) brightness(${Math.abs(
+          saturationFilter.brightness
         )}%)`,
       };
 
-      // Storage
       styleDistancesArray.push(styleDistances);
     });
   }

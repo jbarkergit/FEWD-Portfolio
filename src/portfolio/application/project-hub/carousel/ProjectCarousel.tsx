@@ -49,9 +49,20 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
     trackStyle: { transform: `translateX(0px)` },
   };
 
+  /** Scale && Filter Hook */
+  const useRemainderScaleAndFilter = (): void => {
+    articleArray.current?.forEach((article: HTMLElement, index: number) => {
+      article.setAttribute('data-status', 'smooth');
+
+      setTimeout(() => {
+        article.style.transform = index === state.activeSlideIndex ? `scale(${1})` : `scale(${0.8})`;
+        article.style.filter = index === state.activeSlideIndex ? `grayscale(0%) sepia(0%) brightness(100%)` : `grayscale(85%) sepia(80) brightness(50%)`;
+      }, 50);
+    });
+  };
+
   /** Reducer */
   const reducer = (state: StateType, action: ActionType): StateType => {
-    const carouselSliderWidth: number = mainRef.current?.clientWidth as number;
     const carouselLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLDivElement).paddingLeft);
     const arrayOfArticlePositions: number[] = articleArray.current.map((child) => child.offsetLeft * -1);
     const activeSlidePosition: number = arrayOfArticlePositions[projectSlideIndex];
@@ -98,24 +109,14 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
       case 'POINTER_LEAVE':
       case 'POINTER_UP':
         if (state.pointerDown) {
-          // Active slide index
           for (let i = 0; i < arrayOfArticlePositions.length; i++) {
             const slideDistanceIteration = Math.abs(arrayOfArticlePositions[i] - state.trackPos);
             const activeSlideDistance = Math.abs(activeSlidePosition - state.trackPos);
             if (slideDistanceIteration < activeSlideDistance) state.activeSlideIndex = i;
           }
 
-          // Scale && Filter
-          articleArray.current?.forEach((article: HTMLElement, index: number) => {
-            article.setAttribute('data-status', 'smooth');
+          useRemainderScaleAndFilter();
 
-            setTimeout(() => {
-              article.style.transform = index === state.activeSlideIndex ? `scale(${1})` : `scale(${0.8})`;
-              article.style.filter = index === state.activeSlideIndex ? `grayscale(0%) sepia(0%) brightness(100%)` : `grayscale(85%) sepia(80) brightness(50%)`;
-            }, 50);
-          });
-
-          // State
           return {
             ...state,
             pointerDown: false,
@@ -207,12 +208,8 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
     };
   }, []);
 
-  /** Initial slider scale && filter */
-  useEffect(() => {
-    articleArray.current?.forEach((article: HTMLElement, index: number) => {
-      projectSlideIndex === index ? article.setAttribute('data-status', '') : article.setAttribute('data-status', 'disabled');
-    });
-  }, []);
+  /** Slide Animator */
+  useEffect(() => useRemainderScaleAndFilter(), [state.activeSlideIndex]);
 
   /** Sync global active project index tracker and useReducer state */
   useEffect(() => {
@@ -229,7 +226,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
       <div className='mainContent__track' ref={carouselRef} style={state.trackStyle} data-status={!state.pointerDown ? 'smooth' : ''}>
         {myProjects.map((project) => (
           <article className='mainContent__track__project' ref={articleRef} key={project.key}>
-            <Link to={`${state.anchorEnabled ? project.url : ''}`} onDragStart={(e) => e.preventDefault()} onDrag={(e) => e.stopPropagation()}>
+            <Link to={state.anchorEnabled ? project.url : ''} onDragStart={(e) => e.preventDefault()} onDrag={(e) => e.stopPropagation()}>
               <figure>
                 <picture>
                   <img src={project.imgSrc} alt={project.imgAlt} rel='preload' loading='eager' draggable='false' decoding='async' fetchpriority='high' />
