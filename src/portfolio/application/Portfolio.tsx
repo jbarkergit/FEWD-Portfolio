@@ -5,7 +5,6 @@ import ContactForm from './contact-form/ContactForm';
 
 const Portfolio = (): JSX.Element => {
   const portfolioRef = useRef<HTMLDivElement>(null);
-  const portfolioCursorTrail = useRef<HTMLDivElement>(null);
 
   /** Active Project Slide Index Tracker */
   const [projectSlideIndex, setProjectSlideIndex] = useState<number>(0);
@@ -68,6 +67,8 @@ const Portfolio = (): JSX.Element => {
   }, [activeGridFeature]);
 
   /** */
+  const portfolioCursorTrail = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     // featureScrollHandler (utilizes featureState)
     featureScrollHandler('smooth');
@@ -128,7 +129,7 @@ const Portfolio = (): JSX.Element => {
   return (
     <div className={`portfolio ${mountAnimation ? 'data-mount-animation-fade-in' : ''}`} ref={portfolioRef}>
       <ProjectHub projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
-      <ProjectDetails projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
+      <ProjectDetails projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
       <ContactForm featureState={featureState} setFeatureState={setFeatureState} />
       <div className='portfolio__cursorTrail' ref={portfolioCursorTrail} />
     </div>

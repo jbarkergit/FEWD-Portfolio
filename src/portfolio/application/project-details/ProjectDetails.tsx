@@ -5,7 +5,7 @@ type PropDrillType = { projectSlideIndex: number; featureState: Record<string, b
 
 /** Component */
 const ProjectDetails = ({ projectSlideIndex, featureState, setFeatureState }: PropDrillType) => {
-  /** Page scroll anywhere references */
+  /** Page scroll anywhere */
   const projectDetails = useRef<HTMLElement>(null);
   const insights = useRef<HTMLElement>(null);
 
@@ -30,7 +30,7 @@ const ProjectDetails = ({ projectSlideIndex, featureState, setFeatureState }: Pr
           </div>
         </div>
         <div className='projectDetails__general__return'>
-          <button aria-label='Return to project hub'>
+          <button aria-label='Return to project hub' onClick={() => setFeatureState({ ...featureState, projectDetailsActive: false })}>
             <svg xmlns='http://www.w3.org/2000/svg' width='3em' height='3em' viewBox='0 0 24 24'>
               <path
                 fill='#ffffff'
