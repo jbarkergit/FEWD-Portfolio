@@ -44,42 +44,39 @@ const Portfolio = (): JSX.Element => {
     }
   };
 
-  // Reset grid position on mount
-  useEffect(() => useFeatureScroll(0, 'instant'), []);
-
-  // Maintain current grid position on window resize
   useEffect(() => {
-    let activeGridFeature: number = 0;
+    // Invoke animator
+    useFeatureScrollHandler('smooth');
 
-    if (Object.keys(featureState).some((value) => featureState[value] === true)) {
+    // Maintain current grid position on window resize
+    let activeGridPosition: number = 0;
+
+    if (Object.keys(featureState).some((value: string) => featureState[value] === true)) {
       switch (true) {
         case featureState.projectDetailsActive:
-          activeGridFeature = 1;
+          activeGridPosition = 1;
           break;
         case featureState.contactFormActive:
-          activeGridFeature = 2;
+          activeGridPosition = 2;
           break;
         default:
-          activeGridFeature = 0;
+          activeGridPosition = 0;
           break;
       }
     }
 
-    const invokeFeatureScroll = () => useFeatureScrollHandler('instant', activeGridFeature);
+    const invokeFeatureScroll = () => useFeatureScrollHandler('instant', activeGridPosition);
     window.addEventListener('resize', invokeFeatureScroll);
     return () => window.removeEventListener('resize', invokeFeatureScroll);
   }, [featureState]);
 
-  /** */
+  /** Cursor trail */
   const portfolioCursorTrail = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // useFeatureScrollHandler (utilizes featureState)
-    useFeatureScrollHandler('smooth');
-
-    // Cursor trail
     const useCursorTrail = (e: PointerEvent) => {
       if (portfolioCursorTrail.current) {
+        // Position, animate
         const defaultAnimatePositions = { top: e.clientY, left: e.clientX };
         let animatePositions = defaultAnimatePositions;
 
@@ -101,7 +98,7 @@ const Portfolio = (): JSX.Element => {
 
         portfolioCursorTrail.current.animate({ top: `${animatePositions.top}px`, left: `${animatePositions.left}px` }, { duration: 15, fill: 'forwards' });
 
-        // Cursor trail type interactions
+        // Type interations
         const target = e.target;
         portfolioCursorTrail.current.removeAttribute('data-status');
 
