@@ -23,23 +23,6 @@
     font: inherit;
     letter-spacing: inherit;
   }
-  &__cursorTrail {
-    position: absolute;
-    width: 22px;
-    aspect-ratio: 1/1;
-    z-index: 20;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    outline: 2px solid white;
-    pointer-events: none;
-    transition: all 0.22s ease;
-    &[data-status='button'] {
-      width: 32px;
-    }
-    &[data-status='anchor'] {
-      width: 32px;
-    }
-  }
 }
 
 .projectHub {

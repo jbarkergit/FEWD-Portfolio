@@ -73,65 +73,12 @@ const Portfolio = (): JSX.Element => {
     return () => window.removeEventListener('resize', invokeFeatureScroll);
   }, [featureState]);
 
-  /** Cursor trail */
-  const portfolioCursorTrail = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const useCursorTrail = (e: PointerEvent) => {
-      if (portfolioCursorTrail.current) {
-        // Position, animate
-        const defaultAnimatePositions = { top: e.clientY, left: e.clientX };
-        let animatePositions = defaultAnimatePositions;
-
-        if (Object.keys(featureState).some((value) => featureState[value] === true)) {
-          switch (true) {
-            case featureState.projectDetailsActive:
-              animatePositions = { top: e.clientY + window.innerHeight, left: e.clientX };
-              break;
-            case featureState.contactFormActive:
-              animatePositions = { top: e.clientY, left: e.clientX + window.innerWidth };
-              break;
-            default:
-              animatePositions = defaultAnimatePositions;
-              break;
-          }
-        } else {
-          animatePositions = defaultAnimatePositions;
-        }
-
-        portfolioCursorTrail.current.animate({ top: `${animatePositions.top}px`, left: `${animatePositions.left}px` }, { duration: 15, fill: 'forwards' });
-
-        // Type interations
-        const target = e.target;
-        portfolioCursorTrail.current.removeAttribute('data-status');
-
-        switch (true) {
-          case target instanceof HTMLButtonElement:
-            portfolioCursorTrail.current.setAttribute('data-status', 'button');
-            break;
-
-          case target instanceof HTMLAnchorElement:
-            portfolioCursorTrail.current.setAttribute('data-status', 'anchor');
-            break;
-
-          default:
-            portfolioCursorTrail.current.removeAttribute('data-status');
-            break;
-        }
-      }
-    };
-
-    portfolioRef.current?.addEventListener('pointermove', useCursorTrail);
-    return () => portfolioRef.current?.removeEventListener('pointermove', useCursorTrail);
-  }, [featureState]);
-
   /** Portfolio */
   return (
     <div className='portfolio' ref={portfolioRef}>
       <ProjectHub projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
       <ProjectDetails projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
       <ContactForm featureState={featureState} setFeatureState={setFeatureState} />
-      <div className='portfolio__cursorTrail' ref={portfolioCursorTrail} />
     </div>
   );
 };
