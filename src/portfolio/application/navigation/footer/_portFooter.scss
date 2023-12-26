@@ -1,6 +1,36 @@
 @use '../../../../sass/functions' as f;
 @use '../../../scss/portfolioStyles' as m;
 
+@keyframes PortFooterOut {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  66% {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+}
+
+@keyframes PortFooterIn {
+  0% {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  66% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .portFooter {
   height: 100%;
   max-height: 12%;
@@ -23,11 +53,11 @@
     }
     &__left,
     &__right {
-      opacity: 1;
-      transition: all 0.5s cubic-bezier(0.5, 0.1, 0, 1);
-      &[data-status='fade-out'] {
-        transform: translateY(20%);
-        opacity: 0;
+      &[data-status='fadeOut'] {
+        animation: PortFooterOut 1s forwards;
+      }
+      &[data-status='fadeIn'] {
+        animation: PortFooterIn 1s forwards;
       }
     }
   }

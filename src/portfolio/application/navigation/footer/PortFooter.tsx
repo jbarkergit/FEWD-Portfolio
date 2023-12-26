@@ -1,8 +1,7 @@
-import { Dispatch, MutableRefObject, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentTimeCDT from './components/CurrentTimeCDT';
 import { myProjects } from '../../../assets/projects-data/myProjects';
-import { usePortNavigationAnimator } from '../../../hooks/usePortNavigationAnimator';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;
@@ -35,9 +34,23 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
   }, [projectSlideIndex]);
 
   /** Component Transition Out */
+  const initialRender = useRef<boolean>(true);
+
   useEffect(() => {
+    if (initialRender.current) initialRender.current = false;
+
     if (Object.values(featureState).some((value) => value === true) && footerNavigationLeft.current && footerNavigationRight.current) {
-      usePortNavigationAnimator([footerNavigationLeft, footerNavigationRight] as RefObject<HTMLElement>[]);
+      // Grid transition out animator
+      [footerNavigationLeft, footerNavigationRight].forEach((section: RefObject<HTMLElement>) => section.current?.setAttribute('data-status', 'fadeOut'));
+    } else if (!initialRender) {
+      // Grid transition in animator
+      setTimeout(
+        () => [footerNavigationLeft, footerNavigationRight].forEach((section: RefObject<HTMLElement>) => section.current?.setAttribute('data-status', 'fadeIn')),
+        1000
+      );
+    } else {
+      // Mount animator
+      [footerNavigationLeft, footerNavigationRight].forEach((section: RefObject<HTMLElement>) => section.current?.setAttribute('data-status', 'fadeIn'));
     }
   }, [featureState]);
 

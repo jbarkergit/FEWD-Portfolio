@@ -226,11 +226,20 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
   }, [state.activeSlideIndex]);
 
   /** Grid transition */
+  const initialRender = useRef<boolean>(true);
+
   useEffect(() => {
+    if (initialRender.current) initialRender.current = false;
+
     if (Object.values(featureState).some((value) => value === true)) {
+      // Grid transition out animator
       mainRef.current?.setAttribute('data-status', 'disabled');
+    } else if (!initialRender) {
+      // Grid transition in animator
+      setTimeout(() => mainRef.current?.setAttribute('data-status', 'active'), 1000);
     } else {
-      mainRef.current?.removeAttribute('data-status');
+      // Mount animator
+      mainRef.current?.setAttribute('data-status', 'active');
     }
   }, [featureState]);
 

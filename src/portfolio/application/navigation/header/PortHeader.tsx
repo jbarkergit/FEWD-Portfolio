@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { myProjects } from '../../../assets/projects-data/myProjects';
-import { usePortNavigationAnimator } from '../../../hooks/usePortNavigationAnimator';
 
 //Prop drill from Portfolio page
 type PortHeaderType = {
@@ -44,9 +43,20 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
     if (reference && !portHeaderSections.current.includes(reference)) portHeaderSections.current?.push(reference);
   };
 
+  const initialRender = useRef<boolean>(true);
+
   useEffect(() => {
-    if (Object.values(featureState).some((value) => value === true) && portHeaderSections) {
-      usePortNavigationAnimator(portHeaderSections);
+    if (initialRender.current) initialRender.current = false;
+
+    if (Object.values(featureState).some((value) => value === true) && portHeaderSections.current) {
+      // Grid transition out animator
+      portHeaderSections.current?.forEach((section: HTMLElement) => section.setAttribute('data-status', 'fadeOut'));
+    } else if (!initialRender) {
+      // Grid transition in animator
+      setTimeout(() => portHeaderSections.current?.forEach((section: HTMLElement) => section.setAttribute('data-status', 'fadeIn')), 1000);
+    } else {
+      // Mount animator
+      portHeaderSections.current?.forEach((section: HTMLElement) => section.setAttribute('data-status', 'fadeIn'));
     }
   }, [featureState]);
 

@@ -18,12 +18,15 @@ const Portfolio = (): JSX.Element => {
 
   /** Grid position transitions && animators */
   const useFeatureScroll = (index: number, scrollBehavior: ScrollBehavior) => {
-    setTimeout(() => {
-      if (portfolioRef.current) {
-        const project = portfolioRef.current?.children[index] as HTMLElement;
-        portfolioRef.current.scrollTo({ left: project.offsetLeft, top: project.offsetTop, behavior: scrollBehavior });
-      }
-    }, 500);
+    setTimeout(
+      () => {
+        if (portfolioRef.current) {
+          const project = portfolioRef.current?.children[index] as HTMLElement;
+          portfolioRef.current.scrollTo({ left: project.offsetLeft, top: project.offsetTop, behavior: scrollBehavior });
+        }
+      },
+      Object.values(featureState).some((value) => value === true) ? 1000 : 0
+    );
   };
 
   // useFeatureScroll invoker - handles all cases based on featureState
