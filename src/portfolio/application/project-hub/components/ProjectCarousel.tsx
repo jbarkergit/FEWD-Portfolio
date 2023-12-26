@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import { myProjects } from '../../../assets/projects-data/myProjects';
 import { useCarouselSlideAnimator } from '../../../hooks/useCarouselSlideAnimator';
 
-type PropDrillType = { projectSlideIndex: number; setProjectSlideIndex: Dispatch<SetStateAction<number>> };
+type PropDrillType = {
+  projectSlideIndex: number;
+  setProjectSlideIndex: Dispatch<SetStateAction<number>>;
+  featureState: Record<string, boolean>;
+  setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
+};
 
 /** useReducer Types */
 type StateType = {
@@ -27,7 +32,7 @@ type ActionType =
   | { type: 'EXTERNAL_NAVIGATION' };
 
 /** Component */
-const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillType): JSX.Element => {
+const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PropDrillType): JSX.Element => {
   /** References */
   const mainRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
@@ -219,6 +224,15 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex }: PropDrillT
   useEffect(() => {
     if (projectSlideIndex !== state.activeSlideIndex) setProjectSlideIndex(state.activeSlideIndex);
   }, [state.activeSlideIndex]);
+
+  /** Grid transition */
+  useEffect(() => {
+    if (Object.values(featureState).some((value) => value === true)) {
+      mainRef.current?.setAttribute('data-status', 'disabled');
+    } else {
+      mainRef.current?.removeAttribute('data-status');
+    }
+  }, [featureState]);
 
   /** Component */
   return (

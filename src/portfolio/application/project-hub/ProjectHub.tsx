@@ -15,7 +15,12 @@ const ProjectHub = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
     <section className='projectHub'>
       <h2>Project hub</h2>
       <PortHeader projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
-      <ProjectCarousel projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} />
+      <ProjectCarousel
+        projectSlideIndex={projectSlideIndex}
+        setProjectSlideIndex={setProjectSlideIndex}
+        featureState={featureState}
+        setFeatureState={setFeatureState}
+      />
       <PortFooter projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
     </section>
   );
