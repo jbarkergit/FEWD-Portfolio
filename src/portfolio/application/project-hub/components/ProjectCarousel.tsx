@@ -198,11 +198,13 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
       dispatch({ type: 'WHEEL_SCROLL', wheelEventActive: true, deltaY: e.deltaY });
     };
 
-    carouselRef.current?.addEventListener('pointerdown', userPointerDown);
-    carouselRef.current?.addEventListener('pointermove', userPointerMove);
-    carouselRef.current?.addEventListener('pointerleave', userPointerLeave);
-    carouselRef.current?.addEventListener('pointerup', userPointerUp);
-    carouselRef.current?.addEventListener('wheel', userWheelEvent);
+    if (!Object.values(featureState).some((value: boolean) => value === true)) {
+      carouselRef.current?.addEventListener('pointerdown', userPointerDown);
+      carouselRef.current?.addEventListener('pointermove', userPointerMove);
+      carouselRef.current?.addEventListener('pointerleave', userPointerLeave);
+      carouselRef.current?.addEventListener('pointerup', userPointerUp);
+      carouselRef.current?.addEventListener('wheel', userWheelEvent);
+    }
 
     return () => {
       carouselRef.current?.removeEventListener('pointerdown', userPointerDown);
@@ -211,7 +213,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
       carouselRef.current?.removeEventListener('pointerup', userPointerUp);
       carouselRef.current?.removeEventListener('wheel', userWheelEvent);
     };
-  }, []);
+  }, [featureState]);
 
   /** Slide Animator */
   useEffect(() => useRemainderScaleAndFilter(), [state.activeSlideIndex]);
