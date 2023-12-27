@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { myProjects } from '../../data/projects/myProjects';
 import Lenis from '@studio-freight/lenis';
 
@@ -10,16 +10,29 @@ type PropDrillType = {
 };
 
 const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PropDrillType) => {
-  const lenis = new Lenis({ lerp: 0.08, duration: 1.2, smoothWheel: true, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  const insights = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    function raf(time: number) {
-      lenis.raf(time);
+    const lenis = new Lenis({ lerp: 0.08, duration: 1.2, smoothWheel: true, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+
+    const useLenisSmoothScroll = () => {
+      function raf(time: number) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
       requestAnimationFrame(raf);
+    };
+
+    if (Object.values(featureState).some((value: boolean) => value === true) && window.location.pathname === '/') {
+      insights.current?.addEventListener('wheel', useLenisSmoothScroll);
     }
 
-    requestAnimationFrame(raf);
-  }, []);
+    return () => {
+      insights.current?.removeEventListener('wheel', useLenisSmoothScroll);
+      lenis.destroy();
+    };
+  }, [featureState]);
 
   /** JSX */
   return (
@@ -55,7 +68,7 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex, featureState,
         </div>
       </section>
 
-      <section className='projectDetails__insights'>
+      <section className='projectDetails__insights' ref={insights}>
         <section className='projectDetails__insights__technology'>
           <div className='projectDetails__insights__technology__container'>
             <h2>Technology</h2>
