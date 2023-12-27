@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { myProjects } from '../../assets/projects-data/myProjects';
+import { myProjects } from '../../data/projects/myProjects';
 
 type PropDrillType = {
   projectSlideIndex: number;

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { myProjects } from '../../../assets/projects-data/myProjects';
+import { myProjects } from '../../../data/projects/myProjects';
 
 //Prop drill from Portfolio page
 type PortHeaderType = {

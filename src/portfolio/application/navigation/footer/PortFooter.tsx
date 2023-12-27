@@ -1,7 +1,7 @@
 import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentTimeCDT from './components/CurrentTimeCDT';
-import { myProjects } from '../../../assets/projects-data/myProjects';
+import { myProjects } from '../../../data/projects/myProjects';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;

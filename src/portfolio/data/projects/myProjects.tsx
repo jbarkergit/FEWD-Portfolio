@@ -1,5 +1,5 @@
-import EcommerceInsights from './insights/EcommerceInsights';
-import PortfolioInsights from './insights/PortfolioInsights';
+import EcommerceInsights from '../insights/EcommerceInsights';
+import PortfolioInsights from '../insights/PortfolioInsights';
 
 export const myProjects = [
   {

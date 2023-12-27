@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useReducer, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { myProjects } from '../../../assets/projects-data/myProjects';
+import { myProjects } from '../../../data/projects/myProjects';
 import { useCarouselSlideAnimator } from '../../../hooks/useCarouselSlideAnimator';
 
 type PropDrillType = {
