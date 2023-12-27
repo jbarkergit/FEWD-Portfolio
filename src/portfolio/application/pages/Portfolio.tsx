@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import ProjectHub from './project-hub/ProjectHub';
-import ProjectDetails from './project-details/ProjectDetails';
-import ContactForm from './contact-form/ContactForm';
+import ProjectHub from '../project-hub/ProjectHub';
+import ProjectDetails from '../project-details/ProjectDetails';
+import ContactForm from '../contact-form/ContactForm';
 
 /** Component */
 const Portfolio = (): JSX.Element => {

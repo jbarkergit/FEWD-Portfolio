@@ -11,7 +11,7 @@ const ProtocolErrorHandler = lazy(() => import('./app/protocol-error/ProtocolErr
 import { useUniqueData } from './ecommerce/hooks/useUniqueData';
 
 /** Key value pair arrays */
-const portfolioKeyValuePairs = [{ path: '/', element: './portfolio/application/Portfolio' }];
+const portfolioKeyValuePairs = [{ path: '/', element: './portfolio/application/pages/Portfolio' }];
 
 const ecommerceKeyValuePairs = [
   { path: '/ecommerce', element: './ecommerce/pages/Home' },
