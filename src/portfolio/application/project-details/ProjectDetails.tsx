@@ -44,24 +44,26 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex, featureState,
       </section>
 
       <section className='projectDetails__insights'>
-        <section className='projectDetails__insights__project'>
-          <article className='projectDetails__insights__project__article'>{myProjects[projectSlideIndex].insights}</article>
+        <section className='projectDetails__insights__technology'>
+          <div className='projectDetails__insights__technology__container'>
+            <h2>Technology</h2>
+            {Object.entries(myProjects[projectSlideIndex].technologies).map(([category, techArray]) => (
+              <div className='projectDetails__insights__technology__container__tech' key={category}>
+                <div className='projectDetails__insights__technology__container__tech--key'>{category.replace('_', ' ')}</div>
+                <div className='projectDetails__insights__technology__container__tech__values'>
+                  {techArray.map((technology: string) => (
+                    <abbr className='projectDetails__insights__technology__container__tech__values--value' title={``} key={`${category}-${technology}`}>
+                      {technology}{' '}
+                    </abbr>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
-        <section className='projectDetails__insights__technology'>
-          <h2>Technology</h2>
-          {Object.entries(myProjects[projectSlideIndex].technologies).map(([category, techArray]) => (
-            <div className='projectDetails__insights__technology__tech' key={category}>
-              <div className='projectDetails__insights__technology__tech--key'>{category.replace('_', ' ')}</div>
-              <div className='projectDetails__insights__technology__tech__values'>
-                {techArray.map((technology: string) => (
-                  <abbr className='projectDetails__insights__technology__tech__values--value' title={``} key={`${category}-${technology}`}>
-                    {technology}{' '}
-                  </abbr>
-                ))}
-              </div>
-            </div>
-          ))}
+        <section className='projectDetails__insights__project'>
+          <article className='projectDetails__insights__project__article'>{myProjects[projectSlideIndex].insights}</article>
         </section>
       </section>
     </section>

@@ -3,8 +3,8 @@
 
 .projectDetails {
   position: relative;
-  display: table;
   height: 100svh;
+  overflow: clip;
 }
 
 .projectDetails__header {
@@ -16,13 +16,15 @@
   width: 100%;
   height: 8rem;
   padding: 0 s.$box-model-viewport-x;
+  pointer-events: none;
   &__left,
   &__right {
     position: relative;
     flex: 0 0 50%;
-    gap: f.rem(24);
+    gap: s.$portfolio-gap;
     z-index: 2;
     & button {
+      pointer-events: all;
       & span {
         display: flex;
         align-items: center;
@@ -38,55 +40,62 @@
 
 .projectDetails__insights {
   display: flex;
-  flex-direction: column;
   gap: calc(s.$portfolio-gap * 4);
-  height: 100svh;
-  padding-top: 8rem;
+  height: 100%;
+  padding: 8rem s.$box-model-viewport-x 0 s.$box-model-viewport-x;
   overflow-y: scroll;
-  & > * {
-    padding: calc(s.$box-model-viewport-x / 2) calc(s.$box-model-viewport-x * 2) 0 calc(s.$box-model-viewport-x * 2);
+  &__technology {
+    position: relative;
+    display: table;
+    flex: 0 1 40%;
+    &__container {
+      position: sticky;
+      top: 10%;
+      left: 0;
+      & h2 {
+        font-size: clamp(f.rem(24), f.rem(30) + 1vw, f.rem(36));
+        line-height: 300%;
+      }
+      &__tech {
+        display: flex;
+        align-items: center;
+        gap: f.rem(100);
+        border-bottom: 1px solid hsl(240, 4%, 16%);
+        &--key {
+          flex: 0 0 30%;
+          padding: s.$portfolio-gap 0;
+          text-transform: capitalize;
+          white-space: nowrap;
+        }
+        &__values {
+          display: flex;
+          justify-content: flex-end;
+          flex: 0 1 70%;
+          flex-wrap: wrap;
+          gap: calc(s.$portfolio-gap / 2);
+          padding: s.$portfolio-gap 0;
+          text-transform: uppercase;
+        }
+      }
+    }
   }
   &__project {
-    display: flex;
+    flex: 1 0 60%;
+    height: max-content;
     &__article {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: f.rem(16);
+      gap: calc(s.$portfolio-gap / 2);
       width: clamp(45ch, 100%, 75ch);
+      padding-bottom: calc(s.$box-model-viewport-x - s.$portfolio-gap);
       user-select: text;
       cursor: text;
       text-align: start;
       & h2 {
-        padding-bottom: s.$portfolio-gap;
+        width: clamp(45ch, 100%, 40ch);
+        padding-bottom: calc(s.$portfolio-gap / 2);
         font-size: clamp(f.rem(24), f.rem(30) + 1vw, f.rem(36));
         line-height: 1.1em;
-      }
-    }
-  }
-
-  &__technology {
-    display: table;
-    margin: 0 0 calc(calc(s.$box-model-viewport-x / 2) + 8rem) 0;
-    line-height: 500%;
-    & h2 {
-      font-size: clamp(f.rem(24), f.rem(30) + 1vw, f.rem(36));
-    }
-    &__tech {
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid hsl(240, 4%, 14%);
-      &--key {
-        width: 30%;
-        text-transform: capitalize;
-      }
-      &__values {
-        display: flex;
-        justify-content: flex-end;
-        gap: f.rem(18);
-        width: 70%;
-        font-size: f.rem(16);
-        text-transform: uppercase;
       }
     }
   }
