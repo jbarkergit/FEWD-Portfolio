@@ -6,7 +6,7 @@ export const myProjects = [
     key: 'ecommerce',
     url: 'http://localhost:5173/ecommerce',
     technologies: {
-      libraries: ['react', 'react router'],
+      libraries: ['react', 'react router', 'uuid'],
       web_technologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
       code_quality: ['eslint', 'prettier'],
     },
@@ -19,7 +19,7 @@ export const myProjects = [
     key: '2024 portfolio',
     url: '',
     technologies: {
-      libraries: ['react', 'react router', 'lenis'],
+      libraries: ['react', 'react router', 'lenis', 'uuid'],
       web_technologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
       code_quality: ['eslint', 'prettier'],
       build_tools: ['vite'],
