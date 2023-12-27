@@ -1,59 +1,69 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { myProjects } from '../../assets/projects-data/myProjects';
 
-type PropDrillType = { projectSlideIndex: number; featureState: Record<string, boolean>; setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>> };
+type PropDrillType = {
+  projectSlideIndex: number;
+  setProjectSlideIndex: Dispatch<SetStateAction<number>>;
+  featureState: Record<string, boolean>;
+  setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
+};
 
 /** Component */
-const ProjectDetails = ({ projectSlideIndex, featureState, setFeatureState }: PropDrillType) => {
-  /** Page scroll anywhere */
-  const projectDetails = useRef<HTMLElement>(null);
-  const insights = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const useInsightScroll = (e: WheelEvent) => {
-      insights.current?.scrollBy({ top: e.deltaY, behavior: 'smooth' });
-    };
-
-    projectDetails.current?.addEventListener('wheel', useInsightScroll);
-
-    return () => projectDetails.current?.removeEventListener('wheel', useInsightScroll);
-  }, []);
-
+const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PropDrillType) => {
   /** JSX */
   return (
-    <section className='projectDetails' ref={projectDetails}>
-      <section className='projectDetails__general'>
-        <div className='projectDetails__general__header'>
-          <div>
-            <span>{myProjects[projectSlideIndex].key}</span>
-            <span>Insights</span>
-          </div>
-        </div>
-        <div className='projectDetails__general__return'>
-          <button aria-label='Return to project hub' onClick={() => setFeatureState({ ...featureState, projectDetailsActive: false })}>
-            <svg xmlns='http://www.w3.org/2000/svg' width='3em' height='3em' viewBox='0 0 24 24'>
-              <path
-                fill='#ffffff'
-                d='M9.42 7.41L4.83 12l4.59 4.59L8 18l-6-6l6-6zm6 0L10.83 12l4.59 4.59L14 18l-6-6l6-6zm6 0L16.83 12l4.59 4.59L20 18l-6-6l6-6z'></path>
-            </svg>
+    <section className='projectDetails'>
+      <section className='projectDetails__header'>
+        <div className='projectDetails__header__left'>
+          <button aria-label='Return to Project Hub' onClick={() => setFeatureState({ ...featureState, projectDetailsActive: false })}>
+            <span>
+              <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+                <path fill='#ffffff' d='m14 18l-6-6l6-6l1.4 1.4l-4.6 4.6l4.6 4.6z'></path>
+              </svg>{' '}
+              Project Hub
+            </span>
           </button>
         </div>
-        <div className='projectDetails__general__technology'>
-          {Object.entries(myProjects[projectSlideIndex].technologies).map(([category, techArray]) => (
-            <div className='projectDetails__general__technology__tech' key={category}>
-              <div className='projectDetails__general__technology__tech--type'>{category.replace('_', ' ')}</div>
-              {techArray.map((technology: string) => (
-                <span className={`projectDetails__general__technology--tech projectDetails__general__technology--${technology}`} key={`${category}-${technology}`}>
-                  {technology}{' '}
-                </span>
-              ))}
-            </div>
-          ))}
+        <div className='projectDetails__header__right'>
+          <button aria-label='View previous project insights' onClick={() => setProjectSlideIndex((state) => (state === 0 ? myProjects.length - 1 : state - 1))}>
+            <span>
+              <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+                <path fill='#ffffff' d='m14 18l-6-6l6-6l1.4 1.4l-4.6 4.6l4.6 4.6z'></path>
+              </svg>
+              Previous Project
+            </span>
+          </button>
+          <button aria-label='View next project insights' onClick={() => setProjectSlideIndex((state) => (state === myProjects.length - 1 ? 0 : state + 1))}>
+            <span>
+              Next Project{' '}
+              <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+                <path fill='#ffffff' d='M12.6 12L8 7.4L9.4 6l6 6l-6 6L8 16.6z'></path>
+              </svg>
+            </span>
+          </button>
         </div>
       </section>
 
-      <section className='projectDetails__insights' ref={insights}>
-        <article className='projectDetails__insights__projectOverview'>{myProjects[projectSlideIndex].insights}</article>
+      <section className='projectDetails__insights'>
+        <section className='projectDetails__insights__project'>
+          <article className='projectDetails__insights__project__article'>{myProjects[projectSlideIndex].insights}</article>
+        </section>
+
+        <section className='projectDetails__insights__technology'>
+          <h2>Technology</h2>
+          {Object.entries(myProjects[projectSlideIndex].technologies).map(([category, techArray]) => (
+            <div className='projectDetails__insights__technology__tech' key={category}>
+              <div className='projectDetails__insights__technology__tech--key'>{category.replace('_', ' ')}</div>
+              <div className='projectDetails__insights__technology__tech__values'>
+                {techArray.map((technology: string) => (
+                  <abbr className='projectDetails__insights__technology__tech__values--value' title={``} key={`${category}-${technology}`}>
+                    {technology}{' '}
+                  </abbr>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
       </section>
     </section>
   );

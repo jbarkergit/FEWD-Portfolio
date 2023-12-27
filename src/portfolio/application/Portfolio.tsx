@@ -77,7 +77,12 @@ const Portfolio = (): JSX.Element => {
   return (
     <div className='portfolio' ref={portfolioRef}>
       <ProjectHub projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
-      <ProjectDetails projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
+      <ProjectDetails
+        projectSlideIndex={projectSlideIndex}
+        setProjectSlideIndex={setProjectSlideIndex}
+        featureState={featureState}
+        setFeatureState={setFeatureState}
+      />
       <ContactForm featureState={featureState} setFeatureState={setFeatureState} />
     </div>
   );
