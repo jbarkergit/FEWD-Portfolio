@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { myProjects } from '../../data/projects/myProjects';
+import Lenis from '@studio-freight/lenis';
 
 type PropDrillType = {
   projectSlideIndex: number;
@@ -9,6 +10,17 @@ type PropDrillType = {
 };
 
 const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PropDrillType) => {
+  const lenis = new Lenis({ lerp: 0.08, duration: 1.2, smoothWheel: true, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+
+  useEffect(() => {
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+  }, []);
+
   /** JSX */
   return (
     <section className='projectDetails'>
