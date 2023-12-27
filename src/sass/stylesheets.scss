@@ -4,6 +4,9 @@
 /* HTTP Protocol Errors */
 @forward '/src/app/protocol-error/protocolErrorHandler';
 
+/* Libraries */
+@forward '/src/sass/libraries/lenis.scss';
+
 /* Projects */
 @forward '/src/portfolio/scss/portfolioExports';
 @forward '/src/ecommerce/scss/ecommerceExports';
