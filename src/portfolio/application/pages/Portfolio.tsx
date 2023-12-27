@@ -25,7 +25,7 @@ const Portfolio = (): JSX.Element => {
           portfolioRef.current.scrollTo({ left: project.offsetLeft, top: project.offsetTop, behavior: scrollBehavior });
         }
       },
-      Object.values(featureState).some((value) => value === true) ? 1000 : 0
+      Object.values(featureState).some((value) => value === true) ? 660 : 0
     );
   };
 
