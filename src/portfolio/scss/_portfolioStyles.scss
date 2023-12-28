@@ -14,9 +14,7 @@ $font-color-indicate-warning: hsl(0, 100%, 58%);
 $font-color-indicate-success: hsl(244, 100%, 68%);
 $font-color-indicate-tooltip: hsl(244, 100%, 68%);
 
-$box-model-viewport-x: f.rem(160); // 8.33%
-$box-model-viewport-y: f.rem(40); // calc(2.963% / 1.5)
-$box-model-border-radius: f.rem(16);
+$box-model-viewport-x: 8.33%;
 
 $portfolio-gap: f.rem(24);
 
