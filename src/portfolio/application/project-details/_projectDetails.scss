@@ -47,7 +47,7 @@
   &__technology {
     position: relative;
     display: table;
-    flex: 0 1 40%;
+    flex: 0 1 45%;
     &__container {
       position: sticky;
       top: 10%;
@@ -80,7 +80,7 @@
     }
   }
   &__project {
-    flex: 1 0 60%;
+    flex: 1 0 55%;
     height: max-content;
     &__article {
       display: flex;

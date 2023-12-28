@@ -18,14 +18,16 @@ type StateType = {
   anchorEnabled: boolean;
   initPageX: number;
   pageX: number;
+  initPageY: number;
+  pageY: number;
   trackPos: number;
   previousTrackPos: number;
   trackStyle: React.CSSProperties;
 };
 
 type ActionType =
-  | { type: 'POINTER_DOWN'; pointerDown: boolean; anchorEnabled: boolean; initPageX: number; pageX: number }
-  | { type: 'POINTER_MOVE'; pointerDown: boolean; anchorEnabled: boolean; pageX: number }
+  | { type: 'POINTER_DOWN'; pointerDown: boolean; anchorEnabled: boolean; initPageX: number; pageX: number; initPageY: number; pageY: number }
+  | { type: 'POINTER_MOVE'; pointerDown: boolean; anchorEnabled: boolean; pageX: number; pageY: number }
   | { type: 'POINTER_LEAVE'; pointerDown: boolean; anchorEnabled: boolean; previousTrackPos: number }
   | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number }
   | { type: 'WHEEL_SCROLL'; deltaY: number; wheelEventActive: boolean }
@@ -49,6 +51,8 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
     anchorEnabled: true,
     initPageX: 0,
     pageX: 0,
+    initPageY: 0,
+    pageY: 0,
     previousTrackPos: 0,
     trackPos: 0,
     trackStyle: { transform: `translateX(0px)` },
@@ -69,30 +73,48 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
   /** Reducer */
   const reducer = (state: StateType, action: ActionType): StateType => {
     const carouselLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLDivElement).paddingLeft);
-    const arrayOfArticlePositions: number[] = articleArray.current.map((child) => child.offsetLeft * -1);
+    const arrayOfArticlePositions: number[] =
+      carouselRef.current && carouselRef.current.clientWidth <= 1750
+        ? articleArray.current.map((child: HTMLElement) => child.offsetTop * -1)
+        : articleArray.current.map((child: HTMLElement) => child.offsetLeft * -1);
     const activeSlidePosition: number = arrayOfArticlePositions[projectSlideIndex];
 
     /** Reducer cases */
     switch (action.type) {
       case 'POINTER_DOWN':
-        return { ...state, pointerDown: true, anchorEnabled: action.anchorEnabled, initPageX: action.initPageX, pageX: action.pageX };
+        return {
+          ...state,
+          pointerDown: true,
+          anchorEnabled: action.anchorEnabled,
+          initPageX: action.initPageX,
+          pageX: action.pageX,
+          initPageY: action.initPageY,
+          pageY: action.pageY,
+        };
 
       case 'POINTER_MOVE':
         if (state.pointerDown) {
           // Calculate track position
-          const pointerTravelDistance: number = action.pageX - state.initPageX;
+          const pointerTravelDistance: number =
+            carouselRef.current && carouselRef.current.clientWidth <= 1750 ? action.pageY - state.initPageY : action.pageX - state.initPageX;
           const newTrackPosition: number = state.previousTrackPos + pointerTravelDistance;
-          const maxTravelDelta: number = (carouselRef.current?.scrollWidth as number) * -1 + (articleArray.current[0].offsetWidth + carouselLeftPadding * 2 + 1);
+          const maxTravelDelta: number =
+            carouselRef.current && carouselRef.current.clientWidth <= 1750
+              ? (carouselRef.current?.scrollHeight as number) * -1 + articleArray.current[0].offsetHeight
+              : (carouselRef.current?.scrollWidth as number) * -1 + (articleArray.current[0].offsetWidth + carouselLeftPadding * 2 + 1);
           const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, 0), maxTravelDelta);
 
           articleArray.current?.forEach((article: HTMLElement) => article.removeAttribute('data-status'));
-          useCarouselSlideAnimator(mainRef, articleArray, true);
 
           // Scale && Filter
-          const styleDistancesArray: { scale: number; filter: string }[] = useCarouselSlideAnimator(mainRef, articleArray, true);
+          const styleDistancesArray: { scale: number; filter: string }[] = useCarouselSlideAnimator(
+            mainRef,
+            articleArray,
+            carouselRef.current && carouselRef.current.clientWidth <= 1750 ? false : true
+          );
 
           articleArray.current?.forEach((article: HTMLElement, index: number) => {
-            const styleDistances = styleDistancesArray[index];
+            const styleDistances: { scale: number; filter: string } = styleDistancesArray[index];
 
             if (styleDistances) {
               article.style.transform = `scale(${styleDistances.scale})`;
@@ -105,7 +127,10 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
             ...state,
             anchorEnabled: action.anchorEnabled,
             trackPos: clampedTrackPosition,
-            trackStyle: { transform: `translateX(${clampedTrackPosition}px)` },
+            trackStyle:
+              carouselRef.current && carouselRef.current.clientWidth <= 1750
+                ? { transform: `translateY(${clampedTrackPosition}px)` }
+                : { transform: `translateX(${clampedTrackPosition}px)` },
           };
         } else {
           return state;
@@ -125,11 +150,22 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
           return {
             ...state,
             pointerDown: false,
-            previousTrackPos: arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding,
-            trackPos: arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding,
-            trackStyle: {
-              transform: `translateX(${arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding}px)`,
-            },
+            previousTrackPos:
+              carouselRef.current && carouselRef.current.clientWidth <= 1750
+                ? arrayOfArticlePositions[state.activeSlideIndex]
+                : arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding,
+            trackPos:
+              carouselRef.current && carouselRef.current.clientWidth <= 1750
+                ? arrayOfArticlePositions[state.activeSlideIndex]
+                : arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding,
+            trackStyle:
+              carouselRef.current && carouselRef.current.clientWidth <= 1750
+                ? {
+                    transform: `translateY(${arrayOfArticlePositions[state.activeSlideIndex]}px)`,
+                  }
+                : {
+                    transform: `translateX(${arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding}px)`,
+                  },
           };
         } else {
           return state;
@@ -146,7 +182,10 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
           if (scrollWheelDirection === scrollYDirection.verticalUp) nextClosestIndex = Math.min(state.activeSlideIndex + 1, arrayOfArticlePositions.length - 1);
           if (scrollWheelDirection === scrollYDirection.veritcalDown) nextClosestIndex = Math.max(state.activeSlideIndex - 1, 0);
 
-          const closestChildPos: number = arrayOfArticlePositions[nextClosestIndex] + carouselLeftPadding;
+          const closestChildPos: number =
+            carouselRef.current && carouselRef.current.clientWidth <= 1750
+              ? arrayOfArticlePositions[nextClosestIndex]
+              : arrayOfArticlePositions[nextClosestIndex] + carouselLeftPadding;
 
           return {
             ...state,
@@ -154,9 +193,14 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
             wheelEventActive: true,
             previousTrackPos: closestChildPos,
             trackPos: closestChildPos,
-            trackStyle: {
-              transform: `translateX(${closestChildPos}px)`,
-            },
+            trackStyle:
+              carouselRef.current && carouselRef.current.clientWidth <= 1750
+                ? {
+                    transform: `translateY(${closestChildPos}px)`,
+                  }
+                : {
+                    transform: `translateX(${closestChildPos}px)`,
+                  },
           };
         } else {
           return state;
@@ -166,11 +210,16 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
         return {
           ...state,
           activeSlideIndex: projectSlideIndex,
-          previousTrackPos: activeSlidePosition + carouselLeftPadding,
-          trackPos: activeSlidePosition + carouselLeftPadding,
-          trackStyle: {
-            transform: `translateX(${activeSlidePosition + carouselLeftPadding}px)`,
-          },
+          previousTrackPos: carouselRef.current && carouselRef.current.clientWidth <= 1750 ? activeSlidePosition : activeSlidePosition + carouselLeftPadding,
+          trackPos: carouselRef.current && carouselRef.current.clientWidth <= 1750 ? activeSlidePosition : activeSlidePosition + carouselLeftPadding,
+          trackStyle:
+            carouselRef.current && carouselRef.current.clientWidth <= 1750
+              ? {
+                  transform: `translateY(${activeSlidePosition}px)`,
+                }
+              : {
+                  transform: `translateX(${activeSlidePosition + carouselLeftPadding}px)`,
+                },
         };
 
       default:
@@ -183,10 +232,18 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
   /** Dispatch Actions */
   useEffect(() => {
     const userPointerDown = (e: PointerEvent) => {
-      dispatch({ type: 'POINTER_DOWN', anchorEnabled: true, pointerDown: true, initPageX: e.pageX as number, pageX: e.pageX as number });
+      dispatch({
+        type: 'POINTER_DOWN',
+        anchorEnabled: true,
+        pointerDown: true,
+        initPageX: e.pageX as number,
+        pageX: e.pageX as number,
+        initPageY: e.pageY as number,
+        pageY: e.pageY as number,
+      });
     };
     const userPointerMove = (e: PointerEvent) => {
-      dispatch({ type: 'POINTER_MOVE', anchorEnabled: false, pointerDown: state.pointerDown, pageX: e.pageX as number });
+      dispatch({ type: 'POINTER_MOVE', anchorEnabled: false, pointerDown: state.pointerDown, pageX: e.pageX as number, pageY: e.pageY });
     };
     const userPointerLeave = () => {
       dispatch({ type: 'POINTER_LEAVE', anchorEnabled: true, pointerDown: false, previousTrackPos: state.trackPos });

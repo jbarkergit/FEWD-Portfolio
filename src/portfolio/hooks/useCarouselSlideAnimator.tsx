@@ -22,7 +22,7 @@ export const useCarouselSlideAnimator = (
       // Resize Slides
       const slideBound: DOMRect = slide.getBoundingClientRect();
       const slideCenterX: number = slideBound.right - slideBound.width / 2;
-      const slideCenterY: number = slideBound.top - slideBound.height / 2;
+      const slideCenterY: number = slideBound.bottom - slideBound.height / 2;
 
       const exponentData: Record<string, number> = {
         carouselPaddingX: parseInt(window.getComputedStyle(container.current as HTMLElement).paddingLeft),

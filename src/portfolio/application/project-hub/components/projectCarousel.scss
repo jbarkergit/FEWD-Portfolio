@@ -53,6 +53,9 @@
     height: inherit;
     max-height: inherit;
     padding: 0 s.$box-model-viewport-x;
+    @media (width <= 1750px) {
+      flex-direction: column;
+    }
     &:hover {
       cursor: grab;
     }
@@ -62,6 +65,7 @@
     &[data-status='smooth'] {
       transition: s.$carousel-track-transition;
     }
+
     &__project {
       height: inherit;
       max-height: inherit;
@@ -76,6 +80,9 @@
         transform: scale(0.8);
         transform-origin: bottom;
         filter: grayscale(85%) sepia(80%) brightness(50%);
+      }
+      @media (width <= 1750px) {
+        height: 85%;
       }
       & a {
         display: block;
@@ -92,6 +99,9 @@
           display: contents;
           & picture img {
             filter: brightness(92%);
+            @media (width <= 1750px) {
+              object-fit: contain;
+            }
           }
         }
       }
