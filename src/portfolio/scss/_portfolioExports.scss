@@ -2,12 +2,10 @@
 @forward '/src/portfolio/scss/portfolioStyles';
 @forward '/src/portfolio/application/pages/portfolioPage';
 
-// Navigation
-@forward '/src/portfolio/application/navigation/header/portHeader';
-@forward '/src/portfolio/application/navigation/footer/portFooter';
-
 // Project Hub
 @forward '/src/portfolio/application/project-hub/components/projectCarousel.scss';
+@forward '/src/portfolio/application/project-hub/navigation/header/portHeader';
+@forward '/src/portfolio/application/project-hub/navigation/footer/portFooter';
 
 // Project Details
 @forward '/src/portfolio/application/project-details/projectDetails';

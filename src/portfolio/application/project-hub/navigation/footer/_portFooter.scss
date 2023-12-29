@@ -1,5 +1,5 @@
-@use '../../../../sass/functions' as f;
-@use '../../../scss/portfolioStyles' as m;
+@use '../../../../../sass/functions' as f;
+@use '../../../../scss/portfolioStyles' as m;
 
 @keyframes PortFooterOut {
   0% {
@@ -32,33 +32,37 @@
 }
 
 .portFooter {
+  display: flex;
+  align-items: center;
   height: 100%;
-  max-height: 12%;
+  max-height: 12svh;
   padding: 0 calc(m.$box-model-viewport-x * 2) 0 m.$box-model-viewport-x;
-  &__nav {
+  & nav {
+    display: contents;
+  }
+  & > * {
     display: flex;
     align-items: center;
-    height: inherit;
-    & > * {
-      display: flex;
-      align-items: center;
-      gap: m.$portfolio-gap;
-      flex: 1 1 50%;
-      height: 100%;
-      & button,
-      & a {
-        text-transform: capitalize;
-        white-space: nowrap;
-      }
+    gap: m.$portfolio-gap;
+    flex: 1 1 50%;
+    height: 100%;
+    & h2 {
+      display: block;
     }
-    &__left,
-    &__right {
-      &[data-status='fadeOut'] {
-        animation: PortFooterOut 1s forwards;
-      }
-      &[data-status='fadeIn'] {
-        animation: PortFooterIn 1s forwards;
-      }
+    & h2,
+    & nav button,
+    & nav a {
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
+  }
+  &__left,
+  &__right {
+    &[data-status='fadeOut'] {
+      animation: PortFooterOut 1s forwards;
+    }
+    &[data-status='fadeIn'] {
+      animation: PortFooterIn 1s forwards;
     }
   }
 }
@@ -67,7 +71,7 @@
   @media (width <= 1200px) {
     display: none;
   }
-  & h2 {
+  & nav h2 {
     display: block;
     text-transform: uppercase;
   }

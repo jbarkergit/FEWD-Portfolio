@@ -23,6 +23,12 @@
     font: inherit;
     letter-spacing: inherit;
   }
+  & > * {
+    position: relative;
+    width: 100vw;
+    height: 100svh;
+    overflow: clip;
+  }
 }
 
 .projectHub {
@@ -36,15 +42,9 @@
 }
 
 .projectHub {
-  width: 100vw;
-  height: 100svh;
-}
-
-.projectHub {
-  position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
   & h2 {
     display: none;
   }

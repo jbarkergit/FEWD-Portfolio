@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { myProjects } from '../../../data/projects/myProjects';
+import { myProjects } from '../../../../data/projects/myProjects';
 
 //Prop drill from Portfolio page
 type PortHeaderType = {
@@ -65,12 +65,13 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
       <section className='portHeader__index' ref={portHeaderSection}>
         <h2>Navigate projects by number</h2>
         <div className='portHeader__index__location'>{`Project 0${projectSlideIndex + 1}.`}</div>
-        <nav className='portHeader__index__slideNav'>
+        <nav className='portHeader__index__slideNav' aria-labelledby='project-navigation'>
           <ul ref={unorderedListRef}>
             {projectIndexArray.map((_, index) => (
               <li key={index}>
                 <button
                   className={`${projectSlideIndex === index ? 'projectNavButtonActive' : ''}`}
+                  id='project-navigation'
                   aria-label={`View Project ${projectSlideIndex + 1}`}
                   onClick={() => setProjectSlideIndex(index)}>
                   0{index + 1}
@@ -96,8 +97,9 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
         }}
         ref={portHeaderSection}>
         <h2>Contact Form and GitHub Links</h2>
-        <div className='portHeader__menu__buttons' ref={menuButtons} data-transform={'false'}>
+        <nav className='portHeader__menu__buttons' aria-labelledby='contact-and-external-links' ref={menuButtons} data-transform={'false'}>
           <button
+            id='contact-and-external-links'
             aria-label='Contact Form'
             onClick={() =>
               featureState.contactFormActive
@@ -106,10 +108,10 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
             }>
             Contact
           </button>
-          <Link to='https://github.com/jbarkergit' target='_blank' aria-label='GitHub'>
+          <Link to='https://github.com/jbarkergit' id='contact-and-external-links' target='_blank' aria-label='Visit GitHub profile'>
             GitHub
           </Link>
-        </div>
+        </nav>
         <div className='portHeader__menu__navbar'>
           <div className='portHeader__menu__navbar--line' data-transform={'false'} ref={line} />
           <div className='portHeader__menu__navbar--line' data-transform={'false'} ref={line} />

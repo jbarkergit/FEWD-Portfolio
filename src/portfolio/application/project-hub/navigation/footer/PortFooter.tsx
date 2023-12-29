@@ -1,7 +1,7 @@
 import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentTimeCDT from './components/CurrentTimeCDT';
-import { myProjects } from '../../../data/projects/myProjects';
+import { myProjects } from '../../../../data/projects/myProjects';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;
@@ -56,8 +56,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
 
   return (
     <footer className='portFooter'>
-      <nav className='portFooter__nav'>
-        {/* <section className='portFooter__nav__mobileLeft'>
+      {/* <section className='portFooter__nav__mobileLeft'>
           <h2>Project links and information</h2>
           {myProjects[projectSlideIndex].projectUrl !== '' ? (
             <button aria-label='Open Demo Link'>
@@ -70,9 +69,11 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
           )}
         </section> */}
 
-        <section className='portFooter__nav__left' ref={footerNavigationLeft}>
-          <h2>{navigationIndicator.key}</h2>
+      <section className='portFooter__nav__left' ref={footerNavigationLeft}>
+        <h2>{navigationIndicator.key}</h2>
+        <nav aria-labelledby='project-links'>
           <button
+            id='project-links'
             aria-label='Open Project Insights'
             onClick={() =>
               featureState.projectDetailsActive
@@ -81,13 +82,15 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
             }>
             {navigationIndicator.insights}
           </button>
-          <Link to={myProjects[projectSlideIndex].url}>{navigationIndicator.demoLink}</Link>
-        </section>
+          <Link to={myProjects[projectSlideIndex].url} id='project-links' aria-label='Project Demo Link'>
+            {navigationIndicator.demoLink}
+          </Link>
+        </nav>
+      </section>
 
-        <section className='portFooter__nav__right' ref={footerNavigationRight}>
-          <CurrentTimeCDT />
-        </section>
-      </nav>
+      <section className='portFooter__nav__right' ref={footerNavigationRight}>
+        <CurrentTimeCDT />
+      </section>
     </footer>
   );
 };
