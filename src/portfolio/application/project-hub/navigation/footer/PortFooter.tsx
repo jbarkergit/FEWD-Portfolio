@@ -69,9 +69,9 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
           )}
         </section> */}
 
-      <section className='portFooter__nav__left' ref={footerNavigationLeft}>
-        <h2>{navigationIndicator.key}</h2>
-        <nav aria-labelledby='project-links'>
+      <section className='portFooter__nav__left'>
+        <nav className='portFooter__nav__left__nav' aria-labelledby='project-links' ref={footerNavigationLeft}>
+          <h2>{navigationIndicator.key}</h2>
           <button
             id='project-links'
             aria-label='Open Project Insights'
