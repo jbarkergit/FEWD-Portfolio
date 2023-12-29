@@ -149,7 +149,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
       case 'WHEEL_SCROLL':
         setTimeout(() => (state.wheelEventActive = false), 360);
 
-        if (!state.wheelEventActive) {
+        if (!state.wheelEventActive && window.innerWidth > 1480) {
           const scrollWheelDirection: number = Math.sign(action.deltaY);
           const scrollYDirection = { verticalUp: -1, veritcalDown: 1 };
 
@@ -224,7 +224,6 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
       carouselRef.current?.addEventListener('pointerup', userPointerUp);
       carouselRef.current?.addEventListener('wheel', userWheelEvent);
     }
-
     return () => {
       carouselRef.current?.removeEventListener('pointerdown', userPointerDown);
       carouselRef.current?.removeEventListener('pointermove', userPointerMove);

@@ -15,6 +15,12 @@
     'PT Sans',
     sans-serif;
   letter-spacing: 0.04rem;
+  @media (width <= 1480px) {
+    display: flex;
+    flex-direction: column;
+    gap: m.$portfolio-gap;
+    height: auto;
+  }
   & button,
   & a,
   & span,
@@ -25,9 +31,12 @@
   }
   & > * {
     position: relative;
-    width: 100vw;
+    width: 100svw;
     height: 100svh;
     overflow: clip;
+    @media (width <= 1000px) {
+      height: max-content;
+    }
   }
 }
 

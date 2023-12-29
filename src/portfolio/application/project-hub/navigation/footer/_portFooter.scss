@@ -37,6 +37,12 @@
   height: 100%;
   max-height: 12svh;
   padding: 0 calc(m.$box-model-viewport-x * 2) 0 m.$box-model-viewport-x;
+  @media (width <= 1480px) {
+    padding: 0 m.$box-model-viewport-x;
+  }
+  @media (width <= 1000px) {
+    padding: calc(m.$box-model-viewport-x / 2) m.$box-model-viewport-x;
+  }
   &__nav {
     &__left,
     &__right {
@@ -64,13 +70,15 @@
         animation: PortFooterIn 1s forwards;
       }
     }
+    &__left__nav button {
+      @media (width <= 1480px) {
+        display: none;
+      }
+    }
   }
 }
 
 .portFooter__nav__left {
-  @media (width <= 1200px) {
-    display: none;
-  }
   &__nav {
     display: flex;
     gap: m.$portfolio-gap;

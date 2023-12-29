@@ -1,6 +1,12 @@
 @use '/src/sass/functions' as f;
 @use '/src/portfolio/scss/portfolioStyles' as s;
 
+.projectDetails {
+  @media (width <= 1480px) {
+    height: max-content;
+  }
+}
+
 .projectDetails__header {
   position: absolute;
   top: 0;
@@ -9,6 +15,10 @@
   height: 8rem;
   & h2 {
     display: none;
+  }
+  @media (width <= 1480px) {
+    position: relative;
+    height: auto;
   }
   &__nav {
     display: flex;
@@ -32,9 +42,17 @@
         }
       }
     }
+    &__left {
+      @media (width <= 1480px) {
+        display: none;
+      }
+    }
     &__right {
       display: flex;
       justify-content: flex-end;
+      @media (width <= 1480px) {
+        display: none;
+      }
     }
   }
 }
@@ -45,10 +63,18 @@
   height: 100%;
   padding: 8rem s.$box-model-viewport-x 0 s.$box-model-viewport-x;
   overflow-y: scroll;
+  @media (width <= 1480px) {
+    flex-direction: column;
+    gap: s.$portfolio-gap;
+    padding: s.$box-model-viewport-x;
+  }
   &__technology {
     position: relative;
     display: table;
     flex: 0 1 45%;
+    @media (width <= 1480px) {
+      order: 2;
+    }
     &__container {
       position: sticky;
       top: 10%;
@@ -56,12 +82,19 @@
       & h2 {
         font-size: clamp(f.rem(24), f.rem(30) + 1vw, f.rem(36));
         line-height: 300%;
+        @media (width <= 460px) {
+          text-align: center;
+        }
       }
       &__tech {
         display: flex;
         align-items: center;
         gap: f.rem(100);
         border-bottom: 1px solid hsl(240, 4%, 16%);
+        @media (width <= 460px) {
+          flex-direction: column;
+          gap: 0;
+        }
         &--key {
           flex: 0 0 30%;
           padding: s.$portfolio-gap 0;
@@ -77,6 +110,9 @@
           gap: calc(s.$portfolio-gap / 2);
           padding: s.$portfolio-gap 0;
           text-transform: uppercase;
+          @media (width <= 460px) {
+            justify-content: center;
+          }
           & li abbr {
             font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
           }
@@ -87,6 +123,11 @@
   &__project {
     flex: 1 0 55%;
     height: max-content;
+    @media (width <= 1480px) {
+      order: 1;
+      display: flex;
+      justify-content: center;
+    }
     &__article {
       display: flex;
       flex-direction: column;
@@ -97,10 +138,14 @@
       cursor: text;
       text-align: start;
       & h2 {
-        width: clamp(45ch, 100%, 40ch);
+        width: clamp(27ch, 100%, 40ch);
         padding-bottom: calc(s.$portfolio-gap / 2);
         font-size: clamp(f.rem(24), f.rem(30) + 1vw, f.rem(36));
         line-height: 1.1em;
+        @media (width <= 620px) {
+          width: auto;
+          font-size: clamp(f.rem(20), f.rem(22) + 1vw, f.rem(28));
+        }
       }
     }
   }
