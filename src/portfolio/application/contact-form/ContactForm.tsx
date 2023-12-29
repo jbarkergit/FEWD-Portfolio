@@ -8,7 +8,7 @@ const ContactForm = ({ featureState, setFeatureState }: PropDrillType) => {
   return (
     <section className='contactForm'>
       <h2>Developer contact form and general information</h2>
-      <section className='contactForm__container'>
+      <div className='contactForm__container'>
         <AboutDeveloper />
         <ContactFormStandard />
         <button
@@ -21,7 +21,7 @@ const ContactForm = ({ featureState, setFeatureState }: PropDrillType) => {
               fill='#ffffff'></path>
           </svg>
         </button>
-      </section>
+      </div>
     </section>
   );
 };

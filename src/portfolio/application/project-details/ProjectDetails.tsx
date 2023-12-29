@@ -13,6 +13,7 @@ const ProjectDetails = ({ projectSlideIndex, setProjectSlideIndex, featureState,
   return (
     <section className='projectDetails'>
       <section className='projectDetails__header'>
+        <h2>Project Insights Navigation Links</h2>
         <nav className='projectDetails__header__nav' aria-labelledby='insights-navigation'>
           <div className='projectDetails__header__nav__left'>
             <button id='insights-navigation' aria-label='Return to Project Hub' onClick={() => setFeatureState({ ...featureState, projectDetailsActive: false })}>
