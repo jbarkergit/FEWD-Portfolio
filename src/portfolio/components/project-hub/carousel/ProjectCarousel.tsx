@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useReducer, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { myProjects } from '../../../data/projects/myProjects';
-import { useCarouselSlideAnimator } from '../../../hooks/useCarouselSlideAnimator';
+import { projectDatabase } from '../../../assets/data/project-database/projectDatabase';
+import { useCarouselSlideAnimator } from '../hooks/useCarouselSlideAnimator';
 
 type PropDrillType = {
   projectSlideIndex: number;
@@ -65,7 +65,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
 
       setTimeout(() => {
         article.style.transform = index === state.activeSlideIndex ? `scale(${1})` : `scale(${0.8})`;
-        article.style.filter = index === state.activeSlideIndex ? `grayscale(0%) sepia(0%) brightness(100%)` : `grayscale(85%) sepia(80) brightness(50%)`;
+        article.style.filter = index === state.activeSlideIndex ? `grayscale(0%) sepia(0%) brightness(100%)` : `grayscale(85%) sepia(80%) brightness(50%)`;
       }, 50);
     });
   };
@@ -94,7 +94,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
           // Calculate track position
           const pointerTravelDistance: number = action.pageX - state.initPageX;
           const newTrackPosition: number = state.previousTrackPos + pointerTravelDistance;
-          const maxTravelDelta: number = (carouselRef.current?.scrollWidth as number) * -1 + (articleArray.current[0].offsetWidth + carouselLeftPadding * 2 + 1);
+          const maxTravelDelta: number = (carouselRef.current?.scrollWidth as number) * -1 + (articleArray.current[0].offsetWidth + carouselLeftPadding * 2);
           const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, 0), maxTravelDelta);
 
           articleArray.current?.forEach((article: HTMLElement) => article.removeAttribute('data-status'));
@@ -267,7 +267,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
   return (
     <main className='mainContent' ref={mainRef}>
       <div className='mainContent__track' ref={carouselRef} style={state.trackStyle} data-status={!state.pointerDown ? 'smooth' : ''}>
-        {myProjects.map((project) => (
+        {projectDatabase.map((project) => (
           <article className='mainContent__track__project' ref={articleRef} key={project.key}>
             <Link
               to={state.anchorEnabled ? project.url : ''}

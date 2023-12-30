@@ -1,5 +1,5 @@
 @use '/src/sass/functions' as f;
-@use '/src/portfolio/scss/portfolioStyles' as m;
+@use '/src/portfolio/scss/portfolioStyles' as s;
 
 .contactForm {
   position: relative;
@@ -8,9 +8,10 @@
   align-items: center;
   z-index: 10;
   backdrop-filter: blur(5px);
-  padding: m.$box-model-viewport-x;
+  padding: s.$box-model-viewport-x;
   @media (width <= 1480px) {
     height: auto;
+    padding: 0 s.$box-model-viewport-x s.$box-model-viewport-x s.$box-model-viewport-x;
   }
   & h2 {
     display: none;
@@ -18,17 +19,17 @@
   &__container {
     position: relative;
     display: flex;
-    gap: calc(m.$portfolio-gap * 4);
+    gap: calc(s.$portfolio-gap * 4);
     height: 100%;
     max-height: 76svh;
     aspect-ratio: 1.99/1;
-    padding: calc(m.$box-model-viewport-x / 2);
+    padding: calc(s.$box-model-viewport-x / 2);
     border: 2px solid hsl(0, 0%, 20%);
-    background-color: m.$background-color-primary;
+    background-color: s.$background-color-primary;
     @media (width <= 1480px) {
+      flex-direction: column;
       height: max-content;
       max-height: unset;
-      flex-direction: column;
     }
     &__return {
       position: absolute;
@@ -37,7 +38,7 @@
     }
   }
   &__section {
-    color: m.$font-color-primary;
+    color: s.$font-color-primary;
     & > * {
       width: 100%;
     }
@@ -47,7 +48,7 @@
       grid-template-columns: 1fr;
       grid-template-rows: repeat(2, 1fr);
       @media (width <= 1480px) {
-        padding-bottom: m.$portfolio-gap;
+        padding-bottom: s.$portfolio-gap;
       }
     }
     &:nth-of-type(2) {
@@ -62,7 +63,7 @@
     display: table;
     align-self: center;
     @media (width <= 1480px) {
-      padding-bottom: m.$portfolio-gap;
+      padding-bottom: s.$portfolio-gap;
     }
     &__article {
       & span {
@@ -88,7 +89,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: calc(m.$portfolio-gap / 6);
+      gap: calc(s.$portfolio-gap / 6);
       @media (width <= 1480px) {
         flex: 0 0 40%;
       }
@@ -111,14 +112,14 @@
   &__fieldset {
     display: flex;
     flex-direction: column;
-    gap: m.$portfolio-gap;
+    gap: s.$portfolio-gap;
     width: 100%;
-    color: m.$background-color-secondary;
+    color: s.$background-color-secondary;
     &__container {
       position: relative;
       display: flex;
       flex-direction: column;
-      min-width: calc(50% - m.$portfolio-gap / 2);
+      min-width: calc(50% - s.$portfolio-gap / 2);
       width: 100%;
       height: fit-content;
       &:last-of-type {

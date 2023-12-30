@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { myProjects } from '../../../../data/projects/myProjects';
+import { projectDatabase } from '../../../../assets/data/project-database/projectDatabase';
 
 //Prop drill from Portfolio page
 type PortHeaderType = {
@@ -13,7 +13,7 @@ type PortHeaderType = {
 /** Map project length array */
 const projectIndexArray: number[] = [];
 
-myProjects.forEach((_, index) => {
+projectDatabase.forEach((_, index) => {
   if (!projectIndexArray.includes(index)) projectIndexArray.push(index);
 });
 

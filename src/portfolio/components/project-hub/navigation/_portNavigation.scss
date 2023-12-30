@@ -1,5 +1,5 @@
-@use '../../../../../sass/functions' as f;
-@use '../../../../scss/portfolioStyles' as m;
+@use '/src/sass/functions' as f;
+@use '/src/portfolio/scss/portfolioStyles' as s;
 
 @keyframes PortFooterOut {
   0% {
@@ -34,21 +34,20 @@
 .portFooter {
   display: flex;
   align-items: center;
-  height: 100%;
-  max-height: 12svh;
-  padding: 0 calc(m.$box-model-viewport-x * 2) 0 m.$box-model-viewport-x;
+  height: 12svh;
+  padding: 0 calc(s.$box-model-viewport-x * 2) 0 s.$box-model-viewport-x;
   @media (width <= 1480px) {
-    padding: 0 m.$box-model-viewport-x;
+    padding: 0 s.$box-model-viewport-x;
   }
   @media (width <= 1000px) {
-    padding: calc(m.$box-model-viewport-x / 2) m.$box-model-viewport-x;
+    padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x;
   }
   &__nav {
     &__left,
     &__right {
       display: flex;
       align-items: center;
-      gap: m.$portfolio-gap;
+      gap: s.$portfolio-gap;
       flex: 1 1 50%;
       height: 100%;
       & h2 {
@@ -81,7 +80,7 @@
 .portFooter__nav__left {
   &__nav {
     display: flex;
-    gap: m.$portfolio-gap;
+    gap: s.$portfolio-gap;
   }
   & nav h2 {
     display: block;

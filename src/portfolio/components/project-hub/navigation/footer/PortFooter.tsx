@@ -1,7 +1,7 @@
 import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentTimeCDT from './components/CurrentTimeCDT';
-import { myProjects } from '../../../../data/projects/myProjects';
+import { projectDatabase } from '../../../../assets/data/project-database/projectDatabase';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;
@@ -13,7 +13,11 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
   const footerNavigationLeft = useRef<HTMLElement>(null);
   const footerNavigationRight = useRef<HTMLElement>(null);
 
-  const [navigationIndicator, setNavigationIndicator] = useState({ key: myProjects[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Demo Link' });
+  const [navigationIndicator, setNavigationIndicator] = useState({
+    key: projectDatabase[projectSlideIndex].key,
+    insights: 'Project Insights',
+    demoLink: 'Demo Link',
+  });
 
   useEffect(() => {
     const setFooterDataAttr = (transitionStatus: string) => {
@@ -23,10 +27,10 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
     footerNavigationLeft.current?.getAttribute('data-transition') === 'false' ? setFooterDataAttr('true') : setFooterDataAttr('false');
 
     setTimeout(() => {
-      if (myProjects[projectSlideIndex].key !== '' && myProjects[projectSlideIndex].url !== '') {
-        setNavigationIndicator({ key: myProjects[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Demo Link' });
-      } else if (myProjects[projectSlideIndex].key !== '' && myProjects[projectSlideIndex].url === '') {
-        setNavigationIndicator({ key: myProjects[projectSlideIndex].key, insights: 'Project Insights', demoLink: '' });
+      if (projectDatabase[projectSlideIndex].key !== '' && projectDatabase[projectSlideIndex].url !== '') {
+        setNavigationIndicator({ key: projectDatabase[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Demo Link' });
+      } else if (projectDatabase[projectSlideIndex].key !== '' && projectDatabase[projectSlideIndex].url === '') {
+        setNavigationIndicator({ key: projectDatabase[projectSlideIndex].key, insights: 'Project Insights', demoLink: '' });
       } else {
         setNavigationIndicator({ key: 'This project is unavailable', insights: '', demoLink: '' });
       }
@@ -82,7 +86,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
             }>
             {navigationIndicator.insights}
           </button>
-          <Link to={myProjects[projectSlideIndex].url} id='project-links' aria-label='Project Demo Link'>
+          <Link to={projectDatabase[projectSlideIndex].url} id='project-links' aria-label='Project Demo Link'>
             {navigationIndicator.demoLink}
           </Link>
         </nav>

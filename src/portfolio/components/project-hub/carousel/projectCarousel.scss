@@ -1,6 +1,18 @@
 @use '/src/sass/functions' as f;
 @use '/src/portfolio/scss/portfolioStyles' as s;
 
+.projectHub {
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  @media (width <= 1480px) {
+    height: max-content;
+  }
+  & h2 {
+    display: none;
+  }
+}
+
 @keyframes mainAnimatorOut {
   0% {
     trasform: scale(0);
@@ -46,7 +58,7 @@
   &[data-status='active'] {
     animation: mainAnimatorIn 1s forwards;
   }
-  @media (width <= 1000px) {
+  @media (width <= 1480px) {
     height: max-content;
   }
   &__track {
@@ -91,7 +103,7 @@
         height: auto;
       }
       @media (width <= 1000px) {
-        width: 92svw;
+        width: 90svw;
         aspect-ratio: unset;
       }
       & a {

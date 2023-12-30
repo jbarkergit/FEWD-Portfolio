@@ -1,5 +1,5 @@
-@use '../../../sass/functions' as f;
-@use '../../scss/portfolioStyles' as m;
+@use '/src/sass/functions' as f;
+@use '/src/portfolio/scss/portfolioStyles' as s;
 
 .portfolio {
   position: relative;
@@ -7,9 +7,9 @@
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   height: 100svh;
-  background-color: m.$background-color-primary;
+  background-color: s.$background-color-primary;
   overflow: hidden;
-  color: m.$font-color-primary;
+  color: s.$font-color-primary;
   font:
     normal normal 500 1.1rem / 1.25em 'Helvetica',
     'PT Sans',
@@ -18,7 +18,7 @@
   @media (width <= 1480px) {
     display: flex;
     flex-direction: column;
-    gap: m.$portfolio-gap;
+    gap: s.$portfolio-gap;
     height: auto;
   }
   & button,
@@ -48,13 +48,4 @@
 }
 .contactForm {
   grid-area: 1 / 2 / 3 / 3;
-}
-
-.projectHub {
-  display: flex;
-  flex-direction: column;
-  overflow: visible;
-  & h2 {
-    display: none;
-  }
 }

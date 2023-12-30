@@ -1,7 +1,7 @@
-import EcommerceInsights from '../insights/EcommerceInsights';
-import PortfolioInsights from '../insights/PortfolioInsights';
+import EcommerceInsights from '../project-insights/EcommerceInsights';
+import PortfolioInsights from '../project-insights/PortfolioInsights';
 
-export const myProjects = [
+export const projectDatabase = [
   {
     key: 'ecommerce',
     url: 'http://localhost:5173/ecommerce',
@@ -11,7 +11,7 @@ export const myProjects = [
       code_quality: ['eslint', 'prettier'],
     },
     insights: <EcommerceInsights />,
-    imgSrc: '/src/portfolio/assets/compressed-project-images/ecommerce-landing.png',
+    imgSrc: '/src/portfolio/assets/media/ecommerce-poster.png',
     imgAlt: 'Ecommerce Web Development Project',
     dataStatus: 'active',
   },
@@ -27,7 +27,7 @@ export const myProjects = [
       version_control: ['git', 'github'],
     },
     insights: <PortfolioInsights />,
-    imgSrc: '/src/portfolio/assets/compressed-project-images/ecommerce-landing.png',
+    imgSrc: '/src/portfolio/assets/media/portfolio-poster.png',
     imgAlt: 'Portfolio Project Hub',
     dataStatus: 'disabled',
   },

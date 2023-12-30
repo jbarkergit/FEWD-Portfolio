@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
-import AboutDeveloper from './components/AboutDeveloper';
-import ContactFormStandard from './components/ContactFormStandard';
+import { Dispatch, SetStateAction } from 'react';
+import AboutDeveloper from '../../components/contact-form/AboutDeveloper';
+import ContactFormStandard from '../../components/contact-form/ContactFormStandard';
 
 type PropDrillType = { featureState: Record<string, boolean>; setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>> };
 
