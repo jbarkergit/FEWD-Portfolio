@@ -1,7 +1,6 @@
 import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import CurrentTimeCDT from './components/CurrentTimeCDT';
-import { projectDatabase } from '../../../../assets/data/project-database/projectDatabase';
+import { projectDatabase } from '../../../assets/data/project-database/projectDatabase';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;
@@ -58,23 +57,31 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
     }
   }, [featureState]);
 
-  return (
-    <footer className='portFooter'>
-      {/* <section className='portFooter__nav__mobileLeft'>
-          <h2>Project links and information</h2>
-          {myProjects[projectSlideIndex].projectUrl !== '' ? (
-            <button aria-label='Open Demo Link'>
-              <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
-                <path fill='#ffffff' d='M16 18v2H5v-2h11Zm5-7v2H3v-2h18Zm-2-7v2H8V4h11Z'></path>
-              </svg>
-            </button>
-          ) : (
-            <span className='projectUnavailable'>This project is unavailable</span>
-          )}
-        </section> */}
+  /** Timezone CDT */
+  const [currentTime, setCurrentTime] = useState('');
 
-      <section className='portFooter__nav__left'>
-        <nav className='portFooter__nav__left__nav' aria-labelledby='project-links' ref={footerNavigationLeft}>
+  const getTime = () => {
+    setCurrentTime(
+      new Date().toLocaleTimeString('en-US', {
+        timeZone: 'America/Chicago',
+        hour12: true,
+        hour: 'numeric',
+        minute: '2-digit',
+      })
+    );
+  };
+
+  useEffect(() => {
+    getTime();
+    const interval = setInterval(getTime, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  /** TSX */
+  return (
+    <footer className='carouselNav'>
+      <section className='carouselNav__section'>
+        <nav className='carouselNav__section__left' aria-labelledby='project-links' ref={footerNavigationLeft}>
           <h2>{navigationIndicator.key}</h2>
           <button
             id='project-links'
@@ -92,8 +99,12 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
         </nav>
       </section>
 
-      <section className='portFooter__nav__right' ref={footerNavigationRight}>
-        <CurrentTimeCDT />
+      <section className='carouselNav__section' ref={footerNavigationRight}>
+        <div className='carouselNav__section__right'>
+          <span className='carouselNav__section__right--timezone'>
+            {currentTime} • CDT (GMT-5) <h2 style={{ display: 'none' }}>Current time in Central Daylight Time, GMT-5</h2>
+          </span>
+        </div>
       </section>
     </footer>
   );

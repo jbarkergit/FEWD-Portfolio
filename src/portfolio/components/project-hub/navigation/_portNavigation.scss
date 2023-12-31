@@ -31,9 +31,8 @@
   }
 }
 
-.portFooter {
+.carouselNav {
   display: flex;
-  align-items: center;
   height: 12svh;
   padding: 0 calc(s.$box-model-viewport-x * 2) 0 s.$box-model-viewport-x;
   @media (width <= 1480px) {
@@ -42,16 +41,21 @@
   @media (width <= 1000px) {
     padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x;
   }
-  &__nav {
+  &__section {
+    flex: 0 0 50%;
+    height: inherit;
     &__left,
     &__right {
       display: flex;
+      flex-wrap: nowrap;
       align-items: center;
       gap: s.$portfolio-gap;
-      flex: 1 1 50%;
-      height: 100%;
-      & h2 {
-        display: block;
+      height: inherit;
+      &[data-status='fadeOut'] {
+        animation: PortFooterOut 1s forwards;
+      }
+      &[data-status='fadeIn'] {
+        animation: PortFooterIn 1s forwards;
       }
       & h2,
       & nav button,
@@ -60,45 +64,76 @@
         white-space: nowrap;
       }
     }
-    &__left__nav,
-    &__right {
-      &[data-status='fadeOut'] {
-        animation: PortFooterOut 1s forwards;
-      }
-      &[data-status='fadeIn'] {
-        animation: PortFooterIn 1s forwards;
-      }
-    }
-    &__left__nav button {
-      @media (width <= 1480px) {
+    &__left {
+      & h2 {
         display: none;
       }
+      &__projectNav ul {
+        position: relative;
+        &:after {
+          content: url(https://api.iconify.design/solar:alt-arrow-up-bold.svg?color=%23ffffff);
+          position: absolute;
+          left: f.rem(2.5);
+          top: f.rem(24);
+          display: block;
+          transform: translateX(var(--afterPsuedoSelector));
+          transition: transform 0.35s ease;
+        }
+        & li button {
+          font-size: 1rem;
+          filter: brightness(60%);
+          transition: filter 360ms ease-in-out;
+          &.projectNavButtonActive {
+            filter: brightness(100%);
+          }
+        }
+      }
+    }
+    &__right {
+      justify-content: flex-end;
+      &__animator {
+        display: flex;
+        flex-direction: column;
+        gap: calc(s.$portfolio-gap / 6);
+        &--line {
+          width: 22px;
+          height: 2px;
+          background-color: s.$font-color-primary;
+          transition: transform 0.7s cubic-bezier(0.7, 0, 0, 1);
+          &:nth-of-type(1) {
+            &[data-status='active'] {
+              transform: rotate(45deg) translate(0px, 8px);
+            }
+          }
+          &:nth-of-type(2) {
+            &[data-status='active'] {
+              transform: translate(min(0, -500px));
+            }
+          }
+          &:nth-of-type(3) {
+            &[data-status='active'] {
+              transform: rotate(-45deg) translate(0px, -8px);
+            }
+          }
+        }
+      }
     }
   }
 }
 
-.portFooter__nav__left {
-  &__nav {
-    display: flex;
-    gap: s.$portfolio-gap;
-  }
-  & nav h2 {
-    display: block;
-    text-transform: uppercase;
-  }
+.carouselNav__section__left__projectNav ul,
+.carouselNav__section__right__nav {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: calc(s.$portfolio-gap / 2);
 }
 
-.portFooter__nav__right {
-  justify-content: flex-end;
-  &--timezone {
-    width: fit-content;
-    margin: 0;
-    text-transform: capitalize;
-  }
-}
-
-.portFooter__nav__mobileLeft {
-  @media (width > 1200px) {
-    display: none;
+.carouselNavHeaderRight {
+  clip-path: polygon(97% 0, 100% 0, 100% 100%, 97% 100%);
+  transition: clip-path 0.5s cubic-bezier(0.7, 0, 0, 1);
+  &[data-status='hovered'] {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transition: clip-path 0.7s cubic-bezier(0.7, 0, 0, 1);
   }
 }

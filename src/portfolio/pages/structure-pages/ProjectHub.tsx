@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
-import PortHeader from '../../components/project-hub/navigation/header/PortHeader';
+import PortHeader from '../../components/project-hub/navigation/PortHeader';
 import ProjectCarousel from '../../components/project-hub/carousel/ProjectCarousel';
-import PortFooter from '../../components/project-hub/navigation/footer/PortFooter';
+import PortFooter from '../../components/project-hub/navigation/PortFooter';
 
 type ProjectHubType = {
   projectSlideIndex: number;
