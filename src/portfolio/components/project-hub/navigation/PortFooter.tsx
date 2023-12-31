@@ -82,7 +82,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
     <footer className='carouselNav'>
       <section className='carouselNav__section'>
         <nav className='carouselNav__section__left' aria-labelledby='project-links' ref={footerNavigationLeft}>
-          <h2>{navigationIndicator.key}</h2>
+          <h2 data-status='visible'>{navigationIndicator.key}</h2>
           <button
             id='project-links'
             aria-label='Open Project Insights'

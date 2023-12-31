@@ -67,6 +67,9 @@
     &__left {
       & h2 {
         display: none;
+        &[data-status='visible'] {
+          display: block;
+        }
       }
       &__projectNav ul {
         position: relative;
