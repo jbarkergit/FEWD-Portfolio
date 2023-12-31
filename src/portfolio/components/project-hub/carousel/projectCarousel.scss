@@ -51,7 +51,7 @@
 .mainContent {
   height: 100%;
   max-height: 76svh;
-  overflow: visible clip;
+  overflow-x: visible;
   &[data-status='disabled'] {
     animation: mainAnimatorOut 1s forwards;
   }
@@ -83,7 +83,7 @@
       transition: s.$carousel-track-transition;
     }
     &__project {
-      width: 75.19%;
+      // width: 75.19%;
       height: inherit;
       max-height: inherit;
       // aspect-ratio: 1.99/1;
