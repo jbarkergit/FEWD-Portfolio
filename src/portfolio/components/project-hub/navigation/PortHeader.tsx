@@ -24,28 +24,40 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
 
   /** Component Transition Out */
   const initialRender = useRef<boolean>(true);
-  const carouselNavHeaderLeft = useRef<HTMLDivElement>(null);
+  const carouselNavSectionLeft = useRef<HTMLDivElement>(null);
+  const carouselNavSectionRight = useRef<HTMLDivElement>(null);
+  const carouselNavSectionRightNav = useRef<HTMLDivElement>(null);
+  const carouselNavSectionRightAnimator = useRef<HTMLDivElement>(null);
+
+  const getCarouselNavHeaderChildrenArray = (): HTMLElement[] => {
+    if ((carouselNavSectionLeft.current, carouselNavSectionRight.current, carouselNavSectionRightNav.current, carouselNavSectionRightAnimator.current)) {
+      return [
+        ...carouselNavSectionLeft.current!.children,
+        ...carouselNavSectionRight.current!.children,
+        ...carouselNavSectionRightNav.current!.children,
+        ...carouselNavSectionRightAnimator.current!.children,
+      ] as HTMLElement[];
+    } else {
+      return [];
+    }
+  };
 
   useEffect(() => {
     if (initialRender.current) initialRender.current = false;
 
-    const carouselNavHeaderChildrenArray: HTMLElement[] = [...carouselNavHeaderRight.current!.children, ...carouselNavHeaderLeft.current!.children] as HTMLElement[];
-
-    if (Object.values(featureState).some((value) => value === true) && carouselNavHeaderRight.current) {
+    if (Object.values(featureState).some((value) => value === true) && carouselNavSectionRight.current) {
       // Grid transition out animator
-      carouselNavHeaderChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeOut'));
+      getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeOut'));
     } else if (!initialRender) {
       // Grid transition in animator
-      setTimeout(() => carouselNavHeaderChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn')), 1000);
+      setTimeout(() => getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn')), 1000);
     } else {
       // Mount animator
-      carouselNavHeaderChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn'));
+      getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn'));
     }
   }, [featureState]);
 
-  /** carouselNavHeaderRight */
-  const carouselNavHeaderRight = useRef<HTMLDivElement>(null);
-
+  /** Section Right 'Menu' animator */
   const animatorLineArray = useRef<HTMLSpanElement[]>([]);
   const animatorLine = (reference: HTMLSpanElement) => {
     if (reference && !animatorLineArray.current.includes(reference)) animatorLineArray.current.push(reference);
@@ -54,7 +66,7 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
   return (
     <header className='carouselNav'>
       <section className='carouselNav__section'>
-        <div className='carouselNav__section__left' ref={carouselNavHeaderLeft}>
+        <div className='carouselNav__section__left' ref={carouselNavSectionLeft}>
           <h2>Navigate projects by number</h2>
           <span className='carouselNav__section__left--location'>{`Project 0${projectSlideIndex + 1}.`}</span>
           <nav className='carouselNav__section__left__projectNav' aria-labelledby='project-navigation'>
@@ -78,16 +90,16 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
       <section
         className='carouselNav__section'
         onPointerOver={() => {
-          carouselNavHeaderRight.current?.setAttribute('data-status', 'hovered');
+          carouselNavSectionRightNav.current?.setAttribute('data-status', 'hovered');
           animatorLineArray.current?.forEach((line: HTMLSpanElement) => line.setAttribute('data-status', 'active'));
         }}
         onPointerLeave={() => {
-          carouselNavHeaderRight.current?.removeAttribute('data-status');
+          carouselNavSectionRightNav.current?.removeAttribute('data-status');
           animatorLineArray.current?.forEach((line: HTMLSpanElement) => line.removeAttribute('data-status'));
         }}>
-        <div className='carouselNav__section__right carouselNavHeaderRight' ref={carouselNavHeaderRight}>
+        <div className='carouselNav__section__right' ref={carouselNavSectionRight}>
           <h2>Contact Form and GitHub Links</h2>
-          <nav className='carouselNav__section__right__nav' aria-labelledby='contact-and-external-links'>
+          <nav className='carouselNav__section__right__nav carouselNavHeaderRight' aria-labelledby='contact-and-external-links' ref={carouselNavSectionRightNav}>
             <button
               id='contact-and-external-links'
               aria-label='Contact Form'
@@ -102,7 +114,7 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
               GitHub
             </Link>
           </nav>
-          <div className='carouselNav__section__right__animator'>
+          <div className='carouselNav__section__right__animator' ref={carouselNavSectionRightAnimator}>
             <span className='carouselNav__section__right__animator--line' ref={animatorLine} />
             <span className='carouselNav__section__right__animator--line' ref={animatorLine} />
             <span className='carouselNav__section__right__animator--line' ref={animatorLine} />
