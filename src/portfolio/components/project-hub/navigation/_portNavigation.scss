@@ -1,7 +1,37 @@
 @use '/src/sass/functions' as f;
 @use '/src/portfolio/scss/portfolioStyles' as s;
 
-@keyframes PortFooterOut {
+@keyframes carouselNavHeaderOut {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  66% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes carouselNavHeaderIn {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  66% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes carouselNavFooterOut {
   0% {
     transform: translateY(0);
     opacity: 1;
@@ -16,18 +46,33 @@
   }
 }
 
-@keyframes PortFooterIn {
+@keyframes carouselNavFooterIn {
   0% {
     transform: translateY(100%);
     opacity: 0;
   }
   66% {
-    transform: translateY(0);
-    opacity: 1;
+    transform: translateY(100%);
+    opacity: 0;
   }
   100% {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@mixin animator {
+  &[data-status='carouselNavHeaderOut'] {
+    animation: carouselNavHeaderOut 1s forwards;
+  }
+  &[data-status='carouselNavHeaderIn'] {
+    animation: carouselNavHeaderIn 1s forwards;
+  }
+  &[data-status='carouselNavFooterOut'] {
+    animation: carouselNavFooterOut 1s forwards;
+  }
+  &[data-status='carouselNavFooterIn'] {
+    animation: carouselNavFooterIn 1s forwards;
   }
 }
 
@@ -52,12 +97,7 @@
       gap: s.$portfolio-gap;
       height: 100%;
       & > * {
-        &[data-status='fadeOut'] {
-          animation: PortFooterOut 1s forwards;
-        }
-        &[data-status='fadeIn'] {
-          animation: PortFooterIn 1s forwards;
-        }
+        @include animator;
       }
       & h2,
       & nav button,
@@ -67,6 +107,12 @@
       }
     }
     &__left {
+      & > * {
+        @include animator;
+      }
+      & > * {
+        @include animator;
+      }
       & h2 {
         display: none;
         &[data-activity='visible'] {
@@ -96,6 +142,9 @@
     }
     &__right {
       justify-content: flex-end;
+      & > * {
+        @include animator;
+      }
       &__animator {
         position: relative;
         display: flex;
@@ -125,12 +174,7 @@
       }
       &__nav {
         & > * {
-          &[data-status='fadeOut'] {
-            animation: PortFooterOut 1s forwards;
-          }
-          &[data-status='fadeIn'] {
-            animation: PortFooterIn 1s forwards;
-          }
+          @include animator;
         }
       }
     }

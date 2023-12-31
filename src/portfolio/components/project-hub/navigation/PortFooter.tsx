@@ -39,20 +39,26 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
   /** Component Transition Out */
   const initialRender = useRef<boolean>(true);
 
+  const getCarouselNavFooterChildrenArray = (): HTMLElement[] => {
+    if ((footerNavigationLeft.current, footerNavigationRight.current)) {
+      return [...footerNavigationLeft.current!.children, ...footerNavigationRight.current!.children] as HTMLElement[];
+    } else {
+      return [];
+    }
+  };
+
   useEffect(() => {
     if (initialRender.current) initialRender.current = false;
 
-    const carouselFooterChildrenArray: HTMLElement[] = [...footerNavigationLeft.current!.children, ...footerNavigationRight.current!.children] as HTMLElement[];
-
-    if (Object.values(featureState).some((value) => value === true) && footerNavigationLeft.current && footerNavigationRight.current) {
+    if (Object.values(featureState).some((value) => value === true)) {
       // Grid transition out animator
-      carouselFooterChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeOut'));
+      getCarouselNavFooterChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavFooterOut'));
     } else if (!initialRender) {
       // Grid transition in animator
-      setTimeout(() => carouselFooterChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn')), 1000);
+      setTimeout(() => getCarouselNavFooterChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavFooterIn')), 1000);
     } else {
       // Mount animator
-      carouselFooterChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn'));
+      getCarouselNavFooterChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavFooterIn'));
     }
   }, [featureState]);
 

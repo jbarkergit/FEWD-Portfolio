@@ -45,15 +45,15 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
   useEffect(() => {
     if (initialRender.current) initialRender.current = false;
 
-    if (Object.values(featureState).some((value) => value === true) && carouselNavSectionRight.current) {
+    if (Object.values(featureState).some((value) => value === true)) {
       // Grid transition out animator
-      getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeOut'));
+      getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavHeaderOut'));
     } else if (!initialRender) {
       // Grid transition in animator
-      setTimeout(() => getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn')), 1000);
+      setTimeout(() => getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavHeaderIn')), 1000);
     } else {
       // Mount animator
-      getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn'));
+      getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavHeaderIn'));
     }
   }, [featureState]);
 
