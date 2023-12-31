@@ -23,25 +23,23 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
   }, [projectSlideIndex]);
 
   /** Component Transition Out */
-  const portHeaderSections = useRef<HTMLElement[]>([]);
-  const portHeaderSection = (reference: HTMLElement) => {
-    if (reference && !portHeaderSections.current.includes(reference)) portHeaderSections.current?.push(reference);
-  };
-
   const initialRender = useRef<boolean>(true);
+  const carouselNavHeaderLeft = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (initialRender.current) initialRender.current = false;
 
-    if (Object.values(featureState).some((value) => value === true) && portHeaderSections.current) {
+    const carouselNavHeaderChildrenArray: HTMLElement[] = [...carouselNavHeaderRight.current!.children, ...carouselNavHeaderLeft.current!.children] as HTMLElement[];
+
+    if (Object.values(featureState).some((value) => value === true) && carouselNavHeaderRight.current) {
       // Grid transition out animator
-      portHeaderSections.current?.forEach((section: HTMLElement) => section.setAttribute('data-status', 'fadeOut'));
+      carouselNavHeaderChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeOut'));
     } else if (!initialRender) {
       // Grid transition in animator
-      setTimeout(() => portHeaderSections.current?.forEach((section: HTMLElement) => section.setAttribute('data-status', 'fadeIn')), 1000);
+      setTimeout(() => carouselNavHeaderChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn')), 1000);
     } else {
       // Mount animator
-      portHeaderSections.current?.forEach((section: HTMLElement) => section.setAttribute('data-status', 'fadeIn'));
+      carouselNavHeaderChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn'));
     }
   }, [featureState]);
 
@@ -55,8 +53,8 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
 
   return (
     <header className='carouselNav'>
-      <section className='carouselNav__section' ref={portHeaderSection}>
-        <div className='carouselNav__section__left'>
+      <section className='carouselNav__section'>
+        <div className='carouselNav__section__left' ref={carouselNavHeaderLeft}>
           <h2>Navigate projects by number</h2>
           <span className='carouselNav__section__left--location'>{`Project 0${projectSlideIndex + 1}.`}</span>
           <nav className='carouselNav__section__left__projectNav' aria-labelledby='project-navigation'>
@@ -79,7 +77,6 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
 
       <section
         className='carouselNav__section'
-        ref={portHeaderSection}
         onPointerOver={() => {
           carouselNavHeaderRight.current?.setAttribute('data-status', 'hovered');
           animatorLineArray.current?.forEach((line: HTMLSpanElement) => line.setAttribute('data-status', 'active'));

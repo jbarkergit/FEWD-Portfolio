@@ -51,11 +51,13 @@
       align-items: center;
       gap: s.$portfolio-gap;
       height: inherit;
-      &[data-status='fadeOut'] {
-        animation: PortFooterOut 1s forwards;
-      }
-      &[data-status='fadeIn'] {
-        animation: PortFooterIn 1s forwards;
+      & > * {
+        &[data-status='fadeOut'] {
+          animation: PortFooterOut 1s forwards;
+        }
+        &[data-status='fadeIn'] {
+          animation: PortFooterIn 1s forwards;
+        }
       }
       & h2,
       & nav button,

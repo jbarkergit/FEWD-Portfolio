@@ -10,7 +10,7 @@ type ProjectNavPropType = {
 
 const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: ProjectNavPropType) => {
   const footerNavigationLeft = useRef<HTMLElement>(null);
-  const footerNavigationRight = useRef<HTMLElement>(null);
+  const footerNavigationRight = useRef<HTMLDivElement>(null);
 
   const [navigationIndicator, setNavigationIndicator] = useState({
     key: projectDatabase[projectSlideIndex].key,
@@ -42,18 +42,17 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
   useEffect(() => {
     if (initialRender.current) initialRender.current = false;
 
+    const carouselFooterChildrenArray: HTMLElement[] = [...footerNavigationLeft.current!.children, ...footerNavigationRight.current!.children] as HTMLElement[];
+
     if (Object.values(featureState).some((value) => value === true) && footerNavigationLeft.current && footerNavigationRight.current) {
       // Grid transition out animator
-      [footerNavigationLeft, footerNavigationRight].forEach((section: RefObject<HTMLElement>) => section.current?.setAttribute('data-status', 'fadeOut'));
+      carouselFooterChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeOut'));
     } else if (!initialRender) {
       // Grid transition in animator
-      setTimeout(
-        () => [footerNavigationLeft, footerNavigationRight].forEach((section: RefObject<HTMLElement>) => section.current?.setAttribute('data-status', 'fadeIn')),
-        1000
-      );
+      setTimeout(() => carouselFooterChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn')), 1000);
     } else {
       // Mount animator
-      [footerNavigationLeft, footerNavigationRight].forEach((section: RefObject<HTMLElement>) => section.current?.setAttribute('data-status', 'fadeIn'));
+      carouselFooterChildrenArray.forEach((element: HTMLElement) => element.setAttribute('data-status', 'fadeIn'));
     }
   }, [featureState]);
 
@@ -99,8 +98,8 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
         </nav>
       </section>
 
-      <section className='carouselNav__section' ref={footerNavigationRight}>
-        <div className='carouselNav__section__right'>
+      <section className='carouselNav__section'>
+        <div className='carouselNav__section__right' ref={footerNavigationRight}>
           <span className='carouselNav__section__right--timezone'>
             {currentTime} • CDT (GMT-5) <h2 style={{ display: 'none' }}>Current time in Central Daylight Time, GMT-5</h2>
           </span>
