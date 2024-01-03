@@ -68,6 +68,9 @@
     gap: s.$portfolio-gap;
     padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x s.$box-model-viewport-x s.$box-model-viewport-x;
   }
+  @media (width <= 460px) {
+    padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x calc(s.$box-model-viewport-x * 2) s.$box-model-viewport-x;
+  }
   &__technology {
     position: relative;
     display: table;
@@ -84,6 +87,7 @@
         line-height: 300%;
         @media (width <= 460px) {
           text-align: center;
+          line-height: 200%;
         }
       }
       &__tech {
@@ -101,6 +105,9 @@
           font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
           text-transform: capitalize;
           white-space: nowrap;
+          @media (width <= 460px) {
+            padding: s.$portfolio-gap 0 0 0;
+          }
         }
         &__values {
           display: flex;

@@ -78,17 +78,16 @@
 
 .carouselNav {
   display: flex;
-  height: 12svh;
-  padding: 0 calc(s.$box-model-viewport-x * 2) 0 s.$box-model-viewport-x;
-  @media (width <= 1480px) {
+  height: 120px;
+  padding: 0 17.5% 0 s.$box-model-viewport-x;
+  @media (width <= 950px) {
     padding: 0 s.$box-model-viewport-x;
-  }
-  @media (width <= 1000px) {
-    padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x;
   }
   &__section {
     flex: 0 0 50%;
-    height: inherit;
+    @media (width <= 950px) {
+      display: none;
+    }
     &__left,
     &__right {
       display: flex;
@@ -98,6 +97,7 @@
       height: 100%;
       & > * {
         @include animator;
+        white-space: nowrap;
       }
       & h2,
       & nav button,
@@ -144,6 +144,9 @@
       justify-content: flex-end;
       & > * {
         @include animator;
+      }
+      @media (width <= 950px) {
+        // display: none;
       }
       &__animator {
         position: relative;
@@ -195,5 +198,47 @@
   &[data-status='hovered'] {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     transition: clip-path 360ms cubic-bezier(0.7, 0, 0, 1);
+  }
+}
+
+.carouselMobileNav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  place-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 120px;
+  z-index: 20;
+  padding: 0 s.$box-model-viewport-x;
+  @media (width > 950px) {
+    display: none;
+  }
+  & h2 {
+    display: none;
+  }
+  &__section {
+    display: flex;
+    gap: s.$portfolio-gap;
+    & > * {
+      width: fit-content;
+    }
+  }
+  &__action {
+    display: flex;
+    align-items: center;
+  }
+  &__menu {
+    background-color: s.$background-color-cream;
+    &[data-status='disabled'] {
+      display: none;
+    }
+  }
+  & > * {
+    flex: 0 1 50%;
+    &:last-child {
+      justify-content: flex-end;
+    }
   }
 }

@@ -86,7 +86,6 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
           </nav>
         </div>
       </section>
-
       <section
         className='carouselNav__section'
         onPointerOver={() => {
@@ -121,6 +120,48 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
           </div>
         </div>
       </section>
+
+      <section className='carouselMobileNav'>
+        <h2>General Links</h2>
+
+        <div className='carouselMobileNav__section'>
+          <span className='carouselNav__section__left--location'>{`Project 0${projectSlideIndex + 1}.`}</span>
+          <nav className='carouselNav__section__left__projectNav' aria-labelledby='project-navigation'>
+            <ul ref={unorderedListRef}>
+              {projectDatabase.map((_, index) => (
+                <li key={_.key + index}>
+                  <button
+                    className={`${projectSlideIndex === index ? 'projectNavButtonActive' : ''}`}
+                    id='project-navigation'
+                    aria-label={`View ${_.key} Project`}
+                    onClick={() => setProjectSlideIndex(index)}>
+                    0{index + 1}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+
+        <div className='carouselMobileNav__section'>
+          <button className='carouselMobileNav__action'>
+            Menu
+            <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
+              <path fill='#ffffff' d='m12 15l-5-5h10z'></path>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <div className='carouselMobileNav__menu' data-status='disabled'>
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+        <Link to='' aria-label='GitHub Profile'>
+          GitHub Profile
+        </Link>
+      </div>
     </header>
   );
 };
