@@ -124,7 +124,7 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
 
       <section className='carouselNav__section'>
         <div className='carouselNav__section__mobile'>
-          <button className='carouselNav__section__mobile--menu' aria-label='Open link menu' onClick={() => }>
+          <button className='carouselNav__section__mobile--menu' aria-label='Open link menu'>
             Menu
             <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
               <path fill='#ffffff' d='m12 15l-5-5h10z'></path>
