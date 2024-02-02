@@ -1,0 +1,55 @@
+@use '/src/sass/functions' as f;
+@use '/src/portfolio/scss/portfolioStyles' as s;
+
+.portMobileMenu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  z-index: 30;
+  background-color: s.$background-color-secondary;
+  opacity: 1;
+  pointer-events: all;
+  &[data-status='false'] {
+    opacity: 0;
+    pointer-events: none;
+  }
+  &__nav {
+    width: inherit;
+    height: inherit;
+    color: s.$font-color-secondary;
+    font-size: f.rem(32);
+    font-weight: 600;
+    line-height: 150%;
+    &__header,
+    &__footer {
+      display: flex;
+      height: 120px;
+      &__block {
+        flex: 0 0 50%;
+        &:nth-of-type(2) {
+          justify-content: flex-end;
+        }
+      }
+    }
+    &__projects {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: inherit;
+      height: 100%;
+      padding: 25% 0;
+      &__li {
+        text-align: center;
+        width: 100%;
+        height: auto;
+        max-height: f.rem(320);
+        &--link,
+        &--button {
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}

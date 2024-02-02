@@ -4,9 +4,6 @@
 // Main Grid Styles
 @forward '/src/portfolio/pages/application-page/portfolioPage';
 
-// Mobile Navigation Menu
-@forward '/src/portfolio/components/project-hub/navigation/mobile/portMobileNav';
-
 // Project Hub Component
 @forward '/src/portfolio/components/project-hub/carousel/projectCarousel.scss';
 @forward '/src/portfolio/components/project-hub/navigation/portNavigation';
@@ -16,3 +13,6 @@
 
 // Contact Form Component
 @forward '/src/portfolio/components/contact-form/contactForm';
+
+// Mobile Menu
+@forward '/src/portfolio/components/mobile-menu/portMobileMenu';

@@ -1,17 +1,28 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, MutableRefObject, SetStateAction, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { projectDatabase } from '../../../assets/data/project-database/projectDatabase';
 
 //Prop drill from Portfolio page
-type PortHeaderType = {
+type PropDrillType = {
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
   featureState: Record<string, boolean>;
   setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
+  portMobileMenu: boolean;
+  setPortMobileMenu: Dispatch<SetStateAction<boolean>>;
+  portMobileMenuRef: MutableRefObject<HTMLElement | null>;
 };
 
 /** Component */
-const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PortHeaderType): JSX.Element => {
+const PortHeader = ({
+  projectSlideIndex,
+  setProjectSlideIndex,
+  featureState,
+  setFeatureState,
+  portMobileMenu,
+  setPortMobileMenu,
+  portMobileMenuRef,
+}: PropDrillType): JSX.Element => {
   //** Arrow position references & logic */
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];
@@ -62,10 +73,6 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
   const animatorLine = (reference: HTMLSpanElement) => {
     if (reference && !animatorLineArray.current.includes(reference)) animatorLineArray.current.push(reference);
   };
-
-  /** Carousel Navigation Menu */
-  const carouselNavMenu = useRef<HTMLElement>(null);
-  const [carouselNavMenuState, setCarouselNavMenuState] = useState<boolean>(false);
 
   return (
     <header className='carouselNav'>
@@ -132,12 +139,14 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
             className='carouselNav__section__mobile--menu'
             aria-label='Open link menu'
             onClick={() => {
-              if (carouselNavMenuState) {
-                carouselNavMenu.current?.setAttribute('data-status', 'active');
-                setCarouselNavMenuState(false);
-              } else {
-                carouselNavMenu.current?.setAttribute('data-status', 'false');
-                setCarouselNavMenuState(true);
+              if (portMobileMenuRef.current) {
+                if (portMobileMenu) {
+                  portMobileMenuRef.current.setAttribute('data-status', 'active');
+                  setPortMobileMenu(false);
+                } else {
+                  portMobileMenuRef.current.setAttribute('data-status', 'false');
+                  setPortMobileMenu(true);
+                }
               }
             }}>
             Menu
@@ -146,42 +155,6 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
             </svg>
           </button>
         </div>
-      </section>
-
-      <section className='carouselNavMenu' ref={carouselNavMenu} data-status={`false`}>
-        <nav className='carouselNavMenu__nav'>
-          <ul className='carouselNavMenu__nav__ul' aria-labelledby='contact-github-and-project-demo-preview-navigators'>
-            <li className='carouselNavMenu__nav__ul__li' id='contact-github-and-project-demo-preview-navigators'>
-              <button
-                className='carouselNavMenu__nav__ul__li--button'
-                aria-label='Contact Form'
-                onClick={() =>
-                  featureState.contactFormActive
-                    ? setFeatureState({ ...featureState, contactFormActive: false })
-                    : setFeatureState({ ...featureState, contactFormActive: true })
-                }>
-                Contact
-              </button>
-            </li>
-            <li className='carouselNavMenu__nav__ul__li' id='contact-github-and-project-demo-preview-navigators'>
-              <Link to='https://github.com/jbarkergit' className='carouselNavMenu__nav__ul__li--link' target='_blank' aria-label='Visit GitHub Profile'>
-                GitHub
-              </Link>
-            </li>
-
-            {projectDatabase.map((_, index) => (
-              <li className='carouselNavMenu__nav__ul__li' key={_.key + index}>
-                <button
-                  className='carouselNavMenu__nav__ul__li--button'
-                  id='contact-github-and-project-demo-preview-navigators'
-                  aria-label={`View ${_.key} Project`}
-                  onClick={() => setProjectSlideIndex(index)}>
-                  0{index + 1}. {_.key}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
       </section>
     </header>
   );

@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import ProjectHub from '../structure-pages/ProjectHub';
 import ProjectDetails from '../structure-pages/ProjectInsights';
 import ContactForm from '../structure-pages/ContactForm';
+import PortMobileMenu from '../../components/mobile-menu/PortMobileMenu';
 
 /** Component */
 const Portfolio = (): JSX.Element => {
@@ -73,10 +74,23 @@ const Portfolio = (): JSX.Element => {
     return () => window.removeEventListener('resize', invokeFeatureScroll);
   }, [featureState]);
 
+  /** Carousel Navigation Menu */
+  const portMobileMenuRefReceiver = useRef<HTMLElement | null>(null);
+  const portMobileMenuRef: MutableRefObject<HTMLElement | null> = portMobileMenuRefReceiver;
+  const [portMobileMenu, setPortMobileMenu] = useState<boolean>(false);
+
   /** Portfolio */
   return (
     <div className='portfolio' ref={portfolioRef}>
-      <ProjectHub projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
+      <ProjectHub
+        projectSlideIndex={projectSlideIndex}
+        setProjectSlideIndex={setProjectSlideIndex}
+        featureState={featureState}
+        setFeatureState={setFeatureState}
+        portMobileMenu={portMobileMenu}
+        setPortMobileMenu={setPortMobileMenu}
+        portMobileMenuRef={portMobileMenuRef}
+      />
       <ProjectDetails
         projectSlideIndex={projectSlideIndex}
         setProjectSlideIndex={setProjectSlideIndex}
@@ -84,6 +98,15 @@ const Portfolio = (): JSX.Element => {
         setFeatureState={setFeatureState}
       />
       <ContactForm featureState={featureState} setFeatureState={setFeatureState} />
+      <PortMobileMenu
+        setProjectSlideIndex={setProjectSlideIndex}
+        featureState={featureState}
+        setFeatureState={setFeatureState}
+        portMobileMenu={portMobileMenu}
+        setPortMobileMenu={setPortMobileMenu}
+        portMobileMenuRef={portMobileMenuRef}
+        ref={portMobileMenuRefReceiver}
+      />
     </div>
   );
 };
