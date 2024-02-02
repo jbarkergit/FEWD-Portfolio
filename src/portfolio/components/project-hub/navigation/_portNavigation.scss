@@ -83,15 +83,21 @@
   @media (width <= 950px) {
     padding: 0 s.$box-model-viewport-x;
   }
+  &--footer {
+    @media (width <= 1480px) {
+      display: none;
+      padding: 0 s.$box-model-viewport-x;
+    }
+  }
   &__section {
     flex: 0 0 50%;
     &:nth-child(2) {
-      @media (width <= 950px) {
+      @media (width <= 1480px) {
         display: none;
       }
     }
     &:nth-child(3) {
-      @media (width > 950px) {
+      @media (width > 1480px) {
         display: none;
       }
     }

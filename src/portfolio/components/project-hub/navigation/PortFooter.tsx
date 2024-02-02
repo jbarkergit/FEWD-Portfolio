@@ -84,7 +84,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
 
   /** TSX */
   return (
-    <footer className='carouselNav'>
+    <footer className='carouselNav carouselNav--footer'>
       <section className='carouselNav__section'>
         <nav className='carouselNav__section__left' aria-labelledby='project-links' ref={footerNavigationLeft}>
           <h2 data-activity='visible'>{navigationIndicator.key}</h2>

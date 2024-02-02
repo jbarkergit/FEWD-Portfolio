@@ -62,7 +62,7 @@
   &[data-status='active'] {
     animation: mainAnimatorIn 1s forwards;
   }
-  @media (width <= 950px) {
+  @media (width <= 1480px) {
     height: max-content;
   }
   &__track {
