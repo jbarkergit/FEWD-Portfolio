@@ -19,7 +19,7 @@ export const projectDatabase = [
     key: '2024 portfolio',
     url: '',
     technologies: {
-      libraries: ['react', 'react router', 'lenis', 'uuid'],
+      libraries: ['react', 'react router', 'uuid'],
       web_technologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
       code_quality: ['eslint', 'prettier'],
       build_tools: ['vite'],
