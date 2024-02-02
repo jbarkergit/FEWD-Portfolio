@@ -79,6 +79,13 @@ const Portfolio = (): JSX.Element => {
   const portMobileMenuRef: MutableRefObject<HTMLElement | null> = portMobileMenuRefReceiver;
   const [portMobileMenu, setPortMobileMenu] = useState<boolean>(false);
 
+  const usePortMobileMenu = () => {
+    if (portMobileMenuRef) {
+      portMobileMenuRef.current?.setAttribute('data-status', !portMobileMenu ? 'active' : 'false');
+      setPortMobileMenu(!portMobileMenu);
+    }
+  };
+
   /** Portfolio */
   return (
     <div className='portfolio' ref={portfolioRef}>
@@ -90,6 +97,7 @@ const Portfolio = (): JSX.Element => {
         portMobileMenu={portMobileMenu}
         setPortMobileMenu={setPortMobileMenu}
         portMobileMenuRef={portMobileMenuRef}
+        usePortMobileMenu={usePortMobileMenu}
       />
       <ProjectDetails
         projectSlideIndex={projectSlideIndex}
@@ -106,6 +114,7 @@ const Portfolio = (): JSX.Element => {
         setPortMobileMenu={setPortMobileMenu}
         portMobileMenuRef={portMobileMenuRef}
         ref={portMobileMenuRefReceiver}
+        usePortMobileMenu={usePortMobileMenu}
       />
     </div>
   );

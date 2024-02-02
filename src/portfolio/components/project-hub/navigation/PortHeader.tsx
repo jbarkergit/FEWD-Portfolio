@@ -11,6 +11,7 @@ type PropDrillType = {
   portMobileMenu: boolean;
   setPortMobileMenu: Dispatch<SetStateAction<boolean>>;
   portMobileMenuRef: MutableRefObject<HTMLElement | null>;
+  usePortMobileMenu: () => void;
 };
 
 /** Component */
@@ -22,6 +23,7 @@ const PortHeader = ({
   portMobileMenu,
   setPortMobileMenu,
   portMobileMenuRef,
+  usePortMobileMenu,
 }: PropDrillType): JSX.Element => {
   //** Arrow position references & logic */
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
@@ -135,20 +137,7 @@ const PortHeader = ({
 
       <section className='carouselNav__section'>
         <div className='carouselNav__section__mobile'>
-          <button
-            className='carouselNav__section__mobile--menu'
-            aria-label='Open link menu'
-            onClick={() => {
-              if (portMobileMenuRef.current) {
-                if (portMobileMenu) {
-                  portMobileMenuRef.current.setAttribute('data-status', 'active');
-                  setPortMobileMenu(false);
-                } else {
-                  portMobileMenuRef.current.setAttribute('data-status', 'false');
-                  setPortMobileMenu(true);
-                }
-              }
-            }}>
+          <button className='carouselNav__section__mobile--menu' aria-label='Open link menu' onClick={() => usePortMobileMenu()}>
             Menu
             <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
               <path fill='#ffffff' d='m12 15l-5-5h10z'></path>

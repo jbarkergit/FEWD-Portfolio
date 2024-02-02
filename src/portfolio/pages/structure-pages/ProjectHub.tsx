@@ -11,6 +11,7 @@ type ProjectHubType = {
   portMobileMenu: boolean;
   setPortMobileMenu: Dispatch<SetStateAction<boolean>>;
   portMobileMenuRef: MutableRefObject<HTMLElement | null>;
+  usePortMobileMenu: () => void;
 };
 
 const ProjectHub = ({
@@ -21,6 +22,7 @@ const ProjectHub = ({
   portMobileMenu,
   setPortMobileMenu,
   portMobileMenuRef,
+  usePortMobileMenu,
 }: ProjectHubType) => {
   return (
     <section className='projectHub'>
@@ -33,6 +35,7 @@ const ProjectHub = ({
         portMobileMenu={portMobileMenu}
         setPortMobileMenu={setPortMobileMenu}
         portMobileMenuRef={portMobileMenuRef}
+        usePortMobileMenu={usePortMobileMenu}
       />
       <ProjectCarousel
         projectSlideIndex={projectSlideIndex}

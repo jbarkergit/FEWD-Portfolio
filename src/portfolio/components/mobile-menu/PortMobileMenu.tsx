@@ -8,10 +8,14 @@ type PropDrillType = {
   portMobileMenu: boolean;
   setPortMobileMenu: Dispatch<SetStateAction<boolean>>;
   portMobileMenuRef: MutableRefObject<HTMLElement | null>;
+  usePortMobileMenu: () => void;
 };
 
 const PortMobileMenu = forwardRef<HTMLElement, PropDrillType>(
-  ({ setProjectSlideIndex, featureState, setFeatureState, portMobileMenu, setPortMobileMenu, portMobileMenuRef }: PropDrillType, ref: ForwardedRef<HTMLElement>) => {
+  (
+    { setProjectSlideIndex, featureState, setFeatureState, portMobileMenu, setPortMobileMenu, portMobileMenuRef, usePortMobileMenu }: PropDrillType,
+    ref: ForwardedRef<HTMLElement>
+  ) => {
     return (
       <section className='portMobileMenu' ref={ref} data-status={'false'}>
         <nav className='portMobileMenu__nav'>
@@ -20,20 +24,7 @@ const PortMobileMenu = forwardRef<HTMLElement, PropDrillType>(
               <button>Justin Barker</button>
             </div>
             <div className='portMobileMenu__nav__header__block'>
-              <button
-                className='carouselNav__section__mobile--menu'
-                aria-label='Open link menu'
-                onClick={() => {
-                  if (portMobileMenuRef) {
-                    if (portMobileMenu) {
-                      portMobileMenuRef.current?.setAttribute('data-status', 'active');
-                      setPortMobileMenu(false);
-                    } else {
-                      portMobileMenuRef.current?.setAttribute('data-status', 'false');
-                      setPortMobileMenu(true);
-                    }
-                  }
-                }}>
+              <button className='carouselNav__section__mobile--menu' aria-label='Open link menu' onClick={() => usePortMobileMenu()}>
                 Menu
                 <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
                   <path fill='#ffffff' d='m12 15l-5-5h10z'></path>
