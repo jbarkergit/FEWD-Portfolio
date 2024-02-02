@@ -22,9 +22,7 @@ const ecommerceKeyValuePairs = [
   { path: '/ecommerce/product/:paramId', element: './ecommerce/pages/ProductDetailPage' },
 ];
 
-const discordCloneKeyValuePairs = [{ path: '/discord-clone', element: './discord-clone/pages/DiscordClone' }];
-
-const initialKeyValuePairs = [portfolioKeyValuePairs[0], ecommerceKeyValuePairs[0], discordCloneKeyValuePairs[0]];
+const initialKeyValuePairs = [portfolioKeyValuePairs[0], ecommerceKeyValuePairs[0]];
 
 type GlobalKeyValuePairsType = (
   | {
@@ -37,7 +35,7 @@ type GlobalKeyValuePairsType = (
     }
 )[];
 
-const globalKeyValuePairs: GlobalKeyValuePairsType = [...portfolioKeyValuePairs, ...ecommerceKeyValuePairs, ...discordCloneKeyValuePairs];
+const globalKeyValuePairs: GlobalKeyValuePairsType = [...portfolioKeyValuePairs, ...ecommerceKeyValuePairs];
 
 type RoutesType = { path: string; module: JSX.Element };
 
