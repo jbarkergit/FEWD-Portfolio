@@ -27,20 +27,21 @@ const PortMobileMenu = forwardRef<HTMLElement, PropDrillType>(
               <button className='carouselNav__section__mobile--menu' aria-label='Open link menu' onClick={() => usePortMobileMenu()}>
                 Menu
                 <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
-                  <path fill='#ffffff' d='m12 15l-5-5h10z'></path>
+                  <path fill='#000000' d='m12 15l-5-5h10z'></path>
                 </svg>
               </button>
             </div>
           </section>
           <ul className='portMobileMenu__nav__projects' aria-labelledby='project-demo-navigation'>
             {projectDatabase.map((_, index) => (
-              <li className='portMobileMenu__nav__ul__li' key={_.key + index}>
+              <li className='portMobileMenu__nav__projects__li' key={_.key + index}>
                 <button
-                  className='portMobileMenu__nav__ul__li--button'
+                  className='portMobileMenu__nav__projects__li--button'
                   id='project-demo-navigation'
                   aria-label={`View ${_.key} Project`}
                   onClick={() => setProjectSlideIndex(index)}>
-                  0{index + 1}. {_.key}
+                  <span>0{index + 1}.</span>
+                  <span>{_.key}</span>
                 </button>
               </li>
             ))}
