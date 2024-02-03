@@ -22,7 +22,9 @@ const ecommerceKeyValuePairs = [
   { path: '/ecommerce/product/:paramId', element: './ecommerce/pages/ProductDetailPage' },
 ];
 
-const initialKeyValuePairs = [portfolioKeyValuePairs[0], ecommerceKeyValuePairs[0]];
+const filmDatabaseKeyValuePairs = [{ path: ['/film-database'], element: './film-database/pages/FilmDatabase.tsx' }];
+
+const initialKeyValuePairs = [portfolioKeyValuePairs[0], ecommerceKeyValuePairs[0], filmDatabaseKeyValuePairs[0]];
 
 type GlobalKeyValuePairsType = (
   | {
@@ -35,7 +37,7 @@ type GlobalKeyValuePairsType = (
     }
 )[];
 
-const globalKeyValuePairs: GlobalKeyValuePairsType = [...portfolioKeyValuePairs, ...ecommerceKeyValuePairs];
+const globalKeyValuePairs: GlobalKeyValuePairsType = [...portfolioKeyValuePairs, ...ecommerceKeyValuePairs, ...filmDatabaseKeyValuePairs];
 
 type RoutesType = { path: string; module: JSX.Element };
 
@@ -95,6 +97,7 @@ function App() {
       // Note: Portfolio && Discord Clone handle their imports locally because they're SPAs
       // IMPORTANT NOTE: DON'T FORGET TO SLICE LANDING PAGES!
       if (location.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
+      if (location.startsWith('/film-database')) useRouteSetter(filmDatabaseKeyValuePairs.slice(0));
     }
   }, [location]);
 
@@ -127,6 +130,8 @@ function App() {
         ))}
 
         <Route path='/ecommerce/discord-clone' element={useModule('/ecommerce/discord-clone')?.module} />
+
+        <Route path='/film-database' element={useModule('/film-database')?.module} />
       </Routes>
     </Suspense>
   );
