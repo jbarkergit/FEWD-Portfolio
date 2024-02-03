@@ -1,2 +1,40 @@
 // @use '../scss/filmDatabaseStyles' as s;
 @use '../../sass/functions' as f;
+
+:root {
+  //controller
+  --fd-carousel-items-per-page: 5;
+  --fd-carousel-gutter: 20px;
+
+  //font styles
+
+  //border box
+
+  //gaps
+  --fd-gap-carousel: calc();
+
+  //background colors
+  --fd-background-color-primary: #1e2126;
+  --fd-background-color-fallback: #040405;
+  --fd-background-color-navigation: #16181d;
+
+  //background gradients
+  --fd-gradient-1: #fff;
+
+  //font colors
+  --fd-font-color-primary: #fff;
+  --fd-font-color-secondary: #909296;
+  --fd-font-color-brand: #1ce783;
+}
+
+.filmDatabase {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100svh;
+  width: 100%;
+  background-color: var(--fd-background-color-primary);
+
+  color: var(--fd-font-color-primary);
+  font-size: f.rem(18);
+}
