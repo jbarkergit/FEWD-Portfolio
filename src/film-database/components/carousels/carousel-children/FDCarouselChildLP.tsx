@@ -1,4 +1,5 @@
 import { useCreateCarouselProps } from '../../../component-creation/useCreateCarousel';
+import useCreatePicture from '../../../component-creation/useCreatePicture';
 import { IcRoundPlayCircle } from '../../../icons/IcRoundPlayCircle';
 import { PhDotsThreeVerticalBold } from '../../../icons/PhDotsThreeVerticalBold';
 
@@ -15,21 +16,11 @@ const FDCarouselChildLP = () => {
           </picture>
         </figure>
         <div className='fdCarousel__block__overlay'>
-          <button className='fdCarousel__block__overlay__play'>
-            <figure>
-              <picture>
-                <IcRoundPlayCircle />
-                <figcaption>Play Trailer</figcaption>
-              </picture>
-            </figure>
+          <button aria-label='Play Trailer'>
+            {useCreatePicture({ svg: <IcRoundPlayCircle />, alt: 'More Information', figcaption: 'More Information Selector' })}
           </button>
-          <button className='fdCarousel__block__overlay__information'>
-            <figure>
-              <picture>
-                <PhDotsThreeVerticalBold />
-                <figcaption>More Information</figcaption>
-              </picture>
-            </figure>
+          <button aria-label='More Information'>
+            {useCreatePicture({ svg: <PhDotsThreeVerticalBold />, alt: 'More Information', figcaption: 'More Information Selector' })}
           </button>
         </div>
       </div>

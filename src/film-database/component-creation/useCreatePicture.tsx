@@ -5,7 +5,7 @@ type useCreatePictureType = {
   figcaption: string;
 };
 
-export const useCreatePicture = ({ svg, src, alt, figcaption }: useCreatePictureType) => {
+const useCreatePicture = ({ svg, src, alt, figcaption }: useCreatePictureType) => {
   return (
     <figure>
       <picture>

@@ -29,25 +29,14 @@ export const useCreateCarouselProps = () => {
 const useCreateCarousel = ({ ...props }: useCreateCarouselPropTypes) => {
   return (
     <section className='fdCarousel'>
-      <UseCreateCarouselContext.Provider value={props}>
-        <FDCarouselHeader />
-        {props.landscape ? <FDCarouselChildLP /> : null}
-        {props.portrait ? <FDCarouselChildLP /> : null}
-        {props.topten ? <FDCarouselChildTopTen /> : null}
-      </UseCreateCarouselContext.Provider>
-      <div className='fdCarousel__block__navigation'>
-        <div className='fdCarousel__block__navigation--left'>
-          {useCreatePicture({ svg: <PhDotsThreeVerticalBold />, alt: 'More Information', figcaption: 'More Information Selector' })}
-        </div>
-        <div className='fdCarousel__block__navigation--right'>
-          <figure>
-            <picture>
-              <PhDotsThreeVerticalBold />
-              <figcaption>More Information</figcaption>
-            </picture>
-          </figure>
-        </div>
-      </div>
+      <section>
+        <UseCreateCarouselContext.Provider value={props}>
+          <FDCarouselHeader />
+          {props.landscape ? <FDCarouselChildLP /> : null}
+          {props.portrait ? <FDCarouselChildLP /> : null}
+          {props.topten ? <FDCarouselChildTopTen /> : null}
+        </UseCreateCarouselContext.Provider>
+      </section>
     </section>
   );
 };
