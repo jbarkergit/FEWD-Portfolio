@@ -38,28 +38,6 @@ button {
   user-select: none;
 }
 
-/* Font imports */
-@font-face {
-  font-optical-sizing: auto;
-  font-family: 'Plus Jakarta Sans';
-  src: url('https://cdn.fontshare.com/wf/U2HFRBAHB5SL53RHFEF22BIJZSJRHR2Y/LFPV5QZIFT7V5OMDNHDQPJYOQAHFUE4W/CLVUG765RK3TA3ESG2NBCJJGWFQVIBTA.woff2') format('woff2');
-  font-weight: 200 800;
-  font-display: swap;
-  font-style: normal;
-  font-stretch: normal;
-  font-variant-ligatures: common-ligatures;
-}
-@font-face {
-  font-optical-sizing: auto;
-  font-family: 'Plus Jakarta Sans';
-  src: url('https://cdn.fontshare.com/wf/QZRCKFY3YNTSI7ZJRBICCIGOZTP4A7XJ/N5R3WNWTF5UMZX6H7KNBVR5N5PJZCKKX/TJFEEESODHVFXP2MHRXMD2MGSHGGFUZG.woff2') format('woff2');
-  font-weight: 200 800;
-  font-display: swap;
-  font-style: italic;
-  font-stretch: normal;
-  font-variant-ligatures: common-ligatures;
-}
-
 /**
 Typography Selectors
 font: {optional: style variant weight} size line-height "family", "fallback-font", fallback-font-type
@@ -69,13 +47,13 @@ html {
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-body {
-  // font:
-  //   normal normal 500 1.1rem / 1.25em 'Helvetica',
-  //   'PT Sans',
-  //   sans-serif;
-  // letter-spacing: 0.04rem;
-}
+// body {
+// font:
+//   normal normal 500 1.1rem / 1.25em 'Helvetica',
+//   'PT Sans',
+//   sans-serif;
+// letter-spacing: 0.04rem;
+// }
 h1 {
   font-size: clamp(f.rem(24), f.rem(34) + 1vw, f.rem(36));
   font-weight: 600;
