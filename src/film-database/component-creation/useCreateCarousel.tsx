@@ -11,31 +11,15 @@ type useCreateCarouselPropTypes = {
   topten?: boolean;
 };
 
-/** Prop Context
- * Creation
- * Export
- */
-const UseCreateCarouselContext = createContext<useCreateCarouselPropTypes | undefined>(undefined);
-
-export const useCreateCarouselProps = () => {
-  const contextValue = useContext(UseCreateCarouselContext);
-  if (contextValue) return contextValue;
-  else throw new Error('Failure at CreateCarouselProps Provider');
-};
-
 // Carousel Creation Hook
-const useCreateCarousel = () => {
-  const props = useCreateCarouselProps();
-
+const useCreateCarousel = ({ heading, landscape, portrait, topten }: useCreateCarouselPropTypes) => {
   return (
     <section className='fdCarousel'>
       <section>
-        <UseCreateCarouselContext.Provider value={props}>
-          <FDCarouselHeader />
-          {props.landscape ? <FDCarouselChildLP /> : null}
-          {props.portrait ? <FDCarouselChildLP /> : null}
-          {props.topten ? <FDCarouselChildTopTen /> : null}
-        </UseCreateCarouselContext.Provider>
+        <FDCarouselHeader />
+        {landscape ? <FDCarouselChildLP /> : null}
+        {portrait ? <FDCarouselChildLP /> : null}
+        {topten ? <FDCarouselChildTopTen /> : null}
       </section>
     </section>
   );

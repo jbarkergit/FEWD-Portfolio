@@ -1,11 +1,8 @@
-import { useCreateCarouselProps } from '../../../component-creation/useCreateCarousel';
 import useCreatePicture from '../../../component-creation/useCreatePicture';
 import { IcRoundPlayCircle } from '../../../icons/IcRoundPlayCircle';
 import { PhDotsThreeVerticalBold } from '../../../icons/PhDotsThreeVerticalBold';
 
 const FDCarouselChildLP = () => {
-  const props = useCreateCarouselProps();
-
   return (
     <div className='fdCarousel__block'>
       <div className='fdCarousel__block__graphic'>
