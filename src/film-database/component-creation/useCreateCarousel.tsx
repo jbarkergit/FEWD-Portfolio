@@ -14,10 +14,12 @@ type useCreateCarouselParamTypes = {
 const useCreateCarousel = ({ heading, landscape, portrait, topten }: useCreateCarouselParamTypes) => {
   return (
     <section className='fdCarousel'>
-      <FDCarouselHeader heading={heading} />
-      {landscape ? <FDCarouselChildLP /> : null}
-      {portrait ? <FDCarouselChildLP /> : null}
-      {topten ? <FDCarouselChildTopTen /> : null}
+      <div className='fdCarousel__container'>
+        <FDCarouselHeader heading={heading} />
+        {landscape ? <FDCarouselChildLP /> : null}
+        {portrait ? <FDCarouselChildLP /> : null}
+        {topten ? <FDCarouselChildTopTen /> : null}
+      </div>
     </section>
   );
 };

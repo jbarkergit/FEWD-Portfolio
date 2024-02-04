@@ -6,10 +6,12 @@ const FDHomePage = () => {
     <div className='filmDatabase'>
       <div className='filmDatabase--backdrop' />
       <FDHeader />
-      {useCreateCarousel({ heading: 'test', landscape: true })}
-      {useCreateCarousel({ heading: 'test', landscape: true })}
-      {useCreateCarousel({ heading: 'test', landscape: true })}
-      {useCreateCarousel({ heading: 'test', landscape: true })}
+      <section className='filmDatabase__content'>
+        {useCreateCarousel({ heading: 'test', landscape: true })}
+        {useCreateCarousel({ heading: 'test', landscape: true })}
+        {useCreateCarousel({ heading: 'test', landscape: true })}
+        {useCreateCarousel({ heading: 'test', landscape: true })}
+      </section>
     </div>
   );
 };

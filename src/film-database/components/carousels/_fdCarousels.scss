@@ -3,7 +3,39 @@
   overflow: hidden;
   width: 100%;
   height: auto;
-  & > * {
-    flex: calc();
+  margin: 2% 0;
+  &__container {
+  }
+  &__block {
+    &__graphic {
+      &__image {
+        & picture {
+          & img {
+            & figcaption {
+            }
+          }
+        }
+      }
+    }
+    &__overlay {
+      & button {
+        & svg {
+        }
+        & figure {
+          & picture {
+            & img {
+            }
+            & figcaption {
+            }
+          }
+        }
+      }
+    }
+    &__footer {
+      & h2 {
+      }
+      & h3 {
+      }
+    }
   }
 }
