@@ -1,7 +1,7 @@
 import { useCreateCarouselProps } from '../../../component-creation/carousel/useCreateCarousel';
 
 const FDCarouselChildLP = () => {
-  const props = useCreateCarouselProps;
+  const props = useCreateCarouselProps();
 
   return (
     <div className='fdCarousel__block'>

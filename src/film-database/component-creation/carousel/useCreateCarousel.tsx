@@ -16,7 +16,12 @@ type useCreateCarouselPropTypes = {
  * Export
  */
 const UseCreateCarouselContext = createContext<useCreateCarouselPropTypes | undefined>(undefined);
-export const useCreateCarouselProps = useContext(UseCreateCarouselContext);
+
+export const useCreateCarouselProps = () => {
+  const contextValue = useContext(UseCreateCarouselContext);
+  if (contextValue) return contextValue;
+  else throw new Error('Failure at CreateCarouselProps Provider');
+};
 
 // Carousel Creation Hook
 const useCreateCarousel = ({ ...props }: useCreateCarouselPropTypes) => {
