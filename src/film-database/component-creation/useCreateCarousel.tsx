@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
-import FDCarouselHeader from '../../components/carousels/carousel-headers/FDCarouselHeader';
-import FDCarouselChildLP from '../../components/carousels/carousel-children/FDCarouselChildLP';
-import FDCarouselChildTopTen from '../../components/carousels/carousel-children/FDCarouselChildTopTen';
+import FDCarouselHeader from '../components/carousels/carousel-headers/FDCarouselHeader';
+import FDCarouselChildLP from '../components/carousels/carousel-children/FDCarouselChildLP';
+import FDCarouselChildTopTen from '../components/carousels/carousel-children/FDCarouselChildTopTen';
 
 // Prop Types
 type useCreateCarouselPropTypes = {

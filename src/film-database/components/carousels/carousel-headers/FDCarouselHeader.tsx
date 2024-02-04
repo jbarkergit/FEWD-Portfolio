@@ -1,4 +1,4 @@
-import { useCreateCarouselProps } from '../../../component-creation/carousel/useCreateCarousel';
+import { useCreateCarouselProps } from '../../../component-creation/useCreateCarousel';
 
 const FDCarouselHeader = () => {
   const props = useCreateCarouselProps();
