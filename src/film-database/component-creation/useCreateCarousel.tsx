@@ -2,8 +2,6 @@ import { createContext, useContext } from 'react';
 import FDCarouselHeader from '../components/carousels/carousel-headers/FDCarouselHeader';
 import FDCarouselChildLP from '../components/carousels/carousel-children/FDCarouselChildLP';
 import FDCarouselChildTopTen from '../components/carousels/carousel-children/FDCarouselChildTopTen';
-import { PhDotsThreeVerticalBold } from '../icons/PhDotsThreeVerticalBold';
-import useCreatePicture from './useCreatePicture';
 
 // Prop Types
 type useCreateCarouselPropTypes = {
@@ -26,7 +24,9 @@ export const useCreateCarouselProps = () => {
 };
 
 // Carousel Creation Hook
-const useCreateCarousel = ({ ...props }: useCreateCarouselPropTypes) => {
+const useCreateCarousel = () => {
+  const props = useCreateCarouselProps();
+
   return (
     <section className='fdCarousel'>
       <section>
