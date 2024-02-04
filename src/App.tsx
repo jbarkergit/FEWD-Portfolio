@@ -22,7 +22,7 @@ const ecommerceKeyValuePairs = [
   { path: '/ecommerce/product/:paramId', element: './ecommerce/pages/ProductDetailPage' },
 ];
 
-const filmDatabaseKeyValuePairs = [{ path: ['/film-database'], element: './film-database/app/FilmDatabase.tsx' }];
+const filmDatabaseKeyValuePairs = [{ path: '/film-database', element: './film-database/pages/FDHomePage.tsx' }];
 
 const initialKeyValuePairs = [portfolioKeyValuePairs[0], ecommerceKeyValuePairs[0], filmDatabaseKeyValuePairs[0]];
 
@@ -94,8 +94,8 @@ function App() {
         // useRouteSetter then invokes useModuleLoader to store modules as JSX.Elements (async await promise conversion) in routes state
         useRouteSetter(routeKeyValuePairs);
       // Background Loading Queue order
-      // Note: Portfolio && Discord Clone handle their imports locally because they're SPAs
-      // IMPORTANT NOTE: DON'T FORGET TO SLICE LANDING PAGES!
+      // Note: SPA's (Portfolio) handle imports locally
+      // IMPORTANT NOTE: DON'T FORGET TO SLICE LANDING PAGES FOR NON SPA!
       if (location.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
       if (location.startsWith('/film-database')) useRouteSetter(filmDatabaseKeyValuePairs.slice(0));
     }
