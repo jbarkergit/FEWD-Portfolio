@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export const useApiRequest = async (endPoint: string) => {
-  const apiKey: string = '';
+  const API_KEY: string = '';
   const [responseLimiter, setResponseLimiter] = useState<number>(0);
 
   try {
