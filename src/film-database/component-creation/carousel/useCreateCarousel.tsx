@@ -1,6 +1,7 @@
+import { createContext, useContext } from 'react';
 import FDCarouselHeader from '../../components/carousels/carousel-headers/FDCarouselHeader';
 import FDCarouselChildLP from '../../components/carousels/carousel-children/FDCarouselChildLP';
-import { createContext, useContext } from 'react';
+import FDCarouselChildTopTen from '../../components/carousels/carousel-children/FDCarouselChildTopTen';
 
 // Prop Types
 type useCreateCarouselPropTypes = {
@@ -24,7 +25,7 @@ const useCreateCarousel = ({ ...props }: useCreateCarouselPropTypes) => {
         <FDCarouselHeader />
         {props.landscape ? <FDCarouselChildLP /> : null}
         {props.portrait ? <FDCarouselChildLP /> : null}
-        {props.topten ? <FDCarouselChildLP /> : null}
+        {props.topten ? <FDCarouselChildTopTen /> : null}
       </UseCreateCarouselContext.Provider>
     </section>
   );
