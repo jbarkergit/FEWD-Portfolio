@@ -2,6 +2,8 @@ import { createContext, useContext } from 'react';
 import FDCarouselHeader from '../components/carousels/carousel-headers/FDCarouselHeader';
 import FDCarouselChildLP from '../components/carousels/carousel-children/FDCarouselChildLP';
 import FDCarouselChildTopTen from '../components/carousels/carousel-children/FDCarouselChildTopTen';
+import { PhDotsThreeVerticalBold } from '../icons/PhDotsThreeVerticalBold';
+import useCreatePicture from './useCreatePicture';
 
 // Prop Types
 type useCreateCarouselPropTypes = {
@@ -33,6 +35,19 @@ const useCreateCarousel = ({ ...props }: useCreateCarouselPropTypes) => {
         {props.portrait ? <FDCarouselChildLP /> : null}
         {props.topten ? <FDCarouselChildTopTen /> : null}
       </UseCreateCarouselContext.Provider>
+      <div className='fdCarousel__block__navigation'>
+        <div className='fdCarousel__block__navigation--left'>
+          {useCreatePicture({ svg: <PhDotsThreeVerticalBold />, alt: 'More Information', figcaption: 'More Information Selector' })}
+        </div>
+        <div className='fdCarousel__block__navigation--right'>
+          <figure>
+            <picture>
+              <PhDotsThreeVerticalBold />
+              <figcaption>More Information</figcaption>
+            </picture>
+          </figure>
+        </div>
+      </div>
     </section>
   );
 };
