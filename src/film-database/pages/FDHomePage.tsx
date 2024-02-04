@@ -1,4 +1,5 @@
 import useCreateCarousel from '../component-creation/useCreateCarousel';
+import FDFooter from '../components/navigation/footer/FDFooter';
 import FDHeader from '../components/navigation/header/FDHeader';
 
 const FDHomePage = () => {
@@ -12,6 +13,7 @@ const FDHomePage = () => {
         {useCreateCarousel({ heading: 'test', landscape: true })}
         {useCreateCarousel({ heading: 'test', landscape: true })}
       </section>
+      <FDFooter />
     </div>
   );
 };
