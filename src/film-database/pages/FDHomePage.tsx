@@ -5,7 +5,10 @@ const FDHomePage = () => {
   return (
     <div className='filmDatabase'>
       <FDHeader />
-      {useCreateCarousel()}
+      {useCreateCarousel({ heading: 'test', landscape: true })}
+      {useCreateCarousel({ heading: 'test', landscape: true })}
+      {useCreateCarousel({ heading: 'test', landscape: true })}
+      {useCreateCarousel({ heading: 'test', landscape: true })}
     </div>
   );
 };
