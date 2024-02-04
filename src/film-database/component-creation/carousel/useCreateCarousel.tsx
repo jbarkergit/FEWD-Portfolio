@@ -11,10 +11,11 @@ type useCreateCarouselPropTypes = {
   topten?: boolean;
 };
 
-// Prop Context
+/** Prop Context
+ * Creation
+ * Export
+ */
 const UseCreateCarouselContext = createContext<useCreateCarouselPropTypes | undefined>(undefined);
-
-// Export Props
 export const useCreateCarouselProps = useContext(UseCreateCarouselContext);
 
 // Carousel Creation Hook
