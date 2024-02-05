@@ -4,7 +4,6 @@ import useCreateCarousel from '../component-creation/useCreateCarousel';
 import { useTmdbData } from '../hooks/useTmdbData';
 
 const FDHomePage = () => {
-  useTmdbData();
   return (
     <div className='filmDatabase'>
       <div className='filmDatabase--backdrop' />
