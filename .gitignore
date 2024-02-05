@@ -30,8 +30,15 @@ public
 package-lock.json
 
 # Environment Variables
-.env
-.env.local
+# loaded in all cases
+.env  
+# loaded in all cases, ignored by git
+.env.local          
+# only loaded in specified mode
+.env.development
+.env.test
+.env.production       
+# only loaded in specified mode, ignored by git
 .env.development.local
 .env.test.local
 .env.production.local
