@@ -1,7 +1,7 @@
 import FDFooter from '../components/navigation/footer/FDFooter';
 import FDHeader from '../components/navigation/header/FDHeader';
 import useCreateCarousel from '../component-creation/useCreateCarousel';
-import { useTmdbData } from '../hooks/useTmdbData';
+import { useTmdbData } from '../api/hooks/useTmdbData';
 
 const FDHomePage = () => {
   return (
