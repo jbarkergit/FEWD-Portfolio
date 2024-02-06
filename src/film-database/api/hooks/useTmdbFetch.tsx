@@ -1,4 +1,4 @@
-export const useTmdbData = async (endPoint: string): Promise<unknown> => {
+export const useTmdbFetch = async (endPoint: string, movie_id?: string, person_id?: string): Promise<unknown> => {
   const options: RequestInit = {
     method: 'GET',
     headers: {

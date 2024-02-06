@@ -6,7 +6,7 @@
   { key: '', endPoint: `` },
  */
 
-const tmdbApiEndPoints = [
+export const tmdbApiEndPoints = [
   {
     movieLists: [
       { key: 'nowPlaying', endPoint: 'https://api.themoviedb.org/3/movie/now_playing' },
