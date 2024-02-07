@@ -1,3 +1,9 @@
+type tmdbApiFetchTypes = {
+  endPoint: string;
+  movie_id?: string;
+  person_id?: string;
+};
+
 /**
  * TMDB API Fetch
  * @param endPoint
@@ -5,12 +11,6 @@
  * @param person_id
  * @returns
  */
-
-type tmdbApiFetchTypes = {
-  endPoint: string;
-  movie_id?: string;
-  person_id?: string;
-};
 
 const tmdbApiFetch = async ({ endPoint, movie_id, person_id }: tmdbApiFetchTypes): Promise<unknown> => {
   // authorization options for TMDB API
@@ -52,17 +52,17 @@ const tmdbApiFetch = async ({ endPoint, movie_id, person_id }: tmdbApiFetchTypes
   }
 };
 
-/**
- * Fetch information by specified params utilizing tmdbApiFetch()
- * @param category
- * @returns
- */
-
 type useTmdbFetchTypes = {
   category: { key: string; endPoint: string }[];
   movie_id?: string;
   person_id?: string;
 };
+
+/**
+ * Fetch information by specified params utilizing tmdbApiFetch()
+ * @param param0
+ * @returns
+ */
 
 export const useTmdbFetch = async ({ category, movie_id, person_id }: useTmdbFetchTypes) => {
   // initialize empty array to be returned for useState storage
