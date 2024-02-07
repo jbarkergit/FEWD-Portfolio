@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 // reusable components
 import FDHeader from '../components/navigation/header/FDHeader';
@@ -10,49 +10,32 @@ import { tmdbApiEndPoints } from '../api/data/tmdbApiEndPoints';
 import { useTmdbFetch } from '../api/hooks/useTmdbFetch';
 
 const FDHomePage = () => {
-  const [tmdbData, setTmdbData] = useState<{}[] | null>(null);
+  const [tmdbData, setTmdbData] = useState<{}>({});
 
-  // useEffect(() => {
-  //   const fetchAllData = async () => {
-  //     try {
-  //       /**
-  //        * create tmdbApiEndPoints copy with map to maintain data structure
-  //        * make map func async to allow for await
-  //        */
-  //       const newData = tmdbApiEndPoints.map(async (obj) => {
-  //         // seperate key object keys referring to category of key value pairs
-  //         const objKey: string = Object.keys(obj)[0];
-  //         // access each object's array of objects
-  //         //@ts-ignore
-  //         const objectKeyArray: { key: string; endPoint: string }[] = obj[objKey];
-  //         // improve app efficiency and speed with await Promise.all
-  //         const data = await Promise.all(
-  //           // create new array with original keys and the fetched data
-  //           objectKeyArray.map(async (keyValuePair) => ({
-  //             key: keyValuePair.key,
-  //             data: await useTmdbFetch(keyValuePair.endPoint),
-  //           }))
-  //         );
+  // Invoke fetch data hooks
+  useEffect(() => {
+    try {
+      useTmdbFetch(tmdbApiEndPoints.movieLists).then((data) => setTmdbData({ movieLists: data }));
+    } catch (error) {
+      console.error(Error);
+    }
 
-  //         // return new data to store in state
-  //         return { ...obj, [`${objKey}Data`]: await Promise.all(data) };
-  //       });
+    // abort fetch calls when component unmounts
+    const controller = new AbortController();
+    return () => controller.abort();
+  }, []);
 
-  //       setTmdbData(await Promise.all(newData));
-
-  //       console.log(tmdbData);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-  // }, []);
+  // CLG Data
+  useEffect(() => console.log(tmdbData), [tmdbData]);
 
   return (
     <div className='filmDatabase'>
       <div className='filmDatabase--backdrop' />
       <FDHeader />
       <section className='filmDatabase__content'>
-        <>{useCreateCarousel({ heading: 'Now Playing', landscape: true })}</>
+        {Object.keys(tmdbData).map((key) => (
+          <Fragment key={key}>{useCreateCarousel({ heading: 'Now Playing', landscape: true, data: key })}</Fragment>
+        ))}
       </section>
       <FDFooter />
     </div>

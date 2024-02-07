@@ -28,10 +28,10 @@ const tmdbApiFetch = async ({ endPoint, movie_id, person_id }: tmdbApiFetchTypes
 
     switch (true) {
       case !!movie_id:
-        url = `${endPoint.replace('/{movie_id}', movie_id)}`;
+        url = `${endPoint.replace('{movie_id}', movie_id)}`;
         break;
       case !!person_id:
-        url = `${endPoint.replace('/person_id}', person_id)}`;
+        url = `${endPoint.replace('{person_id}', person_id)}`;
         break;
       default:
         url = `${endPoint}`;
@@ -52,19 +52,13 @@ const tmdbApiFetch = async ({ endPoint, movie_id, person_id }: tmdbApiFetchTypes
   }
 };
 
-type useTmdbFetchTypes = {
-  category: { key: string; endPoint: string }[];
-  movie_id?: string;
-  person_id?: string;
-};
-
 /**
  * Fetch information by specified params utilizing tmdbApiFetch()
  * @param param0
  * @returns
  */
 
-export const useTmdbFetch = async ({ category, movie_id, person_id }: useTmdbFetchTypes) => {
+export const useTmdbFetch = async (category: { key: string; endPoint: string }[], movie_id?: string, person_id?: string) => {
   // initialize empty array to be returned for useState storage
   const dataArray: {}[] = [];
 
@@ -74,13 +68,14 @@ export const useTmdbFetch = async ({ category, movie_id, person_id }: useTmdbFet
       // create a new array based on category keyValuePairs
       category.map(async (keyValuePair) => {
         // await end points
-        const data = await tmdbApiFetch({ endPoint: keyValuePair.endPoint, movie_id, person_id });
-        // push new array into dataArray
-        dataArray.push({ [keyValuePair.key]: [{ key: keyValuePair.key, data: data }] });
+        await tmdbApiFetch({ endPoint: keyValuePair.endPoint, movie_id, person_id }).then((data) => {
+          // push new array into dataArray
+          dataArray.push({ [keyValuePair.key]: [{ key: keyValuePair.key, data: data }] });
+        });
       })
     );
 
-    // return our new array for storage
+    // return our new array of data
     return dataArray;
   } catch (error) {
     console.error('Error fetching data:', error);
