@@ -12,10 +12,13 @@ import { useTmdbFetch } from '../api/hooks/useTmdbFetch';
 const FDHomePage = () => {
   const [tmdbData, setTmdbData] = useState<{}>({});
 
-  // Invoke fetch data hooks
+  // Invoke fetch data hooks on mount
   useEffect(() => {
     try {
-      useTmdbFetch(tmdbApiEndPoints.movieLists).then((data) => setTmdbData({ movieLists: data }));
+      // movie lists
+      useTmdbFetch(tmdbApiEndPoints.movieLists).then((data) => setTmdbData((previousState) => ({ ...previousState, movieLists: data })));
+
+      //
     } catch (error) {
       console.error(Error);
     }

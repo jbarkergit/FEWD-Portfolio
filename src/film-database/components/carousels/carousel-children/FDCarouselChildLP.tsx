@@ -2,9 +2,14 @@ import useCreatePicture from '../../../component-creation/useCreatePicture';
 import { IcRoundPlayCircle } from '../../../icons/IcRoundPlayCircle';
 import { PhDotsThreeVerticalBold } from '../../../icons/PhDotsThreeVerticalBold';
 
-const FDCarouselChildLP = () => {
+type PropDrillType = {
+  data: unknown;
+};
+
+const FDCarouselChildLP = ({ data }: PropDrillType) => {
   return (
     <div className='fdCarousel__block'>
+      <>{data}</>
       <div className='fdCarousel__block__graphic'>
         <figure className='fdCarousel__block__graphic__image'>
           <picture>
