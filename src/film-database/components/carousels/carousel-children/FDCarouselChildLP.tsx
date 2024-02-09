@@ -11,11 +11,28 @@ type NestedDataType = {
   [key: string]: { key: string; data: { [key: string]: any } };
 };
 
+type MovieType = {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
+
 const FDCarouselChildLP = ({ data }: PropDrillType): JSX.Element[] | undefined => {
-  const [desiredData, setDesiredData] = useState<{}[]>([]);
+  const [desiredData, setDesiredData] = useState<MovieType[]>([]);
 
   /**
-   * nested callback hell; however, to maintain data structures, this may be needed.
+   * nested callback hell problem; however, to maintain data structures, this may be needed.
    * considering -> refactoring api call hooks to reduce nesting
    * given -> api call returns aliases for call
    * note: extremely long variable name to remember steps required to retrieve nested data
@@ -27,10 +44,14 @@ const FDCarouselChildLP = ({ data }: PropDrillType): JSX.Element[] | undefined =
       .flat();
 
     for (const valueObjects of dataObjectEntriesKeyValuePairsFlattened) {
-      // ignoring property 'results', data may be too broad across different api calls
+      // TS-IGNORE property 'results', data may be too broad across different api calls
+      // NOTE: to resolve this issue i'll have to manually add types via CLG for all variations of calls
+      // given -> cannot find interface / types for various calls in their documentation
+
       // @ts-ignore
-      const dataPropertyResults: {}[] = valueObjects.data.results;
-      console.log(dataPropertyResults);
+      const dataPropertyResults: MovieType[] = valueObjects.data.results;
+      // console.log(dataPropertyResults);
+
       setDesiredData(dataPropertyResults);
     }
   }, []);
