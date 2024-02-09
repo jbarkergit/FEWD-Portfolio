@@ -31,14 +31,11 @@ type MovieType = {
 const FDCarouselChildLP = ({ data }: PropDrillType): JSX.Element[] | undefined => {
   const [desiredData, setDesiredData] = useState<MovieType[]>([]);
 
-  /**
-   * nested callback hell problem; however, to maintain data structures, this may be needed.
-   * considering -> refactoring api call hooks to reduce nesting
-   * given -> api call returns aliases for call
-   * note: extremely long variable name to remember steps required to retrieve nested data
-   */
-
   useEffect(() => {
+    /**
+     * maintaining data structures with alias refs, requires nested callback hell
+     * note: extremely long variable name to remember steps required to retrieve nested data
+     */
     const dataObjectEntriesKeyValuePairsFlattened = Object.entries<NestedDataType[]>(data)
       .map(([key, value]) => value)
       .flat();

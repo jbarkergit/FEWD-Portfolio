@@ -10,7 +10,7 @@ import { tmdbApiEndPoints } from '../api/data/tmdbApiEndPoints';
 import { useTmdbFetch } from '../api/hooks/useTmdbFetch';
 
 const FDHomePage = () => {
-  const [tmdbData, setTmdbData] = useState<{} | undefined>();
+  const [tmdbData, setTmdbData] = useState<{} | undefined>({});
 
   // Invoke fetch data hooks on mount
   useEffect(() => {
@@ -28,9 +28,9 @@ const FDHomePage = () => {
     return () => controller.abort();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(tmdbData);
-  // }, [tmdbData]);
+  useEffect(() => {
+    console.log(tmdbData);
+  }, [tmdbData]);
 
   return (
     <div className='filmDatabase'>
