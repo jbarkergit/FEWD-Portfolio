@@ -34,6 +34,12 @@ const FDFooter = () => {
           <div className='fdFooter__block__nav__additions'>{/* additional info here */}</div>
         </nav>
       </section>
+
+      <section className='fdFooter__block'>
+        <blockquote>
+          <p>All media content along with associated information, images, and videos are provided courtesy of themoviedb.org.</p>
+        </blockquote>
+      </section>
     </footer>
   );
 };
