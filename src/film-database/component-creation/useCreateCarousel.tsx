@@ -8,7 +8,7 @@ type useCreateCarouselParamTypes = {
   landscape?: boolean;
   portrait?: boolean;
   topten?: boolean;
-  data: unknown;
+  data: {};
 };
 
 // Carousel Creation Hook

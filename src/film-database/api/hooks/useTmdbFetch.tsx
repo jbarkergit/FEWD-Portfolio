@@ -58,7 +58,7 @@ const tmdbApiFetch = async ({ endPoint, movie_id, person_id }: tmdbApiFetchTypes
  * @returns
  */
 
-export const useTmdbFetch = async (category: { key: string; endPoint: string }[], movie_id?: string, person_id?: string) => {
+export const useTmdbFetch = async (category: { key: string; endPoint: string }[], movie_id?: string, person_id?: string): Promise<{}[] | undefined> => {
   // initialize empty array to be returned for useState storage
   const dataArray: {}[] = [];
 

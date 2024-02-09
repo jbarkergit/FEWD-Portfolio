@@ -10,15 +10,15 @@ import { tmdbApiEndPoints } from '../api/data/tmdbApiEndPoints';
 import { useTmdbFetch } from '../api/hooks/useTmdbFetch';
 
 const FDHomePage = () => {
-  const [tmdbData, setTmdbData] = useState<{}>({});
+  const [tmdbData, setTmdbData] = useState<{} | undefined>();
 
   // Invoke fetch data hooks on mount
   useEffect(() => {
     try {
       // movie lists
-      useTmdbFetch(tmdbApiEndPoints.movieLists).then((data) => setTmdbData((previousState) => ({ ...previousState, movieLists: data })));
-
-      //
+      useTmdbFetch(tmdbApiEndPoints.movieLists).then((data: {}[] | undefined) => {
+        if (data !== undefined) setTmdbData(data);
+      });
     } catch (error) {
       console.error(Error);
     }
@@ -28,17 +28,20 @@ const FDHomePage = () => {
     return () => controller.abort();
   }, []);
 
-  // CLG Data
-  useEffect(() => console.log(tmdbData), [tmdbData]);
+  // useEffect(() => {
+  //   console.log(tmdbData);
+  // }, [tmdbData]);
 
   return (
     <div className='filmDatabase'>
       <div className='filmDatabase--backdrop' />
       <FDHeader />
       <section className='filmDatabase__content'>
-        {Object.keys(tmdbData).map((key) => (
-          <Fragment key={key}>{useCreateCarousel({ heading: 'Now Playing', landscape: true, data: key })}</Fragment>
-        ))}
+        {tmdbData !== undefined
+          ? Object.entries<{ [key: string]: {}[] }>(tmdbData).map(([key, value]: [key: string, value: {}]) => (
+              <Fragment key={key}>{useCreateCarousel({ heading: key, landscape: true, data: value })}</Fragment>
+            ))
+          : null}
       </section>
       <FDFooter />
     </div>
