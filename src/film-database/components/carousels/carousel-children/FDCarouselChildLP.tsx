@@ -56,17 +56,27 @@ const FDCarouselChildLP = ({ data }: PropDrillType): JSX.Element[] | undefined =
     }
   }, []);
 
+  const formatDate = (date: string) => {
+    const newDate = new Date(date);
+    const formattedDate = `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear().toString().slice(2)}`;
+
+    const currentDate = new Date();
+
+    if (newDate > currentDate) return `Coming ${formattedDate}`;
+    else return 'Now Available on...';
+  };
+
   if (desiredData)
     return desiredData.map((data) => (
-      <div className='fdCarousel__block'>
-        <div className='fdCarousel__block__graphic'>
-          <figure className='fdCarousel__block__graphic__image'>
+      <div className='fdCarousel__container__block' key={data.id}>
+        <div className='fdCarousel__container__block__item'>
+          <figure className='fdCarousel__container__block__item__graphic'>
             <picture>
-              <img src=''></img>
-              <figcaption>Description</figcaption>
+              <img src={`https://image.tmdb.org/t/p/original/${data.poster_path}.svg`}></img>
+              <figcaption>{data.original_title}</figcaption>
             </picture>
           </figure>
-          <div className='fdCarousel__block__overlay'>
+          <div className='fdCarousel__container__block__overlay'>
             <button aria-label='Play Trailer'>
               {useCreatePicture({ svg: <IcRoundPlayCircle />, alt: 'More Information', figcaption: 'More Information Selector' })}
             </button>
@@ -74,12 +84,11 @@ const FDCarouselChildLP = ({ data }: PropDrillType): JSX.Element[] | undefined =
               {useCreatePicture({ svg: <PhDotsThreeVerticalBold />, alt: 'More Information', figcaption: 'More Information Selector' })}
             </button>
           </div>
-          td
         </div>
 
-        <hgroup className='fdCarousel__block__footer'>
-          <h2>Movie title</h2>
-          <h3>Release Date / Seasons</h3>
+        <hgroup className='fdCarousel__container__block__footer'>
+          <h2>{data.title}</h2>
+          <h3>{formatDate(data.release_date)}</h3>
         </hgroup>
       </div>
     ));
