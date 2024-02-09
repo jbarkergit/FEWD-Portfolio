@@ -15,8 +15,8 @@ type useCreateCarouselParamTypes = {
 const useCreateCarousel = ({ heading, landscape, portrait, topten, data }: useCreateCarouselParamTypes) => {
   return (
     <section className='fdCarousel'>
+      <FDCarouselHeader heading={heading} />
       <div className='fdCarousel__container'>
-        <FDCarouselHeader heading={heading} />
         {landscape ? <FDCarouselChildLP data={data} /> : null}
         {portrait ? <FDCarouselChildLP data={data} /> : null}
         {topten ? <FDCarouselChildTopTen data={data} /> : null}
