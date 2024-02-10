@@ -70,7 +70,7 @@ export const useTmdbFetch = async (category: { key: string; endPoint: string }[]
         // await end points
         await tmdbApiFetch({ endPoint: keyValuePair.endPoint, movie_id, person_id }).then((data) => {
           // push new array into dataArray
-          dataArray.push({ [keyValuePair.key]: { key: keyValuePair.key, data: data } });
+          dataArray.push({ key: keyValuePair.key, data: data });
         });
       })
     );

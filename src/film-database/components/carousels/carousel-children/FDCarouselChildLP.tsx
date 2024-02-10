@@ -33,15 +33,13 @@ const FDCarouselChildLP = ({ data }: PropDrillType): JSX.Element[] | undefined =
 
   useEffect(() => {
     /**
-     * maintaining data structures with alias refs, requires nested callback hell
+     * maintaining data structures with alias refs requires nested callback hell
      * note: extremely long variable name to remember steps required to retrieve nested data
      */
-    const dataObjectEntriesKeyValuePairsFlattened = Object.entries<NestedDataType[]>(data)
-      .map(([key, value]) => value)
-      .flat();
+    const dataObjectEntriesKeyValuePairsFlattened = Object.entries<NestedDataType[]>(data).map(([key, value]) => value);
 
     for (const valueObjects of dataObjectEntriesKeyValuePairsFlattened) {
-      // TS-IGNORE property 'results', data may be too broad across different api calls
+      // TS-IGNORE property 'results', data from api calls may be too broad
       // NOTE: to resolve this issue i'll have to manually add types via CLG for all variations of calls
       // given -> cannot find interface / types for various calls in their documentation
 
@@ -54,10 +52,10 @@ const FDCarouselChildLP = ({ data }: PropDrillType): JSX.Element[] | undefined =
   }, []);
 
   const formatDate = (date: string) => {
+    const currentDate = new Date();
+
     const newDate = new Date(date);
     const formattedDate = `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear().toString().slice(2)}`;
-
-    const currentDate = new Date();
 
     if (newDate > currentDate) return `Coming ${formattedDate}`;
     else return 'Now Available on...';
