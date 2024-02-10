@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 
 // reusable components
 import FDHeader from '../components/navigation/header/FDHeader';
@@ -22,10 +22,12 @@ const FDHomePage = () => {
   useEffect(() => {
     try {
       // movieLists
-      useTmdbFetch(tmdbApiEndPoints.movieLists).then((data: UseTmdbDataArrayType | undefined) => {
-        if (data) setTmdbData(data as UseTmdbDataArrayType);
-        else throw new Error('Could not fetch requested data.');
-      });
+      useMemo(() => {
+        useTmdbFetch(tmdbApiEndPoints.movieLists).then((data: UseTmdbDataArrayType | undefined) => {
+          if (data) setTmdbData(data as UseTmdbDataArrayType);
+          else throw new Error('Could not fetch requested data.');
+        });
+      }, []);
     } catch (error) {
       console.error(Error);
     }
