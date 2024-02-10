@@ -7,16 +7,25 @@ import useCreateCarousel from '../component-creation/useCreateCarousel';
 
 // api
 import { tmdbApiEndPoints } from '../api/data/tmdbApiEndPoints';
-import { useTmdbFetch } from '../api/hooks/useTmdbFetch';
+import { UseTmdbDataArrayType, useTmdbFetch } from '../api/hooks/useTmdbFetch';
+import { TmdbDataUnionArrayType } from '../api/types/TmdbDataTypes';
 
+// lib
+import { v4 as uuidv4 } from 'uuid';
+
+// component
 const FDHomePage = () => {
-  const [tmdbData, setTmdbData] = useState<{}[] | undefined>([]);
+  // data fetch hook storage
+  const [tmdbData, setTmdbData] = useState<UseTmdbDataArrayType>([]);
 
   // Invoke fetch data hooks on mount
   useEffect(() => {
     try {
-      // movie lists
-      useTmdbFetch(tmdbApiEndPoints.movieLists).then((data: {}[] | undefined) => setTmdbData(data));
+      // movieLists
+      useTmdbFetch(tmdbApiEndPoints.movieLists).then((data: UseTmdbDataArrayType | undefined) => {
+        if (data) setTmdbData(data as UseTmdbDataArrayType);
+        else throw new Error('Could not fetch requested data.');
+      });
     } catch (error) {
       console.error(Error);
     }
@@ -31,11 +40,9 @@ const FDHomePage = () => {
       <div className='filmDatabase--backdrop' />
       <FDHeader />
       <section className='filmDatabase__content'>
-        {/* {tmdbData !== undefined
-          ? tmdbData.map(([key, value]: [key: string, value: {}]) => (
-              <Fragment key={key}>{useCreateCarousel({ heading: key, landscape: true, data: value })}</Fragment>
-            ))
-          : null} */}
+        {tmdbData?.map((dataObject: { key: string; data: TmdbDataUnionArrayType }) => (
+          <Fragment key={uuidv4()}>{useCreateCarousel({ heading: Object.keys(dataObject)[0], landscape: true, data: dataObject.data })}</Fragment>
+        ))}
       </section>
       <FDFooter />
     </div>

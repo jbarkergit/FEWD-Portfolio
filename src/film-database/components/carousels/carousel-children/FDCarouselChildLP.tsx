@@ -1,92 +1,58 @@
-import { useEffect, useState } from 'react';
+// lib
+import { v4 as uuidv4 } from 'uuid';
+
+// type imports
+import { TmdbDataUnionArrayType, TmdbDataUnionType } from '../../../api/types/TmdbDataTypes';
+
+// component creation
 import useCreatePicture from '../../../component-creation/useCreatePicture';
+
+//svg
 import { IcRoundPlayCircle } from '../../../icons/IcRoundPlayCircle';
 import { PhDotsThreeVerticalBold } from '../../../icons/PhDotsThreeVerticalBold';
 
+// types
 type PropDrillType = {
-  data: {};
+  data: TmdbDataUnionArrayType;
 };
 
-type NestedDataType = {
-  [key: string]: { key: string; data: { [key: string]: any } };
-};
-
-type MovieType = {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
+const formatDate = (date: string): string => {
+  const currentDate: Date = new Date();
+  const newDate: Date = new Date(date);
+  if (newDate > currentDate) return `Coming ${`${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear().toString().slice(2)}`}`;
+  else return 'Now Available on...';
 };
 
 const FDCarouselChildLP = ({ data }: PropDrillType): JSX.Element[] | undefined => {
-  const [desiredData, setDesiredData] = useState<MovieType[]>([]);
+  //NOTE: TS-IGNORE property 'results', data from api calls may be too broad, see useCreateCarousel component
+  //@ts-ignore
+  const { results } = data as TmdbDataUnionType;
 
-  useEffect(() => {
-    /**
-     * maintaining data structures with alias refs requires nested callback hell
-     * note: extremely long variable name to remember steps required to retrieve nested data
-     */
-    const dataObjectEntriesKeyValuePairsFlattened = Object.entries<NestedDataType[]>(data).map(([key, value]) => value);
-
-    for (const valueObjects of dataObjectEntriesKeyValuePairsFlattened) {
-      // TS-IGNORE property 'results', data from api calls may be too broad
-      // NOTE: to resolve this issue i'll have to manually add types via CLG for all variations of calls
-      // given -> cannot find interface / types for various calls in their documentation
-
-      // @ts-ignore
-      const dataPropertyResults: MovieType[] = valueObjects.data.results;
-      // console.log(dataPropertyResults);
-
-      setDesiredData(dataPropertyResults);
-    }
-  }, []);
-
-  const formatDate = (date: string) => {
-    const currentDate = new Date();
-
-    const newDate = new Date(date);
-    const formattedDate = `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear().toString().slice(2)}`;
-
-    if (newDate > currentDate) return `Coming ${formattedDate}`;
-    else return 'Now Available on...';
-  };
-
-  if (desiredData)
-    return desiredData.map((data) => (
-      <div className='fdCarousel__container__block' key={data.id}>
-        <div className='fdCarousel__container__block__item'>
-          <figure className='fdCarousel__container__block__item__graphic'>
-            <picture>
-              <img src={`https://image.tmdb.org/t/p/original/${data.poster_path}.svg`}></img>
-              <figcaption>{data.original_title}</figcaption>
-            </picture>
-          </figure>
-          <div className='fdCarousel__container__block__overlay'>
-            <button aria-label='Play Trailer'>
-              {useCreatePicture({ svg: <IcRoundPlayCircle />, alt: 'More Information', figcaption: 'More Information Selector' })}
-            </button>
-            <button aria-label='More Information'>
-              {useCreatePicture({ svg: <PhDotsThreeVerticalBold />, alt: 'More Information', figcaption: 'More Information Selector' })}
-            </button>
-          </div>
+  return results.map((data: TmdbDataUnionType) => (
+    <div className='fdCarousel__container__block' key={uuidv4()}>
+      <div className='fdCarousel__container__block__item'>
+        <figure className='fdCarousel__container__block__item__graphic'>
+          <picture>
+            <img src={`https://image.tmdb.org/t/p/original/${data?.poster_path}.svg`}></img>
+            <figcaption>{data?.original_title}</figcaption>
+          </picture>
+        </figure>
+        <div className='fdCarousel__container__block__overlay'>
+          <button aria-label='Play Trailer'>
+            {useCreatePicture({ svg: <IcRoundPlayCircle />, alt: 'More Information', figcaption: 'More Information Selector' })}
+          </button>
+          <button aria-label='More Information'>
+            {useCreatePicture({ svg: <PhDotsThreeVerticalBold />, alt: 'More Information', figcaption: 'More Information Selector' })}
+          </button>
         </div>
-
-        <hgroup className='fdCarousel__container__block__footer'>
-          <h2>{data.title}</h2>
-          <h3>{formatDate(data.release_date)}</h3>
-        </hgroup>
       </div>
-    ));
+
+      <hgroup className='fdCarousel__container__block__footer'>
+        <h2>{data?.title}</h2>
+        <h3>{formatDate(data?.release_date!)}</h3>
+      </hgroup>
+    </div>
+  ));
 };
 
 export default FDCarouselChildLP;

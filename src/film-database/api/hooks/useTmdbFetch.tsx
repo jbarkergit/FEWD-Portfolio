@@ -1,9 +1,3 @@
-type tmdbApiFetchTypes = {
-  endPoint: string;
-  movie_id?: string;
-  person_id?: string;
-};
-
 /**
  * TMDB API Fetch
  * @param endPoint
@@ -12,7 +6,15 @@ type tmdbApiFetchTypes = {
  * @returns
  */
 
-const tmdbApiFetch = async ({ endPoint, movie_id, person_id }: tmdbApiFetchTypes): Promise<unknown> => {
+import { TmdbDataUnionArrayType } from '../types/TmdbDataTypes';
+
+type TmdbApiFetchTypes = {
+  endPoint: string;
+  movie_id?: string | undefined;
+  person_id?: string | undefined;
+};
+
+const tmdbApiFetch = async ({ endPoint, movie_id, person_id }: TmdbApiFetchTypes): Promise<unknown> => {
   // authorization options for TMDB API
   const options: RequestInit = {
     method: 'GET',
@@ -58,26 +60,33 @@ const tmdbApiFetch = async ({ endPoint, movie_id, person_id }: tmdbApiFetchTypes
  * @returns
  */
 
-export const useTmdbFetch = async (category: { key: string; endPoint: string }[], movie_id?: string, person_id?: string): Promise<{}[] | undefined> => {
+export type UseTmdbFetchKeyValuePairType = { key: string; endPoint: string };
+
+export type UseTmdbDataArrayType = { key: string; data: TmdbDataUnionArrayType }[];
+
+export const useTmdbFetch = async (
+  category: { key: string; endPoint: string }[],
+  movie_id?: string | undefined,
+  person_id?: string | undefined
+): Promise<UseTmdbDataArrayType | undefined> => {
   // initialize empty array to be returned for useState storage
-  const dataArray: {}[] = [];
+  const dataArray: UseTmdbDataArrayType = [];
 
   try {
     // utilize Promise.all to fetch requests in parallel
     await Promise.all(
-      // create a new array based on category keyValuePairs
-      category.map(async (keyValuePair) => {
-        // await end points
-        await tmdbApiFetch({ endPoint: keyValuePair.endPoint, movie_id, person_id }).then((data) => {
-          // push new array into dataArray
-          dataArray.push({ key: keyValuePair.key, data: data });
-        });
+      // create a new array to assign aliases to each keyValuePair for clarity
+      category.map(async (keyValuePair: UseTmdbFetchKeyValuePairType) => {
+        // await end points -- explicit type cast to by-pass type checks (TmdbDataUnionArrayType provides potential types)
+        const data: TmdbDataUnionArrayType = (await tmdbApiFetch({ endPoint: keyValuePair.endPoint, movie_id, person_id })) as TmdbDataUnionArrayType;
+        // push new array into dataArray
+        if (data) dataArray.push({ key: keyValuePair.key, data: data });
       })
     );
-
     // return our new array of data
     return dataArray;
   } catch (error) {
     console.error('Error fetching data:', error);
+    return undefined;
   }
 };

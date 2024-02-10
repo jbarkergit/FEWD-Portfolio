@@ -1,6 +1,10 @@
+// components
 import FDCarouselHeader from '../components/carousels/carousel-headers/FDCarouselHeader';
 import FDCarouselChildLP from '../components/carousels/carousel-children/FDCarouselChildLP';
 import FDCarouselChildTopTen from '../components/carousels/carousel-children/FDCarouselChildTopTen';
+
+// types
+import { TmdbDataUnionArrayType } from '../api/types/TmdbDataTypes';
 
 // Param Types
 type useCreateCarouselParamTypes = {
@@ -8,7 +12,7 @@ type useCreateCarouselParamTypes = {
   landscape?: boolean;
   portrait?: boolean;
   topten?: boolean;
-  data: {};
+  data: TmdbDataUnionArrayType;
 };
 
 // Carousel Creation Hook

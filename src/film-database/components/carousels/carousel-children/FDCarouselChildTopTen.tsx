@@ -1,5 +1,8 @@
+// types
+import { TmdbDataUnionArrayType } from '../../../api/types/TmdbDataTypes';
+
 type PropDrillType = {
-  data: unknown;
+  data: TmdbDataUnionArrayType;
 };
 
 const FDCarouselChildTopTen = ({ data }: PropDrillType) => {
