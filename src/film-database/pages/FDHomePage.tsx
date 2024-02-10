@@ -41,7 +41,7 @@ const FDHomePage = () => {
       <FDHeader />
       <section className='filmDatabase__content'>
         {tmdbData?.map((dataObject: { key: string; data: TmdbDataUnionArrayType }) => (
-          <Fragment key={uuidv4()}>{useCreateCarousel({ heading: Object.keys(dataObject)[0], landscape: true, data: dataObject.data })}</Fragment>
+          <Fragment key={uuidv4()}>{useCreateCarousel({ heading: dataObject.key.split(/(?=[A-Z])/).join(' '), landscape: true, data: dataObject.data })}</Fragment>
         ))}
       </section>
       <FDFooter />
