@@ -21,13 +21,17 @@ const FDHomePage = () => {
   // Invoke fetch data hooks on mount
   useEffect(() => {
     try {
-      // movieLists
+      // Movie lists
       useMemo(() => {
         useTmdbFetch(tmdbApiEndPoints.movieLists).then((data: UseTmdbDataArrayType | undefined) => {
           if (data) setTmdbData(data as UseTmdbDataArrayType);
           else throw new Error('Could not fetch requested data.');
         });
       }, []);
+
+      // Other
+
+      // Catch block
     } catch (error) {
       console.error(Error);
     }
