@@ -2,10 +2,10 @@
 import { TmdbDataUnionArrayType } from '../../../api/types/TmdbDataTypes';
 
 type PropDrillType = {
-  data: TmdbDataUnionArrayType;
+  dataObject: TmdbDataUnionArrayType;
 };
 
-const FDCarouselChildTopTen = ({ data }: PropDrillType) => {
+const FDCarouselChildTopTen = ({ dataObject }: PropDrillType) => {
   return <div>FDCarouselChildTopTen</div>;
 };
 export default FDCarouselChildTopTen;

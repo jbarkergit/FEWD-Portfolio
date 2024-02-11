@@ -5,15 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 import { TmdbDataUnionArrayType, TmdbDataUnionType } from '../../../api/types/TmdbDataTypes';
 
 // component creation
-import useCreatePicture from '../../../component-creation/useCreatePicture';
+import useCreatePicture from '../../../hooks/useCreatePicture';
 
-//svg
-import { IcRoundPlayCircle } from '../../../icons/IcRoundPlayCircle';
-import { PhDotsThreeVerticalBold } from '../../../icons/PhDotsThreeVerticalBold';
+// svg
+import { MaterialPlayCircle } from '../../../icons/MaterialPlayCircle';
+import { BootstrapThreeDotsVertical } from '../../../icons/PhDotsThreeVerticalBold';
 
 // types
 type PropDrillType = {
-  data: TmdbDataUnionArrayType;
+  dataObject: TmdbDataUnionArrayType;
 };
 
 const formatDate = (date: string): string => {
@@ -23,35 +23,31 @@ const formatDate = (date: string): string => {
   else return 'Now Available on...';
 };
 
-const FDCarouselChildLP = ({ data }: PropDrillType): JSX.Element[] | undefined => {
+const FDCarouselChildLP = ({ dataObject }: PropDrillType): JSX.Element[] | undefined => {
   //NOTE: TS-IGNORE property 'results', data from api calls may be too broad, see useCreateCarousel component
   //@ts-ignore
-  const { results } = data as TmdbDataUnionType;
+  const { results } = dataObject as TmdbDataUnionType;
 
   return results.map((data: TmdbDataUnionType) => (
-    <div className='fdCarousel__container__block' key={uuidv4()}>
-      <div className='fdCarousel__container__block__item'>
-        <figure className='fdCarousel__container__block__item__graphic'>
-          <picture>
-            <img src={`https://image.tmdb.org/t/p/original/${data?.poster_path}.svg`}></img>
-            <figcaption>{data?.original_title}</figcaption>
-          </picture>
-        </figure>
-        <div className='fdCarousel__container__block__overlay'>
-          <button aria-label='Play Trailer'>
-            {useCreatePicture({ svg: <IcRoundPlayCircle />, alt: 'More Information', figcaption: 'More Information Selector' })}
+    <article className='fdCarousel__wrapper__container' key={uuidv4()}>
+      <div className='fdCarousel__wrapper__container__graphic'>
+        {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${data?.poster_path}.svg}`, alt: data?.original_title as string })}
+
+        <div className='fdCarousel__wrapper__container__graphic__overlay'>
+          <button className='fdCarousel__wrapper__container__graphic__overlay--play' aria-label='Play Trailer'>
+            {useCreatePicture({ svg: <MaterialPlayCircle />, alt: 'Play Trailer' })}
           </button>
-          <button aria-label='More Information'>
-            {useCreatePicture({ svg: <PhDotsThreeVerticalBold />, alt: 'More Information', figcaption: 'More Information Selector' })}
+          <button className='fdCarousel__wrapper__container__graphic__overlay--moreInfo' aria-label='More Information'>
+            {useCreatePicture({ svg: <BootstrapThreeDotsVertical />, alt: 'More Information' })}
           </button>
         </div>
       </div>
 
-      <hgroup className='fdCarousel__container__block__footer'>
-        <h2>{data?.title}</h2>
-        <h3>{formatDate(data?.release_date!)}</h3>
+      <hgroup className='fdCarousel__wrapper__container__info'>
+        <h2 className='fdCarousel__wrapper__container__info--h2'>{data?.title}</h2>
+        <h3 className='fdCarousel__wrapper__container__info--h3'>{formatDate(data?.release_date!)}</h3>
       </hgroup>
-    </div>
+    </article>
   ));
 };
 

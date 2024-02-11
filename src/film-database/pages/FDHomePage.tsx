@@ -1,9 +1,12 @@
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
-// reusable components
+// reusable jsx components
 import FDHeader from '../components/navigation/header/FDHeader';
 import FDFooter from '../components/navigation/footer/FDFooter';
-import useCreateCarousel from '../component-creation/useCreateCarousel';
+import FDCarouselChildLP from '../components/carousels/carousel-children/FDCarouselChildLP';
+
+// jsx component hooks
+import useCreateCarousel from '../hooks/useCreateCarousel';
 
 // api
 import { tmdbApiEndPoints } from '../api/data/tmdbApiEndPoints';
@@ -22,14 +25,10 @@ const FDHomePage = () => {
   useEffect(() => {
     try {
       // Movie lists
-      useMemo(() => {
-        useTmdbFetch(tmdbApiEndPoints.movieLists).then((data: UseTmdbDataArrayType | undefined) => {
-          if (data) setTmdbData(data as UseTmdbDataArrayType);
-          else throw new Error('Could not fetch requested data.');
-        });
-      }, []);
-
-      // Other
+      useTmdbFetch(tmdbApiEndPoints.movieLists).then((data: UseTmdbDataArrayType | undefined) => {
+        if (data) setTmdbData(data as UseTmdbDataArrayType);
+        else throw new Error('Could not fetch requested data.');
+      });
 
       // Catch block
     } catch (error) {
@@ -43,13 +42,12 @@ const FDHomePage = () => {
 
   return (
     <div className='filmDatabase'>
-      <div className='filmDatabase--backdrop' />
       <FDHeader />
-      <section className='filmDatabase__content'>
-        {tmdbData?.map((dataObject: { key: string; data: TmdbDataUnionArrayType }) => (
-          <Fragment key={uuidv4()}>{useCreateCarousel({ heading: dataObject.key.split(/(?=[A-Z])/).join(' '), landscape: true, data: dataObject.data })}</Fragment>
-        ))}
-      </section>
+
+      {tmdbData?.map((dataObject: { key: string; data: TmdbDataUnionArrayType }) => (
+        <Fragment key={uuidv4()}>{useCreateCarousel({ heading: dataObject.key, dataObject: dataObject.data })}</Fragment>
+      ))}
+
       <FDFooter />
     </div>
   );

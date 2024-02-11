@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
-import useCreatePicture from '../../../component-creation/useCreatePicture';
-import { CbiVideoland } from '../../../icons/CbiVideoland';
+import useCreatePicture from '../../../hooks/useCreatePicture';
 
 const FDHeader = () => {
   return (
     <header className='fdHeader'>
       <nav className='fdHeader__nav'>
         <section className='fdLogo__nav__logo'>
-          <Link to='/film-database'>{useCreatePicture({ svg: <CbiVideoland />, alt: 'Film Database Logo', figcaption: 'Film Database Logo' })}</Link>
+          {/* <Link to='/film-database'>{useCreatePicture({ svg: <CbiVideoland />, alt: 'Film Database Logo' })}</Link> */}
         </section>
         <section className='fdLogo__nav__links'>
           <ul aria-labelledby='navigate-to-genre'>
