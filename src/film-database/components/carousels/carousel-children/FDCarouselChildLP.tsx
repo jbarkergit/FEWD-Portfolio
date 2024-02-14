@@ -31,7 +31,7 @@ const FDCarouselChildLP = ({ dataObject }: PropDrillType): JSX.Element[] | undef
   return results.map((data: TmdbDataUnionType) => (
     <article className='fdCarousel__wrapper__container' key={uuidv4()}>
       <div className='fdCarousel__wrapper__container__graphic'>
-        {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${data?.poster_path}.svg}`, alt: data?.original_title as string })}
+        {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${data?.poster_path}.svg`, alt: data?.original_title as string })}
 
         <div className='fdCarousel__wrapper__container__graphic__overlay'>
           <button className='fdCarousel__wrapper__container__graphic__overlay--play' aria-label='Play Trailer'>

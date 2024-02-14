@@ -37,6 +37,7 @@
       &__graphic {
         position: relative;
         z-index: 1;
+        width: inherit;
         aspect-ratio: 2/3;
         overflow: hidden;
         cursor: pointer;
