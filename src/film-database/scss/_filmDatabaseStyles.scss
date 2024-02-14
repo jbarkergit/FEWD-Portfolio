@@ -10,6 +10,8 @@
   //font styles
 
   //border box
+  --fd-border-box-padding: 0 5.85%;
+  --fd-border-box-padding-RL: 5.85%;
 
   //gaps
   --fd-gap-carousel: calc();
@@ -80,8 +82,7 @@
   font:
     normal normal 500 100% / 1.8em 'Satoshi',
     sans-serif;
-  font-size: f.rem(18);
+  font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
   color: var(--fd-font-color-primary);
   background-color: var(--fd-background-color-primary);
-  padding: 0 5.85%;
 }

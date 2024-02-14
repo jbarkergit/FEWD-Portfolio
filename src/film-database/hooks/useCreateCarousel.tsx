@@ -18,7 +18,11 @@ const useCreateCarousel = ({ heading, topten, dataObject }: useCreateCarouselPar
   return (
     <section className='fdCarousel'>
       <FDCarouselHeading heading={heading} />
-      <div className='fdCarousel__wrapper'>{topten ? <FDCarouselChildTopTen dataObject={dataObject} /> : <FDCarouselChildLP dataObject={dataObject} />}</div>
+      <div className='fdCarousel__wrapper'>{topten ? <FDCarouselChildTopTen dataObject={dataObject} /> : <FDCarouselChildLP dataObject={dataObject} />}</div>{' '}
+      <nav className='fdCarousel__navigation'>
+        <button className='fdCarousel__navigation--button'></button>
+        <button className='fdCarousel__navigation--button'></button>
+      </nav>
     </section>
   );
 };
