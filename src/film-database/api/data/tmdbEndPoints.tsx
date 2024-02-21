@@ -1,10 +1,10 @@
 /**
  * https://developer.themoviedb.org/reference/
  * array containing objects with key-value pairs for TMDB API endpoints
- * each object represents an api category of endpoints
+ * each object represents an api "category" of endpoints
  */
 
-export const tmdbApiEndPoints = {
+export const tmdbEndPoints = {
   // end points to acess movie lists
   movieLists: [
     { key: 'nowPlaying', endPoint: 'https://api.themoviedb.org/3/movie/now_playing' },

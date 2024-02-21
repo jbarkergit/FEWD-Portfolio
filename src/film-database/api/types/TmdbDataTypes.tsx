@@ -1,10 +1,43 @@
-/** TYPE NOTES
- * cannot find interface / types for various calls in TMDB documentation
- * to resolve this issue -> manually convert data structures to types via CLG
+/** Custom Type Naming Convention Reference
+ * Note: Use of underscores (_) is to offer clarity when utilizing type autocompletion
+ *
+ * #1. Type_ Preface
+ *      e.g. Type_#2_#3_#4?_#5?
+ *
+ * #2. Identify where the type originates
+ * Note: This must be location oriented and concise
+ *      e.g. Type_Tmdb_#3_#4?_#5?
+ *
+ * #3. Assign unique identifier
+ *      e.g. Type_Tmdb_Movie_#4_#5?
+ *
+ * * #4. Define data structure
+ *  Obj, Arr, ObjArr, Map, KeyValuePair, KeyValuePairArray, ArrUnion, ObjUnion, MixedUnion, etc.
+ *      e.g. Type_Tmdb_Movie_Map_#5?
+ *
+ * #5. OPTIONAL: Determine if desired output is potentially UNKNOWN | UNDEFINED | NULL, else OMIT
+ * Note: "is" preface, in lowercase, mandatory
+ *  Could be Unknown -> isUnknown
+ *  Could be Undefined -> isUndefined
+ *  Could be Null -> isNullable
+ *      e.g. Type_Tmdb_Movie_Map_isUndefined
  */
 
-// Api Category Types
-type TmdbMovieType = {
+/** PARAMETER (PAYLOAD) TYPE */
+export type Type_Tmdb_Call_Params = {
+  signal?: AbortSignal;
+  movie_id?: string | undefined;
+  person_id?: string | undefined;
+  tmdbEndPointKeyValuePairValue?: string;
+  tmdbEndPointKeyValuePairArr?: { key: string; endPoint: string }[];
+};
+
+/**
+ * API CALL TYPES
+ * Interface / types missing in TMDB API Docs, manual conversion required to build respective data structures
+ */
+
+export type Type_Tmdb_Movie_Obj = {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -21,6 +54,26 @@ type TmdbMovieType = {
   vote_count: number;
 };
 
-// standard DIRECT union types
-export type TmdbDataUnionType = TmdbMovieType | undefined;
-export type TmdbDataUnionArrayType = TmdbMovieType[] | undefined;
+/** All Potential Api Call Result Types (Type_Tmdb_DataFetch_Obj.results Type Union) */
+export type Type_Tmdb_ApiCallUnion_Obj = Type_Tmdb_Movie_Obj;
+
+//** Standard Api Call Type used by useTmdbFetcher() */
+export type Type_Tmdb_DataFetch_Obj = {
+  dates: { maximum: string; minimum: string };
+  page: number;
+  results: Type_Tmdb_ApiCallUnion_Obj[];
+  total_pages: number;
+  total_results: number;
+};
+
+/** Fetcher Return Type */
+export type Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = Promise<Type_Tmdb_DataFetch_Obj | undefined>;
+
+/** Processor Return Type */
+export type Type_Tmdb_ProcessorReturn_MapEntriesPromise_isUndefined = Promise<
+  | {
+      key: string;
+      value: Type_Tmdb_FetcherReturn_ObjPromise_isUndefined;
+    }[]
+  | undefined
+>;
