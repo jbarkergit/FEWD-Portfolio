@@ -25,7 +25,7 @@ const FDCarouselWrapper = ({ mapKey, mapValue }: Type_PropDrill) => {
           <FDCarouselChildLP value={values} key={uuidv4()} />
         ))}
         <nav className='fdCarousel__wrapper__navigation'>
-          <button className='fdCarousel__wrapper__navigation--button' aria-label={'Show Previous'}>
+          <button className='fdCarousel__wrapper__navigation--button' aria-label='Show Previous'>
             {useCreatePicture({ svg: <MaterialLeftCaret />, alt: 'Show Previous' })}
           </button>
           <button className='fdCarousel__wrapper__navigation--button' aria-label='Show More'>

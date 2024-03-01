@@ -1,5 +1,5 @@
 // Api Util
-import { useTmdbFetcher } from './useTmdbFetcher';
+import { tmdbFetcher } from './tmdbFetcher';
 // Api Types
 import {
   Type_Tmdb_Call_Params,
@@ -8,9 +8,9 @@ import {
   Type_Tmdb_ProcessorReturn_MapSettled_isUndefined,
 } from '../types/TmdbDataTypes';
 
-export const useTmdbProcessor = async ({
-  tmdbEndPointKeyValuePairArr,
+export const tmdbProcessor = async ({
   // controller,
+  tmdbEndPointKeyValuePairArr,
   movie_id,
   person_id,
 }: Type_Tmdb_Call_Params): Type_Tmdb_ProcessorReturn_MapSettled_isUndefined => {
@@ -22,7 +22,7 @@ export const useTmdbProcessor = async ({
         // Map the array of key-value pairs to process each end point asynchronously
         tmdbEndPointKeyValuePairArr.map(async (keyValuePair: { key: string; endPoint: string }) => {
           // Establish variable for fetch calls, note: optional parameters movie_id & person_id may still be passed despite being optional
-          const fetchDataPromise: Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = useTmdbFetcher({
+          const fetchDataPromise: Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = tmdbFetcher({
             // controller: controller,
             tmdbEndPointKeyValuePairValue: keyValuePair.endPoint,
             movie_id: movie_id,

@@ -1,6 +1,6 @@
 import { Type_Tmdb_Call_Params, Type_Tmdb_FetcherReturn_ObjPromise_isUndefined } from '../types/TmdbDataTypes';
 
-export const useTmdbFetcher = async ({
+export const tmdbFetcher = async ({
   // controller,
   movie_id,
   person_id,
