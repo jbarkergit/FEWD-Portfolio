@@ -10,17 +10,17 @@ import { BootstrapThreeDotsVertical } from '../../../icons/PhDotsThreeVerticalBo
 
 // types
 type Type_PropDrill = {
-  mapValue: Type_Tmdb_Movie_Obj;
+  value: Type_Tmdb_Movie_Obj;
 };
 
-const FDCarouselChildLP = ({ mapValue }: Type_PropDrill) => {
+const FDCarouselChildLP = ({ value }: Type_PropDrill) => {
   // Return component only in the event that all of the data is available
-  if (mapValue.poster_path && mapValue.title && mapValue.release_date)
+  if (value.poster_path && value.title && value.release_date)
     return (
       <article className='fdCarousel__wrapper__container'>
         <div className='fdCarousel__wrapper__container__graphic'>
           {/* need to create alt container for lower resolution img processing */}
-          {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${mapValue.poster_path}.svg`, alt: mapValue.title as string })}
+          {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${value.poster_path}.svg`, alt: value.title as string })}
 
           <div className='fdCarousel__wrapper__container__graphic__overlay'>
             <button className='fdCarousel__wrapper__container__graphic__overlay--play' aria-label='Play Trailer'>
@@ -33,8 +33,8 @@ const FDCarouselChildLP = ({ mapValue }: Type_PropDrill) => {
         </div>
 
         <hgroup className='fdCarousel__wrapper__container__info'>
-          <h2 className='fdCarousel__wrapper__container__info--h2'>{mapValue.title}</h2>
-          <h3 className='fdCarousel__wrapper__container__info--h3'>{useFormatDate(mapValue.release_date)}</h3>
+          <h2 className='fdCarousel__wrapper__container__info--h2'>{value.title}</h2>
+          <h3 className='fdCarousel__wrapper__container__info--h3'>{useFormatDate(value.release_date)}</h3>
         </hgroup>
       </article>
     );

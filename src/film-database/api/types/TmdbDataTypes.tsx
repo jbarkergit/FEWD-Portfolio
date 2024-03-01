@@ -25,7 +25,7 @@
 
 /** PARAMETER (PAYLOAD) TYPE */
 export type Type_Tmdb_Call_Params = {
-  signal?: AbortSignal;
+  // controller: AbortController;
   movie_id?: string | undefined;
   person_id?: string | undefined;
   tmdbEndPointKeyValuePairValue?: string;
@@ -69,11 +69,17 @@ export type Type_Tmdb_DataFetch_Obj = {
 /** Fetcher Return Type */
 export type Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = Promise<Type_Tmdb_DataFetch_Obj | undefined>;
 
-/** Processor Return Type */
-export type Type_Tmdb_ProcessorReturn_MapEntriesPromise_isUndefined = Promise<
-  | {
+/** Processor Defined Guard Conversion Type */
+export type Type_Tmdb_ProcessorDefined_ObjPromise = Promise<Type_Tmdb_DataFetch_Obj>;
+
+/** Processor Return Type (Promise.allSettled) */
+export type Type_Tmdb_ProcessorReturn_MapSettled_isUndefined = Promise<
+  | PromiseSettledResult<{
       key: string;
-      value: Type_Tmdb_FetcherReturn_ObjPromise_isUndefined;
-    }[]
+      value: Type_Tmdb_ProcessorDefined_ObjPromise;
+    }>[]
   | undefined
 >;
+
+/** Parent State Storage Type */
+export type Type_Tmdb_Parent_StateObjArr = { key: string; value: Type_Tmdb_ApiCallUnion_Obj[] }[];

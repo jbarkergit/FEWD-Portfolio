@@ -1,16 +1,7 @@
-import { Type_Tmdb_Call_Params, Type_Tmdb_DataFetch_Obj, Type_Tmdb_FetcherReturn_ObjPromise_isUndefined } from '../types/TmdbDataTypes';
-
-/**
- * TMDB API Fetch
- * @param endPoint
- * @param signal
- * @param movie_id?
- * @param person_id?
- * @returns
- */
+import { Type_Tmdb_Call_Params, Type_Tmdb_FetcherReturn_ObjPromise_isUndefined } from '../types/TmdbDataTypes';
 
 export const useTmdbFetcher = async ({
-  signal,
+  // controller,
   movie_id,
   person_id,
   tmdbEndPointKeyValuePairValue,
@@ -22,7 +13,7 @@ export const useTmdbFetcher = async ({
       accept: 'application/json',
       Authorization: `${import.meta.env.VITE_TMDB_AUTH_KEY}`,
     },
-    signal: signal,
+    // signal: controller.signal,
   };
 
   // Alter URL according to optional paramaters
@@ -42,14 +33,16 @@ export const useTmdbFetcher = async ({
   try {
     // Fetch data
     const response: Response = await fetch(`${url}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`, options);
-    const rawData: Promise<Type_Tmdb_DataFetch_Obj | undefined> = await response.json();
+    const rawData: Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = await response.json();
 
-    // Throw status code if response is not ok, else return data
-    if (!response.ok) throw new Error(`${response.status}`);
-    else return rawData;
+    // Throw status code if response is not ok && abort fetch, else return data
+    if (!response.ok) {
+      // controller.abort();
+      throw new Error(`${response.status}`);
+    } else return rawData;
 
     // Catch errors
   } catch (error) {
-    console.error('Request failure status: ', error);
+    console.error('Request aborted, failure status: ', error);
   }
 };
