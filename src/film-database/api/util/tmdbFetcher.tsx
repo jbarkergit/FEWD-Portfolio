@@ -1,7 +1,7 @@
 import { Type_Tmdb_Call_Params, Type_Tmdb_FetcherReturn_ObjPromise_isUndefined } from '../types/TmdbDataTypes';
 
 export const tmdbFetcher = async ({
-  // controller,
+  controller,
   movie_id,
   person_id,
   tmdbEndPointKeyValuePairValue,
@@ -13,7 +13,7 @@ export const tmdbFetcher = async ({
       accept: 'application/json',
       Authorization: `${import.meta.env.VITE_TMDB_AUTH_KEY}`,
     },
-    // signal: controller.signal,
+    signal: controller?.signal,
   };
 
   // Alter URL according to optional paramaters
@@ -37,7 +37,7 @@ export const tmdbFetcher = async ({
 
     // Throw status code if response is not ok && abort fetch, else return data
     if (!response.ok) {
-      // controller.abort();
+      controller?.abort();
       throw new Error(`${response.status}`);
     } else return rawData;
 

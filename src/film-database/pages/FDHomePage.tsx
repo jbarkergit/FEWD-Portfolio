@@ -24,7 +24,7 @@ const FDHomePage = () => {
 
     // Fetch, Process && Store Desired Data
     (async () => {
-      const data = await useTmdbApi({ /**controller,*/ tmdbEndPointKeyValuePairArr: tmdbEndPoints.movieLists });
+      const data = await useTmdbApi({ controller, tmdbEndPointKeyValuePairArr: tmdbEndPoints.movieLists });
       setTmdbDataArr(data);
     })();
 

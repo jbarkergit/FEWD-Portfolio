@@ -3,17 +3,13 @@ import { Type_Tmdb_DataFetch_Obj, Type_Tmdb_ApiCallUnion_Obj, Type_Tmdb_Parent_S
 // Api Util
 import { tmdbProcessor } from '../util/tmdbProcessor';
 
-export const useTmdbApi = async ({
-  tmdbEndPointKeyValuePairArr,
-  /**controller,**/ movie_id,
-  person_id,
-}: Type_Tmdb_Call_Params): Promise<Type_Tmdb_Parent_StateObjArr> => {
+export const useTmdbApi = async ({ controller, tmdbEndPointKeyValuePairArr, movie_id, person_id }: Type_Tmdb_Call_Params): Promise<Type_Tmdb_Parent_StateObjArr> => {
   // Initialize return storage
   const dataStorage: Type_Tmdb_Parent_StateObjArr = [];
 
   // Individualize api calls
   const fetchAndProcessApiCall = tmdbProcessor({
-    // controller: controller,
+    controller: controller,
     tmdbEndPointKeyValuePairArr: tmdbEndPointKeyValuePairArr,
     movie_id: movie_id,
     person_id: person_id,

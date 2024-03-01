@@ -25,7 +25,7 @@
 
 /** PARAMETER (PAYLOAD) TYPE */
 export type Type_Tmdb_Call_Params = {
-  // controller: AbortController;
+  controller?: AbortController;
   movie_id?: string | undefined;
   person_id?: string | undefined;
   tmdbEndPointKeyValuePairValue?: string;

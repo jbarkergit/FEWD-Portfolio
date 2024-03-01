@@ -9,7 +9,7 @@ import {
 } from '../types/TmdbDataTypes';
 
 export const tmdbProcessor = async ({
-  // controller,
+  controller,
   tmdbEndPointKeyValuePairArr,
   movie_id,
   person_id,
@@ -23,7 +23,7 @@ export const tmdbProcessor = async ({
         tmdbEndPointKeyValuePairArr.map(async (keyValuePair: { key: string; endPoint: string }) => {
           // Establish variable for fetch calls, note: optional parameters movie_id & person_id may still be passed despite being optional
           const fetchDataPromise: Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = tmdbFetcher({
-            // controller: controller,
+            controller,
             tmdbEndPointKeyValuePairValue: keyValuePair.endPoint,
             movie_id: movie_id,
             person_id: person_id,
