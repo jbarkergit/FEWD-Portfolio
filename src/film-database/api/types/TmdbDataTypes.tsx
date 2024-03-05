@@ -29,7 +29,7 @@ export type Type_Tmdb_Call_Params = {
   movie_id?: string | undefined;
   person_id?: string | undefined;
   tmdbEndPointKeyValuePairValue?: string;
-  tmdbEndPointKeyValuePairArr?: { key: string; endPoint: string }[];
+  tmdbEndPointKeyValuePairArr?: { key: string; endPoint: string }[] | { key: string; endPoint: string };
 };
 
 /**
@@ -37,7 +37,7 @@ export type Type_Tmdb_Call_Params = {
  * Interface / types missing in TMDB API Docs, manual conversion required to build respective data structures
  */
 
-export type Type_Tmdb_Movie_Obj = {
+export type Type_Tmdb_MovieList_Obj = {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -54,8 +54,36 @@ export type Type_Tmdb_Movie_Obj = {
   vote_count: number;
 };
 
+export type Type_Tmdb_Movies_Obj = {
+  adult: boolean;
+  backdrop_path: string | null;
+  belongs_to_collection: any;
+  budget: number;
+  genres: { id: number; name: string }[];
+  homepage: string;
+  id: number;
+  imdb_id: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string | null;
+  production_companies: { id: number; logo_path: string | null; name: string; origin_country: string }[];
+  production_countries: { iso_3166_1: string; name: string }[];
+  release_date: string;
+  revenue: number;
+  runtime: number;
+  spoken_languages: { english_name: string; iso_639_1: string; name: string }[];
+  status: string;
+  tagline: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
+
 /** All Potential Api Call Result Types (Type_Tmdb_DataFetch_Obj.results Type Union) */
-export type Type_Tmdb_ApiCallUnion_Obj = Type_Tmdb_Movie_Obj;
+export type Type_Tmdb_ApiCallUnion_Obj = Type_Tmdb_MovieList_Obj | Type_Tmdb_Movies_Obj;
 
 //** Standard Api Call Type used by useTmdbFetcher() */
 export type Type_Tmdb_DataFetch_Obj = {
@@ -82,4 +110,4 @@ export type Type_Tmdb_ProcessorReturn_MapSettled_isUndefined = Promise<
 >;
 
 /** Parent State Storage Type */
-export type Type_Tmdb_Parent_StateObjArr = { key: string; value: Type_Tmdb_ApiCallUnion_Obj[] }[];
+export type Type_Tmdb_Parent_StateObjArr = { key: string; value: Type_Tmdb_ApiCallUnion_Obj | Type_Tmdb_ApiCallUnion_Obj[] }[];

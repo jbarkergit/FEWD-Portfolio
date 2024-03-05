@@ -24,8 +24,15 @@ const FDHomePage = () => {
 
     // Fetch, Process && Store Desired Data
     (async () => {
-      const data = await useTmdbApi({ controller, tmdbEndPointKeyValuePairArr: tmdbEndPoints.movieLists });
-      setTmdbDataArr(data);
+      const movieLists = await useTmdbApi({ controller, tmdbEndPointKeyValuePairArr: tmdbEndPoints.movieLists });
+
+      const data = await useTmdbApi({
+        controller: controller,
+        tmdbEndPointKeyValuePairArr: tmdbEndPoints.movies.find((obj) => obj.key === 'details'),
+        movie_id: '1096197-no-way-up',
+      });
+
+      setTmdbDataArr(movieLists);
     })();
 
     // Abort any ongoing fetch operations when component unmounts

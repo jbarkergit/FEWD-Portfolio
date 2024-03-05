@@ -1,5 +1,5 @@
 // API Types
-import { Type_Tmdb_Movie_Obj } from '../../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
 // Hooks
 import { useFormatDate } from '../../../hooks/useFormatDate';
 // Component hooks
@@ -10,7 +10,7 @@ import { BootstrapThreeDotsVertical } from '../../../icons/PhDotsThreeVerticalBo
 
 // types
 type Type_PropDrill = {
-  value: Type_Tmdb_Movie_Obj;
+  value: Type_Tmdb_ApiCallUnion_Obj;
 };
 
 const FDCarouselChildLP = ({ value }: Type_PropDrill) => {

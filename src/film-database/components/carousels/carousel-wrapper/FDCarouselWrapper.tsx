@@ -13,7 +13,7 @@ import MaterialRightCaret from '../../../icons/MaterialRightCaret';
 
 type Type_PropDrill = {
   mapKey: string;
-  mapValue: Type_Tmdb_ApiCallUnion_Obj[];
+  mapValue: Type_Tmdb_ApiCallUnion_Obj[] | Type_Tmdb_ApiCallUnion_Obj;
 };
 
 const FDCarouselWrapper = ({ mapKey, mapValue }: Type_PropDrill) => {
@@ -21,9 +21,11 @@ const FDCarouselWrapper = ({ mapKey, mapValue }: Type_PropDrill) => {
     <section className='fdCarousel'>
       <FDCarouselHeading heading={mapKey} />
       <div className='fdCarousel__wrapper'>
-        {mapValue.map((values) => (
-          <FDCarouselChildLP value={values} key={uuidv4()} />
-        ))}
+        {Array.isArray(mapValue) ? (
+          mapValue.map((values) => <FDCarouselChildLP value={values} key={uuidv4()} />)
+        ) : (
+          <FDCarouselChildLP value={mapValue} key={uuidv4()} />
+        )}
         <nav className='fdCarousel__wrapper__navigation'>
           <button className='fdCarousel__wrapper__navigation--button' aria-label='Show Previous'>
             {useCreatePicture({ svg: <MaterialLeftCaret />, alt: 'Show Previous' })}

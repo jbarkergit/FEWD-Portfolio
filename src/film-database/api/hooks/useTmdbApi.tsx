@@ -23,10 +23,13 @@ export const useTmdbApi = async ({ controller, tmdbEndPointKeyValuePairArr, movi
           const fulfilledList = list.value;
 
           if (fulfilledList) {
+            const value: Type_Tmdb_DataFetch_Obj | Type_Tmdb_ApiCallUnion_Obj = await fulfilledList.value;
+
             const key: string = fulfilledList.key;
-            const value: Type_Tmdb_DataFetch_Obj = await fulfilledList.value;
-            const resultsArray: Type_Tmdb_ApiCallUnion_Obj[] = value.results;
-            dataStorage.push({ key: key, value: resultsArray });
+            const resultsArray = value.results as Type_Tmdb_ApiCallUnion_Obj[];
+            const resultObject = value as unknown as Type_Tmdb_ApiCallUnion_Obj;
+
+            dataStorage.push({ key: key, value: 'results' in value ? resultsArray : resultObject });
           }
         }
       }
