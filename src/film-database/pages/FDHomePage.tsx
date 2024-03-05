@@ -26,13 +26,14 @@ const FDHomePage = () => {
     (async () => {
       const movieLists = await useTmdbApi({ controller, tmdbEndPointKeyValuePairArr: tmdbEndPoints.movieLists });
 
-      const data = await useTmdbApi({
+      const moviesDetails = await useTmdbApi({
         controller: controller,
         tmdbEndPointKeyValuePairArr: tmdbEndPoints.movies.find((obj) => obj.key === 'details'),
         movie_id: '1096197-no-way-up',
       });
 
-      setTmdbDataArr(movieLists);
+      // Set state with merged desired data
+      setTmdbDataArr([...movieLists, ...moviesDetails]);
     })();
 
     // Abort any ongoing fetch operations when component unmounts
