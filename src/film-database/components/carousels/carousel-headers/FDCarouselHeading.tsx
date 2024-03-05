@@ -1,3 +1,5 @@
+import { useFormatApiKey } from '../../../hooks/useFormatApiKey';
+
 type PropType = {
   heading: string;
 };
@@ -5,7 +7,7 @@ type PropType = {
 const FDCarouselHeading = ({ heading }: PropType) => {
   return (
     <h2 className='fdCarousel__heading'>
-      <div className='fdCarousel__heading__textBlock'>{heading.split(/(?=[A-Z])/).join(' ')}</div>
+      <div className='fdCarousel__heading__textBlock'>{useFormatApiKey(heading)}</div>
     </h2>
   );
 };
