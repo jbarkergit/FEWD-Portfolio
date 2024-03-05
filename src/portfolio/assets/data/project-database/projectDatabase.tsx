@@ -1,7 +1,22 @@
 import EcommerceInsights from '../project-insights/EcommerceInsights';
+import FilmDatabaseInsights from '../project-insights/FilmDatabaseInsights';
 import PortfolioInsights from '../project-insights/PortfolioInsights';
 
 export const projectDatabase = [
+  {
+    key: 'film database',
+    url: 'http://localhost:5173/film-database',
+    technologies: {
+      libraries: ['react', 'react router', 'uuid'],
+      web_technologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
+      code_quality: ['eslint', 'prettier'],
+      api: ['tmdb'],
+    },
+    insights: <FilmDatabaseInsights />,
+    imgSrc: 'src/portfolio/assets/media/film-db-temp.png',
+    imgAlt: 'Film Database Development Project',
+    dataStatus: 'active',
+  },
   {
     key: 'ecommerce',
     url: 'http://localhost:5173/ecommerce',
