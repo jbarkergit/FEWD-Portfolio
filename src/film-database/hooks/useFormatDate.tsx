@@ -1,6 +1,10 @@
 export const useFormatDate = (date: string): string => {
+  // Today's date
   const currentDate: Date = new Date();
-  const newDate: Date = new Date(date);
-  if (newDate > currentDate) return `Coming ${`${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear().toString().slice(2)}`}`;
+  // Parameter date conversion
+  const releaseDate: Date = new Date(date);
+
+  // Check if releaseDate is future or past
+  if (releaseDate > currentDate) return `Coming ${`${releaseDate.getMonth() + 1}/${releaseDate.getDate()}/${releaseDate.getFullYear().toString().slice(2)}`}`;
   else return 'Now Available on...';
 };
