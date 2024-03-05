@@ -15,13 +15,18 @@ const FDHeader = () => {
         </section>
         <section className='fdHeader__nav__links'>
           <ul className='fdHeader__nav__links__ul' aria-labelledby='navigate-to-genre'>
-            {Object.entries(tmdbEndPoints).map((arr) => (
-              <li id='navigate-to-genre' key={arr[0]}>
-                <Link to={`/film-database/${arr[0]}`} aria-label={useFormatApiKey(arr[0])}>
-                  {useFormatApiKey(arr[0])}
-                </Link>
-              </li>
-            ))}
+            {Object.entries(tmdbEndPoints).map(([key, value]) => {
+              if (['movieLists', 'movies', 'trending'].includes(key)) {
+                return (
+                  <li id='navigate-to-genre' key={key}>
+                    <Link to={`/film-database/${key}`} aria-label={useFormatApiKey(key)}>
+                      {useFormatApiKey(key)}
+                    </Link>
+                  </li>
+                );
+              }
+              return null;
+            })}
           </ul>
         </section>
         <section className='fdHeader__nav__features'>
