@@ -1,0 +1,31 @@
+@use '../../scss/filmDatabaseStyles' as s;
+@use '../../../sass/functions' as f;
+
+.fdHeader {
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    padding: calc(var(--fd-border-box-padding-RL) / 4);
+    gap: var(--fd-gap-carousel);
+    &__logo {
+      display: grid;
+      place-items: center;
+      & a figure picture svg {
+        max-height: f.rem(40);
+      }
+    }
+    &__links {
+      &__ul {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        gap: calc(var(--fd-border-box-padding-RL) / 4);
+        & li {
+          text-transform: capitalize;
+        }
+      }
+    }
+    &__features {
+    }
+  }
+}

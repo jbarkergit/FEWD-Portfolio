@@ -1,22 +1,30 @@
 import { Link } from 'react-router-dom';
+import { tmdbEndPoints } from '../../../api/data/tmdbEndPoints';
+import { useFormatApiKey } from '../../../hooks/useFormatApiKey';
 import useCreatePicture from '../../../hooks/useCreatePicture';
+import TmdbLogoShort from '../../../icons/TmdbLogoShort';
 
 const FDHeader = () => {
   return (
     <header className='fdHeader'>
       <nav className='fdHeader__nav'>
-        <section className='fdLogo__nav__logo'>
-          {/* <Link to='/film-database'>{useCreatePicture({ svg: <CbiVideoland />, alt: 'Film Database Logo' })}</Link> */}
+        <section className='fdHeader__nav__logo'>
+          <Link to='https://www.themoviedb.org/' target='_blank'>
+            {useCreatePicture({ svg: <TmdbLogoShort />, alt: 'TMDB API Logo' })}
+          </Link>
         </section>
-        <section className='fdLogo__nav__links'>
-          <ul aria-labelledby='navigate-to-genre'>
-            {/* map genres here */}
-            <li id='navigate-to-genre'>
-              <Link to='' aria-label=''></Link>
-            </li>
+        <section className='fdHeader__nav__links'>
+          <ul className='fdHeader__nav__links__ul' aria-labelledby='navigate-to-genre'>
+            {Object.entries(tmdbEndPoints).map((arr) => (
+              <li id='navigate-to-genre' key={arr[0]}>
+                <Link to={`/film-database/${arr[0]}`} aria-label={useFormatApiKey(arr[0])}>
+                  {useFormatApiKey(arr[0])}
+                </Link>
+              </li>
+            ))}
           </ul>
         </section>
-        <section className='fdLogo__nav__features'>
+        <section className='fdHeader__nav__features'>
           {/* search bar */}
           {/* account */}
         </section>
