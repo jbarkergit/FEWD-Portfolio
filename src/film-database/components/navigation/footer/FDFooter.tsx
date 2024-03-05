@@ -1,3 +1,7 @@
+import { Link } from 'react-router-dom';
+import useCreatePicture from '../../../hooks/useCreatePicture';
+import TmdbLogoShort from '../../../icons/TmdbLogoShort';
+
 const FDFooter = () => {
   return (
     <footer className='fdFooter'>
@@ -36,8 +40,16 @@ const FDFooter = () => {
       </section>
 
       <section className='fdFooter__block'>
+        <Link to='https://www.themoviedb.org/' target='_blank'>
+          {useCreatePicture({ svg: <TmdbLogoShort />, alt: 'TMDB API Logo' })}
+        </Link>
         <blockquote>
-          <p>All media content along with associated information, images, and videos are provided courtesy of themoviedb.org.</p>
+          <p>
+            All media content along with associated information, images, and videos are provided courtesy of{' '}
+            <Link to='https://www.themoviedb.org/' target='_blank'>
+              themoviedb.org.
+            </Link>
+          </p>
         </blockquote>
       </section>
     </footer>
