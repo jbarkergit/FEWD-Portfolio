@@ -1,8 +1,11 @@
 // Global Styles
 @forward '/src/film-database/scss/filmDatabaseStyles';
 
+// Navigation
+@forward '/src/film-database/components/navigation/fdNavigation';
+
 // components/carousels
 @forward '/src/film-database/components/carousels/fdCarousels';
 
-// Navigation
-@forward '/src/film-database/components/navigation/fdNavigation';
+// components/flat-grid
+@forward '/src/film-database/components/flat-grid/fdFlatGrid';

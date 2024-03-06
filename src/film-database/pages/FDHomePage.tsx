@@ -11,6 +11,7 @@ import { useTmdbApi } from '../api/hooks/useTmdbApi';
 import FDHeader from '../components/navigation/header/FDHeader';
 import FDCarouselWrapper from '../components/carousels/carousel-wrapper/FDCarouselWrapper';
 import FDFooter from '../components/navigation/footer/FDFooter';
+import FDFlatGrid from '../components/flat-grid/FDFlatGrid';
 
 /** Component NOTICE: Fetching and processing of data was designed, with reusability in mind, to allow for the application to grow by fetching only desired data */
 const FDHomePage = () => {
@@ -26,14 +27,14 @@ const FDHomePage = () => {
     (async () => {
       const movieLists = await useTmdbApi({ controller, tmdbEndPointKeyValuePairArr: tmdbEndPoints.movieLists });
 
-      const moviesDetails = await useTmdbApi({
-        controller: controller,
-        tmdbEndPointKeyValuePairArr: tmdbEndPoints.movies.find((obj) => obj.key === 'details'),
-        movie_id: '1096197-no-way-up',
-      });
+      // const moviesDetails = await useTmdbApi({
+      //   controller: controller,
+      //   tmdbEndPointKeyValuePairArr: tmdbEndPoints.movies.find((obj) => obj.key === 'details'),
+      //   movie_id: '1096197-no-way-up',
+      // });
 
       // Set state with merged desired data
-      setTmdbDataArr([...movieLists, ...moviesDetails]);
+      setTmdbDataArr([...movieLists]);
     })();
 
     // Abort any ongoing fetch operations when component unmounts
@@ -48,6 +49,7 @@ const FDHomePage = () => {
       <FDHeader />
       {tmdbDataArr.map((entry) => (
         <FDCarouselWrapper mapKey={entry.key} mapValue={entry.value} key={uuidv4()} />
+        // <FDFlatGrid mapKey={entry.key} mapValue={entry.value} key={uuidv4()} />
       ))}
       <FDFooter />
     </div>

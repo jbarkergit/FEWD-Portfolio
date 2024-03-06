@@ -8,9 +8,9 @@ export const tmdbEndPoints = {
   // end points to acess movie lists
   movieLists: [
     { key: 'nowPlaying', endPoint: 'https://api.themoviedb.org/3/movie/now_playing' },
-    { key: 'popular', endPoint: 'https://api.themoviedb.org/3/movie/popular' },
+    // { key: 'popular', endPoint: 'https://api.themoviedb.org/3/movie/popular' },
     { key: 'topRated', endPoint: 'https://api.themoviedb.org/3/movie/top_rated' },
-    { key: 'upcoming', endPoint: 'https://api.themoviedb.org/3/movie/upcoming' },
+    // { key: 'upcoming', endPoint: 'https://api.themoviedb.org/3/movie/upcoming' },
   ],
 
   // end points to acess movie details

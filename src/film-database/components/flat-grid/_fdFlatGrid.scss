@@ -1,0 +1,39 @@
+@use '../../scss/filmDatabaseStyles' as s;
+@use '../../../sass/functions' as f;
+
+.fdFlatGrid {
+  &__header {
+    height: max-content;
+    padding: var(--fd-border-box-padding-RL);
+    text-transform: capitalize;
+    &--h2 {
+      font-size: clamp(f.rem(26), f.rem(40) + 1vw, f.rem(46));
+    }
+  }
+  &__wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, calc(25% - 1.5rem));
+    grid-auto-rows: 1fr;
+    justify-content: center;
+    gap: var(--fd-carousel-gutter);
+    overflow: hidden;
+    &__li {
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 calc((100% + var(--fd-border-box-padding-RL)) / var(--fd-carousel-items-per-page) - var(--fd-carousel-gutter));
+      gap: var(--fd-carousel-gutter);
+      &__article {
+        & figure picture img {
+        }
+        &__hgroup {
+          &--h2 {
+            font-size: 18px;
+          }
+          &--h3 {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
