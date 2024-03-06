@@ -16,7 +16,7 @@ const FDFlatGrid = ({ mapKey, mapValue }: Type_PropDrill) => {
       </div>
       <ul className='fdFlatGrid__wrapper'>
         {mapValue.map((values) => (
-          <li className='fdFlatGrid__wrapper__li'>
+          <li className='fdFlatGrid__wrapper__li' key={values.id}>
             <article className='fdFlatGrid__wrapper__li__article'>
               {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${values.poster_path}.svg`, alt: values.title as string })}
               <hgroup className='fdFlatGrid__wrapper__li__article__hgroup'>
