@@ -2,29 +2,25 @@
 @use '../../sass/functions' as f;
 
 :root {
-  //controller
+  // Carousel Controller
   --fd-carousel-items-per-page: 7.25;
-  --fd-carousel-items-per-original-page: 5;
-  --fd-carousel-gutter: 10px;
+  --fd-carousel-font-header: clamp(1rem, 1rem + 1vw, 1.125rem);
 
-  //font styles
+  // Flat Grid Controller
+  --fd-flat-grid-items-per-page: 5;
+  --fd-flat-grid-font-header: clamp(1rem, 1rem + 1vw, 1.3125rem);
 
-  //border box
+  // Border Box && Gutters
   --fd-border-box-padding: 0 5.85%;
   --fd-border-box-padding-RL: 5.85%;
+  --fd-poster-gutter: 1.875rem;
 
-  //gaps
-  --fd-gap-carousel: 16px;
-
-  //background colors
+  // background colors
   --fd-background-color-primary: #1e2126;
   --fd-background-color-fallback: #040405;
   --fd-background-color-navigation: #16181d;
 
-  //background gradients
-  --fd-gradient-1: #fff;
-
-  //font colors
+  // font colors
   --fd-font-color-primary: #fff;
   --fd-font-color-secondary: #909296;
   --fd-font-color-brand: #1ce783;
