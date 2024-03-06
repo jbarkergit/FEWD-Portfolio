@@ -11,12 +11,12 @@
   &__heading {
     display: block;
     width: 100%;
-    padding: var(--fd-border-box-padding);
+    padding: var(--fd-flat-grid-font-header-padding);
     &__textBlock {
-      white-space: nowrap;
+      font-size: var(--fd-flat-grid-font-header);
+      line-height: normal;
       text-transform: capitalize;
-      font-weight: 600;
-      font-size: clamp(f.rem(18), f.rem(20) + 1vw, f.rem(26));
+      white-space: nowrap;
     }
   }
 
@@ -46,6 +46,11 @@
         & figure {
           pointer-events: none;
         }
+        & figure picture img,
+        figure picture svg {
+          transition: ease-in-out 0.22s all;
+          border-radius: var(--fd-poster-radius);
+        }
         &__overlay {
           position: absolute;
           z-index: 2;
@@ -74,12 +79,7 @@
       }
 
       &__info {
-        & h3 {
-          font-size: 14px;
-        }
-        & h2 {
-          font-size: 18px;
-        }
+        @include s.fdPosterDetails;
       }
     }
 

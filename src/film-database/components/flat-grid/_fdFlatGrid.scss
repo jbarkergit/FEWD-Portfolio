@@ -3,11 +3,12 @@
 
 .fdFlatGrid {
   &__header {
-    padding: var(--fd-border-box-padding);
+    padding: var(--fd-flat-grid-font-header-padding);
     &--h2 {
-      font-size: clamp(f.rem(26), f.rem(40) + 1vw, f.rem(46));
+      font-size: var(--fd-flat-grid-font-header);
       line-height: normal;
       text-transform: capitalize;
+      white-space: nowrap;
     }
   }
   &__wrapper {
@@ -18,23 +19,38 @@
     );
     grid-auto-rows: 1fr;
     justify-content: center;
-    gap: var(--fd-poster-gutter);
-    padding: var(--fd-border-box-padding);
+    column-gap: var(--fd-poster-gutter);
+    padding: var(--fd-border-box-section-padding);
     overflow: hidden;
     &__li {
       display: flex;
       flex-direction: column;
-      gap: var(--fd-poster-gutter);
+      transform-origin: top;
+      transition: ease-in-out 0.22s all;
+      &:hover {
+        transform: scale(1.1);
+      }
       &__article {
+        display: flex;
+        flex-direction: column;
+        row-gap: var(--fd-details-gap);
+        & figure picture img,
+        figure picture svg {
+          transition: ease-in-out 0.22s all;
+          border-radius: var(--fd-poster-radius);
+        }
         &__hgroup {
-          &--h2 {
-            font-size: 18px;
-          }
-          &--h3 {
-            font-size: 14px;
-          }
+          @include s.fdPosterDetails;
         }
       }
     }
   }
 }
+
+// // Poster hover border radius removal
+// .fdFlatGrid__wrapper__li:hover .fdFlatGrid__wrapper__li__article figure picture img {
+//   border-radius: 0;
+// }
+// .fdFlatGrid__wrapper__li:hover .fdFlatGrid__wrapper__li__article figure picture svg {
+//   border-radius: 0;
+// }

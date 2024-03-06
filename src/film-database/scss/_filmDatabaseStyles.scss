@@ -3,17 +3,21 @@
 
 :root {
   // Carousel Controller
-  --fd-carousel-items-per-page: 7.25;
+  --fd-carousel-items-per-page: 7.15;
   --fd-carousel-font-header: clamp(1rem, 1rem + 1vw, 1.125rem);
 
   // Flat Grid Controller
-  --fd-flat-grid-items-per-page: 5;
-  --fd-flat-grid-font-header: clamp(1rem, 1rem + 1vw, 1.3125rem);
+  --fd-flat-grid-items-per-page: 6;
+  --fd-flat-grid-font-header: clamp(1rem, 1.4rem + 1vw, 2rem);
+  --fd-flat-grid-font-header-padding: 0 var(--fd-border-box-padding-RL) 1rem var(--fd-border-box-padding-RL);
 
   // Border Box && Gutters
   --fd-border-box-padding: 0 5.85%;
   --fd-border-box-padding-RL: 5.85%;
+  --fd-border-box-section-padding: 0 var(--fd-border-box-padding-RL) var(--fd-border-box-padding-RL) var(--fd-border-box-padding-RL);
   --fd-poster-gutter: 1.875rem;
+  --fd-poster-radius: 0.6rem;
+  --fd-details-gap: calc(var(--fd-poster-gutter) / 2.5);
 
   // background colors
   --fd-background-color-primary: #1e2126;
@@ -24,6 +28,15 @@
   --fd-font-color-primary: #fff;
   --fd-font-color-secondary: #909296;
   --fd-font-color-brand: #1ce783;
+}
+
+@mixin fdPosterDetails {
+  &--h2 {
+    font-size: clamp(16px, 100% + 1vw, 20px);
+  }
+  &--h3 {
+    font-size: clamp(14px, 100% + 1vw, 16px);
+  }
 }
 
 @font-face {
