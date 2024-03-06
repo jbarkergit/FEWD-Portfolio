@@ -3,28 +3,29 @@
 
 .fdFlatGrid {
   &__header {
-    height: max-content;
-    padding: var(--fd-border-box-padding-RL);
-    text-transform: capitalize;
+    padding: var(--fd-border-box-padding);
     &--h2 {
       font-size: clamp(f.rem(26), f.rem(40) + 1vw, f.rem(46));
+      line-height: normal;
+      text-transform: capitalize;
     }
   }
   &__wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, calc(25% - 1.5rem));
+    grid-template-columns: repeat(
+      auto-fit,
+      calc((100% - (var(--fd-poster-gutter) * (var(--fd-flat-grid-items-per-page) - 1))) / var(--fd-flat-grid-items-per-page))
+    );
     grid-auto-rows: 1fr;
     justify-content: center;
-    gap: var(--fd-carousel-gutter);
+    gap: var(--fd-poster-gutter);
+    padding: var(--fd-border-box-padding);
     overflow: hidden;
     &__li {
       display: flex;
       flex-direction: column;
-      flex: 0 0 calc((100% + var(--fd-border-box-padding-RL)) / var(--fd-carousel-items-per-page) - var(--fd-carousel-gutter));
-      gap: var(--fd-carousel-gutter);
+      gap: var(--fd-poster-gutter);
       &__article {
-        & figure picture img {
-        }
         &__hgroup {
           &--h2 {
             font-size: 18px;
