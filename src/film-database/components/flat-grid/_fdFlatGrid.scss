@@ -23,16 +23,13 @@
     padding: var(--fd-border-box-section-padding);
     overflow: hidden;
     &__li {
-      display: flex;
-      flex-direction: column;
-      transform-origin: top;
-      transition: ease-in-out 0.22s all;
+      height: fit-content;
       &__article {
+        display: flex;
+        flex-direction: column;
+        row-gap: var(--fd-details-gap);
         &__graphic {
           position: relative;
-          display: flex;
-          flex-direction: column;
-          row-gap: var(--fd-details-gap);
           & figure picture img,
           figure picture svg {
             transition: ease-in-out 0.22s all;
