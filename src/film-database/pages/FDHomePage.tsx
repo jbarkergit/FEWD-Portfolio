@@ -48,8 +48,8 @@ const FDHomePage = () => {
     <div className='filmDatabase'>
       <FDHeader />
       {tmdbDataArr.map((entry) => (
-        <FDCarouselWrapper mapKey={entry.key} mapValue={entry.value} key={uuidv4()} />
-        // <FDFlatGrid mapKey={entry.key} mapValue={entry.value} key={uuidv4()} />
+        // <FDCarouselWrapper mapKey={entry.key} mapValue={entry.value} key={uuidv4()} />
+        <FDFlatGrid mapKey={entry.key} mapValue={entry.value} key={uuidv4()} />
       ))}
       <FDFooter />
     </div>
