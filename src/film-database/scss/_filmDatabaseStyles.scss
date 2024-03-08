@@ -13,12 +13,9 @@
 }
 
 :root {
-  // Carousel Controller
+  // Controller
   --fd-carousel-items-per-page: 7.15;
-
-  // Flat Grid Controller
   --fd-flat-grid-items-per-page: 6;
-  --fd-flat-grid-font-header-padding: 0 var(--fd-border-box-padding-RL) 1rem var(--fd-border-box-padding-RL);
 
   // Border Box && Gutters
   --fd-border-box-padding: 0 5.85%;
@@ -28,14 +25,14 @@
   --fd-poster-radius: 0.6rem;
   --fd-details-gap: calc(var(--fd-poster-gutter) / 2.5);
   --fd-button-radius: 0.8rem;
+  --fd-flat-grid-font-header-padding: 0 var(--fd-border-box-padding-RL) 1rem var(--fd-border-box-padding-RL);
 
   // background colors
   --fd-background-color-primary: hsl(217, 12%, 13%);
   --fd-background-color-fallback: hsl(240, 11%, 2%);
 
   // Fonts
-  --fd-carousel-font-header: clamp(1rem, 1rem + 1vw, 1.125rem);
-  --fd-flat-grid-font-header: clamp(1rem, 1.4rem + 1vw, 2rem);
+  --fd-font-size-section-header: clamp(1rem, 1.4rem + 1vw, 2rem);
 
   // font colors
   --fd-font-color-primary: hsl(0, 0%, 100%);
