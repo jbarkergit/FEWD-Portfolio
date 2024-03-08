@@ -9,9 +9,9 @@ import { Type_Tmdb_Parent_StateObjArr } from '../api/types/TmdbDataTypes';
 import { useTmdbApi } from '../api/hooks/useTmdbApi';
 // Components
 import FDHeader from '../components/navigation/header/FDHeader';
-import FDCarouselWrapper from '../components/carousels/carousel-wrapper/FDCarouselWrapper';
+import FDCarouselWrapper from '../components/layouts/standard-carousel/carousel-wrapper/FDCarouselWrapper';
 import FDFooter from '../components/navigation/footer/FDFooter';
-import FDFlatGrid from '../components/flat-grid/FDFlatGrid';
+import FDFlatGrid from '../components/layouts/flat-grid/FDFlatGrid';
 
 /** Component NOTICE: Fetching and processing of data was designed, with reusability in mind, to allow for the application to grow by fetching only desired data */
 const FDHomePage = () => {

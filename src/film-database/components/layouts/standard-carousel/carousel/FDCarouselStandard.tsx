@@ -1,12 +1,12 @@
 // API Types
-import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCallUnion_Obj } from '../../../../api/types/TmdbDataTypes';
 // Hooks
-import { useFormatDate } from '../../../hooks/useFormatDate';
+import { useFormatDate } from '../../../../hooks/useFormatDate';
 // Component hooks
-import useCreatePicture from '../../../hooks/useCreatePicture';
+import useCreatePicture from '../../../../hooks/useCreatePicture';
 // SVG
-import { MaterialPlayCircle } from '../../../assets/svg-icons/MaterialPlayCircle';
-import { BootstrapThreeDotsVertical } from '../../../assets/svg-icons/PhDotsThreeVerticalBold';
+import { MaterialPlayCircle } from '../../../../assets/svg-icons/MaterialPlayCircle';
+import { BootstrapThreeDotsVertical } from '../../../../assets/svg-icons/PhDotsThreeVerticalBold';
 
 // types
 type Type_PropDrill = {

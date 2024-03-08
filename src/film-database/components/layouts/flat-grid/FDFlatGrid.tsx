@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Type_Tmdb_ApiCallUnion_Obj } from '../../api/types/TmdbDataTypes';
-import { MaterialPlayCircle } from '../../assets/svg-icons/MaterialPlayCircle';
-import { BootstrapThreeDotsVertical } from '../../assets/svg-icons/PhDotsThreeVerticalBold';
-import useCreatePicture from '../../hooks/useCreatePicture';
-import { useFormatApiKey } from '../../hooks/useFormatApiKey';
-import { useFormatDate } from '../../hooks/useFormatDate';
+import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
+import { MaterialPlayCircle } from '../../../assets/svg-icons/MaterialPlayCircle';
+import { BootstrapThreeDotsVertical } from '../../../assets/svg-icons/PhDotsThreeVerticalBold';
+import useCreatePicture from '../../../hooks/useCreatePicture';
+import { useFormatApiKey } from '../../../hooks/useFormatApiKey';
+import { useFormatDate } from '../../../hooks/useFormatDate';
 
 type Type_PropDrill = {
   mapKey: string;

@@ -1,15 +1,15 @@
 // Lib
 import { v4 as uuidv4 } from 'uuid';
 // API Types
-import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCallUnion_Obj } from '../../../../api/types/TmdbDataTypes';
 // Carousel components
-import FDCarouselHeading from '../carousel-headers/FDCarouselHeading';
-import FDCarouselChildLP from '../carousel-children/FDCarouselChildLP';
+import FDCarouselHeading from '../carousel-header/FDCarouselHeading';
+import FDCarouselChildLP from '../carousel/FDCarouselStandard';
 // JSX component hooks
-import useCreatePicture from '../../../hooks/useCreatePicture';
+import useCreatePicture from '../../../../hooks/useCreatePicture';
 // SVG
-import MaterialLeftCaret from '../../../assets/svg-icons/MaterialLeftCaret';
-import MaterialRightCaret from '../../../assets/svg-icons/MaterialRightCaret';
+import MaterialLeftCaret from '../../../../assets/svg-icons/MaterialLeftCaret';
+import MaterialRightCaret from '../../../../assets/svg-icons/MaterialRightCaret';
 
 type Type_PropDrill = {
   mapKey: string;
