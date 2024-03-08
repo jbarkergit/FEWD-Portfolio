@@ -35,10 +35,10 @@ const FDFlatGrid = ({ mapKey, mapValue }: Type_PropDrill) => {
               </div>
 
               <hgroup className='fdFlatGrid__wrapper__li__article__hgroup'>
-                <Link to=''>
+                <Link to='' aria-label={values.title}>
                   <h2 className='fdFlatGrid__wrapper__li__article__hgroup--h2'>{values.title}</h2>
                 </Link>
-                <Link to=''>
+                <Link to='' aria-label={values.title}>
                   <h3 className='fdFlatGrid__wrapper__li__article__hgroup--h3'>{useFormatDate(values.release_date)}</h3>
                 </Link>
               </hgroup>
