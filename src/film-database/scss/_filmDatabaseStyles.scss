@@ -1,14 +1,23 @@
 // @use '../scss/filmDatabaseStyles' as s;
 @use '../../sass/functions' as f;
 
+.filmDatabase {
+  position: relative;
+  //font: {optional: style variant weight} size line-height "family", "fallback-font", fallback-font-type
+  font:
+    normal normal 500 100% / 1.8em 'Satoshi',
+    sans-serif;
+  font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
+  color: var(--fd-font-color-primary);
+  background-color: var(--fd-background-color-primary);
+}
+
 :root {
   // Carousel Controller
   --fd-carousel-items-per-page: 7.15;
-  --fd-carousel-font-header: clamp(1rem, 1rem + 1vw, 1.125rem);
 
   // Flat Grid Controller
   --fd-flat-grid-items-per-page: 6;
-  --fd-flat-grid-font-header: clamp(1rem, 1.4rem + 1vw, 2rem);
   --fd-flat-grid-font-header-padding: 0 var(--fd-border-box-padding-RL) 1rem var(--fd-border-box-padding-RL);
 
   // Border Box && Gutters
@@ -23,6 +32,10 @@
   // background colors
   --fd-background-color-primary: hsl(217, 12%, 13%);
   --fd-background-color-fallback: hsl(240, 11%, 2%);
+
+  // Fonts
+  --fd-carousel-font-header: clamp(1rem, 1rem + 1vw, 1.125rem);
+  --fd-flat-grid-font-header: clamp(1rem, 1.4rem + 1vw, 2rem);
 
   // font colors
   --fd-font-color-primary: hsl(0, 0%, 100%);
@@ -90,15 +103,4 @@
   font-style: normal;
   font-stretch: normal;
   font-variant-ligatures: common-ligatures;
-}
-
-.filmDatabase {
-  position: relative;
-  //font: {optional: style variant weight} size line-height "family", "fallback-font", fallback-font-type
-  font:
-    normal normal 500 100% / 1.8em 'Satoshi',
-    sans-serif;
-  font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
-  color: var(--fd-font-color-primary);
-  background-color: var(--fd-background-color-primary);
 }

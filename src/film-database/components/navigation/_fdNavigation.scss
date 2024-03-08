@@ -48,30 +48,33 @@
 }
 
 .fdFooter {
-  &__block {
-    display: flex;
-    flex-direction: column;
-    padding: calc(var(--fd-border-box-padding-RL) / 4);
-    gap: var(--fd-poster-gutter);
-    & table {
-      & thead {
-        & tr {
-          & th {
-          }
+  display: flex;
+  flex-direction: column;
+  gap: var(--fd-poster-gutter);
+  padding: 0 var(--fd-border-box-padding-RL);
+  &__section {
+    &__nav {
+      display: flex;
+      &__ul {
+        flex: 0 0 50%;
+        text-transform: capitalize;
+        &__header {
+          padding-bottom: f.rem(6);
+          font-weight: 600;
+          font-size: var(--fd-carousel-font-header);
         }
-      }
-      & tbody {
-        & tr {
-          & td {
-          }
+        &__li a {
+          font-weight: 400;
         }
       }
     }
-    &__nav {
-      &__socials {
-      }
-      &__additions {
-      }
+  }
+
+  &__blockquote {
+    display: flex;
+    &__tmdbApiCredit p {
+      font-weight: 300;
+      letter-spacing: 0.04em;
     }
   }
 }
