@@ -32,18 +32,18 @@
           position: relative;
           & figure picture img,
           figure picture svg {
-            transition: ease-in-out 0.22s all;
+            transition: ease-in-out 0.22s brightness;
             border-radius: var(--fd-poster-radius);
           }
           &__overlay {
             position: absolute;
+            top: 0;
+            left: 0;
             z-index: 2;
-            inset: 50% 50%;
-            transform: translate(-50%, -50%);
             width: 100%;
             aspect-ratio: 2/3;
             opacity: 0;
-            transition: ease-in-out 0.22s all;
+            transition: ease-in-out 0.22s opacity;
             cursor: pointer;
             & button {
               position: absolute;
