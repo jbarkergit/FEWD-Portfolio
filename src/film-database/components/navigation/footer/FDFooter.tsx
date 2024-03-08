@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import useCreatePicture from '../../../hooks/useCreatePicture';
-import TmdbLogoShort from '../../../icons/TmdbLogoShort';
+import TmdbLogoShort from '../../../assets/logo/TmdbLogoShort';
 
 const FDFooter = () => {
   return (
