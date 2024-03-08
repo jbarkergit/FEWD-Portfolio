@@ -8,8 +8,8 @@ import FDCarouselChildLP from '../carousel-children/FDCarouselChildLP';
 // JSX component hooks
 import useCreatePicture from '../../../hooks/useCreatePicture';
 // SVG
-import MaterialLeftCaret from '../../../icons/MaterialLeftCaret';
-import MaterialRightCaret from '../../../icons/MaterialRightCaret';
+import MaterialLeftCaret from '../../../assets/svg-icons/MaterialLeftCaret';
+import MaterialRightCaret from '../../../assets/svg-icons/MaterialRightCaret';
 
 type Type_PropDrill = {
   mapKey: string;

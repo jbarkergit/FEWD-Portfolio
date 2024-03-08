@@ -5,8 +5,8 @@ import { useFormatDate } from '../../../hooks/useFormatDate';
 // Component hooks
 import useCreatePicture from '../../../hooks/useCreatePicture';
 // SVG
-import { MaterialPlayCircle } from '../../../icons/MaterialPlayCircle';
-import { BootstrapThreeDotsVertical } from '../../../icons/PhDotsThreeVerticalBold';
+import { MaterialPlayCircle } from '../../../assets/svg-icons/MaterialPlayCircle';
+import { BootstrapThreeDotsVertical } from '../../../assets/svg-icons/PhDotsThreeVerticalBold';
 
 // types
 type Type_PropDrill = {
