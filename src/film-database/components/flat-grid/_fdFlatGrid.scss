@@ -28,13 +28,42 @@
       transform-origin: top;
       transition: ease-in-out 0.22s all;
       &__article {
-        display: flex;
-        flex-direction: column;
-        row-gap: var(--fd-details-gap);
-        & figure picture img,
-        figure picture svg {
-          transition: ease-in-out 0.22s all;
-          border-radius: var(--fd-poster-radius);
+        &__graphic {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--fd-details-gap);
+          & figure picture img,
+          figure picture svg {
+            transition: ease-in-out 0.22s all;
+            border-radius: var(--fd-poster-radius);
+          }
+          &__overlay {
+            position: absolute;
+            z-index: 2;
+            inset: 50% 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            aspect-ratio: 2/3;
+            opacity: 0;
+            transition: ease-in-out 0.22s all;
+            & button {
+              position: absolute;
+              height: fit-content;
+              transform: translate(-50%, -50%);
+            }
+            &--play {
+              inset: 50% 50%;
+              width: 3.2em;
+            }
+            &--moreInfo {
+              inset: 6% 94%;
+              width: calc(3.2em / 3);
+            }
+            & button svg {
+              color: white;
+            }
+          }
         }
         &__hgroup {
           @include s.fdPosterDetails;
@@ -42,6 +71,17 @@
       }
     }
   }
+}
+
+// transform picture on hover
+.fdFlatGrid__wrapper__li__article__graphic:hover figure picture img {
+  filter: brightness(65%);
+}
+
+// transform graphic overlay on hover
+.fdFlatGrid__wrapper__li__article:hover .fdFlatGrid__wrapper__li__article__graphic__overlay,
+.fdFlatGrid__wrapper__li__article__graphic__overlay:hover .fdFlatGrid__wrapper__li__article {
+  opacity: 1;
 }
 
 // Poster hover border radius removal
