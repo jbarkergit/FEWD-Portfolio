@@ -2,19 +2,36 @@
 @use '../../../sass/functions' as f;
 
 .fdHeader {
-  &__nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--fd-border-box-padding-RL) / 4);
+  gap: var(--fd-poster-gutter);
+  min-height: 11rem;
+  & > * {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    padding: calc(var(--fd-border-box-padding-RL) / 4);
-    gap: var(--fd-poster-gutter);
+    align-items: center;
+  }
+
+  &__row {
     &__logo {
-      display: grid;
-      place-items: center;
       & a figure picture svg {
         max-height: f.rem(40);
       }
     }
-    &__links {
+    &__searchBar {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &__features {
+    }
+  }
+
+  &__row {
+    &__navigation {
+      width: 100%;
       &__ul {
         display: flex;
         justify-content: center;
@@ -24,8 +41,6 @@
           text-transform: capitalize;
         }
       }
-    }
-    &__features {
     }
   }
 }

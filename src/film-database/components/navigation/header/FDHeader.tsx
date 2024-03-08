@@ -2,19 +2,27 @@ import { Link } from 'react-router-dom';
 import { tmdbEndPoints } from '../../../api/data/tmdbEndPoints';
 import { useFormatApiKey } from '../../../hooks/useFormatApiKey';
 import useCreatePicture from '../../../hooks/useCreatePicture';
-import TmdbLogoShort from '../../../icons/TmdbLogoShort';
+import TmdbLogoShort from '../../../assets/logo/TmdbLogoShort';
+import FDSearchBar from '../../features/search-bar/FDSearchBar';
 
 const FDHeader = () => {
   return (
     <header className='fdHeader'>
-      <nav className='fdHeader__nav'>
-        <section className='fdHeader__nav__logo'>
+      <section className='fdHeader__row'>
+        <section className='fdHeader__row__logo'>
           <Link to='https://www.themoviedb.org/' target='_blank'>
             {useCreatePicture({ svg: <TmdbLogoShort />, alt: 'TMDB API Logo' })}
           </Link>
         </section>
-        <section className='fdHeader__nav__links'>
-          <ul className='fdHeader__nav__links__ul' aria-labelledby='navigate-to-genre'>
+        <section className='fdHeader__row__searchBar'>
+          <FDSearchBar />
+        </section>
+        <section className='fdHeader__row__features'></section>
+      </section>
+
+      <section className='fdHeader__row'>
+        <nav className='fdHeader__row__navigation'>
+          <ul className='fdHeader__row__navigation__ul' aria-labelledby='navigate-to-genre'>
             {Object.entries(tmdbEndPoints).map(([key, value]) => {
               if (['movieLists', 'movies', 'trending'].includes(key)) {
                 return (
@@ -28,12 +36,8 @@ const FDHeader = () => {
               return null;
             })}
           </ul>
-        </section>
-        <section className='fdHeader__nav__features'>
-          {/* search bar */}
-          {/* account */}
-        </section>
-      </nav>
+        </nav>
+      </section>
     </header>
   );
 };
