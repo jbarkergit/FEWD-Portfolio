@@ -47,6 +47,7 @@
             aspect-ratio: 2/3;
             opacity: 0;
             transition: ease-in-out 0.22s all;
+            cursor: pointer;
             & button {
               position: absolute;
               height: fit-content;
@@ -55,6 +56,7 @@
             &--play {
               inset: 50% 50%;
               width: 3.2em;
+              pointer-events: none;
             }
             &--moreInfo {
               inset: 6% 94%;
