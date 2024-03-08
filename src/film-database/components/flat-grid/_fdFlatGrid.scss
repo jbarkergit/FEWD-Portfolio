@@ -27,9 +27,6 @@
       flex-direction: column;
       transform-origin: top;
       transition: ease-in-out 0.22s all;
-      &:hover {
-        transform: scale(1.1);
-      }
       &__article {
         display: flex;
         flex-direction: column;
@@ -47,10 +44,15 @@
   }
 }
 
-// // Poster hover border radius removal
+// Poster hover border radius removal
 // .fdFlatGrid__wrapper__li:hover .fdFlatGrid__wrapper__li__article figure picture img {
 //   border-radius: 0;
 // }
 // .fdFlatGrid__wrapper__li:hover .fdFlatGrid__wrapper__li__article figure picture svg {
 //   border-radius: 0;
+// }
+
+// Hide poster details on hover
+// .fdFlatGrid__wrapper__li:hover .fdFlatGrid__wrapper__li__article__hgroup {
+//   opacity: 0;
 // }
