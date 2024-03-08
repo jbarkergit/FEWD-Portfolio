@@ -1,0 +1,48 @@
+@use '../../../scss/filmDatabaseStyles' as s;
+@use '../../../../sass/functions' as f;
+
+.fdHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 var(--fd-border-box-padding-RL);
+  gap: var(--fd-poster-gutter);
+  min-height: 11rem;
+  & > * {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__row {
+    &__logo {
+      & a figure picture svg {
+        max-height: f.rem(40);
+      }
+    }
+    &__searchBar {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &__features {
+    }
+  }
+
+  &__row {
+    &__navigation {
+      width: 100%;
+      &__ul {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        & li {
+          text-transform: capitalize;
+          & a {
+            @include s.fdButton;
+          }
+        }
+      }
+    }
+  }
+}
