@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Type_Tmdb_ApiCallUnion_Obj } from '../../api/types/TmdbDataTypes';
 import { MaterialPlayCircle } from '../../assets/svg-icons/MaterialPlayCircle';
 import { BootstrapThreeDotsVertical } from '../../assets/svg-icons/PhDotsThreeVerticalBold';
@@ -34,8 +35,12 @@ const FDFlatGrid = ({ mapKey, mapValue }: Type_PropDrill) => {
               </div>
 
               <hgroup className='fdFlatGrid__wrapper__li__article__hgroup'>
-                <h2 className='fdFlatGrid__wrapper__li__article__hgroup--h2'>{values.title}</h2>
-                <h3 className='fdFlatGrid__wrapper__li__article__hgroup--h3'>{useFormatDate(values.release_date)}</h3>
+                <Link to=''>
+                  <h2 className='fdFlatGrid__wrapper__li__article__hgroup--h2'>{values.title}</h2>
+                </Link>
+                <Link to=''>
+                  <h3 className='fdFlatGrid__wrapper__li__article__hgroup--h3'>{useFormatDate(values.release_date)}</h3>
+                </Link>
               </hgroup>
             </article>
           </li>
