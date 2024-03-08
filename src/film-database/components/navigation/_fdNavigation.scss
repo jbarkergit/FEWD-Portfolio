@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: calc(var(--fd-border-box-padding-RL) / 4);
+  padding: 0 var(--fd-border-box-padding-RL);
   gap: var(--fd-poster-gutter);
   min-height: 11rem;
   & > * {
@@ -36,9 +36,11 @@
         display: flex;
         justify-content: center;
         width: 100%;
-        gap: calc(var(--fd-border-box-padding-RL) / 4);
         & li {
           text-transform: capitalize;
+          & a {
+            @include s.fdButton;
+          }
         }
       }
     }

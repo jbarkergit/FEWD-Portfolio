@@ -3,10 +3,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { useTDSearchBar } from '../../../hooks/useTDSearchBar';
 
 const FDSearchBar = () => {
+  // References
   const searchBar = useRef<HTMLDivElement>(null);
+
+  // State
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  //** Exterior click handler */
+  /** Exterior click handler */
   useEffect(() => {
     const exteriorClickHandler = (e: PointerEvent): void => {
       if (!searchBar.current?.contains(e.target as HTMLElement)) setSearchTerm('');
@@ -21,6 +24,7 @@ const FDSearchBar = () => {
     };
   }, []);
 
+  /** JSX */
   return (
     <div className='tdSearchBar' ref={searchBar}>
       <label className='tdSearchBar__label' htmlFor='tdSearchBar__input'>
@@ -31,7 +35,7 @@ const FDSearchBar = () => {
         id='tdSearchBar__input'
         data-focus={searchTerm.length > 0 ? 'true' : 'false'}
         type='text'
-        placeholder='Search products'
+        placeholder=''
         value={searchTerm.replace('-', ' ')}
         autoCapitalize='none'
         autoComplete='none'
@@ -46,7 +50,7 @@ const FDSearchBar = () => {
           <ul className='tdSearchBar__return__ul' tabIndex={-1}>
             {useTDSearchBar(searchTerm).length <= 0 ? (
               <li className='tdSearchBar__return__ul__li' key={uuidv4()}>
-                <span className='tdSearchBar__return__ul__li--noResult'>Sorry, no results.</span>
+                <span className='tdSearchBar__return__ul__li--noResult'>No results found for {searchTerm}.</span>
               </li>
             ) : (
               useTDSearchBar(searchTerm).map((product, index) =>
