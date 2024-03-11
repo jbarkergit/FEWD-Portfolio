@@ -21,16 +21,16 @@
     display: none;
   }
   &__wrapper {
+    display: grid;
+    place-items: center;
     width: inherit;
     height: inherit;
     &--iframe {
-      width: inherit;
-      height: inherit;
+      width: 75%;
       // As per YouTube Player API Recommendations: minimum 480 pixels wide and 270 pixels tall.
       min-width: 480px;
       min-height: 270px;
       aspect-ratio: 16/9;
-      //
     }
   }
 }
