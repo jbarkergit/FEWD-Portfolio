@@ -8,16 +8,16 @@ import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
 // Api Hooks
 import { useFormatApiKey } from '../../../hooks/useFormatApiKey';
 import { useFormatDate } from '../../../hooks/useFormatDate';
-import { useTmdbVideos } from '../../../api/hooks/useTmdbVideos';
 // Hooks
 import useCreatePicture from '../../../hooks/useCreatePicture';
 
 type Type_PropDrill = {
   mapKey: string;
   mapValue: Type_Tmdb_ApiCallUnion_Obj[];
+  useVideoPlayer: (propertyId: string) => Promise<void>;
 };
 
-const FDFlatGrid = ({ mapKey, mapValue }: Type_PropDrill) => {
+const FDFlatGrid = ({ mapKey, mapValue, useVideoPlayer }: Type_PropDrill) => {
   return (
     <section className='fdFlatGrid'>
       <div className='fdFlatGrid__header'>
@@ -27,14 +27,14 @@ const FDFlatGrid = ({ mapKey, mapValue }: Type_PropDrill) => {
         {mapValue.map((values) => (
           <li className='fdFlatGrid__wrapper__li' key={values.id}>
             <article className='fdFlatGrid__wrapper__li__article'>
-              <div className='fdFlatGrid__wrapper__li__article__graphic' onClick={() => useTmdbVideos(`${values.id}`)}>
+              <div className='fdFlatGrid__wrapper__li__article__graphic' onClick={() => useVideoPlayer(`${values.id}`)}>
                 {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${values.poster_path}.svg`, alt: values.title as string })}
 
                 <div className='fdFlatGrid__wrapper__li__article__graphic__overlay'>
                   <button
                     className='fdFlatGrid__wrapper__li__article__graphic__overlay--play'
                     aria-label='Play Trailer'
-                    onClick={() => useTmdbVideos(`${values.id}`)}>
+                    onClick={() => useVideoPlayer(`${values.id}`)}>
                     {useCreatePicture({ svg: <MaterialPlayCircle />, alt: 'Play Trailer' })}
                   </button>
                   <button className='fdFlatGrid__wrapper__li__article__graphic__overlay--moreInfo' aria-label='More Information'>
