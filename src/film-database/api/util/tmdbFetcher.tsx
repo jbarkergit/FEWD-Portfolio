@@ -21,18 +21,18 @@ export const tmdbFetcher = async ({
 
   switch (true) {
     case !!movie_id:
-      url = `${tmdbEndPointKeyValuePairValue?.replace('{movie_id}', movie_id)}`;
+      url = `${tmdbEndPointKeyValuePairValue?.replace('{movie_id}', movie_id)}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&append_to_response=videos`;
       break;
     case !!person_id:
-      url = `${tmdbEndPointKeyValuePairValue?.replace('{person_id}', person_id)}`;
+      url = `${tmdbEndPointKeyValuePairValue?.replace('{person_id}', person_id)}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
       break;
     default:
-      url = `${tmdbEndPointKeyValuePairValue}`;
+      url = `${tmdbEndPointKeyValuePairValue}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
   }
 
   try {
     // Fetch data
-    const response: Response = await fetch(`${url}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`, options);
+    const response: Response = await fetch(`${url}`, options);
     const rawData: Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = await response.json();
 
     // Throw status code if response is not ok && abort fetch, else return data
