@@ -30,6 +30,7 @@
         row-gap: var(--fd-details-gap);
         &__graphic {
           position: relative;
+          z-index: 1;
           & figure picture img,
           figure picture svg {
             transition: ease-in-out 0.22s filter;

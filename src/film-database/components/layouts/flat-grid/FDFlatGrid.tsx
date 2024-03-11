@@ -1,10 +1,16 @@
+// React
 import { Link } from 'react-router-dom';
-import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
+// Assets
 import { MaterialPlayCircle } from '../../../assets/svg-icons/MaterialPlayCircle';
 import { BootstrapThreeDotsVertical } from '../../../assets/svg-icons/PhDotsThreeVerticalBold';
-import useCreatePicture from '../../../hooks/useCreatePicture';
+// Api Types
+import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
+// Api Hooks
 import { useFormatApiKey } from '../../../hooks/useFormatApiKey';
 import { useFormatDate } from '../../../hooks/useFormatDate';
+import { useTmdbVideos } from '../../../api/hooks/useTmdbVideos';
+// Hooks
+import useCreatePicture from '../../../hooks/useCreatePicture';
 
 type Type_PropDrill = {
   mapKey: string;
@@ -21,11 +27,14 @@ const FDFlatGrid = ({ mapKey, mapValue }: Type_PropDrill) => {
         {mapValue.map((values) => (
           <li className='fdFlatGrid__wrapper__li' key={values.id}>
             <article className='fdFlatGrid__wrapper__li__article'>
-              <div className='fdFlatGrid__wrapper__li__article__graphic'>
+              <div className='fdFlatGrid__wrapper__li__article__graphic' onClick={() => useTmdbVideos(`${values.id}`)}>
                 {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${values.poster_path}.svg`, alt: values.title as string })}
 
                 <div className='fdFlatGrid__wrapper__li__article__graphic__overlay'>
-                  <button className='fdFlatGrid__wrapper__li__article__graphic__overlay--play' aria-label='Play Trailer'>
+                  <button
+                    className='fdFlatGrid__wrapper__li__article__graphic__overlay--play'
+                    aria-label='Play Trailer'
+                    onClick={() => useTmdbVideos(`${values.id}`)}>
                     {useCreatePicture({ svg: <MaterialPlayCircle />, alt: 'Play Trailer' })}
                   </button>
                   <button className='fdFlatGrid__wrapper__li__article__graphic__overlay--moreInfo' aria-label='More Information'>
