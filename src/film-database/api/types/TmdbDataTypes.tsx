@@ -37,6 +37,19 @@ export type Type_Tmdb_Call_Params = {
  * Interface / types missing in TMDB API Docs, manual conversion required to build respective data structures
  */
 
+export type Type_Tmdb_Trailer_Obj = {
+  id: string;
+  iso_3166_1: string;
+  iso_639_1: string;
+  key: string;
+  name: string;
+  official: boolean;
+  published_at: string;
+  site: string;
+  size: number;
+  type: string;
+};
+
 export type Type_Tmdb_MovieList_Obj = {
   adult: boolean;
   backdrop_path: string;
@@ -110,4 +123,4 @@ export type Type_Tmdb_ProcessorReturn_MapSettled_isUndefined = Promise<
 >;
 
 /** Parent State Storage Type */
-export type Type_Tmdb_Parent_StateObjArr = { key: string; value: Type_Tmdb_ApiCallUnion_Obj | Type_Tmdb_ApiCallUnion_Obj[] }[];
+export type Type_Tmdb_Parent_StateObjArr = { key: string; value: Type_Tmdb_ApiCallUnion_Obj | Type_Tmdb_ApiCallUnion_Obj[] | Type_Tmdb_Trailer_Obj[] }[];
