@@ -12,6 +12,7 @@ import FDHeader from '../components/navigation/header/FDHeader';
 import FDCarouselWrapper from '../components/layouts/standard-carousel/carousel-wrapper/FDCarouselWrapper';
 import FDFooter from '../components/navigation/footer/FDFooter';
 import FDFlatGrid from '../components/layouts/flat-grid/FDFlatGrid';
+import FDVideoPlayer from '../components/features/iframes/TDVideoPlayer';
 
 /** Component NOTICE: Fetching and processing of data was designed, with reusability in mind, to allow for the application to grow by fetching only desired data */
 const FDHomePage = () => {
@@ -43,14 +44,28 @@ const FDHomePage = () => {
     // Optional: Ensure data is up to date by watching /api/data/tmdbEndPoints
   }, []);
 
+  /** Video Player State */
+  const [videoPlayerState, setVideoPlayerState] = useState<boolean>(false);
+  const [videoPlayerVideos, setVideoPlayerVideos] = useState<Type_Tmdb_Parent_StateObjArr>([]);
+
+  const useVideoPlayer = async (propertyId: string): Promise<void> => {
+    const videosArray = await useTmdbApi({ tmdbEndPointKeyValuePairArr: tmdbEndPoints.movies.find((obj) => obj.key === 'videos'), movie_id: `${propertyId}` });
+
+    if (videosArray) {
+      setVideoPlayerVideos(videosArray);
+      setVideoPlayerState(true);
+    }
+  };
+
   /** Component */
   return (
     <div className='filmDatabase'>
       <FDHeader />
       {tmdbDataArr.map((entry) => (
         // <FDCarouselWrapper mapKey={entry.key} mapValue={entry.value} key={uuidv4()} />
-        <FDFlatGrid mapKey={entry.key} mapValue={entry.value} key={uuidv4()} />
+        <FDFlatGrid mapKey={entry.key} mapValue={entry.value} key={uuidv4()} useVideoPlayer={useVideoPlayer} />
       ))}
+      <FDVideoPlayer videoPlayerState={videoPlayerState} videoPlayerVideos={videoPlayerVideos} />
       <FDFooter />
     </div>
   );
