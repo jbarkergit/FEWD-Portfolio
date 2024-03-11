@@ -46,6 +46,7 @@ const FDVideoPlayer = ({ videoPlayerState, videoPlayerVideos, setVideoPlayerStat
           title={`YouTube video player: ${trailerObj.name}`}
           // loading={string}
           opts={opts}
+          onPause={() => setVideoPlayerState(false)}
           onEnd={() => setVideoPlayerState(false)}
           onError={() => setVideoPlayerState(false)}
         />
