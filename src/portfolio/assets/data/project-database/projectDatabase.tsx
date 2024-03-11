@@ -10,7 +10,7 @@ export const projectDatabase = [
       libraries: ['react', 'react router', 'uuid'],
       web_technologies: ['html', 'css', 'sass', 'javascript', 'typescript'],
       code_quality: ['eslint', 'prettier'],
-      api: ['tmdb'],
+      api: ['tmdb', 'youtube player'],
     },
     insights: <FilmDatabaseInsights />,
     imgSrc: 'src/portfolio/assets/media/film-db-temp.png',
