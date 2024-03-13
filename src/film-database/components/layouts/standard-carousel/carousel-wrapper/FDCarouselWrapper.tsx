@@ -3,10 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 // API Types
 import { Type_Tmdb_ApiCallUnion_Obj } from '../../../../api/types/TmdbDataTypes';
 // Carousel components
-import FDCarouselHeading from '../carousel-header/FDCarouselHeading';
 import FDCarouselChildLP from '../carousel/FDCarouselStandard';
 // JSX component hooks
 import useCreatePicture from '../../../../hooks/useCreatePicture';
+// Hooks
+import { useFormatApiKey } from '../../../../hooks/useFormatApiKey';
 // SVG
 import MaterialLeftCaret from '../../../../assets/svg-icons/MaterialLeftCaret';
 import MaterialRightCaret from '../../../../assets/svg-icons/MaterialRightCaret';
@@ -19,7 +20,9 @@ type Type_PropDrill = {
 const FDCarouselWrapper = ({ mapKey, mapValue }: Type_PropDrill) => {
   return (
     <section className='fdCarousel'>
-      <FDCarouselHeading heading={mapKey} />
+      <h2 className='fdCarousel__heading'>
+        <div className='fdCarousel__heading__textBlock'>{useFormatApiKey(mapKey)}</div>
+      </h2>
       <div className='fdCarousel__wrapper'>
         {Array.isArray(mapValue) ? (
           mapValue.map((values) => <FDCarouselChildLP value={values} key={uuidv4()} />)
