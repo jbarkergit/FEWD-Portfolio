@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from 'react';
-import YouTube from 'react-youtube';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import YouTube, { YouTubeEvent } from 'react-youtube';
 import { Type_Tmdb_Parent_StateObjArr, Type_Tmdb_Trailer_Obj } from '../../../api/types/TmdbDataTypes';
 import { Options } from 'youtube-player/dist/types';
 
@@ -15,11 +15,13 @@ type Type_PropDrill = {
 };
 
 const FDVideoPlayer = ({ videoPlayerState, videoPlayerVideos, setVideoPlayerState }: Type_PropDrill) => {
+  // Trailer object
   const trailerObj: Type_Tmdb_Trailer_Obj | undefined =
     videoPlayerVideos && videoPlayerVideos.length > 0
       ? (videoPlayerVideos[0]?.value as Type_Tmdb_Trailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer')
       : undefined;
 
+  // iframe options
   const opts: Options = {
     height: undefined,
     width: undefined,
@@ -35,20 +37,43 @@ const FDVideoPlayer = ({ videoPlayerState, videoPlayerVideos, setVideoPlayerStat
     },
   };
 
+  /** YouTube Player Ref */
+  let player: YouTubeEvent | null = null;
+
+  /** Close trailer hook */
+  const useCloseTrailer = (): void => {
+    setVideoPlayerState(false);
+    if (player) player.target.pauseVideo();
+  };
+
+  /** Exterior click handler */
+  useEffect(() => {
+    const exteriorClickHandler = (e: PointerEvent): void => {
+      if ((e.target as HTMLElement).className !== 'fdVideoPlayer__wrapper--iframe') useCloseTrailer();
+    };
+
+    document.body.addEventListener('pointerup', exteriorClickHandler);
+    return () => document.body.removeEventListener('pointerup', exteriorClickHandler);
+  }, []);
+
+  /** Component */
   if (trailerObj?.key)
     return (
       <section className='fdVideoPlayer' data-status={videoPlayerState}>
         <h2 className='fdVideoPlayer--h2'>{trailerObj.name}</h2>
         <YouTube
           videoId={trailerObj.key}
+          opts={opts}
           className='fdVideoPlayer__wrapper'
           iframeClassName='fdVideoPlayer__wrapper--iframe'
           title={`YouTube video player: ${trailerObj.name}`}
           // loading={string}
-          opts={opts}
-          onPause={() => setVideoPlayerState(false)}
-          onEnd={() => setVideoPlayerState(false)}
-          onError={() => setVideoPlayerState(false)}
+          onReady={(event: YouTubeEvent) => (player = event)}
+          onEnd={() => useCloseTrailer}
+          onError={() => {
+            useCloseTrailer;
+            player?.target.destroy;
+          }}
         />
       </section>
     );
