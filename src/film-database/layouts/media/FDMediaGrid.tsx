@@ -1,15 +1,10 @@
-// React
 import { Link } from 'react-router-dom';
-// Assets
-import { MaterialPlayCircle } from '../../../assets/svg-icons/MaterialPlayCircle';
-import { BootstrapThreeDotsVertical } from '../../../assets/svg-icons/PhDotsThreeVerticalBold';
-// Api Types
-import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
-// Api Hooks
-import { useFormatApiKey } from '../../../hooks/useFormatApiKey';
-import { useFormatDate } from '../../../hooks/useFormatDate';
-// Hooks
-import useCreatePicture from '../../../hooks/useCreatePicture';
+import { Type_Tmdb_ApiCallUnion_Obj } from '../../api/types/TmdbDataTypes';
+import { MaterialPlayCircle } from '../../assets/svg-icons/MaterialPlayCircle';
+import { BootstrapThreeDotsVertical } from '../../assets/svg-icons/PhDotsThreeVerticalBold';
+import useCreatePicture from '../../hooks/useCreatePicture';
+import { useFormatApiKey } from '../../hooks/useFormatApiKey';
+import { useFormatDate } from '../../hooks/useFormatDate';
 
 type Type_PropDrill = {
   mapKey: string;
@@ -17,7 +12,7 @@ type Type_PropDrill = {
   useVideoPlayer: (propertyId: string) => Promise<void>;
 };
 
-const FDFlatGrid = ({ mapKey, mapValue, useVideoPlayer }: Type_PropDrill) => {
+const FDMediaGrid = () => {
   return (
     <section className='fdFlatGrid'>
       <div className='fdFlatGrid__header'>
@@ -58,5 +53,4 @@ const FDFlatGrid = ({ mapKey, mapValue, useVideoPlayer }: Type_PropDrill) => {
     </section>
   );
 };
-
-export default FDFlatGrid;
+export default FDMediaGrid;
