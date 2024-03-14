@@ -9,10 +9,9 @@ import { Type_Tmdb_Parent_StateObjArr } from '../api/types/TmdbDataTypes';
 import { useTmdbApi } from '../api/hooks/useTmdbApi';
 // Components
 import FDHeader from '../components/navigation/header/FDHeader';
-import FDCarouselWrapper from '../components/layouts/standard-carousel/carousel-wrapper/FDCarouselWrapper';
 import FDFooter from '../components/navigation/footer/FDFooter';
-import FDFlatGrid from '../components/layouts/flat-grid/FDFlatGrid';
 import FDVideoPlayer from '../components/features/iframes/TDVideoPlayer';
+import FDMediaGrid from '../components/media/FDMediaGrid';
 
 /** Component NOTICE: Fetching and processing of data was designed, with reusability in mind, to allow for the application to grow by fetching only desired data */
 const FDHomePage = () => {
@@ -63,9 +62,9 @@ const FDHomePage = () => {
       <FDHeader />
       {tmdbDataArr.map((entry) => (
         // <FDCarouselWrapper mapKey={entry.key} mapValue={entry.value} key={uuidv4()} />
-        <FDFlatGrid mapKey={entry.key} mapValue={entry.value} key={uuidv4()} useVideoPlayer={useVideoPlayer} />
+        <FDMediaGrid mapKey={entry.key} mapValue={entry.value} key={uuidv4()} useVideoPlayer={useVideoPlayer} grid={true} />
       ))}
-      <FDVideoPlayer videoPlayerState={videoPlayerState} videoPlayerVideos={videoPlayerVideos} />
+      <FDVideoPlayer videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerVideos={videoPlayerVideos} />
       <FDFooter />
     </div>
   );

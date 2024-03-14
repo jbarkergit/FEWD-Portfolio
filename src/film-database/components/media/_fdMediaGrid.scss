@@ -1,7 +1,7 @@
-@use '../../../scss/filmDatabaseStyles' as s;
-@use '../../../../sass/functions' as f;
+@use '../../scss/filmDatabaseStyles' as s;
+@use '../../../sass/functions' as f;
 
-.fdFlatGrid {
+.FDMediaGrid {
   &__header {
     padding: var(--fd-flat-grid-font-header-padding);
     &--h2 {
@@ -13,7 +13,6 @@
   }
   &__wrapper {
     display: flex;
-    justify-content: center;
     gap: var(--fd-poster-gutter);
     padding: var(--fd-border-box-section-padding);
     overflow: hidden;
@@ -24,6 +23,7 @@
         calc((100% - (var(--fd-poster-gutter) * (var(--fd-flat-grid-items-per-page) - 1))) / var(--fd-flat-grid-items-per-page))
       );
       grid-auto-rows: 1fr;
+      justify-content: center;
     }
     &__li {
       flex: 0 0 calc((100% + var(--fd-border-box-padding-RL)) / var(--fd-carousel-items-per-page) - var(--fd-poster-gutter));
@@ -76,28 +76,53 @@
       }
     }
   }
+  &__navigation {
+    position: absolute;
+    z-index: 2;
+    width: calc(100svw - var(--fd-border-box-padding-RL));
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    &--button {
+      position: absolute;
+      width: calc(((100% + var(--fd-border-box-padding-RL)) / var(--fd-carousel-items-per-page) - var(--fd-poster-gutter)) / 3.1);
+      height: 76%;
+      pointer-events: all;
+      & svg {
+        width: 2.8em;
+        height: 2.8em;
+        color: white;
+      }
+    }
+    &--button:nth-of-type(1) {
+      left: calc(var(--fd-border-box-padding-RL) * -1);
+    }
+    &--button:nth-of-type(2) {
+      right: 0;
+    }
+  }
 }
 
 // transform picture on hover
-.fdFlatGrid__wrapper__li__article__graphic:hover figure picture img {
+.FDMediaGrid__wrapper__li__article__graphic:hover figure picture img {
   filter: brightness(65%);
 }
 
 // transform graphic overlay on hover
-.fdFlatGrid__wrapper__li__article:hover .fdFlatGrid__wrapper__li__article__graphic__overlay,
-.fdFlatGrid__wrapper__li__article__graphic__overlay:hover .fdFlatGrid__wrapper__li__article {
+.FDMediaGrid__wrapper__li__article:hover .FDMediaGrid__wrapper__li__article__graphic__overlay,
+.FDMediaGrid__wrapper__li__article__graphic__overlay:hover .FDMediaGrid__wrapper__li__article {
   opacity: 1;
 }
 
 // Poster hover border radius removal
-// .fdFlatGrid__wrapper__li:hover .fdFlatGrid__wrapper__li__article figure picture img {
+// .FDMediaGrid__wrapper__li:hover .FDMediaGrid__wrapper__li__article figure picture img {
 //   border-radius: 0;
 // }
-// .fdFlatGrid__wrapper__li:hover .fdFlatGrid__wrapper__li__article figure picture svg {
+// .FDMediaGrid__wrapper__li:hover .FDMediaGrid__wrapper__li__article figure picture svg {
 //   border-radius: 0;
 // }
 
 // Hide poster details on hover
-// .fdFlatGrid__wrapper__li:hover .fdFlatGrid__wrapper__li__article__hgroup {
+// .FDMediaGrid__wrapper__li:hover .FDMediaGrid__wrapper__li__article__hgroup {
 //   opacity: 0;
 // }

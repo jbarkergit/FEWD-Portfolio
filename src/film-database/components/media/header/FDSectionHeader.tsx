@@ -6,8 +6,8 @@ type Type_PropDrill = {
 
 const FDSectionHeader = ({ mapKey }: Type_PropDrill) => {
   return (
-    <div className='fdFlatGrid__header'>
-      <h2 className='fdFlatGrid__header--h2'>{useFormatApiKey(mapKey)}</h2>
+    <div className='FDMediaGrid__header'>
+      <h2 className='FDMediaGrid__header--h2'>{useFormatApiKey(mapKey)}</h2>
     </div>
   );
 };

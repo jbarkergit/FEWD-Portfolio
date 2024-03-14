@@ -1,11 +1,14 @@
 // Global Styles
 @forward '/src/film-database/scss/filmDatabaseStyles';
+
 // components/navigation
 @forward '/src/film-database/components/navigation/header/fdHeader';
 @forward '/src/film-database/components/navigation/footer/fdFooter';
+
 // components/features/search-bar
 @forward '/src/film-database/components/features/search-bar/tdSearchBar';
 // components/features/iframes
 @forward '/src/film-database/components/features/iframes/tdVideoPlayer';
-// layouts/media
-@forward '/src/film-database/layouts/media/fdMedia';
+
+// components/media
+@forward '/src/film-database/components/media/fdMediaGrid';
