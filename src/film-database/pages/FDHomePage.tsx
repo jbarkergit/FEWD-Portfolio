@@ -62,7 +62,7 @@ const FDHomePage = () => {
       <FDHeader />
       {tmdbDataArr.map((entry) => (
         // <FDCarouselWrapper mapKey={entry.key} mapValue={entry.value} key={uuidv4()} />
-        <FDMediaGrid mapKey={entry.key} mapValue={entry.value} key={uuidv4()} useVideoPlayer={useVideoPlayer} grid={true} />
+        <FDMediaGrid mapKey={entry.key} mapValue={entry.value} key={uuidv4()} useVideoPlayer={useVideoPlayer} grid={false} />
       ))}
       <FDVideoPlayer videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerVideos={videoPlayerVideos} />
       <FDFooter />
