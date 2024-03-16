@@ -17,8 +17,6 @@ const FDCarouselOverlay = ({ posterHeight }: Type_PropDrill) => {
         button.style.height = posterHeight;
       });
     }
-
-    console.log(posterHeight);
   }, [posterHeight, navigationLeft, navigationRight]);
 
   return (
