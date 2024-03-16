@@ -17,6 +17,7 @@ type Type_PropDrill = {
 };
 
 const FDPosterProp = ({ mapValue, useVideoPlayer, setPosterHeight }: Type_PropDrill) => {
+  /** Update navigation overlay button height dynamically */
   const posterOverlay = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
