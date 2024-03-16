@@ -8,23 +8,18 @@ type Type_PropDrill = {
 };
 
 const FDCarouselOverlay = ({ posterHeight }: Type_PropDrill) => {
-  const navigationLeft = useRef<HTMLButtonElement>(null);
-  const navigationRight = useRef<HTMLButtonElement>(null);
+  const navigationOverlay = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (posterHeight && navigationLeft.current && navigationRight.current) {
-      [navigationLeft.current, navigationRight.current].forEach((button) => {
-        button.style.height = posterHeight;
-      });
-    }
-  }, [posterHeight, navigationLeft, navigationRight]);
+    if (posterHeight && navigationOverlay.current) navigationOverlay.current.style.height = posterHeight;
+  }, [posterHeight, navigationOverlay.current]);
 
   return (
-    <nav className='FDMediaGrid__wrapper__ul__navigation'>
-      <button className='FDMediaGrid__wrapper__ul__navigation--button' aria-label='Show Previous' ref={navigationLeft}>
+    <nav className='FDMediaGrid__wrapper__ul__navigation' ref={navigationOverlay}>
+      <button className='FDMediaGrid__wrapper__ul__navigation--button' aria-label='Show Previous'>
         {useCreatePicture({ svg: <MaterialLeftCaret />, alt: 'Show Previous Selection' })}
       </button>
-      <button className='FDMediaGrid__wrapper__ul__navigation--button' aria-label='Show More' ref={navigationRight}>
+      <button className='FDMediaGrid__wrapper__ul__navigation--button' aria-label='Show More'>
         {useCreatePicture({ svg: <MaterialRightCaret />, alt: 'Show More' })}
       </button>
     </nav>
