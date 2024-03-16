@@ -12,117 +12,118 @@
     }
   }
   &__wrapper {
-    display: flex;
-    gap: var(--fd-poster-gutter);
-    padding: var(--fd-border-box-section-padding);
-    overflow: hidden;
+    &[data-status='carousel'] {
+      padding: 0 0 var(--fd-border-box-padding-RL) var(--fd-border-box-padding-RL);
+    }
     &[data-status='grid'] {
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fit,
-        calc((100% - (var(--fd-poster-gutter) * (var(--fd-flat-grid-items-per-page) - 1))) / var(--fd-flat-grid-items-per-page))
-      );
-      grid-auto-rows: 1fr;
-      justify-content: center;
+      padding: var(--fd-border-box-section-padding);
     }
-    &__li {
-      flex: 0 0 calc((100% + var(--fd-border-box-padding-RL)) / var(--fd-carousel-items-per-page) - var(--fd-poster-gutter));
-      height: fit-content;
-      aspect-ratio: 2/3;
-      &__article {
-        display: flex;
-        flex-direction: column;
-        row-gap: var(--fd-details-gap);
-        &__graphic {
-          position: relative;
-          z-index: 1;
-          & figure picture img,
-          figure picture svg {
-            transition: ease-in-out 0.22s filter;
-            border-radius: var(--fd-poster-radius);
-          }
-          &__overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 2;
-            width: 100%;
-            aspect-ratio: 2/3;
-            opacity: 0;
-            transition: ease-in-out 0.22s opacity;
-            cursor: pointer;
-            & button {
+    &__ul {
+      position: relative;
+      display: flex;
+      gap: var(--fd-poster-gutter);
+      overflow: hidden;
+      &[data-status='grid'] {
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fit,
+          calc((100% - (var(--fd-poster-gutter) * (var(--fd-flat-grid-items-per-page) - 1))) / var(--fd-flat-grid-items-per-page))
+        );
+        grid-auto-rows: 1fr;
+        justify-content: center;
+      }
+      &__li {
+        flex: 0 0 calc((100% - (var(--fd-poster-gutter) * (var(--fd-carousel-items-per-page) - 1) + var(--fd-poster-gutter))) / var(--fd-carousel-items-per-page));
+        height: fit-content;
+        aspect-ratio: 2/3;
+        &__article {
+          display: flex;
+          flex-direction: column;
+          row-gap: var(--fd-details-gap);
+          &__graphic {
+            position: relative;
+            z-index: 1;
+            & figure picture img,
+            figure picture svg {
+              transition: ease-in-out 0.22s filter;
+              border-radius: var(--fd-poster-radius);
+            }
+            &__overlay {
               position: absolute;
-              height: fit-content;
-              transform: translate(-50%, -50%);
-            }
-            &--play {
-              inset: 50% 50%;
-              width: 3.2em;
-              pointer-events: none;
-            }
-            &--moreInfo {
-              inset: 6% 94%;
-              width: calc(3.2em / 3);
-            }
-            & button svg {
-              color: white;
+              top: 0;
+              left: 0;
+              z-index: 2;
+              width: 100%;
+              aspect-ratio: 2/3;
+              opacity: 0;
+              transition: ease-in-out 0.22s opacity;
+              cursor: pointer;
+              & button {
+                position: absolute;
+                height: fit-content;
+                transform: translate(-50%, -50%);
+              }
+              &--play {
+                inset: 50% 50%;
+                width: 3.2em;
+                pointer-events: none;
+              }
+              &--moreInfo {
+                inset: 6% 94%;
+                width: calc(3.2em / 3);
+              }
+              & button svg {
+                color: white;
+              }
             }
           }
-        }
-        &__hgroup {
-          @include s.fdPosterDetails;
+          &__hgroup {
+            @include s.fdPosterDetails;
+          }
         }
       }
-    }
-  }
-  &__navigation {
-    position: absolute;
-    z-index: 2;
-    width: calc(100svw - var(--fd-border-box-padding-RL));
-    height: 100%;
-    pointer-events: none;
-    opacity: 0;
-    &--button {
-      position: absolute;
-      width: calc(((100% + var(--fd-border-box-padding-RL)) / var(--fd-carousel-items-per-page) - var(--fd-poster-gutter)) / 3.1);
-      height: 76%;
-      pointer-events: all;
-      & svg {
-        width: 2.8em;
-        height: 2.8em;
-        color: white;
+      &__navigation {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        opacity: 0;
+        &--button {
+          position: absolute;
+          width: calc(((100% + var(--fd-border-box-padding-RL)) / var(--fd-carousel-items-per-page) - var(--fd-poster-gutter)) / 3.1);
+          pointer-events: all;
+          & svg {
+            width: 2.8em;
+            height: 2.8em;
+            color: white;
+          }
+        }
+        &--button:nth-of-type(1) {
+          left: calc(var(--fd-border-box-padding-RL) * -1);
+        }
+        &--button:nth-of-type(2) {
+          right: 0;
+        }
       }
-    }
-    &--button:nth-of-type(1) {
-      left: calc(var(--fd-border-box-padding-RL) * -1);
-    }
-    &--button:nth-of-type(2) {
-      right: 0;
     }
   }
 }
 
-// transform picture on hover
-.FDMediaGrid__wrapper__li__article__graphic:hover figure picture img {
+// transform graphic filter on hover
+.FDMediaGrid__wrapper__ul__li__article__graphic:hover figure picture img {
   filter: brightness(65%);
 }
 
 // transform graphic overlay on hover
-.FDMediaGrid__wrapper__li__article:hover .FDMediaGrid__wrapper__li__article__graphic__overlay,
-.FDMediaGrid__wrapper__li__article__graphic__overlay:hover .FDMediaGrid__wrapper__li__article {
+.FDMediaGrid__wrapper__ul__li__article__graphic:hover .FDMediaGrid__wrapper__ul__li__article__graphic__overlay,
+.FDMediaGrid__wrapper__ul__li__article__graphic__overlay:hover .FDMediaGrid__wrapper__ul__li__article__graphic {
   opacity: 1;
 }
 
-// Poster hover border radius removal
-// .FDMediaGrid__wrapper__li:hover .FDMediaGrid__wrapper__li__article figure picture img {
-//   border-radius: 0;
-// }
-// .FDMediaGrid__wrapper__li:hover .FDMediaGrid__wrapper__li__article figure picture svg {
-//   border-radius: 0;
-// }
-
-// Hide poster details on hover
-// .FDMediaGrid__wrapper__li:hover .FDMediaGrid__wrapper__li__article__hgroup {
-//   opacity: 0;
-// }
+// navigation overlay on track hover
+.FDMediaGrid__wrapper__ul:hover .FDMediaGrid__wrapper__ul__navigation {
+  opacity: 1;
+}
