@@ -15,11 +15,10 @@ import FDMediaGrid from '../components/media/FDMediaGrid';
 
 /** Component NOTICE: Fetching and processing of data was designed, with reusability in mind, to allow for the application to grow by fetching only desired data */
 const FDHomePage = () => {
+  /** Fetch Data */
   // Initialize a new Map to store our api entries and furthermore data
   const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_Parent_StateObjArr>([]);
-  // useEffect(() => console.log(tmdbDataArr), [tmdbDataArr]);
 
-  /** Fetch Data */
   useEffect(() => {
     // Initialize an AbortController and a signal for aborting the fetch operations
     const controller = new AbortController();
