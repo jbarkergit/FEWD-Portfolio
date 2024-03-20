@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import YouTube, { YouTubeEvent } from 'react-youtube';
-import { Type_Tmdb_Parent_StateObjArr, Type_Tmdb_Trailer_Obj } from '../../../api/types/TmdbDataTypes';
+import { Type_Tmdb_Trailer_Obj } from '../../../api/types/TmdbDataTypes';
 import { Options } from 'youtube-player/dist/types';
 
 /** This component utilizes YouTube Player API
@@ -10,15 +10,14 @@ import { Options } from 'youtube-player/dist/types';
 
 type Type_PropDrill = {
   videoPlayerState: boolean;
-  videoPlayerVideos: Type_Tmdb_Parent_StateObjArr;
+  videoPlayerTrailer: Type_Tmdb_Trailer_Obj[];
   setVideoPlayerState: Dispatch<SetStateAction<boolean>>;
 };
 
-const FDVideoPlayer = ({ videoPlayerState, videoPlayerVideos, setVideoPlayerState }: Type_PropDrill) => {
-  // Trailer object
+const FDVideoPlayer = ({ videoPlayerState, videoPlayerTrailer, setVideoPlayerState }: Type_PropDrill) => {
   const trailerObj: Type_Tmdb_Trailer_Obj | undefined =
-    videoPlayerVideos && videoPlayerVideos.length > 0
-      ? (videoPlayerVideos[0]?.value as Type_Tmdb_Trailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer')
+    videoPlayerTrailer && videoPlayerTrailer.length > 0
+      ? (videoPlayerTrailer[0]?.value as Type_Tmdb_Trailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer')
       : undefined;
 
   // iframe options
@@ -57,7 +56,7 @@ const FDVideoPlayer = ({ videoPlayerState, videoPlayerVideos, setVideoPlayerStat
   }, []);
 
   /** Component */
-  if (trailerObj?.key)
+  if (trailerObj)
     return (
       <section className='fdVideoPlayer' data-status={videoPlayerState}>
         <h2 className='fdVideoPlayer--h2'>{trailerObj.name}</h2>

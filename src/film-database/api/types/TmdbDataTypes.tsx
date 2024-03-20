@@ -38,6 +38,7 @@ export type Type_Tmdb_Call_Params = {
  */
 
 export type Type_Tmdb_Trailer_Obj = {
+  value: never[];
   id: string;
   iso_3166_1: string;
   iso_639_1: string;
@@ -123,4 +124,4 @@ export type Type_Tmdb_ProcessorReturn_MapSettled_isUndefined = Promise<
 >;
 
 /** Parent State Storage Type */
-export type Type_Tmdb_Parent_StateObjArr = { key: string; value: Type_Tmdb_ApiCallUnion_Obj | Type_Tmdb_ApiCallUnion_Obj[] | Type_Tmdb_Trailer_Obj[] }[];
+export type Type_Tmdb_Parent_StateObjArr = { key: string; value: Type_Tmdb_ApiCallUnion_Obj | Type_Tmdb_ApiCallUnion_Obj[] }[];

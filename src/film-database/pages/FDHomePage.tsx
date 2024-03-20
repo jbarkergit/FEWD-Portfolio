@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 // Api Data
 import { tmdbEndPoints } from '../api/data/tmdbEndPoints';
 // Api Types
-import { Type_Tmdb_Parent_StateObjArr } from '../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCallUnion_Obj, Type_Tmdb_Parent_StateObjArr, Type_Tmdb_Trailer_Obj } from '../api/types/TmdbDataTypes';
 // Api Hooks
 import { useTmdbApi } from '../api/hooks/useTmdbApi';
 // Components
@@ -25,7 +25,7 @@ const FDHomePage = () => {
 
     // Fetch, Process && Store Desired Data
     (async () => {
-      const movieLists = await useTmdbApi({ controller, tmdbEndPointKeyValuePairArr: tmdbEndPoints.movieLists });
+      const movieLists = (await useTmdbApi({ controller, tmdbEndPointKeyValuePairArr: tmdbEndPoints.movieLists })) as Type_Tmdb_Parent_StateObjArr;
 
       // const moviesDetails = await useTmdbApi({
       //   controller: controller,
@@ -39,19 +39,20 @@ const FDHomePage = () => {
 
     // Abort any ongoing fetch operations when component unmounts
     return () => controller.abort();
-
-    // Optional: Ensure data is up to date by watching /api/data/tmdbEndPoints
   }, []);
 
   /** Video Player State */
   const [videoPlayerState, setVideoPlayerState] = useState<boolean>(false);
-  const [videoPlayerVideos, setVideoPlayerVideos] = useState<Type_Tmdb_Parent_StateObjArr>([]);
+  const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<Type_Tmdb_Trailer_Obj[]>([]);
 
   const useVideoPlayer = async (propertyId: string): Promise<void> => {
-    const videosArray = await useTmdbApi({ tmdbEndPointKeyValuePairArr: tmdbEndPoints.movies.find((obj) => obj.key === 'videos'), movie_id: `${propertyId}` });
+    const trailerObj = (await useTmdbApi({
+      tmdbEndPointKeyValuePairArr: tmdbEndPoints.movies.find((obj) => obj.key === 'videos'),
+      movie_id: `${propertyId}`,
+    })) as Type_Tmdb_Trailer_Obj[];
 
-    if (videosArray) {
-      setVideoPlayerVideos(videosArray);
+    if (trailerObj) {
+      setVideoPlayerTrailer(trailerObj);
       setVideoPlayerState(true);
     }
   };
@@ -61,10 +62,15 @@ const FDHomePage = () => {
     <div className='filmDatabase'>
       <FDHeader />
       {tmdbDataArr.map((entry) => (
-        // <FDCarouselWrapper mapKey={entry.key} mapValue={entry.value} key={uuidv4()} />
-        <FDMediaGrid mapKey={entry.key} mapValue={entry.value} key={uuidv4()} useVideoPlayer={useVideoPlayer} grid={false} />
+        <FDMediaGrid
+          mapKey={entry.key}
+          mapValue={entry.value as unknown as Type_Tmdb_ApiCallUnion_Obj[]}
+          useVideoPlayer={useVideoPlayer}
+          grid={false}
+          key={uuidv4()}
+        />
       ))}
-      <FDVideoPlayer videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerVideos={videoPlayerVideos} />
+      <FDVideoPlayer videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerTrailer={videoPlayerTrailer} />
       <FDFooter />
     </div>
   );
