@@ -18,13 +18,11 @@ type Type_PropDrill = {
 
 const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill) => {
   /** Universal variables */
-  const dataLength: number = grid ? mapValue.length / 6 : mapValue.length / 7.5;
+  const dataLength: number = grid ? mapValue.length / 6 : mapValue.length / 8;
   const [setIndex, setSetIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
 
   /** Data pagination */
   const [paginatedData, setPaginatedData] = useState<Type_Tmdb_ApiCallUnion_Obj[]>([]);
-  // useEffect(() => console.log(mapValue), [mapValue]);
-  useEffect(() => console.log(paginatedData), [paginatedData]);
 
   useEffect(() => {
     if (mapValue && !grid)
@@ -36,35 +34,43 @@ const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill)
       });
   }, [mapValue, setIndex]);
 
-  /** Refs */
-  const carouselWrapper = useRef<HTMLDivElement>(null);
-  const carousel = useRef<HTMLUListElement>(null);
-
   /** Update navigation overlay button height dynamically */
+  const carouselUl = useRef<HTMLUListElement>(null);
   const [posterDimensions, setPosterDimensions] = useState<{ width: number | undefined; height: number | undefined }>({ width: undefined, height: undefined });
 
-  // const updatePosterDimensions = () => {
-  //   const posterOverlay = carousel.current?.children[0].children[0].children[0];
-  //   const posterOverlayRect: DOMRect | undefined = posterOverlay?.getBoundingClientRect();
-  //   setPosterDimensions({ width: posterOverlayRect?.width, height: posterOverlayRect?.height });
-  // };
+  const updatePosterDimensions = () => {
+    if (carouselUl.current) {
+      const childrenNestOne = carouselUl.current.children[0] as HTMLLIElement;
+      if (childrenNestOne) {
+        const childrenNestTwo = childrenNestOne.children[0];
+        if (childrenNestTwo) {
+          const childrenNestThree = childrenNestTwo.children[0] as HTMLDivElement;
+          if (childrenNestThree) {
+            const posterOverlayRect: DOMRect = childrenNestThree.getBoundingClientRect();
+            setPosterDimensions({ width: posterOverlayRect?.width, height: posterOverlayRect?.height });
+          }
+        }
+      }
+    }
+  };
 
-  // useEffect(() => {
-  //   // Initial height
-  //   updatePosterDimensions();
+  useEffect(() => {
+    // Initial height
+    updatePosterDimensions();
 
-  //   window.addEventListener('resize', updatePosterDimensions);
-  //   return () => window.removeEventListener('resize', updatePosterDimensions);
-  // }, []);
+    window.addEventListener('resize', updatePosterDimensions);
+    return () => window.removeEventListener('resize', updatePosterDimensions);
+  }, [carouselUl.current]);
 
   /** Carousel navigation functionality */
+  const carouselWrapper = useRef<HTMLDivElement>(null);
 
   /** Component */
   return (
     <section className='FDMediaGrid'>
       <FDSectionHeader mapKey={mapKey} />
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'} ref={carouselWrapper}>
-        <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carousel}>
+        <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
           {grid
             ? mapValue.map((values: Type_Tmdb_ApiCallUnion_Obj) => <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} key={uuidv4()} />)
             : paginatedData.map((values: Type_Tmdb_ApiCallUnion_Obj) => <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} key={uuidv4()} />)}
