@@ -65,6 +65,36 @@ const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill)
   /** Carousel navigation functionality */
   const carouselWrapper = useRef<HTMLDivElement>(null);
 
+  const useCarouselTravelDistance = () => {
+    if (carouselWrapper.current && carouselUl.current && posterDimensions.width) {
+      const carouselWidth: number = carouselWrapper.current.offsetWidth;
+      const carouselPadding: number = parseInt(window.getComputedStyle(carouselWrapper.current).getPropertyValue('padding-left'));
+      const carouselGap: number = parseInt(window.getComputedStyle(carouselUl.current).getPropertyValue('gap'));
+
+      switch (true) {
+        // 0 Case
+        case setIndex.currIndex === 0:
+          return `${carouselWidth / carouselPadding}`;
+          break;
+        // Forward
+        case setIndex.currIndex > setIndex.prevIndex:
+          return `${(carouselWidth * (setIndex.currIndex - 1) - carouselPadding - carouselGap - posterDimensions.width / 2) * -1}`;
+
+        // Backwards
+        case setIndex.currIndex < setIndex.prevIndex:
+          return `${carouselWidth * (setIndex.currIndex - 1) * -1 - carouselGap}`;
+
+        //
+        default:
+          break;
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (carouselUl.current) carouselUl.current.style.transform = `translateX(${useCarouselTravelDistance()}px)`;
+  }, [setIndex]);
+
   /** Component */
   return (
     <section className='FDMediaGrid'>
