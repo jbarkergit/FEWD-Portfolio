@@ -12,6 +12,7 @@
     }
   }
   &__wrapper {
+    position: relative;
     &[data-status='carousel'] {
       padding: 0 0 var(--fd-border-box-padding-RL) var(--fd-border-box-padding-RL);
     }
@@ -19,10 +20,8 @@
       padding: var(--fd-border-box-section-padding);
     }
     &__ul {
-      position: relative;
       display: flex;
       gap: var(--fd-poster-gutter);
-      overflow: hidden;
       &[data-status='grid'] {
         display: grid;
         grid-template-columns: repeat(
@@ -82,31 +81,31 @@
           }
         }
       }
-      &__navigation {
+    }
+    &__navigation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 100%;
+      pointer-events: none;
+      opacity: 0;
+      &--button {
         position: absolute;
-        top: 0;
+        width: calc(((100% + var(--fd-border-box-padding-RL)) / var(--fd-carousel-items-per-page) - var(--fd-poster-gutter)) / 3.1);
+        height: 100%;
+        pointer-events: all;
+        & svg {
+          width: 2.8em;
+          height: 2.8em;
+          color: white;
+        }
+      }
+      &--button:nth-of-type(1) {
         left: 0;
-        z-index: 2;
-        width: 100%;
-        pointer-events: none;
-        opacity: 0;
-        &--button {
-          position: absolute;
-          width: calc(((100% + var(--fd-border-box-padding-RL)) / var(--fd-carousel-items-per-page) - var(--fd-poster-gutter)) / 3.1);
-          height: 100%;
-          pointer-events: all;
-          & svg {
-            width: 2.8em;
-            height: 2.8em;
-            color: white;
-          }
-        }
-        &--button:nth-of-type(1) {
-          left: calc(var(--fd-border-box-padding-RL) * -1);
-        }
-        &--button:nth-of-type(2) {
-          right: 0;
-        }
+      }
+      &--button:nth-of-type(2) {
+        right: 0;
       }
     }
   }
@@ -124,6 +123,6 @@
 }
 
 // navigation overlay on track hover
-.FDMediaGrid__wrapper__ul:hover .FDMediaGrid__wrapper__ul__navigation {
+.FDMediaGrid__wrapper:hover .FDMediaGrid__wrapper__navigation {
   opacity: 1;
 }

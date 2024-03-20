@@ -13,23 +13,29 @@ import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
 type Type_PropDrill = {
   mapValue: Type_Tmdb_ApiCallUnion_Obj;
   useVideoPlayer: (propertyId: string) => Promise<void>;
-  setPosterHeight: Dispatch<SetStateAction<string | undefined>>;
+  setPosterDimensions: Dispatch<
+    SetStateAction<{
+      width: number | undefined;
+      height: number | undefined;
+    }>
+  >;
 };
 
-const FDPosterProp = ({ mapValue, useVideoPlayer, setPosterHeight }: Type_PropDrill) => {
+const FDPosterProp = ({ mapValue, useVideoPlayer, setPosterDimensions }: Type_PropDrill) => {
   /** Update navigation overlay button height dynamically */
   const posterOverlay = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const updatePosterHeight = () => {
-      if (posterOverlay.current) setPosterHeight(`${posterOverlay.current.getBoundingClientRect().height}px`);
+    const updatePosterDimensions = () => {
+      const posterOverlayRect: DOMRect | undefined = posterOverlay.current?.getBoundingClientRect();
+      setPosterDimensions({ width: posterOverlayRect?.width, height: posterOverlayRect?.height });
     };
 
     // Initial height
-    updatePosterHeight();
+    updatePosterDimensions();
 
-    window.addEventListener('resize', updatePosterHeight);
-    return () => window.removeEventListener('resize', updatePosterHeight);
+    window.addEventListener('resize', updatePosterDimensions);
+    return () => window.removeEventListener('resize', updatePosterDimensions);
   }, []);
 
   return (
