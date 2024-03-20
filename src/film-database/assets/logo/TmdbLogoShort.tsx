@@ -3,9 +3,9 @@ const TmdbLogoShort = () => {
     <svg xmlns='http://www.w3.org/2000/svg'>
       <defs>
         <linearGradient id='a' y1='17.76' x2='273.42' y2='17.76' gradientUnits='userSpaceOnUse'>
-          <stop offset='0' stop-color='#90cea1' />
-          <stop offset='.56' stop-color='#3cbec9' />
-          <stop offset='1' stop-color='#00b3e5' />
+          <stop offset='0' stopColor='#90cea1' />
+          <stop offset='.56' stopColor='#3cbec9' />
+          <stop offset='1' stopColor='#00b3e5' />
         </linearGradient>
       </defs>
       <g data-name='Layer 2'>
