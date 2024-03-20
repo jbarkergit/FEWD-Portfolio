@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import YouTube, { YouTubeEvent } from 'react-youtube';
+import YouTube, { YouTubeEvent, YouTubeProps } from 'react-youtube';
 import { Type_Tmdb_Trailer_Obj } from '../../../api/types/TmdbDataTypes';
 import { Options } from 'youtube-player/dist/types';
 
@@ -37,28 +37,18 @@ const FDVideoPlayer = ({ videoPlayerState, videoPlayerTrailer, setVideoPlayerSta
   };
 
   /** YouTube Player Ref */
-  let player: YouTubeEvent | null = null;
+  let player: YouTubeEvent;
 
   /** Close trailer hook */
   const useCloseTrailer = (): void => {
+    player.target.pauseVideo();
     setVideoPlayerState(false);
-    if (player) player.target.pauseVideo();
   };
-
-  /** Exterior click handler */
-  useEffect(() => {
-    const exteriorClickHandler = (e: PointerEvent): void => {
-      if ((e.target as HTMLElement).className !== 'fdVideoPlayer__wrapper--iframe') useCloseTrailer();
-    };
-
-    document.body.addEventListener('pointerup', exteriorClickHandler);
-    return () => document.body.removeEventListener('pointerup', exteriorClickHandler);
-  }, []);
 
   /** Component */
   if (trailerObj)
     return (
-      <section className='fdVideoPlayer' data-status={videoPlayerState}>
+      <section className='fdVideoPlayer' data-status={videoPlayerState} onClick={() => useCloseTrailer()}>
         <h2 className='fdVideoPlayer--h2'>{trailerObj.name}</h2>
         <YouTube
           videoId={trailerObj.key}
@@ -68,10 +58,10 @@ const FDVideoPlayer = ({ videoPlayerState, videoPlayerTrailer, setVideoPlayerSta
           title={`YouTube video player: ${trailerObj.name}`}
           // loading={string}
           onReady={(event: YouTubeEvent) => (player = event)}
-          onEnd={() => useCloseTrailer}
+          onEnd={() => useCloseTrailer()}
           onError={() => {
-            useCloseTrailer;
-            player?.target.destroy;
+            useCloseTrailer();
+            player.target.destroy();
           }}
         />
       </section>
