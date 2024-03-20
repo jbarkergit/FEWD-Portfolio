@@ -19,6 +19,7 @@ const FDHomePage = () => {
   const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_Parent_StateObjArr>([]);
   // useEffect(() => console.log(tmdbDataArr), [tmdbDataArr]);
 
+  /** Fetch Data */
   useEffect(() => {
     // Initialize an AbortController and a signal for aborting the fetch operations
     const controller = new AbortController();
