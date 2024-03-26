@@ -38,6 +38,7 @@ const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill)
   const carouselUl = useRef<HTMLUListElement>(null);
   const [posterDimensions, setPosterDimensions] = useState<{ width: number | undefined; height: number | undefined }>({ width: undefined, height: undefined });
 
+  /** Due to HTML structure, there isn't an easy way to pass refs upwards; therefore, I opted to drill dom nodes */
   const updatePosterDimensions = () => {
     if (carouselUl.current) {
       const childrenNestOne = carouselUl.current.children[0] as HTMLLIElement;
