@@ -30,33 +30,38 @@ const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill)
         setPaginatedData((prevData: Type_Tmdb_ApiCallUnion_Obj[]) => {
           const startIndex: number = prevData.length === 0 ? 0 : prevData.length + 1;
           const endIndex: number = 8 * setIndex.currIndex;
-          return [...prevData, ...mapValue.slice(startIndex, endIndex)];
+          return [...prevData, ...mapValue.slice(startIndex, endIndex)] as Type_Tmdb_ApiCallUnion_Obj[];
         });
     };
 
-    /** Carousel navigation functionality (INFINITE LOOP)
-     * [Employed] Option #1: CSS Scroll-Snapping && JavaScript Scroll Methods (Apple, Nike)
-     * Reduces overall JavaScript logic, reduces DOM manipulation, doesn't require CSS animations
+    /** INFINITE LOOP
+     * [EMPLOYED] Animation && End of Loop: CSS Scroll-Snapping && JavaScript Scroll Methods (Apple, Nike)
+     * Requires perfect min max boundaries for indexing
+     * Reduces overall JavaScript logic, doesn't require CSS animations
      *
-     * [x] Option #2: Push off-screen elements to end of queue and vise versa. (Disney) E.g. [(1), 2,3,4,5,6,7,8,9, (1 IF 9 is last index || 10, (1))]
+     * [x] Infinite Loop: Push off-screen elements to end of queue and vise versa. (Disney) E.g. [(1), 2,3,4,5,6,7,8,9, (1 IF 9 is last index || 10, (1))]
      * Requires intervals to delay the removal of the off-screen elements to provide css animations
      *
-     * [x] Option #3: Manipulate the wrapper position manually (Netflix - Single child distance)
+     * [x] Infinite Loop: Manipulate the wrapper position manually (Netflix - Single child distance)
      * Set distances require calculations that account for padding, gap and conditions for the first && last index
      * Single child distances require dom node width && gap size
      */
 
     paginateData().then(() => {
-      if (carouselUl.current && paginatedData.length > 0 && setIndex.currIndex > 0) {
-        const index = Math.min(Math.floor(paginatedData.length / setIndex.currIndex) + 1, carouselUl.current.children.length - 1);
-        const childElement = carouselUl.current.children[index] as HTMLElement;
-        const scrollLeft = childElement.offsetLeft - carouselUl.current.offsetLeft;
-        carouselUl.current.scrollLeft = scrollLeft;
+      if (carouselUl.current) {
+        const firstPossibleIndex: boolean = setIndex.currIndex === 1;
+        const lastPossibleIndex: boolean = setIndex.currIndex === Math.round(mapValue.length / 8) + 1;
+        const nextChildsIndex: number = firstPossibleIndex || lastPossibleIndex ? 0 : (setIndex.currIndex - 1) * 8;
+
+        const carouselChildren: HTMLCollection = carouselUl.current.children;
+        const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;
+
+        const scrollDistance: number = nextChild.offsetLeft - carouselUl.current.offsetLeft;
+
+        carouselUl.current.scrollTo({ left: scrollDistance, behavior: 'smooth' });
       }
     });
-
-    console.log(setIndex);
-  }, [mapValue, setIndex]);
+  }, [setIndex]);
 
   /** Update navigation overlay button height dynamically
    * Due to the informational footer, I'm opting to use JavaScript to set heights of the buttons in order to prevent any potential visual mishaps.

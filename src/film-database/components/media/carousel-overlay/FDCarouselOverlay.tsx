@@ -26,7 +26,7 @@ const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setSetIndex }: Typ
     }
   }, [posterDimensions]);
 
-  const maxIndex: number = Math.round(tmdbArrLength / 8) + 1;
+  const maxIndex: number = Math.floor(tmdbArrLength / 8) + 1;
   const minIndex: number = 1;
 
   return (
