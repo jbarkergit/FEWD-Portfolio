@@ -52,14 +52,12 @@ const FDHomePage = () => {
      * I will not being implementing this technique for a simple front-end project.
      *
      * As of now, I've introduced a fail safe in the event that a session has cached data by checking if an object key doesn't exist in the API data.
-     * This should update the data in the event that the API returns new results on mount.
+     * This technically shouldn't have any effect on the code until localStorage becomes preference over sessionStorage
      */
-
-    // Update session storage cache
 
     getMergedData()
       .then((mergedData: Type_Tmdb_Parent_StateObjArr) => {
-        if (!webStorageData || webStorageData.some((webStorageObj) => !mergedData.some((obj) => obj.key === webStorageObj.key))) {
+        if (!webStorageData || (webStorageData && webStorageData.some((webStorageObj) => !mergedData.some((obj) => obj.key === webStorageObj.key)))) {
           useFilmDatabaseWebStorage(userLocation, mergedData).setData();
           // Note: A shallow copy of this data will be created later in order to enhance performance via pagination
           setTmdbDataArr(mergedData);
