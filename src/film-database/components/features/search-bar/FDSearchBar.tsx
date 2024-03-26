@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, ChangeEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useTDSearchBar } from '../../../hooks/useTDSearchBar';
+import { useTDSearchBar } from '../../../hooks/features/useTDSearchBar';
 
 const FDSearchBar = () => {
   // References

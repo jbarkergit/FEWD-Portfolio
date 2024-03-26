@@ -1,4 +1,4 @@
-import { useFormatApiKey } from '../../../hooks/useFormatApiKey';
+import { useFormatApiKey } from '../../../hooks/formatters/useFormatApiKey';
 
 type Type_PropDrill = {
   mapKey: string;

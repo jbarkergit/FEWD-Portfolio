@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { tmdbEndPoints } from '../../../api/data/tmdbEndPoints';
-import { useFormatApiKey } from '../../../hooks/useFormatApiKey';
-import useCreatePicture from '../../../hooks/useCreatePicture';
+import { useFormatApiKey } from '../../../hooks/formatters/useFormatApiKey';
+import useCreatePicture from '../../../hooks/component-creation/useCreatePicture';
 import TmdbLogoShort from '../../../assets/logo/TmdbLogoShort';
 import FDSearchBar from '../../features/search-bar/FDSearchBar';
 

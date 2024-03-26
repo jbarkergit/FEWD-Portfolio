@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import MaterialLeftCaret from '../../../assets/svg-icons/MaterialLeftCaret';
 import MaterialRightCaret from '../../../assets/svg-icons/MaterialRightCaret';
-import useCreatePicture from '../../../hooks/useCreatePicture';
+import useCreatePicture from '../../../hooks/component-creation/useCreatePicture';
 
 type Type_PropDrill = {
   posterDimensions: {

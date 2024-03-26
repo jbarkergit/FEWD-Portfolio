@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { MaterialPlayCircle } from '../../../assets/svg-icons/MaterialPlayCircle';
 import { BootstrapThreeDotsVertical } from '../../../assets/svg-icons/PhDotsThreeVerticalBold';
 // Hooks
-import useCreatePicture from '../../../hooks/useCreatePicture';
-import { useFormatDate } from '../../../hooks/useFormatDate';
+import useCreatePicture from '../../../hooks/component-creation/useCreatePicture';
+import { useFormatDate } from '../../../hooks/formatters/useFormatDate';
 // Types
 import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
 
