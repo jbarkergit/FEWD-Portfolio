@@ -22,6 +22,9 @@
     &__ul {
       display: flex;
       gap: var(--fd-poster-gutter);
+      scroll-snap-type: x mandatory;
+      scroll-padding: 0 0;
+      overflow-x: hidden;
       &[data-status='grid'] {
         display: grid;
         grid-template-columns: repeat(
@@ -35,6 +38,7 @@
         flex: 0 0 calc((100% - (var(--fd-poster-gutter) * (var(--fd-carousel-items-per-page) - 1) + var(--fd-poster-gutter))) / var(--fd-carousel-items-per-page));
         height: fit-content;
         aspect-ratio: 2/3;
+        scroll-snap-align: start;
         &__article {
           display: flex;
           flex-direction: column;
