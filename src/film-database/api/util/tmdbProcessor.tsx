@@ -29,6 +29,7 @@ export const tmdbProcessor = async ({
       const mapEntries = await Promise.allSettled(
         // Map the array of key-value pairs to process each end point asynchronously
         tmdbEndPointKeyValuePairArrConversion().map(async (keyValuePair: { key: string; endPoint: string }) => {
+          // Local storage caching to prevent unnecessary api calls
           // Establish variable for fetch calls, note: optional parameters movie_id & person_id may still be passed despite being optional
           const fetchDataPromise: Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = tmdbFetcher({
             controller,
