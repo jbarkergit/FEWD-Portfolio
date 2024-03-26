@@ -45,27 +45,28 @@ const FDHomePage = () => {
 
     /** Network Traffic Performance Technique Notes
      * API Memoization may not be the best technique here, given you'd still need to make an API call to ensure data is up to date.
-     * The current solution I've come up with is to store data on mount, in sessionStorage, to clear the cache post-session.
+     * To prevent unnecessary API calls, I've employed a solution that utilizes sessionStorage to store data on mount and clear it post-session.
+     * This includes a fail safe in the event that React updates components.
      *
-     * The trade-off is that data may not be up to date during the session IF new data is available via API (no real-time updates).
-     * A potential solution to this would be to set intervals during session time to check if data is up to date.
-     * I will not being implementing this technique for a simple front-end project.
+     * This application will be an SPA; therefore, we're introducing a trade-off:
+     * IF the API presents new data during the session (post-mount), the user won't receive it as a real-time update.
      *
-     * As of now, I've introduced a fail safe in the event that a session has cached data by checking if an object key doesn't exist in the API data.
-     * This technically shouldn't have any effect on the code until localStorage becomes preference over sessionStorage
+     * A potential solution to this would be to set intervals during session time to check if our data is consistent with the API data.
+     * I've currently opted-out of implementing this technique; given this is merely a simple front-end project.
+     * If I were to opt-in, I'd use an alternative procedure involving localStorage, given the conditional statements wouldn't affect sessionStorage.
+     * if (!webStorageData || (webStorageData && webStorageData.some((webStorageObj) => !mergedData.some((obj) => obj.key === webStorageObj.key))))
      */
 
-    getMergedData()
-      .then((mergedData: Type_Tmdb_Parent_StateObjArr) => {
-        if (!webStorageData || (webStorageData && webStorageData.some((webStorageObj) => !mergedData.some((obj) => obj.key === webStorageObj.key)))) {
+    if (!webStorageData) {
+      getMergedData()
+        .then((mergedData) => {
           useFilmDatabaseWebStorage(userLocation, mergedData).setData();
-          // Note: A shallow copy of this data will be created later in order to enhance performance via pagination
           setTmdbDataArr(mergedData);
-        } else {
-          if (webStorageData) setTmdbDataArr(mergedData);
-        }
-      })
-      .catch((error) => console.error(error));
+        })
+        .catch((error) => console.error(error));
+    } else {
+      setTmdbDataArr(webStorageData);
+    }
 
     // Abort any ongoing fetch operations when component unmounts
     return () => controller.abort();
