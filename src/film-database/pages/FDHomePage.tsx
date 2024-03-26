@@ -72,7 +72,12 @@ const FDHomePage = () => {
     return () => controller.abort();
   }, []);
 
-  /** Video Player State */
+  /** Video Player State
+   * This set of state variables enables the application to utilize a single YouTube iFrame component to produce trailer results for media.
+   * This component makes use of the react-youtube API to handle iFrames.
+   * videoPlayerState handles the component visibility
+   * videoPlayerTrailer stores API data and is used to find trailers directly from YouTube opposed to alternative sources.
+   */
   const [videoPlayerState, setVideoPlayerState] = useState<boolean>(false);
   const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<Type_Tmdb_Trailer_Obj[]>([]);
 
