@@ -31,7 +31,7 @@ const FDHomePage = () => {
     const controller = new AbortController();
 
     /** Fetch data */
-    const fetchData = async (): Promise<Type_Tmdb_Parent_StateObjArr> => {
+    const getMergedData = async (): Promise<Type_Tmdb_Parent_StateObjArr> => {
       const movieLists = (await useTmdbApi({ controller, tmdbEndPointKeyValuePairArr: tmdbEndPoints.movieLists })) as Type_Tmdb_Parent_StateObjArr;
 
       // const moviesDetails = await useTmdbApi({
@@ -56,11 +56,11 @@ const FDHomePage = () => {
      */
 
     // Update session storage cache
-    fetchData()
-      .then((mergedData) => {
+
+    getMergedData()
+      .then((mergedData: Type_Tmdb_Parent_StateObjArr) => {
         if (!webStorageData || webStorageData.some((webStorageObj) => !mergedData.some((obj) => obj.key === webStorageObj.key))) {
           useFilmDatabaseWebStorage(userLocation, mergedData).setData();
-
           // Note: A shallow copy of this data will be created later in order to enhance performance via pagination
           setTmdbDataArr(mergedData);
         } else {
