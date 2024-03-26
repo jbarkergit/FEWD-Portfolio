@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 // Lib
 import { v4 as uuidv4 } from 'uuid';
 // Api Data
@@ -12,19 +13,25 @@ import FDHeader from '../components/navigation/header/FDHeader';
 import FDFooter from '../components/navigation/footer/FDFooter';
 import FDVideoPlayer from '../components/features/iframes/TDVideoPlayer';
 import FDMediaGrid from '../components/media/FDMediaGrid';
+import { useFilmDatabaseWebStorage } from '../hooks/web-storage-api/useFilmDatabaseWebStorage';
 
-/** Component NOTICE: Fetching and processing of data was designed, with reusability in mind, to allow for the application to grow by fetching only desired data */
 const FDHomePage = () => {
-  /** Fetch Data */
-  // Initialize a new Map to store our api entries and furthermore data
+  // Store cached data in state for component renders && pagination
   const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_Parent_StateObjArr>([]);
+  // Session Storage Data
+  const userLocation = useLocation();
+  const webStorageData: Type_Tmdb_Parent_StateObjArr | null = useFilmDatabaseWebStorage(userLocation).getData();
 
   useEffect(() => {
-    // Initialize an AbortController and a signal for aborting the fetch operations
+    /** Initialize an AbortController and a signal for aborting the fetch operations
+     * I've opted out of Promise.all in favor of allSettled to ensure that we receive data from our custom API call data in the event that a call fails.
+     * Unresolved promises will be filtered out once the array of endpoints has been iterated into the fetcher hook.
+     * A controller has been employed to pass signals to each endpoint in order to abort fetch operations.
+     */
     const controller = new AbortController();
 
-    // Fetch, Process && Store Desired Data
-    (async () => {
+    /** Fetch data */
+    const fetchData = async (): Promise<Type_Tmdb_Parent_StateObjArr> => {
       const movieLists = (await useTmdbApi({ controller, tmdbEndPointKeyValuePairArr: tmdbEndPoints.movieLists })) as Type_Tmdb_Parent_StateObjArr;
 
       // const moviesDetails = await useTmdbApi({
@@ -33,9 +40,34 @@ const FDHomePage = () => {
       //   movie_id: '1096197-no-way-up',
       // });
 
-      // Set state with merged desired data
-      setTmdbDataArr([...movieLists]);
-    })();
+      return [...movieLists] as Type_Tmdb_Parent_StateObjArr;
+    };
+
+    /** Network Traffic Performance Technique Notes
+     * API Memoization may not be the best technique here, given you'd still need to make an API call to ensure data is up to date.
+     * The current solution I've come up with is to store data on mount, in sessionStorage, to clear the cache post-session.
+     *
+     * The trade-off is that data may not be up to date during the session IF new data is available via API (no real-time updates).
+     * A potential solution to this would be to set intervals during session time to check if data is up to date.
+     * I will not being implementing this technique for a simple front-end project.
+     *
+     * As of now, I've introduced a fail safe in the event that a session has cached data by checking if an object key doesn't exist in the API data.
+     * This should update the data in the event that the API returns new results on mount.
+     */
+
+    // Update session storage cache
+    fetchData()
+      .then((mergedData) => {
+        if (!webStorageData || webStorageData.some((webStorageObj) => !mergedData.some((obj) => obj.key === webStorageObj.key))) {
+          useFilmDatabaseWebStorage(userLocation, mergedData).setData();
+
+          // Note: A shallow copy of this data will be created later in order to enhance performance via pagination
+          setTmdbDataArr(mergedData);
+        } else {
+          if (webStorageData) setTmdbDataArr(mergedData);
+        }
+      })
+      .catch((error) => console.error(error));
 
     // Abort any ongoing fetch operations when component unmounts
     return () => controller.abort();
