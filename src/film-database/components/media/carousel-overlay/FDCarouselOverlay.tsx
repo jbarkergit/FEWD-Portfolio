@@ -8,7 +8,7 @@ type Type_PropDrill = {
     width: number | undefined;
     height: number | undefined;
   };
-  dataLength: number;
+  tmdbArrLength: number;
   setSetIndex: Dispatch<
     SetStateAction<{
       prevIndex: number;
@@ -17,7 +17,7 @@ type Type_PropDrill = {
   >;
 };
 
-const FDCarouselOverlay = ({ posterDimensions, dataLength, setSetIndex }: Type_PropDrill) => {
+const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setSetIndex }: Type_PropDrill) => {
   const navigationOverlay = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -26,22 +26,36 @@ const FDCarouselOverlay = ({ posterDimensions, dataLength, setSetIndex }: Type_P
     }
   }, [posterDimensions]);
 
+  const maxIndex: number = Math.round(tmdbArrLength / 8) + 1;
+  const minIndex: number = 1;
+
   return (
     <nav className='FDMediaGrid__wrapper__navigation' ref={navigationOverlay}>
       <button
         className='FDMediaGrid__wrapper__navigation--button'
         aria-label='Show Previous'
-        onClick={() =>
-          setSetIndex((prevState) => ({ prevIndex: prevState.currIndex, currIndex: prevState.currIndex === 0 ? dataLength - 1 : prevState.currIndex - 1 }))
-        }>
+        onClick={() => {
+          setSetIndex((prevState) => {
+            return {
+              prevIndex: prevState.currIndex,
+              currIndex: prevState.currIndex === minIndex ? maxIndex : prevState.currIndex - 1,
+            };
+          });
+        }}>
         {useCreatePicture({ svg: <MaterialLeftCaret />, alt: 'Show Previous Selection' })}
       </button>
+
       <button
         className='FDMediaGrid__wrapper__navigation--button'
         aria-label='Show More'
-        onClick={() =>
-          setSetIndex((prevIndex) => ({ prevIndex: prevIndex.currIndex, currIndex: prevIndex.currIndex === dataLength - 1 ? 0 : prevIndex.currIndex + 1 }))
-        }>
+        onClick={() => {
+          setSetIndex((prevState) => {
+            return {
+              prevIndex: prevState.currIndex,
+              currIndex: prevState.currIndex === maxIndex ? minIndex : prevState.currIndex + 1,
+            };
+          });
+        }}>
         {useCreatePicture({ svg: <MaterialRightCaret />, alt: 'Show More' })}
       </button>
     </nav>
