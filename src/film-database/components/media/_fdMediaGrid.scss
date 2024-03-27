@@ -32,7 +32,7 @@
         overflow-x: scroll;
         scrollbar-width: none;
         scroll-behavior: smooth;
-        // scroll-snap-type: x proximity;
+        scroll-snap-type: x proximity;
         scroll-padding: 0 0;
         /* Overlapping padding */
         grid-column: left-start/right-end;
@@ -54,7 +54,7 @@
         );
         aspect-ratio: 2/3;
         /* Scroll snapping */
-        scroll-snap-align: start;
+        scroll-snap-align: end;
         /* Width matching (required for dynamic logic) */
         &__article,
         &__article__graphic,
