@@ -13,6 +13,7 @@
   }
   &__wrapper {
     position: relative;
+    overflow: hidden;
     &[data-status='carousel'] {
       padding: 0 0 var(--fd-border-box-padding-RL) var(--fd-border-box-padding-RL);
     }
@@ -24,7 +25,9 @@
       gap: var(--fd-poster-gutter);
       scroll-snap-type: x mandatory;
       scroll-padding: 0 0;
-      overflow-x: auto;
+      overflow: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       &[data-status='grid'] {
         display: grid;
         grid-template-columns: repeat(
