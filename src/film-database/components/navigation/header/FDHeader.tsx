@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import { tmdbEndPoints } from '../../../api/data/tmdbEndPoints';
 import { useFormatApiKey } from '../../../hooks/formatters/useFormatApiKey';
-import useCreatePicture from '../../../hooks/component-creation/useCreatePicture';
-import TmdbLogoShort from '../../../assets/logo/TmdbLogoShort';
 import FDSearchBar from '../../features/search-bar/FDSearchBar';
 
 const FDHeader = () => {
@@ -10,8 +8,11 @@ const FDHeader = () => {
     <header className='fdHeader'>
       <section className='fdHeader__row'>
         <section className='fdHeader__row__logo'>
-          <Link to='https://www.themoviedb.org/' target='_blank'>
-            {useCreatePicture({ svg: <TmdbLogoShort />, alt: 'TMDB API Logo' })}
+          <Link to='/film-database' target='_blank'>
+            <h1>
+              <span>FILM</span>
+              <span>DATABASE</span>
+            </h1>
           </Link>
         </section>
         <section className='fdHeader__row__searchBar'>

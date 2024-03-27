@@ -15,11 +15,12 @@
   }
 
   &__row {
-    &__logo {
-      & a figure picture svg {
-        max-height: f.rem(40);
-      }
+    &__logo h1 {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Satoshi-Black';
     }
+
     &__searchBar {
       position: absolute;
       left: 50%;
