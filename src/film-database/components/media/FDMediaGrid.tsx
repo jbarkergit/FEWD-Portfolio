@@ -23,51 +23,49 @@ const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill)
   const [paginatedData, setPaginatedData] = useState<Type_Tmdb_ApiCallUnion_Obj[]>([]);
   const carouselUl = useRef<HTMLUListElement>(null);
 
+  /** Data Pagination: Pushes data into state when setIndex changes (the user navigates) */
   useEffect(() => {
-    /** Data Pagination: Pushes data into state when setIndex changes (the user navigates) */
-    const paginateData = async () => {
-      if (mapValue && !grid)
-        setPaginatedData((prevData: Type_Tmdb_ApiCallUnion_Obj[]) => {
-          const startIndex: number = prevData.length === 0 ? 0 : prevData.length + 1;
-          const endIndex: number = 8 * setIndex.currIndex;
-          return [...prevData, ...mapValue.slice(startIndex, endIndex)] as Type_Tmdb_ApiCallUnion_Obj[];
-        });
-    };
+    if (mapValue && !grid) {
+      setPaginatedData((prevData: Type_Tmdb_ApiCallUnion_Obj[]) => {
+        const startIndex: number = prevData.length === 0 ? 0 : prevData.length + 1;
+        const endIndex: number = 8 * setIndex.currIndex;
+        return [...prevData, ...mapValue.slice(startIndex, endIndex)] as Type_Tmdb_ApiCallUnion_Obj[];
+      });
+    }
+  }, [setIndex]);
 
-    /** INFINITE LOOP
-     * [EMPLOYED] Animation && End of Loop: CSS Scroll-Snapping && JavaScript Scroll Methods (Apple, Nike)
-     * Requires perfect min max boundaries for indexing
-     * Reduces overall JavaScript logic, doesn't require CSS animations
-     *
-     * [x] Infinite Loop: Push off-screen elements to end of queue and vise versa. (Disney) E.g. [(1), 2,3,4,5,6,7,8,9, (1 IF 9 is last index || 10, (1))]
-     * Requires intervals to delay the removal of the off-screen elements to provide css animations
-     *
-     * [x] Infinite Loop: Manipulate the wrapper position manually (Netflix - Single child distance)
-     * Set distances require calculations that account for padding, gap and conditions for the first && last index
-     * Single child distances require dom node width && gap size
-     */
+  /** INFINITE LOOP
+   * [EMPLOYED] Animation && End of Loop Wrapping: CSS Scroll-Snapping && JavaScript Scroll Methods
+   * Requires perfect min max boundaries for indexing
+   * Reduces overall JavaScript logic, doesn't require CSS animations
+   *
+   * [x] Infinite Loop: Push off-screen elements to end of queue and vise versa. E.g. [(1), 2,3,4,5,6,7,8,9, (1 IF 9 is last index || 10, (1))]
+   * Requires intervals to delay the removal of the off-screen elements to provide css animations
+   *
+   * [x] Infinite Loop: Manipulate the wrapper position manually
+   * Set distances require calculations that account for padding, gap and conditions for the first && last index
+   * Single child distances require dom node width && gap size
+   */
+  useEffect(() => {
+    if (carouselUl.current) {
+      const firstPossibleIndex: boolean = setIndex.currIndex === 1;
+      const lastPossibleIndex: boolean = setIndex.currIndex === Math.round(mapValue.length / 8) + 1;
+      const nextChildsIndex: number = firstPossibleIndex || lastPossibleIndex ? 0 : (setIndex.currIndex - 1) * 8;
 
-    paginateData().then(() => {
-      if (carouselUl.current) {
-        const firstPossibleIndex: boolean = setIndex.currIndex === 1;
-        const lastPossibleIndex: boolean = setIndex.currIndex === Math.round(mapValue.length / 8) + 1;
-        const nextChildsIndex: number = firstPossibleIndex || lastPossibleIndex ? 0 : (setIndex.currIndex - 1) * 8;
+      const carouselChildren: HTMLCollection = carouselUl.current.children;
+      const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;
 
-        const carouselChildren: HTMLCollection = carouselUl.current.children;
-        const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;
-
+      if (nextChild) {
         const scrollDistance: number = nextChild.offsetLeft - carouselUl.current.offsetLeft;
-
         carouselUl.current.scrollTo({ left: scrollDistance, behavior: 'smooth' });
       }
-    });
-  }, [setIndex]);
+    }
+  }, [paginatedData]);
 
   /** Update navigation overlay button height dynamically
    * Due to the informational footer, I'm opting to use JavaScript to set heights of the buttons in order to prevent any potential visual mishaps.
    * Due to HTML structure, there isn't an easy way to pass refs upwards; therefore, I opted to shake the tree via dom nodes (I understand this isn't the best practice)
    */
-
   const [posterDimensions, setPosterDimensions] = useState<{ width: number | undefined; height: number | undefined }>({ width: undefined, height: undefined });
 
   const updatePosterDimensions = () => {
