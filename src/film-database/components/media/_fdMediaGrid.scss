@@ -5,6 +5,7 @@
   &__header {
     padding: var(--fd-flat-grid-font-header-padding);
     &--h2 {
+      font-family: 'Satoshi-Bold';
       font-size: var(--fd-font-size-section-header);
       line-height: normal;
       text-transform: capitalize;
@@ -84,7 +85,15 @@
             }
           }
           &__hgroup {
-            @include s.fdPosterDetails;
+            overflow-wrap: break-word;
+            &--h2 {
+              font-family: 'Satoshi-Bold';
+              font-size: clamp(16px, 100% + 1vw, 20px);
+            }
+            &--h3 {
+              font-family: 'Satoshi-Medium';
+              font-size: clamp(14px, 100% + 1vw, 16px);
+            }
           }
         }
       }

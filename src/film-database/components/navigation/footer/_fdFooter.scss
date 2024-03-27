@@ -19,12 +19,12 @@
           &__header {
             padding-bottom: f.rem(6);
             & h2 {
+              font-family: 'Satoshi-Medium';
               font-size: var(--fd-font-size-section-header);
-              font-weight: 600;
             }
           }
           &__li a {
-            font-weight: 400;
+            font-family: 'Satoshi-Regular';
           }
         }
       }
@@ -35,8 +35,7 @@
     display: flex;
     justify-content: center;
     &__tmdbApiCredit p {
-      font-weight: 300;
-      letter-spacing: 0.04em;
+      font-family: 'Satoshi-Regular';
     }
   }
 }

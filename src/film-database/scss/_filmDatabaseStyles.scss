@@ -5,9 +5,10 @@
   position: relative;
   //font: {optional: style variant weight} size line-height "family", "fallback-font", fallback-font-type
   font:
-    normal normal 500 100% / 1.8em 'Satoshi',
+    normal normal 500 100% / 1.8em 'Satoshi-Medium',
     sans-serif;
   font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
+  letter-spacing: 0.01em;
   color: var(--fd-font-color-primary);
   background-color: var(--fd-background-color-primary);
 }
@@ -40,18 +41,6 @@
   --fd-font-color-brand: hsl(150, 81%, 51%);
 }
 
-@mixin fdPosterDetails {
-  overflow-wrap: break-word;
-  &--h2 {
-    font-family: 'Satoshi-Bold';
-    font-size: clamp(16px, 100% + 1vw, 20px);
-  }
-  &--h3 {
-    font-family: 'Satoshi-Medium';
-    font-size: clamp(14px, 100% + 1vw, 16px);
-  }
-}
-
 @mixin fdButton {
   padding: 0.625rem 1.5rem;
   border-radius: var(--fd-button-radius);
@@ -75,15 +64,6 @@
  * Satoshi Black
  *
 */
-@font-face {
-  font-family: 'Satoshi-Light';
-  src: url('../fonts/Satoshi-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-display: swap;
-  font-style: normal;
-  font-stretch: normal;
-  font-variant-ligatures: common-ligatures;
-}
 @font-face {
   font-family: 'Satoshi-Regular';
   src: url('../fonts/Satoshi-Regular.woff2') format('woff2');

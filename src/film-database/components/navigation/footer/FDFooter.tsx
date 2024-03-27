@@ -13,7 +13,7 @@ const FDFooter = () => {
                 <h2>Browse</h2>
               </header>
               {['Streaming Library', 'Movies', 'Television', 'Kids'].map((item: string) => (
-                <li className='fdFooter__section__nav__ul__li' key={item}>
+                <li className='fdFooter__section__nav__ul__wrapper__li' key={item}>
                   <Link to='' aria-label={`Navigate to ${item}`}>
                     {item}
                   </Link>
@@ -27,7 +27,7 @@ const FDFooter = () => {
                 <h2>Categories</h2>
               </header>
               {['To be', 'reduced from', 'api data', 'context'].map((item: string) => (
-                <li className='fdFooter__section__nav__ul__li' key={item}>
+                <li className='fdFooter__section__nav__ul__wrapper__li' key={item}>
                   <Link to='' aria-label={`Navigate to ${item}`}>
                     {item}
                   </Link>
@@ -41,7 +41,7 @@ const FDFooter = () => {
                 <h2>Help</h2>
               </header>
               {['What to Watch', 'About Ads', 'Privacy Policy', 'Personal Data Privacy', 'Your US State Privacy Rights', 'Terms of Service'].map((item: string) => (
-                <li className='fdFooter__section__nav__ul__li' key={item}>
+                <li className='fdFooter__section__nav__ul__wrapper__li' key={item}>
                   <Link to='' aria-label={`Navigate to ${item}`}>
                     {item}
                   </Link>
