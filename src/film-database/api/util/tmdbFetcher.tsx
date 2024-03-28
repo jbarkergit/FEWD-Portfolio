@@ -4,6 +4,7 @@ export const tmdbFetcher = async ({
   controller,
   movie_id,
   person_id,
+  time_window,
   tmdbEndPointKeyValuePairValue,
 }: Type_Tmdb_Call_Params): Type_Tmdb_FetcherReturn_ObjPromise_isUndefined => {
   // Authorization options for TMDB API
@@ -25,6 +26,9 @@ export const tmdbFetcher = async ({
       break;
     case !!person_id:
       url = `${tmdbEndPointKeyValuePairValue?.replace('{person_id}', person_id)}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
+      break;
+    case !!time_window:
+      url = `${tmdbEndPointKeyValuePairValue?.replace('{time_window}', time_window)}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
       break;
     default:
       url = `${tmdbEndPointKeyValuePairValue}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;

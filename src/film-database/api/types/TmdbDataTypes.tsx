@@ -28,6 +28,7 @@ export type Type_Tmdb_Call_Params = {
   controller?: AbortController;
   movie_id?: string | undefined;
   person_id?: string | undefined;
+  time_window?: string | undefined;
   tmdbEndPointKeyValuePairValue?: string;
   tmdbEndPointKeyValuePairArr?: { key: string; endPoint: string }[] | { key: string; endPoint: string };
 };

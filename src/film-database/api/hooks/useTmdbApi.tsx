@@ -14,6 +14,7 @@ export const useTmdbApi = async ({
   tmdbEndPointKeyValuePairArr,
   movie_id,
   person_id,
+  time_window,
 }: Type_Tmdb_Call_Params): Promise<Type_Tmdb_Parent_StateObjArr | Type_Tmdb_Trailer_Obj[]> => {
   // Initialize return storage
   const dataStorage: Type_Tmdb_Parent_StateObjArr = [];
@@ -24,6 +25,7 @@ export const useTmdbApi = async ({
     tmdbEndPointKeyValuePairArr: tmdbEndPointKeyValuePairArr,
     movie_id: movie_id,
     person_id: person_id,
+    time_window: time_window,
   });
 
   // Type check, destructure, resolve and store data

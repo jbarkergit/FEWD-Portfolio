@@ -13,6 +13,7 @@ export const tmdbProcessor = async ({
   tmdbEndPointKeyValuePairArr,
   movie_id,
   person_id,
+  time_window,
 }: Type_Tmdb_Call_Params): Type_Tmdb_ProcessorReturn_MapSettled_isUndefined => {
   // Ensure the tmdbEndPointKeyValuePairArr parameter is not undefined
   if (tmdbEndPointKeyValuePairArr) {
@@ -36,6 +37,7 @@ export const tmdbProcessor = async ({
             tmdbEndPointKeyValuePairValue: keyValuePair.endPoint,
             movie_id: movie_id,
             person_id: person_id,
+            time_window: time_window,
           });
 
           // Ensure that both the key and fetched data are available for each operation
