@@ -52,7 +52,7 @@ const FDHomePage = () => {
         time_window: 'week',
       })) as Type_Tmdb_Parent_StateObjArr;
 
-      return [...movieLists, ...trendingMovies, ...trendingTV] as Type_Tmdb_Parent_StateObjArr;
+      return [...trendingMovies] as Type_Tmdb_Parent_StateObjArr;
     };
 
     /** Network Traffic Performance Technique Notes

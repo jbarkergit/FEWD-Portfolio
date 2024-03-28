@@ -11,38 +11,39 @@
   font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
   letter-spacing: 0.01em;
   color: var(--fd-font-color-primary);
-  background-color: var(--fd-background-color-primary);
+  background-color: var(--fd-backgroundColor-primary);
 }
 
 :root {
   // Controller
   --fd-carousel-items-per-page: 7.5;
   --fd-flat-grid-items-per-page: 6;
-  --fd-border-box-padding: 0 7rem;
-  --fd-border-box-padding-RL: 7rem;
-  --fd-border-box-section-padding: 0 var(--fd-border-box-padding-RL) var(--fd-border-box-padding-RL) var(--fd-border-box-padding-RL);
-  --fd-poster-gutter: 1.875rem;
-  --fd-poster-radius: 0.6rem;
-  --fd-details-gap: calc(var(--fd-poster-gutter) / 2.5);
-  --fd-button-radius: 0.8rem;
-  --fd-flat-grid-font-header-padding: 0 var(--fd-border-box-padding-RL) 1rem var(--fd-border-box-padding-RL);
 
-  // background colors
-  --fd-background-color-primary: hsl(217, 12%, 13%);
-  --fd-background-color-fallback: hsl(240, 11%, 2%);
-
-  // Fonts
+  // Font
   --fd-font-size-section-header: clamp(1rem, 1.4rem + 1vw, 2rem);
-
-  // font colors
+  // Font Colors
   --fd-font-color-primary: hsl(0, 0%, 100%);
   --fd-font-color-secondary: hsl(220, 3%, 58%);
   --fd-font-color-brand: hsl(150, 81%, 51%);
+
+  // Background Colors
+  --fd-backgroundColor-primary: hsl(217, 12%, 13%);
+  --fd-backgroundColor-fallback: hsl(240, 11%, 2%);
+
+  // Box Model
+  --fd-padding-generic: 7rem;
+  --fd-padding-wrapper: 0 0 var(--fd-padding-generic) 0;
+  --fd-padding-innerWrapper: 0 var(--fd-padding-generic);
+
+  // Media Posters
+  --fd-gap-mediaPoster: 1.875rem;
+  --fd-borderRadius-mediaPoster: 0.6rem;
+  // Media Posters: Informational Details
+  --fd-gap-informationalDetails: calc(var(--fd-gap-mediaPoster) / 2.5);
 }
 
 @mixin fdButton {
   padding: 0.625rem 1.5rem;
-  border-radius: var(--fd-button-radius);
   color: var(--fd-font-color-primary);
   cursor: pointer;
 }

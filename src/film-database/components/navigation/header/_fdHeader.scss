@@ -5,8 +5,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 var(--fd-border-box-padding-RL);
-  gap: var(--fd-poster-gutter);
+  padding: 0 var(--fd-padding-generic);
+  gap: var(--fd-gap-mediaPoster);
   min-height: 11rem;
   & > * {
     position: relative;

@@ -4,8 +4,8 @@
 .fdFooter {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--fd-poster-gutter) * 3.25);
-  padding: 0 var(--fd-border-box-padding-RL);
+  gap: calc(var(--fd-gap-mediaPoster) * 3.25);
+  padding: 0 var(--fd-padding-generic);
   &__section {
     &__nav {
       display: flex;
