@@ -49,8 +49,8 @@ const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill)
   useEffect(() => {
     if (carouselUl.current) {
       const firstPossibleIndex: boolean = setIndex.currIndex === 1;
-      const lastPossibleIndex: boolean = setIndex.currIndex === Math.round(mapValue.length / 8) + 1;
-      const nextChildsIndex: number = firstPossibleIndex || lastPossibleIndex ? 0 : (setIndex.currIndex - 1) * 8;
+      const lastPossibleIndex: boolean = setIndex.currIndex === Math.round(mapValue.length / 7) + 1;
+      const nextChildsIndex: number = firstPossibleIndex || lastPossibleIndex ? 0 : (setIndex.currIndex - 1) * 7;
 
       const carouselChildren: HTMLCollection = carouselUl.current.children;
       const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;

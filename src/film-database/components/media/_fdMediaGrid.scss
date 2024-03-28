@@ -2,6 +2,7 @@
 @use '../../../sass/functions' as f;
 
 .FDMediaGrid {
+  padding: var(--fd-padding-wrapper);
   &__header {
     padding: 0 var(--fd-padding-generic) 1rem var(--fd-padding-generic);
     &--h2 {
@@ -14,7 +15,6 @@
   }
   &__wrapper {
     position: relative;
-    padding: var(--fd-section-padding);
     overflow: hidden;
     &[data-status='carousel'] {
       /* Overlapping padding */
@@ -37,7 +37,7 @@
         /* Overlapping padding */
         grid-column: left-start/right-end;
         grid-row: 1;
-        padding: 0 var(--fd-padding-generic);
+        padding: var(--fd-padding-innerWrapper);
       }
       &[data-status='grid'] {
         display: grid;
@@ -50,15 +50,16 @@
       }
       &__li {
         width: calc(
-          ((100svw - var(--fd-padding-generic) * 2 - var(--fd-gap-mediaPoster) * (var(--fd-carousel-items-per-page) - 0.5))) / var(--fd-carousel-items-per-page)
+          ((100svw - var(--fd-padding-generic) * 2 - var(--fd-gap-mediaPoster) * (var(--fd-carousel-items-per-page) - 0.5))) /
+            (var(--fd-carousel-items-per-page) - 0.5)
         );
         aspect-ratio: 2/3;
         /* Scroll snapping */
-        scroll-snap-align: end;
+        scroll-snap-align: center;
         /* Width matching (required for dynamic logic) */
         &__article,
         &__article__graphic,
-        &__article__graphic figure {
+        &__article__graphic > * {
           width: inherit;
         }
         &__article {
