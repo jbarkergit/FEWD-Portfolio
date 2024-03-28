@@ -68,6 +68,8 @@
           &__graphic {
             position: relative;
             z-index: 1;
+            background-color: var(--fd-background-color-fallback);
+            border-radius: var(--fd-poster-radius);
             & figure picture img,
             figure picture svg {
               transition: ease-in-out 0.22s filter;
