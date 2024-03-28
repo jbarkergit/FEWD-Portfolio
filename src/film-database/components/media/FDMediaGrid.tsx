@@ -55,11 +55,9 @@ const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill)
       const carouselChildren: HTMLCollection = carouselUl.current.children;
       const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;
 
-      const carouselLeftPadding: number = parseInt(window.getComputedStyle(carouselUl.current).paddingLeft) * -1;
-
       if (nextChild) {
         const scrollDistance: number = nextChild.offsetLeft - carouselUl.current.offsetLeft;
-        carouselUl.current.scrollTo({ left: setIndex.currIndex === 1 ? carouselLeftPadding : scrollDistance, behavior: 'smooth' });
+        carouselUl.current.scrollTo({ left: scrollDistance, behavior: 'smooth' });
       }
     }
   }, [paginatedData]);
