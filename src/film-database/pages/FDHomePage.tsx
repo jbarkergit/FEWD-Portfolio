@@ -40,33 +40,44 @@ const FDHomePage = () => {
       //   movie_id: '1096197-no-way-up',
       // });
 
-      return [...movieLists] as Type_Tmdb_Parent_StateObjArr;
+      const trendingMovies = (await useTmdbApi({
+        controller,
+        tmdbEndPointKeyValuePairArr: tmdbEndPoints.trending[0],
+        time_window: 'week',
+      })) as Type_Tmdb_Parent_StateObjArr;
+
+      const trendingTV = (await useTmdbApi({
+        controller,
+        tmdbEndPointKeyValuePairArr: tmdbEndPoints.trending[1],
+        time_window: 'week',
+      })) as Type_Tmdb_Parent_StateObjArr;
+
+      return [...movieLists, ...trendingMovies, ...trendingTV] as Type_Tmdb_Parent_StateObjArr;
     };
 
     /** Network Traffic Performance Technique Notes
      * API Memoization may not be the best technique here, given you'd still need to make an API call to ensure data is up to date.
-     * To prevent unnecessary API calls, I've employed a solution that utilizes sessionStorage to store data on mount and clear it post-session.
-     * This includes a fail safe in the event that React updates components.
+     * To prevent unnecessary API calls, I've employed a solution that utilizes localStorage to store data on mount.
+     * If the data does not exist in localStorage || the most recent data is not up to date, the fetched data will replace the cached data.
+     * This will prevent React from updating components until data is changed, which will now be exclusively on mount.
      *
      * This application will be an SPA; therefore, we're introducing a trade-off:
      * IF the API presents new data during the session (post-mount), the user won't receive it as a real-time update.
      *
      * A potential solution to this would be to set intervals during session time to check if our data is consistent with the API data.
      * I've currently opted-out of implementing this technique; given this is merely a simple front-end project.
-     * If I were to opt-in, I'd use an alternative procedure involving localStorage, given the conditional statements wouldn't affect sessionStorage.
-     * if (!webStorageData || (webStorageData && webStorageData.some((webStorageObj) => !mergedData.some((obj) => obj.key === webStorageObj.key))))
      */
 
-    if (!webStorageData) {
-      getMergedData()
-        .then((mergedData) => {
+    getMergedData()
+      .then((mergedData) => {
+        if (!webStorageData || (webStorageData && webStorageData.some((webStorageObj) => mergedData.some((obj) => obj.key === webStorageObj.key)))) {
           useFilmDatabaseWebStorage(userLocation, mergedData).setData();
           setTmdbDataArr(mergedData);
-        })
-        .catch((error) => console.error(error));
-    } else {
-      setTmdbDataArr(webStorageData);
-    }
+        } else {
+          setTmdbDataArr(webStorageData);
+        }
+      })
+      .catch((error) => console.error(error));
 
     // Abort any ongoing fetch operations when component unmounts
     return () => controller.abort();
