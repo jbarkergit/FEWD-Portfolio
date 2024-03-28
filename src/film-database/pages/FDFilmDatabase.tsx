@@ -15,7 +15,7 @@ import FDVideoPlayer from '../components/features/iframes/TDVideoPlayer';
 import FDMediaGrid from '../components/media/FDMediaGrid';
 import { useFilmDatabaseWebStorage } from '../hooks/web-storage-api/useFilmDatabaseWebStorage';
 
-const FDHomePage = () => {
+const FDFilmDatabase = () => {
   // Store cached data in state for component renders && pagination
   const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_Parent_StateObjArr>([]);
   // Session Storage Data
@@ -107,7 +107,7 @@ const FDHomePage = () => {
   /** Component */
   return (
     <div className='filmDatabase'>
-      <FDHeader />
+      {/* <FDHeader /> */}
       {tmdbDataArr.map((entry) => (
         <FDMediaGrid
           mapKey={entry.key}
@@ -118,9 +118,9 @@ const FDHomePage = () => {
         />
       ))}
       <FDVideoPlayer videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerTrailer={videoPlayerTrailer} />
-      <FDFooter />
+      {/* <FDFooter /> */}
     </div>
   );
 };
 
-export default FDHomePage;
+export default FDFilmDatabase;
