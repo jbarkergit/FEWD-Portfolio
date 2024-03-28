@@ -97,8 +97,10 @@ const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill)
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'}>
         <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
           {grid
-            ? mapValue.map((values: Type_Tmdb_ApiCallUnion_Obj) => <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} key={uuidv4()} />)
-            : paginatedData.map((values: Type_Tmdb_ApiCallUnion_Obj) => <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} key={uuidv4()} />)}
+            ? mapValue.map((values: Type_Tmdb_ApiCallUnion_Obj) => <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} grid={grid} key={uuidv4()} />)
+            : paginatedData.map((values: Type_Tmdb_ApiCallUnion_Obj) => (
+                <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} grid={grid} key={uuidv4()} />
+              ))}
         </ul>
         {grid ? null : <FDCarouselOverlay posterDimensions={posterDimensions} tmdbArrLength={mapValue.length - 1} setSetIndex={setSetIndex} />}
       </div>

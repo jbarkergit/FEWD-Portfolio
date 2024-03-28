@@ -11,11 +11,12 @@ import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
 type Type_PropDrill = {
   mapValue: Type_Tmdb_ApiCallUnion_Obj;
   useVideoPlayer: (propertyId: string) => Promise<void>;
+  grid: boolean;
 };
 
-const FDPosterProp = ({ mapValue, useVideoPlayer }: Type_PropDrill) => {
+const FDPosterProp = ({ mapValue, useVideoPlayer, grid }: Type_PropDrill) => {
   return (
-    <li className='FDMediaGrid__wrapper__ul__li' key={mapValue.id}>
+    <li className='FDMediaGrid__wrapper__ul__li' data-status={grid ? 'grid' : 'carousel'} key={mapValue.id}>
       <article className='FDMediaGrid__wrapper__ul__li__article'>
         <div className='FDMediaGrid__wrapper__ul__li__article__graphic' onClick={() => useVideoPlayer(`${mapValue.id}`)}>
           {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${mapValue.poster_path}.svg`, alt: mapValue.title as string })}
