@@ -23,34 +23,10 @@
  *      e.g. Type_Tmdb_Movie_Map_isUndefined
  */
 
-/** PARAMETER (PAYLOAD) TYPE */
-export type Type_Tmdb_Call_Params = {
-  controller?: AbortController;
-  movie_id?: string | undefined;
-  person_id?: string | undefined;
-  time_window?: string | undefined;
-  tmdbEndPointKeyValuePairValue?: string;
-  tmdbEndPointKeyValuePairArr?: { key: string; endPoint: string }[] | { key: string; endPoint: string };
-};
-
 /**
  * API CALL TYPES
  * Interface / types missing in TMDB API Docs, manual conversion required to build respective data structures
  */
-
-export type Type_Tmdb_Trailer_Obj = {
-  value: never[];
-  id: string;
-  iso_3166_1: string;
-  iso_639_1: string;
-  key: string;
-  name: string;
-  official: boolean;
-  published_at: string;
-  site: string;
-  size: number;
-  type: string;
-};
 
 export type Type_Tmdb_MovieList_Obj = {
   adult: boolean;
@@ -97,32 +73,45 @@ export type Type_Tmdb_Movies_Obj = {
   vote_count: number;
 };
 
-/** All Potential Api Call Result Types (Type_Tmdb_DataFetch_Obj.results Type Union) */
-export type Type_Tmdb_ApiCallUnion_Obj = Type_Tmdb_MovieList_Obj | Type_Tmdb_Movies_Obj;
-
-//** Standard Api Call Type used by useTmdbFetcher() */
-export type Type_Tmdb_DataFetch_Obj = {
-  dates: { maximum: string; minimum: string };
-  page: number;
-  results: Type_Tmdb_ApiCallUnion_Obj[];
-  total_pages: number;
-  total_results: number;
+export type Type_Tmdb_Trailer_Obj = {
+  value: never[];
+  id: string;
+  iso_3166_1: string;
+  iso_639_1: string;
+  key: string;
+  name: string;
+  official: boolean;
+  published_at: string;
+  site: string;
+  size: number;
+  type: string;
 };
 
-/** Fetcher Return Type */
-export type Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = Promise<Type_Tmdb_DataFetch_Obj | undefined>;
+/** All Potential Api Call Result Types (Type_Tmdb_DataFetch_Obj.results Type Union) */
+export type Type_Tmdb_ApiCallUnion_Obj = Type_Tmdb_MovieList_Obj | Type_Tmdb_Movies_Obj | Type_Tmdb_Trailer_Obj;
 
-/** Processor Defined Guard Conversion Type */
-export type Type_Tmdb_ProcessorDefined_ObjPromise = Promise<Type_Tmdb_DataFetch_Obj>;
+/** Fetcher Data Promise Return Type (No parameters required) */
+export type Type_Tmdb_Fetcher_Obj = {
+  results: Type_Tmdb_ApiCallUnion_Obj[];
+  dates?: { maximum: string; minimum: string };
+  page?: number;
+  total_pages?: number;
+  total_results?: number;
+};
 
-/** Processor Return Type (Promise.allSettled) */
-export type Type_Tmdb_ProcessorReturn_MapSettled_isUndefined = Promise<
-  | PromiseSettledResult<{
-      key: string;
-      value: Type_Tmdb_ProcessorDefined_ObjPromise;
-    }>[]
-  | undefined
->;
+export type Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = Promise<Type_Tmdb_Fetcher_Obj | undefined>;
 
-/** Parent State Storage Type */
-export type Type_Tmdb_Parent_StateObjArr = { key: string; value: Type_Tmdb_ApiCallUnion_Obj | Type_Tmdb_ApiCallUnion_Obj[] }[];
+/** PARAMETER (PAYLOAD) TYPE */
+export type Type_Tmdb_KeyValuePair_Obj = { key: string; label?: string; endPoint: string };
+
+export type Type_Tmdb_Invoke_Params = {
+  controller: AbortController;
+  movie_id?: string | undefined;
+  person_id?: string | undefined;
+  tmdbKeyValuePairUnion: Type_Tmdb_KeyValuePair_Obj[] | Type_Tmdb_KeyValuePair_Obj;
+};
+
+/** Processor Return Type */
+export type Type_Tmdb_Processor_StateObj = { key: string; label?: string | undefined; value: Type_Tmdb_ApiCallUnion_Obj[] };
+
+export type Type_Tmdb_ProcessorReturn_StateObj = Promise<Type_Tmdb_Processor_StateObj[]>;

@@ -1,58 +1,80 @@
+// Api Util
+import { tmdbFetcher } from '../util/tmdbFetcher';
 // Api Types
 import {
-  Type_Tmdb_DataFetch_Obj,
-  Type_Tmdb_ApiCallUnion_Obj,
-  Type_Tmdb_Parent_StateObjArr,
-  Type_Tmdb_Call_Params,
+  Type_Tmdb_Fetcher_Obj,
+  Type_Tmdb_Invoke_Params,
+  Type_Tmdb_KeyValuePair_Obj,
+  Type_Tmdb_MovieList_Obj,
+  Type_Tmdb_Movies_Obj,
+  Type_Tmdb_ProcessorReturn_StateObj,
+  Type_Tmdb_Processor_StateObj,
   Type_Tmdb_Trailer_Obj,
 } from '../types/TmdbDataTypes';
-// Api Util
-import { tmdbProcessor } from '../util/tmdbProcessor';
 
-export const useTmdbApi = async ({
-  controller,
-  tmdbEndPointKeyValuePairArr,
-  movie_id,
-  person_id,
-  time_window,
-}: Type_Tmdb_Call_Params): Promise<Type_Tmdb_Parent_StateObjArr | Type_Tmdb_Trailer_Obj[]> => {
-  // Initialize return storage
-  const dataStorage: Type_Tmdb_Parent_StateObjArr = [];
+/** Concurrent Fetch Operations: filtering && aborting operations
+ * Utilizing an AbortController to pass signals in order to abort individual fetch operations
+ * Promise.all < Promise.allSettled: Ensure that unresolved fetch returns doesn't abort all fetch operations
+ * Manually filter out unresolved promises
+ * Controller Param: Enables passing of signals to each operation allowing for aborts.
+ */
 
-  // Individualize api calls
-  const fetchAndProcessApiCall = tmdbProcessor({
-    controller: controller,
-    tmdbEndPointKeyValuePairArr: tmdbEndPointKeyValuePairArr,
-    movie_id: movie_id,
-    person_id: person_id,
-    time_window: time_window,
-  });
+export const useTmdbApi = async ({ controller, movie_id, person_id, tmdbKeyValuePairUnion }: Type_Tmdb_Invoke_Params): Type_Tmdb_ProcessorReturn_StateObj => {
+  // Array conversion: tmdbKeyValuePairUnion parameter (Outweighs any potential performance loss from type checks)
+  const tmdbKeyValuePairUnionConversion = (): Type_Tmdb_KeyValuePair_Obj[] => {
+    return Array.isArray(tmdbKeyValuePairUnion) ? tmdbKeyValuePairUnion : [tmdbKeyValuePairUnion];
+  };
 
-  // Type check, destructure, resolve and store data
-  await fetchAndProcessApiCall.then(async (data) => {
-    if (data) {
-      if (Array.isArray(data)) {
-        for (const list of data) {
-          if (list.status === 'fulfilled') {
-            const fulfilledList = list.value;
+  const entries = await Promise.allSettled(
+    // Fetch array of key-value pairs asynchronously
+    tmdbKeyValuePairUnionConversion().map(async (keyValuePair: Type_Tmdb_KeyValuePair_Obj) => {
+      const fetchDataPromise: Type_Tmdb_Fetcher_Obj | undefined = await tmdbFetcher({
+        controller: controller,
+        movie_id: movie_id,
+        person_id: person_id,
+        keyValuePairEndPoint: keyValuePair.endPoint,
+      });
 
-            if (fulfilledList) {
-              const value: Type_Tmdb_DataFetch_Obj | Type_Tmdb_ApiCallUnion_Obj = await fulfilledList.value;
+      const fetchedDataResults = fetchDataPromise?.results;
 
-              const key: string = fulfilledList.key;
-              const resultsArray = value.results as Type_Tmdb_ApiCallUnion_Obj[];
-              const resultObject = value as unknown as Type_Tmdb_ApiCallUnion_Obj;
+      if (!fetchDataPromise || !fetchedDataResults) {
+        throw new Error(`Unfulfilled fetch response for key: ${keyValuePair.key}`);
+      }
 
-              dataStorage.push({ key: key, value: 'results' in value ? resultsArray : resultObject });
-            }
-          }
-        }
+      let explicitlyTypedData;
+
+      // Type casting fetched data
+      switch (true) {
+        // Type_Tmdb_MovieList_Obj
+        case 'backdrop_path' in fetchedDataResults:
+          explicitlyTypedData = fetchedDataResults as Type_Tmdb_MovieList_Obj[];
+          break;
+
+        // Type_Tmdb_Movies_Obj
+        case 'budget' in fetchedDataResults:
+          explicitlyTypedData = fetchedDataResults as Type_Tmdb_Movies_Obj[];
+          break;
+
         // Type_Tmdb_Trailer_Obj
-      } else if ('published_at' in data) {
-        return data as Type_Tmdb_Trailer_Obj[];
-      } else console.error('Data type may be unresolved or undefined.');
-    }
-  });
+        default:
+          explicitlyTypedData = fetchedDataResults as Type_Tmdb_Trailer_Obj[];
+          break;
+      }
 
-  return dataStorage;
+      const key: string = keyValuePair.key;
+      const label: string | undefined = keyValuePair.label;
+
+      return { key: key, label: label, value: explicitlyTypedData };
+    })
+  );
+
+  // Filter out and error log rejections
+  const rejections = entries.filter((entry) => entry.status === 'rejected');
+  if (rejections.length > 0) throw new Error(`Rejections: ${rejections}`);
+
+  // Return filtered data (any potential undefined or rejected values from Promise.allSettled array)
+  // Unfortunately, TypeScript has an issue narrowing down types after filtering; therefore, type casting is required in the map method
+  return entries
+    .filter((entry: PromiseSettledResult<Type_Tmdb_Processor_StateObj>) => entry.status === 'fulfilled' && entry.value !== null)
+    .map((entry: PromiseSettledResult<Type_Tmdb_Processor_StateObj>) => (entry as PromiseFulfilledResult<Type_Tmdb_Processor_StateObj>).value);
 };

@@ -1,12 +1,19 @@
-import { Type_Tmdb_Call_Params, Type_Tmdb_FetcherReturn_ObjPromise_isUndefined } from '../types/TmdbDataTypes';
+import { Type_Tmdb_FetcherReturn_ObjPromise_isUndefined } from '../types/TmdbDataTypes';
+
+/** Fetcher PARAMETER (PAYLOAD) TYPE */
+export type Type_TmdbFetcher_Invoke_Params = {
+  controller: AbortController;
+  movie_id?: string | undefined;
+  person_id?: string | undefined;
+  keyValuePairEndPoint: string;
+};
 
 export const tmdbFetcher = async ({
   controller,
   movie_id,
   person_id,
-  time_window,
-  tmdbEndPointKeyValuePairValue,
-}: Type_Tmdb_Call_Params): Type_Tmdb_FetcherReturn_ObjPromise_isUndefined => {
+  keyValuePairEndPoint,
+}: Type_TmdbFetcher_Invoke_Params): Type_Tmdb_FetcherReturn_ObjPromise_isUndefined => {
   // Authorization options for TMDB API
   const options: RequestInit = {
     method: 'GET',
@@ -17,21 +24,18 @@ export const tmdbFetcher = async ({
     signal: controller?.signal,
   };
 
-  // Alter URL according to optional paramaters
+  // Alter URL according to optional parameters
   let url: string;
 
   switch (true) {
     case !!movie_id:
-      url = `${tmdbEndPointKeyValuePairValue?.replace('{movie_id}', movie_id)}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&append_to_response=videos`;
+      url = `${keyValuePairEndPoint?.replace('{movie_id}', movie_id)}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&append_to_response=videos`;
       break;
     case !!person_id:
-      url = `${tmdbEndPointKeyValuePairValue?.replace('{person_id}', person_id)}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
-      break;
-    case !!time_window:
-      url = `${tmdbEndPointKeyValuePairValue?.replace('{time_window}', time_window)}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
+      url = `${keyValuePairEndPoint?.replace('{person_id}', person_id)}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
       break;
     default:
-      url = `${tmdbEndPointKeyValuePairValue}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
+      url = `${keyValuePairEndPoint}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
   }
 
   try {
