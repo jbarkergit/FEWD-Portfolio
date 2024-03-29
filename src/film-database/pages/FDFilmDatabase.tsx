@@ -20,7 +20,7 @@ const FDHomePage = () => {
   const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_Processor_StateObj[]>([]);
   // Session Storage Data
   const userLocation = useLocation();
-  const webStorageData: Type_Tmdb_Processor_StateObj[] = useFilmDatabaseWebStorage(userLocation).getData();
+  const webStorageData: Type_Tmdb_Processor_StateObj[] | null = useFilmDatabaseWebStorage(userLocation).getData();
 
   /** Network Traffic Performance technique notes
    * API Memoization may not be the best technique here, given you'd still need to make an API call to ensure data is up to date.
@@ -43,11 +43,11 @@ const FDHomePage = () => {
         controller,
         tmdbKeyValuePairUnion: [
           tmdbEndPoints.movie_lists.nowPlaying,
-          tmdbEndPoints.movie_lists.popular,
-          tmdbEndPoints.movie_lists.topRated,
-          tmdbEndPoints.movie_lists.upcoming,
-          tmdbEndPoints.movie_trending.trendingDay,
-          tmdbEndPoints.movie_trending.trendingWeek,
+          // tmdbEndPoints.movie_lists.popular,
+          // tmdbEndPoints.movie_lists.topRated,
+          // tmdbEndPoints.movie_lists.upcoming,
+          // tmdbEndPoints.movie_trending.trendingDay,
+          // tmdbEndPoints.movie_trending.trendingWeek,
         ],
       });
 
