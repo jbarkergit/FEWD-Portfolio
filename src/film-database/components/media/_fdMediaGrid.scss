@@ -63,6 +63,7 @@
         &__article__graphic,
         &__article__graphic > * {
           width: inherit;
+          aspect-ratio: inherit;
         }
         &__article {
           display: flex;
