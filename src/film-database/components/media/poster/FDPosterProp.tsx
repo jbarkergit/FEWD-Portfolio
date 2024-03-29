@@ -6,7 +6,7 @@ import { BootstrapThreeDotsVertical } from '../../../assets/svg-icons/BootstrapT
 import useCreatePicture from '../../../hooks/component-creation/useCreatePicture';
 import { useFormatDate } from '../../../hooks/formatters/useFormatDate';
 // Types
-import { Type_Tmdb_ApiCallUnion_Obj } from '../../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCallUnion_Obj, Type_Tmdb_MovieList_Obj, Type_Tmdb_Movies_Obj, Type_Tmdb_Trailer_Obj } from '../../../api/types/TmdbDataTypes';
 
 type Type_PropDrill = {
   mapValue: Type_Tmdb_ApiCallUnion_Obj;
@@ -15,17 +15,18 @@ type Type_PropDrill = {
 };
 
 const FDPosterProp = ({ mapValue, useVideoPlayer, grid }: Type_PropDrill) => {
+  const value = mapValue as unknown as Type_Tmdb_MovieList_Obj;
   return (
-    <li className='FDMediaGrid__wrapper__ul__li' data-status={grid ? 'grid' : 'carousel'} key={mapValue.id}>
+    <li className='FDMediaGrid__wrapper__ul__li' data-status={grid ? 'grid' : 'carousel'} key={value.id}>
       <article className='FDMediaGrid__wrapper__ul__li__article'>
-        <div className='FDMediaGrid__wrapper__ul__li__article__graphic' onClick={() => useVideoPlayer(`${mapValue.id}`)}>
-          {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${mapValue.poster_path}.svg`, alt: mapValue.title as string })}
+        <div className='FDMediaGrid__wrapper__ul__li__article__graphic' onClick={() => useVideoPlayer(`${value.id}`)}>
+          {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${value.poster_path}.svg`, alt: value.title as string })}
 
           <div className='FDMediaGrid__wrapper__ul__li__article__graphic__overlay'>
             {/* <button
               className='FDMediaGrid__wrapper__ul__li__article__graphic__overlay--play'
               aria-label='Play Trailer'
-              onClick={() => useVideoPlayer(`${mapValue.id}`)}>
+              onClick={() => useVideoPlayer(`${value.id}`)}>
               {useCreatePicture({ svg: <MaterialPlayCircle />, alt: 'Play Trailer' })}
             </button> */}
             <button className='FDMediaGrid__wrapper__ul__li__article__graphic__overlay--moreInfo' aria-label='More Information'>
@@ -35,11 +36,11 @@ const FDPosterProp = ({ mapValue, useVideoPlayer, grid }: Type_PropDrill) => {
         </div>
 
         {/* <hgroup className='FDMediaGrid__wrapper__ul__li__article__hgroup'>
-          <Link to='' aria-label={mapValue.title}>
-            <h2 className='FDMediaGrid__wrapper__ul__li__article__hgroup--h2'>{mapValue.title}</h2>
+          <Link to='' aria-label={value.title}>
+            <h2 className='FDMediaGrid__wrapper__ul__li__article__hgroup--h2'>{value.title}</h2>
           </Link>
-          <Link to='' aria-label={mapValue.title}>
-            <h3 className='FDMediaGrid__wrapper__ul__li__article__hgroup--h3'>{useFormatDate(mapValue.release_date)}</h3>
+          <Link to='' aria-label={value.title}>
+            <h3 className='FDMediaGrid__wrapper__ul__li__article__hgroup--h3'>{useFormatDate(value.release_date)}</h3>
           </Link>
         </hgroup> */}
       </article>
