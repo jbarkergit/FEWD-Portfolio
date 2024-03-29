@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import { tmdbEndPoints } from '../../../api/data/tmdbEndPoints';
-import { useFormatApiKey } from '../../../hooks/formatters/useFormatApiKey';
 import FDSearchBar from '../../features/search-bar/FDSearchBar';
-import { useEffect } from 'react';
 
 const FDHeader = () => {
   return (
@@ -28,8 +26,8 @@ const FDHeader = () => {
             {Object.entries(tmdbEndPoints).map(([key, value]) => {
               return (
                 <li id='navigate-to-genre' key={key}>
-                  <Link to={`/film-database/${key}`} aria-label={useFormatApiKey(key)}>
-                    {useFormatApiKey(key)}
+                  <Link to={`/film-database/${key}`} aria-label={key}>
+                    {key}
                   </Link>
                 </li>
               );

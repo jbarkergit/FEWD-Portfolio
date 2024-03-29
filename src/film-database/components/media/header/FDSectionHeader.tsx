@@ -1,5 +1,3 @@
-import { useFormatApiKey } from '../../../hooks/formatters/useFormatApiKey';
-
 type Type_PropDrill = {
   mapKey: string;
 };
@@ -7,7 +5,7 @@ type Type_PropDrill = {
 const FDSectionHeader = ({ mapKey }: Type_PropDrill) => {
   return (
     <div className='FDMediaGrid__header'>
-      <h2 className='FDMediaGrid__header--h2'>{useFormatApiKey(mapKey)}</h2>
+      <h2 className='FDMediaGrid__header--h2'>{mapKey}</h2>
     </div>
   );
 };

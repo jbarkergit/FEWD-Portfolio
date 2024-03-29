@@ -92,7 +92,7 @@ const FDHomePage = () => {
       <FDHeader />
       {tmdbDataArr.map((entry) => (
         <FDMediaGrid
-          mapKey={entry.key}
+          mapKey={entry.label!}
           mapValue={entry.value as unknown as Type_Tmdb_ApiCallUnion_Obj[]}
           useVideoPlayer={useVideoPlayer}
           grid={false}
