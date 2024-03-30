@@ -73,12 +73,10 @@ const FDHomePage = () => {
   const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<Type_Tmdb_Trailer_Obj[]>([]);
 
   const useVideoPlayer = async (propertyId: string): Promise<void> => {
-    // const trailerObj = (await useTmdbApi({
-    //   tmdbKeyValuePairUnion: tmdbEndPoints.movie_search_keywords,
-    //   movie_id: `${propertyId}`,
-    // })) as Type_Tmdb_Trailer_Obj[];
-
-    let trailerObj;
+    const trailerObj = (await useTmdbApi({
+      tmdbKeyValuePairUnion: tmdbEndPoints.movie_trailer_videos,
+      movie_id: `${propertyId}`,
+    })) as Type_Tmdb_Trailer_Obj[];
 
     if (trailerObj) {
       setVideoPlayerTrailer(trailerObj);
