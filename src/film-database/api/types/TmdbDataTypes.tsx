@@ -105,7 +105,7 @@ export type Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = Promise<Type_Tmdb_F
 export type Type_Tmdb_KeyValuePair_Obj = { key: string; label?: string; endPoint: string };
 
 export type Type_Tmdb_Invoke_Params = {
-  controller: AbortController;
+  controller?: AbortController;
   movie_id?: string | undefined;
   person_id?: string | undefined;
   tmdbKeyValuePairUnion: Type_Tmdb_KeyValuePair_Obj[] | Type_Tmdb_KeyValuePair_Obj;
