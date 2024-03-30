@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
-import YouTube, { YouTubeEvent, YouTubeProps } from 'react-youtube';
+import { Dispatch, SetStateAction } from 'react';
+import YouTube, { YouTubeEvent } from 'react-youtube';
 import { Type_Tmdb_Trailer_Obj } from '../../../api/types/TmdbDataTypes';
 import { Options } from 'youtube-player/dist/types';
 
