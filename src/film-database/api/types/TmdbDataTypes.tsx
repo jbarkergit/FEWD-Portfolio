@@ -86,7 +86,7 @@ export type Type_Tmdb_ApiCall_Union = Type_Tmdb_MovieList_Obj | Type_Tmdb_Movies
 /** Payload without optional parameters */
 export type Type_Tmdb_KeyValuePair_Obj = { key: string; label?: string | undefined; endPoint: string };
 
-/** Payload Optional Parameters */
+/** Payload Optional Parameters: Necessary for Payload Destructuring || Type Guards */
 export type Type_Tmdb_MovieIdParam_isUndefined = string | undefined;
 export type Type_Tmdb_PersonIdParam_isUndefined = string | undefined;
 export type Type_Tmdb_DiscoverParam_Obj_isUndefined = { type: string; category: string } | undefined;
@@ -95,14 +95,15 @@ export type Type_Tmdb_OptParam_Union_isUndefined =
   | Type_Tmdb_PersonIdParam_isUndefined
   | Type_Tmdb_DiscoverParam_Obj_isUndefined;
 
+// Compact Payload Optional Parameters
 export type Type_Tmdb_MovieId_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; movie_id: Type_Tmdb_MovieIdParam_isUndefined };
 export type Type_Tmdb_PersonId_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; person_id: Type_Tmdb_PersonIdParam_isUndefined };
 export type Type_Tmdb_Discover_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; discover: Type_Tmdb_DiscoverParam_Obj_isUndefined };
-type Type_Tmdb_Parameter_Union_isUndefined = Type_Tmdb_MovieId_Obj_isUndefined | Type_Tmdb_PersonId_Obj_isUndefined | Type_Tmdb_Discover_Obj_isUndefined;
+export type Type_Tmdb_Parameter_Union_isUndefined = Type_Tmdb_MovieId_Obj_isUndefined | Type_Tmdb_PersonId_Obj_isUndefined | Type_Tmdb_Discover_Obj_isUndefined;
 
 /** Full Payload Union */
-type Type_Tmdb_Mixed_Union_isUndefined = Type_Tmdb_KeyValuePair_Obj | Type_Tmdb_Parameter_Union_isUndefined;
-type Type_Tmdb_Payload_Union_isUndefined = Type_Tmdb_Mixed_Union_isUndefined | Type_Tmdb_Mixed_Union_isUndefined[] | undefined;
+export type Type_Tmdb_Mixed_Union_isUndefined = Type_Tmdb_KeyValuePair_Obj | Type_Tmdb_Parameter_Union_isUndefined;
+export type Type_Tmdb_Payload_Union_isUndefined = Type_Tmdb_Mixed_Union_isUndefined | Type_Tmdb_Mixed_Union_isUndefined[] | undefined;
 
 export type Type_Tmdb_Payload_Union = {
   controller: AbortController;
