@@ -1,81 +1,84 @@
 export const useGenreId = (type: string, genre: string): number | undefined => {
-  switch (type) {
+  const lowercaseType = type.toLowerCase();
+  const lowercaseGenre = genre.toLowerCase();
+
+  switch (lowercaseType) {
     case 'movie':
-      switch (genre) {
-        case 'Action':
+      switch (lowercaseGenre) {
+        case 'action':
           return 28;
-        case 'Adventure':
+        case 'adventure':
           return 12;
-        case 'Animation':
+        case 'animation':
           return 16;
-        case 'Comedy':
+        case 'comedy':
           return 35;
-        case 'Crime':
+        case 'crime':
           return 80;
-        case 'Documentary':
+        case 'documentary':
           return 99;
-        case 'Drama':
+        case 'drama':
           return 18;
-        case 'Family':
+        case 'family':
           return 10751;
-        case 'Fantasy':
+        case 'fantasy':
           return 14;
-        case 'History':
+        case 'history':
           return 36;
-        case 'Horror':
+        case 'horror':
           return 27;
-        case 'Music':
+        case 'music':
           return 10402;
-        case 'Mystery':
+        case 'mystery':
           return 9648;
-        case 'Romance':
+        case 'romance':
           return 10749;
-        case 'Science Fiction':
+        case 'science fiction':
           return 878;
-        case 'TV Movie':
+        case 'tv movie':
           return 10770;
-        case 'Thriller':
+        case 'thriller':
           return 53;
-        case 'War':
+        case 'war':
           return 10752;
-        case 'Western':
+        case 'western':
           return 37;
         default:
           return undefined;
       }
     case 'tv':
-      switch (genre) {
-        case 'Action & Adventure':
+      switch (lowercaseGenre) {
+        case 'action & adventure':
           return 10759;
-        case 'Animation':
+        case 'animation':
           return 16;
-        case 'Comedy':
+        case 'comedy':
           return 35;
-        case 'Crime':
+        case 'crime':
           return 80;
-        case 'Documentary':
+        case 'documentary':
           return 99;
-        case 'Drama':
+        case 'drama':
           return 18;
-        case 'Family':
+        case 'family':
           return 10751;
-        case 'Kids':
+        case 'kids':
           return 10762;
-        case 'Mystery':
+        case 'mystery':
           return 9648;
-        case 'News':
+        case 'news':
           return 10763;
-        case 'Reality':
+        case 'reality':
           return 10764;
-        case 'Sci-Fi & Fantasy':
+        case 'sci-fi & fantasy':
           return 10765;
-        case 'Soap':
+        case 'soap':
           return 10766;
-        case 'Talk':
+        case 'talk':
           return 10767;
-        case 'War & Politics':
+        case 'war & politics':
           return 10768;
-        case 'Western':
+        case 'western':
           return 37;
         default:
           return undefined;
