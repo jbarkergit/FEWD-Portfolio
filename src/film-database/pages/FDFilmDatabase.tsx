@@ -5,7 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 // Api Data
 import { tmdbEndPoints } from '../api/data/tmdbEndPoints';
 // Api Types
-import { Type_Tmdb_ApiCallUnion_Obj, Type_Tmdb_Processor_StateObj, Type_Tmdb_Trailer_Obj } from '../api/types/TmdbDataTypes';
+import {
+  Type_Tmdb_Discover_Obj_isUndefined,
+  Type_Tmdb_Trailer_Obj,
+  Type_Tmdb_useApiReturn_Obj,
+  Type_Tmdb_useApiReturn_Obj_isUndefined,
+} from '../api/types/TmdbDataTypes';
 // Api Hooks
 import { useTmdbApi } from '../api/hooks/useTmdbApi';
 // Components
@@ -17,10 +22,10 @@ import { useFilmDatabaseWebStorage } from '../hooks/web-storage-api/useFilmDatab
 
 const FDHomePage = () => {
   // Store cached data in state for component renders && pagination
-  const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_Processor_StateObj[]>([]);
+  const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
   // Session Storage Data
   const userLocation = useLocation();
-  const webStorageData: Type_Tmdb_Processor_StateObj[] | null = useFilmDatabaseWebStorage(userLocation).getData();
+  const webStorageData: Type_Tmdb_useApiReturn_Obj[] | null = useFilmDatabaseWebStorage(userLocation).getData();
 
   /** Network Traffic Performance technique notes
    * API Memoization may not be the best technique here, given you'd still need to make an API call to ensure data is up to date.
@@ -36,24 +41,25 @@ const FDHomePage = () => {
    */
 
   useEffect(() => {
-    const controller = new AbortController();
+    const controller: AbortController = new AbortController();
 
     (async () => {
-      const dataArr = await useTmdbApi({
-        controller,
+      const dataArr: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
+        controller: controller,
         tmdbKeyValuePairUnion: [
-          tmdbEndPoints.movie_lists.nowPlaying,
+          // tmdbEndPoints.movie_lists.nowPlaying,
           // tmdbEndPoints.movie_lists.popular,
           // tmdbEndPoints.movie_lists.topRated,
           // tmdbEndPoints.movie_lists.upcoming,
           // tmdbEndPoints.movie_trending.trendingDay,
           // tmdbEndPoints.movie_trending.trendingWeek,
+          // { tmdbEndPointObj: tmdbEndPoints.movie_discover, discover: { type: 'movie', category: 'Horror' } },
         ],
       });
 
-      if (!webStorageData || webStorageData.some((webStorageObj) => dataArr?.some((dataArrObj) => dataArrObj.key === webStorageObj.key))) {
-        useFilmDatabaseWebStorage(userLocation, dataArr).setData();
+      if (!webStorageData || (dataArr && webStorageData.some((webStorageObj) => dataArr.some((dataArrObj) => dataArrObj?.key === webStorageObj?.key)))) {
         setTmdbDataArr(dataArr);
+        useFilmDatabaseWebStorage(userLocation, dataArr).setData();
       } else {
         setTmdbDataArr(webStorageData);
       }
@@ -73,9 +79,11 @@ const FDHomePage = () => {
   const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<Type_Tmdb_Trailer_Obj[]>([]);
 
   const useVideoPlayer = async (propertyId: string): Promise<void> => {
+    const controller: AbortController = new AbortController();
+
     const trailerObj = (await useTmdbApi({
-      tmdbKeyValuePairUnion: tmdbEndPoints.movie_trailer_videos,
-      movie_id: `${propertyId}`,
+      controller: controller,
+      tmdbKeyValuePairUnion: { tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos, movie_id: `${propertyId}` },
     })) as Type_Tmdb_Trailer_Obj[];
 
     if (trailerObj) {
@@ -89,13 +97,7 @@ const FDHomePage = () => {
     <div className='filmDatabase'>
       <FDHeader />
       {tmdbDataArr.map((entry) => (
-        <FDMediaGrid
-          mapKey={entry.label!}
-          mapValue={entry.value as unknown as Type_Tmdb_ApiCallUnion_Obj[]}
-          useVideoPlayer={useVideoPlayer}
-          grid={false}
-          key={uuidv4()}
-        />
+        <FDMediaGrid dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} useVideoPlayer={useVideoPlayer} grid={false} key={uuidv4()} />
       ))}
       <FDVideoPlayer videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerTrailer={videoPlayerTrailer} />
       <FDFooter />

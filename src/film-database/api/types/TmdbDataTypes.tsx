@@ -80,29 +80,33 @@ export type Type_Tmdb_Trailer_Obj = {
   type: string;
 };
 
-// Data return types union
+/** Api Call Types */
 export type Type_Tmdb_ApiCall_Union = Type_Tmdb_MovieList_Obj | Type_Tmdb_Movies_Obj | Type_Tmdb_Trailer_Obj;
 
-/** API utility payload types */
-// End-point parameters
-export type Type_Tmdb_KeyValuePair_Obj = { key: string; label?: string; endPoint: string };
-type Type_Tmdb_KeyValuePair_Union = Type_Tmdb_KeyValuePair_Obj | Type_Tmdb_KeyValuePair_Obj[];
+/** Payload without optional parameters */
+export type Type_Tmdb_KeyValuePair_Obj = { key: string; label?: string | undefined; endPoint: string };
+export type Type_Tmdb_KeyValuePair_Union = Type_Tmdb_KeyValuePair_Obj | Type_Tmdb_KeyValuePair_Obj[];
 
-// Optional parameters
-type Type_Tmdb_MovieIdParam_isUndefined = string | undefined;
-type Type_Tmdb_PersonIdParam_isUndefined = string | undefined;
-type Type_Tmdb_DiscoverParam_Obj_isUndefined = { type: string; category: string } | undefined;
+/** Payload Optional Parameters */
+export type Type_Tmdb_MovieIdParam_isUndefined = string | undefined;
+export type Type_Tmdb_PersonIdParam_isUndefined = string | undefined;
+export type Type_Tmdb_DiscoverParam_Obj_isUndefined = { type: string; category: string } | undefined;
+export type Type_Tmdb_Param_Union_isUndefined = Type_Tmdb_MovieIdParam_isUndefined | Type_Tmdb_PersonIdParam_isUndefined | Type_Tmdb_DiscoverParam_Obj_isUndefined;
 
-// Optional parameters union
-type Type_Tmdb_OptionalParam_Union_isUndefined =
-  | { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Union; movie_id: Type_Tmdb_MovieIdParam_isUndefined }
-  | { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Union; person_id: Type_Tmdb_PersonIdParam_isUndefined }
-  | { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Union; discover: Type_Tmdb_DiscoverParam_Obj_isUndefined };
+export type Type_Tmdb_MovieId_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; movie_id: Type_Tmdb_MovieIdParam_isUndefined };
+export type Type_Tmdb_PersonId_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; person_id: Type_Tmdb_PersonIdParam_isUndefined };
+export type Type_Tmdb_Discover_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; discover: Type_Tmdb_DiscoverParam_Obj_isUndefined };
 
-// Payload union with required && optional parameters
+export type Type_Tmdb_OptionalParam_Union_isUndefined =
+  | Type_Tmdb_MovieId_Obj_isUndefined
+  | Type_Tmdb_PersonId_Obj_isUndefined
+  | Type_Tmdb_Discover_Obj_isUndefined
+  | Type_Tmdb_KeyValuePair_Union;
+
+// Payload union with and without optional parameters
 export type Type_Tmdb_Payload_Union = {
   controller: AbortController;
-  tmdbKeyValuePairUnion: Type_Tmdb_KeyValuePair_Union | Type_Tmdb_OptionalParam_Union_isUndefined;
+  tmdbKeyValuePairUnion: Type_Tmdb_OptionalParam_Union_isUndefined;
 };
 
 /** UTIL Module tmdbFetcher Return Types */
@@ -118,7 +122,9 @@ export type Type_Tmdb_Fetcher_Obj = {
 // Promise
 export type Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = Promise<Type_Tmdb_Fetcher_Obj | undefined>;
 
-/** UTIL/HOOK Module useTmdbApi Return Type */
-export type Type_Tmdb_useApiReturn_Obj = { key: string; label?: string | undefined; value: Type_Tmdb_ApiCall_Union[] };
+/** UTIL/HOOK Module useTmdbApi */
+// Return
+export type Type_Tmdb_useApiReturn_Obj_isUndefined = { key: string; label?: string | undefined; value: Type_Tmdb_ApiCall_Union[] } | undefined;
 
-export type Type_Tmdb_useApiReturn_ObjArrPromise = Promise<Type_Tmdb_useApiReturn_Obj[]>;
+// Storage type
+export type Type_Tmdb_useApiReturn_Obj = Exclude<Type_Tmdb_useApiReturn_Obj_isUndefined, undefined>;

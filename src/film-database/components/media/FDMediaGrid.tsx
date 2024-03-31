@@ -1,35 +1,34 @@
-// React
 import { useEffect, useRef, useState } from 'react';
 // Lib
 import { v4 as uuidv4 } from 'uuid';
 // Types
-import { Type_Tmdb_ApiCallUnion_Obj } from '../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCall_Union } from '../../api/types/TmdbDataTypes';
 // Components
 import FDCarouselOverlay from './carousel-overlay/FDCarouselOverlay';
-import FDSectionHeader from './header/FDSectionHeader';
 import FDPosterProp from './poster/FDPosterProp';
 
 type Type_PropDrill = {
-  mapKey: string;
-  mapValue: Type_Tmdb_ApiCallUnion_Obj[];
+  dataKey: string;
+  dataLabel?: string | undefined;
+  dataValue: Type_Tmdb_ApiCall_Union[];
   useVideoPlayer: (propertyId: string) => Promise<void>;
   grid: boolean;
 };
 
-const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill) => {
+const FDMediaGrid = ({ dataKey, dataLabel, dataValue, useVideoPlayer, grid }: Type_PropDrill) => {
   const [setIndex, setSetIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
 
   /** Data Pagination && Carousel Navigation */
-  const [paginatedData, setPaginatedData] = useState<Type_Tmdb_ApiCallUnion_Obj[]>([]);
+  const [paginatedData, setPaginatedData] = useState<Type_Tmdb_ApiCall_Union[]>([]);
   const carouselUl = useRef<HTMLUListElement>(null);
 
   /** Data Pagination: Pushes data into state when setIndex changes (the user navigates) */
   useEffect(() => {
-    if (mapValue && !grid) {
-      setPaginatedData((prevData: Type_Tmdb_ApiCallUnion_Obj[]) => {
+    if (!grid) {
+      setPaginatedData((prevData: Type_Tmdb_ApiCall_Union[]) => {
         const startIndex: number = prevData.length === 0 ? 0 : prevData.length + 1;
         const endIndex: number = 8 * setIndex.currIndex;
-        return [...prevData, ...mapValue.slice(startIndex, endIndex)] as Type_Tmdb_ApiCallUnion_Obj[];
+        return [...prevData, ...dataValue.slice(startIndex, endIndex)] as Type_Tmdb_ApiCall_Union[];
       });
     }
   }, [setIndex]);
@@ -49,7 +48,7 @@ const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill)
   useEffect(() => {
     if (carouselUl.current) {
       const firstPossibleIndex: boolean = setIndex.currIndex === 1;
-      const lastPossibleIndex: boolean = setIndex.currIndex === Math.round(mapValue.length / 7) + 1;
+      const lastPossibleIndex: boolean = setIndex.currIndex === Math.round(dataValue.length / 7) + 1;
       const nextChildsIndex: number = firstPossibleIndex || lastPossibleIndex ? 0 : (setIndex.currIndex - 1) * 7;
 
       const carouselChildren: HTMLCollection = carouselUl.current.children;
@@ -93,16 +92,16 @@ const FDMediaGrid = ({ mapKey, mapValue, useVideoPlayer, grid }: Type_PropDrill)
   /** Component */
   return (
     <section className='FDMediaGrid'>
-      <FDSectionHeader mapKey={mapKey} />
+      <div className='FDMediaGrid__header'>
+        <h2 className='FDMediaGrid__header--h2'>{dataLabel ? dataLabel : dataKey}</h2>
+      </div>
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'}>
         <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
           {grid
-            ? mapValue.map((values: Type_Tmdb_ApiCallUnion_Obj) => <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} grid={grid} key={uuidv4()} />)
-            : paginatedData.map((values: Type_Tmdb_ApiCallUnion_Obj) => (
-                <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} grid={grid} key={uuidv4()} />
-              ))}
+            ? dataValue.map((values) => <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} grid={grid} key={uuidv4()} />)
+            : paginatedData.map((values) => <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} grid={grid} key={uuidv4()} />)}
         </ul>
-        {grid ? null : <FDCarouselOverlay posterDimensions={posterDimensions} tmdbArrLength={mapValue.length - 1} setSetIndex={setSetIndex} />}
+        {grid ? null : <FDCarouselOverlay posterDimensions={posterDimensions} tmdbArrLength={dataValue.length - 1} setSetIndex={setSetIndex} />}
       </div>
     </section>
   );

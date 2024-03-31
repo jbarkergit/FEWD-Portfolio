@@ -6,10 +6,10 @@ import { BootstrapThreeDotsVertical } from '../../../assets/svg-icons/BootstrapT
 import useCreatePicture from '../../../hooks/component-creation/useCreatePicture';
 import { useFormatDate } from '../../../hooks/formatters/useFormatDate';
 // Types
-import { Type_Tmdb_ApiCallUnion_Obj, Type_Tmdb_MovieList_Obj, Type_Tmdb_Movies_Obj, Type_Tmdb_Trailer_Obj } from '../../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCall_Union, Type_Tmdb_MovieList_Obj } from '../../../api/types/TmdbDataTypes';
 
 type Type_PropDrill = {
-  mapValue: Type_Tmdb_ApiCallUnion_Obj;
+  mapValue: Type_Tmdb_ApiCall_Union;
   useVideoPlayer: (propertyId: string) => Promise<void>;
   grid: boolean;
 };

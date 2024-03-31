@@ -1,6 +1,6 @@
 export const useGenreId = (type: string, genre: string): number | undefined => {
   switch (type) {
-    case 'film':
+    case 'movie':
       switch (genre) {
         case 'Action':
           return 28;

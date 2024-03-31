@@ -1,41 +1,52 @@
-import { Type_Tmdb_FetcherReturn_ObjPromise_isUndefined } from '../types/TmdbDataTypes';
+import { useGenreId } from '../hooks/useGenreId';
+import { Type_Tmdb_FetcherReturn_ObjPromise_isUndefined, Type_Tmdb_Param_Union_isUndefined } from '../types/TmdbDataTypes';
 
-/** Fetcher PARAMETER (PAYLOAD) TYPE */
-export type Type_TmdbFetcher_Invoke_Params = {
+/** PARAMETER (PAYLOAD) TYPE */
+type Type_TmdbFetcher_Invoke_Params = {
   controller: AbortController;
-  movie_id?: string | undefined;
-  person_id?: string | undefined;
   keyValuePairEndPoint: string;
+  parameter?: Type_Tmdb_Param_Union_isUndefined;
 };
 
 export const tmdbFetcher = async ({
   controller,
-  movie_id,
-  person_id,
   keyValuePairEndPoint,
+  parameter,
 }: Type_TmdbFetcher_Invoke_Params): Type_Tmdb_FetcherReturn_ObjPromise_isUndefined => {
   // Authorization options for TMDB API
   const options: RequestInit = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `${import.meta.env.VITE_TMDB_AUTH_KEY}`,
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_AUTH_KEY}`,
     },
-    signal: controller?.signal,
+    // signal: controller.signal,
   };
 
   // Alter URL according to optional parameters
+  const apiKey = import.meta.env.VITE_TMDB_API_KEY;
   let url: string;
 
   switch (true) {
-    case !!movie_id:
-      url = `${keyValuePairEndPoint?.replace('{movie_id}', movie_id)}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&append_to_response=videos`;
-      break;
-    case !!person_id:
-      url = `${keyValuePairEndPoint?.replace('{person_id}', person_id)}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
-      break;
+    case !!parameter:
+      switch (true) {
+        case parameter === 'movie_id':
+          url = `${keyValuePairEndPoint.replace('{movie_id}', parameter)}?api_key=${apiKey}&append_to_response=videos`;
+          break;
+        case parameter === 'person_id':
+          url = `${keyValuePairEndPoint.replace('{person_id}', parameter)}?api_key=${apiKey}`;
+          break;
+        case parameter instanceof Object && parameter.type === 'movie':
+          url = `${keyValuePairEndPoint}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${useGenreId(parameter.type, parameter.category)}`;
+          break;
+        default:
+          console.error(`Parameter is ${parameter}`);
+          break;
+      }
+
     default:
-      url = `${keyValuePairEndPoint}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
+      url = `${keyValuePairEndPoint}?api_key=${apiKey}`;
+      break;
   }
 
   try {
@@ -47,7 +58,9 @@ export const tmdbFetcher = async ({
     if (!response.ok) {
       controller?.abort();
       throw new Error(`${response.status}`);
-    } else return rawData;
+    } else {
+      return rawData;
+    }
 
     // Catch errors
   } catch (error) {
