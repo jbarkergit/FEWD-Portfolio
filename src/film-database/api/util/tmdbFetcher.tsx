@@ -1,11 +1,11 @@
 import { useGenreId } from '../hooks/useGenreId';
-import { Type_Tmdb_FetcherReturn_ObjPromise_isUndefined, Type_Tmdb_Param_Union_isUndefined } from '../types/TmdbDataTypes';
+import { Type_Tmdb_FetcherReturn_ObjPromise_isUndefined, Type_Tmdb_OptParam_Union_isUndefined } from '../types/TmdbDataTypes';
 
 /** PARAMETER (PAYLOAD) TYPE */
 type Type_TmdbFetcher_Invoke_Params = {
   controller: AbortController;
-  keyValuePairEndPoint: string;
-  parameter?: Type_Tmdb_Param_Union_isUndefined;
+  keyValuePairEndPoint: string | undefined;
+  parameter?: Type_Tmdb_OptParam_Union_isUndefined;
 };
 
 export const tmdbFetcher = async ({
@@ -31,12 +31,15 @@ export const tmdbFetcher = async ({
     case !!parameter:
       switch (true) {
         case parameter === 'movie_id':
-          url = `${keyValuePairEndPoint.replace('{movie_id}', parameter)}?api_key=${apiKey}&append_to_response=videos`;
+          console.log('movie_id');
+          url = `${keyValuePairEndPoint?.replace('{movie_id}', parameter)}?api_key=${apiKey}&append_to_response=videos`;
           break;
         case parameter === 'person_id':
-          url = `${keyValuePairEndPoint.replace('{person_id}', parameter)}?api_key=${apiKey}`;
+          console.log('person_id');
+          url = `${keyValuePairEndPoint?.replace('{person_id}', parameter)}?api_key=${apiKey}`;
           break;
         case parameter instanceof Object && parameter.type === 'movie':
+          console.log('movie');
           url = `${keyValuePairEndPoint}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${useGenreId(parameter.type, parameter.category)}`;
           break;
         default:
@@ -46,6 +49,7 @@ export const tmdbFetcher = async ({
 
     default:
       url = `${keyValuePairEndPoint}?api_key=${apiKey}`;
+      console.log('default');
       break;
   }
 
