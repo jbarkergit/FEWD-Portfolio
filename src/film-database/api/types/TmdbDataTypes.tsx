@@ -85,28 +85,28 @@ export type Type_Tmdb_ApiCall_Union = Type_Tmdb_MovieList_Obj | Type_Tmdb_Movies
 
 /** Payload without optional parameters */
 export type Type_Tmdb_KeyValuePair_Obj = { key: string; label?: string | undefined; endPoint: string };
-export type Type_Tmdb_KeyValuePair_Union = Type_Tmdb_KeyValuePair_Obj | Type_Tmdb_KeyValuePair_Obj[];
 
 /** Payload Optional Parameters */
 export type Type_Tmdb_MovieIdParam_isUndefined = string | undefined;
 export type Type_Tmdb_PersonIdParam_isUndefined = string | undefined;
 export type Type_Tmdb_DiscoverParam_Obj_isUndefined = { type: string; category: string } | undefined;
-export type Type_Tmdb_Param_Union_isUndefined = Type_Tmdb_MovieIdParam_isUndefined | Type_Tmdb_PersonIdParam_isUndefined | Type_Tmdb_DiscoverParam_Obj_isUndefined;
+export type Type_Tmdb_OptParam_Union_isUndefined =
+  | Type_Tmdb_MovieIdParam_isUndefined
+  | Type_Tmdb_PersonIdParam_isUndefined
+  | Type_Tmdb_DiscoverParam_Obj_isUndefined;
 
 export type Type_Tmdb_MovieId_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; movie_id: Type_Tmdb_MovieIdParam_isUndefined };
 export type Type_Tmdb_PersonId_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; person_id: Type_Tmdb_PersonIdParam_isUndefined };
 export type Type_Tmdb_Discover_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; discover: Type_Tmdb_DiscoverParam_Obj_isUndefined };
+type Type_Tmdb_Parameter_Union_isUndefined = Type_Tmdb_MovieId_Obj_isUndefined | Type_Tmdb_PersonId_Obj_isUndefined | Type_Tmdb_Discover_Obj_isUndefined;
 
-export type Type_Tmdb_OptionalParam_Union_isUndefined =
-  | Type_Tmdb_MovieId_Obj_isUndefined
-  | Type_Tmdb_PersonId_Obj_isUndefined
-  | Type_Tmdb_Discover_Obj_isUndefined
-  | Type_Tmdb_KeyValuePair_Union;
+/** Full Payload Union */
+type Type_Tmdb_Mixed_Union_isUndefined = Type_Tmdb_KeyValuePair_Obj | Type_Tmdb_Parameter_Union_isUndefined;
+type Type_Tmdb_Payload_Union_isUndefined = Type_Tmdb_Mixed_Union_isUndefined[] | undefined;
 
-// Payload union with and without optional parameters
 export type Type_Tmdb_Payload_Union = {
   controller: AbortController;
-  tmdbKeyValuePairUnion: Type_Tmdb_OptionalParam_Union_isUndefined;
+  tmdbKeyValuePairUnion: Type_Tmdb_Payload_Union_isUndefined;
 };
 
 /** UTIL Module tmdbFetcher Return Types */
