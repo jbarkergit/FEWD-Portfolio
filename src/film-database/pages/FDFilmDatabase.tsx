@@ -53,7 +53,7 @@ const FDHomePage = () => {
           // tmdbEndPoints.movie_lists.upcoming,
           // tmdbEndPoints.movie_trending.trendingDay,
           // tmdbEndPoints.movie_trending.trendingWeek,
-          // { tmdbEndPointObj: tmdbEndPoints.movie_discover, discover: { type: 'movie', category: 'Horror' } },
+          { tmdbEndPointObj: tmdbEndPoints.movie_discover, discover: { type: 'movie', category: 'horror' } },
         ],
       });
 
