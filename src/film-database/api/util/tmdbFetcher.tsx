@@ -31,15 +31,12 @@ export const tmdbFetcher = async ({
     case !!parameter:
       switch (true) {
         case parameter === 'movie_id':
-          console.log('movie_id');
           url = `${keyValuePairEndPoint?.replace('{movie_id}', parameter)}?api_key=${apiKey}&append_to_response=videos`;
           break;
         case parameter === 'person_id':
-          console.log('person_id');
           url = `${keyValuePairEndPoint?.replace('{person_id}', parameter)}?api_key=${apiKey}`;
           break;
         case parameter instanceof Object && parameter.type === 'movie':
-          console.log('movie');
           url = `${keyValuePairEndPoint}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${useGenreId(parameter.type, parameter.category)}`;
           break;
         default:
@@ -49,7 +46,6 @@ export const tmdbFetcher = async ({
 
     default:
       url = `${keyValuePairEndPoint}?api_key=${apiKey}`;
-      console.log('default');
       break;
   }
 
