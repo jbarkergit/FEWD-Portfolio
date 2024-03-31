@@ -102,7 +102,7 @@ type Type_Tmdb_Parameter_Union_isUndefined = Type_Tmdb_MovieId_Obj_isUndefined |
 
 /** Full Payload Union */
 type Type_Tmdb_Mixed_Union_isUndefined = Type_Tmdb_KeyValuePair_Obj | Type_Tmdb_Parameter_Union_isUndefined;
-type Type_Tmdb_Payload_Union_isUndefined = Type_Tmdb_Mixed_Union_isUndefined[] | undefined;
+type Type_Tmdb_Payload_Union_isUndefined = Type_Tmdb_Mixed_Union_isUndefined | Type_Tmdb_Mixed_Union_isUndefined[] | undefined;
 
 export type Type_Tmdb_Payload_Union = {
   controller: AbortController;
