@@ -88,14 +88,14 @@ const tvGenres: Record<Type_TmdbDiscoverTv_Genre_Union, number> = {
 };
 
 /** Hook */
-export const useDiscoverGenre = ({ type, genre }: Interface_Discover): { type: string; id: number } | undefined => {
+export const useDiscoverGenre = ({ type, genre }: Interface_Discover): { type: string; genreNum: number } | undefined => {
   const payload: { type: string; genre: string } = { type: type.toLowerCase(), genre: genre.toLowerCase() };
 
   switch (payload.type) {
     case 'movie':
-      return { type: payload.type, id: movieGenres[payload.genre as Type_TmdbDiscoverMovie_Genre_Union] };
+      return { type: payload.type, genreNum: movieGenres[payload.genre as Type_TmdbDiscoverMovie_Genre_Union] };
     case 'tv':
-      return { type: payload.type, id: tvGenres[payload.genre as Type_TmdbDiscoverTv_Genre_Union] };
+      return { type: payload.type, genreNum: tvGenres[payload.genre as Type_TmdbDiscoverTv_Genre_Union] };
     default:
       return undefined;
   }
