@@ -15,6 +15,7 @@
  *      e.g. Type_Tmdb_Movie_Union_#5?
  *
  * #5. OPTIONAL: Determine if desired output is potentially UNKNOWN | UNDEFINED | NULL, else OMIT
+ * Note: Apply to types which may be undefined: VOID union types without an undefined return
  * Note: "is" preface, in lowercase, mandatory
  *  Could be Unknown -> isUnknown
  *  Could be Undefined -> isUndefined
@@ -22,8 +23,10 @@
  *      e.g. Type_Tmdb_Movie_Map_isUndefined
  */
 
-/** API CALL TYPES: Interface / types missing in TMDB API Docs, manual conversion required to build respective data structures */
-export type Type_Tmdb_MovieList_Obj = {
+/** Fetcher Utility Api Call Types
+ * TMDB Api Documentation does not provide call types; therefore, manual conversion is required to build respective data structures
+ */
+export type Type_Tmdb_ApiCallMovieList_Obj = {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -39,7 +42,8 @@ export type Type_Tmdb_MovieList_Obj = {
   vote_average: number;
   vote_count: number;
 };
-export type Type_Tmdb_Movies_Obj = {
+
+export type Type_Tmdb_ApiCallMovie_Obj = {
   adult: boolean;
   backdrop_path: string | null;
   belongs_to_collection: any;
@@ -66,7 +70,8 @@ export type Type_Tmdb_Movies_Obj = {
   vote_average: number;
   vote_count: number;
 };
-export type Type_Tmdb_Trailer_Obj = {
+
+export type Type_Tmdb_ApiCallTrailer_Obj = {
   value: never[];
   id: string;
   iso_3166_1: string;
@@ -80,39 +85,59 @@ export type Type_Tmdb_Trailer_Obj = {
   type: string;
 };
 
-/** Api Call Types */
-export type Type_Tmdb_ApiCall_Union = Type_Tmdb_MovieList_Obj | Type_Tmdb_Movies_Obj | Type_Tmdb_Trailer_Obj;
+export type Type_Tmdb_ApiCall_Union = Type_Tmdb_ApiCallMovieList_Obj | Type_Tmdb_ApiCallMovie_Obj | Type_Tmdb_ApiCallTrailer_Obj;
 
-/** Payload without optional parameters */
+/** useTmdbApi && Fetcher Utility Key-value Pair Payload (For when parameters aren't required) */
 export type Type_Tmdb_KeyValuePair_Obj = { key: string; label?: string | undefined; endPoint: string };
 
-/** Payload Optional Parameters: Necessary for Payload Destructuring || Type Guards */
-export type Type_Tmdb_MovieIdParam_isUndefined = string | undefined;
-export type Type_Tmdb_PersonIdParam_isUndefined = string | undefined;
-export type Type_Tmdb_DiscoverParam_Obj_isUndefined = { type: string; genreNum: number } | undefined;
-export type Type_Tmdb_OptParam_Union_isUndefined =
+/** BAREBONE Payload Optional Parameters: Necessary for Payload Destructuring or Type Guard */
+export type Type_Tmdb_MovieIdParam_isUndefined = { typeGuardKey: string | undefined; propValue: string };
+export type Type_Tmdb_PersonIdParam_isUndefined = { typeGuardKey: string | undefined; propValue: string };
+export type Type_Tmdb_DiscoverParam_Obj_isUndefined = { typeGuardKey: string; propValue: number } | undefined; // undefined
+export type Type_Tmdb_TrailerParam_Obj = { typeGuardKey: string; propValue: string };
+
+export type Type_Tmdb_BareOptParam_Union =
   | Type_Tmdb_MovieIdParam_isUndefined
   | Type_Tmdb_PersonIdParam_isUndefined
-  | Type_Tmdb_DiscoverParam_Obj_isUndefined;
+  | Type_Tmdb_DiscoverParam_Obj_isUndefined
+  | Type_Tmdb_TrailerParam_Obj;
 
-// Compact Payload Optional Parameters
-export type Type_Tmdb_MovieId_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; movie_id: Type_Tmdb_MovieIdParam_isUndefined };
-export type Type_Tmdb_PersonId_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; person_id: Type_Tmdb_PersonIdParam_isUndefined };
-export type Type_Tmdb_Discover_Obj_isUndefined = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; discover: Type_Tmdb_DiscoverParam_Obj_isUndefined };
-export type Type_Tmdb_Parameter_Union_isUndefined = Type_Tmdb_MovieId_Obj_isUndefined | Type_Tmdb_PersonId_Obj_isUndefined | Type_Tmdb_Discover_Obj_isUndefined;
-
-/** Full Payload Union */
-export type Type_Tmdb_Mixed_Union_isUndefined = Type_Tmdb_KeyValuePair_Obj | Type_Tmdb_Parameter_Union_isUndefined;
-export type Type_Tmdb_Payload_Union_isUndefined = Type_Tmdb_Mixed_Union_isUndefined | Type_Tmdb_Mixed_Union_isUndefined[] | undefined;
-
-export type Type_Tmdb_Payload_Union = {
+/** Fetcher Utility Payload Type */
+export type Type_TmdbFetcher_Payload = {
   controller: AbortController;
-  tmdbKeyValuePairUnion: Type_Tmdb_Payload_Union_isUndefined;
+  keyValuePairEndPoint: string | undefined;
+  parametersObj?: {
+    typeGuardKey: string;
+    propValue: Type_Tmdb_BareOptParam_Union | undefined;
+  };
 };
 
-/** UTIL Module tmdbFetcher Return Types */
+/** useTmdbApi Payload's optional Parameters: independant properties act as Type Guard for dynamic URL generation */
+export type Type_Tmdb_OptParamMovieId_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; movie_id: Type_Tmdb_MovieIdParam_isUndefined };
+export type Type_Tmdb_OptParamPersonId_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; person_id: Type_Tmdb_PersonIdParam_isUndefined };
+export type Type_Tmdb_OptParamDiscover_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; discover: Type_Tmdb_DiscoverParam_Obj_isUndefined };
+export type Type_Tmdb_OptParamloadTrailer_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; trailer_id: Type_Tmdb_TrailerParam_Obj };
+
+export type Type_Tmdb_OptParam_Union =
+  | Type_Tmdb_OptParamMovieId_Obj
+  | Type_Tmdb_OptParamPersonId_Obj
+  | Type_Tmdb_OptParamDiscover_Obj
+  | Type_Tmdb_OptParamloadTrailer_Obj;
+
+/** useTmdbApi Union Payloads */
+// Is either a Key-value pair object || {tmdbEndPointObj: nested left-side Key-value Pair, Custom Type Guard Param: Key-value Pair}
+export type Type_Tmdb_Mixed_Union_isUndefined = Type_Tmdb_KeyValuePair_Obj | Type_Tmdb_OptParam_Union | undefined;
+// Type_Tmdb_Mixed_Union_isUndefined as a singular object || an array of objects || undefined
+export type Type_Tmdb_Payload_Union_isUndefined = Type_Tmdb_Mixed_Union_isUndefined | Type_Tmdb_Mixed_Union_isUndefined[] | undefined;
+
+export type Type_Tmdb_useTmdbApiPayload = {
+  controller: AbortController;
+  payload: Type_Tmdb_Payload_Union_isUndefined;
+};
+
+/** Fetcher Utility Return Types */
 // Resolved Promise
-export type Type_Tmdb_Fetcher_Obj = {
+export type Type_Tmdb_FetcherReturn_Obj = {
   results: Type_Tmdb_ApiCall_Union[];
   dates?: { maximum: string; minimum: string };
   page?: number;
@@ -121,11 +146,10 @@ export type Type_Tmdb_Fetcher_Obj = {
 };
 
 // Promise
-export type Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = Promise<Type_Tmdb_Fetcher_Obj | undefined>;
+export type Type_Tmdb_FetcherReturn_ObjPromise_isUndefined = Promise<Type_Tmdb_FetcherReturn_Obj | undefined>;
 
-/** UTIL/HOOK Module useTmdbApi */
-// Return
+/** useTmdbApi Return */
 export type Type_Tmdb_useApiReturn_Obj_isUndefined = { key: string; label?: string | undefined; value: Type_Tmdb_ApiCall_Union[] } | undefined;
 
-// Storage type
+/** Data Storage Type */
 export type Type_Tmdb_useApiReturn_Obj = Exclude<Type_Tmdb_useApiReturn_Obj_isUndefined, undefined>;
