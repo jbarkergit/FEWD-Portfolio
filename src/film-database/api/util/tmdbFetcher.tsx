@@ -33,13 +33,17 @@ export const tmdbFetcher = async ({
         case parameter === 'movie_id':
           url = `${keyValuePairEndPoint?.replace('{movie_id}', parameter)}?api_key=${apiKey}&append_to_response=videos`;
           break;
+
         case parameter === 'person_id':
           url = `${keyValuePairEndPoint?.replace('{person_id}', parameter)}?api_key=${apiKey}`;
           break;
+
         case parameter instanceof Object && parameter.type === 'movie':
           url = `${keyValuePairEndPoint}?include_adult=true&include_video=true&language=en-US&page=1&sort_by=primary_release_date.asc&with_genres=${parameter.genreNum}`;
           break;
+
         default:
+          // Identify if the parameter is being passed correctly || is undefined
           console.error(`Parameter is ${parameter}`);
           break;
       }
