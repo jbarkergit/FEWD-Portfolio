@@ -28,7 +28,7 @@ export const useTmdbApi = async ({ controller, tmdbKeyValuePairUnion }: Type_Tmd
 
   const entries = await Promise.allSettled(
     // Fetch array of key-value pairs asynchronously
-    tmdbKeyValuePairUnionArrConversion().map(async (keyValuePair) => {
+    tmdbKeyValuePairUnionArrConversion().map(async (keyValuePair: Type_Tmdb_Mixed_Union_isUndefined | undefined) => {
       // Utilizes Type Guard to return key-value pair's properties
       const destructureKeyValuePair = () => {
         if (keyValuePair) {
