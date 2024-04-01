@@ -93,7 +93,7 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, useVideoPlayer, grid }: Ty
   return (
     <section className='FDMediaGrid'>
       <div className='FDMediaGrid__header'>
-        <h2 className='FDMediaGrid__header--h2'>{dataLabel ? dataLabel : dataKey}</h2>
+        <h2 className='FDMediaGrid__header--h2'>{dataLabel ? dataLabel : dataKey.replace('_', ' ')}</h2>
       </div>
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'}>
         <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
