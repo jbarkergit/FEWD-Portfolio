@@ -48,13 +48,13 @@ const FDHomePage = () => {
       const dataArr: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
         controller: controller,
         tmdbKeyValuePairUnion: [
-          // tmdbEndPoints.movie_lists.nowPlaying,
+          tmdbEndPoints.movie_lists.nowPlaying,
           // tmdbEndPoints.movie_lists.popular,
           // tmdbEndPoints.movie_lists.topRated,
           // tmdbEndPoints.movie_lists.upcoming,
           // tmdbEndPoints.movie_trending.trendingDay,
           // tmdbEndPoints.movie_trending.trendingWeek,
-          { tmdbEndPointObj: tmdbEndPoints.movie_discover, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
+          // { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
         ],
       });
 
