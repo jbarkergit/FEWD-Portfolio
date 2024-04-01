@@ -1,3 +1,5 @@
+import { Type_Tmdb_DiscoverParam_Obj_isUndefined } from '../types/TmdbDataTypes';
+
 /** useDiscoverGenre types && interface */
 type Type_TmdbDiscover_MediaType_Union = 'movie' | 'tv';
 
@@ -88,14 +90,14 @@ const tvGenres: Record<Type_TmdbDiscoverTv_Genre_Union, number> = {
 };
 
 /** Hook */
-export const useDiscoverGenre = ({ type, genre }: Interface_Discover): { type: string; genreNum: number } | undefined => {
+export const useDiscoverGenre = ({ type, genre }: Interface_Discover): Type_Tmdb_DiscoverParam_Obj_isUndefined => {
   const payload: { type: string; genre: string } = { type: type.toLowerCase(), genre: genre.toLowerCase() };
 
   switch (payload.type) {
     case 'movie':
-      return { type: payload.type, genreNum: movieGenres[payload.genre as Type_TmdbDiscoverMovie_Genre_Union] };
+      return { typeGuardKey: payload.type, propValue: movieGenres[payload.genre as Type_TmdbDiscoverMovie_Genre_Union] };
     case 'tv':
-      return { type: payload.type, genreNum: tvGenres[payload.genre as Type_TmdbDiscoverTv_Genre_Union] };
+      return { typeGuardKey: payload.type, propValue: tvGenres[payload.genre as Type_TmdbDiscoverTv_Genre_Union] };
     default:
       return undefined;
   }
