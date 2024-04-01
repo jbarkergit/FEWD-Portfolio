@@ -89,7 +89,7 @@ export type Type_Tmdb_KeyValuePair_Obj = { key: string; label?: string | undefin
 /** Payload Optional Parameters: Necessary for Payload Destructuring || Type Guards */
 export type Type_Tmdb_MovieIdParam_isUndefined = string | undefined;
 export type Type_Tmdb_PersonIdParam_isUndefined = string | undefined;
-export type Type_Tmdb_DiscoverParam_Obj_isUndefined = { type: string; category: string } | undefined;
+export type Type_Tmdb_DiscoverParam_Obj_isUndefined = { type: string; id: number } | undefined;
 export type Type_Tmdb_OptParam_Union_isUndefined =
   | Type_Tmdb_MovieIdParam_isUndefined
   | Type_Tmdb_PersonIdParam_isUndefined

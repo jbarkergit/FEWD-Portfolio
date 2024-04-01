@@ -19,6 +19,7 @@ import FDFooter from '../components/navigation/footer/FDFooter';
 import FDVideoPlayer from '../components/features/iframes/TDVideoPlayer';
 import FDMediaGrid from '../components/media/FDMediaGrid';
 import { useFilmDatabaseWebStorage } from '../hooks/web-storage-api/useFilmDatabaseWebStorage';
+import { useDiscoverGenre } from '../api/hooks/useDiscoverGenre';
 
 const FDHomePage = () => {
   // Store cached data in state for component renders && pagination
@@ -53,7 +54,7 @@ const FDHomePage = () => {
           // tmdbEndPoints.movie_lists.upcoming,
           // tmdbEndPoints.movie_trending.trendingDay,
           // tmdbEndPoints.movie_trending.trendingWeek,
-          { tmdbEndPointObj: tmdbEndPoints.movie_discover, discover: { type: 'movie', category: 'horror' } },
+          { tmdbEndPointObj: tmdbEndPoints.movie_discover, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
         ],
       });
 
