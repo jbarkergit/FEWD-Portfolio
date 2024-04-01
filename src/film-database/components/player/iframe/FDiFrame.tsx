@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import YouTube, { YouTubeEvent } from 'react-youtube';
-import { Type_Tmdb_Trailer_Obj } from '../../../api/types/TmdbDataTypes';
+import { Type_Tmdb_Trailer_Obj, Type_Tmdb_useApiReturn_Obj } from '../../../api/types/TmdbDataTypes';
 import { Options } from 'youtube-player/dist/types';
 
 /** This component utilizes YouTube Player API
@@ -10,11 +10,11 @@ import { Options } from 'youtube-player/dist/types';
 
 type Type_PropDrill = {
   videoPlayerState: boolean;
-  videoPlayerTrailer: Type_Tmdb_Trailer_Obj[];
+  videoPlayerTrailer: Type_Tmdb_useApiReturn_Obj[];
   setVideoPlayerState: Dispatch<SetStateAction<boolean>>;
 };
 
-const FDVideoPlayer = ({ videoPlayerState, videoPlayerTrailer, setVideoPlayerState }: Type_PropDrill) => {
+const FDiFrame = ({ videoPlayerState, videoPlayerTrailer, setVideoPlayerState }: Type_PropDrill) => {
   const trailerObj: Type_Tmdb_Trailer_Obj | undefined =
     videoPlayerTrailer && videoPlayerTrailer.length > 0
       ? (videoPlayerTrailer[0]?.value as Type_Tmdb_Trailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer')
@@ -48,13 +48,13 @@ const FDVideoPlayer = ({ videoPlayerState, videoPlayerTrailer, setVideoPlayerSta
   /** Component */
   if (trailerObj)
     return (
-      <section className='fdVideoPlayer' data-status={videoPlayerState} onClick={() => useCloseTrailer()}>
-        <h2 className='fdVideoPlayer--h2'>{trailerObj.name}</h2>
+      <section className='FDVideoPlayer__player' data-status={videoPlayerState}>
+        <h2 className='FDVideoPlayer__player--h2'>{trailerObj.name}</h2>
         <YouTube
           videoId={trailerObj.key}
           opts={opts}
-          className='fdVideoPlayer__wrapper'
-          iframeClassName='fdVideoPlayer__wrapper--iframe'
+          className='FDVideoPlayer__player__wrapper'
+          iframeClassName='FDVideoPlayer__player__wrapper--iframe'
           title={`YouTube video player: ${trailerObj.name}`}
           // loading={string}
           onReady={(event: YouTubeEvent) => (player = event)}
@@ -67,4 +67,4 @@ const FDVideoPlayer = ({ videoPlayerState, videoPlayerTrailer, setVideoPlayerSta
       </section>
     );
 };
-export default FDVideoPlayer;
+export default FDiFrame;

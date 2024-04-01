@@ -15,11 +15,11 @@ type Type_PropDrill = {
 };
 
 const FDPosterProp = ({ mapValue, useVideoPlayer, grid }: Type_PropDrill) => {
-  const value = mapValue as unknown as Type_Tmdb_MovieList_Obj;
+  const value: Type_Tmdb_MovieList_Obj = mapValue as unknown as Type_Tmdb_MovieList_Obj;
   return (
     <li className='FDMediaGrid__wrapper__ul__li' data-status={grid ? 'grid' : 'carousel'} key={value.id}>
       <article className='FDMediaGrid__wrapper__ul__li__article'>
-        <div className='FDMediaGrid__wrapper__ul__li__article__graphic' onClick={() => useVideoPlayer(`${value.id}`)}>
+        <div className='FDMediaGrid__wrapper__ul__li__article__graphic' onClick={() => useVideoPlayer(value.id)}>
           {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${value.poster_path}.svg`, alt: value.title as string })}
 
           <div className='FDMediaGrid__wrapper__ul__li__article__graphic__overlay'>

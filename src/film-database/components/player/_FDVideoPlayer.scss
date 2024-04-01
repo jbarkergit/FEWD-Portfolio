@@ -1,0 +1,34 @@
+@use '../../scss/filmDatabaseStyles' as s;
+@use '../../../sass/functions' as f;
+
+.fdVideoPlayer {
+  width: 100%;
+  background-color: hsla(0, 0%, 0%, 0.9);
+  overflow: hidden;
+  pointer-events: none;
+  transition: ease-in-out 0.22s all;
+  &[data-status='true'] {
+  }
+  &--h2 {
+    display: none;
+  }
+  &__panel {
+  }
+  &__player {
+    &__wrapper {
+      display: grid;
+      place-items: center;
+      width: inherit;
+      height: inherit;
+      &--iframe {
+        width: 75%;
+        // As per YouTube Player API Recommendations: minimum 480 pixels wide and 270 pixels tall.
+        min-width: 480px;
+        min-height: 270px;
+        aspect-ratio: 16/9;
+        //
+        background-color: hsl(0, 0%, 0%);
+      }
+    }
+  }
+}
