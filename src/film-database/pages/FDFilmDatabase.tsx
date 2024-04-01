@@ -5,21 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 // Api Data
 import { tmdbEndPoints } from '../api/data/tmdbEndPoints';
 // Api Types
-import {
-  Type_Tmdb_Discover_Obj_isUndefined,
-  Type_Tmdb_Trailer_Obj,
-  Type_Tmdb_useApiReturn_Obj,
-  Type_Tmdb_useApiReturn_Obj_isUndefined,
-} from '../api/types/TmdbDataTypes';
+import { Type_Tmdb_useApiReturn_Obj } from '../api/types/TmdbDataTypes';
 // Api Hooks
 import { useTmdbApi } from '../api/hooks/useTmdbApi';
-// Components
-import FDHeader from '../components/navigation/header/FDHeader';
-import FDFooter from '../components/navigation/footer/FDFooter';
-import FDVideoPlayer from '../components/features/iframes/TDVideoPlayer';
-import FDMediaGrid from '../components/media/FDMediaGrid';
-import { useFilmDatabaseWebStorage } from '../hooks/web-storage-api/useFilmDatabaseWebStorage';
 import { useDiscoverGenre } from '../api/hooks/useDiscoverGenre';
+import { useFilmDatabaseWebStorage } from '../hooks/web-storage-api/useFilmDatabaseWebStorage';
+// Components
+import FDMediaGrid from '../components/media/FDMediaGrid';
+import FDVideoPlayerPanel from '../components/player/panel/FDVideoPlayerPanel';
+import FDiFrame from '../components/player/iframe/FDiFrame';
 
 const FDHomePage = () => {
   // Store cached data in state for component renders && pagination
@@ -47,14 +41,14 @@ const FDHomePage = () => {
     (async () => {
       const dataArr: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
         controller: controller,
-        tmdbKeyValuePairUnion: [
-          tmdbEndPoints.movie_lists.nowPlaying,
+        payload: [
+          // tmdbEndPoints.movie_lists.nowPlaying,
           // tmdbEndPoints.movie_lists.popular,
           // tmdbEndPoints.movie_lists.topRated,
           // tmdbEndPoints.movie_lists.upcoming,
           // tmdbEndPoints.movie_trending.trendingDay,
-          // tmdbEndPoints.movie_trending.trendingWeek,
-          // { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
+          tmdbEndPoints.movie_trending.trendingWeek,
+          { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
         ],
       });
 
@@ -76,16 +70,16 @@ const FDHomePage = () => {
    * videoPlayerState handles the component visibility
    * videoPlayerTrailer stores API data and is used to find trailers directly from YouTube opposed to alternative sources.
    */
-  const [videoPlayerState, setVideoPlayerState] = useState<boolean>(false);
-  const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<Type_Tmdb_Trailer_Obj[]>([]);
+  const [videoPlayerState, setVideoPlayerState] = useState<boolean>(true);
+  const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
 
   const useVideoPlayer = async (propertyId: string): Promise<void> => {
     const controller: AbortController = new AbortController();
 
-    const trailerObj = (await useTmdbApi({
+    const trailerObj = await useTmdbApi({
       controller: controller,
-      tmdbKeyValuePairUnion: { tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos, movie_id: `${propertyId}` },
-    })) as Type_Tmdb_Trailer_Obj[];
+      payload: { tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos, trailer_id: { typeGuardKey: 'Unknown', propValue: propertyId } },
+    });
 
     if (trailerObj) {
       setVideoPlayerTrailer(trailerObj);
@@ -93,15 +87,23 @@ const FDHomePage = () => {
     }
   };
 
+  /** Player Population for Testing ( TO BE REMOVED ) */
+  useEffect(() => {
+    useVideoPlayer('634492');
+  }, []);
+
   /** Component */
   return (
     <div className='filmDatabase'>
-      <FDHeader />
-      {tmdbDataArr.map((entry) => (
-        <FDMediaGrid dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} useVideoPlayer={useVideoPlayer} grid={false} key={uuidv4()} />
-      ))}
-      <FDVideoPlayer videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerTrailer={videoPlayerTrailer} />
-      <FDFooter />
+      <section className='FDVideoPlayer'>
+        <FDVideoPlayerPanel />
+        <FDiFrame videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerTrailer={videoPlayerTrailer} />
+      </section>
+      <section>
+        {tmdbDataArr.map((entry) => (
+          <FDMediaGrid dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} useVideoPlayer={useVideoPlayer} grid={false} key={uuidv4()} />
+        ))}
+      </section>
     </div>
   );
 };

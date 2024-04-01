@@ -1,18 +1,12 @@
-import { useDiscoverGenre } from '../hooks/useDiscoverGenre';
-import { Type_Tmdb_FetcherReturn_ObjPromise_isUndefined, Type_Tmdb_OptParam_Union_isUndefined } from '../types/TmdbDataTypes';
+import {
+  Type_TmdbFetcher_Payload,
+  Type_Tmdb_FetcherReturn_ObjPromise_isUndefined,
+  Type_Tmdb_MovieIdParam_isUndefined,
+  Type_Tmdb_PersonIdParam_isUndefined,
+  Type_Tmdb_TrailerParam_Obj,
+} from '../types/TmdbDataTypes';
 
-/** PARAMETER (PAYLOAD) TYPE */
-type Type_TmdbFetcher_Invoke_Params = {
-  controller: AbortController;
-  keyValuePairEndPoint: string | undefined;
-  parameter?: Type_Tmdb_OptParam_Union_isUndefined;
-};
-
-export const tmdbFetcher = async ({
-  controller,
-  keyValuePairEndPoint,
-  parameter,
-}: Type_TmdbFetcher_Invoke_Params): Type_Tmdb_FetcherReturn_ObjPromise_isUndefined => {
+export const tmdbFetcher = async ({ controller, keyValuePairEndPoint, parametersObj }: Type_TmdbFetcher_Payload): Type_Tmdb_FetcherReturn_ObjPromise_isUndefined => {
   // Authorization options for TMDB API
   const options: RequestInit = {
     method: 'GET',
@@ -28,23 +22,28 @@ export const tmdbFetcher = async ({
   let url: string;
 
   switch (true) {
-    case !!parameter:
+    case parametersObj !== undefined:
       switch (true) {
-        case parameter === 'movie_id':
-          url = `${keyValuePairEndPoint?.replace('{movie_id}', parameter)}?api_key=${apiKey}&append_to_response=videos`;
+        case parametersObj.typeGuardKey === 'movie_id':
+          url = `${keyValuePairEndPoint?.replace('{movie_id}', (parametersObj as unknown as Type_Tmdb_MovieIdParam_isUndefined).propValue)}?api_key=${apiKey}&append_to_response=videos`;
           break;
 
-        case parameter === 'person_id':
-          url = `${keyValuePairEndPoint?.replace('{person_id}', parameter)}?api_key=${apiKey}`;
+        case parametersObj.typeGuardKey === 'person_id':
+          url = `${keyValuePairEndPoint?.replace('{person_id}', (parametersObj as unknown as Type_Tmdb_PersonIdParam_isUndefined).propValue)}?api_key=${apiKey}`;
           break;
 
-        case parameter instanceof Object && parameter.type === 'movie':
-          url = `${keyValuePairEndPoint}?include_adult=true&include_video=true&language=en-US&page=1&sort_by=primary_release_date.asc&with_genres=${parameter.genreNum}`;
+        // Needs parameter work
+        // case parameter.typeGuardKey === 'discover':
+        //   url = `${keyValuePairEndPoint}?include_adult=true&include_video=true&language=en-US&page=1&sort_by=primary_release_date.asc&with_genres=${(parameter as unknown as Type_Tmdb_DiscoverParam_Obj_isUndefined).genreNum}`;
+        //   break;
+
+        case parametersObj.typeGuardKey === 'trailer':
+          url = `${keyValuePairEndPoint?.replace('{person_id}', (parametersObj as unknown as Type_Tmdb_TrailerParam_Obj).propValue)}?api_key=${apiKey}`;
           break;
 
         default:
           // Identify if the parameter is being passed correctly || is undefined
-          console.error(`Parameter is ${parameter}`);
+          console.error(`Parameter is ${parametersObj}`);
           break;
       }
 

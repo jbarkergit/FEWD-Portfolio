@@ -2,15 +2,16 @@
 import { tmdbFetcher } from '../util/tmdbFetcher';
 // Api Types
 import {
-  Type_Tmdb_Discover_Obj_isUndefined,
-  Type_Tmdb_Fetcher_Obj,
+  Type_Tmdb_FetcherReturn_Obj,
   Type_Tmdb_KeyValuePair_Obj,
   Type_Tmdb_Mixed_Union_isUndefined,
-  Type_Tmdb_MovieId_Obj_isUndefined,
-  Type_Tmdb_Payload_Union,
-  Type_Tmdb_PersonId_Obj_isUndefined,
+  Type_Tmdb_OptParamDiscover_Obj,
+  Type_Tmdb_OptParamMovieId_Obj,
+  Type_Tmdb_OptParamPersonId_Obj,
+  Type_Tmdb_OptParamloadTrailer_Obj,
   Type_Tmdb_useApiReturn_Obj,
   Type_Tmdb_useApiReturn_Obj_isUndefined,
+  Type_Tmdb_useTmdbApiPayload,
 } from '../types/TmdbDataTypes';
 
 /** Concurrent Fetch Operations: filtering && aborting operations
@@ -20,46 +21,55 @@ import {
  * Controller Param: Enables passing of signals to each operation allowing for aborts.
  */
 
-export const useTmdbApi = async ({ controller, tmdbKeyValuePairUnion }: Type_Tmdb_Payload_Union): Promise<Type_Tmdb_useApiReturn_Obj[]> => {
+export const useTmdbApi = async ({ controller, payload }: Type_Tmdb_useTmdbApiPayload): Promise<Type_Tmdb_useApiReturn_Obj[]> => {
   // Handle events where singular objects are passed by converting entries to an obj arr
-  const tmdbKeyValuePairUnionArrConversion = (): (Type_Tmdb_Mixed_Union_isUndefined | undefined)[] => {
-    return Array.isArray(tmdbKeyValuePairUnion) ? tmdbKeyValuePairUnion : [tmdbKeyValuePairUnion];
+  const payloadArrConversion = (): (Type_Tmdb_Mixed_Union_isUndefined | undefined)[] => {
+    return Array.isArray(payload) ? payload : [payload];
   };
 
   const entries = await Promise.allSettled(
     // Fetch array of key-value pairs asynchronously
-    tmdbKeyValuePairUnionArrConversion().map(async (keyValuePair: Type_Tmdb_Mixed_Union_isUndefined | undefined) => {
+    payloadArrConversion().map(async (keyValuePair: Type_Tmdb_Mixed_Union_isUndefined | undefined) => {
       // Utilizes Type Guard to return key-value pair's properties
       const destructureKeyValuePair = () => {
         if (keyValuePair) {
-          let typedKeyValuePair;
+          let typedKeyValuePair: Type_Tmdb_Mixed_Union_isUndefined;
 
           switch (true) {
             case 'movie_id' in keyValuePair:
-              typedKeyValuePair = keyValuePair as Type_Tmdb_MovieId_Obj_isUndefined;
+              typedKeyValuePair = keyValuePair as Type_Tmdb_OptParamMovieId_Obj;
               return {
                 key: typedKeyValuePair.tmdbEndPointObj.key,
                 label: typedKeyValuePair.tmdbEndPointObj.label,
                 endPoint: typedKeyValuePair.tmdbEndPointObj.endPoint,
-                parameter: typedKeyValuePair.movie_id,
+                parameter: { typeGuardKey: 'movie_id', propValue: typedKeyValuePair.movie_id },
               };
 
             case 'person_id' in keyValuePair:
-              typedKeyValuePair = keyValuePair as Type_Tmdb_PersonId_Obj_isUndefined;
+              typedKeyValuePair = keyValuePair as Type_Tmdb_OptParamPersonId_Obj;
               return {
                 key: typedKeyValuePair.tmdbEndPointObj.key,
                 label: typedKeyValuePair.tmdbEndPointObj.label,
                 endPoint: typedKeyValuePair.tmdbEndPointObj.endPoint,
-                parameter: typedKeyValuePair.person_id,
+                parameter: { typeGuardKey: 'person_id', propValue: typedKeyValuePair.person_id },
               };
 
             case 'discover' in keyValuePair:
-              typedKeyValuePair = keyValuePair as Type_Tmdb_Discover_Obj_isUndefined;
+              typedKeyValuePair = keyValuePair as Type_Tmdb_OptParamDiscover_Obj;
               return {
                 key: typedKeyValuePair.tmdbEndPointObj.key,
                 label: typedKeyValuePair.tmdbEndPointObj.label,
                 endPoint: typedKeyValuePair.tmdbEndPointObj.endPoint,
-                parameter: typedKeyValuePair.discover,
+                parameter: { typeGuardKey: 'discover', propValue: typedKeyValuePair.discover },
+              };
+
+            case 'trailer_id' in keyValuePair:
+              typedKeyValuePair = keyValuePair as Type_Tmdb_OptParamloadTrailer_Obj;
+              return {
+                key: typedKeyValuePair.tmdbEndPointObj.key,
+                label: typedKeyValuePair.tmdbEndPointObj.label,
+                endPoint: typedKeyValuePair.tmdbEndPointObj.endPoint,
+                parameter: { typeGuardKey: 'trailer', propValue: typedKeyValuePair.trailer_id },
               };
 
             default:
@@ -68,6 +78,7 @@ export const useTmdbApi = async ({ controller, tmdbKeyValuePairUnion }: Type_Tmd
                 key: typedKeyValuePair.key,
                 label: typedKeyValuePair.label,
                 endPoint: typedKeyValuePair.endPoint,
+                parameter: undefined,
               };
           }
         } else {
@@ -78,10 +89,10 @@ export const useTmdbApi = async ({ controller, tmdbKeyValuePairUnion }: Type_Tmd
       const destructuredData = destructureKeyValuePair();
 
       // tmdbFetcher
-      const fetchDataPromise: Type_Tmdb_Fetcher_Obj | undefined = await tmdbFetcher({
+      const fetchDataPromise: Type_Tmdb_FetcherReturn_Obj | undefined = await tmdbFetcher({
         controller: controller,
         keyValuePairEndPoint: destructuredData?.endPoint,
-        parameter: destructuredData?.parameter,
+        parametersObj: destructuredData?.parameter,
       });
 
       // Identify bad api call without leaking api key to console
