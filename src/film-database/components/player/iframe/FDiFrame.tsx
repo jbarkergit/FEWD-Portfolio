@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import YouTube, { YouTubeEvent } from 'react-youtube';
-import { Type_Tmdb_Trailer_Obj, Type_Tmdb_useApiReturn_Obj } from '../../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_useApiReturn_Obj } from '../../../api/types/TmdbDataTypes';
 import { Options } from 'youtube-player/dist/types';
 
 /** This component utilizes YouTube Player API
@@ -15,9 +15,9 @@ type Type_PropDrill = {
 };
 
 const FDiFrame = ({ videoPlayerState, videoPlayerTrailer, setVideoPlayerState }: Type_PropDrill) => {
-  const trailerObj: Type_Tmdb_Trailer_Obj | undefined =
+  const trailerObj: Type_Tmdb_ApiCallTrailer_Obj | undefined =
     videoPlayerTrailer && videoPlayerTrailer.length > 0
-      ? (videoPlayerTrailer[0]?.value as Type_Tmdb_Trailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer')
+      ? (videoPlayerTrailer[0]?.value as Type_Tmdb_ApiCallTrailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer')
       : undefined;
 
   // iframe options
