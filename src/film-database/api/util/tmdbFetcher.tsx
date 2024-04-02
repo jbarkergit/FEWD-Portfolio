@@ -39,7 +39,6 @@ export const tmdbFetcher = async ({ controller, keyValuePairEndPoint, parameters
 
         case parametersObj.typeGuardKey === 'trailer_id':
           url = `${keyValuePairEndPoint?.replace('{movie_id}', `${(parametersObj as unknown as Type_Tmdb_TrailerParam_Obj).propValue}`)}?api_key=${apiKey}`;
-          console.log(url);
           break;
 
         default:
