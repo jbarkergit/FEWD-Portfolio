@@ -1,8 +1,8 @@
 import {
   Type_TmdbFetcher_Payload,
   Type_Tmdb_FetcherReturn_ObjPromise_isUndefined,
-  Type_Tmdb_MovieIdParam_isUndefined,
-  Type_Tmdb_PersonIdParam_isUndefined,
+  Type_Tmdb_MovieIdParam_Obj,
+  Type_Tmdb_PersonIdParam_Obj,
   Type_Tmdb_TrailerParam_Obj,
 } from '../types/TmdbDataTypes';
 
@@ -25,11 +25,11 @@ export const tmdbFetcher = async ({ controller, keyValuePairEndPoint, parameters
     case parametersObj !== undefined:
       switch (true) {
         case parametersObj.typeGuardKey === 'movie_id':
-          url = `${keyValuePairEndPoint?.replace('{movie_id}', (parametersObj as unknown as Type_Tmdb_MovieIdParam_isUndefined).propValue)}?api_key=${apiKey}&append_to_response=videos`;
+          url = `${keyValuePairEndPoint?.replace('{movie_id}', (parametersObj as unknown as Type_Tmdb_MovieIdParam_Obj).propValue)}?api_key=${apiKey}&append_to_response=videos`;
           break;
 
         case parametersObj.typeGuardKey === 'person_id':
-          url = `${keyValuePairEndPoint?.replace('{person_id}', (parametersObj as unknown as Type_Tmdb_PersonIdParam_isUndefined).propValue)}?api_key=${apiKey}`;
+          url = `${keyValuePairEndPoint?.replace('{person_id}', (parametersObj as unknown as Type_Tmdb_PersonIdParam_Obj).propValue)}?api_key=${apiKey}`;
           break;
 
         // Needs parameter work
@@ -37,8 +37,9 @@ export const tmdbFetcher = async ({ controller, keyValuePairEndPoint, parameters
         //   url = `${keyValuePairEndPoint}?include_adult=true&include_video=true&language=en-US&page=1&sort_by=primary_release_date.asc&with_genres=${(parameter as unknown as Type_Tmdb_DiscoverParam_Obj_isUndefined).genreNum}`;
         //   break;
 
-        case parametersObj.typeGuardKey === 'trailer':
-          url = `${keyValuePairEndPoint?.replace('{person_id}', (parametersObj as unknown as Type_Tmdb_TrailerParam_Obj).propValue)}?api_key=${apiKey}`;
+        case parametersObj.typeGuardKey === 'trailer_id':
+          url = `${keyValuePairEndPoint?.replace('{movie_id}', `${(parametersObj as unknown as Type_Tmdb_TrailerParam_Obj).propValue}`)}?api_key=${apiKey}`;
+          console.log(url);
           break;
 
         default:
