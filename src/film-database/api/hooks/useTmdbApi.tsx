@@ -42,7 +42,7 @@ export const useTmdbApi = async ({ controller, payload }: Type_Tmdb_useTmdbApiPa
                 key: typedKeyValuePair.tmdbEndPointObj.key,
                 label: typedKeyValuePair.tmdbEndPointObj.label,
                 endPoint: typedKeyValuePair.tmdbEndPointObj.endPoint,
-                parameter: { typeGuardKey: 'movie_id', propValue: typedKeyValuePair.movie_id },
+                parameter: typedKeyValuePair.movie_id,
               };
 
             case 'person_id' in keyValuePair:
@@ -51,7 +51,7 @@ export const useTmdbApi = async ({ controller, payload }: Type_Tmdb_useTmdbApiPa
                 key: typedKeyValuePair.tmdbEndPointObj.key,
                 label: typedKeyValuePair.tmdbEndPointObj.label,
                 endPoint: typedKeyValuePair.tmdbEndPointObj.endPoint,
-                parameter: { typeGuardKey: 'person_id', propValue: typedKeyValuePair.person_id },
+                parameter: typedKeyValuePair.person_id,
               };
 
             case 'discover' in keyValuePair:
@@ -60,7 +60,7 @@ export const useTmdbApi = async ({ controller, payload }: Type_Tmdb_useTmdbApiPa
                 key: typedKeyValuePair.tmdbEndPointObj.key,
                 label: typedKeyValuePair.tmdbEndPointObj.label,
                 endPoint: typedKeyValuePair.tmdbEndPointObj.endPoint,
-                parameter: { typeGuardKey: 'discover', propValue: typedKeyValuePair.discover },
+                parameter: typedKeyValuePair.discover,
               };
 
             case 'trailer_id' in keyValuePair:
@@ -69,7 +69,7 @@ export const useTmdbApi = async ({ controller, payload }: Type_Tmdb_useTmdbApiPa
                 key: typedKeyValuePair.tmdbEndPointObj.key,
                 label: typedKeyValuePair.tmdbEndPointObj.label,
                 endPoint: typedKeyValuePair.tmdbEndPointObj.endPoint,
-                parameter: { typeGuardKey: 'trailer', propValue: typedKeyValuePair.trailer_id },
+                parameter: typedKeyValuePair.trailer_id,
               };
 
             default:
