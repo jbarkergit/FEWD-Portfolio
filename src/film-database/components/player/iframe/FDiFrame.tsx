@@ -25,14 +25,25 @@ const FDiFrame = ({ videoPlayerState, videoPlayerTrailer, setVideoPlayerState }:
     height: undefined,
     width: undefined,
     playerVars: {
-      origin: 'http://localhost:5173/film-database',
-      hl: 'eng',
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
       cc_lang_pref: 'eng',
       cc_load_policy: 1,
+      // color: undefined,
+      controls: 1,
+      disablekb: 0,
+      // enablejsapi?: 0 | 1 | undefined;
+      // end?: number | undefined;
+      fs: 1,
+      hl: 'eng',
       iv_load_policy: 3,
-      autoplay: 1,
+      loop: 0,
+      origin: 'http://localhost:5173/film-database',
+      // playlist?: string | undefined;
+      playsinline: 1,
       rel: 0,
-      playsinline: 0,
+      // start?: number | undefined;
+      widget_referrer: undefined,
     },
   };
 
