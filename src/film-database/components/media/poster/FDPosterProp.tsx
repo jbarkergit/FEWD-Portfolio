@@ -6,16 +6,16 @@ import { BootstrapThreeDotsVertical } from '../../../assets/svg-icons/BootstrapT
 import useCreatePicture from '../../../hooks/component-creation/useCreatePicture';
 import { useFormatDate } from '../../../hooks/formatters/useFormatDate';
 // Types
-import { Type_Tmdb_ApiCall_Union, Type_Tmdb_MovieList_Obj } from '../../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCall_Union, Type_Tmdb_ApiCallMovieList_Obj } from '../../../api/types/TmdbDataTypes';
 
 type Type_PropDrill = {
   mapValue: Type_Tmdb_ApiCall_Union;
-  useVideoPlayer: (propertyId: string) => Promise<void>;
+  useVideoPlayer: (propertyId: number) => Promise<void>;
   grid: boolean;
 };
 
 const FDPosterProp = ({ mapValue, useVideoPlayer, grid }: Type_PropDrill) => {
-  const value: Type_Tmdb_MovieList_Obj = mapValue as unknown as Type_Tmdb_MovieList_Obj;
+  const value: Type_Tmdb_ApiCallMovieList_Obj = mapValue as unknown as Type_Tmdb_ApiCallMovieList_Obj;
   return (
     <li className='FDMediaGrid__wrapper__ul__li' data-status={grid ? 'grid' : 'carousel'} key={value.id}>
       <article className='FDMediaGrid__wrapper__ul__li__article'>

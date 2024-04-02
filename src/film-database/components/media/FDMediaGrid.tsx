@@ -11,7 +11,7 @@ type Type_PropDrill = {
   dataKey: string;
   dataLabel?: string | undefined;
   dataValue: Type_Tmdb_ApiCall_Union[];
-  useVideoPlayer: (propertyId: string) => Promise<void>;
+  useVideoPlayer: (propertyId: number) => Promise<void>;
   grid: boolean;
 };
 

@@ -47,8 +47,8 @@ const FDHomePage = () => {
           // tmdbEndPoints.movie_lists.topRated,
           // tmdbEndPoints.movie_lists.upcoming,
           // tmdbEndPoints.movie_trending.trendingDay,
-          tmdbEndPoints.movie_trending.trendingWeek,
-          { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
+          // tmdbEndPoints.movie_trending.trendingWeek,
+          // { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
         ],
       });
 
@@ -73,12 +73,12 @@ const FDHomePage = () => {
   const [videoPlayerState, setVideoPlayerState] = useState<boolean>(true);
   const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
 
-  const useVideoPlayer = async (propertyId: string): Promise<void> => {
+  const useVideoPlayer = async (propertyId: number): Promise<void> => {
     const controller: AbortController = new AbortController();
 
     const trailerObj = await useTmdbApi({
       controller: controller,
-      payload: { tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos, trailer_id: { typeGuardKey: 'Unknown', propValue: propertyId } },
+      payload: { tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos, trailer_id: { typeGuardKey: 'trailer_id', propValue: propertyId } },
     });
 
     if (trailerObj) {
@@ -86,11 +86,6 @@ const FDHomePage = () => {
       setVideoPlayerState(true);
     }
   };
-
-  /** Player Population for Testing ( TO BE REMOVED ) */
-  useEffect(() => {
-    useVideoPlayer('634492');
-  }, []);
 
   /** Component */
   return (
