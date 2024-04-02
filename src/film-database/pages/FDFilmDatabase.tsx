@@ -12,8 +12,7 @@ import { useDiscoverGenre } from '../api/hooks/useDiscoverGenre';
 import { useFilmDatabaseWebStorage } from '../hooks/web-storage-api/useFilmDatabaseWebStorage';
 // Components
 import FDMediaGrid from '../components/media/FDMediaGrid';
-import FDVideoPlayerPanel from '../components/player/panel/FDVideoPlayerPanel';
-import FDiFrame from '../components/player/iframe/FDiFrame';
+import FDVideoPlayer from '../components/player/FDVideoPlayer';
 
 const FDHomePage = () => {
   // Store cached data in state for component renders && pagination
@@ -90,10 +89,7 @@ const FDHomePage = () => {
   /** Component */
   return (
     <div className='filmDatabase'>
-      <section className='FDVideoPlayer'>
-        <FDVideoPlayerPanel />
-        <FDiFrame videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerTrailer={videoPlayerTrailer} />
-      </section>
+      <FDVideoPlayer videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerTrailer={videoPlayerTrailer} />
       <section>
         {tmdbDataArr.map((entry) => (
           <FDMediaGrid dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} useVideoPlayer={useVideoPlayer} grid={false} key={uuidv4()} />
