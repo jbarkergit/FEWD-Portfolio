@@ -1,7 +1,7 @@
 import { filmDatabaseKeyValuePairs } from '../../../App';
-import { Type_Tmdb_Processor_StateObj } from '../../api/types/TmdbDataTypes';
+import { Type_Tmdb_useApiReturn_Obj } from '../../api/types/TmdbDataTypes';
 
-export const useFilmDatabaseWebStorage = (userLocation: any, data?: Type_Tmdb_Processor_StateObj[]) => {
+export const useFilmDatabaseWebStorage = (userLocation: any, data?: Type_Tmdb_useApiReturn_Obj[]) => {
   /** Custom Cross-Origin restriction safety protocol (utilizes project paths from custom app routing solution) */
   const isSameOrigin = (): boolean => {
     return filmDatabaseKeyValuePairs.some((obj) => obj.path === `${userLocation.pathname}`);
@@ -17,12 +17,12 @@ export const useFilmDatabaseWebStorage = (userLocation: any, data?: Type_Tmdb_Pr
   };
 
   /** Data getter - Utilizes Web Storage to prevent unnecessary API calls */
-  const getData = (): Type_Tmdb_Processor_StateObj[] | null => {
+  const getData = (): Type_Tmdb_useApiReturn_Obj[] | null => {
     if (isSameOrigin()) {
       const cachedData = localStorage.getItem(filmDatabaseStorageKey);
 
       if (cachedData) {
-        return JSON.parse(cachedData) as Type_Tmdb_Processor_StateObj[];
+        return JSON.parse(cachedData) as Type_Tmdb_useApiReturn_Obj[];
       } else {
         console.error('Could not retrieve data from Web Storage.');
         return null;
