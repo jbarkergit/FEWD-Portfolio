@@ -91,14 +91,14 @@ export type Type_Tmdb_ApiCall_Union = Type_Tmdb_ApiCallMovieList_Obj | Type_Tmdb
 export type Type_Tmdb_KeyValuePair_Obj = { key: string; label?: string | undefined; endPoint: string };
 
 /** BAREBONE Payload Optional Parameters: Necessary for Payload Destructuring or Type Guard */
-export type Type_Tmdb_MovieIdParam_isUndefined = { typeGuardKey: string | undefined; propValue: string };
-export type Type_Tmdb_PersonIdParam_isUndefined = { typeGuardKey: string | undefined; propValue: string };
+export type Type_Tmdb_MovieIdParam_Obj = { typeGuardKey: string; propValue: string };
+export type Type_Tmdb_PersonIdParam_Obj = { typeGuardKey: string; propValue: string };
 export type Type_Tmdb_DiscoverParam_Obj_isUndefined = { typeGuardKey: string; propValue: number } | undefined; // undefined
-export type Type_Tmdb_TrailerParam_Obj = { typeGuardKey: string; propValue: string };
+export type Type_Tmdb_TrailerParam_Obj = { typeGuardKey: string; propValue: number };
 
 export type Type_Tmdb_BareOptParam_Union =
-  | Type_Tmdb_MovieIdParam_isUndefined
-  | Type_Tmdb_PersonIdParam_isUndefined
+  | Type_Tmdb_MovieIdParam_Obj
+  | Type_Tmdb_PersonIdParam_Obj
   | Type_Tmdb_DiscoverParam_Obj_isUndefined
   | Type_Tmdb_TrailerParam_Obj;
 
@@ -106,15 +106,12 @@ export type Type_Tmdb_BareOptParam_Union =
 export type Type_TmdbFetcher_Payload = {
   controller: AbortController;
   keyValuePairEndPoint: string | undefined;
-  parametersObj?: {
-    typeGuardKey: string;
-    propValue: Type_Tmdb_BareOptParam_Union | undefined;
-  };
+  parametersObj?: Type_Tmdb_BareOptParam_Union | undefined;
 };
 
 /** useTmdbApi Payload's optional Parameters: independant properties act as Type Guard for dynamic URL generation */
-export type Type_Tmdb_OptParamMovieId_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; movie_id: Type_Tmdb_MovieIdParam_isUndefined };
-export type Type_Tmdb_OptParamPersonId_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; person_id: Type_Tmdb_PersonIdParam_isUndefined };
+export type Type_Tmdb_OptParamMovieId_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; movie_id: Type_Tmdb_MovieIdParam_Obj };
+export type Type_Tmdb_OptParamPersonId_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; person_id: Type_Tmdb_PersonIdParam_Obj };
 export type Type_Tmdb_OptParamDiscover_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; discover: Type_Tmdb_DiscoverParam_Obj_isUndefined };
 export type Type_Tmdb_OptParamloadTrailer_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; trailer_id: Type_Tmdb_TrailerParam_Obj };
 
