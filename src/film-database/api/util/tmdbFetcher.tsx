@@ -21,35 +21,34 @@ export const tmdbFetcher = async ({ controller, keyValuePairEndPoint, parameters
   const apiKey = import.meta.env.VITE_TMDB_API_KEY;
   let url: string;
 
-  switch (true) {
-    case parametersObj !== undefined:
-      switch (true) {
-        case parametersObj.typeGuardKey === 'movie_id':
-          url = `${keyValuePairEndPoint?.replace('{movie_id}', (parametersObj as unknown as Type_Tmdb_MovieIdParam_Obj).propValue)}?api_key=${apiKey}&append_to_response=videos`;
-          break;
+  if (parametersObj !== undefined) {
+    switch (true) {
+      case parametersObj.typeGuardKey === 'movie_id':
+        url = `${keyValuePairEndPoint?.replace('{movie_id}', (parametersObj as unknown as Type_Tmdb_MovieIdParam_Obj).propValue)}?api_key=${apiKey}&append_to_response=videos`;
+        break;
 
-        case parametersObj.typeGuardKey === 'person_id':
-          url = `${keyValuePairEndPoint?.replace('{person_id}', (parametersObj as unknown as Type_Tmdb_PersonIdParam_Obj).propValue)}?api_key=${apiKey}`;
-          break;
+      case parametersObj.typeGuardKey === 'person_id':
+        url = `${keyValuePairEndPoint?.replace('{person_id}', (parametersObj as unknown as Type_Tmdb_PersonIdParam_Obj).propValue)}?api_key=${apiKey}`;
+        break;
 
-        // Needs parameter work
-        // case parameter.typeGuardKey === 'discover':
-        //   url = `${keyValuePairEndPoint}?include_adult=true&include_video=true&language=en-US&page=1&sort_by=primary_release_date.asc&with_genres=${(parameter as unknown as Type_Tmdb_DiscoverParam_Obj_isUndefined).genreNum}`;
-        //   break;
+      // Needs parameter work
+      // case parameter.typeGuardKey === 'discover':
+      //   url = `${keyValuePairEndPoint}?include_adult=true&include_video=true&language=en-US&page=1&sort_by=primary_release_date.asc&with_genres=${(parameter as unknown as Type_Tmdb_DiscoverParam_Obj_isUndefined).genreNum}`;
+      //   break;
 
-        case parametersObj.typeGuardKey === 'trailer_id':
-          url = `${keyValuePairEndPoint?.replace('{movie_id}', `${(parametersObj as unknown as Type_Tmdb_TrailerParam_Obj).propValue}`)}?api_key=${apiKey}`;
-          break;
+      case parametersObj.typeGuardKey === 'trailer_id':
+        const propValueToString: string = (parametersObj as unknown as Type_Tmdb_TrailerParam_Obj).propValue.toString();
+        url = `${keyValuePairEndPoint?.replace('{movie_id}', propValueToString)}?api_key=${apiKey}`;
+        break;
 
-        default:
-          // Identify if the parameter is being passed correctly || is undefined
-          console.error(`Parameter is ${parametersObj}`);
-          break;
-      }
-
-    default:
-      url = `${keyValuePairEndPoint}?api_key=${apiKey}`;
-      break;
+      default:
+        // Identify if the parameter is being passed correctly || is undefined
+        url = `${keyValuePairEndPoint}?api_key=${apiKey}`;
+        break;
+    }
+  } else {
+    console.error('Fetcher Parameter may be undefined.');
+    return undefined;
   }
 
   try {
