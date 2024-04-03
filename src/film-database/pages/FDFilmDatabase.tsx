@@ -41,19 +41,19 @@ const FDHomePage = () => {
       const dataArr: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
         controller: controller,
         payload: [
-          tmdbEndPoints.movie_lists.nowPlaying,
+          // tmdbEndPoints.movie_lists.nowPlaying,
           // tmdbEndPoints.movie_lists.popular,
           // tmdbEndPoints.movie_lists.topRated,
           // tmdbEndPoints.movie_lists.upcoming,
           // tmdbEndPoints.movie_trending.trendingDay,
           // tmdbEndPoints.movie_trending.trendingWeek,
-          // { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
+          { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
         ],
       });
 
       if (
         !webStorageData ||
-        webStorageData.length === 0 ||
+        webStorageData.length < 2 ||
         (dataArr && webStorageData.some((webStorageObj) => dataArr.some((dataArrObj) => dataArrObj?.key === webStorageObj?.key)))
       ) {
         setTmdbDataArr(dataArr);
