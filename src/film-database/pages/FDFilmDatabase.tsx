@@ -51,7 +51,11 @@ const FDHomePage = () => {
         ],
       });
 
-      if (!webStorageData || (dataArr && webStorageData.some((webStorageObj) => dataArr.some((dataArrObj) => dataArrObj?.key === webStorageObj?.key)))) {
+      if (
+        !webStorageData ||
+        webStorageData.length === 0 ||
+        (dataArr && webStorageData.some((webStorageObj) => dataArr.some((dataArrObj) => dataArrObj?.key === webStorageObj?.key)))
+      ) {
         setTmdbDataArr(dataArr);
         useFilmDatabaseWebStorage(userLocation, dataArr).setData();
       } else {
