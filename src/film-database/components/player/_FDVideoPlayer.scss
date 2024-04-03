@@ -34,14 +34,16 @@
       display: none;
     }
     &__wrapper {
+      position: relative;
       display: grid;
       place-items: center;
-      & > * {
+      &--iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: inherit;
         height: inherit;
         aspect-ratio: inherit;
-      }
-      &--iframe {
         background-color: hsl(0, 0%, 0%);
         // As per YouTube Player API Recommendations: minimum 480 pixels wide and 270 pixels tall.
         min-width: 480px;
