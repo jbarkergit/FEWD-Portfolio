@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import YouTube, { YouTubeEvent } from 'react-youtube';
-import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_useApiReturn_Obj } from '../../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_ApiCall_Union } from '../../../api/types/TmdbDataTypes';
 import { Options } from 'youtube-player/dist/types';
 
 /** This component utilizes YouTube Player API
@@ -10,7 +10,13 @@ import { Options } from 'youtube-player/dist/types';
 
 type Type_PropDrill = {
   videoPlayerState: boolean;
-  videoPlayerTrailer: Type_Tmdb_useApiReturn_Obj[];
+  videoPlayerTrailer:
+    | {
+        key: string;
+        label?: string | undefined;
+        value: Type_Tmdb_ApiCall_Union[];
+      }[]
+    | undefined;
   setVideoPlayerState: Dispatch<SetStateAction<boolean>>;
 };
 

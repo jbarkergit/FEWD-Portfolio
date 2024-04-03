@@ -3,6 +3,7 @@
 
 .FDVideoPlayer {
   position: relative;
+  background-color: hsla(0, 0%, 0%, 0.9);
   overflow: hidden;
   transition: ease-in-out 0.22s all;
   &[data-status='true'] {
@@ -23,7 +24,7 @@
     z-index: 2;
     height: 100%;
     aspect-ratio: 16/9;
-    background-color: hsla(0, 0%, 0%, 0.9);
+
     & > * {
       width: inherit;
       height: inherit;

@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 // Api Data
 import { tmdbEndPoints } from '../api/data/tmdbEndPoints';
 // Api Types
-import { Type_Tmdb_useApiReturn_Obj } from '../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCall_Union, Type_Tmdb_useApiReturn_Obj } from '../api/types/TmdbDataTypes';
 // Api Hooks
 import { useTmdbApi } from '../api/hooks/useTmdbApi';
 import { useDiscoverGenre } from '../api/hooks/useDiscoverGenre';
@@ -41,7 +41,7 @@ const FDHomePage = () => {
       const dataArr: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
         controller: controller,
         payload: [
-          // tmdbEndPoints.movie_lists.nowPlaying,
+          tmdbEndPoints.movie_lists.nowPlaying,
           // tmdbEndPoints.movie_lists.popular,
           // tmdbEndPoints.movie_lists.topRated,
           // tmdbEndPoints.movie_lists.upcoming,
@@ -74,7 +74,7 @@ const FDHomePage = () => {
    * videoPlayerTrailer stores API data and is used to find trailers directly from YouTube opposed to alternative sources.
    */
   const [videoPlayerState, setVideoPlayerState] = useState<boolean>(true);
-  const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
+  const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<{ key: string; label?: string | undefined; value: Type_Tmdb_ApiCall_Union[] }[]>();
 
   const useVideoPlayer = async (propertyId: number): Promise<void> => {
     const controller: AbortController = new AbortController();

@@ -8,11 +8,13 @@ import FDiFrame from './iframe/FDiFrame';
 type Type_PropDrill = {
   videoPlayerState: boolean;
   setVideoPlayerState: Dispatch<SetStateAction<boolean>>;
-  videoPlayerTrailer: {
-    key: string;
-    label?: string | undefined;
-    value: Type_Tmdb_ApiCall_Union[];
-  }[];
+  videoPlayerTrailer:
+    | {
+        key: string;
+        label?: string | undefined;
+        value: Type_Tmdb_ApiCall_Union[];
+      }[]
+    | undefined;
 };
 
 const FDVideoPlayer = ({ videoPlayerState, setVideoPlayerState, videoPlayerTrailer }: Type_PropDrill) => {
