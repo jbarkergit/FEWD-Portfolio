@@ -3,28 +3,26 @@
 
 .FDVideoPlayer {
   position: relative;
+  display: flex;
   background-color: hsla(0, 0%, 0%, 0.9);
   overflow: hidden;
   transition: ease-in-out 0.22s all;
   &[data-status='true'] {
   }
+  & > * {
+    flex: 1 1 auto;
+  }
   &--h2 {
     display: none;
   }
   &__panel {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     z-index: 3;
   }
   &__player {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 2;
+    position: relative;
     height: 100%;
     aspect-ratio: 16/9;
-
     & > * {
       width: inherit;
       height: inherit;
@@ -34,7 +32,10 @@
       display: none;
     }
     &__wrapper {
-      position: relative;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 2;
       display: grid;
       place-items: center;
       &--iframe {

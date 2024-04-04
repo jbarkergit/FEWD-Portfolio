@@ -26,7 +26,7 @@ const FDVideoPlayer = ({ videoPlayerState, setVideoPlayerState, videoPlayerTrail
   if (videoPlayerTrailer)
     return (
       <section className='FDVideoPlayer'>
-        <FDVideoPlayerPanel title={videoPlayerTrailer.title} backdrop={videoPlayerTrailer.backdrop} overview={videoPlayerTrailer.overview} />
+        <FDVideoPlayerPanel title={videoPlayerTrailer.title} overview={videoPlayerTrailer.overview} />
         <FDiFrame videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerTrailer={videoPlayerTrailer.trailerObjData} />
       </section>
     );
