@@ -46,30 +46,29 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, useVideoPlayer, grid }: Ty
    * Set distances require calculations that account for padding, gap and conditions for the first && last index
    * Single child distances require dom node width && gap size
    */
-
   useEffect(() => {
     if (carouselUl.current) {
-      const dataLength: number = dataValue.length - 1;
-      const firstPossibleIndex: number = 1;
-      const lastPossibleIndex: number = (dataLength / 8) % 1 === 0 ? dataLength / 8 : Math.floor(dataLength / 8) + 1;
+      const firstPossibleIndex: boolean = setIndex.currIndex === 1;
+      const lastPossibleIndex: boolean = setIndex.currIndex === Math.ceil(dataValue.length / 8);
+
       let nextChildsIndex: number;
 
       switch (true) {
-        case setIndex.currIndex === firstPossibleIndex:
+        case firstPossibleIndex:
           nextChildsIndex = 0;
           break;
-        case setIndex.currIndex === lastPossibleIndex:
-          nextChildsIndex = dataLength;
+
+        case lastPossibleIndex:
+          nextChildsIndex = dataValue.length - 1;
           break;
+
         default:
-          if (setIndex.currIndex > setIndex.prevIndex) nextChildsIndex = setIndex.currIndex * 8;
-          else nextChildsIndex = setIndex.currIndex * 8 * -1;
+          nextChildsIndex = (setIndex.currIndex - 1) * 8 - 2;
           break;
       }
 
       const carouselChildren: HTMLCollection = carouselUl.current.children;
       const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;
-
       if (nextChild) {
         const scrollDistance: number = nextChild.offsetLeft - carouselUl.current.offsetLeft;
         carouselUl.current.scrollTo({ left: scrollDistance, behavior: 'smooth' });
