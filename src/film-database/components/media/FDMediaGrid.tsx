@@ -26,7 +26,8 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, useVideoPlayer, grid }: Ty
   useEffect(() => {
     if (!grid) {
       setPaginatedData((prevData: Type_Tmdb_ApiCall_Union[]) => {
-        const startIndex: number = prevData.length === 0 ? 0 : prevData.length + 1;
+        const prevDataLength: number = prevData.length - 1;
+        const startIndex: number = prevDataLength === 0 ? 0 : prevDataLength + 1;
         const endIndex: number = 8 * setIndex.currIndex;
         return [...prevData, ...dataValue.slice(startIndex, endIndex)] as Type_Tmdb_ApiCall_Union[];
       });
@@ -45,11 +46,26 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, useVideoPlayer, grid }: Ty
    * Set distances require calculations that account for padding, gap and conditions for the first && last index
    * Single child distances require dom node width && gap size
    */
+
   useEffect(() => {
     if (carouselUl.current) {
-      const firstPossibleIndex: boolean = setIndex.currIndex === 1;
-      const lastPossibleIndex: boolean = setIndex.currIndex === Math.round(dataValue.length / 7) + 1;
-      const nextChildsIndex: number = firstPossibleIndex || lastPossibleIndex ? 0 : (setIndex.currIndex - 1) * 7;
+      const dataLength: number = dataValue.length - 1;
+      const firstPossibleIndex: number = 1;
+      const lastPossibleIndex: number = (dataLength / 8) % 1 === 0 ? dataLength / 8 : Math.floor(dataLength / 8) + 1;
+      let nextChildsIndex: number;
+
+      switch (true) {
+        case setIndex.currIndex === firstPossibleIndex:
+          nextChildsIndex = 0;
+          break;
+        case setIndex.currIndex === lastPossibleIndex:
+          nextChildsIndex = dataLength;
+          break;
+        default:
+          if (setIndex.currIndex > setIndex.prevIndex) nextChildsIndex = setIndex.currIndex * 8;
+          else nextChildsIndex = setIndex.currIndex * 8 * -1;
+          break;
+      }
 
       const carouselChildren: HTMLCollection = carouselUl.current.children;
       const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;
@@ -63,7 +79,7 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, useVideoPlayer, grid }: Ty
 
   /** Update navigation overlay button height dynamically
    * Due to the informational footer, I'm opting to use JavaScript to set heights of the buttons in order to prevent any potential visual mishaps.
-   * Due to HTML structure, there isn't an easy way to pass refs upwards; therefore, I opted to shake the tree via dom nodes (I understand this isn't the best practice)
+   * Due to HTML structure, there isn't an easy way to pass refs upwards; therefore, I opted to drill dom nodes (I understand this isn't the best practice)
    */
   const [posterDimensions, setPosterDimensions] = useState<{ width: number | undefined; height: number | undefined }>({ width: undefined, height: undefined });
 
