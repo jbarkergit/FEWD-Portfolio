@@ -10,19 +10,25 @@ type Type_PropDrill = {
   setVideoPlayerState: Dispatch<SetStateAction<boolean>>;
   videoPlayerTrailer:
     | {
-        key: string;
-        label?: string | undefined;
-        value: Type_Tmdb_ApiCall_Union[];
-      }[]
+        title: string;
+        backdrop: string;
+        overview: string;
+        trailerObjData: {
+          key: string;
+          label?: string | undefined;
+          value: Type_Tmdb_ApiCall_Union[];
+        }[];
+      }
     | undefined;
 };
 
 const FDVideoPlayer = ({ videoPlayerState, setVideoPlayerState, videoPlayerTrailer }: Type_PropDrill) => {
-  return (
-    <section className='FDVideoPlayer'>
-      <FDVideoPlayerPanel />
-      <FDiFrame videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerTrailer={videoPlayerTrailer} />
-    </section>
-  );
+  if (videoPlayerTrailer)
+    return (
+      <section className='FDVideoPlayer'>
+        <FDVideoPlayerPanel title={videoPlayerTrailer.title} backdrop={videoPlayerTrailer.backdrop} overview={videoPlayerTrailer.overview} />
+        <FDiFrame videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerTrailer={videoPlayerTrailer.trailerObjData} />
+      </section>
+    );
 };
 export default FDVideoPlayer;

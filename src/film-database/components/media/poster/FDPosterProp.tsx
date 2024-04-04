@@ -10,7 +10,7 @@ import { Type_Tmdb_ApiCall_Union, Type_Tmdb_ApiCallMovieList_Obj } from '../../.
 
 type Type_PropDrill = {
   mapValue: Type_Tmdb_ApiCall_Union;
-  useVideoPlayer: (propertyId: number) => Promise<void>;
+  useVideoPlayer: (title: string, backdrop: string, overview: string, propId: number) => Promise<void>;
   grid: boolean;
 };
 
@@ -19,7 +19,7 @@ const FDPosterProp = ({ mapValue, useVideoPlayer, grid }: Type_PropDrill) => {
   return (
     <li className='FDMediaGrid__wrapper__ul__li' data-status={grid ? 'grid' : 'carousel'} key={value.id}>
       <article className='FDMediaGrid__wrapper__ul__li__article'>
-        <div className='FDMediaGrid__wrapper__ul__li__article__graphic' onClick={() => useVideoPlayer(value.id)}>
+        <div className='FDMediaGrid__wrapper__ul__li__article__graphic' onClick={() => useVideoPlayer(value.title, value.backdrop_path, value.overview, value.id)}>
           {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${value.poster_path}.svg`, alt: value.title as string })}
 
           <div className='FDMediaGrid__wrapper__ul__li__article__graphic__overlay'>

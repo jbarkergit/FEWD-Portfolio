@@ -10,13 +10,11 @@ import { Options } from 'youtube-player/dist/types';
 
 type Type_PropDrill = {
   videoPlayerState: boolean;
-  videoPlayerTrailer:
-    | {
-        key: string;
-        label?: string | undefined;
-        value: Type_Tmdb_ApiCall_Union[];
-      }[]
-    | undefined;
+  videoPlayerTrailer: {
+    key: string;
+    label?: string | undefined;
+    value: Type_Tmdb_ApiCall_Union[];
+  }[];
   setVideoPlayerState: Dispatch<SetStateAction<boolean>>;
 };
 

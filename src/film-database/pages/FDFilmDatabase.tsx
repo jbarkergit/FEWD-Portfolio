@@ -17,6 +17,7 @@ import FDVideoPlayer from '../components/player/FDVideoPlayer';
 const FDHomePage = () => {
   // Store cached data in state for component renders && pagination
   const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
+
   // Session Storage Data
   const userLocation = useLocation();
   const webStorageData: Type_Tmdb_useApiReturn_Obj[] | null = useFilmDatabaseWebStorage(userLocation).getData();
@@ -41,13 +42,13 @@ const FDHomePage = () => {
       const dataArr: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
         controller: controller,
         payload: [
-          // tmdbEndPoints.movie_lists.nowPlaying,
+          tmdbEndPoints.movie_lists.nowPlaying,
           // tmdbEndPoints.movie_lists.popular,
           // tmdbEndPoints.movie_lists.topRated,
           // tmdbEndPoints.movie_lists.upcoming,
           // tmdbEndPoints.movie_trending.trendingDay,
           // tmdbEndPoints.movie_trending.trendingWeek,
-          { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
+          // { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
         ],
       });
 
@@ -74,15 +75,31 @@ const FDHomePage = () => {
    * videoPlayerTrailer stores API data and is used to find trailers directly from YouTube opposed to alternative sources.
    */
   const [videoPlayerState, setVideoPlayerState] = useState<boolean>(true);
-  const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<{ key: string; label?: string | undefined; value: Type_Tmdb_ApiCall_Union[] }[]>();
+  const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<{
+    title: string;
+    backdrop: string;
+    overview: string;
+    trailerObjData: {
+      key: string;
+      label?: string | undefined;
+      value: Type_Tmdb_ApiCall_Union[];
+    }[];
+  }>();
 
-  const useVideoPlayer = async (propertyId: number): Promise<void> => {
+  const useVideoPlayer = async (title: string, backdrop: string, overview: string, propId: number): Promise<void> => {
     const controller: AbortController = new AbortController();
 
-    const trailerObj = await useTmdbApi({
+    const trailerObjData = await useTmdbApi({
       controller: controller,
-      payload: { tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos, trailer_id: { typeGuardKey: 'trailer_id', propValue: propertyId } },
+      payload: { tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos, trailer_id: { typeGuardKey: 'trailer_id', propValue: propId } },
     });
+
+    const trailerObj = {
+      title: title,
+      backdrop: backdrop,
+      overview: overview,
+      trailerObjData: trailerObjData,
+    };
 
     if (trailerObj) {
       setVideoPlayerTrailer(trailerObj);
