@@ -50,9 +50,9 @@
       }
       &__li {
         &[data-status='carousel'] {
-          width: calc(
-            ((100svw - var(--fd-padding-generic) * 2 - var(--fd-gap-mediaPoster) * (var(--fd-carousel-items-per-page) - 0.5))) /
-              (var(--fd-carousel-items-per-page) - 0.5)
+          height: calc(
+            ((100svw - 2 * var(--fd-gap-mediaPoster) - (var(--fd-carousel-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) / var(--fd-carousel-items-per-page)) /
+              0.66667
           );
         }
         aspect-ratio: 2/3;
