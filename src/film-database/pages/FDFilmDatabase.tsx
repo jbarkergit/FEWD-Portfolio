@@ -5,14 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 // Api Data
 import { tmdbEndPoints } from '../api/data/tmdbEndPoints';
 // Api Types
-import { Type_Tmdb_ApiCall_Union, Type_Tmdb_useApiReturn_Obj } from '../api/types/TmdbDataTypes';
+import { Type_Tmdb_useApiReturn_Obj } from '../api/types/TmdbDataTypes';
 // Api Hooks
 import { useTmdbApi } from '../api/hooks/useTmdbApi';
-import { useDiscoverGenre } from '../api/hooks/useDiscoverGenre';
 import { useFilmDatabaseWebStorage } from '../hooks/web-storage-api/useFilmDatabaseWebStorage';
 // Components
 import FDMediaGrid from '../components/media/FDMediaGrid';
-import FDVideoPlayer from '../components/player/FDVideoPlayer';
 
 const FDHomePage = () => {
   // Store cached data in state for component renders && pagination
@@ -52,11 +50,7 @@ const FDHomePage = () => {
         ],
       });
 
-      if (
-        !webStorageData ||
-        webStorageData.length < 2 ||
-        (dataArr && webStorageData.some((webStorageObj) => dataArr.some((dataArrObj) => dataArrObj?.key === webStorageObj?.key)))
-      ) {
+      if (!webStorageData || (dataArr && webStorageData.some((webStorageObj) => dataArr.some((dataArrObj) => dataArrObj?.key === webStorageObj?.key)))) {
         setTmdbDataArr(dataArr);
         useFilmDatabaseWebStorage(userLocation, dataArr).setData();
       } else {
@@ -68,52 +62,12 @@ const FDHomePage = () => {
     return () => controller.abort();
   }, []);
 
-  /** Video Player State
-   * This set of state variables enables the application to utilize a single YouTube iFrame component to produce trailer results for media.
-   * This component makes use of the react-youtube API to handle iFrames.
-   * videoPlayerState handles the component visibility
-   * videoPlayerTrailer stores API data and is used to find trailers directly from YouTube opposed to alternative sources.
-   */
-  const [videoPlayerState, setVideoPlayerState] = useState<boolean>(true);
-  const [videoPlayerTrailer, setVideoPlayerTrailer] = useState<{
-    title: string;
-    backdrop: string;
-    overview: string;
-    trailerObjData: {
-      key: string;
-      label?: string | undefined;
-      value: Type_Tmdb_ApiCall_Union[];
-    }[];
-  }>();
-
-  const useVideoPlayer = async (title: string, backdrop: string, overview: string, propId: number): Promise<void> => {
-    const controller: AbortController = new AbortController();
-
-    const trailerObjData = await useTmdbApi({
-      controller: controller,
-      payload: { tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos, trailer_id: { typeGuardKey: 'trailer_id', propValue: propId } },
-    });
-
-    const trailerObj = {
-      title: title,
-      backdrop: backdrop,
-      overview: overview,
-      trailerObjData: trailerObjData,
-    };
-
-    if (trailerObj) {
-      setVideoPlayerTrailer(trailerObj);
-      setVideoPlayerState(true);
-    }
-  };
-
   /** Component */
   return (
     <div className='filmDatabase'>
-      <FDVideoPlayer videoPlayerState={videoPlayerState} setVideoPlayerState={setVideoPlayerState} videoPlayerTrailer={videoPlayerTrailer} />
       <section>
         {tmdbDataArr.map((entry) => (
-          <FDMediaGrid dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} useVideoPlayer={useVideoPlayer} grid={false} key={uuidv4()} />
+          <FDMediaGrid dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} grid={false} key={uuidv4()} />
         ))}
       </section>
     </div>
