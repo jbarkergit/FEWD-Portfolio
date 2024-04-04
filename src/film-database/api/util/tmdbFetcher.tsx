@@ -21,9 +21,10 @@ export const tmdbFetcher = async ({ controller, keyValuePairEndPoint, parameters
   const apiKey = import.meta.env.VITE_TMDB_API_KEY;
   let url: string;
 
+  /** Append to Response is not available on TMDB pre-made lists; therefore, objects such as trailers need to be handled seperately */
   switch (true) {
     case parametersObj?.typeGuardKey === 'movie_id':
-      url = `${keyValuePairEndPoint?.replace('{movie_id}', (parametersObj as unknown as Type_Tmdb_MovieIdParam_Obj).propValue)}?api_key=${apiKey}&append_to_response=videos`;
+      url = `${keyValuePairEndPoint?.replace('{movie_id}', (parametersObj as unknown as Type_Tmdb_MovieIdParam_Obj).propValue)}?api_key=${apiKey}`;
       break;
 
     case parametersObj?.typeGuardKey === 'person_id':
@@ -41,7 +42,6 @@ export const tmdbFetcher = async ({ controller, keyValuePairEndPoint, parameters
       break;
 
     default:
-      // Identify if the parameter is being passed correctly || is undefined
       url = `${keyValuePairEndPoint}?api_key=${apiKey}`;
       break;
   }
