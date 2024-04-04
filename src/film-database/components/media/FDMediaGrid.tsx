@@ -63,7 +63,7 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, useVideoPlayer, grid }: Ty
           break;
 
         default:
-          nextChildsIndex = (setIndex.currIndex - 1) * 8 - 2;
+          nextChildsIndex = (setIndex.currIndex - 1) * 8 - 1;
           break;
       }
 
