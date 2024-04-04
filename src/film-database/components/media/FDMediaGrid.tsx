@@ -11,11 +11,10 @@ type Type_PropDrill = {
   dataKey: string;
   dataLabel?: string | undefined;
   dataValue: Type_Tmdb_ApiCall_Union[];
-  useVideoPlayer: (title: string, backdrop: string, overview: string, propId: number) => Promise<void>;
   grid: boolean;
 };
 
-const FDMediaGrid = ({ dataKey, dataLabel, dataValue, useVideoPlayer, grid }: Type_PropDrill) => {
+const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) => {
   const [setIndex, setSetIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
 
   /** Data Pagination && Carousel Navigation */
@@ -113,8 +112,8 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, useVideoPlayer, grid }: Ty
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'}>
         <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
           {grid
-            ? dataValue.map((values) => <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} grid={grid} key={uuidv4()} />)
-            : paginatedData.map((values) => <FDPosterProp mapValue={values} useVideoPlayer={useVideoPlayer} grid={grid} key={uuidv4()} />)}
+            ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} key={uuidv4()} />)
+            : paginatedData.map((values) => <FDPosterProp mapValue={values} grid={grid} key={uuidv4()} />)}
         </ul>
         {grid ? null : <FDCarouselOverlay posterDimensions={posterDimensions} tmdbArrLength={dataValue.length - 1} setSetIndex={setSetIndex} />}
       </div>
