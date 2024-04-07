@@ -39,21 +39,39 @@
         grid-column: left-start/right-end;
         grid-row: 1;
       }
-      &[data-status='grid'] {
-        display: grid;
-        grid-template-columns: repeat(
-          auto-fit,
-          calc((100% - (var(--fd-gap-mediaPoster) * (var(--fd-flat-grid-items-per-page) - 1))) / var(--fd-flat-grid-items-per-page))
-        );
-        grid-auto-rows: 1fr;
-        justify-content: center;
-      }
+      // &[data-status='grid'] {
+      //   display: grid;
+      //   grid-template-columns: repeat(
+      //     auto-fit,
+      //     calc((100% - (var(--fd-gap-mediaPoster) * (var(--fd-flat-grid-items-per-page) - 1))) / var(--fd-flat-grid-items-per-page))
+      //   );
+      //   grid-auto-rows: 1fr;
+      //   justify-content: center;
+      // }
       &__li {
+        overflow: clip;
         &[data-status='carousel'] {
           height: calc(
             ((100svw - 2 * var(--fd-gap-mediaPoster) - (var(--fd-carousel-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) / var(--fd-carousel-items-per-page)) /
               0.66667
           );
+        }
+        // &[data-status='grid'] {
+        //   height: calc(
+        //     ((100svw - 2 * var(--fd-gap-mediaPoster) - (var(--fd-flat-grid-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) / var(--fd-flat-grid-items-per-page)) /
+        //       0.66667
+        //   );
+        // }
+        &:hover {
+          aspect-ratio: 16/9;
+          transform-origin: bottom;
+          & .FDMediaGrid__wrapper__ul__li__article__graphic {
+            opacity: 0;
+          }
+          & .FDMediaGrid__wrapper__ul__li__article__trailer {
+            opacity: 1;
+            transition: ease-in-out 0.22s opacity;
+          }
         }
         aspect-ratio: 2/3;
         /* Scroll snapping */
@@ -66,57 +84,71 @@
           aspect-ratio: inherit;
         }
         &__article {
+          position: relative;
           display: flex;
           flex-direction: column;
           row-gap: var(--fd-gap-informationalDetails);
+          cursor: pointer;
+          & > * {
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
           &__graphic {
-            position: relative;
-            z-index: 1;
-            background-color: var(--fd-backgroundColor-fallback);
-            border-radius: var(--fd-borderRadius-mediaPoster);
-            & figure picture img,
-            figure picture svg {
-              transition: ease-in-out 0.22s filter;
+            z-index: 3;
+            & figure picture,
+            & figure picture img {
               border-radius: var(--fd-borderRadius-mediaPoster);
             }
-            &__overlay {
-              position: absolute;
-              top: 0;
-              left: 0;
-              z-index: 2;
-              width: 100%;
-              aspect-ratio: 2/3;
-              opacity: 0;
-              transition: ease-in-out 0.22s opacity;
-              cursor: pointer;
-              & button {
-                position: absolute;
-                height: fit-content;
-                transform: translate(-50%, -50%);
+          }
+          &__poster,
+          &__trailer {
+            height: 100%;
+            aspect-ratio: 16/9;
+            background-color: hsla(0, 0%, 0%, 0.9);
+          }
+          &__poster {
+            z-index: 2;
+            &__hgroup {
+              overflow-wrap: break-word;
+              &--h2 {
+                font-family: 'Satoshi-Bold';
+                font-size: clamp(16px, 100% + 1vw, 20px);
               }
-              &--play {
-                inset: 50% 50%;
-                width: 3.2em;
-                pointer-events: none;
+              &--h3 {
+                font-family: 'Satoshi-Medium';
+                font-size: clamp(14px, 100% + 1vw, 16px);
               }
-              &--moreInfo {
-                inset: 6% 94%;
-                width: calc(3.2em / 3);
-              }
-              & button svg {
-                color: white;
+              & figure picture img {
               }
             }
           }
-          &__hgroup {
-            overflow-wrap: break-word;
-            &--h2 {
-              font-family: 'Satoshi-Bold';
-              font-size: clamp(16px, 100% + 1vw, 20px);
+          &__trailer {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            & > * {
+              width: inherit;
+              height: inherit;
+              aspect-ratio: inherit;
             }
-            &--h3 {
-              font-family: 'Satoshi-Medium';
-              font-size: clamp(14px, 100% + 1vw, 16px);
+            &--h2 {
+              display: none;
+            }
+            &__wrapper {
+              position: absolute;
+              top: 0;
+              right: 0;
+              &--iframe {
+                width: inherit;
+                height: inherit;
+                aspect-ratio: inherit;
+                background-color: hsl(0, 0%, 0%);
+                // As per YouTube Player API Recommendations: minimum 480 pixels wide and 270 pixels tall.
+                min-width: 480px;
+                min-height: 270px;
+                aspect-ratio: 16/9;
+              }
             }
           }
         }
@@ -126,34 +158,34 @@
       position: absolute;
       top: 0;
       left: 0;
-      z-index: 2;
       width: 100%;
       pointer-events: none;
       opacity: 0;
       &--button {
         position: absolute;
+        z-index: 5;
         width: calc(((100% + var(--fd-padding-generic)) / var(--fd-carousel-items-per-page) - var(--fd-gap-mediaPoster)) / 3.1);
         height: 100%;
+        background-color: hsla(217, 100%, 3%, 0.5);
         pointer-events: all;
         & svg {
-          width: 2.8em;
-          height: 2.8em;
+          width: 3em;
+          height: 3em;
           color: white;
         }
       }
       &--button:nth-of-type(1) {
         left: 0;
+        border-top-right-radius: var(--fd-borderRadius-mediaPoster);
+        border-bottom-right-radius: var(--fd-borderRadius-mediaPoster);
       }
       &--button:nth-of-type(2) {
         right: 0;
+        border-top-left-radius: var(--fd-borderRadius-mediaPoster);
+        border-bottom-left-radius: var(--fd-borderRadius-mediaPoster);
       }
     }
   }
-}
-
-// transform graphic filter on hover
-.FDMediaGrid__wrapper__ul__li__article__graphic:hover figure picture img {
-  filter: brightness(65%);
 }
 
 // transform graphic overlay on hover
@@ -165,4 +197,5 @@
 // navigation overlay on track hover
 .FDMediaGrid__wrapper:hover .FDMediaGrid__wrapper__navigation {
   opacity: 1;
+  transition: ease-in-out 0.22s opacity;
 }

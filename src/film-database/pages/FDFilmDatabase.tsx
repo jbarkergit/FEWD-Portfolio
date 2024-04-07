@@ -11,6 +11,8 @@ import { useTmdbApi } from '../api/hooks/useTmdbApi';
 import { useFilmDatabaseWebStorage } from '../hooks/web-storage-api/useFilmDatabaseWebStorage';
 // Components
 import FDMediaGrid from '../components/media/FDMediaGrid';
+import FDHeader from '../components/navigation/header/FDHeader';
+import FDFooter from '../components/navigation/footer/FDFooter';
 
 const FDHomePage = () => {
   // Store cached data in state for component renders && pagination
@@ -65,11 +67,13 @@ const FDHomePage = () => {
   /** Component */
   return (
     <div className='filmDatabase'>
+      <FDHeader />
       <section>
         {tmdbDataArr.map((entry) => (
           <FDMediaGrid dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} grid={false} key={uuidv4()} />
         ))}
       </section>
+      {/* <FDFooter /> */}
     </div>
   );
 };
