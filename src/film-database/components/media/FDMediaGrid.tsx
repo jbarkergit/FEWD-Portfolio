@@ -105,6 +105,42 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
     }
   }, [btnNavIndex]);
 
+  /** KEYBOARD NAVIGATION
+   * #1. Index handler
+   * #2. Dom manipulation
+   */
+  const [activeChild, setActiveChild] = useState<number>(0);
+
+  useEffect(() => {
+    const keyboardStrokeHandler = (event: KeyboardEvent) => {
+      switch (true) {
+        case event.key === 'ArrowLeft':
+          setActiveChild(activeChild === 0 ? paginatedData.length : activeChild - 1);
+          break;
+
+        case event.key === 'ArrowRight':
+          setActiveChild(activeChild === paginatedData.length ? 0 : activeChild + 1);
+          break;
+
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', keyboardStrokeHandler);
+    return () => window.removeEventListener('keydown', keyboardStrokeHandler);
+  }, []);
+
+  useEffect(() => {
+    const carouselChildren: HTMLCollection | undefined = carouselUl.current?.children;
+    const activeNode = carouselChildren ? (carouselChildren[activeChild] as HTMLLIElement) : null;
+
+    if (carouselUl.current && carouselChildren && activeNode) {
+      activeNode.scrollTo({ left: activeNode.offsetLeft - carouselUl.current?.offsetLeft, behavior: 'smooth' });
+      activeNode.setAttribute('data-trailer-status', 'active');
+    }
+  }, [activeChild]);
+
   /** INFINITE LOOP BUTTON NAVIGATION
    * [EMPLOYED] Animation && End of Loop Wrapping: CSS Scroll-Snapping && JavaScript Scroll Methods
    * Requires perfect min max boundaries for indexing
@@ -152,43 +188,7 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
         carouselUl.current.scrollTo({ left: scrollDistance, behavior: 'smooth' });
       }
     }
-  }, [paginatedData]);
-
-  /** KEYBOARD NAVIGATION
-   * #1. Index handler
-   * #2. Dom manipulation
-   */
-  const [activeChild, setActiveChild] = useState<number>(0);
-
-  useEffect(() => {
-    const keyboardStrokeHandler = (event: KeyboardEvent) => {
-      switch (true) {
-        case event.key === 'ArrowLeft':
-          setActiveChild(activeChild === 0 ? paginatedData.length : activeChild - 1);
-          break;
-
-        case event.key === 'ArrowRight':
-          setActiveChild(activeChild === paginatedData.length ? 0 : activeChild + 1);
-          break;
-
-        default:
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', keyboardStrokeHandler);
-    return () => window.removeEventListener('keydown', keyboardStrokeHandler);
-  }, []);
-
-  useEffect(() => {
-    const carouselChildren: HTMLCollection | undefined = carouselUl.current?.children;
-    const activeNode = carouselChildren ? (carouselChildren[activeChild] as HTMLLIElement) : null;
-
-    if (carouselUl.current && carouselChildren && activeNode) {
-      activeNode.scrollTo({ left: activeNode.offsetLeft - carouselUl.current?.offsetLeft, behavior: 'smooth' });
-      activeNode.setAttribute('data-trailer-status', 'active');
-    }
-  }, [activeChild]);
+  }, [paginatedData, activeChild]);
 
   /** VIDEO PLAYER STATE
    * This set of state variables enables the application to utilize a single YouTube iFrame component to produce trailer results for media.
