@@ -36,7 +36,6 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
    * Employment of Mutation Observer is required to ensure our observations are concurrent
    */
   const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
-  useEffect(() => console.log(visibleNodesCount), [visibleNodesCount]);
 
   useEffect(() => {
     const observer: IntersectionObserver = new IntersectionObserver(
@@ -118,24 +117,31 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
    * Set distances require calculations that account for padding, gap and conditions for the first && last index
    * Single child distances require dom node width && gap size
    */
+
+  // Last possible index depends on visible nodes in carouselUl.current (visibleNodesCount)
+  const lastIndexCalc: number = Math.ceil(dataValue.length / visibleNodesCount);
+  const [lastPossibleIndex, setLastPossibleIndex] = useState<number>(lastIndexCalc);
+  useEffect(() => setLastPossibleIndex(lastIndexCalc), [visibleNodesCount]);
+  useEffect(() => console.log(lastPossibleIndex), [lastPossibleIndex]);
+
   useEffect(() => {
     if (carouselUl.current) {
-      const firstPossibleIndex: boolean = btnNavIndex.currIndex === 1;
-      const lastPossibleIndex: boolean = btnNavIndex.currIndex === Math.ceil(dataValue.length / visibleNodesCount);
+      const isFirstIndex: boolean = btnNavIndex.currIndex === 1;
+      const isLastIndex: boolean = btnNavIndex.currIndex === lastPossibleIndex;
 
       let nextChildsIndex: number;
 
       switch (true) {
-        case firstPossibleIndex:
+        case isFirstIndex:
           nextChildsIndex = 0;
           break;
 
-        case lastPossibleIndex:
+        case isLastIndex:
           nextChildsIndex = dataValue.length - 1;
           break;
 
         default:
-          nextChildsIndex = (btnNavIndex.currIndex - 1) * visibleNodesCount - 1;
+          nextChildsIndex = (btnNavIndex.currIndex - 1) * lastPossibleIndex - 1;
           break;
       }
 
@@ -240,7 +246,14 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
             ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} key={uuidv4()} />)
             : paginatedData.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} key={uuidv4()} />)}
         </ul>
-        {grid ? null : <FDCarouselOverlay posterDimensions={posterDimensions} tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} />}
+        {grid ? null : (
+          <FDCarouselOverlay
+            posterDimensions={posterDimensions}
+            tmdbArrLength={dataValue.length - 1}
+            setBtnNavIndex={setBtnNavIndex}
+            visibleNodesCount={visibleNodesCount}
+          />
+        )}
       </div>
     </section>
   );
