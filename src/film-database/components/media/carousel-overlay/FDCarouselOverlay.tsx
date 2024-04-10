@@ -15,9 +15,10 @@ type Type_PropDrill = {
       currIndex: number;
     }>
   >;
+  visibleNodesCount: number;
 };
 
-const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setBtnNavIndex }: Type_PropDrill) => {
+const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setBtnNavIndex, visibleNodesCount }: Type_PropDrill) => {
   const navigationOverlay = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -26,8 +27,7 @@ const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setBtnNavIndex }: 
     }
   }, [posterDimensions]);
 
-  const maxIndex: number = Math.floor(tmdbArrLength / 8) + 1;
-  const minIndex: number = 1;
+  const minMaxIndex = { min: 1, max: Math.ceil(tmdbArrLength / visibleNodesCount) };
 
   return (
     <nav className='FDMediaGrid__wrapper__navigation' ref={navigationOverlay}>
@@ -38,7 +38,7 @@ const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setBtnNavIndex }: 
           setBtnNavIndex((prevState) => {
             return {
               prevIndex: prevState.currIndex,
-              currIndex: prevState.currIndex === minIndex ? maxIndex : prevState.currIndex - 1,
+              currIndex: prevState.currIndex === minMaxIndex.min ? minMaxIndex.max : prevState.currIndex - 1,
             };
           });
         }}>
@@ -52,7 +52,7 @@ const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setBtnNavIndex }: 
           setBtnNavIndex((prevState) => {
             return {
               prevIndex: prevState.currIndex,
-              currIndex: prevState.currIndex === maxIndex ? minIndex : prevState.currIndex + 1,
+              currIndex: prevState.currIndex === minMaxIndex.max ? minMaxIndex.min : prevState.currIndex + 1,
             };
           });
         }}>
