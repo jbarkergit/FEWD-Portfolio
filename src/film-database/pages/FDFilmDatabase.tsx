@@ -20,7 +20,7 @@ const FDHomePage = () => {
 
   // Session Storage Data
   const userLocation = useLocation();
-  const webStorageData: Type_Tmdb_useApiReturn_Obj[] | null = useFilmDatabaseWebStorage({ userLocation: userLocation, cacheKey: 'movieCache' }).getData();
+  const webStorageData = useFilmDatabaseWebStorage({ userLocation: userLocation, cacheKey: 'movieCache' }).getData() as Type_Tmdb_useApiReturn_Obj[] | null;
 
   /** Network Traffic Performance technique notes
    * API Memoization may not be the best technique here, given you'd still need to make an API call to ensure data is up to date.
