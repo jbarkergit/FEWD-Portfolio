@@ -122,7 +122,6 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
   const lastIndexCalc: number = Math.ceil(dataValue.length / visibleNodesCount);
   const [lastPossibleIndex, setLastPossibleIndex] = useState<number>(lastIndexCalc);
   useEffect(() => setLastPossibleIndex(lastIndexCalc), [visibleNodesCount]);
-  useEffect(() => console.log(lastPossibleIndex), [lastPossibleIndex]);
 
   useEffect(() => {
     if (carouselUl.current) {
@@ -165,11 +164,11 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
     const keyboardStrokeHandler = (event: KeyboardEvent) => {
       switch (true) {
         case event.key === 'ArrowLeft':
-          setActiveChild(activeChild === 0 ? dataValue.length : activeChild - 1);
+          setActiveChild(activeChild === 0 ? paginatedData.length : activeChild - 1);
           break;
 
         case event.key === 'ArrowRight':
-          setActiveChild(activeChild === dataValue.length ? 0 : activeChild + 1);
+          setActiveChild(activeChild === paginatedData.length ? 0 : activeChild + 1);
           break;
 
         default:
