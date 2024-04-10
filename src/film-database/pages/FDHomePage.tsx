@@ -9,6 +9,7 @@ import { Type_Tmdb_useApiReturn_Obj } from '../api/types/TmdbDataTypes';
 // Api Hooks
 import { useTmdbApi } from '../api/hooks/useTmdbApi';
 import { useFilmDatabaseWebStorage } from '../hooks/web-storage-api/useFilmDatabaseWebStorage';
+import { useDiscoverGenre } from '../api/hooks/useDiscoverGenre';
 // Components
 import FDMediaGrid from '../components/media/FDMediaGrid';
 import FDHeader from '../components/navigation/header/FDHeader';
@@ -39,22 +40,41 @@ const FDHomePage = () => {
     const controller: AbortController = new AbortController();
 
     (async () => {
-      const dataArr: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
+      const nowPlaying: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
         controller: controller,
-        payload: [
-          tmdbEndPoints.movie_lists.nowPlaying,
-          // tmdbEndPoints.movie_lists.popular,
-          // tmdbEndPoints.movie_lists.topRated,
-          // tmdbEndPoints.movie_lists.upcoming,
-          // tmdbEndPoints.movie_trending.trendingDay,
-          // tmdbEndPoints.movie_trending.trendingWeek,
-          // { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
-        ],
+        payload: tmdbEndPoints.movie_lists.nowPlaying,
       });
 
-      if (!webStorageData || (dataArr && webStorageData.some((webStorageObj) => dataArr.some((dataArrObj) => dataArrObj?.key === webStorageObj?.key)))) {
-        setTmdbDataArr(dataArr);
-        useFilmDatabaseWebStorage({ userLocation: userLocation, data: dataArr, cacheKey: 'movieCache' }).setData();
+      const prefabs: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
+        controller: controller,
+        payload: [tmdbEndPoints.movie_lists.popular, tmdbEndPoints.movie_lists.topRated, tmdbEndPoints.movie_lists.upcoming],
+      });
+
+      const trending: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
+        controller: controller,
+        payload: [tmdbEndPoints.movie_trending.trendingDay, tmdbEndPoints.movie_trending.trendingWeek],
+      });
+
+      // const discover: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
+      //   controller: controller,
+      //   payload: { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
+      // });
+
+      const mergedFetchedData = [...nowPlaying, ...prefabs, ...trending];
+
+      if (!webStorageData || webStorageData.some((webStorageObj) => mergedFetchedData.some((item) => webStorageObj.key === item.key))) {
+        setTmdbDataArr((prevData) => {
+          if (!prevData) return [...mergedFetchedData];
+          else return [...prevData, ...mergedFetchedData];
+        });
+
+        [{ nowPlaying: nowPlaying, prefabs: prefabs, trending: trending }].forEach((keyValuePair) => {
+          Object.keys(keyValuePair).forEach((key) => {
+            Object.values(keyValuePair).forEach((value) => {
+              useFilmDatabaseWebStorage({ userLocation: userLocation, data: value, cacheKey: key }).setData();
+            });
+          });
+        });
       } else {
         setTmdbDataArr(webStorageData);
       }
