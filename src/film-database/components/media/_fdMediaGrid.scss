@@ -96,17 +96,6 @@
             transition: ease-in-out 0.22s opacity;
           }
         }
-        &:hover {
-          aspect-ratio: 16/9;
-          transform-origin: bottom;
-          & .FDMediaGrid__wrapper__ul__li__article__graphic {
-            opacity: 0;
-          }
-          & .FDMediaGrid__wrapper__ul__li__article__trailer {
-            opacity: 1;
-            transition: ease-in-out 0.22s opacity;
-          }
-        }
         aspect-ratio: 2/3;
         /* Scroll snapping */
         scroll-snap-align: center;
@@ -133,56 +122,6 @@
             & figure picture,
             & figure picture img {
               border-radius: var(--fd-borderRadius-mediaPoster);
-            }
-          }
-          &__poster,
-          &__trailer {
-            height: 100%;
-            aspect-ratio: 16/9;
-            background-color: hsla(0, 0%, 0%, 0.9);
-          }
-          &__poster {
-            z-index: 2;
-            &__hgroup {
-              overflow-wrap: break-word;
-              &--h2 {
-                font-family: 'Satoshi-Bold';
-                font-size: clamp(16px, 100% + 1vw, 20px);
-              }
-              &--h3 {
-                font-family: 'Satoshi-Medium';
-                font-size: clamp(14px, 100% + 1vw, 16px);
-              }
-              & figure picture img {
-              }
-            }
-          }
-          &__trailer {
-            position: relative;
-            z-index: 1;
-            opacity: 0;
-            & > * {
-              width: inherit;
-              height: inherit;
-              aspect-ratio: inherit;
-            }
-            &--h2 {
-              display: none;
-            }
-            &__wrapper {
-              position: absolute;
-              top: 0;
-              right: 0;
-              &--iframe {
-                width: inherit;
-                height: inherit;
-                aspect-ratio: inherit;
-                background-color: hsl(0, 0%, 0%);
-                // As per YouTube Player API Recommendations: minimum 480 pixels wide and 270 pixels tall.
-                min-width: 480px;
-                min-height: 270px;
-                aspect-ratio: 16/9;
-              }
             }
           }
         }
