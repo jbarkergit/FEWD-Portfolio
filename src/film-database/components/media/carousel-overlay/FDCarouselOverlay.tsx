@@ -9,7 +9,7 @@ type Type_PropDrill = {
     height: number | undefined;
   };
   tmdbArrLength: number;
-  setSetIndex: Dispatch<
+  setBtnNavIndex: Dispatch<
     SetStateAction<{
       prevIndex: number;
       currIndex: number;
@@ -17,7 +17,7 @@ type Type_PropDrill = {
   >;
 };
 
-const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setSetIndex }: Type_PropDrill) => {
+const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setBtnNavIndex }: Type_PropDrill) => {
   const navigationOverlay = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setSetIndex }: Typ
         className='FDMediaGrid__wrapper__navigation--button'
         aria-label='Show Previous'
         onClick={() => {
-          setSetIndex((prevState) => {
+          setBtnNavIndex((prevState) => {
             return {
               prevIndex: prevState.currIndex,
               currIndex: prevState.currIndex === minIndex ? maxIndex : prevState.currIndex - 1,
@@ -49,7 +49,7 @@ const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setSetIndex }: Typ
         className='FDMediaGrid__wrapper__navigation--button'
         aria-label='Show More'
         onClick={() => {
-          setSetIndex((prevState) => {
+          setBtnNavIndex((prevState) => {
             return {
               prevIndex: prevState.currIndex,
               currIndex: prevState.currIndex === maxIndex ? minIndex : prevState.currIndex + 1,
