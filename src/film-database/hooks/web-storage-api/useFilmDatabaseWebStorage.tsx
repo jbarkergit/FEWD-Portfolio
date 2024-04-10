@@ -8,7 +8,7 @@ export type Type_useFilmDatabaseWebStorage_Obj = {
 
 interface Type_Tmdb_useWebStorage_Interface {
   userLocation: any;
-  cacheKey: 'movieCache' | 'trailerCache';
+  cacheKey: 'movieCache' | 'trailerCache' | string;
   data?: Type_Tmdb_useApiReturn_Obj[] | Type_useFilmDatabaseWebStorage_Obj[];
 }
 
