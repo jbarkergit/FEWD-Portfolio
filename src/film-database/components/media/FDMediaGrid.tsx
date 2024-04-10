@@ -105,42 +105,6 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
     }
   }, [btnNavIndex]);
 
-  /** KEYBOARD NAVIGATION
-   * #1. Index handler
-   * #2. Dom manipulation
-   */
-  const [activeChild, setActiveChild] = useState<number>(0);
-
-  useEffect(() => {
-    const keyboardStrokeHandler = (event: KeyboardEvent) => {
-      switch (true) {
-        case event.key === 'ArrowLeft':
-          setActiveChild(activeChild === 0 ? paginatedData.length : activeChild - 1);
-          break;
-
-        case event.key === 'ArrowRight':
-          setActiveChild(activeChild === paginatedData.length ? 0 : activeChild + 1);
-          break;
-
-        default:
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', keyboardStrokeHandler);
-    return () => window.removeEventListener('keydown', keyboardStrokeHandler);
-  }, []);
-
-  useEffect(() => {
-    const carouselChildren: HTMLCollection | undefined = carouselUl.current?.children;
-    const activeNode = carouselChildren ? (carouselChildren[activeChild] as HTMLLIElement) : null;
-
-    if (carouselUl.current && carouselChildren && activeNode) {
-      activeNode.scrollTo({ left: activeNode.offsetLeft - carouselUl.current?.offsetLeft, behavior: 'smooth' });
-      activeNode.setAttribute('data-trailer-status', 'active');
-    }
-  }, [activeChild]);
-
   /** INFINITE LOOP BUTTON NAVIGATION
    * [EMPLOYED] Animation && End of Loop Wrapping: CSS Scroll-Snapping && JavaScript Scroll Methods
    * Requires perfect min max boundaries for indexing
@@ -188,7 +152,7 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
         carouselUl.current.scrollTo({ left: scrollDistance, behavior: 'smooth' });
       }
     }
-  }, [paginatedData, activeChild]);
+  }, [paginatedData]);
 
   /** VIDEO PLAYER STATE
    * This set of state variables enables the application to utilize a single YouTube iFrame component to produce trailer results for media.
@@ -197,10 +161,10 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
    */
   const [trailerCache, setTrailerCache] = useState<Type_useFilmDatabaseWebStorage_Obj[]>();
 
-  useEffect(() => {
+  const useFetchTrailer = (index: number) => {
     const controller: AbortController = new AbortController();
     const cachedTrailers = useFilmDatabaseWebStorage({ userLocation: userLocation, cacheKey: 'trailerCache' }).getData() as Type_useFilmDatabaseWebStorage_Obj[];
-    const isCachedTrailer: boolean = cachedTrailers?.some((obj) => obj.trailer_id === dataValue[activeChild].id);
+    const isCachedTrailer: boolean = cachedTrailers?.some((obj) => obj.trailer_id === index);
 
     if (!isCachedTrailer) {
       (async (): Promise<void> => {
@@ -208,13 +172,13 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
           controller: controller,
           payload: {
             tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos,
-            trailer_id: { typeGuardKey: 'trailer_id', propValue: `${dataValue[activeChild].id}` },
+            trailer_id: { typeGuardKey: 'trailer_id', propValue: `${index}` },
           } as unknown as Type_Tmdb_OptParamloadTrailer_Obj,
         });
 
         const trailerObj: Type_useFilmDatabaseWebStorage_Obj[] = [
           {
-            trailer_id: dataValue[activeChild].id,
+            trailer_id: index,
             trailer: (trailerObjData as Type_Tmdb_ApiCallTrailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer'),
           },
         ];
@@ -231,7 +195,7 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
     } else {
       setTrailerCache(cachedTrailers);
     }
-  }, [activeChild]);
+  };
 
   /** Component */
   return (
@@ -242,8 +206,10 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'} ref={carouselWrapper}>
         <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
           {grid
-            ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} key={uuidv4()} />)
-            : paginatedData.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} key={uuidv4()} />)}
+            ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
+            : paginatedData.map((values) => (
+                <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} useFetchTrailer={useFetchTrailer} key={uuidv4()} />
+              ))}
         </ul>
         {grid ? null : (
           <FDCarouselOverlay
