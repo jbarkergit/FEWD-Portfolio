@@ -22,13 +22,8 @@ type Type_PropDrill = {
 
 const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) => {
   const userLocation = useLocation();
-
-  /** Refs */
   const carouselWrapper = useRef<HTMLDivElement>(null);
   const carouselUl = useRef<HTMLUListElement>(null);
-
-  /** Button Navigation State Index */
-  const [btnNavIndex, setBtnNavIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
 
   /** Carousel Visible Nodes State
    * Employed observers to watch for visible children nodes of carouselUl.current
@@ -62,37 +57,9 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
     };
   }, []);
 
-  /** Update navigation overlay button height dynamically
-   * Due to the informational footer, I'm opting to use JavaScript to set heights of the buttons in order to prevent any potential visual mishaps.
-   * Due to HTML structure, there isn't an easy way to pass refs upwards; therefore, I opted to drill dom nodes (I understand this isn't the best practice)
-   * Note: Temporary until I finish HTML structure -- WILL replace with resize Observer OR forwardRef
-   */
-  const [posterDimensions, setPosterDimensions] = useState<{ width: number | undefined; height: number | undefined }>({ width: undefined, height: undefined });
-
-  useEffect(() => {
-    const updatePosterDimensions = () => {
-      if (carouselUl.current) {
-        const childrenNestOne = carouselUl.current.children[0] as HTMLLIElement | undefined;
-        if (!childrenNestOne) return;
-
-        const childrenNestTwo = childrenNestOne.children[0] as HTMLElement | undefined;
-        if (!childrenNestTwo) return;
-
-        const childrenNestThree = childrenNestTwo.children[0] as HTMLDivElement | undefined;
-        if (!childrenNestThree) return;
-
-        const posterOverlayRect: DOMRect = childrenNestThree.getBoundingClientRect();
-        setPosterDimensions({ width: posterOverlayRect?.width, height: posterOverlayRect?.height });
-      }
-    };
-
-    updatePosterDimensions(); // Initial height
-    window.addEventListener('resize', updatePosterDimensions);
-    return () => window.removeEventListener('resize', updatePosterDimensions);
-  }, [carouselUl.current]);
-
   /** Data Pagination: Pushes data into state when setIndex changes (the user navigates) */
   const [paginatedData, setPaginatedData] = useState<Type_Tmdb_ApiCall_Union[]>([]);
+  const [btnNavIndex, setBtnNavIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
 
   useEffect(() => {
     if (!grid) {
@@ -206,19 +173,10 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'} ref={carouselWrapper}>
         <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
           {grid
-            ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
-            : paginatedData.map((values) => (
-                <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} useFetchTrailer={useFetchTrailer} key={uuidv4()} />
-              ))}
+            ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} key={uuidv4()} />)
+            : paginatedData.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} key={uuidv4()} />)}
         </ul>
-        {grid ? null : (
-          <FDCarouselOverlay
-            posterDimensions={posterDimensions}
-            tmdbArrLength={dataValue.length - 1}
-            setBtnNavIndex={setBtnNavIndex}
-            visibleNodesCount={visibleNodesCount}
-          />
-        )}
+        {grid ? null : <FDCarouselOverlay tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />}
       </div>
     </section>
   );

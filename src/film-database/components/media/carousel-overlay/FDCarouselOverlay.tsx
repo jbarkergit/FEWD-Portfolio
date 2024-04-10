@@ -1,13 +1,9 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import MaterialLeftCaret from '../../../assets/svg-icons/MaterialLeftCaret';
 import MaterialRightCaret from '../../../assets/svg-icons/MaterialRightCaret';
 import useCreatePicture from '../../../hooks/component-creation/useCreatePicture';
 
 type Type_PropDrill = {
-  posterDimensions: {
-    width: number | undefined;
-    height: number | undefined;
-  };
   tmdbArrLength: number;
   setBtnNavIndex: Dispatch<
     SetStateAction<{
@@ -18,19 +14,11 @@ type Type_PropDrill = {
   visibleNodesCount: number;
 };
 
-const FDCarouselOverlay = ({ posterDimensions, tmdbArrLength, setBtnNavIndex, visibleNodesCount }: Type_PropDrill) => {
-  const navigationOverlay = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (posterDimensions.height && navigationOverlay.current) {
-      navigationOverlay.current.style.height = `${posterDimensions.height}px`;
-    }
-  }, [posterDimensions]);
-
+const FDCarouselOverlay = ({ tmdbArrLength, setBtnNavIndex, visibleNodesCount }: Type_PropDrill) => {
   const minMaxIndex = { min: 1, max: Math.ceil(tmdbArrLength / visibleNodesCount) };
 
   return (
-    <nav className='FDMediaGrid__wrapper__navigation' ref={navigationOverlay}>
+    <nav className='FDMediaGrid__wrapper__navigation'>
       <button
         className='FDMediaGrid__wrapper__navigation--button'
         aria-label='Show Previous'
