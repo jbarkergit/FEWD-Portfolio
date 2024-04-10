@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 // Lib
 import { v4 as uuidv4 } from 'uuid';
 // API Data
@@ -7,11 +8,10 @@ import { tmdbEndPoints } from '../../api/data/tmdbEndPoints';
 import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_ApiCall_Union, Type_Tmdb_OptParamloadTrailer_Obj } from '../../api/types/TmdbDataTypes';
 // API Hooks
 import { useTmdbApi } from '../../api/hooks/useTmdbApi';
+import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../../hooks/web-storage-api/useFilmDatabaseWebStorage';
 // Components
 import FDCarouselOverlay from './carousel-overlay/FDCarouselOverlay';
 import FDPosterProp from './poster/FDPosterProp';
-import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../../hooks/web-storage-api/useFilmDatabaseWebStorage';
-import { useLocation } from 'react-router-dom';
 
 type Type_PropDrill = {
   dataKey: string;
@@ -92,17 +92,15 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
 
   useEffect(() => {
     if (carouselUl.current) {
-      const isFirstIndex: boolean = btnNavIndex.currIndex === 1;
-      const isLastIndex: boolean = btnNavIndex.currIndex === lastPossibleIndex;
-
+      const posIndex = { isFirstIndex: btnNavIndex.currIndex === 1, isLastIndex: btnNavIndex.currIndex === lastPossibleIndex };
       let nextChildsIndex: number;
 
       switch (true) {
-        case isFirstIndex:
+        case posIndex.isFirstIndex:
           nextChildsIndex = 0;
           break;
 
-        case isLastIndex:
+        case posIndex.isLastIndex:
           nextChildsIndex = dataValue.length - 1;
           break;
 
@@ -173,8 +171,10 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'} ref={carouselWrapper}>
         <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
           {grid
-            ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} key={uuidv4()} />)
-            : paginatedData.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} key={uuidv4()} />)}
+            ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
+            : paginatedData.map((values) => (
+                <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} useFetchTrailer={useFetchTrailer} key={uuidv4()} />
+              ))}
         </ul>
         {grid ? null : <FDCarouselOverlay tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />}
       </div>
