@@ -66,11 +66,9 @@ const FDHomePage = () => {
       if (!webStorageData || webStorageData.some((webStorageObj) => mergedFetchedData.some((item) => webStorageObj.key === item.key))) {
         setTmdbDataArr(mergedFetchedData);
 
-        [{ nowPlaying: nowPlaying, prefabs: prefabs, trending: trending }].forEach((keyValuePair) => {
-          Object.keys(keyValuePair).forEach((key) => {
-            Object.values(keyValuePair).forEach((value) => {
-              useFilmDatabaseWebStorage({ userLocation: userLocation, data: value, cacheKey: key }).setData();
-            });
+        [{ nowPlaying, prefabs, trending }].forEach((dataObject) => {
+          Object.entries(dataObject).forEach(([key, value]) => {
+            useFilmDatabaseWebStorage({ userLocation, data: value, cacheKey: key }).setData();
           });
         });
       } else {
