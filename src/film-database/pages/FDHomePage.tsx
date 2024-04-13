@@ -14,6 +14,7 @@ import { useDiscoverGenre } from '../api/hooks/useDiscoverGenre';
 import FDMediaGrid from '../components/media/FDMediaGrid';
 import FDHeader from '../components/navigation/header/FDHeader';
 import FDFooter from '../components/navigation/footer/FDFooter';
+import FDHero from '../components/hero/FDHero';
 
 const FDHomePage = () => {
   // Store cached data in state for component renders && pagination
@@ -63,10 +64,7 @@ const FDHomePage = () => {
       const mergedFetchedData = [...nowPlaying, ...prefabs, ...trending];
 
       if (!webStorageData || webStorageData.some((webStorageObj) => mergedFetchedData.some((item) => webStorageObj.key === item.key))) {
-        setTmdbDataArr((prevData) => {
-          if (!prevData) return [...mergedFetchedData];
-          else return [...prevData, ...mergedFetchedData];
-        });
+        setTmdbDataArr(mergedFetchedData);
 
         [{ nowPlaying: nowPlaying, prefabs: prefabs, trending: trending }].forEach((keyValuePair) => {
           Object.keys(keyValuePair).forEach((key) => {
@@ -88,6 +86,7 @@ const FDHomePage = () => {
   return (
     <div className='filmDatabase'>
       <FDHeader />
+      <FDHero />
       <section>
         {tmdbDataArr.map((entry) => (
           <FDMediaGrid dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} grid={false} key={uuidv4()} />
