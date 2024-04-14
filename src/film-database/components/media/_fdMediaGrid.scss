@@ -1,5 +1,6 @@
 @use '../../scss/filmDatabaseStyles' as s;
 @use '../../../sass/functions' as f;
+@use '../../scss/filmDatabaseStyles' as m;
 
 .FDMediaGrid {
   padding: var(--fd-padding-wrapper);
@@ -25,12 +26,7 @@
       padding: var(--fd-padding-innerWrapper);
       &[data-status='carousel'] {
         display: flex;
-        /* Scroll snapping */
-        overflow-x: scroll;
-        scrollbar-width: none;
-        scroll-behavior: smooth;
-        scroll-snap-type: x proximity;
-        scroll-padding: 0 0;
+        @include m.scrollSnapping;
         /* Overlapping padding */
         grid-column: left-start/right-end;
         grid-row: 1;
