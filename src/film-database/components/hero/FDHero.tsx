@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useFilmDatabaseWebStorage } from '../../hooks/web-storage-api/useFilmDatabaseWebStorage';
 import { Type_Tmdb_ApiCallMovie_Obj, Type_Tmdb_useApiReturn_Obj } from '../../api/types/TmdbDataTypes';
@@ -6,14 +7,30 @@ import useCreatePicture from '../../hooks/component-creation/useCreatePicture';
 const FDHero = () => {
   const userLocation = useLocation();
   const nowPlaying = useFilmDatabaseWebStorage({ userLocation: userLocation, cacheKey: 'nowPlaying' }).getData() as Type_Tmdb_useApiReturn_Obj[];
+  const [radioIndex, setRadioIndex] = useState<number>(0);
+
+  const scrollSnapper = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateScroller = () => {
+      const scrollSnapperOffset = scrollSnapper.current?.offsetWidth;
+      const activeSlideOffset = (scrollSnapper.current?.children[0] as HTMLDivElement).offsetWidth;
+      scrollSnapper.current?.scrollTo({ left: activeSlideOffset * (radioIndex + 1) - scrollSnapperOffset!, behavior: 'smooth' });
+    };
+
+    updateScroller();
+
+    window.addEventListener('resize', updateScroller);
+    return () => window.addEventListener('resize', updateScroller);
+  }, [radioIndex]);
 
   return (
     <section className='fdHero'>
-      <div className='fdHero__infographic'>
+      <div className='fdHero__infographic' ref={scrollSnapper}>
         {nowPlaying?.map((obj) =>
           obj.value.splice(0, 5).map((data, index) => {
             const values = data as unknown as Type_Tmdb_ApiCallMovie_Obj;
-            console.log(values);
+
             return (
               <div className='fdHero__infographic__slide' key={`fdHeroSlideBackdrop-${index + 1}`}>
                 <hgroup className='fdHero__infographic__details'>
@@ -31,23 +48,24 @@ const FDHero = () => {
 
       <fieldset className='fdHero__controller'>
         <legend>Select a Now Playing Film</legend>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <div className='fdHero__controller__option' key={`fdHeroRadio-${index}`}>
-            <input type='radio' id='huey' name='drone' value='huey' checked />
-            <label htmlFor='huey'>Huey</label>
-          </div>
-        ))}
+        <ul className='fdHero__controller__radios'>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <li className='fdHero__controller__radios__option' key={`fdHeroRadio-${index}`}>
+              <input
+                type='radio'
+                id={`fdHero__controller__radios__option--input--${index}`}
+                name='radioOpt'
+                value={`fdHero__controller__option--${index}`}
+                checked={index === radioIndex}
+                onChange={() => setRadioIndex(index)}
+              />
+              <label htmlFor={`fdHero__controller__radios__option--label--${index}`}>{`Movie Option ${index}`}</label>
+            </li>
+          ))}
+        </ul>
       </fieldset>
     </section>
   );
 };
 
 export default FDHero;
-
-/**
- * 
-.slide[data-index="1"] { transform: translateX(0%); }
-.slide[data-index="2"] { transform: translateX(-100%); }
-.slide[data-index="3"] { transform: translateX(-200%); }
-
- */
