@@ -71,7 +71,6 @@
     border-bottom-left-radius: var(--fd-borderRadius-mediaPoster);
     background-color: var(--fd-font-color-primary);
     &[data-status='active'] {
-      width: 32ch;
       opacity: 1;
     }
     &[data-status='disabled'] {
