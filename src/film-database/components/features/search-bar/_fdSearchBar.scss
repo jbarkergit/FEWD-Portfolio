@@ -1,0 +1,71 @@
+@use '../../../scss/filmDatabaseStyles' as s;
+@use '../../../../sass/functions' as f;
+
+.fdSearchBar {
+  position: relative;
+  display: table;
+  color: var(--fd-font-color-secondary);
+
+  &__searcher {
+    position: relative;
+    z-index: 2;
+    border-radius: var(--fd-borderRadius-mediaPoster);
+    background-color: var(--fd-font-color-primary);
+    overflow: clip;
+    &__fieldset {
+      position: relative;
+      display: flex;
+      & legend {
+        display: none;
+      }
+      &__input {
+        width: 0ch;
+        padding: none;
+        cursor: text;
+        white-space: nowrap;
+        text-transform: capitalize;
+        &[data-status='expanded'] {
+          width: 31ch;
+          padding: 0.425rem 1.5rem;
+        }
+      }
+      &__label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+        padding: 0.425rem 1.5rem 0.425rem calc(1.5rem + 0.25rem);
+        pointer-events: none;
+        white-space: nowrap;
+      }
+      &__button {
+        display: grid;
+        place-items: center;
+        padding: 0.425rem;
+        & svg {
+          width: 1.6em;
+          aspect-ratio: 1/1;
+        }
+      }
+    }
+  }
+
+  &__results {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    border-bottom-right-radius: var(--fd-borderRadius-mediaPoster);
+    border-bottom-left-radius: var(--fd-borderRadius-mediaPoster);
+    background-color: var(--fd-font-color-primary);
+    &__li {
+    }
+  }
+}
+
+.fdSearchBar__searcher__fieldset__input:focus-within ~ .fdSearchBar__searcher__fieldset__label {
+  display: block;
+}
+.fdSearchBar__searcher__fieldset__input:focus-within ~ .fdSearchBar__searcher__fieldset__button {
+  padding: 0.425rem 1.5rem 0.425rem 0;
+}
