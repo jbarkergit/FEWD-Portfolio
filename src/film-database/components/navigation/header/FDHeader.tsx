@@ -23,7 +23,7 @@ const FDHeader = () => {
       <section className='fdHeader__row'>
         <nav className='fdHeader__row__navigation'>
           <ul className='fdHeader__row__navigation__ul' aria-labelledby='navigate-to-genre'>
-            {Object.entries(tmdbEndPoints).map(([key, value]) => {
+            {Object.entries(tmdbEndPoints).map(([key]) => {
               return (
                 <li id='navigate-to-genre' key={key}>
                   <Link to={`/film-database/${key}`} aria-label={key}>
