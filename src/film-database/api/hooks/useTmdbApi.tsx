@@ -8,7 +8,8 @@ import {
   Type_Tmdb_OptParamDiscover_Obj,
   Type_Tmdb_OptParamMovieId_Obj,
   Type_Tmdb_OptParamPersonId_Obj,
-  Type_Tmdb_OptParamloadTrailer_Obj,
+  Type_Tmdb_OptParamSearchFunc_Obj,
+  Type_Tmdb_OptParamTrailer_Obj,
   Type_Tmdb_useApiReturn_Obj,
   Type_Tmdb_useApiReturn_Obj_isUndefined,
   Type_Tmdb_useTmdbApiPayload,
@@ -64,12 +65,21 @@ export const useTmdbApi = async ({ controller, payload }: Type_Tmdb_useTmdbApiPa
               };
 
             case 'trailer_id' in keyValuePair:
-              typedKeyValuePair = keyValuePair as Type_Tmdb_OptParamloadTrailer_Obj;
+              typedKeyValuePair = keyValuePair as Type_Tmdb_OptParamTrailer_Obj;
               return {
                 key: typedKeyValuePair.tmdbEndPointObj.key,
                 label: typedKeyValuePair.tmdbEndPointObj.label,
                 endPoint: typedKeyValuePair.tmdbEndPointObj.endPoint,
                 parameter: typedKeyValuePair.trailer_id,
+              };
+
+            case 'search_term' in keyValuePair:
+              typedKeyValuePair = keyValuePair as Type_Tmdb_OptParamSearchFunc_Obj;
+              return {
+                key: typedKeyValuePair.tmdbEndPointObj.key,
+                label: undefined,
+                endPoint: typedKeyValuePair.tmdbEndPointObj.endPoint,
+                parameter: typedKeyValuePair.search_term,
               };
 
             default:

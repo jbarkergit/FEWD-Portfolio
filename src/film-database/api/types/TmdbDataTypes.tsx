@@ -95,12 +95,14 @@ export type Type_Tmdb_MovieIdParam_Obj = { typeGuardKey: string; propValue: stri
 export type Type_Tmdb_PersonIdParam_Obj = { typeGuardKey: string; propValue: string };
 export type Type_Tmdb_DiscoverParam_Obj_isUndefined = { typeGuardKey: string; propValue: number } | undefined; // undefined
 export type Type_Tmdb_TrailerParam_Obj = { typeGuardKey: string; propValue: number };
+export type Type_Tmdb_SearchMovie_Obj = { typeGuardKey: string; propValue: string };
 
 export type Type_Tmdb_BareOptParam_Union =
   | Type_Tmdb_MovieIdParam_Obj
   | Type_Tmdb_PersonIdParam_Obj
   | Type_Tmdb_DiscoverParam_Obj_isUndefined
-  | Type_Tmdb_TrailerParam_Obj;
+  | Type_Tmdb_TrailerParam_Obj
+  | Type_Tmdb_SearchMovie_Obj;
 
 /** Fetcher Utility Payload Type */
 export type Type_TmdbFetcher_Payload = {
@@ -113,13 +115,15 @@ export type Type_TmdbFetcher_Payload = {
 export type Type_Tmdb_OptParamMovieId_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; movie_id: Type_Tmdb_MovieIdParam_Obj };
 export type Type_Tmdb_OptParamPersonId_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; person_id: Type_Tmdb_PersonIdParam_Obj };
 export type Type_Tmdb_OptParamDiscover_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; discover: Type_Tmdb_DiscoverParam_Obj_isUndefined };
-export type Type_Tmdb_OptParamloadTrailer_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; trailer_id: Type_Tmdb_TrailerParam_Obj };
+export type Type_Tmdb_OptParamTrailer_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; trailer_id: Type_Tmdb_TrailerParam_Obj };
+export type Type_Tmdb_OptParamSearchFunc_Obj = { tmdbEndPointObj: Type_Tmdb_KeyValuePair_Obj; search_term: Type_Tmdb_SearchMovie_Obj };
 
 export type Type_Tmdb_OptParam_Union =
   | Type_Tmdb_OptParamMovieId_Obj
   | Type_Tmdb_OptParamPersonId_Obj
   | Type_Tmdb_OptParamDiscover_Obj
-  | Type_Tmdb_OptParamloadTrailer_Obj;
+  | Type_Tmdb_OptParamTrailer_Obj
+  | Type_Tmdb_OptParamSearchFunc_Obj;
 
 /** useTmdbApi Union Payloads */
 // Is either a Key-value pair object || {tmdbEndPointObj: nested left-side Key-value Pair, Custom Type Guard Param: Key-value Pair}

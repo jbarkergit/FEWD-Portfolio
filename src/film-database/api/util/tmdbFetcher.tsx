@@ -33,12 +33,16 @@ export const tmdbFetcher = async ({ controller, keyValuePairEndPoint, parameters
 
     // Needs parameter work
     // case parameter.typeGuardKey === 'discover':
-    //   url = `${keyValuePairEndPoint}?include_adult=true&include_video=true&language=en-US&page=1&sort_by=primary_release_date.asc&with_genres=${(parameter as unknown as Type_Tmdb_DiscoverParam_Obj_isUndefined).genreNum}`;
+    //   url = `${keyValuePairEndPoint}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=primary_release_date.asc&with_genres=${(parameter as unknown as Type_Tmdb_DiscoverParam_Obj_isUndefined).genreNum}`;
     //   break;
 
     case parametersObj?.typeGuardKey === 'trailer_id':
       const propValueToString: string = (parametersObj as unknown as Type_Tmdb_TrailerParam_Obj).propValue.toString();
       url = `${keyValuePairEndPoint?.replace('{movie_id}', propValueToString)}?api_key=${apiKey}`;
+      break;
+
+    case parametersObj?.typeGuardKey === 'movie_search':
+      url = `${keyValuePairEndPoint}?query=${parametersObj.propValue}&include_adult=false&language=en-US&page=1'`;
       break;
 
     default:
