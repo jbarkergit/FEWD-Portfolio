@@ -3,69 +3,83 @@
 
 .fdSearchBar {
   position: relative;
-  display: table;
+  display: flex;
+  flex-direction: column;
+  height: 46px;
   color: var(--fd-font-color-secondary);
 
-  &__searcher {
+  &__fieldset {
     position: relative;
     z-index: 2;
+    display: flex;
     border-radius: var(--fd-borderRadius-mediaPoster);
     background-color: var(--fd-font-color-primary);
-    overflow: clip;
-    &__fieldset {
-      position: relative;
-      display: flex;
-      & legend {
-        display: none;
+    & legend {
+      display: none;
+    }
+    &__input {
+      cursor: text;
+      white-space: nowrap;
+      text-transform: capitalize;
+      &[data-status='active'] {
+        width: 32ch;
+        padding: 0.425rem 1.5rem;
       }
-      &__input {
+      &[data-status='disabled'] {
         width: 0ch;
-        padding: none;
-        cursor: text;
-        white-space: nowrap;
-        text-transform: capitalize;
-        &[data-status='expanded'] {
-          width: 31ch;
-          padding: 0.425rem 1.5rem;
-        }
+        padding: 0;
       }
-      &__label {
-        position: absolute;
-        top: 0;
-        left: 0;
+    }
+    &__label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0.425rem 1.5rem 0.425rem calc(1.5rem + 0.25rem);
+      pointer-events: none;
+      white-space: nowrap;
+      &[data-status='active'] {
+        display: block;
+      }
+      &[data-status='disabled'] {
         display: none;
-        padding: 0.425rem 1.5rem 0.425rem calc(1.5rem + 0.25rem);
-        pointer-events: none;
-        white-space: nowrap;
       }
-      &__button {
-        display: grid;
-        place-items: center;
+    }
+    &__button {
+      display: grid;
+      place-items: center;
+      height: 46px;
+      aspect-ratio: 1/1;
+      &[data-status='active'] {
+        padding: 0.425rem 1.5rem 0.425rem 0;
+      }
+      &[data-status='disabled'] {
         padding: 0.425rem;
-        & svg {
-          width: 1.6em;
-          aspect-ratio: 1/1;
-        }
+      }
+      & svg {
+        width: 1.6em;
+        aspect-ratio: 1/1;
       }
     }
   }
 
   &__results {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 20;
+    padding-top: calc(8px + 0.425rem);
+    margin-top: -8px;
     border-bottom-right-radius: var(--fd-borderRadius-mediaPoster);
     border-bottom-left-radius: var(--fd-borderRadius-mediaPoster);
     background-color: var(--fd-font-color-primary);
+    &[data-status='active'] {
+      width: 32ch;
+      opacity: 1;
+    }
+    &[data-status='disabled'] {
+      width: 0ch;
+      opacity: 0;
+    }
     &__li {
+      padding: 0.425rem calc(1.5rem + 0.2rem);
+      white-space: nowrap;
+      overflow: clip;
     }
   }
-}
-
-.fdSearchBar__searcher__fieldset__input:focus-within ~ .fdSearchBar__searcher__fieldset__label {
-  display: block;
-}
-.fdSearchBar__searcher__fieldset__input:focus-within ~ .fdSearchBar__searcher__fieldset__button {
-  padding: 0.425rem 1.5rem 0.425rem 0;
 }
