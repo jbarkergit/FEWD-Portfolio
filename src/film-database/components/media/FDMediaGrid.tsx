@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 // API Data
 import { tmdbEndPoints } from '../../api/data/tmdbEndPoints';
 // API Types
-import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_ApiCall_Union, Type_Tmdb_OptParamloadTrailer_Obj } from '../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_ApiCall_Union, Type_Tmdb_OptParamTrailer_Obj } from '../../api/types/TmdbDataTypes';
 // API Hooks
 import { useTmdbApi } from '../../api/hooks/useTmdbApi';
 import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../../hooks/web-storage-api/useFilmDatabaseWebStorage';
@@ -138,7 +138,7 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
           payload: {
             tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos,
             trailer_id: { typeGuardKey: 'trailer_id', propValue: `${index}` },
-          } as unknown as Type_Tmdb_OptParamloadTrailer_Obj,
+          } as unknown as Type_Tmdb_OptParamTrailer_Obj,
         });
 
         const trailerObj: Type_useFilmDatabaseWebStorage_Obj[] = [
