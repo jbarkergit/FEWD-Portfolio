@@ -80,7 +80,7 @@ const FDSearchBar = () => {
 
   /** JSX */
   return (
-    <div className='fdSearchBar' ref={searchBar}>
+    <section className='fdSearchBar' ref={searchBar}>
       <fieldset className='fdSearchBar__fieldset'>
         <legend>Find the entertainment you're looking for</legend>
 
@@ -132,7 +132,7 @@ const FDSearchBar = () => {
           <li>No results found.</li>
         ) : null}
       </ul>
-    </div>
+    </section>
   );
 };
 export default FDSearchBar;
