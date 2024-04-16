@@ -5,8 +5,9 @@
 @forward '/src/film-database/components/navigation/header/fdHeader';
 @forward '/src/film-database/components/navigation/footer/fdFooter';
 
-// components/features/search-bar
+// components/features
 @forward '/src/film-database/components/features/search-bar/fdSearchBar';
+@forward '/src/film-database/components/features/genre-navigation/fdGenreNavigation';
 
 // components/media
 @forward '/src/film-database/components/media/fdMediaGrid';

@@ -6,7 +6,7 @@
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: 1fr;
   row-gap: var(--fd-gap-mediaPoster);
   padding: calc(var(--fd-padding-generic) / 2.5) var(--fd-padding-generic);
   overflow: visible;
@@ -17,11 +17,9 @@
     }
     &:nth-of-type(2) {
       grid-area: 1 / 2 / 2 / 4;
-      justify-self: end;
+      display: flex;
+      justify-content: flex-end;
       gap: var(--fd-gap-mediaPoster);
-    }
-    &:nth-of-type(3) {
-      grid-area: 2 / 1 / 3 / 4;
     }
     &__navigation {
       &__ul {

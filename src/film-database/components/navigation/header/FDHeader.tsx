@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import FDSearchBar from '../../features/search-bar/FDSearchBar';
-import { movieGenres } from '../../../api/hooks/useDiscoverGenre';
+import FDGenreNavigation from '../../features/genre-navigation/FDGenreNavigation';
 
 const FDHeader = () => {
   return (
@@ -18,22 +18,7 @@ const FDHeader = () => {
 
       <section className='fdHeader__row'>
         <FDSearchBar />
-      </section>
-
-      <section className='fdHeader__row'>
-        <nav className='fdHeader__row__navigation'>
-          <ul className='fdHeader__row__navigation__ul' aria-labelledby='navigate-to-genre'>
-            {Object.entries(movieGenres).map(([key]) => {
-              return (
-                <li id='navigate-to-genre' key={key}>
-                  <Link to={`/film-database/${key}`} aria-label={key}>
-                    {key.replace('_', ' ')}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
+        <FDGenreNavigation />
       </section>
     </header>
   );

@@ -1,0 +1,80 @@
+@use '../../../scss/filmDatabaseStyles' as s;
+@use '../../../../sass/functions' as f;
+
+.fdNavigation {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  max-width: calc(22ch + 46px);
+  height: 46px;
+  color: var(--fd-font-color-secondary);
+
+  &__fieldset {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    border-radius: var(--fd-borderRadius-mediaPoster);
+    background-color: var(--fd-font-color-primary);
+    & legend {
+      display: none;
+    }
+    &__input {
+      padding: 0.425rem 1.5rem;
+      cursor: text;
+      white-space: nowrap;
+      text-transform: capitalize;
+    }
+    &__label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0.425rem 1.5rem 0.425rem calc(1.5rem + 0.25rem);
+      pointer-events: none;
+      white-space: nowrap;
+      text-transform: capitalize;
+      &[data-status='active'] {
+        display: block;
+      }
+      &[data-status='disabled'] {
+        display: none;
+      }
+    }
+    &__icon {
+      display: grid;
+      place-items: center;
+      height: 46px;
+      aspect-ratio: 1/1;
+      padding: 0.425rem 1.5rem 0.425rem 0;
+      &[data-status='disabled'] {
+        padding: 0.425rem;
+      }
+      & svg {
+        width: 1.6em;
+        aspect-ratio: 1/1;
+      }
+    }
+  }
+
+  &__results {
+    padding-top: calc(8px + 0.425rem);
+    margin-top: -8px;
+    border-bottom-right-radius: var(--fd-borderRadius-mediaPoster);
+    border-bottom-left-radius: var(--fd-borderRadius-mediaPoster);
+    background-color: var(--fd-font-color-primary);
+    &[data-status='active'] {
+      display: table;
+      opacity: 1;
+    }
+    &[data-status='disabled'] {
+      display: none;
+      height: 0px;
+      opacity: 0;
+    }
+    & li {
+      padding: 0.425rem calc(1.5rem + 0.2rem);
+      white-space: nowrap;
+      overflow: clip;
+    }
+  }
+}
