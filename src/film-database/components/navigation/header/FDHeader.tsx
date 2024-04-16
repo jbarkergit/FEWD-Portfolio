@@ -6,18 +6,18 @@ const FDHeader = () => {
   return (
     <header className='fdHeader'>
       <section className='fdHeader__row'>
-        <section className='fdHeader__row__logo'>
+        <div className='fdLogo'>
           <Link to='/film-database' target='_blank'>
             <h1>
               <span>FILM</span>
               <span>DATABASE</span>
             </h1>
           </Link>
-        </section>
-        <section className='fdHeader__row__searchBar'>
-          <FDSearchBar />
-        </section>
-        <section className='fdHeader__row__features'></section>
+        </div>
+      </section>
+
+      <section className='fdHeader__row'>
+        <FDSearchBar />
       </section>
 
       <section className='fdHeader__row'>
