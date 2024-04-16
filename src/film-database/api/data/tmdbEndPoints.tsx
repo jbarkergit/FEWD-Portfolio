@@ -26,7 +26,10 @@ export const tmdbEndPoints = {
     recommendations: { key: 'movie_information_recommendations', endPoint: 'https://api.themoviedb.org/3/movie/{movie_id}/recommendations' },
   },
 
-  movie_search_keywords: { key: 'movie_search_keywords', endPoint: 'https://api.themoviedb.org/3/movie/{movie_id}/keywords' },
+  movie_search_movie: { key: 'movie_search_movie', endPoint: 'https://api.themoviedb.org/3/search/movie' },
+
+  movie_search_keyword: { key: 'movie_search_keyword', endPoint: 'https://api.themoviedb.org/3/movie/{movie_id}/keywords' },
+
   movie_trailer_videos: { key: 'movie_trailer_videos', endPoint: 'https://api.themoviedb.org/3/movie/{movie_id}/videos' },
 
   movie_discover: { key: 'movie_discover', endPoint: 'https://api.themoviedb.org/3/discover/movie' },
