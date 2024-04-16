@@ -7,6 +7,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
+  row-gap: var(--fd-gap-mediaPoster);
   padding: calc(var(--fd-padding-generic) / 2.5) var(--fd-padding-generic);
   overflow: visible;
   &__row {
@@ -26,12 +27,13 @@
       &__ul {
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
         & li {
+          font-family: 'Satoshi-Bold';
+          font-size: clamp(f.rem(14), f.rem(14) + 1vw, f.rem(18));
           text-transform: capitalize;
-          & a {
-            @include s.fdButton;
-            font-family: 'Satoshi-Bold';
-          }
+          white-space: nowrap;
         }
       }
     }

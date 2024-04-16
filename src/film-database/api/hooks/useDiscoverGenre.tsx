@@ -48,7 +48,7 @@ interface Interface_Discover {
 }
 
 /** ID Storage */
-const movieGenres: Record<Type_TmdbDiscoverMovie_Genre_Union, number> = {
+export const movieGenres: Record<Type_TmdbDiscoverMovie_Genre_Union, number> = {
   action: 28,
   adventure: 12,
   animation: 16,
