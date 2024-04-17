@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ForwardedRef, RefObject, forwardRef, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Lib
 import { v4 as uuidv4 } from 'uuid';
@@ -18,9 +18,10 @@ type Type_PropDrill = {
   dataLabel?: string | undefined;
   dataValue: Type_Tmdb_ApiCall_Union[];
   grid: boolean;
+  ref: RefObject<HTMLElement>;
 };
 
-const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) => {
+const FDMediaGrid = forwardRef<HTMLElement, Type_PropDrill>(({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill, ref: ForwardedRef<HTMLElement>) => {
   const userLocation = useLocation();
   const carouselWrapper = useRef<HTMLDivElement>(null);
   const carouselUl = useRef<HTMLUListElement>(null);
@@ -164,7 +165,7 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
 
   /** Component */
   return (
-    <section className='FDMediaGrid'>
+    <section className='FDMediaGrid' ref={ref}>
       <div className='FDMediaGrid__header'>
         <h2 className='FDMediaGrid__header--h2'>{dataLabel ? dataLabel : dataKey.replace('_', ' ')}</h2>
       </div>
@@ -180,5 +181,5 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill) =>
       </div>
     </section>
   );
-};
+});
 export default FDMediaGrid;
