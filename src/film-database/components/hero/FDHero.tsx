@@ -9,17 +9,17 @@ const FDHero = () => {
   const nowPlaying = useFilmDatabaseWebStorage({ userLocation: userLocation, cacheKey: 'nowPlaying' }).getData() as Type_Tmdb_useApiReturn_Obj[];
   const [radioIndex, setRadioIndex] = useState<number>(0);
 
+  /** Scroll Snapping */
   const scrollSnapper = useRef<HTMLDivElement>(null);
 
+  const updateScroller = () => {
+    const scrollSnapperOffset = scrollSnapper.current?.offsetWidth;
+    const activeSlideOffset = (scrollSnapper.current?.children[0] as HTMLDivElement).offsetWidth;
+    scrollSnapper.current?.scrollTo({ left: activeSlideOffset * (radioIndex + 1) - scrollSnapperOffset!, behavior: 'smooth' });
+  };
+
   useEffect(() => {
-    const updateScroller = () => {
-      const scrollSnapperOffset = scrollSnapper.current?.offsetWidth;
-      const activeSlideOffset = (scrollSnapper.current?.children[0] as HTMLDivElement).offsetWidth;
-      scrollSnapper.current?.scrollTo({ left: activeSlideOffset * (radioIndex + 1) - scrollSnapperOffset!, behavior: 'smooth' });
-    };
-
-    updateScroller();
-
+    updateScroller(); // Mount
     window.addEventListener('resize', updateScroller);
     return () => window.addEventListener('resize', updateScroller);
   }, [radioIndex]);
