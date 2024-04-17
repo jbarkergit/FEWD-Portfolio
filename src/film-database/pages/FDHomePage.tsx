@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Lib
 import { v4 as uuidv4 } from 'uuid';
@@ -80,14 +80,36 @@ const FDHomePage = () => {
     return () => controller.abort();
   }, []);
 
+  /** Scrolling margin for media component */
+  const fdMedia = useRef<HTMLElement>(null);
+  const forRefHeader = useRef<HTMLElement>(null);
+  const forRefMedia = useRef<HTMLElement>(null);
+
+  const resizeMediaMargin = () => {
+    if (fdMedia.current && forRefHeader.current && forRefMedia.current) {
+      const heroHeight: number = window.innerHeight;
+      const headerHeight: number = forRefHeader.current.offsetHeight;
+      const mediaHeight: number = forRefMedia.current.offsetHeight;
+      const margin: number = heroHeight - headerHeight - mediaHeight * 1.75;
+
+      fdMedia.current.style.marginTop = `${margin}px`;
+    }
+  };
+
+  useEffect(() => {
+    resizeMediaMargin(); // Mount
+    window.addEventListener('resize', resizeMediaMargin);
+    return () => window.removeEventListener('resize', resizeMediaMargin);
+  }, [fdMedia.current, forRefHeader.current, forRefMedia.current]);
+
   /** Component */
   return (
     <div className='filmDatabase'>
-      <FDHeader />
+      <FDHeader ref={forRefHeader} />
       <FDHero />
-      <section>
+      <section className='fdMedia' ref={fdMedia}>
         {tmdbDataArr.map((entry) => (
-          <FDMediaGrid dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} grid={false} key={uuidv4()} />
+          <FDMediaGrid dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} grid={false} ref={forRefMedia} key={uuidv4()} />
         ))}
       </section>
       {/* <FDFooter /> */}
