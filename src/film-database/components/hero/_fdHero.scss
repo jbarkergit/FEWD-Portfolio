@@ -3,11 +3,15 @@
 @use '../../scss/filmDatabaseStyles' as m;
 
 .fdHero {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3/1;
-  padding: var(--fd-padding-innerWrapper);
-  margin-bottom: calc(var(--fd-padding-generic) / 2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100svw;
+  height: 100svh;
+  // aspect-ratio: 3/1;
+  // padding: var(--fd-padding-innerWrapper);
+  // margin-bottom: calc(var(--fd-padding-generic) / 2);
   &__infographic {
     position: relative;
     z-index: 1;
@@ -16,7 +20,7 @@
     height: 100%;
     aspect-ratio: inherit;
     background-color: var(--fd-backgroundColor-fallback);
-    border-radius: var(--fd-borderRadius-mediaPoster);
+    // border-radius: var(--fd-borderRadius-mediaPoster);
     @include m.scrollSnapping;
     &__slide,
     &__slide figure,
