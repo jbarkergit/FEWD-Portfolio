@@ -70,7 +70,7 @@ const FDGenreNavigation = () => {
         />
 
         <label className='fdNavigation__fieldset__label' htmlFor='fdNavigation__fieldset__input' data-status={searchTerm.length === 0 ? 'active' : 'disabled'}>
-          {searchTerm.length > 0 ? searchTerm : genre}
+          {searchTerm.length > 0 ? searchTerm : genre.replace('_', ' ')}
         </label>
 
         <button className='fdNavigation__fieldset__icon' onClick={() => setIsMenuOpen(true)}>
