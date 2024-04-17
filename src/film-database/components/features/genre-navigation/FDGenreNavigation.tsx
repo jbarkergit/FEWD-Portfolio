@@ -32,6 +32,21 @@ const FDGenreNavigation = () => {
     };
   }, []);
 
+  /** Filter results by search term */
+  const getSearchResults = (): [string, number][] | string => {
+    const entries: [string, number][] = Object.entries(movieGenres);
+    const filteredEntries = entries.filter((entries) => entries[0].includes(searchTerm));
+    if (searchTerm.length > 0) {
+      if (filteredEntries.length > 0) {
+        return filteredEntries;
+      } else {
+        return 'No results found.';
+      }
+    } else {
+      return entries;
+    }
+  };
+
   return (
     <section className='fdNavigation' ref={searchBar}>
       <fieldset className='fdNavigation__fieldset'>
@@ -68,20 +83,25 @@ const FDGenreNavigation = () => {
       </fieldset>
 
       <ul className='fdNavigation__results' data-status={isMenuOpen ? 'active' : 'disabled'}>
-        {Object.entries(movieGenres).map(([key]) => {
-          return (
-            <li id='navigate-to-genre' key={key}>
-              <button
-                onClick={() => {
-                  setGenre(key);
-                  setIsMenuOpen(false);
-                }}
-                aria-label={key}>
-                {key.replace('_', ' ')}
-              </button>
-            </li>
-          );
-        })}
+        {Array.isArray(getSearchResults()) ? (
+          (getSearchResults() as [string, number][]).map(([key, _]) => {
+            return (
+              <li id='navigate-to-genre' key={key}>
+                <button
+                  onClick={() => {
+                    setGenre(key);
+                    setIsMenuOpen(false);
+                    setSearchTerm('');
+                  }}
+                  aria-label={key}>
+                  {key.replace('_', ' ')}
+                </button>
+              </li>
+            );
+          })
+        ) : (
+          <li id='navigate-to-genre'>{getSearchResults()}</li>
+        )}
       </ul>
     </section>
   );
