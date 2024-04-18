@@ -80,36 +80,37 @@ const FDHomePage = () => {
     return () => controller.abort();
   }, []);
 
-  /** Scrolling margin for media component */
+  /** Scrolling Padding for media component */
   const fdMedia = useRef<HTMLElement>(null);
-  const forRefHeader = useRef<HTMLElement>(null);
-  const forRefMedia = useRef<HTMLElement>(null);
+  const [mediaHeight, setMediaHeight] = useState<number>(0);
 
-  const resizeMediaMargin = () => {
-    if (fdMedia.current && forRefHeader.current && forRefMedia.current) {
-      const heroHeight: number = window.innerHeight;
-      const headerHeight: number = forRefHeader.current.offsetHeight;
-      const mediaHeight: number = forRefMedia.current.offsetHeight;
-      const padding: number = heroHeight - headerHeight - mediaHeight * 1.75;
-
-      fdMedia.current.style.paddingTop = `${padding}px`;
-    }
+  const resizeMediaPadding = () => {
+    const windowHeight: number = window.innerHeight;
+    if (fdMedia.current) fdMedia.current.style.paddingTop = `${windowHeight - mediaHeight}px`;
   };
 
   useEffect(() => {
-    resizeMediaMargin(); // Mount
-    window.addEventListener('resize', resizeMediaMargin);
-    return () => window.removeEventListener('resize', resizeMediaMargin);
-  }, [fdMedia.current, forRefHeader.current, forRefMedia.current]);
+    resizeMediaPadding(); // Mount
+    window.addEventListener('resize', resizeMediaPadding);
+    return () => window.removeEventListener('resize', resizeMediaPadding);
+  }, [mediaHeight]);
 
   /** Component */
   return (
     <div className='filmDatabase'>
-      <FDHeader ref={forRefHeader} />
+      <FDHeader />
       <FDHero />
       <section className='fdMedia' ref={fdMedia}>
         {tmdbDataArr.map((entry) => (
-          <FDMediaGrid dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} grid={false} ref={forRefMedia} key={uuidv4()} />
+          <FDMediaGrid
+            dataKey={entry.key}
+            dataLabel={entry.label}
+            dataValue={entry.value}
+            grid={false}
+            mediaHeight={mediaHeight}
+            setMediaHeight={setMediaHeight}
+            key={uuidv4()}
+          />
         ))}
       </section>
       {/* <FDFooter /> */}
