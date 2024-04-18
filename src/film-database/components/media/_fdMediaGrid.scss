@@ -50,13 +50,15 @@
         overflow: clip;
         &[data-status='carousel'] {
           height: calc(
-            ((100svw - 2 * var(--fd-gap-mediaPoster) - (var(--fd-carousel-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) / var(--fd-carousel-items-per-page)) /
-              0.66667
+            (
+                (100svw - var(--fd-carousel-items-per-page) * var(--fd-gap-mediaPoster) - (var(--fd-carousel-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) /
+                  var(--fd-carousel-items-per-page)
+              ) / 0.66667
           );
           @media (width <= 1250px) {
             height: calc(
               (
-                  (100svw - 2 * var(--fd-gap-mediaPoster) - (var(--fd-carousel-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) /
+                  (100svw - var(--fd-carousel-items-per-page) * var(--fd-gap-mediaPoster) - (var(--fd-carousel-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) /
                     calc(var(--fd-carousel-items-per-page) - 2)
                 ) / 0.66667
             );
@@ -64,7 +66,7 @@
           @media (width <= 950px) {
             height: calc(
               (
-                  (100svw - 2 * var(--fd-gap-mediaPoster) - (var(--fd-carousel-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) /
+                  (100svw - var(--fd-carousel-items-per-page) * var(--fd-gap-mediaPoster) - (var(--fd-carousel-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) /
                     calc(var(--fd-carousel-items-per-page) - 4)
                 ) / 0.66667
             );
@@ -72,7 +74,7 @@
           @media (width <= 650px) {
             height: calc(
               (
-                  (100svw - 2 * var(--fd-gap-mediaPoster) - (var(--fd-carousel-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) /
+                  (100svw - var(--fd-carousel-items-per-page) * var(--fd-gap-mediaPoster) - (var(--fd-carousel-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) /
                     calc(var(--fd-carousel-items-per-page) - 5)
                 ) / 0.66667
             );
