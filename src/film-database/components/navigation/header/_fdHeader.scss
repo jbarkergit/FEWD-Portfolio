@@ -2,12 +2,15 @@
 @use '../../../../sass/functions' as f;
 
 .fdHeader {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr;
   row-gap: var(--fd-gap-mediaPoster);
+  width: 100%;
   height: 155px;
   padding: calc(var(--fd-padding-generic) / 2.5) var(--fd-padding-generic);
   overflow: visible;

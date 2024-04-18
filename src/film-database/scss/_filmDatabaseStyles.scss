@@ -5,7 +5,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 100svh;
+  height: 100svh;
+  overflow-y: scroll;
+  scrollbar-width: none;
   background-color: var(--fd-backgroundColor-primary);
   //font: {optional: style variant weight} size line-height "family", "fallback-font", fallback-font-type
   font:

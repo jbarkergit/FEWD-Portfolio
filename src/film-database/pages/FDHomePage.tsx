@@ -90,9 +90,9 @@ const FDHomePage = () => {
       const heroHeight: number = window.innerHeight;
       const headerHeight: number = forRefHeader.current.offsetHeight;
       const mediaHeight: number = forRefMedia.current.offsetHeight;
-      const margin: number = heroHeight - headerHeight - mediaHeight * 1.75;
+      const padding: number = heroHeight - headerHeight - mediaHeight * 1.75;
 
-      fdMedia.current.style.marginTop = `${margin}px`;
+      fdMedia.current.style.paddingTop = `${padding}px`;
     }
   };
 

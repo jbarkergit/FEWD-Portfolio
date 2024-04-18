@@ -2,13 +2,19 @@
 @use '../../../sass/functions' as f;
 @use '../../scss/filmDatabaseStyles' as m;
 
+.fdMedia {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 19;
+}
+
 .FDMediaGrid {
-  padding: var(--fd-padding-wrapper);
+  padding: 0 0 calc(var(--fd-padding-generic) / 4) 0;
   &__header {
+    position: relative;
+    z-index: 1;
     padding: 0 var(--fd-padding-generic) 1rem var(--fd-padding-generic);
-    @media (width <= 1250px) {
-      padding: 0 calc(var(--fd-padding-generic) / 2) 1rem calc(var(--fd-padding-generic) / 2);
-    }
     &--h2 {
       font-family: 'Satoshi-Bold';
       font-size: var(--fd-font-size-section-header);
@@ -30,9 +36,6 @@
         /* Overlapping padding */
         grid-column: left-start/right-end;
         grid-row: 1;
-      }
-      @media (width <= 1250px) {
-        padding: 0 calc(var(--fd-padding-generic) / 2);
       }
       // &[data-status='grid'] {
       //   display: grid;

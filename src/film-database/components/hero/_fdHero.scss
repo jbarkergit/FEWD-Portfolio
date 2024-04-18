@@ -33,7 +33,7 @@
     &__details {
       position: absolute;
       top: calc(50px + 30svh);
-      left: calc(50px + var(--fd-gap-mediaPoster) / 2);
+      left: calc(var(--fd-padding-generic));
       z-index: 2;
       max-width: 45ch;
       & h2 {
