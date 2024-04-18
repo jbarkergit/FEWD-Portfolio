@@ -1,15 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-// Lib
 import { v4 as uuidv4 } from 'uuid';
-// API Data
-import { tmdbEndPoints } from '../../api/data/tmdbEndPoints';
-// API Types
-import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_ApiCall_Union, Type_Tmdb_OptParamTrailer_Obj } from '../../api/types/TmdbDataTypes';
-// API Hooks
-import { useTmdbApi } from '../../api/hooks/useTmdbApi';
-import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../../hooks/web-storage-api/useFilmDatabaseWebStorage';
-// Components
+import { tmdbEndPoints } from '../../composables/tmdb-api/data/tmdbEndPoints';
+import { useTmdbApi } from '../../composables/tmdb-api/hooks/useTmdbApi';
+import { Type_Tmdb_ApiCall_Union, Type_Tmdb_OptParamTrailer_Obj, Type_Tmdb_ApiCallTrailer_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
+import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../../composables/web-storage-api/useFilmDatabaseWebStorage';
 import FDCarouselOverlay from './overlay/FDCarouselOverlay';
 import FDPosterProp from './poster/FDPosterProp';
 
@@ -183,10 +178,8 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedi
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'} ref={carouselWrapper}>
         <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
           {grid
-            ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
-            : paginatedData.map((values) => (
-                <FDPosterProp mapValue={values} grid={grid} trailerCache={trailerCache} useFetchTrailer={useFetchTrailer} key={uuidv4()} />
-              ))}
+            ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
+            : paginatedData.map((values) => <FDPosterProp mapValue={values} grid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)}
         </ul>
         {grid ? null : <FDCarouselOverlay tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />}
       </div>

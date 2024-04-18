@@ -1,19 +1,17 @@
-// Api Util
-import { tmdbFetcher } from '../util/tmdbFetcher';
-// Api Types
 import {
-  Type_Tmdb_FetcherReturn_Obj,
-  Type_Tmdb_KeyValuePair_Obj,
+  Type_Tmdb_useTmdbApiPayload,
+  Type_Tmdb_useApiReturn_Obj,
   Type_Tmdb_Mixed_Union_isUndefined,
-  Type_Tmdb_OptParamDiscover_Obj,
   Type_Tmdb_OptParamMovieId_Obj,
   Type_Tmdb_OptParamPersonId_Obj,
-  Type_Tmdb_OptParamSearchFunc_Obj,
+  Type_Tmdb_OptParamDiscover_Obj,
   Type_Tmdb_OptParamTrailer_Obj,
-  Type_Tmdb_useApiReturn_Obj,
+  Type_Tmdb_OptParamSearchFunc_Obj,
+  Type_Tmdb_KeyValuePair_Obj,
+  Type_Tmdb_FetcherReturn_Obj,
   Type_Tmdb_useApiReturn_Obj_isUndefined,
-  Type_Tmdb_useTmdbApiPayload,
 } from '../types/TmdbDataTypes';
+import { tmdbFetcher } from '../util/tmdbFetcher';
 
 /** Concurrent Fetch Operations: filtering && aborting operations
  * Utilizing an AbortController to pass signals in order to abort individual fetch operations

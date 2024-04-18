@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import FDSearchBar from '../../features/search-bar/FDSearchBar';
-import FDGenreNavigation from '../../features/genre-navigation/FDGenreNavigation';
+import FDGenreNavigation from '../../../features/genre-nav/FDGenreNavigation';
+import FDSearchBar from '../../../features/search-bar/FDSearchBar';
 
 const FDHeader = () => {
   return (

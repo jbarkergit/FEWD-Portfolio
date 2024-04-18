@@ -1,5 +1,5 @@
 import { filmDatabaseKeyValuePairs } from '../../../App';
-import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_useApiReturn_Obj } from '../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_useApiReturn_Obj } from '../tmdb-api/types/TmdbDataTypes';
 
 export type Type_useFilmDatabaseWebStorage_Obj = {
   trailer_id: string | number;

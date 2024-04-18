@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect, ChangeEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Type_Tmdb_ApiCallMovie_Obj, Type_Tmdb_ApiCall_Union, Type_Tmdb_useApiReturn_Obj } from '../../../api/types/TmdbDataTypes';
-import { tmdbEndPoints } from '../../../api/data/tmdbEndPoints';
-import { useTmdbApi } from '../../../api/hooks/useTmdbApi';
+import { tmdbEndPoints } from '../../composables/tmdb-api/data/tmdbEndPoints';
+import { useTmdbApi } from '../../composables/tmdb-api/hooks/useTmdbApi';
+import { Type_Tmdb_useApiReturn_Obj, Type_Tmdb_ApiCall_Union, Type_Tmdb_ApiCallMovie_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
 const FDSearchBar = () => {
   const searchBar = useRef<HTMLDivElement>(null);

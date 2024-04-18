@@ -1,16 +1,16 @@
 // Global Styles
 @forward '/src/film-database/scss/filmDatabaseStyles';
 
-// components/navigation
+// navigation
 @forward '/src/film-database/components/navigation/header/fdHeader';
 @forward '/src/film-database/components/navigation/footer/fdFooter';
 
-// components/features
+// features
 @forward '/src/film-database/components/features/search-bar/fdSearchBar';
-@forward '/src/film-database/components/features/genre-navigation/fdGenreNavigation';
+@forward '/src/film-database/components/features/genre-nav/fdGenreNavigation';
 
-// components/media
-@forward '/src/film-database/components/media/fdMediaGrid';
+// media
+@forward '/src/film-database/components/carousel/fdMediaGrid';
 
-// components/hero
+// hero
 @forward '/src/film-database/components/hero/fdHero';

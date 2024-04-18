@@ -1,5 +1,5 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { movieGenres } from '../../../api/hooks/useDiscoverGenre';
+import { useRef, useState, useEffect, ChangeEvent } from 'react';
+import { movieGenres } from '../../composables/tmdb-api/hooks/useDiscoverGenre';
 
 const FDGenreNavigation = () => {
   const searchBar = useRef<HTMLElement>(null);

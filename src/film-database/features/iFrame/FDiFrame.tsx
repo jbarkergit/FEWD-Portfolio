@@ -1,6 +1,6 @@
-import YouTube, { YouTubeEvent } from 'react-youtube';
+import { YouTubeEvent } from 'react-youtube';
+import { Type_useFilmDatabaseWebStorage_Obj } from '../../composables/web-storage-api/useFilmDatabaseWebStorage';
 import { Options } from 'youtube-player/dist/types';
-import { Type_useFilmDatabaseWebStorage_Obj } from '../../../hooks/web-storage-api/useFilmDatabaseWebStorage';
 
 /** This component utilizes YouTube Player API
  * https://developers.google.com/youtube/iframe_api_reference

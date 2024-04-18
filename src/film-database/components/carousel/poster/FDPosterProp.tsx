@@ -1,17 +1,14 @@
-// Component Hooks
+import { Type_Tmdb_ApiCall_Union, Type_Tmdb_ApiCallMovieList_Obj } from '../../../composables/tmdb-api/types/TmdbDataTypes';
+import { Type_useFilmDatabaseWebStorage_Obj } from '../../../composables/web-storage-api/useFilmDatabaseWebStorage';
 import useCreatePicture from '../../../hooks/useCreatePicture';
-// API Types
-import { Type_Tmdb_ApiCall_Union, Type_Tmdb_ApiCallMovieList_Obj } from '../../../api/types/TmdbDataTypes';
-import { Type_useFilmDatabaseWebStorage_Obj } from '../../../hooks/web-storage-api/useFilmDatabaseWebStorage';
 
 type Type_PropDrill = {
   mapValue: Type_Tmdb_ApiCall_Union;
   grid: boolean;
-  trailerCache: Type_useFilmDatabaseWebStorage_Obj[] | undefined;
   useFetchTrailer: (index: number) => void;
 };
 
-const FDPosterProp = ({ mapValue, grid, trailerCache, useFetchTrailer }: Type_PropDrill) => {
+const FDPosterProp = ({ mapValue, grid, useFetchTrailer }: Type_PropDrill) => {
   const value: Type_Tmdb_ApiCallMovieList_Obj = mapValue as unknown as Type_Tmdb_ApiCallMovieList_Obj;
 
   return (
