@@ -3,15 +3,15 @@ import { useLocation } from 'react-router-dom';
 // Lib
 import { v4 as uuidv4 } from 'uuid';
 // Api Data
-import { tmdbEndPoints } from '../api/data/tmdbEndPoints';
+import { tmdbEndPoints } from '../composables/tmdb-api/data/tmdbEndPoints';
 // Api Types
-import { Type_Tmdb_useApiReturn_Obj } from '../api/types/TmdbDataTypes';
+import { Type_Tmdb_useApiReturn_Obj } from '../composables/tmdb-api/types/TmdbDataTypes';
 // Api Hooks
-import { useTmdbApi } from '../api/hooks/useTmdbApi';
-import { useFilmDatabaseWebStorage } from '../hooks/web-storage-api/useFilmDatabaseWebStorage';
-import { useDiscoverGenre } from '../api/hooks/useDiscoverGenre';
+import { useTmdbApi } from '../composables/tmdb-api/hooks/useTmdbApi';
+import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
+import { useDiscoverGenre } from '../composables/tmdb-api/hooks/useDiscoverGenre';
 // Components
-import FDMediaGrid from '../components/media/FDMediaGrid';
+import FDMediaGrid from '../components/carousel/FDMediaGrid';
 import FDHeader from '../components/navigation/header/FDHeader';
 import FDFooter from '../components/navigation/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';

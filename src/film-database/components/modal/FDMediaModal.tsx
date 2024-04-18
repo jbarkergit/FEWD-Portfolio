@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import useCreatePicture from '../../hooks/component-creation/useCreatePicture';
-import { useFormatDate } from '../../hooks/formatters/useFormatDate';
-import FDiFrame from '../media/iFrame/FDiFrame';
+import useCreatePicture from '../../hooks/useCreatePicture';
+import { useFormatDate } from '../../hooks/useFormatDate';
+import FDiFrame from '../../features/iFrame/FDiFrame';
 
 const FDMediaModal = () => {
   return (

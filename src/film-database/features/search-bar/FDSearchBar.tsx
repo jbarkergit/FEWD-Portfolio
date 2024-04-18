@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, ChangeEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Type_Tmdb_ApiCallMovie_Obj, Type_Tmdb_ApiCall_Union, Type_Tmdb_OptParamSearchFunc_Obj, Type_Tmdb_useApiReturn_Obj } from '../../../api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCallMovie_Obj, Type_Tmdb_ApiCall_Union, Type_Tmdb_useApiReturn_Obj } from '../../../api/types/TmdbDataTypes';
 import { tmdbEndPoints } from '../../../api/data/tmdbEndPoints';
 import { useTmdbApi } from '../../../api/hooks/useTmdbApi';
 

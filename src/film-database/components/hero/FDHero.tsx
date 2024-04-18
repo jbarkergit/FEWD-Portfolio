@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useFilmDatabaseWebStorage } from '../../hooks/web-storage-api/useFilmDatabaseWebStorage';
-import { Type_Tmdb_ApiCallMovie_Obj, Type_Tmdb_useApiReturn_Obj } from '../../api/types/TmdbDataTypes';
-import useCreatePicture from '../../hooks/component-creation/useCreatePicture';
+import { useFilmDatabaseWebStorage } from '../../composables/web-storage-api/useFilmDatabaseWebStorage';
+import { Type_Tmdb_ApiCallMovie_Obj, Type_Tmdb_useApiReturn_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
+import useCreatePicture from '../../hooks/useCreatePicture';
 
 const FDHero = () => {
   const userLocation = useLocation();

@@ -1,5 +1,5 @@
 // Component Hooks
-import useCreatePicture from '../../../hooks/component-creation/useCreatePicture';
+import useCreatePicture from '../../../hooks/useCreatePicture';
 // API Types
 import { Type_Tmdb_ApiCall_Union, Type_Tmdb_ApiCallMovieList_Obj } from '../../../api/types/TmdbDataTypes';
 import { Type_useFilmDatabaseWebStorage_Obj } from '../../../hooks/web-storage-api/useFilmDatabaseWebStorage';
