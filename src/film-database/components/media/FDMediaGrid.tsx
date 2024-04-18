@@ -1,4 +1,4 @@
-import { ForwardedRef, RefObject, forwardRef, useEffect, useRef, useState } from 'react';
+import { Dispatch, ForwardedRef, RefObject, SetStateAction, forwardRef, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Lib
 import { v4 as uuidv4 } from 'uuid';
@@ -18,10 +18,11 @@ type Type_PropDrill = {
   dataLabel?: string | undefined;
   dataValue: Type_Tmdb_ApiCall_Union[];
   grid: boolean;
-  ref: RefObject<HTMLElement>;
+  mediaHeight: number;
+  setMediaHeight: Dispatch<SetStateAction<number>>;
 };
 
-const FDMediaGrid = forwardRef<HTMLElement, Type_PropDrill>(({ dataKey, dataLabel, dataValue, grid }: Type_PropDrill, ref: ForwardedRef<HTMLElement>) => {
+const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMediaHeight }: Type_PropDrill) => {
   const userLocation = useLocation();
   const carouselWrapper = useRef<HTMLDivElement>(null);
   const carouselUl = useRef<HTMLUListElement>(null);
@@ -163,9 +164,19 @@ const FDMediaGrid = forwardRef<HTMLElement, Type_PropDrill>(({ dataKey, dataLabe
     }
   };
 
+  /** Grab fdMediaGrid (arr node 0) height dynamically for parent's padding setter */
+  const mediaRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (mediaRef.current) {
+      const nodeHeight = mediaRef.current.offsetHeight;
+      if (mediaHeight < nodeHeight) setMediaHeight(nodeHeight);
+    }
+  }, [mediaRef.current]);
+
   /** Component */
   return (
-    <section className='FDMediaGrid' ref={ref}>
+    <section className='FDMediaGrid' ref={mediaRef}>
       <div className='FDMediaGrid__header'>
         <h2 className='FDMediaGrid__header--h2'>{dataLabel ? dataLabel : dataKey.replace('_', ' ')}</h2>
       </div>
@@ -181,5 +192,5 @@ const FDMediaGrid = forwardRef<HTMLElement, Type_PropDrill>(({ dataKey, dataLabe
       </div>
     </section>
   );
-});
+};
 export default FDMediaGrid;
