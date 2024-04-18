@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Lib
 import { v4 as uuidv4 } from 'uuid';
@@ -94,6 +94,35 @@ const FDHomePage = () => {
     window.addEventListener('resize', resizeMediaPadding);
     return () => window.removeEventListener('resize', resizeMediaPadding);
   }, [mediaHeight]);
+
+  /** Carousel delta scroll snapping */
+  const [snapIndex, setSnapIndex] = useState<number>(0);
+  useEffect(() => console.log(snapIndex), [snapIndex]);
+
+  // Calculate next snap index based on deltaY
+  // NOTE: Order should be reversed because we're basing the index off of a HTMLCollection
+  const updateSnapIndex = (e: WheelEvent) => {
+    setSnapIndex(e.deltaY > 0 ? snapIndex + 1 : snapIndex - 1);
+  };
+
+  useEffect(() => {
+    window.addEventListener('wheel', updateSnapIndex);
+    return () => window.removeEventListener('wheel', updateSnapIndex);
+  }, []);
+
+  // Snapper
+  useEffect(() => {
+    // Note: Manually drilling nodes to prevent unnecessary logic to reach carouselChildren
+    if (!fdMedia.current) return;
+    const carouselNodes: HTMLCollection = fdMedia.current.children;
+
+    if (!carouselNodes) return;
+    const nextChild: HTMLLIElement = carouselNodes[snapIndex] as HTMLLIElement;
+
+    if (!nextChild) return;
+    const activeNodeRectTop: number = nextChild.getBoundingClientRect().top;
+    window.scrollTo({ top: activeNodeRectTop + mediaHeight, behavior: 'smooth' });
+  }, [snapIndex]);
 
   /** Component */
   return (

@@ -1,4 +1,4 @@
-import { Dispatch, ForwardedRef, RefObject, SetStateAction, forwardRef, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Lib
 import { v4 as uuidv4 } from 'uuid';
@@ -11,7 +11,7 @@ import { useTmdbApi } from '../../api/hooks/useTmdbApi';
 import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../../hooks/web-storage-api/useFilmDatabaseWebStorage';
 // Components
 import FDCarouselOverlay from './carousel-overlay/FDCarouselOverlay';
-import FDPosterProp from './poster/FDPosterProp';
+import FDPosterProp from './media-poster/FDPosterProp';
 
 type Type_PropDrill = {
   dataKey: string;
