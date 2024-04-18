@@ -20,7 +20,6 @@
     background-color: var(--fd-backgroundColor-fallback);
     @include m.scrollSnapping;
     &__slide,
-    &__slide,
     &__slide figure,
     &__slide figure picture,
     &__slide figure picture img {
