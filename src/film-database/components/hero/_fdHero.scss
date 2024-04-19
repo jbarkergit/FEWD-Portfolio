@@ -1,6 +1,6 @@
-@use '../../scss/filmDatabaseStyles' as s;
-@use '../../../sass/functions' as f;
-@use '../../scss/filmDatabaseStyles' as m;
+@use '/src/sass/functions' as f;
+@use '/src/film-database/styles/scss/filmDatabaseStyles' as s;
+@use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
 .fdHero {
   position: fixed;

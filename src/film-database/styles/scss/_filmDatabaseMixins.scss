@@ -1,0 +1,13 @@
+@mixin scrollSnapping {
+  overflow-x: scroll;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  scroll-padding: 0 0;
+}
+
+@mixin fdButton {
+  padding: 0.625rem 1.5rem;
+  color: var(--fd-font-color-primary);
+  cursor: pointer;
+}
