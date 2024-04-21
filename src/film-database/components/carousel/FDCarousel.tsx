@@ -104,8 +104,6 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
           break;
       }
 
-      console.log(nextChildsIndex);
-
       const carouselChildren: HTMLCollection = carouselUl.current.children;
       const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;
 
