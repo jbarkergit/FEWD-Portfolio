@@ -83,11 +83,9 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
    */
 
   // Last possible index depends on visible nodes in carouselUl.current (visibleNodesCount)
-  const lastIndexCalc: number = Math.ceil(dataValue.length / visibleNodesCount);
-  const [lastPossibleIndex, setLastPossibleIndex] = useState<number>(lastIndexCalc);
-  useEffect(() => setLastPossibleIndex(lastIndexCalc), [visibleNodesCount]);
-
   useEffect(() => {
+    const lastPossibleIndex: number = Math.ceil(dataValue.length / visibleNodesCount);
+
     if (carouselUl.current) {
       const posIndex = { isFirstIndex: btnNavIndex.currIndex === 1, isLastIndex: btnNavIndex.currIndex === lastPossibleIndex };
       let nextChildsIndex: number;
@@ -102,9 +100,11 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
           break;
 
         default:
-          nextChildsIndex = (btnNavIndex.currIndex - 1) * lastPossibleIndex - 1;
+          nextChildsIndex = (btnNavIndex.currIndex - 1) * visibleNodesCount;
           break;
       }
+
+      console.log(nextChildsIndex);
 
       const carouselChildren: HTMLCollection = carouselUl.current.children;
       const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;
