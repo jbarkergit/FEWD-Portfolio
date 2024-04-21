@@ -5,8 +5,8 @@ import { tmdbEndPoints } from '../../composables/tmdb-api/data/tmdbEndPoints';
 import { useTmdbApi } from '../../composables/tmdb-api/hooks/useTmdbApi';
 import { Type_Tmdb_ApiCall_Union, Type_Tmdb_OptParamTrailer_Obj, Type_Tmdb_ApiCallTrailer_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
 import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../../composables/web-storage-api/useFilmDatabaseWebStorage';
-import FDCarouselOverlay from './overlay/FDCarouselOverlay';
-import FDPosterProp from './poster/FDPosterProp';
+import FDCarouselOverlay from './FDCarouselOverlay';
+import FDPosterProp from './FDCarouselPoster';
 
 type Type_PropDrill = {
   dataKey: string;
@@ -17,7 +17,7 @@ type Type_PropDrill = {
   setMediaHeight: Dispatch<SetStateAction<number>>;
 };
 
-const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMediaHeight }: Type_PropDrill) => {
+const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMediaHeight }: Type_PropDrill) => {
   const userLocation = useLocation();
   const carouselWrapper = useRef<HTMLDivElement>(null);
   const carouselUl = useRef<HTMLUListElement>(null);
@@ -181,9 +181,9 @@ const FDMediaGrid = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedi
             ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
             : paginatedData.map((values) => <FDPosterProp mapValue={values} grid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)}
         </ul>
-        {grid ? null : <FDCarouselOverlay tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />}
+        <FDCarouselOverlay tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />
       </div>
     </section>
   );
 };
-export default FDMediaGrid;
+export default FDCarousel;

@@ -11,9 +11,9 @@ import { useTmdbApi } from '../composables/tmdb-api/hooks/useTmdbApi';
 import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 import { useDiscoverGenre } from '../composables/tmdb-api/hooks/useDiscoverGenre';
 // Components
-import FDMediaGrid from '../components/carousel/FDMediaGrid';
-import FDHeader from '../components/navigation/header/FDHeader';
-import FDFooter from '../components/navigation/footer/FDFooter';
+import FDMediaGrid from '../components/carousel/FDCarousel';
+import FDHeader from '../components/header/FDHeader';
+import FDFooter from '../components/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';
 
 const FDHomePage = () => {

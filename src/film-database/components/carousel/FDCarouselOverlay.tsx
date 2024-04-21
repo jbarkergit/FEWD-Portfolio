@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
-import MaterialLeftCaret from '../../../assets/svg-icons/MaterialLeftCaret';
-import MaterialRightCaret from '../../../assets/svg-icons/MaterialRightCaret';
-import useCreatePicture from '../../../hooks/useCreatePicture';
+import MaterialLeftCaret from '../../assets/svg-icons/MaterialLeftCaret';
+import MaterialRightCaret from '../../assets/svg-icons/MaterialRightCaret';
+import useCreatePicture from '../../hooks/useCreatePicture';
 
 type Type_PropDrill = {
   tmdbArrLength: number;

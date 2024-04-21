@@ -1,6 +1,5 @@
-import { Type_Tmdb_ApiCall_Union, Type_Tmdb_ApiCallMovieList_Obj } from '../../../composables/tmdb-api/types/TmdbDataTypes';
-import { Type_useFilmDatabaseWebStorage_Obj } from '../../../composables/web-storage-api/useFilmDatabaseWebStorage';
-import useCreatePicture from '../../../hooks/useCreatePicture';
+import { Type_Tmdb_ApiCall_Union, Type_Tmdb_ApiCallMovieList_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
+import useCreatePicture from '../../hooks/useCreatePicture';
 
 type Type_PropDrill = {
   mapValue: Type_Tmdb_ApiCall_Union;
@@ -8,7 +7,7 @@ type Type_PropDrill = {
   useFetchTrailer: (index: number) => void;
 };
 
-const FDPosterProp = ({ mapValue, grid, useFetchTrailer }: Type_PropDrill) => {
+const FDCarouselPoster = ({ mapValue, grid, useFetchTrailer }: Type_PropDrill) => {
   const value: Type_Tmdb_ApiCallMovieList_Obj = mapValue as unknown as Type_Tmdb_ApiCallMovieList_Obj;
 
   return (
@@ -21,4 +20,4 @@ const FDPosterProp = ({ mapValue, grid, useFetchTrailer }: Type_PropDrill) => {
     </li>
   );
 };
-export default FDPosterProp;
+export default FDCarouselPoster;
