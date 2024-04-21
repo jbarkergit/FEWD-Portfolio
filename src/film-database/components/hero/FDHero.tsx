@@ -1,32 +1,16 @@
-import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Type_Tmdb_useApiReturn_Obj, Type_Tmdb_ApiCallMovie_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
 import { useFilmDatabaseWebStorage } from '../../composables/web-storage-api/useFilmDatabaseWebStorage';
 import useCreatePicture from '../../hooks/useCreatePicture';
 
 const FDHero = () => {
+  /** Component data */
   const userLocation = useLocation();
   const nowPlaying = useFilmDatabaseWebStorage({ userLocation: userLocation, cacheKey: 'nowPlaying' }).getData() as Type_Tmdb_useApiReturn_Obj[];
-  const [radioIndex, setRadioIndex] = useState<number>(0);
-
-  /** Scroll Snapping */
-  const scrollSnapper = useRef<HTMLDivElement>(null);
-
-  const updateScroller = () => {
-    const scrollSnapperOffset = scrollSnapper.current?.offsetWidth;
-    const activeSlideOffset = (scrollSnapper.current?.children[0] as HTMLDivElement).offsetWidth;
-    scrollSnapper.current?.scrollTo({ left: activeSlideOffset * (radioIndex + 1) - scrollSnapperOffset!, behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    updateScroller(); // Mount
-    window.addEventListener('resize', updateScroller);
-    return () => window.addEventListener('resize', updateScroller);
-  }, [radioIndex]);
 
   return (
     <section className='fdHero'>
-      <div className='fdHero__infographic' ref={scrollSnapper}>
+      <div className='fdHero__infographic'>
         {nowPlaying?.map((obj) =>
           obj.value.splice(0, 5).map((data, index) => {
             const values = data as unknown as Type_Tmdb_ApiCallMovie_Obj;
@@ -46,7 +30,7 @@ const FDHero = () => {
         )}
       </div>
 
-      <fieldset className='fdHero__controller'>
+      {/* <fieldset className='fdHero__controller'>
         <legend>Select a Now Playing Film</legend>
         <ul className='fdHero__controller__radios'>
           {Array.from({ length: 5 }).map((_, index) => (
@@ -63,7 +47,7 @@ const FDHero = () => {
             </li>
           ))}
         </ul>
-      </fieldset>
+      </fieldset> */}
     </section>
   );
 };

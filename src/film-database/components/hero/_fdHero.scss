@@ -53,31 +53,31 @@
     }
   }
 
-  &__controller {
-    position: absolute;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-    & legend {
-      display: none;
-    }
-    &__radios {
-      display: flex;
-      gap: var(--fd-gap-mediaPoster);
-      &__option {
-        input {
-          display: block;
-          width: 18px;
-          height: 18px;
-          border-radius: 50%;
-          background-color: white;
-          cursor: pointer;
-        }
-        & label {
-          display: none;
-        }
-      }
-    }
-  }
+  // &__controller {
+  //   position: absolute;
+  //   bottom: 24px;
+  //   left: 50%;
+  //   transform: translateX(-50%);
+  //   z-index: 3;
+  //   & legend {
+  //     display: none;
+  //   }
+  //   &__radios {
+  //     display: flex;
+  //     gap: var(--fd-gap-mediaPoster);
+  //     &__option {
+  //       input {
+  //         display: block;
+  //         width: 18px;
+  //         height: 18px;
+  //         border-radius: 50%;
+  //         background-color: white;
+  //         cursor: pointer;
+  //       }
+  //       & label {
+  //         display: none;
+  //       }
+  //     }
+  //   }
+  // }
 }
