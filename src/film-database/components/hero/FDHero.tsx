@@ -29,25 +29,6 @@ const FDHero = () => {
           })
         )}
       </div>
-
-      {/* <fieldset className='fdHero__controller'>
-        <legend>Select a Now Playing Film</legend>
-        <ul className='fdHero__controller__radios'>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <li className='fdHero__controller__radios__option' key={`fdHeroRadio-${index}`}>
-              <input
-                type='radio'
-                id={`fdHero__controller__radios__option--input--${index}`}
-                name='radioOpt'
-                value={`fdHero__controller__option--${index}`}
-                checked={index === radioIndex}
-                onChange={() => setRadioIndex(index)}
-              />
-              <label htmlFor={`fdHero__controller__radios__option--label--${index}`}>{`Movie Option ${index}`}</label>
-            </li>
-          ))}
-        </ul>
-      </fieldset> */}
     </section>
   );
 };

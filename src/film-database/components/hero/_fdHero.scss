@@ -9,7 +9,6 @@
   z-index: 0;
   width: 100svw;
   height: 100svh;
-  // aspect-ratio: 3/1;
   &__infographic {
     position: relative;
     z-index: 1;
@@ -18,7 +17,6 @@
     height: 100%;
     aspect-ratio: inherit;
     background-color: var(--fd-backgroundColor-fallback);
-    @include m.scrollSnapping;
     &__slide,
     &__slide figure,
     &__slide figure picture,
@@ -52,32 +50,4 @@
       }
     }
   }
-
-  // &__controller {
-  //   position: absolute;
-  //   bottom: 24px;
-  //   left: 50%;
-  //   transform: translateX(-50%);
-  //   z-index: 3;
-  //   & legend {
-  //     display: none;
-  //   }
-  //   &__radios {
-  //     display: flex;
-  //     gap: var(--fd-gap-mediaPoster);
-  //     &__option {
-  //       input {
-  //         display: block;
-  //         width: 18px;
-  //         height: 18px;
-  //         border-radius: 50%;
-  //         background-color: white;
-  //         cursor: pointer;
-  //       }
-  //       & label {
-  //         display: none;
-  //       }
-  //     }
-  //   }
-  // }
 }
