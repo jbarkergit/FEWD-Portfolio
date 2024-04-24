@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useRef, useState, useEffect } from 'react';
+import { Dispatch, SetStateAction, useRef, useState, useEffect, RefObject } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 

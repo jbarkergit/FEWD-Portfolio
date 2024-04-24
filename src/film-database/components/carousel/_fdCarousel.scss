@@ -3,11 +3,8 @@
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
 .fdMedia {
-  position: absolute;
-  top: 0;
-  left: 0;
   z-index: 19;
-  overflow-x: scroll;
+  overflow: scroll;
   scrollbar-width: none;
   scroll-behavior: smooth;
   scroll-snap-type: y proximity;
