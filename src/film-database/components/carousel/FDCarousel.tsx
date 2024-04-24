@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useRef, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import { tmdbEndPoints } from '../../composables/tmdb-api/data/tmdbEndPoints';
 import { useTmdbApi } from '../../composables/tmdb-api/hooks/useTmdbApi';
@@ -8,7 +9,7 @@ import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '.
 
 import FDCarouselHeader from './FDCarouselHeader';
 import FDCarouselOverlay from './FDCarouselOverlay';
-import FDCarouselMapper from './FDCarouselMapper';
+import FDCarouselPoster from './FDCarouselPoster';
 
 type Type_PropDrill = {
   dataKey: string;
@@ -32,7 +33,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
   const [visibleNodesCount, setVisibleNodesCount] = useState<number>(0);
 
   useEffect(() => {
-    if (!grid && carouselUl.current && carouselUl.current.children) {
+    if (!grid) {
       const observer: IntersectionObserver = new IntersectionObserver(
         // Filter entries that are intersecting (visible in DOM), pass length to state
         (entries: IntersectionObserverEntry[]) => setVisibleNodesCount(entries.filter((entry: IntersectionObserverEntry) => entry.isIntersecting).length),
@@ -50,7 +51,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
 
       // Re-observe when carouselUl.current changes e.g. when media queries change the amount of visible nodes
       const mutationObserver: MutationObserver = new MutationObserver(observeNodes);
-      mutationObserver.observe(carouselUl.current, { childList: true });
+      if (carouselUl.current) mutationObserver.observe(carouselUl.current, { childList: true });
 
       return () => {
         observer.disconnect();
@@ -180,7 +181,11 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
     <section className='FDMediaGrid' ref={mediaRef}>
       <FDCarouselHeader dataLabel={dataLabel} dataKey={dataKey} />
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'} ref={carouselWrapper}>
-        <FDCarouselMapper grid={grid} dataValue={dataValue} paginatedData={paginatedData} useFetchTrailer={useFetchTrailer} />
+        <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
+          {grid
+            ? dataValue.map((values) => <FDCarouselPoster mapValue={values} grid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
+            : paginatedData.map((values) => <FDCarouselPoster mapValue={values} grid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)}
+        </ul>
         <FDCarouselOverlay tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />
       </div>
     </section>
