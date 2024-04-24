@@ -7,7 +7,7 @@ type Type_PropDrill = {
   useFetchTrailer: (index: number) => void;
 };
 
-const FDCarouselPoster = ({ mapValue, grid, useFetchTrailer }: Type_PropDrill) => {
+const FDCarouselMapperPoster = ({ mapValue, grid, useFetchTrailer }: Type_PropDrill) => {
   const value: Type_Tmdb_ApiCallMovieList_Obj = mapValue as unknown as Type_Tmdb_ApiCallMovieList_Obj;
 
   return (
@@ -20,4 +20,4 @@ const FDCarouselPoster = ({ mapValue, grid, useFetchTrailer }: Type_PropDrill) =
     </li>
   );
 };
-export default FDCarouselPoster;
+export default FDCarouselMapperPoster;

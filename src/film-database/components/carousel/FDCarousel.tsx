@@ -1,13 +1,14 @@
 import { Dispatch, SetStateAction, useRef, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+
 import { tmdbEndPoints } from '../../composables/tmdb-api/data/tmdbEndPoints';
 import { useTmdbApi } from '../../composables/tmdb-api/hooks/useTmdbApi';
 import { Type_Tmdb_ApiCall_Union, Type_Tmdb_OptParamTrailer_Obj, Type_Tmdb_ApiCallTrailer_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
 import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../../composables/web-storage-api/useFilmDatabaseWebStorage';
-import FDCarouselOverlay from './FDCarouselOverlay';
-import FDPosterProp from './FDCarouselPoster';
+
 import FDCarouselHeader from './FDCarouselHeader';
+import FDCarouselOverlay from './FDCarouselOverlay';
+import FDCarouselMapper from './FDCarouselMapper';
 
 type Type_PropDrill = {
   dataKey: string;
@@ -19,7 +20,7 @@ type Type_PropDrill = {
 };
 
 const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMediaHeight }: Type_PropDrill) => {
-  const userLocation = useLocation();
+  // References
   const carouselWrapper = useRef<HTMLDivElement>(null);
   const carouselUl = useRef<HTMLUListElement>(null);
 
@@ -28,12 +29,12 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
    * Note: Intersectional Observer does not detect changes that may occur
    * Employment of Mutation Observer is required to ensure our observations are concurrent
    */
-  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
+  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(0);
 
   useEffect(() => {
     const observer: IntersectionObserver = new IntersectionObserver(
       // Filter entries that are intersecting (visible in DOM), pass length to state
-      (entries) => setVisibleNodesCount(entries.filter((entry) => entry.isIntersecting).length),
+      (entries) => setVisibleNodesCount(entries.filter((entry) => entry.isIntersecting).length - 1),
       // Observer OPTS Note: Threshold is set to 1 to ensure we're observing ONLY 100% visible nodes
       { root: carouselUl.current, rootMargin: '0px', threshold: 1 }
     );
@@ -45,6 +46,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
 
     // Initial observation
     observeNodes();
+
     // Re-observe when carouselUl.current changes e.g. when media queries change the amount of visible nodes
     const mutationObserver: MutationObserver = new MutationObserver(observeNodes);
     mutationObserver.observe(carouselUl.current!, { childList: true });
@@ -85,7 +87,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
 
   // Last possible index depends on visible nodes in carouselUl.current (visibleNodesCount)
   useEffect(() => {
-    const lastPossibleIndex: number = Math.ceil(dataValue.length / visibleNodesCount);
+    const lastPossibleIndex: number = Math.ceil(dataValue.length - 1 / visibleNodesCount);
 
     if (carouselUl.current) {
       const posIndex = { isFirstIndex: btnNavIndex.currIndex === 1, isLastIndex: btnNavIndex.currIndex === lastPossibleIndex };
@@ -120,6 +122,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
    * This component makes use of the react-youtube API to handle iFrames.
    * videoPlayerTrailer stores API data and is used to find trailers directly from YouTube opposed to alternative sources.
    */
+  const userLocation = useLocation();
   const [trailerCache, setTrailerCache] = useState<Type_useFilmDatabaseWebStorage_Obj[]>();
 
   const useFetchTrailer = (index: number) => {
@@ -173,11 +176,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
     <section className='FDMediaGrid' ref={mediaRef}>
       <FDCarouselHeader dataLabel={dataLabel} dataKey={dataKey} />
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'} ref={carouselWrapper}>
-        <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
-          {grid
-            ? dataValue.map((values) => <FDPosterProp mapValue={values} grid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
-            : paginatedData.map((values) => <FDPosterProp mapValue={values} grid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)}
-        </ul>
+        <FDCarouselMapper grid={grid} dataValue={dataValue} paginatedData={paginatedData} useFetchTrailer={useFetchTrailer} />
         <FDCarouselOverlay tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />
       </div>
     </section>
