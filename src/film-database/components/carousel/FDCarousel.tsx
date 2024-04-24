@@ -89,32 +89,34 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
 
   // Last possible index depends on visible nodes in carouselUl.current (visibleNodesCount)
   useEffect(() => {
-    const lastPossibleIndex: number = Math.ceil(dataValue.length / visibleNodesCount);
+    if (!grid) {
+      const lastPossibleIndex: number = Math.ceil(dataValue.length - 1 / visibleNodesCount);
 
-    if (carouselUl.current) {
-      const posIndex = { isFirstIndex: btnNavIndex.currIndex === 1, isLastIndex: btnNavIndex.currIndex === lastPossibleIndex };
-      let nextChildsIndex: number;
+      if (carouselUl.current) {
+        const posIndex = { isFirstIndex: btnNavIndex.currIndex === 1, isLastIndex: btnNavIndex.currIndex === lastPossibleIndex };
+        let nextChildsIndex: number;
 
-      switch (true) {
-        case posIndex.isFirstIndex:
-          nextChildsIndex = 0;
-          break;
+        switch (true) {
+          case posIndex.isFirstIndex:
+            nextChildsIndex = 0;
+            break;
 
-        case posIndex.isLastIndex:
-          nextChildsIndex = dataValue.length - 1;
-          break;
+          case posIndex.isLastIndex:
+            nextChildsIndex = dataValue.length - 1;
+            break;
 
-        default:
-          nextChildsIndex = (btnNavIndex.currIndex - 1) * visibleNodesCount;
-          break;
-      }
+          default:
+            nextChildsIndex = (btnNavIndex.currIndex - 1) * visibleNodesCount;
+            break;
+        }
 
-      const carouselChildren: HTMLCollection = carouselUl.current.children;
-      const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;
+        const carouselChildren: HTMLCollection = carouselUl.current.children;
+        const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;
 
-      if (nextChild) {
-        const scrollDistance: number = nextChild.offsetLeft - carouselUl.current.offsetLeft;
-        carouselUl.current.scrollTo({ left: scrollDistance, behavior: 'smooth' });
+        if (nextChild) {
+          const scrollDistance: number = nextChild.offsetLeft - carouselUl.current.offsetLeft;
+          carouselUl.current.scrollTo({ left: scrollDistance, behavior: 'smooth' });
+        }
       }
     }
   }, [paginatedData]);
