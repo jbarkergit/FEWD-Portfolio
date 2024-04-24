@@ -60,11 +60,7 @@ const FDHomePage = () => {
       //   payload: { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
       // });
 
-      const mergedFetchedData = [
-        // ...nowPlaying,
-        // ...prefabs,
-        ...trending,
-      ];
+      const mergedFetchedData = [...nowPlaying, ...prefabs, ...trending];
 
       if (!webStorageData || webStorageData.some((webStorageObj) => mergedFetchedData.some((item) => webStorageObj.key === item.key))) {
         setTmdbDataArr(mergedFetchedData);
@@ -97,34 +93,6 @@ const FDHomePage = () => {
     return () => window.removeEventListener('resize', resizeMediaPadding);
   }, [mediaHeight]);
 
-  /** Carousel Navigation (Y Axis) */
-  const scrollYAxis = (e: WheelEvent) => {
-    if (!fdMedia.current) return;
-    const fdMediaNodes: HTMLCollection = fdMedia.current.children;
-    if (!fdMediaNodes) return;
-
-    // State
-    let yAxis: number = 0;
-
-    const isWheelEvent: boolean = e instanceof WheelEvent;
-    const deltaY: number = (e as WheelEvent).deltaY;
-    const nodeLength: number = fdMedia.current.children.length - 1;
-
-    if (isWheelEvent) yAxis = Math.max(0, Math.min(nodeLength, yAxis + deltaY > 0 ? 1 : -1));
-    else e.preventDefault();
-
-    // Scroll
-    fdMedia.current.scrollTo({
-      top: (fdMediaNodes[yAxis] as HTMLElement).offsetTop,
-      behavior: 'smooth',
-    });
-  };
-
-  useEffect(() => {
-    fdMedia.current?.addEventListener('wheel', scrollYAxis);
-    return () => fdMedia.current?.removeEventListener('wheel', scrollYAxis);
-  }, []);
-
   /** Component */
   return (
     <div className='filmDatabase'>
@@ -139,6 +107,7 @@ const FDHomePage = () => {
             grid={false}
             mediaHeight={mediaHeight}
             setMediaHeight={setMediaHeight}
+            fdMedia={fdMedia}
             key={uuidv4()}
           />
         ))}

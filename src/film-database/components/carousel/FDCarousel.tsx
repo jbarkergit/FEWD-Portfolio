@@ -18,9 +18,12 @@ type Type_PropDrill = {
   grid: boolean;
   mediaHeight: number;
   setMediaHeight: Dispatch<SetStateAction<number>>;
+  fdMedia: RefObject<HTMLElement>;
 };
 
-const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMediaHeight }: Type_PropDrill) => {
+type Type_getClampedIndex = { prev: number; cur: number } | undefined;
+
+const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMediaHeight, fdMedia }: Type_PropDrill) => {
   // References
   const carouselWrapper = useRef<HTMLDivElement>(null);
   const carouselUl = useRef<HTMLUListElement>(null);
@@ -177,6 +180,81 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
       if (mediaHeight < nodeHeight) setMediaHeight(nodeHeight);
     }
   }, [mediaRef.current]);
+
+  /** Carousel Navigation (Y Axis) */
+  const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
+  useEffect(() => console.log(yAxis), [yAxis]);
+
+  // Clamped state getter
+  const getClampedIndex = (prevIndex: number, curIndex: number, increment: number): Type_getClampedIndex => {
+    if (!fdMedia.current) return;
+    const nodeLength: number = fdMedia.current.children.length - 1;
+
+    return {
+      prev: Math.max(0, Math.min(nodeLength, prevIndex + increment)),
+      cur: Math.max(0, Math.min(nodeLength, curIndex + increment)),
+    };
+  };
+
+  // State setter
+  const setYAxisIndexes = (e: WheelEvent | KeyboardEvent) => {
+    // Wheel Events
+    const isWheelEvent: boolean = e instanceof WheelEvent;
+    const deltaY: number = (e as WheelEvent).deltaY;
+
+    // Keyboard Events
+    const isKeyboardEvent: boolean = e instanceof KeyboardEvent;
+    const isArrowUp: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowUp';
+    const isArrowDown: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowDown';
+    const isArrowRight: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowRight';
+    const isArrowLeft: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowLeft';
+
+    // Logic
+    switch (true) {
+      case isWheelEvent || (isKeyboardEvent && isArrowUp) || (isKeyboardEvent && isArrowDown):
+        setYAxis((prevState: typeof yAxis) => {
+          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, deltaY > 0 ? 1 : -1);
+          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
+        });
+        break;
+
+      case isKeyboardEvent && isArrowRight:
+        break;
+
+      case isKeyboardEvent && isArrowLeft:
+        break;
+
+      default:
+        e.preventDefault();
+        break;
+    }
+  };
+
+  useEffect(() => {
+    fdMedia.current?.addEventListener('wheel', setYAxisIndexes);
+    fdMedia.current?.addEventListener('keyup', setYAxisIndexes);
+
+    return () => {
+      fdMedia.current?.removeEventListener('wheel', setYAxisIndexes);
+      fdMedia.current?.removeEventListener('keyup', setYAxisIndexes);
+    };
+  }, []);
+
+  // Scroll method
+  useEffect(() => {
+    if (!fdMedia.current) return;
+
+    const fdMediaNodes: HTMLCollection = fdMedia.current.children;
+    if (!fdMediaNodes) return;
+
+    const fdMediaActiveNode = fdMediaNodes[yAxis.cur] as HTMLElement;
+    if (!fdMediaActiveNode) return;
+
+    fdMedia.current.scrollTo({
+      top: fdMediaActiveNode.offsetTop - parseInt(fdMedia.current.style.paddingTop),
+      behavior: 'smooth',
+    });
+  }, [yAxis.cur]);
 
   /** Component */
   return (
