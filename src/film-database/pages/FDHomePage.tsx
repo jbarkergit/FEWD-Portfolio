@@ -20,10 +20,6 @@ const FDHomePage = () => {
   // Store cached data in state for component renders && pagination
   const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
 
-  // Session Storage Data
-  const userLocation = useLocation();
-  const webStorageData = useFilmDatabaseWebStorage({ userLocation: userLocation, cacheKey: 'movieCache' }).getData() as Type_Tmdb_useApiReturn_Obj[] | null;
-
   /** Network Traffic Performance technique notes
    * API Memoization may not be the best technique here, given you'd still need to make an API call to ensure data is up to date.
    * To prevent unnecessary API calls, I've employed a solution that utilizes localStorage to store data on mount.
@@ -37,7 +33,10 @@ const FDHomePage = () => {
    * I've currently opted-out of implementing this technique; given this is merely a simple front-end project.
    */
 
+  const userLocation = useLocation();
+
   useEffect(() => {
+    const webStorageData = useFilmDatabaseWebStorage({ userLocation: userLocation, cacheKey: 'movieCache' }).getData() as Type_Tmdb_useApiReturn_Obj[] | null;
     const controller: AbortController = new AbortController();
 
     (async () => {
@@ -89,8 +88,7 @@ const FDHomePage = () => {
   const [mediaHeight, setMediaHeight] = useState<number>(0);
 
   const resizeMediaPadding = () => {
-    const windowHeight: number = window.innerHeight;
-    if (fdMedia.current) fdMedia.current.style.paddingTop = `${windowHeight - mediaHeight}px`;
+    if (fdMedia.current) fdMedia.current.style.paddingTop = `${window.innerHeight - mediaHeight}px`;
   };
 
   useEffect(() => {
