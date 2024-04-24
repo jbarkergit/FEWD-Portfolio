@@ -30,7 +30,9 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
    * Note: Intersectional Observer does not detect changes that may occur
    * Employment of Mutation Observer is required to ensure our observations are concurrent
    */
-  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(0);
+
+  // BUG: Paginated data won't render without a default state, need to look into this
+  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
 
   useEffect(() => {
     if (!grid) {
@@ -91,7 +93,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
   // Last possible index depends on visible nodes in carouselUl.current (visibleNodesCount)
   useEffect(() => {
     if (!grid) {
-      const lastPossibleIndex: number = Math.ceil(dataValue.length - 1 / visibleNodesCount);
+      const lastPossibleIndex: number = Math.ceil(dataValue.length / visibleNodesCount);
 
       if (carouselUl.current) {
         const posIndex = { isFirstIndex: btnNavIndex.currIndex === 1, isLastIndex: btnNavIndex.currIndex === lastPossibleIndex };
