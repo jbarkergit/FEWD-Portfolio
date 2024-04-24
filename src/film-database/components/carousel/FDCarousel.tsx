@@ -7,6 +7,7 @@ import { Type_Tmdb_ApiCall_Union, Type_Tmdb_OptParamTrailer_Obj, Type_Tmdb_ApiCa
 import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../../composables/web-storage-api/useFilmDatabaseWebStorage';
 import FDCarouselOverlay from './FDCarouselOverlay';
 import FDPosterProp from './FDCarouselPoster';
+import FDCarouselHeader from './FDCarouselHeader';
 
 type Type_PropDrill = {
   dataKey: string;
@@ -170,9 +171,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
   /** Component */
   return (
     <section className='FDMediaGrid' ref={mediaRef}>
-      <div className='FDMediaGrid__header'>
-        <h2 className='FDMediaGrid__header--h2'>{dataLabel ? dataLabel : dataKey.replace('_', ' ')}</h2>
-      </div>
+      <FDCarouselHeader dataLabel={dataLabel} dataKey={dataKey} />
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'} ref={carouselWrapper}>
         <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
           {grid
