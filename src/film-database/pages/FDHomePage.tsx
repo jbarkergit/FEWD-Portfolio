@@ -11,7 +11,7 @@ import { useTmdbApi } from '../composables/tmdb-api/hooks/useTmdbApi';
 import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 import { useDiscoverGenre } from '../composables/tmdb-api/hooks/useDiscoverGenre';
 // Components
-import FDMediaGrid from '../components/carousel/FDCarousel';
+import FDCarousel from '../components/carousel/FDCarousel';
 import FDHeader from '../components/header/FDHeader';
 import FDFooter from '../components/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';
@@ -61,7 +61,11 @@ const FDHomePage = () => {
       //   payload: { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
       // });
 
-      const mergedFetchedData = [...nowPlaying, ...prefabs, ...trending];
+      const mergedFetchedData = [
+        // ...nowPlaying,
+        // ...prefabs,
+        ...trending,
+      ];
 
       if (!webStorageData || webStorageData.some((webStorageObj) => mergedFetchedData.some((item) => webStorageObj.key === item.key))) {
         setTmdbDataArr(mergedFetchedData);
@@ -131,7 +135,7 @@ const FDHomePage = () => {
       <FDHero />
       <section className='fdMedia' ref={fdMedia}>
         {tmdbDataArr.map((entry) => (
-          <FDMediaGrid
+          <FDCarousel
             dataKey={entry.key}
             dataLabel={entry.label}
             dataValue={entry.value}
