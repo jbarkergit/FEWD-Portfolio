@@ -1,8 +1,9 @@
 import { useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import FDCarouselMapperPoster from './FDCarouselMapperPoster';
 import { Type_Tmdb_ApiCall_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
+
+import FDCarouselMapperPoster from './FDCarouselMapperPoster';
 
 type Type_PropDrill = {
   grid: boolean;

@@ -32,30 +32,32 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
   const [visibleNodesCount, setVisibleNodesCount] = useState<number>(0);
 
   useEffect(() => {
-    const observer: IntersectionObserver = new IntersectionObserver(
-      // Filter entries that are intersecting (visible in DOM), pass length to state
-      (entries) => setVisibleNodesCount(entries.filter((entry) => entry.isIntersecting).length - 1),
-      // Observer OPTS Note: Threshold is set to 1 to ensure we're observing ONLY 100% visible nodes
-      { root: carouselUl.current, rootMargin: '0px', threshold: 1 }
-    );
+    if (!grid && carouselUl.current && carouselUl.current.children) {
+      const observer: IntersectionObserver = new IntersectionObserver(
+        // Filter entries that are intersecting (visible in DOM), pass length to state
+        (entries: IntersectionObserverEntry[]) => setVisibleNodesCount(entries.filter((entry: IntersectionObserverEntry) => entry.isIntersecting).length),
+        // Observer OPTS Note: Threshold is set to 1 to ensure we're observing ONLY 100% visible nodes
+        { root: carouselUl.current, rootMargin: '0px', threshold: 1 }
+      );
 
-    const observeNodes = () => {
       // Create array from our ref's children && observe each node
-      if (carouselUl.current) Array.from(carouselUl.current.children).forEach((node) => observer.observe(node));
-    };
+      const observeNodes = () => {
+        if (carouselUl.current) Array.from(carouselUl.current.children).forEach((node) => observer.observe(node));
+      };
 
-    // Initial observation
-    observeNodes();
+      // Initial observation
+      observeNodes();
 
-    // Re-observe when carouselUl.current changes e.g. when media queries change the amount of visible nodes
-    const mutationObserver: MutationObserver = new MutationObserver(observeNodes);
-    mutationObserver.observe(carouselUl.current!, { childList: true });
+      // Re-observe when carouselUl.current changes e.g. when media queries change the amount of visible nodes
+      const mutationObserver: MutationObserver = new MutationObserver(observeNodes);
+      mutationObserver.observe(carouselUl.current, { childList: true });
 
-    return () => {
-      observer.disconnect();
-      mutationObserver.disconnect();
-    };
-  }, []);
+      return () => {
+        observer.disconnect();
+        mutationObserver.disconnect();
+      };
+    }
+  }, [carouselUl.current]);
 
   /** Data Pagination: Pushes data into state when setIndex changes (the user navigates) */
   const [paginatedData, setPaginatedData] = useState<Type_Tmdb_ApiCall_Union[]>([]);
@@ -87,7 +89,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
 
   // Last possible index depends on visible nodes in carouselUl.current (visibleNodesCount)
   useEffect(() => {
-    const lastPossibleIndex: number = Math.ceil(dataValue.length - 1 / visibleNodesCount);
+    const lastPossibleIndex: number = Math.ceil(dataValue.length / visibleNodesCount);
 
     if (carouselUl.current) {
       const posIndex = { isFirstIndex: btnNavIndex.currIndex === 1, isLastIndex: btnNavIndex.currIndex === lastPossibleIndex };
