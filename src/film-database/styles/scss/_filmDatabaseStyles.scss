@@ -20,7 +20,7 @@
 
 :root {
   // Controller
-  --fd-carousel-items-per-page: 7.5;
+  --fd-carousel-items-per-page: 7;
   --fd-flat-grid-items-per-page: 6;
 
   // Font
@@ -44,6 +44,11 @@
   --fd-borderRadius-mediaPoster: 9.6px;
   // Media Posters: Informational Details
   --fd-gap-informationalDetails: calc(var(--fd-gap-mediaPoster) / 2.5);
+
+  // Carousel
+  --fd-carousel-featured-height: calc(
+    ((100svw - 2 * var(--fd-padding-generic) - (var(--fd-carousel-items-per-page) - 1) * var(--fd-gap-mediaPoster)) / var(--fd-carousel-items-per-page)) / 0.66667
+  );
 }
 
 /**
