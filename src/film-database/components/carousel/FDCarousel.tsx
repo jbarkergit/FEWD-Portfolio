@@ -34,14 +34,14 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
    * Employment of Mutation Observer is required to ensure our observations are concurrent
    */
 
-  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(7);
+  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
 
   useEffect(() => {
     if (!grid) {
       const observer: IntersectionObserver = new IntersectionObserver(
         // Filter entries that are intersecting (visible in DOM), pass length to state
         (entries: IntersectionObserverEntry[]) => {
-          const filteredEntriesLength: number = entries.filter((entry: IntersectionObserverEntry) => entry.isIntersecting).length;
+          const filteredEntriesLength: number = entries.filter((entry: IntersectionObserverEntry) => entry.isIntersecting).length + 1;
           setVisibleNodesCount(filteredEntriesLength);
         },
         // Observer OPTS Note: Threshold is set to 1 to ensure we're observing ONLY 100% visible nodes
