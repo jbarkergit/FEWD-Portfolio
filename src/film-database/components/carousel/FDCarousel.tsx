@@ -34,14 +34,16 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
    * Employment of Mutation Observer is required to ensure our observations are concurrent
    */
 
-  // BUG: Paginated data won't render without a default state, need to look into this
-  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
+  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(7);
 
   useEffect(() => {
     if (!grid) {
       const observer: IntersectionObserver = new IntersectionObserver(
         // Filter entries that are intersecting (visible in DOM), pass length to state
-        (entries: IntersectionObserverEntry[]) => setVisibleNodesCount(entries.filter((entry: IntersectionObserverEntry) => entry.isIntersecting).length),
+        (entries: IntersectionObserverEntry[]) => {
+          const filteredEntriesLength: number = entries.filter((entry: IntersectionObserverEntry) => entry.isIntersecting).length;
+          setVisibleNodesCount(filteredEntriesLength);
+        },
         // Observer OPTS Note: Threshold is set to 1 to ensure we're observing ONLY 100% visible nodes
         { root: carouselUl.current, rootMargin: '0px', threshold: 1 }
       );
@@ -183,7 +185,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
 
   /** Carousel Navigation (Y Axis) */
   const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
-  useEffect(() => console.log(yAxis), [yAxis]);
+  // useEffect(() => console.log(yAxis), [yAxis]);
 
   // Clamped state getter
   const getClampedIndex = (prevIndex: number, curIndex: number, increment: number): Type_getClampedIndex => {
@@ -254,6 +256,10 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
       top: fdMediaActiveNode.offsetTop - parseInt(fdMedia.current.style.paddingTop),
       behavior: 'smooth',
     });
+
+    // Data-attribute handler
+    fdMedia.current.children[yAxis.prev].setAttribute('data-status', 'hidden');
+    fdMedia.current.children[yAxis.cur].setAttribute('data-status', 'active');
   }, [yAxis.cur]);
 
   /** Component */
