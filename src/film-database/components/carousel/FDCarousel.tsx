@@ -15,7 +15,7 @@ type Type_PropDrill = {
   dataKey: string;
   dataLabel?: string | undefined;
   dataValue: Type_Tmdb_ApiCall_Union[];
-  grid: boolean;
+  isGridLayout: boolean;
   mediaHeight: number;
   setMediaHeight: Dispatch<SetStateAction<number>>;
   fdMedia: RefObject<HTMLElement>;
@@ -23,7 +23,7 @@ type Type_PropDrill = {
 
 type Type_getClampedIndex = { prev: number; cur: number } | undefined;
 
-const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMediaHeight, fdMedia }: Type_PropDrill) => {
+const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, mediaHeight, setMediaHeight, fdMedia }: Type_PropDrill) => {
   // References
   const carouselWrapper = useRef<HTMLDivElement>(null);
   const carouselUl = useRef<HTMLUListElement>(null);
@@ -37,7 +37,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
   const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
 
   useEffect(() => {
-    if (!grid) {
+    if (!isGridLayout) {
       const observer: IntersectionObserver = new IntersectionObserver(
         // Filter entries that are intersecting (visible in DOM), pass length to state
         (entries: IntersectionObserverEntry[]) => {
@@ -72,7 +72,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
   const [btnNavIndex, setBtnNavIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
 
   useEffect(() => {
-    if (!grid) {
+    if (!isGridLayout) {
       setPaginatedData((prevData: Type_Tmdb_ApiCall_Union[]) => {
         const prevDataLength: number = prevData.length - 1;
         const startIndex: number = prevDataLength === 0 ? 0 : prevDataLength + 1;
@@ -97,7 +97,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
 
   // Last possible index depends on visible nodes in carouselUl.current (visibleNodesCount)
   useEffect(() => {
-    if (!grid) {
+    if (!isGridLayout) {
       const lastPossibleIndex: number = Math.ceil(dataValue.length / visibleNodesCount);
 
       if (carouselUl.current) {
@@ -305,11 +305,11 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
   return (
     <section className='FDMediaGrid' ref={mediaRef}>
       <FDCarouselHeader dataLabel={dataLabel} dataKey={dataKey} />
-      <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'} ref={carouselWrapper}>
-        <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
-          {grid
-            ? dataValue.map((values) => <FDCarouselPoster mapValue={values} isCarouselGrid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
-            : paginatedData.map((values) => <FDCarouselPoster mapValue={values} isCarouselGrid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)}
+      <div className='FDMediaGrid__wrapper' data-status={isGridLayout ? 'grid' : 'carousel'} ref={carouselWrapper}>
+        <ul className='FDMediaGrid__wrapper__ul' data-status={isGridLayout ? 'grid' : 'carousel'} ref={carouselUl}>
+          {isGridLayout
+            ? dataValue.map((values) => <FDCarouselPoster mapValue={values} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
+            : paginatedData.map((values) => <FDCarouselPoster mapValue={values} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)}
         </ul>
         <FDCarouselOverlay tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />
       </div>

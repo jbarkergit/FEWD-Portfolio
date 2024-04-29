@@ -104,7 +104,7 @@ const FDHomePage = () => {
             dataKey={entry.key}
             dataLabel={entry.label}
             dataValue={entry.value}
-            grid={false}
+            isGridLayout={false}
             mediaHeight={mediaHeight}
             setMediaHeight={setMediaHeight}
             fdMedia={fdMedia}
