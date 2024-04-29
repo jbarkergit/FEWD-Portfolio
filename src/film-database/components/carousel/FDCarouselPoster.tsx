@@ -3,15 +3,15 @@ import useCreatePicture from '../../hooks/useCreatePicture';
 
 type Type_PropDrill = {
   mapValue: Type_Tmdb_ApiCall_Union;
-  grid: boolean;
+  isCarouselGrid: boolean;
   useFetchTrailer: (index: number) => void;
 };
 
-const FDCarouselPoster = ({ mapValue, grid, useFetchTrailer }: Type_PropDrill) => {
+const FDCarouselPoster = ({ mapValue, isCarouselGrid, useFetchTrailer }: Type_PropDrill) => {
   const value: Type_Tmdb_ApiCallMovieList_Obj = mapValue as unknown as Type_Tmdb_ApiCallMovieList_Obj;
 
   return (
-    <li className='FDMediaGrid__wrapper__ul__li' data-status={grid ? 'grid' : 'carousel'} onPointerUp={() => useFetchTrailer(value.id)} key={value.id}>
+    <li className='FDMediaGrid__wrapper__ul__li' data-status={isCarouselGrid ? 'grid' : 'carousel'} onPointerUp={() => useFetchTrailer(value.id)} key={value.id}>
       <article className='FDMediaGrid__wrapper__ul__li__article'>
         <div className='FDMediaGrid__wrapper__ul__li__article__graphic'>
           {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${value.poster_path}.svg`, alt: value.title as string })}

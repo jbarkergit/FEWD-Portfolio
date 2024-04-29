@@ -183,9 +183,11 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
     }
   }, [mediaRef.current]);
 
-  /** Carousel Navigation (Y Axis) */
+  /** Carousel Navigation (X && Y Axis) */
   const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
   // useEffect(() => console.log(yAxis), [yAxis]);
+  const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
+  useEffect(() => console.log(xAxis), [xAxis]);
 
   // Clamped state getter
   const getClampedIndex = (prevIndex: number, curIndex: number, increment: number): Type_getClampedIndex => {
@@ -199,31 +201,41 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
   };
 
   // State setter
-  const setYAxisIndexes = (e: WheelEvent | KeyboardEvent) => {
-    // Wheel Events
+  const setAxisIndexes = (e: WheelEvent | KeyboardEvent) => {
+    // Event Types
     const isWheelEvent: boolean = e instanceof WheelEvent;
-    const deltaY: number = (e as WheelEvent).deltaY;
-
-    // Keyboard Events
     const isKeyboardEvent: boolean = e instanceof KeyboardEvent;
+
+    // Y Axis Events
+    const deltaY: number = (e as WheelEvent).deltaY;
     const isArrowUp: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowUp';
     const isArrowDown: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowDown';
+
+    // X Axis Events
     const isArrowRight: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowRight';
     const isArrowLeft: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowLeft';
 
     // Logic
     switch (true) {
-      case isWheelEvent || (isKeyboardEvent && isArrowUp) || (isKeyboardEvent && isArrowDown):
+      case isWheelEvent:
         setYAxis((prevState: typeof yAxis) => {
           const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, deltaY > 0 ? 1 : -1);
           return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
         });
         break;
 
-      case isKeyboardEvent && isArrowRight:
+      case (isKeyboardEvent && isArrowUp) || (isKeyboardEvent && isArrowDown):
+        setYAxis((prevState: typeof yAxis) => {
+          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, isArrowUp ? -1 : 1);
+          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
+        });
         break;
 
-      case isKeyboardEvent && isArrowLeft:
+      case (isKeyboardEvent && isArrowRight) || (isKeyboardEvent && isArrowLeft):
+        setXAxis((prevState: typeof xAxis) => {
+          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, isArrowRight ? 1 : -1);
+          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
+        });
         break;
 
       default:
@@ -233,16 +245,16 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
   };
 
   useEffect(() => {
-    fdMedia.current?.addEventListener('wheel', setYAxisIndexes);
-    fdMedia.current?.addEventListener('keyup', setYAxisIndexes);
+    window.addEventListener('wheel', setAxisIndexes);
+    window.addEventListener('keyup', setAxisIndexes);
 
     return () => {
-      fdMedia.current?.removeEventListener('wheel', setYAxisIndexes);
-      fdMedia.current?.removeEventListener('keyup', setYAxisIndexes);
+      window.removeEventListener('wheel', setAxisIndexes);
+      window.removeEventListener('keyup', setAxisIndexes);
     };
   }, []);
 
-  // Scroll method
+  // Y Scroll method
   useEffect(() => {
     if (!fdMedia.current) return;
 
@@ -258,9 +270,36 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
     });
 
     // Data-attribute handler
-    fdMedia.current.children[yAxis.prev].setAttribute('data-status', 'hidden');
-    fdMedia.current.children[yAxis.cur].setAttribute('data-status', 'active');
+    fdMedia.current.children[yAxis.prev].setAttribute('data-activity', 'hidden');
+    fdMedia.current.children[yAxis.cur].setAttribute('data-activity', 'active');
   }, [yAxis.cur]);
+
+  // X Scroll method
+  useEffect(() => {
+    if (!fdMedia.current || !carouselUl.current || !carouselUl.current.children) return;
+
+    // All mapped carousels
+    const carouselsArr: Element[] = [...fdMedia.current.children];
+    const activeCarousel = carouselsArr[yAxis.cur] as HTMLUListElement;
+    const prevActiveCarousel = carouselsArr[yAxis.prev] as HTMLUListElement;
+    if (!carouselsArr || !activeCarousel || !prevActiveCarousel) return;
+
+    // Inactive && active (active) carousel nodes
+    const activeCarouselWrapper = activeCarousel.children[1] as HTMLHeadElement;
+    const activeCarouselUL = activeCarouselWrapper.children[0] as HTMLUListElement;
+    if (!activeCarouselWrapper || !activeCarouselUL) return;
+
+    const activeCarouselLI = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
+    const prevActiveCarouselNode = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
+    if (!activeCarouselLI || !prevActiveCarouselNode) return;
+
+    // X Axis scroller
+    activeCarousel.scrollTo({ left: activeCarouselLI.offsetLeft, behavior: 'smooth' });
+
+    // Data-attributes for active && inactive carousels
+    activeCarouselLI.setAttribute('data-activity', 'active');
+    prevActiveCarouselNode.setAttribute('data-activity', 'hidden');
+  }, [xAxis.cur]);
 
   /** Component */
   return (
@@ -269,8 +308,8 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, grid, mediaHeight, setMedia
       <div className='FDMediaGrid__wrapper' data-status={grid ? 'grid' : 'carousel'} ref={carouselWrapper}>
         <ul className='FDMediaGrid__wrapper__ul' data-status={grid ? 'grid' : 'carousel'} ref={carouselUl}>
           {grid
-            ? dataValue.map((values) => <FDCarouselPoster mapValue={values} grid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
-            : paginatedData.map((values) => <FDCarouselPoster mapValue={values} grid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)}
+            ? dataValue.map((values) => <FDCarouselPoster mapValue={values} isCarouselGrid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
+            : paginatedData.map((values) => <FDCarouselPoster mapValue={values} isCarouselGrid={grid} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)}
         </ul>
         <FDCarouselOverlay tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />
       </div>
