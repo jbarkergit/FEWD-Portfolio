@@ -9,7 +9,6 @@ import { useTmdbApi } from '../composables/tmdb-api/hooks/useTmdbApi';
 import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_OptParamTrailer_Obj, Type_Tmdb_useApiReturn_Obj } from '../composables/tmdb-api/types/TmdbDataTypes';
 // Api Hooks
 import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
-import { useDiscoverGenre } from '../composables/tmdb-api/hooks/useDiscoverGenre';
 // Components
 import FDCarousel from '../components/carousel/FDCarousel';
 import FDHeader from '../components/header/FDHeader';
@@ -17,6 +16,8 @@ import FDFooter from '../components/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';
 
 const FDHomePage = () => {
+  const mediaRef = useRef<HTMLElement>(null);
+
   // Store cached data in state for component renders && pagination
   const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
 
@@ -122,38 +123,14 @@ const FDHomePage = () => {
     }
   };
 
-  /** Scrolling Padding for media component */
-  const fdMedia = useRef<HTMLElement>(null);
-  const [mediaHeight, setMediaHeight] = useState<number>(0);
-
-  const resizeMediaPadding = () => {
-    if (fdMedia.current) fdMedia.current.style.paddingTop = `${window.innerHeight - mediaHeight}px`;
-  };
-
-  useEffect(() => {
-    resizeMediaPadding(); // Mount
-    window.addEventListener('resize', resizeMediaPadding);
-    return () => window.removeEventListener('resize', resizeMediaPadding);
-  }, [mediaHeight]);
-
   /** Component */
   return (
     <div className='filmDatabase'>
       <FDHeader />
       <FDHero />
-      <section className='fdMedia' ref={fdMedia}>
+      <section className='FDMediaGrid' ref={mediaRef}>
         {tmdbDataArr.map((entry) => (
-          <FDCarousel
-            dataKey={entry.key}
-            dataLabel={entry.label}
-            dataValue={entry.value}
-            isGridLayout={false}
-            mediaHeight={mediaHeight}
-            setMediaHeight={setMediaHeight}
-            fdMedia={fdMedia}
-            useFetchTrailer={useFetchTrailer}
-            key={uuidv4()}
-          />
+          <FDCarousel dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} isGridLayout={false} useFetchTrailer={useFetchTrailer} key={uuidv4()} />
         ))}
       </section>
       {/* <FDFooter /> */}

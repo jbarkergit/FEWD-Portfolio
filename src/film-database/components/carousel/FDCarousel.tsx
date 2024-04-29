@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useRef, useState, useEffect, RefObject } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Type_Tmdb_ApiCall_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
@@ -11,16 +11,14 @@ type Type_PropDrill = {
   dataLabel?: string | undefined;
   dataValue: Type_Tmdb_ApiCall_Union[];
   isGridLayout: boolean;
-  mediaHeight: number;
-  setMediaHeight: Dispatch<SetStateAction<number>>;
-  fdMedia: RefObject<HTMLElement>;
   useFetchTrailer: (index: number) => void;
 };
 
 type Type_getClampedIndex = { prev: number; cur: number } | undefined;
 
-const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, mediaHeight, setMediaHeight, fdMedia, useFetchTrailer }: Type_PropDrill) => {
+const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, useFetchTrailer }: Type_PropDrill) => {
   // References
+  const fdMedia = useRef<HTMLElement>(null);
   const carouselWrapper = useRef<HTMLDivElement>(null);
   const carouselUl = useRef<HTMLUListElement>(null);
 
@@ -125,19 +123,9 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, mediaHeight, 
     }
   }, [paginatedData]);
 
-  /** Grab fdMediaGrid (arr node 0) height dynamically for parent's padding setter */
-  const mediaRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (mediaRef.current) {
-      const nodeHeight = mediaRef.current.offsetHeight;
-      if (mediaHeight < nodeHeight) setMediaHeight(nodeHeight);
-    }
-  }, [mediaRef.current]);
-
   /** Carousel Navigation (X && Y Axis) */
   const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
-  useEffect(() => console.log(yAxis), [yAxis]);
+  // useEffect(() => console.log(yAxis), [yAxis]);
   const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
   // useEffect(() => console.log(xAxis), [xAxis]);
 
@@ -206,7 +194,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, mediaHeight, 
     };
   }, []);
 
-  // Y Scroll method
+  // Y Axis Scroll method
   useEffect(() => {
     if (!fdMedia.current) return;
 
@@ -226,32 +214,32 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, mediaHeight, 
     fdMedia.current.children[yAxis.prev].setAttribute('data-visibility', 'hidden');
   }, [yAxis.cur]);
 
-  // X Scroll method
-  useEffect(() => {
-    if (!fdMedia.current || !carouselUl.current || !carouselUl.current.children) return;
+  // X Axis Scroll method
+  // useEffect(() => {
+  //   if (!fdMedia.current || !fdMedia.current.children || !carouselUl.current || !carouselUl.current.children) return;
 
-    // All mapped carousels
-    const carouselsArr: Element[] = [...fdMedia.current.children];
-    const activeCarousel = carouselsArr[yAxis.cur] as HTMLUListElement;
-    const prevActiveCarousel = carouselsArr[yAxis.prev] as HTMLUListElement;
-    if (!carouselsArr || !activeCarousel || !prevActiveCarousel) return;
+  //   // All mapped carousels
+  //   const carouselsArr: Element[] = [...fdMedia.current.children];
+  //   const activeCarousel = carouselsArr[yAxis.cur] as HTMLUListElement;
+  //   const prevActiveCarousel = carouselsArr[yAxis.prev] as HTMLUListElement;
+  //   if (!carouselsArr || !activeCarousel || !prevActiveCarousel) return;
 
-    // Inactive && active (active) carousel nodes
-    const activeCarouselWrapper = activeCarousel.children[1] as HTMLHeadElement;
-    const activeCarouselUL = activeCarouselWrapper.children[0] as HTMLUListElement;
-    if (!activeCarouselWrapper || !activeCarouselUL) return;
+  //   // Inactive && active (active) carousel nodes
+  //   const activeCarouselWrapper = activeCarousel.children[1] as HTMLHeadElement;
+  //   const activeCarouselUL = activeCarouselWrapper.children[0] as HTMLUListElement;
+  //   if (!activeCarouselWrapper || !activeCarouselUL) return;
 
-    const activeCarouselLI = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
-    const prevActiveCarouselNode = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
-    if (!activeCarouselLI || !prevActiveCarouselNode) return;
+  //   const activeCarouselLI = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
+  //   const prevActiveCarouselNode = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
+  //   if (!activeCarouselLI || !prevActiveCarouselNode) return;
 
-    // X Axis scroller
-    activeCarousel.scrollTo({ left: activeCarouselLI.offsetLeft, behavior: 'smooth' });
+  //   // X Axis scroller
+  //   activeCarousel.scrollTo({ left: activeCarouselLI.offsetLeft, behavior: 'smooth' });
 
-    // Data-attributes for active && inactive carousels
-    activeCarouselLI.setAttribute('data-activity', 'focused');
-    prevActiveCarouselNode.removeAttribute('data-activity');
-  }, [xAxis.cur]);
+  //   // Data-attributes for active && inactive carousels
+  //   activeCarouselLI.setAttribute('data-activity', 'focused');
+  //   prevActiveCarouselNode.removeAttribute('data-activity');
+  // }, [xAxis.cur]);
 
   /** Component */
   const getMapData = (): Type_Tmdb_ApiCall_Union[] => {
@@ -259,7 +247,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, mediaHeight, 
   };
 
   return (
-    <section className='FDMediaGrid' ref={mediaRef}>
+    <section className='fdMedia' ref={fdMedia}>
       <div className='FDMediaGrid__header'>
         <h2 className='FDMediaGrid__header--h2'>{dataLabel ? dataLabel : dataKey.replace('_', ' ')}</h2>
       </div>

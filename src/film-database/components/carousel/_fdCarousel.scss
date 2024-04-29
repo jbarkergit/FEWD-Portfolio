@@ -2,7 +2,14 @@
 @use '/src/film-database/styles/scss/filmDatabaseStyles' as s;
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
-.fdMedia {
+:root {
+  // Carousel
+  --fd-carousel-featured-height: calc(
+    ((100svw - 2 * var(--fd-padding-generic) - (var(--fd-carousel-items-per-page) - 1) * var(--fd-gap-mediaPoster)) / var(--fd-carousel-items-per-page)) / 0.66667
+  );
+}
+
+.fdMediaGrid {
   z-index: 19;
   overflow: scroll;
   scrollbar-width: none;
@@ -12,7 +19,8 @@
 }
 
 .FDMediaGrid {
-  padding: 0 0 calc(var(--fd-padding-generic) / 4) 0;
+  // padding-top: 100svh -;
+  // padding: 0 0 calc(var(--fd-padding-generic) / 4) 0;
   &[data-visibility='visible'] {
     display: block;
   }
@@ -59,7 +67,7 @@
       // }
       &__li {
         width: calc(var(--fd-carousel-featured-height) * 0.66667);
-        aspect-ratio: 2/3;
+        height: var(--fd-carousel-featured-height);
         margin-right: var(--fd-gap-mediaPoster);
         overflow: clip;
         // &[data-layout='carousel'] {
