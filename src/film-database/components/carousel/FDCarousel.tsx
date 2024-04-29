@@ -270,8 +270,8 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, mediaHeight, 
     });
 
     // Data-attribute handler
-    fdMedia.current.children[yAxis.prev].setAttribute('data-activity', 'hidden');
-    fdMedia.current.children[yAxis.cur].setAttribute('data-activity', 'active');
+    fdMedia.current.children[yAxis.cur].setAttribute('data-visibility', 'visible');
+    fdMedia.current.children[yAxis.prev].setAttribute('data-visibility', 'hidden');
   }, [yAxis.cur]);
 
   // X Scroll method
@@ -297,8 +297,8 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, mediaHeight, 
     activeCarousel.scrollTo({ left: activeCarouselLI.offsetLeft, behavior: 'smooth' });
 
     // Data-attributes for active && inactive carousels
-    activeCarouselLI.setAttribute('data-activity', 'active');
-    prevActiveCarouselNode.setAttribute('data-activity', 'hidden');
+    activeCarouselLI.setAttribute('data-activity', 'focused');
+    prevActiveCarouselNode.removeAttribute('data-activity');
   }, [xAxis.cur]);
 
   /** Component */

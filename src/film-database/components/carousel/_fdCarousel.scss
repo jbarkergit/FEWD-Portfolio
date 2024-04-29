@@ -13,6 +13,12 @@
 
 .FDMediaGrid {
   padding: 0 0 calc(var(--fd-padding-generic) / 4) 0;
+  &[data-visibility='visible'] {
+    display: block;
+  }
+  &[data-visibility='hidden'] {
+    display: block;
+  }
   &__header {
     position: relative;
     z-index: 1;

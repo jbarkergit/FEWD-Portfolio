@@ -11,7 +11,7 @@ const FDCarouselPoster = ({ mapValue, isGridLayout, useFetchTrailer }: Type_Prop
   const value: Type_Tmdb_ApiCallMovieList_Obj = mapValue as unknown as Type_Tmdb_ApiCallMovieList_Obj;
 
   return (
-    <li className='FDMediaGrid__wrapper__ul__li' data-layout={isGridLayout ? 'grid' : 'carousel'} onPointerUp={() => useFetchTrailer(value.id)} key={value.id}>
+    <li className='FDMediaGrid__wrapper__ul__li' data-status={isGridLayout ? 'grid' : 'carousel'} onPointerUp={() => useFetchTrailer(value.id)} key={value.id}>
       <article className='FDMediaGrid__wrapper__ul__li__article'>
         <div className='FDMediaGrid__wrapper__ul__li__article__graphic'>
           {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${value.poster_path}.svg`, alt: value.title as string })}
