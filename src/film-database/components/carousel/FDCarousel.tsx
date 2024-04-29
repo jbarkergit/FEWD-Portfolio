@@ -305,8 +305,8 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, mediaHeight, 
   return (
     <section className='FDMediaGrid' ref={mediaRef}>
       <FDCarouselHeader dataLabel={dataLabel} dataKey={dataKey} />
-      <div className='FDMediaGrid__wrapper' data-status={isGridLayout ? 'grid' : 'carousel'} ref={carouselWrapper}>
-        <ul className='FDMediaGrid__wrapper__ul' data-status={isGridLayout ? 'grid' : 'carousel'} ref={carouselUl}>
+      <div className='FDMediaGrid__wrapper' ref={carouselWrapper}>
+        <ul className='FDMediaGrid__wrapper__ul' data-layout={isGridLayout ? 'grid' : 'carousel'} ref={carouselUl}>
           {isGridLayout
             ? dataValue.map((values) => <FDCarouselPoster mapValue={values} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
             : paginatedData.map((values) => <FDCarouselPoster mapValue={values} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)}

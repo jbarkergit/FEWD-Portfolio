@@ -35,14 +35,14 @@
     overflow: clip;
     &__ul {
       padding: var(--fd-padding-innerWrapper);
-      &[data-status='carousel'] {
+      &[data-layout='carousel'] {
         display: flex;
         @include m.scrollSnapping;
         /* Overlapping padding */
         grid-column: left-start/right-end;
         grid-row: 1;
       }
-      // &[data-status='grid'] {
+      // &[data-layout='grid'] {
       //   display: grid;
       //   grid-template-columns: repeat(
       //     auto-fit,
@@ -56,7 +56,7 @@
         aspect-ratio: 2/3;
         margin-right: var(--fd-gap-mediaPoster);
         overflow: clip;
-        // &[data-status='carousel'] {
+        // &[data-layout='carousel'] {
         //   height: calc(
         //     ((100svw - 2 * var(--fd-gap-mediaPoster) - var(--fd-carousel-items-per-page) * var(--fd-gap-mediaPoster)) / var(--fd-carousel-items-per-page)) / 0.66667
         //   );
@@ -86,7 +86,7 @@
         //     );
         //   }
         // }
-        // &[data-status='grid'] {
+        // &[data-layout='grid'] {
         //   height: calc(
         //     ((100svw - 2 * var(--fd-gap-mediaPoster) - (var(--fd-flat-grid-items-per-page) - 0.5) * var(--fd-gap-mediaPoster)) / var(--fd-flat-grid-items-per-page)) /
         //       0.66667
