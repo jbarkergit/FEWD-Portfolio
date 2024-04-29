@@ -5,10 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 // Api Data
 import { tmdbEndPoints } from '../composables/tmdb-api/data/tmdbEndPoints';
 // Api Types
-import { Type_Tmdb_useApiReturn_Obj } from '../composables/tmdb-api/types/TmdbDataTypes';
-// Api Hooks
 import { useTmdbApi } from '../composables/tmdb-api/hooks/useTmdbApi';
-import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
+import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_OptParamTrailer_Obj, Type_Tmdb_useApiReturn_Obj } from '../composables/tmdb-api/types/TmdbDataTypes';
+// Api Hooks
+import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 import { useDiscoverGenre } from '../composables/tmdb-api/hooks/useDiscoverGenre';
 // Components
 import FDCarousel from '../components/carousel/FDCarousel';
@@ -79,6 +79,49 @@ const FDHomePage = () => {
     return () => controller.abort();
   }, []);
 
+  /** VIDEO PLAYER STATE
+   * This set of state variables enables the application to utilize a single YouTube iFrame component to produce trailer results for media.
+   * This component makes use of the react-youtube API to handle iFrames.
+   * videoPlayerTrailer stores API data and is used to find trailers directly from YouTube opposed to alternative sources.
+   */
+  const [trailerCache, setTrailerCache] = useState<Type_useFilmDatabaseWebStorage_Obj[]>();
+
+  const useFetchTrailer = (index: number) => {
+    const controller: AbortController = new AbortController();
+    const cachedTrailers = useFilmDatabaseWebStorage({ userLocation: userLocation, cacheKey: 'trailerCache' }).getData() as Type_useFilmDatabaseWebStorage_Obj[];
+    const isCachedTrailer: boolean = cachedTrailers?.some((obj) => obj.trailer_id === index);
+
+    if (!isCachedTrailer) {
+      (async (): Promise<void> => {
+        const trailerObjData = await useTmdbApi({
+          controller: controller,
+          payload: {
+            tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos,
+            trailer_id: { typeGuardKey: 'trailer_id', propValue: `${index}` },
+          } as unknown as Type_Tmdb_OptParamTrailer_Obj,
+        });
+
+        const trailerObj: Type_useFilmDatabaseWebStorage_Obj[] = [
+          {
+            trailer_id: index,
+            trailer: (trailerObjData as Type_Tmdb_ApiCallTrailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer'),
+          },
+        ];
+
+        if (trailerObjData && trailerObj) {
+          useFilmDatabaseWebStorage({ userLocation: userLocation, data: trailerObj, cacheKey: 'trailerCache' }).setData();
+
+          setTrailerCache((prevData: Type_useFilmDatabaseWebStorage_Obj[] | undefined) => {
+            if (prevData) return [...prevData, ...cachedTrailers];
+            else return cachedTrailers;
+          });
+        }
+      })();
+    } else {
+      setTrailerCache(cachedTrailers);
+    }
+  };
+
   /** Scrolling Padding for media component */
   const fdMedia = useRef<HTMLElement>(null);
   const [mediaHeight, setMediaHeight] = useState<number>(0);
@@ -108,6 +151,7 @@ const FDHomePage = () => {
             mediaHeight={mediaHeight}
             setMediaHeight={setMediaHeight}
             fdMedia={fdMedia}
+            useFetchTrailer={useFetchTrailer}
             key={uuidv4()}
           />
         ))}
