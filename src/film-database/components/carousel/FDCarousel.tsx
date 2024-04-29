@@ -7,7 +7,6 @@ import { useTmdbApi } from '../../composables/tmdb-api/hooks/useTmdbApi';
 import { Type_Tmdb_ApiCall_Union, Type_Tmdb_OptParamTrailer_Obj, Type_Tmdb_ApiCallTrailer_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
 import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../../composables/web-storage-api/useFilmDatabaseWebStorage';
 
-import FDCarouselHeader from './FDCarouselHeader';
 import FDCarouselOverlay from './FDCarouselOverlay';
 import FDCarouselPoster from './FDCarouselPoster';
 
@@ -302,14 +301,20 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, mediaHeight, 
   }, [xAxis.cur]);
 
   /** Component */
+  const getMapData = (): Type_Tmdb_ApiCall_Union[] => {
+    return isGridLayout ? dataValue : paginatedData;
+  };
+
   return (
     <section className='FDMediaGrid' ref={mediaRef}>
-      <FDCarouselHeader dataLabel={dataLabel} dataKey={dataKey} />
+      <div className='FDMediaGrid__header'>
+        <h2 className='FDMediaGrid__header--h2'>{dataLabel ? dataLabel : dataKey.replace('_', ' ')}</h2>
+      </div>
       <div className='FDMediaGrid__wrapper' ref={carouselWrapper}>
         <ul className='FDMediaGrid__wrapper__ul' data-layout={isGridLayout ? 'grid' : 'carousel'} ref={carouselUl}>
-          {isGridLayout
-            ? dataValue.map((values) => <FDCarouselPoster mapValue={values} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)
-            : paginatedData.map((values) => <FDCarouselPoster mapValue={values} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} key={uuidv4()} />)}
+          {getMapData().map((values) => (
+            <FDCarouselPoster mapValue={values} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} key={uuidv4()} />
+          ))}
         </ul>
         <FDCarouselOverlay tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />
       </div>
