@@ -246,13 +246,15 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, useFetchTrail
     return isGridLayout ? dataValue : paginatedData;
   };
 
+  const carouselHeading: string = dataLabel ? dataLabel : dataKey.replace('_', ' ');
+
   return (
-    <section className='fdMedia__carousel' ref={fdMedia}>
+    <section className='fdMedia__carousel' ref={fdMedia} aria-label={`${carouselHeading} Section`}>
       <div className='fdMedia__carousel__header'>
-        <h2 className='fdMedia__carousel__header--h2'>{dataLabel ? dataLabel : dataKey.replace('_', ' ')}</h2>
+        <h2 className='fdMedia__carousel__header--h2'>{carouselHeading}</h2>
       </div>
       <div className='fdMedia__carousel__wrapper' ref={carouselWrapper}>
-        <ul className='fdMedia__carousel__wrapper__ul' data-layout={isGridLayout ? 'grid' : 'carousel'} ref={carouselUl}>
+        <ul className='fdMedia__carousel__wrapper__ul' ref={carouselUl} data-layout={isGridLayout ? 'grid' : 'carousel'} role='list'>
           {getMapData().map((values) => (
             <FDCarouselPoster mapValue={values} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} key={uuidv4()} />
           ))}

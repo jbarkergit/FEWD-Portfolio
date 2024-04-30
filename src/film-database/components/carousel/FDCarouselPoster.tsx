@@ -30,7 +30,12 @@ const FDCarouselPoster = ({ mapValue, isGridLayout, useFetchTrailer }: Type_Prop
   } = value;
 
   return (
-    <li className='fdMedia__carousel__wrapper__ul__li' data-layout={isGridLayout ? 'grid' : 'carousel'} onPointerUp={() => useFetchTrailer(id)} key={uuidv4()}>
+    <li
+      className='fdMedia__carousel__wrapper__ul__li'
+      data-layout={isGridLayout ? 'grid' : 'carousel'}
+      onPointerUp={() => useFetchTrailer(id)}
+      key={uuidv4()}
+      role='listitem'>
       <article className='fdMedia__carousel__wrapper__ul__li__article'>
         <header className='fdMedia__carousel__wrapper__ul__li__article__header'>
           <h2>{title}</h2>
