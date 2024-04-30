@@ -36,7 +36,7 @@ const FDCarouselPoster = ({ mapValue, isGridLayout, useFetchTrailer }: Type_Prop
           <h2>{title}</h2>
         </header>
         <div className='fdMedia__carousel__wrapper__ul__li__article__graphic'>
-          {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${value.poster_path}.svg`, alt: title })}
+          {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${poster_path}.svg`, alt: title })}
         </div>
       </article>
     </li>
