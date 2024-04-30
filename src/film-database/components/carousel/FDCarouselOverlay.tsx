@@ -18,9 +18,9 @@ const FDCarouselOverlay = ({ tmdbArrLength, setBtnNavIndex, visibleNodesCount }:
   const minMaxIndex = { min: 1, max: Math.ceil(tmdbArrLength / visibleNodesCount) };
 
   return (
-    <nav className='FDMediaGrid__wrapper__navigation'>
+    <nav className='fdMedia__carousel__wrapper__navigation'>
       <button
-        className='FDMediaGrid__wrapper__navigation--button'
+        className='fdMedia__carousel__wrapper__navigation--button'
         aria-label='Show Previous'
         onClick={() => {
           setBtnNavIndex((prevState) => {
@@ -34,7 +34,7 @@ const FDCarouselOverlay = ({ tmdbArrLength, setBtnNavIndex, visibleNodesCount }:
       </button>
 
       <button
-        className='FDMediaGrid__wrapper__navigation--button'
+        className='fdMedia__carousel__wrapper__navigation--button'
         aria-label='Show More'
         onClick={() => {
           setBtnNavIndex((prevState) => {

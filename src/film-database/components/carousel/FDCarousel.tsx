@@ -195,24 +195,24 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, useFetchTrail
   }, []);
 
   // Y Axis Scroll method
-  useEffect(() => {
-    if (!fdMedia.current) return;
+  // useEffect(() => {
+  //   if (!fdMedia.current) return;
 
-    const fdMediaNodes: HTMLCollection = fdMedia.current.children;
-    if (!fdMediaNodes) return;
+  //   const fdMediaNodes: HTMLCollection = fdMedia.current.children;
+  //   if (!fdMediaNodes) return;
 
-    const fdMediaActiveNode = fdMediaNodes[yAxis.cur] as HTMLElement;
-    if (!fdMediaActiveNode) return;
+  //   const fdMediaActiveNode = fdMediaNodes[yAxis.cur] as HTMLElement;
+  //   if (!fdMediaActiveNode) return;
 
-    fdMedia.current.scrollTo({
-      top: fdMediaActiveNode.offsetTop - parseInt(fdMedia.current.style.paddingTop),
-      behavior: 'smooth',
-    });
+  //   fdMedia.current.scrollTo({
+  //     top: fdMediaActiveNode.offsetTop - parseInt(fdMedia.current.style.paddingTop),
+  //     behavior: 'smooth',
+  //   });
 
-    // Data-attribute handler
-    fdMedia.current.children[yAxis.cur].setAttribute('data-visibility', 'visible');
-    fdMedia.current.children[yAxis.prev].setAttribute('data-visibility', 'hidden');
-  }, [yAxis.cur]);
+  //   // Data-attribute handler
+  //   fdMedia.current.children[yAxis.cur].setAttribute('data-visibility', 'visible');
+  //   fdMedia.current.children[yAxis.prev].setAttribute('data-visibility', 'hidden');
+  // }, [yAxis.cur]);
 
   // X Axis Scroll method
   // useEffect(() => {
@@ -247,12 +247,12 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, useFetchTrail
   };
 
   return (
-    <section className='fdMedia' ref={fdMedia}>
-      <div className='FDMediaGrid__header'>
-        <h2 className='FDMediaGrid__header--h2'>{dataLabel ? dataLabel : dataKey.replace('_', ' ')}</h2>
+    <section className='fdMedia__carousel' ref={fdMedia}>
+      <div className='fdMedia__carousel__header'>
+        <h2 className='fdMedia__carousel__header--h2'>{dataLabel ? dataLabel : dataKey.replace('_', ' ')}</h2>
       </div>
-      <div className='FDMediaGrid__wrapper' ref={carouselWrapper}>
-        <ul className='FDMediaGrid__wrapper__ul' data-layout={isGridLayout ? 'grid' : 'carousel'} ref={carouselUl}>
+      <div className='fdMedia__carousel__wrapper' ref={carouselWrapper}>
+        <ul className='fdMedia__carousel__wrapper__ul' data-layout={isGridLayout ? 'grid' : 'carousel'} ref={carouselUl}>
           {getMapData().map((values) => (
             <FDCarouselPoster mapValue={values} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} key={uuidv4()} />
           ))}

@@ -128,7 +128,7 @@ const FDHomePage = () => {
     <div className='filmDatabase'>
       <FDHeader />
       <FDHero />
-      <section className='FDMediaGrid' ref={mediaRef}>
+      <section className='fdMedia' ref={mediaRef}>
         {tmdbDataArr.map((entry) => (
           <FDCarousel dataKey={entry.key} dataLabel={entry.label} dataValue={entry.value} isGridLayout={false} useFetchTrailer={useFetchTrailer} key={uuidv4()} />
         ))}
