@@ -254,7 +254,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, useFetchTrail
         <h2 className='fdMedia__carousel__header--h2'>{carouselHeading}</h2>
       </div>
       <div className='fdMedia__carousel__wrapper' ref={carouselWrapper}>
-        <ul className='fdMedia__carousel__wrapper__ul' ref={carouselUl} data-layout={isGridLayout ? 'grid' : 'carousel'} role='list'>
+        <ul className='fdMedia__carousel__wrapper__ul' ref={carouselUl} data-layout={isGridLayout ? 'grid' : 'carousel'}>
           {getMapData().map((values) => (
             <FDCarouselPoster mapValue={values} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} key={uuidv4()} />
           ))}
