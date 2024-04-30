@@ -1,8 +1,15 @@
-@mixin scrollSnapping {
+@mixin scrollSnappingXAxis {
   overflow-x: scroll;
   scrollbar-width: none;
   scroll-behavior: smooth;
   scroll-snap-type: x proximity;
+  scroll-padding: 0 0;
+}
+@mixin scrollSnappingYAxis {
+  overflow-y: scroll;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
   scroll-padding: 0 0;
 }
 
