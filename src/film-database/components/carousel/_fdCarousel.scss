@@ -10,7 +10,8 @@
 
 .fdMedia {
   display: block;
-  padding-top: var(--fd-padding-generic);
+  margin-top: var(--fd-padding-generic);
+  @include m.scrollSnappingYAxis;
   & > * {
     position: relative;
     z-index: 2;
@@ -36,19 +37,19 @@
     &__wrapper {
       position: relative;
       /* Overlapping padding */
-      // display: grid;
-      // grid-template-areas: 'left right';
-      // grid-template-columns: repeat(2, calc(var(--fd-padding-generic) - var(--fd-gap-mediaPoster)));
-      // grid-template-rows: 1fr;
-      // justify-content: space-between;
+      display: grid;
+      grid-template-areas: 'left right';
+      grid-template-columns: repeat(2, calc(var(--fd-padding-generic) - var(--fd-gap-mediaPoster)));
+      grid-template-rows: 1fr;
+      justify-content: space-between;
       &__ul {
         padding: var(--fd-padding-innerWrapper);
         &[data-layout='carousel'] {
           display: flex;
-          @include m.scrollSnapping;
+          @include m.scrollSnappingXAxis;
           /* Overlapping padding */
-          // grid-column: left-start/right-end;
-          // grid-row: 1;
+          grid-column: left-start/right-end;
+          grid-row: 1;
         }
         &[data-layout='grid'] {
           display: grid;
@@ -63,7 +64,6 @@
           width: calc(var(--fd-carousel-featured-height) * 0.66667);
           height: var(--fd-carousel-featured-height);
           margin-right: var(--fd-gap-mediaPoster);
-          overflow: clip;
           /* Scroll snapping */
           scroll-snap-align: center;
           /* Width matching (required for dynamic logic) */
