@@ -1,42 +1,24 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import { Type_Tmdb_ApiCall_Union, Type_Tmdb_ApiCallMovieList_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
-
 import useCreatePicture from '../../hooks/useCreatePicture';
 
 type Type_PropDrill = {
-  mapValue: Type_Tmdb_ApiCall_Union;
+  paginatedObj: Type_Tmdb_ApiCall_Union;
   isGridLayout: boolean;
   useFetchTrailer: (index: number) => void;
 };
 
-const FDCarouselPoster = ({ mapValue, isGridLayout, useFetchTrailer }: Type_PropDrill) => {
-  const value: Type_Tmdb_ApiCallMovieList_Obj = mapValue as unknown as Type_Tmdb_ApiCallMovieList_Obj;
-  const {
-    adult,
-    backdrop_path,
-    genre_ids,
-    id,
-    original_language,
-    original_title,
-    overview,
-    popularity,
-    poster_path,
-    release_date,
-    title,
-    video,
-    vote_average,
-    vote_count,
-  } = value;
+const FDCarouselPoster = ({ paginatedObj, isGridLayout, useFetchTrailer }: Type_PropDrill) => {
+  const { backdrop_path, genre_ids, id, overview, popularity, poster_path, release_date, title, video, vote_average, vote_count } =
+    paginatedObj as Type_Tmdb_ApiCallMovieList_Obj;
 
   return (
-    <li className='fdMedia__carousel__wrapper__ul__li' data-layout={isGridLayout ? 'grid' : 'carousel'} onPointerUp={() => useFetchTrailer(id)} key={uuidv4()}>
+    <li className='fdMedia__carousel__wrapper__ul__li' data-layout={isGridLayout ? 'grid' : 'carousel'} onPointerUp={() => useFetchTrailer(id)}>
       <article className='fdMedia__carousel__wrapper__ul__li__article'>
         <header className='fdMedia__carousel__wrapper__ul__li__article__header'>
           <h2>{title}</h2>
         </header>
         <div className='fdMedia__carousel__wrapper__ul__li__article__graphic'>
-          {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${poster_path}.svg`, alt: title })}
+          {useCreatePicture({ src: `https://image.tmdb.org/t/p/original/${poster_path}`, alt: title })}
         </div>
       </article>
     </li>

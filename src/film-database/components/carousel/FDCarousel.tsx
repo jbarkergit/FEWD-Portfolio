@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, RefObject, Dispatch, SetStateAction, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Type_Tmdb_ApiCall_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
@@ -7,75 +7,28 @@ import FDCarouselOverlay from './FDCarouselOverlay';
 import FDCarouselPoster from './FDCarouselPoster';
 
 type Type_PropDrill = {
-  dataKey: string;
-  dataLabel?: string | undefined;
-  dataValue: Type_Tmdb_ApiCall_Union[];
+  carouselUl: RefObject<HTMLUListElement>;
+  visibleNodesCount: number;
+  btnNavIndex: {
+    prevIndex: number;
+    currIndex: number;
+  };
+  setBtnNavIndex: Dispatch<
+    SetStateAction<{
+      prevIndex: number;
+      currIndex: number;
+    }>
+  >;
   isGridLayout: boolean;
+  tmdbDataObject: {
+    key: string;
+    label?: string | undefined;
+    value: Type_Tmdb_ApiCall_Union[];
+  };
   useFetchTrailer: (index: number) => void;
 };
 
-type Type_getClampedIndex = { prev: number; cur: number } | undefined;
-
-const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, useFetchTrailer }: Type_PropDrill) => {
-  // References
-  const fdMedia = useRef<HTMLElement>(null);
-  const carouselWrapper = useRef<HTMLDivElement>(null);
-  const carouselUl = useRef<HTMLUListElement>(null);
-
-  /** Carousel Visible Nodes State
-   * Employed observers to watch for visible children nodes of carouselUl.current
-   * Note: Intersectional Observer does not detect changes that may occur
-   * Employment of Mutation Observer is required to ensure our observations are concurrent
-   */
-
-  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
-
-  useEffect(() => {
-    if (!isGridLayout) {
-      const observer: IntersectionObserver = new IntersectionObserver(
-        // Filter entries that are intersecting (visible in DOM), pass length to state
-        (entries: IntersectionObserverEntry[]) => {
-          const filteredEntriesLength: number = entries.filter((entry: IntersectionObserverEntry) => entry.isIntersecting).length + 1;
-          setVisibleNodesCount(filteredEntriesLength);
-        },
-        // Observer OPTS Note: Threshold is set to 1 to ensure we're observing ONLY 100% visible nodes
-        { root: carouselUl.current, rootMargin: '0px', threshold: 1 }
-      );
-
-      // Create array from our ref's children && observe each node
-      const observeNodes = () => {
-        if (carouselUl.current) Array.from(carouselUl.current.children).forEach((node) => observer.observe(node));
-      };
-
-      // Initial observation
-      observeNodes();
-
-      // Re-observe when carouselUl.current changes e.g. when media queries change the amount of visible nodes
-      const mutationObserver: MutationObserver = new MutationObserver(observeNodes);
-      if (carouselUl.current) mutationObserver.observe(carouselUl.current, { childList: true });
-
-      return () => {
-        observer.disconnect();
-        mutationObserver.disconnect();
-      };
-    }
-  }, [carouselUl.current]);
-
-  /** Data Pagination: Pushes data into state when setIndex changes (the user navigates) */
-  const [paginatedData, setPaginatedData] = useState<Type_Tmdb_ApiCall_Union[]>([]);
-  const [btnNavIndex, setBtnNavIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
-
-  useEffect(() => {
-    if (!isGridLayout) {
-      setPaginatedData((prevData: Type_Tmdb_ApiCall_Union[]) => {
-        const prevDataLength: number = prevData.length - 1;
-        const startIndex: number = prevDataLength === 0 ? 0 : prevDataLength + 1;
-        const endIndex: number = visibleNodesCount * btnNavIndex.currIndex;
-        return [...prevData, ...dataValue.slice(startIndex, endIndex)] as Type_Tmdb_ApiCall_Union[];
-      });
-    }
-  }, [btnNavIndex]);
-
+const FDCarousel = ({ carouselUl, btnNavIndex, setBtnNavIndex, visibleNodesCount, isGridLayout, tmdbDataObject, useFetchTrailer }: Type_PropDrill) => {
   /** INFINITE LOOP BUTTON NAVIGATION
    * [EMPLOYED] Animation && End of Loop Wrapping: CSS Scroll-Snapping && JavaScript Scroll Methods
    * Requires perfect min max boundaries for indexing
@@ -92,7 +45,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, useFetchTrail
   // Last possible index depends on visible nodes in carouselUl.current (visibleNodesCount)
   useEffect(() => {
     if (!isGridLayout) {
-      const lastPossibleIndex: number = Math.ceil(dataValue.length / visibleNodesCount);
+      const lastPossibleIndex: number = Math.ceil(tmdbDataObject.value.length / visibleNodesCount);
 
       if (carouselUl.current) {
         const posIndex = { isFirstIndex: btnNavIndex.currIndex === 1, isLastIndex: btnNavIndex.currIndex === lastPossibleIndex };
@@ -104,7 +57,7 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, useFetchTrail
             break;
 
           case posIndex.isLastIndex:
-            nextChildsIndex = dataValue.length - 1;
+            nextChildsIndex = tmdbDataObject.value.length - 1;
             break;
 
           default:
@@ -121,147 +74,26 @@ const FDCarousel = ({ dataKey, dataLabel, dataValue, isGridLayout, useFetchTrail
         }
       }
     }
-  }, [paginatedData]);
-
-  /** Carousel Navigation (X && Y Axis) */
-  const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
-  // useEffect(() => console.log(yAxis), [yAxis]);
-  const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
-  // useEffect(() => console.log(xAxis), [xAxis]);
-
-  // Clamped state getter
-  const getClampedIndex = (prevIndex: number, curIndex: number, increment: number): Type_getClampedIndex => {
-    if (!fdMedia.current) return;
-    const nodeLength: number = fdMedia.current.children.length - 1;
-
-    return {
-      prev: Math.max(0, Math.min(nodeLength, prevIndex + increment)),
-      cur: Math.max(0, Math.min(nodeLength, curIndex + increment)),
-    };
-  };
-
-  // State setter
-  const setAxisIndexes = (e: WheelEvent | KeyboardEvent) => {
-    // Event Types
-    const isWheelEvent: boolean = e instanceof WheelEvent;
-    const isKeyboardEvent: boolean = e instanceof KeyboardEvent;
-
-    // Y Axis Events
-    const deltaY: number = (e as WheelEvent).deltaY;
-    const isArrowUp: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowUp';
-    const isArrowDown: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowDown';
-
-    // X Axis Events
-    const isArrowRight: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowRight';
-    const isArrowLeft: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowLeft';
-
-    // Logic
-    switch (true) {
-      case isWheelEvent:
-        setYAxis((prevState: typeof yAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, deltaY > 0 ? 1 : -1);
-          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
-        });
-        break;
-
-      case (isKeyboardEvent && isArrowUp) || (isKeyboardEvent && isArrowDown):
-        setYAxis((prevState: typeof yAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, isArrowUp ? -1 : 1);
-          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
-        });
-        break;
-
-      case (isKeyboardEvent && isArrowRight) || (isKeyboardEvent && isArrowLeft):
-        setXAxis((prevState: typeof xAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, isArrowRight ? 1 : -1);
-          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
-        });
-        break;
-
-      default:
-        e.preventDefault();
-        break;
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('wheel', setAxisIndexes);
-    window.addEventListener('keyup', setAxisIndexes);
-
-    return () => {
-      window.removeEventListener('wheel', setAxisIndexes);
-      window.removeEventListener('keyup', setAxisIndexes);
-    };
-  }, []);
-
-  // Y Axis Scroll method
-  // useEffect(() => {
-  //   if (!fdMedia.current) return;
-
-  //   const fdMediaNodes: HTMLCollection = fdMedia.current.children;
-  //   if (!fdMediaNodes) return;
-
-  //   const fdMediaActiveNode = fdMediaNodes[yAxis.cur] as HTMLElement;
-  //   if (!fdMediaActiveNode) return;
-
-  //   fdMedia.current.scrollTo({
-  //     top: fdMediaActiveNode.offsetTop - parseInt(fdMedia.current.style.paddingTop),
-  //     behavior: 'smooth',
-  //   });
-
-  //   // Data-attribute handler
-  //   fdMedia.current.children[yAxis.cur].setAttribute('data-visibility', 'visible');
-  //   fdMedia.current.children[yAxis.prev].setAttribute('data-visibility', 'hidden');
-  // }, [yAxis.cur]);
-
-  // X Axis Scroll method
-  // useEffect(() => {
-  //   if (!fdMedia.current || !fdMedia.current.children || !carouselUl.current || !carouselUl.current.children) return;
-
-  //   // All mapped carousels
-  //   const carouselsArr: Element[] = [...fdMedia.current.children];
-  //   const activeCarousel = carouselsArr[yAxis.cur] as HTMLUListElement;
-  //   const prevActiveCarousel = carouselsArr[yAxis.prev] as HTMLUListElement;
-  //   if (!carouselsArr || !activeCarousel || !prevActiveCarousel) return;
-
-  //   // Inactive && active (active) carousel nodes
-  //   const activeCarouselWrapper = activeCarousel.children[1] as HTMLHeadElement;
-  //   const activeCarouselUL = activeCarouselWrapper.children[0] as HTMLUListElement;
-  //   if (!activeCarouselWrapper || !activeCarouselUL) return;
-
-  //   const activeCarouselLI = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
-  //   const prevActiveCarouselNode = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
-  //   if (!activeCarouselLI || !prevActiveCarouselNode) return;
-
-  //   // X Axis scroller
-  //   activeCarousel.scrollTo({ left: activeCarouselLI.offsetLeft, behavior: 'smooth' });
-
-  //   // Data-attributes for active && inactive carousels
-  //   activeCarouselLI.setAttribute('data-activity', 'focused');
-  //   prevActiveCarouselNode.removeAttribute('data-activity');
-  // }, [xAxis.cur]);
+  }, [visibleNodesCount]);
 
   /** Component */
-  const getMapData = (): Type_Tmdb_ApiCall_Union[] => {
-    return isGridLayout ? dataValue : paginatedData;
-  };
-
-  const carouselHeading: string = dataLabel ? dataLabel : dataKey.replace('_', ' ');
+  const heading: string = tmdbDataObject.label ? tmdbDataObject.label : tmdbDataObject.key.replaceAll('_', ' ');
 
   return (
-    <section className='fdMedia__carousel' ref={fdMedia} aria-label={`${carouselHeading} Section`}>
+    <section className='fdMedia__carousel' key={uuidv4()} aria-label={`${heading} Section`}>
       <div className='fdMedia__carousel__header'>
-        <h2 className='fdMedia__carousel__header--h2'>{carouselHeading}</h2>
+        <h2 className='fdMedia__carousel__header--h2'>{heading}</h2>
       </div>
-      <div className='fdMedia__carousel__wrapper' ref={carouselWrapper}>
+      <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' ref={carouselUl} data-layout={isGridLayout ? 'grid' : 'carousel'}>
-          {getMapData().map((values) => (
-            <FDCarouselPoster mapValue={values} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} key={uuidv4()} />
+          {tmdbDataObject.value.map((paginatedObj) => (
+            <FDCarouselPoster key={uuidv4()} paginatedObj={paginatedObj} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} />
           ))}
         </ul>
-        <FDCarouselOverlay tmdbArrLength={dataValue.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />
+        <FDCarouselOverlay tmdbArrLength={tmdbDataObject.value.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />
       </div>
     </section>
   );
 };
+
 export default FDCarousel;
