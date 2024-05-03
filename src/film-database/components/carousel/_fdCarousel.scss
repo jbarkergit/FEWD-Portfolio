@@ -106,7 +106,7 @@
         opacity: 0;
         &--button {
           position: absolute;
-          z-index: 5;
+          z-index: 10;
           height: 50%;
           background-color: hsla(216, 100%, 3%, 0.5);
           pointer-events: all;
