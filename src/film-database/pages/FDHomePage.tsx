@@ -147,6 +147,7 @@ const FDHomePage = () => {
    */
   const [paginatedData, setPaginatedData] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
   // useEffect(() => console.log(paginatedData), [paginatedData]);
+
   const [btnNavIndex, setBtnNavIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
 
   const getPaginatedData = (): void => {
@@ -175,6 +176,7 @@ const FDHomePage = () => {
         if (!targetToPaginate || !existingPaginatedTarget) return [];
 
         // Calculations
+        // Data will exist; therefore, there's no need to handle '0' length cases
         const sliceStartIndex: number = existingPaginatedTarget.value.length + 1;
         const sliceEndIndex: number = visibleNodesCount * btnNavIndex.currIndex;
 
@@ -252,14 +254,14 @@ const FDHomePage = () => {
   // useEffect(() => console.log(xAxis), [xAxis]);
 
   // Clamped state getter
-  const getClampedIndex = (prevIndex: number, curIndex: number, increment: number): Type_getClampedIndex => {
+  const getClampedIndex = (curIndex: number, increment: number): Type_getClampedIndex => {
     if (!fdMediaRef.current || !fdMediaRef.current.children) return;
+
+    // Calculations
     const fdMediaCarouselsLength: number = fdMediaRef.current.children.length;
 
-    return {
-      prev: Math.max(0, Math.min(fdMediaCarouselsLength, prevIndex + increment)),
-      cur: Math.max(0, Math.min(fdMediaCarouselsLength, curIndex + increment)),
-    };
+    // Return new state
+    return { prev: curIndex, cur: Math.max(0, Math.min(fdMediaCarouselsLength, curIndex + increment)) };
   };
 
   // X-Axis && Y-Axis State setter
@@ -281,21 +283,21 @@ const FDHomePage = () => {
     switch (true) {
       case isWheelEvent:
         setYAxis((prevState: typeof yAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, deltaY > 0 ? 1 : -1);
+          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.cur, deltaY > 0 ? 1 : -1);
           return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
         });
         break;
 
       case (isKeyboardEvent && isArrowUp) || (isKeyboardEvent && isArrowDown):
         setYAxis((prevState: typeof yAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, isArrowUp ? -1 : 1);
+          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.cur, isArrowUp ? -1 : 1);
           return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
         });
         break;
 
       case (isKeyboardEvent && isArrowRight) || (isKeyboardEvent && isArrowLeft):
         setXAxis((prevState: typeof xAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, isArrowRight ? 1 : -1);
+          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.cur, isArrowRight ? 1 : -1);
           return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
         });
         break;
@@ -306,38 +308,38 @@ const FDHomePage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   window.addEventListener('wheel', setAxisIndexes);
-  //   window.addEventListener('keyup', setAxisIndexes);
+  useEffect(() => {
+    window.addEventListener('wheel', setAxisIndexes);
+    window.addEventListener('keyup', setAxisIndexes);
 
-  //   return () => {
-  //     window.removeEventListener('wheel', setAxisIndexes);
-  //     window.removeEventListener('keyup', setAxisIndexes);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener('wheel', setAxisIndexes);
+      window.removeEventListener('keyup', setAxisIndexes);
+    };
+  }, []);
 
   // Y Axis Scroll method
-  // useEffect(() => {
-  //   if (!fdMediaRef.current || !fdMediaRef.current.children) return;
-  //   const fdMediaCarouselActiveNode = fdMediaRef.current.children[yAxis.cur] as HTMLElement;
-  //   const fdMediaCarouselPrevActiveNode = fdMediaRef.current.children[yAxis.prev] as HTMLElement;
+  useEffect(() => {
+    if (!fdMediaRef.current || !fdMediaRef.current.children) return;
+    const fdMediaCarouselActiveNode = fdMediaRef.current.children[yAxis.cur] as HTMLElement;
+    const fdMediaCarouselPrevActiveNode = fdMediaRef.current.children[yAxis.prev] as HTMLElement;
 
-  //   if (!fdMediaCarouselActiveNode || !fdMediaCarouselPrevActiveNode) return;
+    if (!fdMediaCarouselActiveNode || !fdMediaCarouselPrevActiveNode) return;
 
-  //   // Calculations
-  //   const activeCarouselOffsetTop: number = fdMediaCarouselActiveNode.offsetTop;
-  //   const fdMediaMarginTop: number = parseInt(fdMediaRef.current.style.marginTop);
+    // Calculations
+    const activeCarouselOffsetTop: number = fdMediaCarouselActiveNode.offsetTop;
+    const fdMediaMarginTop: number = parseInt(fdMediaRef.current.style.marginTop);
 
-  //   // Scroll method
-  //   fdMediaRef.current.scrollTo({
-  //     top: activeCarouselOffsetTop - fdMediaMarginTop,
-  //     behavior: 'smooth',
-  //   });
+    // Scroll method
+    fdMediaRef.current.scrollTo({
+      top: activeCarouselOffsetTop - fdMediaMarginTop,
+      behavior: 'smooth',
+    });
 
-  //   // Data-attribute handler
-  //   fdMediaCarouselActiveNode.setAttribute('data-visibility', 'visible');
-  //   fdMediaCarouselPrevActiveNode.setAttribute('data-visibility', 'hidden');
-  // }, [yAxis.cur]);
+    // Data-attribute handler
+    fdMediaCarouselActiveNode.setAttribute('data-visibility', 'visible');
+    fdMediaCarouselPrevActiveNode.setAttribute('data-visibility', 'hidden');
+  }, [yAxis.cur]);
 
   // X Axis Scroll method
   // useEffect(() => {
@@ -369,7 +371,8 @@ const FDHomePage = () => {
   /** Component */
 
   const getMapData = (isGridLayout: boolean) => {
-    return isGridLayout ? tmdbDataArr : paginatedData;
+    if (!isGridLayout && paginatedData.length > 0) return paginatedData;
+    else return tmdbDataArr;
   };
 
   return (
