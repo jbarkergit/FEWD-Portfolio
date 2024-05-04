@@ -131,7 +131,7 @@ const FDHomePage = () => {
   useEffect(() => observeCarouselNodes(), [carouselUl.current?.children]);
 
   /** SHARED: Carousel Navigation && Pagination (Y-Axis) State */
-  const yAxis = useRef<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
+  const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
 
   /** Data Pagination: Pushes data into state when setIndex changes (the user navigates)
    * Note: paginatedData will fire 6x times on mount due to virtual dom, 2x for each dependency mount
@@ -146,7 +146,6 @@ const FDHomePage = () => {
    */
   const [paginatedData, setPaginatedData] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
   // useEffect(() => console.log(paginatedData), [paginatedData]);
-
   const [btnNavIndex, setBtnNavIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
 
   const getPaginatedData = (): void => {
@@ -169,13 +168,12 @@ const FDHomePage = () => {
       } else {
         // If tmdbDataArr HAS been paginated, isolate the targeted object's value, add new paginated data
         // Target values
-        const targetToPaginate: Type_Tmdb_useApiReturn_Obj = tmdbDataArr[yAxis.current.cur];
-        const existingPaginatedTarget: Type_Tmdb_useApiReturn_Obj = prevData[yAxis.current.cur];
+        const targetToPaginate: Type_Tmdb_useApiReturn_Obj = tmdbDataArr[yAxis.cur];
+        const existingPaginatedTarget: Type_Tmdb_useApiReturn_Obj = prevData[yAxis.cur];
 
         if (!targetToPaginate || !existingPaginatedTarget) return paginatedData;
 
         // Calculations
-        // Data will exist; therefore, there's no need to handle '0' length cases
         const sliceStartIndex: number = existingPaginatedTarget.value.length + 1;
         const sliceEndIndex: number = visibleNodesCount.current * btnNavIndex.currIndex;
 
@@ -249,18 +247,20 @@ const FDHomePage = () => {
    * Note: An X-Axis state must be created for each carousel; therefore, its state and logic live inside of the mapped component
    * Note: The Y-Axis state only requires a singular fire; therefore, its state and logic live inside this parent
    */
-  const xAxis = useRef<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
+  const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
   // useEffect(() => console.log(xAxis), [xAxis]);
 
   // Clamped state getter
-  const getClampedIndex = (curIndex: number, increment: number): Type_getClampedIndex => {
+  const getClampedIndex = (prevIndex: number, curIndex: number, increment: number): Type_getClampedIndex => {
     if (!fdMediaRef.current || !fdMediaRef.current.children) return;
 
     // Calculations
     const fdMediaCarouselsLength: number = fdMediaRef.current.children.length - 1;
 
-    // Return new state
-    return { prev: curIndex, cur: Math.max(0, Math.min(fdMediaCarouselsLength, curIndex + increment)) };
+    return {
+      prev: Math.max(0, Math.min(fdMediaCarouselsLength, prevIndex + increment)),
+      cur: Math.max(0, Math.min(fdMediaCarouselsLength, curIndex + increment)),
+    };
   };
 
   // X-Axis && Y-Axis State setter
@@ -281,15 +281,24 @@ const FDHomePage = () => {
     // Logic
     switch (true) {
       case isWheelEvent:
-        yAxis.current = getClampedIndex(yAxis.current.cur, deltaY > 0 ? 1 : -1) as Exclude<Type_getClampedIndex, undefined>;
+        setYAxis((prevState: typeof yAxis) => {
+          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, deltaY > 0 ? 1 : -1);
+          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
+        });
         break;
 
       case (isKeyboardEvent && isArrowUp) || (isKeyboardEvent && isArrowDown):
-        yAxis.current = getClampedIndex(yAxis.current.cur, isArrowUp ? -1 : 1) as Exclude<Type_getClampedIndex, undefined>;
+        setYAxis((prevState: typeof yAxis) => {
+          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, isArrowUp ? -1 : 1);
+          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
+        });
         break;
 
       case (isKeyboardEvent && isArrowRight) || (isKeyboardEvent && isArrowLeft):
-        xAxis.current = getClampedIndex(xAxis.current.cur, isArrowRight ? 1 : -1) as Exclude<Type_getClampedIndex, undefined>;
+        setXAxis((prevState: typeof xAxis) => {
+          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, isArrowRight ? 1 : -1);
+          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
+        });
         break;
 
       default:
@@ -361,8 +370,7 @@ const FDHomePage = () => {
   /** Component */
 
   const getMapData = (isGridLayout: boolean) => {
-    if (!isGridLayout && paginatedData.length > 0) return paginatedData;
-    else return tmdbDataArr;
+    return isGridLayout ? tmdbDataArr : paginatedData;
   };
 
   return (
