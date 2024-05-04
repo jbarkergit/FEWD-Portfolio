@@ -96,14 +96,14 @@ const FDHomePage = () => {
    * Note: State may seem unnecessary; however, it's important to update the visible node count due to viewport sizing
    */
 
-  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
+  const visibleNodesCount = useRef<number>(8);
 
   const observeCarouselNodes = () => {
     const observer: IntersectionObserver = new IntersectionObserver(
       // Filter entries that are intersecting (visible in DOM), pass length to state
       (entries: IntersectionObserverEntry[]) => {
         const filteredEntriesLength: number = entries.filter((entry: IntersectionObserverEntry) => entry.isIntersecting).length;
-        if (filteredEntriesLength > 0) setVisibleNodesCount(filteredEntriesLength);
+        if (filteredEntriesLength > 0) visibleNodesCount.current = filteredEntriesLength;
       },
       // Observer OPTS Note: Threshold is set to .2 to ensure we're observing ALL visible nodes; partial or not.
       { root: carouselUl.current, rootMargin: '0px', threshold: 0.2 }
@@ -131,8 +131,7 @@ const FDHomePage = () => {
   useEffect(() => observeCarouselNodes(), [carouselUl.current?.children]);
 
   /** SHARED: Carousel Navigation && Pagination (Y-Axis) State */
-  const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
-  // useEffect(() => console.log(yAxis), [yAxis]);
+  const yAxis = useRef<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
 
   /** Data Pagination: Pushes data into state when setIndex changes (the user navigates)
    * Note: paginatedData will fire 6x times on mount due to virtual dom, 2x for each dependency mount
@@ -160,7 +159,7 @@ const FDHomePage = () => {
         const paginatedDataArr: typeof paginatedData = tmdbDataArr.map((obj) => {
           // Starting index is 0 given tmdbDataArr's objects wouldn't have been paginated yet
           // Ending index is based on visibleNodesCount to assist load times on all media devices
-          const paginatedValue: Type_Tmdb_ApiCall_Union[] = obj.value.slice(0, visibleNodesCount);
+          const paginatedValue: Type_Tmdb_ApiCall_Union[] = obj.value.slice(0, visibleNodesCount.current);
 
           return { key: obj.key, label: obj.label, value: paginatedValue };
         });
@@ -170,15 +169,15 @@ const FDHomePage = () => {
       } else {
         // If tmdbDataArr HAS been paginated, isolate the targeted object's value, add new paginated data
         // Target values
-        const targetToPaginate: Type_Tmdb_useApiReturn_Obj = tmdbDataArr[yAxis.cur];
-        const existingPaginatedTarget: Type_Tmdb_useApiReturn_Obj = prevData[yAxis.cur];
+        const targetToPaginate: Type_Tmdb_useApiReturn_Obj = tmdbDataArr[yAxis.current.cur];
+        const existingPaginatedTarget: Type_Tmdb_useApiReturn_Obj = prevData[yAxis.current.cur];
 
-        if (!targetToPaginate || !existingPaginatedTarget) return [];
+        if (!targetToPaginate || !existingPaginatedTarget) return paginatedData;
 
         // Calculations
         // Data will exist; therefore, there's no need to handle '0' length cases
         const sliceStartIndex: number = existingPaginatedTarget.value.length + 1;
-        const sliceEndIndex: number = visibleNodesCount * btnNavIndex.currIndex;
+        const sliceEndIndex: number = visibleNodesCount.current * btnNavIndex.currIndex;
 
         // Slice new data (Slice creates a new arr; therefore, we won't need to create a copy of tmdbDataArr)
         const newValues: Type_Tmdb_ApiCall_Union[] = targetToPaginate.value.slice(sliceStartIndex, sliceEndIndex);
@@ -250,7 +249,7 @@ const FDHomePage = () => {
    * Note: An X-Axis state must be created for each carousel; therefore, its state and logic live inside of the mapped component
    * Note: The Y-Axis state only requires a singular fire; therefore, its state and logic live inside this parent
    */
-  const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
+  const xAxis = useRef<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
   // useEffect(() => console.log(xAxis), [xAxis]);
 
   // Clamped state getter
@@ -258,7 +257,7 @@ const FDHomePage = () => {
     if (!fdMediaRef.current || !fdMediaRef.current.children) return;
 
     // Calculations
-    const fdMediaCarouselsLength: number = fdMediaRef.current.children.length;
+    const fdMediaCarouselsLength: number = fdMediaRef.current.children.length - 1;
 
     // Return new state
     return { prev: curIndex, cur: Math.max(0, Math.min(fdMediaCarouselsLength, curIndex + increment)) };
@@ -282,24 +281,15 @@ const FDHomePage = () => {
     // Logic
     switch (true) {
       case isWheelEvent:
-        setYAxis((prevState: typeof yAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.cur, deltaY > 0 ? 1 : -1);
-          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
-        });
+        yAxis.current = getClampedIndex(yAxis.current.cur, deltaY > 0 ? 1 : -1) as Exclude<Type_getClampedIndex, undefined>;
         break;
 
       case (isKeyboardEvent && isArrowUp) || (isKeyboardEvent && isArrowDown):
-        setYAxis((prevState: typeof yAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.cur, isArrowUp ? -1 : 1);
-          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
-        });
+        yAxis.current = getClampedIndex(yAxis.current.cur, isArrowUp ? -1 : 1) as Exclude<Type_getClampedIndex, undefined>;
         break;
 
       case (isKeyboardEvent && isArrowRight) || (isKeyboardEvent && isArrowLeft):
-        setXAxis((prevState: typeof xAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.cur, isArrowRight ? 1 : -1);
-          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
-        });
+        xAxis.current = getClampedIndex(xAxis.current.cur, isArrowRight ? 1 : -1) as Exclude<Type_getClampedIndex, undefined>;
         break;
 
       default:
@@ -309,37 +299,37 @@ const FDHomePage = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('wheel', setAxisIndexes);
+    fdMediaRef.current?.addEventListener('wheel', setAxisIndexes);
     window.addEventListener('keyup', setAxisIndexes);
 
     return () => {
-      window.removeEventListener('wheel', setAxisIndexes);
+      fdMediaRef.current?.removeEventListener('wheel', setAxisIndexes);
       window.removeEventListener('keyup', setAxisIndexes);
     };
   }, []);
 
   // Y Axis Scroll method
-  useEffect(() => {
-    if (!fdMediaRef.current || !fdMediaRef.current.children) return;
-    const fdMediaCarouselActiveNode = fdMediaRef.current.children[yAxis.cur] as HTMLElement;
-    const fdMediaCarouselPrevActiveNode = fdMediaRef.current.children[yAxis.prev] as HTMLElement;
+  // useEffect(() => {
+  //   if (!fdMediaRef.current || !fdMediaRef.current.children) return;
+  //   const fdMediaCarouselActiveNode = fdMediaRef.current.children[yAxis.cur] as HTMLElement;
+  //   const fdMediaCarouselPrevActiveNode = fdMediaRef.current.children[yAxis.prev] as HTMLElement;
 
-    if (!fdMediaCarouselActiveNode || !fdMediaCarouselPrevActiveNode) return;
+  //   if (!fdMediaCarouselActiveNode || !fdMediaCarouselPrevActiveNode) return;
 
-    // Calculations
-    const activeCarouselOffsetTop: number = fdMediaCarouselActiveNode.offsetTop;
-    const fdMediaMarginTop: number = parseInt(fdMediaRef.current.style.marginTop);
+  //   // Calculations
+  //   const activeCarouselOffsetTop: number = fdMediaCarouselActiveNode.offsetTop;
+  //   const fdMediaMarginTop: number = parseInt(fdMediaRef.current.style.marginTop);
 
-    // Scroll method
-    fdMediaRef.current.scrollTo({
-      top: activeCarouselOffsetTop - fdMediaMarginTop,
-      behavior: 'smooth',
-    });
+  //   // Scroll method
+  //   fdMediaRef.current.scrollTo({
+  //     top: activeCarouselOffsetTop - fdMediaMarginTop,
+  //     behavior: 'smooth',
+  //   });
 
-    // Data-attribute handler
-    fdMediaCarouselActiveNode.setAttribute('data-visibility', 'visible');
-    fdMediaCarouselPrevActiveNode.setAttribute('data-visibility', 'hidden');
-  }, [yAxis.cur]);
+  //   // Data-attribute handler
+  //   fdMediaCarouselActiveNode.setAttribute('data-visibility', 'visible');
+  //   fdMediaCarouselPrevActiveNode.setAttribute('data-visibility', 'hidden');
+  // }, [yAxis.cur]);
 
   // X Axis Scroll method
   // useEffect(() => {

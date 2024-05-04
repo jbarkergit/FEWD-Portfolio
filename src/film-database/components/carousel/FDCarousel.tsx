@@ -1,4 +1,4 @@
-import { useEffect, RefObject, Dispatch, SetStateAction, useState } from 'react';
+import { useEffect, RefObject, Dispatch, SetStateAction, MutableRefObject } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Type_Tmdb_ApiCall_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
@@ -8,7 +8,7 @@ import FDCarouselPoster from './FDCarouselPoster';
 
 type Type_PropDrill = {
   carouselUl: RefObject<HTMLUListElement>;
-  visibleNodesCount: number;
+  visibleNodesCount: MutableRefObject<number>;
   btnNavIndex: {
     prevIndex: number;
     currIndex: number;
@@ -45,7 +45,7 @@ const FDCarousel = ({ carouselUl, btnNavIndex, setBtnNavIndex, visibleNodesCount
   // Last possible index depends on visible nodes in carouselUl.current (visibleNodesCount)
   useEffect(() => {
     if (!isGridLayout) {
-      const lastPossibleIndex: number = Math.ceil(tmdbDataObject.value.length / visibleNodesCount);
+      const lastPossibleIndex: number = Math.ceil(tmdbDataObject.value.length / visibleNodesCount.current);
 
       if (carouselUl.current) {
         const posIndex = { isFirstIndex: btnNavIndex.currIndex === 1, isLastIndex: btnNavIndex.currIndex === lastPossibleIndex };
@@ -61,7 +61,7 @@ const FDCarousel = ({ carouselUl, btnNavIndex, setBtnNavIndex, visibleNodesCount
             break;
 
           default:
-            nextChildsIndex = (btnNavIndex.currIndex - 1) * visibleNodesCount;
+            nextChildsIndex = (btnNavIndex.currIndex - 1) * visibleNodesCount.current;
             break;
         }
 

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, MutableRefObject, SetStateAction } from 'react';
 import MaterialLeftCaret from '../../assets/svg-icons/MaterialLeftCaret';
 import MaterialRightCaret from '../../assets/svg-icons/MaterialRightCaret';
 import useCreatePicture from '../../hooks/useCreatePicture';
@@ -11,11 +11,11 @@ type Type_PropDrill = {
       currIndex: number;
     }>
   >;
-  visibleNodesCount: number;
+  visibleNodesCount: MutableRefObject<number>;
 };
 
 const FDCarouselOverlay = ({ tmdbArrLength, setBtnNavIndex, visibleNodesCount }: Type_PropDrill) => {
-  const minMaxIndex = { min: 1, max: Math.ceil(tmdbArrLength / visibleNodesCount) };
+  const minMaxIndex = { min: 1, max: Math.ceil(tmdbArrLength / visibleNodesCount.current) };
 
   return (
     <nav className='fdMedia__carousel__wrapper__navigation'>
