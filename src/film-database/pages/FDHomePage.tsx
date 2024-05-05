@@ -208,7 +208,7 @@ const FDHomePage = () => {
       });
   };
 
-  useEffect(() => firePaginationRequest(), [tmdbDataArr, btnNavIndex, visibleNodesCount]);
+  useEffect(() => firePaginationRequest(), [btnNavIndex, visibleNodesCount]);
 
   /** VIDEO PLAYER STATE
    * This set of state variables enables the application to utilize a single YouTube iFrame component to produce trailer results for media.
