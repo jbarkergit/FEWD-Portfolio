@@ -317,37 +317,37 @@ const FDHomePage = () => {
   };
 
   useEffect(() => {
-    fdMediaRef.current?.addEventListener('wheel', setAxisIndexes);
-    window.addEventListener('keyup', setAxisIndexes);
+    carouselUlRef.current?.addEventListener('wheel', setAxisIndexes);
+    carouselUlRef.current?.addEventListener('keyup', setAxisIndexes);
 
     return () => {
-      fdMediaRef.current?.removeEventListener('wheel', setAxisIndexes);
-      window.removeEventListener('keyup', setAxisIndexes);
+      carouselUlRef.current?.removeEventListener('wheel', setAxisIndexes);
+      carouselUlRef.current?.removeEventListener('keyup', setAxisIndexes);
     };
   }, []);
 
   // Y Axis Scroll method
-  // useEffect(() => {
-  //   if (!fdMediaRef.current || !fdMediaRef.current.children) return;
-  //   const fdMediaCarouselActiveNode = fdMediaRef.current.children[yAxis.cur] as HTMLElement;
-  //   const fdMediaCarouselPrevActiveNode = fdMediaRef.current.children[yAxis.prev] as HTMLElement;
+  useEffect(() => {
+    if (!fdMediaRef.current || !fdMediaRef.current.children) return;
+    const fdMediaCarouselActiveNode = fdMediaRef.current.children[yAxis.cur] as HTMLElement;
+    const fdMediaCarouselPrevActiveNode = fdMediaRef.current.children[yAxis.prev] as HTMLElement;
 
-  //   if (!fdMediaCarouselActiveNode || !fdMediaCarouselPrevActiveNode) return;
+    if (!fdMediaCarouselActiveNode || !fdMediaCarouselPrevActiveNode) return;
 
-  //   // Calculations
-  //   const activeCarouselOffsetTop: number = fdMediaCarouselActiveNode.offsetTop;
-  //   const fdMediaMarginTop: number = parseInt(fdMediaRef.current.style.marginTop);
+    // Calculations
+    const activeCarouselOffsetTop: number = fdMediaCarouselActiveNode.offsetTop;
+    const fdMediaMarginTop: number = parseInt(fdMediaRef.current.style.marginTop);
 
-  //   // Scroll method
-  //   fdMediaRef.current.scrollTo({
-  //     top: activeCarouselOffsetTop - fdMediaMarginTop,
-  //     behavior: 'smooth',
-  //   });
+    // Scroll method
+    fdMediaRef.current.scrollTo({
+      top: activeCarouselOffsetTop - fdMediaMarginTop,
+      behavior: 'smooth',
+    });
 
-  //   // Data-attribute handler
-  //   fdMediaCarouselActiveNode.setAttribute('data-visibility', 'visible');
-  //   fdMediaCarouselPrevActiveNode.setAttribute('data-visibility', 'hidden');
-  // }, [yAxis.cur]);
+    // Data-attribute handler
+    fdMediaCarouselActiveNode.setAttribute('data-visibility', 'visible');
+    fdMediaCarouselPrevActiveNode.setAttribute('data-visibility', 'hidden');
+  }, [yAxis.cur]);
 
   // X Axis Scroll method
   // useEffect(() => {
