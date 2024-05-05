@@ -1,4 +1,4 @@
-import { useEffect, RefObject, Dispatch, SetStateAction, MutableRefObject, forwardRef } from 'react';
+import { useEffect, RefObject, Dispatch, SetStateAction, forwardRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Type_Tmdb_ApiCall_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';

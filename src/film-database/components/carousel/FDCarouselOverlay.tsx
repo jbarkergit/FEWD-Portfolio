@@ -1,4 +1,4 @@
-import { Dispatch, MutableRefObject, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import MaterialLeftCaret from '../../assets/svg-icons/MaterialLeftCaret';
 import MaterialRightCaret from '../../assets/svg-icons/MaterialRightCaret';
 import useCreatePicture from '../../hooks/useCreatePicture';
