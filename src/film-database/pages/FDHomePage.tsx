@@ -350,37 +350,38 @@ const FDHomePage = () => {
   }, [yAxis.cur]);
 
   // X Axis Scroll method
-  // useEffect(() => {
-  //   if (!fdMediaCarousel.current || !fdMediaCarousel.current.children || !carouselUl.current || !carouselUl.current.children) return;
+  useEffect(() => {
+    if (!fdMediaRef.current || !fdMediaRef.current.children || !carouselUlRef.current || !carouselUlRef.current.children) return;
 
-  //   // All mapped carousels
-  //   const carouselsArr: Element[] = [...fdMediaCarousel.current.children];
-  //   const activeCarousel = carouselsArr[yAxis.cur] as HTMLUListElement;
-  //   const prevActiveCarousel = carouselsArr[yAxis.prev] as HTMLUListElement;
-  //   if (!carouselsArr || !activeCarousel || !prevActiveCarousel) return;
+    // All mapped carousels
+    const carouselsArr: Element[] = [...fdMediaRef.current.children];
+    const activeCarousel = carouselsArr[yAxis.cur] as HTMLUListElement;
+    const prevActiveCarousel = carouselsArr[yAxis.prev] as HTMLUListElement;
+    if (!carouselsArr || !activeCarousel || !prevActiveCarousel) return;
 
-  //   // Inactive && active (active) carousel nodes
-  //   const activeCarouselWrapper = activeCarousel.children[1] as HTMLHeadElement;
-  //   const activeCarouselUL = activeCarouselWrapper.children[0] as HTMLUListElement;
-  //   if (!activeCarouselWrapper || !activeCarouselUL) return;
+    // Inactive && active (active) carousel nodes
+    const activeCarouselWrapper = activeCarousel.children[1] as HTMLHeadElement;
+    const activeCarouselUL = activeCarouselWrapper.children[0] as HTMLUListElement;
+    if (!activeCarouselWrapper || !activeCarouselUL) return;
 
-  //   const activeCarouselLI = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
-  //   const prevActiveCarouselNode = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
-  //   if (!activeCarouselLI || !prevActiveCarouselNode) return;
+    const activeCarouselLI = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
+    const prevActiveCarouselNode = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
+    if (!activeCarouselLI || !prevActiveCarouselNode) return;
 
-  //   // X Axis scroller
-  //   activeCarousel.scrollTo({ left: activeCarouselLI.offsetLeft, behavior: 'smooth' });
+    // X Axis scroller
+    activeCarousel.scrollTo({ left: activeCarouselLI.offsetLeft, behavior: 'smooth' });
 
-  //   // Data-attributes for active && inactive carousels
-  //   activeCarouselLI.setAttribute('data-activity', 'focused');
-  //   prevActiveCarouselNode.removeAttribute('data-activity');
-  // }, [xAxis.cur]);
+    // Data-attributes for active && inactive carousels
+    activeCarouselLI.setAttribute('data-activity', 'focused');
+    prevActiveCarouselNode.removeAttribute('data-activity');
+  }, [xAxis.cur]);
 
-  /** Component */
+  /** Determine component's media data */
   const getMapData = (isGridLayout: boolean) => {
     return isGridLayout ? tmdbDataArr : paginatedData;
   };
 
+  /** Component */
   return (
     <div className='filmDatabase'>
       <FDHeader />
