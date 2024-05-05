@@ -132,45 +132,50 @@ const FDHomePage = () => {
 
   useEffect(() => observeCarouselNodes(), [carouselUlRef.current?.children]);
 
-  /** SHARED: Carousel Navigation && Pagination (Y-Axis) State */
+  /** SHARED STATE:
+   * Carousel Navigation Y-Axis,
+   * Carousel Media Navigation
+   * Carousel Media Pagination
+   * */
   const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
+  // useEffect(() => console.log(yAxis), [yAxis]);
 
-  /** Data Pagination: Pushes data into state when setIndex changes (the user navigates)
-   * Note: paginatedData will fire 6x times on mount due to virtual dom, 2x for each dependency mount
+  const [btnNavIndex, setBtnNavIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
+  // useEffect(() => console.log(btnNavIndex), [btnNavIndex]);
+
+  const [paginatedData, setPaginatedData] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
+  // useEffect(() => console.log(paginatedData), [paginatedData]);
+
+  /** Initial tmdbDataArr Pagination
+   * On mount, slice values from indexes 0 to visibleNodeCounts (Assists all media device load times)
+   * */
+  const paginateOnMount = () => {
+    const paginatedDataArr: typeof paginatedData = tmdbDataArr.map((obj) => {
+      const paginatedValue: Type_Tmdb_ApiCall_Union[] = obj.value.slice(0, visibleNodesCount);
+      return { key: obj.key, label: obj.label, value: paginatedValue };
+    });
+
+    setPaginatedData(paginatedDataArr);
+  };
+
+  useEffect(() => paginateOnMount(), [tmdbDataArr]);
+
+  /** Post-mount Data Pagination
+   * If tmdbDataArr HAS been paginated, isolate the targeted object's value and push new data
+   * Pushes data into state when setIndex changes (the user navigates)
+   * Note: paginatedData will fire 6x times on mount due to virtual dom, 2x for each dependency mount (virtual dom)
    *
    * tmdbDataArr dependency: This data is fetched; therefore, requires a watchful eye
    * btnNavIndex depdendency: This index state is fired by the carousel overlay, our main driver for pagination calculations
    * visibleNodesCount dependency: Repaginates data as the viewport resizes
-   *
-   * **ALERT!**
-   * visibleNodesCount may be firing this too often, will require further inspection
-   * visibleNodesCount as a dependency requires error boundaries to ensure our data is RE-paginated on viewport resize
    */
-  const [paginatedData, setPaginatedData] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
-  // useEffect(() => console.log(paginatedData), [paginatedData]);
-  const [btnNavIndex, setBtnNavIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
 
   const getPaginatedData = (): void => {
-    if (!tmdbDataArr) return;
+    const targetToPaginate: Type_Tmdb_useApiReturn_Obj = tmdbDataArr[yAxis.cur];
+    const isPaginationComplete: boolean = targetToPaginate.value.length - 1 === paginatedData.length - 1;
 
-    setPaginatedData((prevData: typeof paginatedData) => {
-      // If tmdbDataArr hasn't been paginated, paginate all arrays on mount
-      if (paginatedData.length === 0) {
-        // Create a copy, slice existing values
-        const paginatedDataArr: typeof paginatedData = tmdbDataArr.map((obj) => {
-          // Starting index is 0 given tmdbDataArr's objects wouldn't have been paginated yet
-          // Ending index is based on visibleNodesCount to assist load times on all media devices
-          const paginatedValue: Type_Tmdb_ApiCall_Union[] = obj.value.slice(0, visibleNodesCount);
-
-          return { key: obj.key, label: obj.label, value: paginatedValue };
-        });
-
-        // Return an array with each object's values paginated
-        return paginatedDataArr;
-      } else {
-        // If tmdbDataArr HAS been paginated, isolate the targeted object's value, add new paginated data
-        // Target values
-        const targetToPaginate: Type_Tmdb_useApiReturn_Obj = tmdbDataArr[yAxis.cur];
+    if (tmdbDataArr && paginatedData.length > 0 && !isPaginationComplete)
+      setPaginatedData((prevData: typeof paginatedData) => {
         const existingPaginatedTarget: Type_Tmdb_useApiReturn_Obj = prevData[yAxis.cur];
 
         if (!targetToPaginate || !existingPaginatedTarget) return paginatedData;
@@ -196,8 +201,7 @@ const FDHomePage = () => {
 
         // Return our new paginatedData copy with updated paginated data
         return newPaginatedArr;
-      }
-    });
+      });
   };
 
   useEffect(() => getPaginatedData(), [tmdbDataArr, btnNavIndex, visibleNodesCount]);
