@@ -168,7 +168,7 @@ const FDHomePage = () => {
    * tmdbDataArr dependency: This data is fetched; therefore, requires a watchful eye
    * btnNavIndex depdendency: This index state is fired by the carousel overlay, our main driver for pagination calculations
    * visibleNodesCount dependency: Repaginates data as the viewport resizes
-   */
+   * */
 
   const getPaginatedData = (): void => {
     const targetToPaginate: Type_Tmdb_useApiReturn_Obj = tmdbDataArr[yAxis.cur];
@@ -210,7 +210,7 @@ const FDHomePage = () => {
    * This set of state variables enables the application to utilize a single YouTube iFrame component to produce trailer results for media.
    * This component makes use of the react-youtube API to handle iFrames.
    * videoPlayerTrailer stores API data and is used to find trailers directly from YouTube opposed to alternative sources.
-   */
+   * */
   const [trailerCache, setTrailerCache] = useState<Type_useFilmDatabaseWebStorage_Obj[]>();
 
   const useFetchTrailer = (index: number) => {
@@ -252,7 +252,7 @@ const FDHomePage = () => {
   /** Carousel Navigation (X-Axis, Y-Axis)
    * Note: An X-Axis state must be created for each carousel; therefore, its state and logic live inside of the mapped component
    * Note: The Y-Axis state only requires a singular fire; therefore, its state and logic live inside this parent
-   */
+   * */
   const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
   // useEffect(() => console.log(xAxis), [xAxis]);
 
@@ -374,7 +374,6 @@ const FDHomePage = () => {
   // }, [xAxis.cur]);
 
   /** Component */
-
   const getMapData = (isGridLayout: boolean) => {
     return isGridLayout ? tmdbDataArr : paginatedData;
   };
