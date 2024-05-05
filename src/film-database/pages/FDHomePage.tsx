@@ -149,7 +149,7 @@ const FDHomePage = () => {
   /** Initial tmdbDataArr Pagination
    * On mount, slice values from indexes 0 to visibleNodeCounts (Assists all media device load times)
    * */
-  const paginateOnMount = () => {
+  const paginateTmdbDataArrOnMount = () => {
     const paginatedDataArr: typeof paginatedData = tmdbDataArr.map((obj) => {
       const paginatedValue: Type_Tmdb_ApiCall_Union[] = obj.value.slice(0, visibleNodesCount);
       return { key: obj.key, label: obj.label, value: paginatedValue };
@@ -158,7 +158,7 @@ const FDHomePage = () => {
     setPaginatedData(paginatedDataArr);
   };
 
-  useEffect(() => paginateOnMount(), [tmdbDataArr]);
+  useEffect(() => paginateTmdbDataArrOnMount(), [tmdbDataArr]);
 
   /** Post-mount Data Pagination
    * If tmdbDataArr HAS been paginated, isolate the targeted object's value and push new data
@@ -170,15 +170,18 @@ const FDHomePage = () => {
    * visibleNodesCount dependency: Repaginates data as the viewport resizes
    * */
 
-  const getPaginatedData = (): void => {
+  const firePaginationRequest = (): void => {
+    // Targets
     const targetToPaginate: Type_Tmdb_useApiReturn_Obj = tmdbDataArr[yAxis.cur];
+    if (!targetToPaginate) return;
+
+    // Conditionals
     const isPaginationComplete: boolean = targetToPaginate.value.length - 1 === paginatedData.length - 1;
 
     if (tmdbDataArr && paginatedData.length > 0 && !isPaginationComplete)
       setPaginatedData((prevData: typeof paginatedData) => {
+        // Targets
         const existingPaginatedTarget: Type_Tmdb_useApiReturn_Obj = prevData[yAxis.cur];
-
-        if (!targetToPaginate || !existingPaginatedTarget) return paginatedData;
 
         // Calculations
         const sliceStartIndex: number = existingPaginatedTarget.value.length + 1;
@@ -204,7 +207,7 @@ const FDHomePage = () => {
       });
   };
 
-  useEffect(() => getPaginatedData(), [tmdbDataArr, btnNavIndex, visibleNodesCount]);
+  useEffect(() => firePaginationRequest(), [tmdbDataArr, btnNavIndex, visibleNodesCount]);
 
   /** VIDEO PLAYER STATE
    * This set of state variables enables the application to utilize a single YouTube iFrame component to produce trailer results for media.
@@ -381,7 +384,7 @@ const FDHomePage = () => {
   return (
     <div className='filmDatabase'>
       <FDHeader />
-      <FDHero />
+      {/* <FDHero /> */}
       <section className='fdMedia' ref={fdMediaRef}>
         {getMapData(false).map((tmdbDataObject) => (
           <FDCarousel
