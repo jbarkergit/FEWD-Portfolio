@@ -97,14 +97,14 @@ const FDHomePage = () => {
    * Note: State may seem unnecessary; however, it's important to update the visible node count due to viewport sizing
    */
 
-  const visibleNodesCount = useRef<number>(8);
+  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
 
   const observeCarouselNodes = () => {
     const observer: IntersectionObserver = new IntersectionObserver(
       // Filter entries that are intersecting (visible in DOM), pass length to state
       (entries: IntersectionObserverEntry[]) => {
         const filteredEntriesLength: number = entries.filter((entry: IntersectionObserverEntry) => entry.isIntersecting).length;
-        if (filteredEntriesLength > 0) visibleNodesCount.current = filteredEntriesLength;
+        if (filteredEntriesLength > 0) setVisibleNodesCount(filteredEntriesLength);
       },
       // Observer OPTS Note: Threshold is set to .2 to ensure we're observing ALL visible nodes; partial or not.
       { root: carouselUlRef.current, rootMargin: '0px', threshold: 0.2 }
@@ -123,6 +123,7 @@ const FDHomePage = () => {
     // Re-observe when carouselUlRef.current changes e.g. when media queries change the amount of visible nodes
     const mutationObserver: MutationObserver = new MutationObserver(observeNodes);
     if (carouselUlRef.current) mutationObserver.observe(carouselUlRef.current, { childList: true });
+
     return () => {
       observer.disconnect();
       mutationObserver.disconnect();
@@ -159,7 +160,7 @@ const FDHomePage = () => {
         const paginatedDataArr: typeof paginatedData = tmdbDataArr.map((obj) => {
           // Starting index is 0 given tmdbDataArr's objects wouldn't have been paginated yet
           // Ending index is based on visibleNodesCount to assist load times on all media devices
-          const paginatedValue: Type_Tmdb_ApiCall_Union[] = obj.value.slice(0, visibleNodesCount.current);
+          const paginatedValue: Type_Tmdb_ApiCall_Union[] = obj.value.slice(0, visibleNodesCount);
 
           return { key: obj.key, label: obj.label, value: paginatedValue };
         });
@@ -176,7 +177,7 @@ const FDHomePage = () => {
 
         // Calculations
         const sliceStartIndex: number = existingPaginatedTarget.value.length + 1;
-        const sliceEndIndex: number = visibleNodesCount.current * btnNavIndex.currIndex;
+        const sliceEndIndex: number = visibleNodesCount * btnNavIndex.currIndex;
 
         // Slice new data (Slice creates a new arr; therefore, we won't need to create a copy of tmdbDataArr)
         const newValues: Type_Tmdb_ApiCall_Union[] = targetToPaginate.value.slice(sliceStartIndex, sliceEndIndex);

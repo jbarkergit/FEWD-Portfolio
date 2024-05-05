@@ -8,7 +8,7 @@ import FDCarouselPoster from './FDCarouselPoster';
 
 type Type_PropDrill = {
   carouselUlRef: RefObject<HTMLUListElement>;
-  visibleNodesCount: MutableRefObject<number>;
+  visibleNodesCount: number;
   btnNavIndex: {
     prevIndex: number;
     currIndex: number;
@@ -46,7 +46,7 @@ const FDCarousel = forwardRef<HTMLUListElement, Type_PropDrill>(
     // Last possible index depends on visible nodes in carouselUl.current (visibleNodesCount)
     useEffect(() => {
       if (!isGridLayout) {
-        const lastPossibleIndex: number = Math.ceil(tmdbDataObject.value.length / visibleNodesCount.current);
+        const lastPossibleIndex: number = Math.ceil(tmdbDataObject.value.length / visibleNodesCount);
 
         if (carouselUlRef.current) {
           const posIndex = { isFirstIndex: btnNavIndex.currIndex === 1, isLastIndex: btnNavIndex.currIndex === lastPossibleIndex };
@@ -62,7 +62,7 @@ const FDCarousel = forwardRef<HTMLUListElement, Type_PropDrill>(
               break;
 
             default:
-              nextChildsIndex = (btnNavIndex.currIndex - 1) * visibleNodesCount.current;
+              nextChildsIndex = (btnNavIndex.currIndex - 1) * visibleNodesCount;
               break;
           }
 

@@ -11,11 +11,11 @@ type Type_PropDrill = {
       currIndex: number;
     }>
   >;
-  visibleNodesCount: MutableRefObject<number>;
+  visibleNodesCount: number;
 };
 
 const FDCarouselOverlay = ({ tmdbArrLength, setBtnNavIndex, visibleNodesCount }: Type_PropDrill) => {
-  const minMaxIndex = { min: 1, max: Math.ceil(tmdbArrLength / visibleNodesCount.current) };
+  const minMaxIndex = { min: 1, max: Math.ceil(tmdbArrLength / visibleNodesCount) };
 
   return (
     <nav className='fdMedia__carousel__wrapper__navigation'>
