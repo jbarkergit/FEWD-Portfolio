@@ -20,8 +20,6 @@ import FDHeader from '../components/header/FDHeader';
 import FDFooter from '../components/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';
 
-type Type_getClampedIndex = { prev: number; cur: number } | undefined;
-
 const FDHomePage = () => {
   // References
   const fdMediaRef = useRef<HTMLElement>(null);
@@ -137,6 +135,9 @@ const FDHomePage = () => {
    * Carousel Media Navigation
    * Carousel Media Pagination
    * */
+  const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
+  // useEffect(() => console.log(xAxis), [xAxis]);
+
   const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
   // useEffect(() => console.log(yAxis), [yAxis]);
 
@@ -256,16 +257,10 @@ const FDHomePage = () => {
    * Note: An X-Axis state must be created for each carousel; therefore, its state and logic live inside of the mapped component
    * Note: The Y-Axis state only requires a singular fire; therefore, its state and logic live inside this parent
    * */
-  const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
-  // useEffect(() => console.log(xAxis), [xAxis]);
 
   // Clamped state getter
-  const getClampedIndex = (prevIndex: number, curIndex: number, increment: number): Type_getClampedIndex => {
-    if (!fdMediaRef.current || !fdMediaRef.current.children) return;
-
-    // Calculations
-    const fdMediaCarouselsLength: number = fdMediaRef.current.children.length - 1;
-
+  const getClampedIndex = (prevIndex: number, curIndex: number, increment: number): typeof xAxis => {
+    const fdMediaCarouselsLength: number = fdMediaRef.current ? fdMediaRef.current.children.length - 1 : 0;
     return {
       prev: Math.max(0, Math.min(fdMediaCarouselsLength, prevIndex + increment)),
       cur: Math.max(0, Math.min(fdMediaCarouselsLength, curIndex + increment)),
@@ -291,22 +286,22 @@ const FDHomePage = () => {
     switch (true) {
       case isWheelEvent:
         setYAxis((prevState: typeof yAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, deltaY > 0 ? 1 : -1);
-          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
+          const clampedIndex: typeof xAxis = getClampedIndex(prevState.prev, prevState.cur, deltaY > 0 ? 1 : -1);
+          return clampedIndex;
         });
         break;
 
       case (isKeyboardEvent && isArrowUp) || (isKeyboardEvent && isArrowDown):
         setYAxis((prevState: typeof yAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, isArrowUp ? -1 : 1);
-          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
+          const clampedIndex: typeof xAxis = getClampedIndex(prevState.prev, prevState.cur, isArrowUp ? -1 : 1);
+          return clampedIndex;
         });
         break;
 
       case (isKeyboardEvent && isArrowRight) || (isKeyboardEvent && isArrowLeft):
         setXAxis((prevState: typeof xAxis) => {
-          const clampedIndex: Type_getClampedIndex = getClampedIndex(prevState.prev, prevState.cur, isArrowRight ? 1 : -1);
-          return clampedIndex as Exclude<Type_getClampedIndex, undefined>;
+          const clampedIndex: typeof xAxis = getClampedIndex(prevState.prev, prevState.cur, isArrowRight ? 1 : -1);
+          return clampedIndex;
         });
         break;
 
