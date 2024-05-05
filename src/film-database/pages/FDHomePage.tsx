@@ -25,7 +25,8 @@ type Type_getClampedIndex = { prev: number; cur: number } | undefined;
 const FDHomePage = () => {
   // References
   const fdMediaRef = useRef<HTMLElement>(null);
-  const carouselUl = useRef<HTMLUListElement>(null);
+  const carouselUlRefReceiver = useRef<HTMLUListElement>(null);
+  const carouselUlRef = carouselUlRefReceiver;
 
   /** Network Traffic Performance technique notes
    * API Memoization may not be the best technique here, given you'd still need to make an API call to ensure data is up to date.
@@ -106,29 +107,29 @@ const FDHomePage = () => {
         if (filteredEntriesLength > 0) visibleNodesCount.current = filteredEntriesLength;
       },
       // Observer OPTS Note: Threshold is set to .2 to ensure we're observing ALL visible nodes; partial or not.
-      { root: carouselUl.current, rootMargin: '0px', threshold: 0.2 }
+      { root: carouselUlRef.current, rootMargin: '0px', threshold: 0.2 }
     );
 
     // Observe each list-item node of the first carousel
     const observeNodes = () => {
-      if (carouselUl.current && carouselUl.current.children) {
-        Array.from(carouselUl.current.children).forEach((node) => observer.observe(node));
+      if (carouselUlRef.current && carouselUlRef.current.children) {
+        Array.from(carouselUlRef.current.children).forEach((node) => observer.observe(node));
       }
     };
 
     // Initial observation
     observeNodes();
 
-    // Re-observe when carouselUl.current changes e.g. when media queries change the amount of visible nodes
+    // Re-observe when carouselUlRef.current changes e.g. when media queries change the amount of visible nodes
     const mutationObserver: MutationObserver = new MutationObserver(observeNodes);
-    if (carouselUl.current) mutationObserver.observe(carouselUl.current, { childList: true });
+    if (carouselUlRef.current) mutationObserver.observe(carouselUlRef.current, { childList: true });
     return () => {
       observer.disconnect();
       mutationObserver.disconnect();
     };
   };
 
-  useEffect(() => observeCarouselNodes(), [carouselUl.current?.children]);
+  useEffect(() => observeCarouselNodes(), [carouselUlRef.current?.children]);
 
   /** SHARED: Carousel Navigation && Pagination (Y-Axis) State */
   const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
@@ -382,7 +383,8 @@ const FDHomePage = () => {
           <FDCarousel
             key={uuidv4()}
             // Refs
-            carouselUl={carouselUl}
+            ref={carouselUlRefReceiver}
+            carouselUlRef={carouselUlRef}
             // State
             visibleNodesCount={visibleNodesCount}
             btnNavIndex={btnNavIndex}
