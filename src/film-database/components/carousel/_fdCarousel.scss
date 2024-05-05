@@ -10,7 +10,7 @@
 
 .fdMedia {
   display: block;
-  margin-top: var(--fd-padding-generic);
+  margin-top: calc(var(--fd-padding-generic) / 4);
   @include m.scrollSnappingYAxis;
   & > * {
     position: relative;
