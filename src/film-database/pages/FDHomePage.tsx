@@ -80,7 +80,9 @@ const FDHomePage = () => {
         | undefined;
 
       // If fetched data does not exist, set state and Web Storage
-      const isMergedDataCached: boolean | undefined = webStorageData?.some((webStorageObj) => mergedFetchedData.some((item) => webStorageObj.key === item.key));
+      const isMergedDataCached: boolean | undefined = webStorageData?.some((webStorageObj) =>
+        mergedFetchedData.some((fetchedDataObj) => fetchedDataObj.key !== webStorageObj.key)
+      );
 
       if (!webStorageData || !isMergedDataCached) {
         // State Setter
