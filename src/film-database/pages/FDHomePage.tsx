@@ -13,12 +13,13 @@ import {
   Type_Tmdb_useApiReturn_Obj,
 } from '../composables/tmdb-api/types/TmdbDataTypes';
 // Api Hooks
-import { Type_useFilmDatabaseWebStorage_Obj, useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
+import { Type_useFDWebStorage_Trailer_Obj, useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 // Components
 import FDCarousel from '../components/carousel/FDCarousel';
 import FDHeader from '../components/header/FDHeader';
 import FDFooter from '../components/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';
+import { useDiscoverGenre } from '../composables/tmdb-api/hooks/useDiscoverGenre';
 
 const FDHomePage = () => {
   // References
@@ -39,15 +40,16 @@ const FDHomePage = () => {
    * I've currently opted-out of implementing this technique; given this is merely a simple front-end project.
    */
 
-  const userLocation = useLocation();
+  const userLocationPath = useLocation().pathname;
 
   // Store cached data in state for component renders && pagination
   const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
 
   useEffect(() => {
-    const webStorageData = useFilmDatabaseWebStorage({ userLocation: userLocation, cacheKey: 'movieCache' }).getData() as Type_Tmdb_useApiReturn_Obj[] | null;
+    // Controller
     const controller: AbortController = new AbortController();
 
+    // Fetch calls
     (async () => {
       const nowPlaying: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
         controller: controller,
@@ -69,16 +71,29 @@ const FDHomePage = () => {
       //   payload: { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
       // });
 
+      // Merged fetch calls
       const mergedFetchedData = [...nowPlaying, ...prefabs, ...trending];
 
-      if (!webStorageData || webStorageData.some((webStorageObj) => mergedFetchedData.some((item) => webStorageObj.key === item.key))) {
+      // Get Web Storage Data
+      const webStorageData = useFilmDatabaseWebStorage({ userLocation: userLocationPath, cacheKey: ['nowPlaying', 'prefabs', 'trending'] }).getData() as
+        | Type_Tmdb_useApiReturn_Obj[]
+        | undefined;
+
+      // If fetched data does not exist, set state and Web Storage
+      const isMergedDataCached: boolean | undefined = webStorageData?.some((webStorageObj) => mergedFetchedData.some((item) => webStorageObj.key === item.key));
+
+      if (!webStorageData || !isMergedDataCached) {
+        // State Setter
         setTmdbDataArr(mergedFetchedData);
 
+        // Web Storage Setter
         [{ nowPlaying, prefabs, trending }].forEach((dataObject) => {
           Object.entries(dataObject).forEach(([key, value]) => {
-            useFilmDatabaseWebStorage({ userLocation, data: value, cacheKey: key }).setData();
+            useFilmDatabaseWebStorage({ userLocation: userLocationPath, data: value, cacheKey: key }).setData();
           });
         });
+
+        // Else, set state with Web Storage
       } else {
         setTmdbDataArr(webStorageData);
       }
@@ -92,7 +107,7 @@ const FDHomePage = () => {
    * Employed observers to watch for visible children nodes of carouselUl.current
    * Note: Intersectional Observer does not detect changes that may occur
    * Employment of Mutation Observer is required to ensure our observations are concurrent
-   * Note: State may seem unnecessary; however, it's important to update the visible node count due to viewport sizing
+   * Note: State may seem unnecessary; however, it's important to update the visible node count due to viewport sizing to refire our logic to force a rerender
    */
 
   const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
@@ -131,21 +146,13 @@ const FDHomePage = () => {
   useEffect(() => observeCarouselNodes(), [carouselUlRef.current?.children]);
 
   /** SHARED STATE:
-   * Carousel Navigation Y-Axis,
-   * Carousel Media Navigation
    * Carousel Media Pagination
+   * Carousel Navigation X-Axis,
+   * Carousel Navigation Y-Axis
    * */
-  const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
-  // useEffect(() => console.log(xAxis), [xAxis]);
-
-  const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
-  // useEffect(() => console.log(yAxis), [yAxis]);
-
-  const [btnNavIndex, setBtnNavIndex] = useState<{ prevIndex: number; currIndex: number }>({ prevIndex: 1, currIndex: 1 });
-  // useEffect(() => console.log(btnNavIndex), [btnNavIndex]);
-
   const [paginatedData, setPaginatedData] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
-  // useEffect(() => console.log(paginatedData), [paginatedData]);
+  const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
+  const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
 
   /** Initial tmdbDataArr Pagination
    * On mount, slice values from indexes 0 to visibleNodeCounts (Assists all media device load times)
@@ -161,113 +168,11 @@ const FDHomePage = () => {
 
   useEffect(() => paginateTmdbDataArrOnMount(), [tmdbDataArr]);
 
-  /** Post-mount Data Pagination
-   * If tmdbDataArr HAS been paginated, isolate the targeted object's value and push new data
-   * Pushes data into state when setIndex changes (the user navigates)
-   * Note: paginatedData will fire 6x times on mount due to virtual dom, 2x for each dependency mount (virtual dom)
-   *
-   * tmdbDataArr dependency: This data is fetched; therefore, requires a watchful eye
-   * btnNavIndex depdendency: This index state is fired by the carousel overlay, our main driver for pagination calculations
-   * visibleNodesCount dependency: Repaginates data as the viewport resizes
-   * */
-
-  const firePaginationRequest = (): void => {
-    // Targets
-    const targetToPaginate: Type_Tmdb_useApiReturn_Obj = tmdbDataArr[yAxis.cur];
-    if (!targetToPaginate) return;
-
-    // Conditionals
-    const isPaginationComplete: boolean = targetToPaginate.value.length - 1 === paginatedData.length - 1;
-
-    if (tmdbDataArr && paginatedData.length > 0 && !isPaginationComplete)
-      setPaginatedData((prevData: typeof paginatedData) => {
-        // Targets
-        const existingPaginatedTarget: Type_Tmdb_useApiReturn_Obj = prevData[yAxis.cur];
-
-        // Calculations
-        const sliceStartIndex: number = existingPaginatedTarget.value.length + 1;
-        const sliceEndIndex: number = visibleNodesCount * btnNavIndex.currIndex;
-
-        // Slice new data (Slice creates a new arr; therefore, we won't need to create a copy of tmdbDataArr)
-        const newValues: Type_Tmdb_ApiCall_Union[] = targetToPaginate.value.slice(sliceStartIndex, sliceEndIndex);
-
-        // Merge existing paginated data with new paginated data
-        const mergedValues: Type_Tmdb_ApiCall_Union[] = [...existingPaginatedTarget.value, ...newValues];
-
-        // Create a new object with our paginated data
-        const paginatedObj: Type_Tmdb_useApiReturn_Obj = { key: targetToPaginate.key, label: targetToPaginate.label, value: mergedValues };
-
-        // Replace the targeted object with our new object
-        const newPaginatedArr: typeof paginatedData = paginatedData.map((obj) => {
-          if (obj.key === paginatedObj.key) return paginatedObj;
-          else return obj;
-        });
-
-        // Return our new paginatedData copy with updated paginated data
-        return newPaginatedArr;
-      });
-  };
-
-  useEffect(() => firePaginationRequest(), [btnNavIndex, visibleNodesCount]);
-
-  /** VIDEO PLAYER STATE
-   * This set of state variables enables the application to utilize a single YouTube iFrame component to produce trailer results for media.
-   * This component makes use of the react-youtube API to handle iFrames.
-   * videoPlayerTrailer stores API data and is used to find trailers directly from YouTube opposed to alternative sources.
-   * */
-  const [trailerCache, setTrailerCache] = useState<Type_useFilmDatabaseWebStorage_Obj[]>();
-
-  const useFetchTrailer = (index: number) => {
-    const controller: AbortController = new AbortController();
-    const cachedTrailers = useFilmDatabaseWebStorage({ userLocation: userLocation, cacheKey: 'trailerCache' }).getData() as Type_useFilmDatabaseWebStorage_Obj[];
-    const isCachedTrailer: boolean = cachedTrailers?.some((obj) => obj.trailer_id === index);
-
-    if (!isCachedTrailer) {
-      (async (): Promise<void> => {
-        const trailerObjData = await useTmdbApi({
-          controller: controller,
-          payload: {
-            tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos,
-            trailer_id: { typeGuardKey: 'trailer_id', propValue: `${index}` },
-          } as unknown as Type_Tmdb_OptParamTrailer_Obj,
-        });
-
-        const trailerObj: Type_useFilmDatabaseWebStorage_Obj[] = [
-          {
-            trailer_id: index,
-            trailer: (trailerObjData as Type_Tmdb_ApiCallTrailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer'),
-          },
-        ];
-
-        if (trailerObjData && trailerObj) {
-          useFilmDatabaseWebStorage({ userLocation: userLocation, data: trailerObj, cacheKey: 'trailerCache' }).setData();
-
-          setTrailerCache((prevData: Type_useFilmDatabaseWebStorage_Obj[] | undefined) => {
-            if (prevData) return [...prevData, ...cachedTrailers];
-            else return cachedTrailers;
-          });
-        }
-      })();
-    } else {
-      setTrailerCache(cachedTrailers);
-    }
-  };
-
   /** Carousel Navigation (X-Axis, Y-Axis)
    * Note: An X-Axis state must be created for each carousel; therefore, its state and logic live inside of the mapped component
    * Note: The Y-Axis state only requires a singular fire; therefore, its state and logic live inside this parent
    * */
 
-  // Clamped state getter
-  const getClampedIndex = (prevIndex: number, curIndex: number, increment: number): typeof xAxis => {
-    const fdMediaCarouselsLength: number = fdMediaRef.current ? fdMediaRef.current.children.length - 1 : 0;
-    return {
-      prev: Math.max(0, Math.min(fdMediaCarouselsLength, prevIndex + increment)),
-      cur: Math.max(0, Math.min(fdMediaCarouselsLength, curIndex + increment)),
-    };
-  };
-
-  // X-Axis && Y-Axis State setter
   const setAxisIndexes = (e: WheelEvent | KeyboardEvent) => {
     // Event Types
     const isWheelEvent: boolean = e instanceof WheelEvent;
@@ -282,26 +187,35 @@ const FDHomePage = () => {
     const isArrowRight: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowRight';
     const isArrowLeft: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowLeft';
 
+    // Calculations
+    const fdMediaCarouselsLength: number = fdMediaRef.current ? fdMediaRef.current.children.length : 0;
+
     // Logic
     switch (true) {
       case isWheelEvent:
         setYAxis((prevState: typeof yAxis) => {
-          const clampedIndex: typeof xAxis = getClampedIndex(prevState.prev, prevState.cur, deltaY > 0 ? 1 : -1);
-          return clampedIndex;
+          return {
+            prev: prevState.cur,
+            cur: Math.max(0, Math.min(fdMediaCarouselsLength, prevState.cur + deltaY > 0 ? 1 : -1)),
+          };
         });
         break;
 
       case (isKeyboardEvent && isArrowUp) || (isKeyboardEvent && isArrowDown):
         setYAxis((prevState: typeof yAxis) => {
-          const clampedIndex: typeof xAxis = getClampedIndex(prevState.prev, prevState.cur, isArrowUp ? -1 : 1);
-          return clampedIndex;
+          return {
+            prev: prevState.cur,
+            cur: Math.max(0, Math.min(fdMediaCarouselsLength, prevState.cur + (isArrowUp ? -1 : 1))),
+          };
         });
         break;
 
       case (isKeyboardEvent && isArrowRight) || (isKeyboardEvent && isArrowLeft):
         setXAxis((prevState: typeof xAxis) => {
-          const clampedIndex: typeof xAxis = getClampedIndex(prevState.prev, prevState.cur, isArrowRight ? 1 : -1);
-          return clampedIndex;
+          return {
+            prev: prevState.cur,
+            cur: Math.max(0, Math.min(fdMediaCarouselsLength, prevState.cur + (isArrowRight ? 1 : -1))),
+          };
         });
         break;
 
@@ -311,15 +225,15 @@ const FDHomePage = () => {
     }
   };
 
-  useEffect(() => {
-    carouselUlRef.current?.addEventListener('wheel', setAxisIndexes);
-    carouselUlRef.current?.addEventListener('keyup', setAxisIndexes);
+  // useEffect(() => {
+  //   fdMediaRef.current?.addEventListener('wheel', setAxisIndexes);
+  //   window.addEventListener('keyup', setAxisIndexes);
 
-    return () => {
-      carouselUlRef.current?.removeEventListener('wheel', setAxisIndexes);
-      carouselUlRef.current?.removeEventListener('keyup', setAxisIndexes);
-    };
-  }, []);
+  //   return () => {
+  //     fdMediaRef.current?.removeEventListener('wheel', setAxisIndexes);
+  //     window.removeEventListener('keyup', setAxisIndexes);
+  //   };
+  // }, []);
 
   // Y Axis Scroll method
   useEffect(() => {
@@ -371,6 +285,49 @@ const FDHomePage = () => {
     prevActiveCarouselNode.removeAttribute('data-activity');
   }, [xAxis.cur]);
 
+  /** VIDEO PLAYER STATE
+   * This set of state variables enables the application to utilize a single YouTube iFrame component to produce trailer results for media.
+   * This component makes use of the react-youtube API to handle iFrames.
+   * videoPlayerTrailer stores API data and is used to find trailers directly from YouTube opposed to alternative sources.
+   * */
+  const [trailerCache, setTrailerCache] = useState<Type_useFDWebStorage_Trailer_Obj[]>();
+
+  const useFetchTrailer = (index: number) => {
+    const controller: AbortController = new AbortController();
+    const cachedTrailers = useFilmDatabaseWebStorage({ userLocation: userLocationPath, cacheKey: 'trailerCache' }).getData() as Type_useFDWebStorage_Trailer_Obj[];
+    const isCachedTrailer: boolean = cachedTrailers?.some((obj) => obj.trailer_id === index);
+
+    if (!isCachedTrailer) {
+      (async (): Promise<void> => {
+        const trailerObjData = await useTmdbApi({
+          controller: controller,
+          payload: {
+            tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos,
+            trailer_id: { typeGuardKey: 'trailer_id', propValue: `${index}` },
+          } as unknown as Type_Tmdb_OptParamTrailer_Obj,
+        });
+
+        const trailerObj: Type_useFDWebStorage_Trailer_Obj[] = [
+          {
+            trailer_id: index,
+            trailer: (trailerObjData as Type_Tmdb_ApiCallTrailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer'),
+          },
+        ];
+
+        if (trailerObjData && trailerObj) {
+          useFilmDatabaseWebStorage({ userLocation: userLocationPath, data: trailerObj, cacheKey: 'trailerCache' }).setData();
+
+          setTrailerCache((prevData: Type_useFDWebStorage_Trailer_Obj[] | undefined) => {
+            if (prevData) return [...prevData, ...cachedTrailers];
+            else return cachedTrailers;
+          });
+        }
+      })();
+    } else {
+      setTrailerCache(cachedTrailers);
+    }
+  };
+
   /** Determine component's media data */
   const getMapData = (isGridLayout: boolean) => {
     return isGridLayout ? tmdbDataArr : paginatedData;
@@ -382,20 +339,20 @@ const FDHomePage = () => {
       <FDHeader />
       {/* <FDHero /> */}
       <section className='fdMedia' ref={fdMediaRef}>
-        {getMapData(false).map((tmdbDataObject) => (
+        {getMapData(false).map((obj, index) => (
           <FDCarousel
             key={uuidv4()}
             // Refs
+            fdMediaRef={fdMediaRef}
             ref={carouselUlRefReceiver}
             carouselUlRef={carouselUlRef}
             // State
             visibleNodesCount={visibleNodesCount}
-            btnNavIndex={btnNavIndex}
-            setBtnNavIndex={setBtnNavIndex}
             // Layout
             isGridLayout={false}
             // Data
-            tmdbDataObject={tmdbDataObject}
+            tmdbDataObject={obj}
+            tmdbDataArr={tmdbDataArr}
             // Hooks
             useFetchTrailer={useFetchTrailer}
           />

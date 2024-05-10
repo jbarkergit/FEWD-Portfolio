@@ -1,38 +1,33 @@
-import { useEffect, RefObject, Dispatch, SetStateAction, forwardRef } from 'react';
+import { useEffect, RefObject, forwardRef, useState, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Type_Tmdb_ApiCall_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCall_Union, Type_Tmdb_useApiReturn_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
 import FDCarouselOverlay from './FDCarouselOverlay';
 import FDCarouselPoster from './FDCarouselPoster';
 
 type Type_PropDrill = {
+  fdMediaRef: RefObject<HTMLElement>;
   carouselUlRef: RefObject<HTMLUListElement>;
   visibleNodesCount: number;
-  btnNavIndex: {
-    prevIndex: number;
-    currIndex: number;
-  };
-  setBtnNavIndex: Dispatch<
-    SetStateAction<{
-      prevIndex: number;
-      currIndex: number;
-    }>
-  >;
   isGridLayout: boolean;
   tmdbDataObject: {
     key: string;
     label?: string | undefined;
     value: Type_Tmdb_ApiCall_Union[];
   };
+  tmdbDataArr: {
+    key: string;
+    label?: string | undefined;
+    value: Type_Tmdb_ApiCall_Union[];
+  }[];
   useFetchTrailer: (index: number) => void;
 };
 
 const FDCarousel = forwardRef<HTMLUListElement, Type_PropDrill>(
-  ({ carouselUlRef, btnNavIndex, setBtnNavIndex, visibleNodesCount, isGridLayout, tmdbDataObject, useFetchTrailer }: Type_PropDrill, ref) => {
+  ({ fdMediaRef, carouselUlRef, visibleNodesCount, isGridLayout, tmdbDataObject, tmdbDataArr, useFetchTrailer }: Type_PropDrill, ref) => {
     /** INFINITE LOOP BUTTON NAVIGATION
      * [EMPLOYED] Animation && End of Loop Wrapping: CSS Scroll-Snapping && JavaScript Scroll Methods
-     * Requires perfect min max boundaries for indexing
      * Reduces overall JavaScript logic, doesn't require CSS animations
      *
      * [x] Infinite Loop: Push off-screen elements to end of queue and vise versa. E.g. [(1), 2,3,4,5,6,7,8,9, (1 IF 9 is last index || 10, (1))]
@@ -43,55 +38,85 @@ const FDCarousel = forwardRef<HTMLUListElement, Type_PropDrill>(
      * Single child distances require dom node width && gap size
      */
 
-    // Last possible index depends on visible nodes in carouselUl.current (visibleNodesCount)
-    useEffect(() => {
-      if (!isGridLayout) {
-        const lastPossibleIndex: number = Math.ceil(tmdbDataObject.value.length / visibleNodesCount);
+    const [carouselNavIndex, setCarouselNavIndex] = useState<number>(0);
+    // useEffect(() => console.log(carouselNavIndex), [carouselNavIndex]);
 
-        if (carouselUlRef.current) {
-          const posIndex = { isFirstIndex: btnNavIndex.currIndex === 1, isLastIndex: btnNavIndex.currIndex === lastPossibleIndex };
-          let nextChildsIndex: number;
+    const navigateCarousel = (): void => {
+      if (!isGridLayout && carouselUlRef.current) {
+        const carouselChildren: HTMLCollection = carouselUlRef.current.children;
+        const nextChild = carouselChildren[carouselNavIndex * visibleNodesCount] as HTMLLIElement;
 
-          switch (true) {
-            case posIndex.isFirstIndex:
-              nextChildsIndex = 0;
-              break;
+        if (nextChild) {
+          const scrollDistance: number = nextChild.offsetLeft - carouselUlRef.current.offsetLeft;
+          carouselUlRef.current.scrollTo({ left: scrollDistance, behavior: 'smooth' });
+        }
+      }
+    };
 
-            case posIndex.isLastIndex:
-              nextChildsIndex = tmdbDataObject.value.length - 1;
-              break;
+    /** Carousel Target Index State */
+    const carouselRef = useRef<HTMLElement>(null);
+    const [carouselTargetIndex, setCarouselTargetIndex] = useState<number>(0);
 
-            default:
-              nextChildsIndex = (btnNavIndex.currIndex - 1) * visibleNodesCount;
-              break;
-          }
+    const updateCarouselTargetIndex = () => {
+      if (fdMediaRef.current) {
+        const carouselArr: Element[] = [...fdMediaRef.current.children];
 
-          const carouselChildren: HTMLCollection = carouselUlRef.current.children;
-          const nextChild = carouselChildren[nextChildsIndex] as HTMLLIElement;
-
-          if (nextChild) {
-            const scrollDistance: number = nextChild.offsetLeft - carouselUlRef.current.offsetLeft;
-            carouselUlRef.current.scrollTo({ left: scrollDistance, behavior: 'smooth' });
+        for (let i = 0; i < carouselArr.length; i++) {
+          if (carouselArr[i] === carouselRef.current) {
+            setCarouselTargetIndex(i);
+            break;
           }
         }
       }
-    }, [visibleNodesCount]);
+    };
+
+    useEffect(() => updateCarouselTargetIndex(), [carouselNavIndex]);
+
+    /** Post-mount Data Pagination */
+    const [postMountPaginatedObj, setPostMountPaginatedObj] = useState<Type_Tmdb_useApiReturn_Obj>(tmdbDataObject);
+
+    const firePaginationRequest = (): void => {
+      const currentPaginatedLength: number = postMountPaginatedObj.value.length;
+      const originalDataTarget: Type_Tmdb_ApiCall_Union[] = tmdbDataArr[carouselTargetIndex].value;
+      const maxLengthToPaginate: number = originalDataTarget.length;
+      const isPaginationComplete: boolean = currentPaginatedLength === maxLengthToPaginate;
+
+      // console.log(`cur ${currentPaginatedLength} .vs. max ${maxLengthToPaginate}`);
+      // console.log(isPaginationComplete);
+
+      if (!isPaginationComplete) {
+        setPostMountPaginatedObj((prevObj) => {
+          const startingSliceIndex: number = prevObj.value.length + 1;
+          const endingSliceIndex: number = carouselNavIndex * visibleNodesCount;
+
+          const slicedData: Type_Tmdb_ApiCall_Union[] = originalDataTarget.slice(startingSliceIndex, endingSliceIndex);
+          const updatedDataValue = (prevObj.value = [...prevObj.value, ...slicedData]);
+          const updatedObject = { key: prevObj.key, label: prevObj.label, value: updatedDataValue };
+
+          return updatedObject;
+        });
+      }
+
+      navigateCarousel();
+    };
+
+    useEffect(() => firePaginationRequest(), [carouselTargetIndex]);
 
     /** Component */
     const heading: string = tmdbDataObject.label ? tmdbDataObject.label : tmdbDataObject.key.replaceAll('_', ' ');
 
     return (
-      <section className='fdMedia__carousel' key={uuidv4()} aria-label={`${heading} Section`}>
+      <section className='fdMedia__carousel' key={uuidv4()} aria-label={`${heading} Section`} ref={carouselRef}>
         <div className='fdMedia__carousel__header'>
           <h2 className='fdMedia__carousel__header--h2'>{heading}</h2>
         </div>
         <div className='fdMedia__carousel__wrapper'>
           <ul className='fdMedia__carousel__wrapper__ul' ref={ref} data-layout={isGridLayout ? 'grid' : 'carousel'}>
-            {tmdbDataObject.value.map((paginatedObj) => (
+            {postMountPaginatedObj.value.map((paginatedObj) => (
               <FDCarouselPoster key={uuidv4()} paginatedObj={paginatedObj} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} />
             ))}
           </ul>
-          <FDCarouselOverlay tmdbArrLength={tmdbDataObject.value.length - 1} setBtnNavIndex={setBtnNavIndex} visibleNodesCount={visibleNodesCount} />
+          <FDCarouselOverlay setCarouselNavIndex={setCarouselNavIndex} maxIndex={Math.ceil(tmdbDataObject.value.length / visibleNodesCount)} />
         </div>
       </section>
     );

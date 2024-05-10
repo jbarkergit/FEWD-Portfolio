@@ -4,30 +4,19 @@ import MaterialRightCaret from '../../assets/svg-icons/MaterialRightCaret';
 import useCreatePicture from '../../hooks/useCreatePicture';
 
 type Type_PropDrill = {
-  tmdbArrLength: number;
-  setBtnNavIndex: Dispatch<
-    SetStateAction<{
-      prevIndex: number;
-      currIndex: number;
-    }>
-  >;
-  visibleNodesCount: number;
+  setCarouselNavIndex: Dispatch<SetStateAction<number>>;
+  maxIndex: number;
 };
 
-const FDCarouselOverlay = ({ tmdbArrLength, setBtnNavIndex, visibleNodesCount }: Type_PropDrill) => {
-  const minMaxIndex = { min: 1, max: Math.ceil(tmdbArrLength / visibleNodesCount) };
-
+const FDCarouselOverlay = ({ setCarouselNavIndex, maxIndex }: Type_PropDrill) => {
   return (
     <nav className='fdMedia__carousel__wrapper__navigation'>
       <button
         className='fdMedia__carousel__wrapper__navigation--button'
         aria-label='Show Previous'
         onClick={() => {
-          setBtnNavIndex((prevState) => {
-            return {
-              prevIndex: prevState.currIndex,
-              currIndex: prevState.currIndex === minMaxIndex.min ? minMaxIndex.max : prevState.currIndex - 1,
-            };
+          setCarouselNavIndex((prevIndex) => {
+            return Math.max(1, Math.min(prevIndex - 1, maxIndex));
           });
         }}>
         {useCreatePicture({ svg: <MaterialLeftCaret />, alt: 'Show Previous Selection' })}
@@ -37,11 +26,8 @@ const FDCarouselOverlay = ({ tmdbArrLength, setBtnNavIndex, visibleNodesCount }:
         className='fdMedia__carousel__wrapper__navigation--button'
         aria-label='Show More'
         onClick={() => {
-          setBtnNavIndex((prevState) => {
-            return {
-              prevIndex: prevState.currIndex,
-              currIndex: prevState.currIndex === minMaxIndex.max ? minMaxIndex.min : prevState.currIndex + 1,
-            };
+          setCarouselNavIndex((prevIndex) => {
+            return Math.max(1, Math.min(prevIndex + 1, maxIndex));
           });
         }}>
         {useCreatePicture({ svg: <MaterialRightCaret />, alt: 'Show More' })}
