@@ -26,6 +26,50 @@ type Type_PropDrill = {
 
 const FDCarousel = forwardRef<HTMLUListElement, Type_PropDrill>(
   ({ fdMediaRef, carouselUlRef, visibleNodesCount, isGridLayout, tmdbDataObject, tmdbDataArr, useFetchTrailer }: Type_PropDrill, ref) => {
+    /** Global State Dependencies */
+    const [carouselNavIndex, setCarouselNavIndex] = useState<number>(1);
+
+    /** Carousel Target Index State */
+    const carouselRef = useRef<HTMLElement>(null);
+
+    const updateCarouselTargetIndex = () => {
+      if (fdMediaRef.current) {
+        const carouselArr: Element[] = [...fdMediaRef.current.children];
+
+        for (let i = 0; i < carouselArr.length; i++) {
+          if (carouselArr[i] === carouselRef.current) {
+            firePaginationRequest(i);
+            break;
+          }
+        }
+      }
+    };
+
+    useEffect(() => updateCarouselTargetIndex(), [carouselNavIndex]);
+
+    /** Post-mount Data Pagination */
+    const [postMountPaginatedObj, setPostMountPaginatedObj] = useState<Type_Tmdb_useApiReturn_Obj>(tmdbDataObject);
+
+    const firePaginationRequest = (carouselTargetIndex: number): void => {
+      const currentPaginatedLength: number = postMountPaginatedObj.value.length;
+      const originalDataTarget: Type_Tmdb_ApiCall_Union[] = tmdbDataArr[carouselTargetIndex].value;
+      const maxLengthToPaginate: number = originalDataTarget.length;
+      const isPaginationComplete: boolean = currentPaginatedLength === maxLengthToPaginate;
+
+      if (!isPaginationComplete) {
+        setPostMountPaginatedObj((prevObj) => {
+          const startingSliceIndex: number = prevObj.value.length + 1;
+          const endingSliceIndex: number = carouselNavIndex * (visibleNodesCount + 1);
+
+          const slicedData: Type_Tmdb_ApiCall_Union[] = originalDataTarget.slice(startingSliceIndex, endingSliceIndex);
+          const updatedDataValue: Type_Tmdb_ApiCall_Union[] = (prevObj.value = [...prevObj.value, ...slicedData]);
+          const updatedObject: Type_Tmdb_useApiReturn_Obj = { key: prevObj.key, label: prevObj.label, value: updatedDataValue };
+
+          return updatedObject;
+        });
+      }
+    };
+
     /** INFINITE LOOP BUTTON NAVIGATION
      * [EMPLOYED] Animation && End of Loop Wrapping: CSS Scroll-Snapping && JavaScript Scroll Methods
      * Reduces overall JavaScript logic, doesn't require CSS animations
@@ -38,13 +82,12 @@ const FDCarousel = forwardRef<HTMLUListElement, Type_PropDrill>(
      * Single child distances require dom node width && gap size
      */
 
-    const [carouselNavIndex, setCarouselNavIndex] = useState<number>(0);
-    // useEffect(() => console.log(carouselNavIndex), [carouselNavIndex]);
-
     const navigateCarousel = (): void => {
       if (!isGridLayout && carouselUlRef.current) {
         const carouselChildren: HTMLCollection = carouselUlRef.current.children;
-        const nextChild = carouselChildren[carouselNavIndex * visibleNodesCount] as HTMLLIElement;
+        const targetIndex: number = carouselNavIndex * visibleNodesCount;
+        const prevChild = carouselChildren[(carouselNavIndex - 1) * visibleNodesCount];
+        const nextChild = carouselChildren[targetIndex] as HTMLLIElement;
 
         if (nextChild) {
           const scrollDistance: number = nextChild.offsetLeft - carouselUlRef.current.offsetLeft;
@@ -53,54 +96,7 @@ const FDCarousel = forwardRef<HTMLUListElement, Type_PropDrill>(
       }
     };
 
-    /** Carousel Target Index State */
-    const carouselRef = useRef<HTMLElement>(null);
-    const [carouselTargetIndex, setCarouselTargetIndex] = useState<number>(0);
-
-    const updateCarouselTargetIndex = () => {
-      if (fdMediaRef.current) {
-        const carouselArr: Element[] = [...fdMediaRef.current.children];
-
-        for (let i = 0; i < carouselArr.length; i++) {
-          if (carouselArr[i] === carouselRef.current) {
-            setCarouselTargetIndex(i);
-            break;
-          }
-        }
-      }
-    };
-
-    useEffect(() => updateCarouselTargetIndex(), [carouselNavIndex]);
-
-    /** Post-mount Data Pagination */
-    const [postMountPaginatedObj, setPostMountPaginatedObj] = useState<Type_Tmdb_useApiReturn_Obj>(tmdbDataObject);
-
-    const firePaginationRequest = (): void => {
-      const currentPaginatedLength: number = postMountPaginatedObj.value.length;
-      const originalDataTarget: Type_Tmdb_ApiCall_Union[] = tmdbDataArr[carouselTargetIndex].value;
-      const maxLengthToPaginate: number = originalDataTarget.length;
-      const isPaginationComplete: boolean = currentPaginatedLength === maxLengthToPaginate;
-
-      // console.log(`cur ${currentPaginatedLength} .vs. max ${maxLengthToPaginate}`);
-      // console.log(isPaginationComplete);
-
-      if (!isPaginationComplete) {
-        setPostMountPaginatedObj((prevObj) => {
-          const startingSliceIndex: number = prevObj.value.length + 1;
-          const endingSliceIndex: number = carouselNavIndex * visibleNodesCount;
-
-          const slicedData: Type_Tmdb_ApiCall_Union[] = originalDataTarget.slice(startingSliceIndex, endingSliceIndex);
-          const updatedDataValue = (prevObj.value = [...prevObj.value, ...slicedData]);
-          const updatedObject = { key: prevObj.key, label: prevObj.label, value: updatedDataValue };
-
-          return updatedObject;
-        });
-      }
-
-      navigateCarousel();
-    };
-
-    useEffect(() => firePaginationRequest(), [carouselTargetIndex]);
+    useEffect(() => navigateCarousel(), [carouselUlRef.current, carouselNavIndex]);
 
     /** Component */
     const heading: string = tmdbDataObject.label ? tmdbDataObject.label : tmdbDataObject.key.replaceAll('_', ' ');
@@ -116,7 +112,7 @@ const FDCarousel = forwardRef<HTMLUListElement, Type_PropDrill>(
               <FDCarouselPoster key={uuidv4()} paginatedObj={paginatedObj} isGridLayout={isGridLayout} useFetchTrailer={useFetchTrailer} />
             ))}
           </ul>
-          <FDCarouselOverlay setCarouselNavIndex={setCarouselNavIndex} maxIndex={Math.ceil(tmdbDataObject.value.length / visibleNodesCount)} />
+          <FDCarouselOverlay setCarouselNavIndex={setCarouselNavIndex} mapObjMaxIndex={Math.ceil(tmdbDataArr[carouselNavIndex].value.length / visibleNodesCount)} />
         </div>
       </section>
     );

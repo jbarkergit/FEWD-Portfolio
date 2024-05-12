@@ -341,7 +341,7 @@ const FDHomePage = () => {
       <FDHeader />
       {/* <FDHero /> */}
       <section className='fdMedia' ref={fdMediaRef}>
-        {getMapData(false).map((obj, index) => (
+        {getMapData(false).map((obj) => (
           <FDCarousel
             key={uuidv4()}
             // Refs

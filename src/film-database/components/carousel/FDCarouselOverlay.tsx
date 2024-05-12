@@ -5,10 +5,10 @@ import useCreatePicture from '../../hooks/useCreatePicture';
 
 type Type_PropDrill = {
   setCarouselNavIndex: Dispatch<SetStateAction<number>>;
-  maxIndex: number;
+  mapObjMaxIndex: number;
 };
 
-const FDCarouselOverlay = ({ setCarouselNavIndex, maxIndex }: Type_PropDrill) => {
+const FDCarouselOverlay = ({ setCarouselNavIndex, mapObjMaxIndex }: Type_PropDrill) => {
   return (
     <nav className='fdMedia__carousel__wrapper__navigation'>
       <button
@@ -16,7 +16,8 @@ const FDCarouselOverlay = ({ setCarouselNavIndex, maxIndex }: Type_PropDrill) =>
         aria-label='Show Previous'
         onClick={() => {
           setCarouselNavIndex((prevIndex) => {
-            return Math.max(1, Math.min(prevIndex - 1, maxIndex));
+            const clampedIndex: number = Math.max(1, Math.min(prevIndex - 1, mapObjMaxIndex));
+            return prevIndex === 1 ? mapObjMaxIndex : clampedIndex;
           });
         }}>
         {useCreatePicture({ svg: <MaterialLeftCaret />, alt: 'Show Previous Selection' })}
@@ -27,7 +28,8 @@ const FDCarouselOverlay = ({ setCarouselNavIndex, maxIndex }: Type_PropDrill) =>
         aria-label='Show More'
         onClick={() => {
           setCarouselNavIndex((prevIndex) => {
-            return Math.max(1, Math.min(prevIndex + 1, maxIndex));
+            const clampedIndex: number = Math.max(1, Math.min(prevIndex + 1, mapObjMaxIndex));
+            return prevIndex === mapObjMaxIndex ? 1 : clampedIndex;
           });
         }}>
         {useCreatePicture({ svg: <MaterialRightCaret />, alt: 'Show More' })}
