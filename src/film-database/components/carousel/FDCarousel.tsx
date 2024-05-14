@@ -49,17 +49,19 @@ const FDCarousel = forwardRef<HTMLUListElement, Type_PropDrill>(
 
     /** Post-mount Data Pagination */
     const [postMountPaginatedObj, setPostMountPaginatedObj] = useState<Type_Tmdb_useApiReturn_Obj>(tmdbDataObject);
+    useEffect(() => console.log(postMountPaginatedObj), [postMountPaginatedObj]);
 
     const firePaginationRequest = (carouselTargetIndex: number): void => {
       const currentPaginatedLength: number = postMountPaginatedObj.value.length;
       const originalDataTarget: Type_Tmdb_ApiCall_Union[] = tmdbDataArr[carouselTargetIndex].value;
-      const maxLengthToPaginate: number = originalDataTarget.length;
+      const maxLengthToPaginate: number = originalDataTarget.length - 1;
       const isPaginationComplete: boolean = currentPaginatedLength === maxLengthToPaginate;
 
       if (!isPaginationComplete) {
         setPostMountPaginatedObj((prevObj) => {
           const startingSliceIndex: number = prevObj.value.length + 1;
-          const endingSliceIndex: number = carouselNavIndex * (visibleNodesCount + 1);
+          // Case where ending index is larger than prevObj's length isn't an issue given we're using .slice which won't go out of bounds
+          const endingSliceIndex: number = carouselNavIndex * visibleNodesCount + 1;
 
           const slicedData: Type_Tmdb_ApiCall_Union[] = originalDataTarget.slice(startingSliceIndex, endingSliceIndex);
           const updatedDataValue: Type_Tmdb_ApiCall_Union[] = (prevObj.value = [...prevObj.value, ...slicedData]);
@@ -85,9 +87,11 @@ const FDCarousel = forwardRef<HTMLUListElement, Type_PropDrill>(
     const navigateCarousel = (): void => {
       if (!isGridLayout && carouselUlRef.current) {
         const carouselChildren: HTMLCollection = carouselUlRef.current.children;
-        const targetIndex: number = carouselNavIndex * visibleNodesCount;
-        const prevChild = carouselChildren[(carouselNavIndex - 1) * visibleNodesCount];
-        const nextChild = carouselChildren[targetIndex] as HTMLLIElement;
+        const targetIndex: number = carouselNavIndex * visibleNodesCount - 1;
+        const maxIndex: number = postMountPaginatedObj.value.length;
+        // Target index isn't as simple as the navigation index multiplied by the visibleNodesCount given it can be out of bounds
+        const clampedTargetIndex: number = Math.max(1, Math.min(targetIndex, maxIndex));
+        const nextChild = carouselChildren[clampedTargetIndex] as HTMLLIElement;
 
         if (nextChild) {
           const scrollDistance: number = nextChild.offsetLeft - carouselUlRef.current.offsetLeft;
@@ -96,7 +100,7 @@ const FDCarousel = forwardRef<HTMLUListElement, Type_PropDrill>(
       }
     };
 
-    useEffect(() => navigateCarousel(), [carouselUlRef.current, carouselNavIndex]);
+    useEffect(() => navigateCarousel(), [postMountPaginatedObj, carouselNavIndex]);
 
     /** Component */
     const heading: string = tmdbDataObject.label ? tmdbDataObject.label : tmdbDataObject.key.replaceAll('_', ' ');
