@@ -3,7 +3,7 @@ import { Type_Tmdb_DiscoverParam_Obj_isUndefined } from '../types/TmdbDataTypes'
 /** useDiscoverGenre types && interface */
 type Type_TmdbDiscover_MediaType_Union = 'movie' | 'tv';
 
-type Type_TmdbDiscoverMovie_Genre_Union =
+type Type_TmdbDiscover_MovieGenre_Union =
   | 'action'
   | 'adventure'
   | 'animation'
@@ -24,7 +24,7 @@ type Type_TmdbDiscoverMovie_Genre_Union =
   | 'war'
   | 'western';
 
-type Type_TmdbDiscoverTv_Genre_Union =
+type Type_TmdbDiscover_TvGenre_Union =
   | 'action_adventure'
   | 'animation'
   | 'comedy'
@@ -42,13 +42,13 @@ type Type_TmdbDiscoverTv_Genre_Union =
   | 'war_politics'
   | 'western';
 
-interface Interface_Discover {
+interface Interface_Discover_Params {
   type: Type_TmdbDiscover_MediaType_Union;
-  genre: Type_TmdbDiscoverMovie_Genre_Union | Type_TmdbDiscoverTv_Genre_Union;
+  genre: Type_TmdbDiscover_MovieGenre_Union | Type_TmdbDiscover_TvGenre_Union;
 }
 
 /** ID Storage */
-export const movieGenres: Record<Type_TmdbDiscoverMovie_Genre_Union, number> = {
+export const movieGenres: Record<Type_TmdbDiscover_MovieGenre_Union, number> = {
   action: 28,
   adventure: 12,
   animation: 16,
@@ -70,7 +70,7 @@ export const movieGenres: Record<Type_TmdbDiscoverMovie_Genre_Union, number> = {
   western: 37,
 };
 
-const tvGenres: Record<Type_TmdbDiscoverTv_Genre_Union, number> = {
+const tvGenres: Record<Type_TmdbDiscover_TvGenre_Union, number> = {
   action_adventure: 10759,
   animation: 16,
   comedy: 35,
@@ -90,14 +90,14 @@ const tvGenres: Record<Type_TmdbDiscoverTv_Genre_Union, number> = {
 };
 
 /** Hook */
-export const useDiscoverGenre = ({ type, genre }: Interface_Discover): Type_Tmdb_DiscoverParam_Obj_isUndefined => {
+export const useDiscoverGenre = ({ type, genre }: Interface_Discover_Params): Type_Tmdb_DiscoverParam_Obj_isUndefined => {
   const payload: { type: string; genre: string } = { type: type.toLowerCase(), genre: genre.toLowerCase() };
 
   switch (payload.type) {
     case 'movie':
-      return { typeGuardKey: payload.type, propValue: movieGenres[payload.genre as Type_TmdbDiscoverMovie_Genre_Union] };
+      return { typeGuardKey: payload.type, propValue: movieGenres[payload.genre as Type_TmdbDiscover_MovieGenre_Union] };
     case 'tv':
-      return { typeGuardKey: payload.type, propValue: tvGenres[payload.genre as Type_TmdbDiscoverTv_Genre_Union] };
+      return { typeGuardKey: payload.type, propValue: tvGenres[payload.genre as Type_TmdbDiscover_TvGenre_Union] };
     default:
       return undefined;
   }
