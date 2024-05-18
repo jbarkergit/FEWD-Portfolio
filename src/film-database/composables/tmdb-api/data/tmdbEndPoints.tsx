@@ -11,12 +11,10 @@ export const tmdbEndPoints = {
     topRated: { key: 'movie_lists_topRated', label: 'Top Rated', endPoint: 'https://api.themoviedb.org/3/movie/top_rated' },
     upcoming: { key: 'movie_lists_upcoming', label: 'Upcoming', endPoint: 'https://api.themoviedb.org/3/movie/upcoming' },
   },
-
   movie_trending: {
     trendingDay: { key: 'movie_trending_trendingDay', label: 'Trending Today', endPoint: 'https://api.themoviedb.org/3/trending/movie/day' },
     trendingWeek: { key: 'movie_trending_trendingWeek', label: 'Trending This Week', endPoint: 'https://api.themoviedb.org/3/trending/movie/week' },
   },
-
   movie_information: {
     details: { key: 'movie_information_details', endPoint: 'https://api.themoviedb.org/3/movie/{movie_id}' },
     releaseDates: { key: 'movie_information_releaseDates', endPoint: 'https://api.themoviedb.org/3/movie/{movie_id}/release_dates' },
@@ -25,12 +23,8 @@ export const tmdbEndPoints = {
     similar: { key: 'movie_information_similar', endPoint: 'https://api.themoviedb.org/3/movie/{movie_id}/similar' },
     recommendations: { key: 'movie_information_recommendations', endPoint: 'https://api.themoviedb.org/3/movie/{movie_id}/recommendations' },
   },
-
   movie_search_movie: { key: 'movie_search_movie', endPoint: 'https://api.themoviedb.org/3/search/movie' },
-
   movie_search_keyword: { key: 'movie_search_keyword', endPoint: 'https://api.themoviedb.org/3/movie/{movie_id}/keywords' },
-
   movie_trailer_videos: { key: 'movie_trailer_videos', endPoint: 'https://api.themoviedb.org/3/movie/{movie_id}/videos' },
-
   movie_discover: { key: 'movie_discover', endPoint: 'https://api.themoviedb.org/3/discover/movie' },
 };
