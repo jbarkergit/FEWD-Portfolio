@@ -19,7 +19,7 @@ import FDCarousel from '../components/carousel/FDCarousel';
 import FDHeader from '../components/header/FDHeader';
 import FDFooter from '../components/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';
-import { useDiscoverGenre } from '../composables/tmdb-api/hooks/useDiscoverGenre';
+import { useHomeData } from '../composables/tmdb-api/hooks/useTmdbData';
 
 const FDHomePage = () => {
   // References
@@ -40,7 +40,7 @@ const FDHomePage = () => {
    * I've currently opted-out of implementing this technique; given this is merely a simple front-end project.
    */
 
-  const userLocationPath = useLocation().pathname;
+  const useLocationPathname = useLocation().pathname;
 
   // Store cached data in state for component renders && pagination
   const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
@@ -49,57 +49,7 @@ const FDHomePage = () => {
     // Controller
     const controller: AbortController = new AbortController();
 
-    // Fetch calls
-    (async () => {
-      const nowPlaying: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
-        controller: controller,
-        payload: tmdbEndPoints.movie_lists.nowPlaying,
-      });
-
-      const prefabs: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
-        controller: controller,
-        payload: [tmdbEndPoints.movie_lists.popular, tmdbEndPoints.movie_lists.topRated, tmdbEndPoints.movie_lists.upcoming],
-      });
-
-      const trending: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
-        controller: controller,
-        payload: [tmdbEndPoints.movie_trending.trendingDay, tmdbEndPoints.movie_trending.trendingWeek],
-      });
-
-      // const discover: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
-      //   controller: controller,
-      //   payload: { tmdbEndPointObj: { ...tmdbEndPoints.movie_discover, label: 'Discover Horror' }, discover: useDiscoverGenre({ type: 'movie', genre: 'horror' }) },
-      // });
-
-      // Merged fetch calls
-      const mergedFetchedData = [...nowPlaying, ...prefabs, ...trending];
-
-      // Get Web Storage Data
-      const webStorageData = useFilmDatabaseWebStorage({ userLocation: userLocationPath, cacheKey: ['nowPlaying', 'prefabs', 'trending'] }).getData() as
-        | Type_Tmdb_useApiReturn_Obj[]
-        | undefined;
-
-      // If fetched data does not exist, set state and Web Storage
-      const isMergedDataCached: boolean | undefined = webStorageData?.some((webStorageObj) =>
-        mergedFetchedData.some((fetchedDataObj) => fetchedDataObj.key !== webStorageObj.key)
-      );
-
-      if (!webStorageData || !isMergedDataCached) {
-        // State Setter
-        setTmdbDataArr(mergedFetchedData);
-
-        // Web Storage Setter
-        [{ nowPlaying, prefabs, trending }].forEach((dataObject) => {
-          Object.entries(dataObject).forEach(([key, value]) => {
-            useFilmDatabaseWebStorage({ userLocation: userLocationPath, data: value, cacheKey: key }).setData();
-          });
-        });
-
-        // Else, set state with Web Storage
-      } else {
-        setTmdbDataArr(webStorageData);
-      }
-    })();
+    useHomeData(controller, useLocationPathname).then((data) => setTmdbDataArr(data));
 
     // Abort any ongoing fetch operations when component unmounts
     return () => controller.abort();
@@ -296,7 +246,10 @@ const FDHomePage = () => {
 
   const useFetchTrailer = (index: number) => {
     const controller: AbortController = new AbortController();
-    const cachedTrailers = useFilmDatabaseWebStorage({ userLocation: userLocationPath, cacheKey: 'trailerCache' }).getData() as Type_useFDWebStorage_Trailer_Obj[];
+    const cachedTrailers = useFilmDatabaseWebStorage({
+      userLocation: useLocationPathname,
+      cacheKey: 'trailerCache',
+    }).getData() as Type_useFDWebStorage_Trailer_Obj[];
     const isCachedTrailer: boolean = cachedTrailers?.some((obj) => obj.trailer_id === index);
 
     if (!isCachedTrailer) {
@@ -317,7 +270,7 @@ const FDHomePage = () => {
         ];
 
         if (trailerObjData && trailerObj) {
-          useFilmDatabaseWebStorage({ userLocation: userLocationPath, data: trailerObj, cacheKey: 'trailerCache' }).setData();
+          useFilmDatabaseWebStorage({ userLocation: useLocationPathname, data: trailerObj, cacheKey: 'trailerCache' }).setData();
 
           setTrailerCache((prevData: Type_useFDWebStorage_Trailer_Obj[] | undefined) => {
             if (prevData) return [...prevData, ...cachedTrailers];
