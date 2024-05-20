@@ -24,17 +24,9 @@ const FDHomePage = () => {
   // Global Variables
   const useLocationPathname = useLocation().pathname;
 
-  /** Network Traffic Performance technique notes
-   * API Memoization may not be the best technique here, given you'd still need to make an API call to ensure data is up to date.
-   * To prevent unnecessary API calls, I've employed a solution that utilizes localStorage to store data on mount.
-   * If the data does not exist in localStorage || the most recent data is not up to date, the fetched data will replace the cached data.
-   * This will prevent React from updating components until data is changed, which will now be exclusively on mount.
-   *
-   * This application will be an SPA; therefore, we're introducing a trade-off:
-   * IF the API presents new data during the session (post-mount), the user won't receive it as a real-time update.
-   *
-   * A potential solution to this would be to set intervals during session time to check if our data is consistent with the API data.
-   * I've currently opted-out of implementing this technique; given this is merely a simple front-end project.
+  /** Network Traffic Performance technique && Real-time updates notes
+   * LocalStorage is persisting data to prevent API calls on mount between sessions
+   * PUSHER (opposed to socket.io) is handling Web Sockets for real-time updates
    */
 
   // Store cached data in state for component renders && pagination
