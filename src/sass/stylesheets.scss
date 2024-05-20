@@ -1,13 +1,13 @@
-/* Boilerplate */
+// Boilerplate
 @forward '/src/sass/boilerplate';
 
-/* HTTP Protocol Errors */
+// Lib
+@forward '/src/sass/lib';
+
+// HTTP Protocol Errors
 @forward '/src/app/protocol-error/protocolErrorHandler';
 
-/* Libraries */
-@forward '/src/lib/lenis/lenis.scss';
-
-/* Projects */
+// Projects
 @forward '/src/portfolio/scss/portfolioExports';
 @forward '/src/ecommerce/scss/ecommerceExports';
 @forward '/src/film-database/styles/scss/filmDatabaseExports';
