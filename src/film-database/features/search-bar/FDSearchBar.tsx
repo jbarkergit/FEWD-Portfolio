@@ -1,14 +1,14 @@
 import { useRef, useState, useEffect, ChangeEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { tmdbEndPoints } from '../../composables/tmdb-api/data/tmdbEndPoints';
-import { useTmdbApi } from '../../composables/tmdb-api/hooks/useTmdbApi';
-import { Type_Tmdb_useApiReturn_Obj, Type_Tmdb_ApiCall_Union, Type_Tmdb_ApiCallMovie_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
+// import { tmdbEndPoints } from '../../composables/tmdb-api/data/tmdbEndPoints';
+// import { useTmdbApi } from '../../composables/tmdb-api/hooks/useTmdbApi';
+// import { Type_Tmdb_useApiReturn_Obj, Type_Tmdb_ApiCall_Union, Type_Tmdb_ApiCallMovie_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
 const FDSearchBar = () => {
   const searchBar = useRef<HTMLDivElement>(null);
 
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
+  // const [searchResults, setSearchResults] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
 
   /** Exterior click handler */
   const exteriorClickHandler = (event: PointerEvent): void => {
@@ -60,23 +60,23 @@ const FDSearchBar = () => {
    * Note: Checking tmdbDataArr for existing options would significantly increase loading times; therefore, I've opted to fetch on every search request
    * Note: An api request is made for each of the user's keystrokes for the sakes of real time results
    */
-  useEffect(() => {
-    (async () => {
-      const controller = new AbortController();
+  // useEffect(() => {
+  //   (async () => {
+  //     const controller = new AbortController();
 
-      const searchFetch: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
-        controller: controller,
-        payload: {
-          tmdbEndPointObj: tmdbEndPoints.movie_search_movie,
-          search_term: { typeGuardKey: 'movie_search', propValue: searchTerm },
-        },
-      });
+  //     const searchFetch: Type_Tmdb_useApiReturn_Obj[] = await useTmdbApi({
+  //       controller: controller,
+  //       payload: {
+  //         tmdbEndPointObj: tmdbEndPoints.movie_search_movie,
+  //         search_term: { typeGuardKey: 'movie_search', propValue: searchTerm },
+  //       },
+  //     });
 
-      if (searchTerm.length > 0) setSearchResults(searchFetch);
-    })();
-  }, [searchTerm]);
+  //     if (searchTerm.length > 0) setSearchResults(searchFetch);
+  //   })();
+  // }, [searchTerm]);
 
-  const values: Type_Tmdb_ApiCall_Union[] | undefined = searchResults[0] ? searchResults[0].value.map((data) => data) : undefined;
+  // const values: Type_Tmdb_ApiCall_Union[] | undefined = searchResults[0] ? searchResults[0].value.map((data) => data) : undefined;
 
   /** JSX */
   return (
@@ -121,8 +121,8 @@ const FDSearchBar = () => {
         </button>
       </fieldset>
 
-      <ul className='fdSearchBar__results' data-status={values && values.length > 0 && searchTerm.length > 0 ? 'active' : 'disabled'}>
-        {values && searchResults.length > 0 ? (
+      {/* <ul className='fdSearchBar__results' data-status={values && values.length > 0 && searchTerm.length > 0 ? 'active' : 'disabled'}> */}
+      {/* {values && searchResults.length > 0 ? (
           values.slice(0, 8).map((obj) => (
             <li className='fdSearchBar__results__li' key={uuidv4()}>
               {(obj as Type_Tmdb_ApiCallMovie_Obj).title}
@@ -130,8 +130,8 @@ const FDSearchBar = () => {
           ))
         ) : searchTerm.length > 0 ? (
           <li>No results found.</li>
-        ) : null}
-      </ul>
+        ) : null} */}
+      {/* </ul> */}
     </section>
   );
 };

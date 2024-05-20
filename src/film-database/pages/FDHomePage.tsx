@@ -3,29 +3,26 @@ import { useLocation } from 'react-router-dom';
 // Lib
 import { v4 as uuidv4 } from 'uuid';
 // Api Data
-import { tmdbEndPoints } from '../composables/tmdb-api/data/tmdbEndPoints';
+import { Type_Tmdb_Movie_Endpoints, tmdbMovieEndpoints } from '../composables/tmdb-api/data/tmdbEndPoints';
 // Api Types
-import { useTmdbApi } from '../composables/tmdb-api/hooks/useTmdbApi';
-import {
-  Type_Tmdb_ApiCallTrailer_Obj,
-  Type_Tmdb_ApiCall_Union,
-  Type_Tmdb_OptParamTrailer_Obj,
-  Type_Tmdb_useApiReturn_Obj,
-} from '../composables/tmdb-api/types/TmdbDataTypes';
+import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_ApiCall_Union } from '../composables/tmdb-api/types/TmdbDataTypes';
 // Api Hooks
+import { useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { Type_useFDWebStorage_Trailer_Obj, useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 // Components
 import FDCarousel from '../components/carousel/FDCarousel';
 import FDHeader from '../components/header/FDHeader';
 import FDFooter from '../components/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';
-import { useHomeData } from '../composables/tmdb-api/hooks/useTmdbData';
 
 const FDHomePage = () => {
   // References
   const fdMediaRef = useRef<HTMLElement>(null);
   const carouselUlRefReceiver = useRef<HTMLUListElement>(null);
   const carouselUlRef = carouselUlRefReceiver;
+
+  // Global Variables
+  const useLocationPathname = useLocation().pathname;
 
   /** Network Traffic Performance technique notes
    * API Memoization may not be the best technique here, given you'd still need to make an API call to ensure data is up to date.
@@ -40,19 +37,28 @@ const FDHomePage = () => {
    * I've currently opted-out of implementing this technique; given this is merely a simple front-end project.
    */
 
-  const useLocationPathname = useLocation().pathname;
-
   // Store cached data in state for component renders && pagination
-  const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
+  const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_ApiCall_Union[][]>([]);
+  // useEffect(() => console.log(tmdbDataArr), [tmdbDataArr]);
 
   useEffect(() => {
-    // Controller
-    const controller: AbortController = new AbortController();
+    // Fetch data based on the user's location (will change when state navigation is implemented)
+    let keyValuePairArr: [string, string][] = [];
 
-    useHomeData(controller, useLocationPathname).then((data) => setTmdbDataArr(data));
+    switch (useLocationPathname) {
+      case '/film-database/genre/horror':
+        keyValuePairArr = [];
+        break;
 
-    // Abort any ongoing fetch operations when component unmounts
-    return () => controller.abort();
+      default:
+        keyValuePairArr = Array.from(tmdbMovieEndpoints.hot.entries());
+        break;
+    }
+
+    // Initialize fetch, set state
+    useFetchTmdbResponse({ endPoint_keyValuePairArr: keyValuePairArr }).then((data) => {
+      if (data) setTmdbDataArr(data);
+    });
   }, []);
 
   /** Carousel Visible Nodes State
@@ -102,23 +108,23 @@ const FDHomePage = () => {
    * Carousel Navigation X-Axis,
    * Carousel Navigation Y-Axis
    * */
-  const [paginatedData, setPaginatedData] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
+  // const [paginatedData, setPaginatedData] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
   const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
   const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
 
   /** Initial tmdbDataArr Pagination
    * On mount, slice values from indexes 0 to visibleNodeCounts (Assists all media device load times)
    * */
-  const paginateTmdbDataArrOnMount = () => {
-    const paginatedDataArr: typeof paginatedData = tmdbDataArr.map((obj) => {
-      const paginatedValue: Type_Tmdb_ApiCall_Union[] = obj.value.slice(0, visibleNodesCount);
-      return { key: obj.key, label: obj.label, value: paginatedValue };
-    });
+  // const paginateTmdbDataArrOnMount = () => {
+  //   const paginatedDataArr: typeof paginatedData = tmdbDataArr.map((obj) => {
+  //     const paginatedValue: Type_Tmdb_ApiCall_Union[] = obj.value.slice(0, visibleNodesCount);
+  //     return { key: obj.key, label: obj.label, value: paginatedValue };
+  //   });
 
-    setPaginatedData(paginatedDataArr);
-  };
+  //   setPaginatedData(paginatedDataArr);
+  // };
 
-  useEffect(() => paginateTmdbDataArrOnMount(), [tmdbDataArr]);
+  // useEffect(() => paginateTmdbDataArrOnMount(), [tmdbDataArr]);
 
   /** Carousel Navigation (X-Axis, Y-Axis)
    * Note: An X-Axis state must be created for each carousel; therefore, its state and logic live inside of the mapped component
@@ -242,51 +248,51 @@ const FDHomePage = () => {
    * This component makes use of the react-youtube API to handle iFrames.
    * videoPlayerTrailer stores API data and is used to find trailers directly from YouTube opposed to alternative sources.
    * */
-  const [trailerCache, setTrailerCache] = useState<Type_useFDWebStorage_Trailer_Obj[]>();
+  // const [trailerCache, setTrailerCache] = useState<Type_useFDWebStorage_Trailer_Obj[]>();
 
-  const useFetchTrailer = (index: number) => {
-    const controller: AbortController = new AbortController();
-    const cachedTrailers = useFilmDatabaseWebStorage({
-      userLocation: useLocationPathname,
-      cacheKey: 'trailerCache',
-    }).getData() as Type_useFDWebStorage_Trailer_Obj[];
-    const isCachedTrailer: boolean = cachedTrailers?.some((obj) => obj.trailer_id === index);
+  // const useFetchTrailer = (index: number) => {
+  //   const controller: AbortController = new AbortController();
+  //   const cachedTrailers = useFilmDatabaseWebStorage({
+  //     userLocation: useLocationPathname,
+  //     cacheKey: 'trailerCache',
+  //   }).getData() as Type_useFDWebStorage_Trailer_Obj[];
+  //   const isCachedTrailer: boolean = cachedTrailers?.some((obj) => obj.trailer_id === index);
 
-    if (!isCachedTrailer) {
-      (async (): Promise<void> => {
-        const trailerObjData = await useTmdbApi({
-          controller: controller,
-          payload: {
-            tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos,
-            trailer_id: { typeGuardKey: 'trailer_id', propValue: `${index}` },
-          } as unknown as Type_Tmdb_OptParamTrailer_Obj,
-        });
+  //   if (!isCachedTrailer) {
+  //     (async (): Promise<void> => {
+  //       const trailerObjData = await useTmdbApi({
+  //         controller: controller,
+  //         payload: {
+  //           tmdbEndPointObj: tmdbEndPoints.movie_trailer_videos,
+  //           trailer_id: { typeGuardKey: 'trailer_id', propValue: `${index}` },
+  //         } as unknown as Type_Tmdb_OptParamTrailer_Obj,
+  //       });
 
-        const trailerObj: Type_useFDWebStorage_Trailer_Obj[] = [
-          {
-            trailer_id: index,
-            trailer: (trailerObjData as Type_Tmdb_ApiCallTrailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer'),
-          },
-        ];
+  //       const trailerObj: Type_useFDWebStorage_Trailer_Obj[] = [
+  //         {
+  //           trailer_id: index,
+  //           trailer: (trailerObjData as Type_Tmdb_ApiCallTrailer_Obj[])?.find((object) => object.site === 'YouTube' && object.type === 'Trailer'),
+  //         },
+  //       ];
 
-        if (trailerObjData && trailerObj) {
-          useFilmDatabaseWebStorage({ userLocation: useLocationPathname, data: trailerObj, cacheKey: 'trailerCache' }).setData();
+  //       if (trailerObjData && trailerObj) {
+  //         useFilmDatabaseWebStorage({ userLocation: useLocationPathname, data: trailerObj, cacheKey: 'trailerCache' }).setData();
 
-          setTrailerCache((prevData: Type_useFDWebStorage_Trailer_Obj[] | undefined) => {
-            if (prevData) return [...prevData, ...cachedTrailers];
-            else return cachedTrailers;
-          });
-        }
-      })();
-    } else {
-      setTrailerCache(cachedTrailers);
-    }
-  };
+  //         setTrailerCache((prevData: Type_useFDWebStorage_Trailer_Obj[] | undefined) => {
+  //           if (prevData) return [...prevData, ...cachedTrailers];
+  //           else return cachedTrailers;
+  //         });
+  //       }
+  //     })();
+  //   } else {
+  //     setTrailerCache(cachedTrailers);
+  //   }
+  // };
 
   /** Determine component's media data */
-  const getMapData = (isGridLayout: boolean) => {
-    return isGridLayout ? tmdbDataArr : paginatedData;
-  };
+  // const getMapData = (isGridLayout: boolean) => {
+  //   return isGridLayout ? tmdbDataArr : paginatedData;
+  // };
 
   /** Component */
   return (
@@ -294,7 +300,7 @@ const FDHomePage = () => {
       <FDHeader />
       {/* <FDHero /> */}
       <section className='fdMedia' ref={fdMediaRef}>
-        {getMapData(false).map((obj) => (
+        {/* {tmdbDataArr.map((obj) => (
           <FDCarousel
             key={uuidv4()}
             // Refs
@@ -309,9 +315,9 @@ const FDHomePage = () => {
             tmdbDataObject={obj}
             tmdbDataArr={tmdbDataArr}
             // Hooks
-            useFetchTrailer={useFetchTrailer}
+            // useFetchTrailer={useFetchTrailer}
           />
-        ))}
+        ))} */}
       </section>
       {/* <FDFooter /> */}
     </div>
