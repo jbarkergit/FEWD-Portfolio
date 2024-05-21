@@ -1,9 +1,13 @@
 ## dependencies
 
 https://www.npmjs.com/package/dotenv
+
 https://www.npmjs.com/package/react
+
 https://www.npmjs.com/package/react-router-dom
+
 https://www.npmjs.com/package/react-youtube
+
 https://www.npmjs.com/package/uuid
 
 ## devDependencies
