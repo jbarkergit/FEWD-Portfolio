@@ -6,11 +6,13 @@ export type Type_useFetchTmdbResponse_Payload = {
   opt_movie_id?: number;
 };
 
+export type Type_useFetchTmdbResponse_KeyValuePairArr = [string, Type_Tmdb_ApiCall_Union[]][];
+
 /** Invoke fetcher util, filter fulfilled && rejected entries, return fulfilled data as a new arr */
 export const useFetchTmdbResponse = async ({
   endPoint_keyValuePairArr,
   opt_movie_id,
-}: Type_useFetchTmdbResponse_Payload): Promise<Type_Tmdb_ApiCall_Union[][] | undefined> => {
+}: Type_useFetchTmdbResponse_Payload): Promise<Type_useFetchTmdbResponse_KeyValuePairArr | undefined> => {
   try {
     const fetchEntries = await Promise.allSettled(
       endPoint_keyValuePairArr.map(async (keyValuePair) => {
@@ -42,8 +44,8 @@ export const useFetchTmdbResponse = async ({
     if (fulfilledEntries.length === 0) throw new Error('No entries were viable.');
     if (rejectedEntries.length > 0) throw new Error('Some entries were rejected.');
 
-    //@ts-ignore (narrowing issues)
-    const values: Type_Tmdb_ApiCall_Union[][] = fulfilledEntries.map((entry) => entry.value);
+    //@ts-ignore (narrowing issues, not going to memory cache/type cast two variables to avoid it)
+    const values: Type_useFetchTmdbResponse_KeyValuePairArr = fulfilledEntries.map((entry) => entry.value);
     return values;
 
     /** Catch errors */
