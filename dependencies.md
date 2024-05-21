@@ -1,7 +1,5 @@
 ## Dependencies
 
-### Core Dependencies
-
 - [dotenv](https://www.npmjs.com/package/dotenv): Loads environment variables from a `.env` file into `process.env`.
 - [react](https://www.npmjs.com/package/react): A JavaScript library for building user interfaces.
 - [react-router-dom](https://www.npmjs.com/package/react-router-dom): DOM bindings for React Router.
@@ -22,7 +20,6 @@
 - [@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin): TypeScript specific linting rules for ESLint.
 - [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser): Parser for TypeScript with ESLint.
 - [@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react): React support for Vite.
-- [cz-conventional-changelog](https://www.npmjs.com/package/cz-conventional-changelog): Commitizen adapter following the conventional-changelog format.
 - [eslint](https://www.npmjs.com/package/eslint): A pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript.
 - [eslint-config-airbnb](https://www.npmjs.com/package/eslint-config-airbnb): Airbnb's ESLint config, following their style guide.
 - [eslint-config-airbnb-typescript](https://www.npmjs.com/package/eslint-config-airbnb-typescript): Airbnb's ESLint config for TypeScript, following their style guide.
