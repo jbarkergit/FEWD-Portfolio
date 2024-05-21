@@ -15,11 +15,7 @@
 - [@testing-library/jest-dom](https://www.npmjs.com/package/@testing-library/jest-dom): Custom Jest matchers for asserting on DOM nodes.
 - [@testing-library/react](https://www.npmjs.com/package/@testing-library/react): Simple and complete testing utilities for React.
 - [@total-typescript/ts-reset](https://www.npmjs.com/package/@total-typescript/ts-reset): A TypeScript development tool for resetting TypeScript configurations.
-- [@types/node](https://www.npmjs.com/package/@types/node): TypeScript definitions for Node.js.
-- [@types/react](https://www.npmjs.com/package/@types/react): TypeScript definitions for React.
-- [@types/react-dom](https://www.npmjs.com/package/@types/react-dom): TypeScript definitions for ReactDOM.
-- [@types/uuid](https://www.npmjs.com/package/@types/uuid): TypeScript definitions for UUID.
-- [@types/youtube-player](https://www.npmjs.com/package/@types/youtube-player): TypeScript definitions for YouTube Player API.
+- [vitest](https://www.npmjs.com/package/vitest): Vite test runner for fast unit testing.
 
 ### Tooling
 
@@ -39,4 +35,11 @@
 - [prettier](https://www.npmjs.com/package/prettier): Opinionated code formatter.
 - [sass](https://www.npmjs.com/package/sass): Sass compiler written in JavaScript.
 - [vite](https://www.npmjs.com/package/vite): A fast, modern build tool for frontend development.
-- [vitest](https://www.npmjs.com/package/vitest): Vite test runner for fast unit testing.
+
+### TypeScript Definitions
+
+- [@types/node](https://www.npmjs.com/package/@types/node): TypeScript definitions for Node.js.
+- [@types/react](https://www.npmjs.com/package/@types/react): TypeScript definitions for React.
+- [@types/react-dom](https://www.npmjs.com/package/@types/react-dom): TypeScript definitions for ReactDOM.
+- [@types/uuid](https://www.npmjs.com/package/@types/uuid): TypeScript definitions for UUID.
+- [@types/youtube-player](https://www.npmjs.com/package/@types/youtube-player): TypeScript definitions for YouTube Player API.
