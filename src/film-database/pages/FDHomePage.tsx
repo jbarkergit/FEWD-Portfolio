@@ -1,19 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { ReactElement, ReactNode, createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Lib
 import { v4 as uuidv4 } from 'uuid';
 // Api Data
-import { Type_Tmdb_Movie_Endpoints, tmdbMovieEndpoints } from '../composables/tmdb-api/data/tmdbEndPoints';
+import { Type_Tmdb_Movie_Endpoints, Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../composables/tmdb-api/data/tmdbEndPoints';
 // Api Types
 import { Type_Tmdb_ApiCallTrailer_Obj, Type_Tmdb_ApiCall_Union } from '../composables/tmdb-api/types/TmdbDataTypes';
 // Api Hooks
-import { useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
+import { Type_useFetchTmdbResponse_KeyValuePairArr, useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { Type_useFDWebStorage_Trailer_Obj, useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 // Components
 import FDCarousel from '../components/carousel/FDCarousel';
 import FDHeader from '../components/header/FDHeader';
 import FDFooter from '../components/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';
+// Types
+type Type_paginatedDataMap = Map<string, Type_Tmdb_ApiCall_Union[]>;
 
 const FDHomePage = () => {
   // References
@@ -24,14 +26,8 @@ const FDHomePage = () => {
   // Global Variables
   const useLocationPathname = useLocation().pathname;
 
-  /** Network Traffic Performance technique && Real-time updates notes
-   * LocalStorage is persisting data to prevent API calls on mount between sessions
-   * PUSHER (opposed to socket.io) is handling Web Sockets for real-time updates
-   */
-
-  // Store cached data in state for component renders && pagination
-  const [tmdbDataArr, setTmdbDataArr] = useState<Type_Tmdb_ApiCall_Union[][]>([]);
-  // useEffect(() => console.log(tmdbDataArr), [tmdbDataArr]);
+  /** Fetch and set data */
+  const [tmdbDataArr, setTmdbDataArr] = useState<Type_useFetchTmdbResponse_KeyValuePairArr>([]);
 
   useEffect(() => {
     // Fetch data based on the user's location (will change when state navigation is implemented)
@@ -53,14 +49,28 @@ const FDHomePage = () => {
     });
   }, []);
 
+  /** Initial data pagination */
+  const [paginatedData, setPaginatedData] = useState<Type_paginatedDataMap>(new Map());
+  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
+
+  const paginateTmdbDataArrOnMount = () => {
+    let dataMap: Type_paginatedDataMap = new Map();
+
+    tmdbDataArr.forEach(([key, dataArr]) => {
+      dataMap.set(key, dataArr.slice(0, visibleNodesCount));
+    });
+
+    setPaginatedData(dataMap);
+  };
+
+  useEffect(() => paginateTmdbDataArrOnMount(), [tmdbDataArr]);
+
   /** Carousel Visible Nodes State
    * Employed observers to watch for visible children nodes of carouselUl.current
    * Note: Intersectional Observer does not detect changes that may occur
    * Employment of Mutation Observer is required to ensure our observations are concurrent
    * Note: State may seem unnecessary; however, it's important to update the visible node count due to viewport sizing to refire our logic to force a rerender
    */
-
-  const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
 
   const observeCarouselNodes = () => {
     const observer: IntersectionObserver = new IntersectionObserver(
@@ -100,80 +110,66 @@ const FDHomePage = () => {
    * Carousel Navigation X-Axis,
    * Carousel Navigation Y-Axis
    * */
-  // const [paginatedData, setPaginatedData] = useState<Type_Tmdb_useApiReturn_Obj[]>([]);
-  const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
-  const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
 
-  /** Initial tmdbDataArr Pagination
-   * On mount, slice values from indexes 0 to visibleNodeCounts (Assists all media device load times)
-   * */
-  // const paginateTmdbDataArrOnMount = () => {
-  //   const paginatedDataArr: typeof paginatedData = tmdbDataArr.map((obj) => {
-  //     const paginatedValue: Type_Tmdb_ApiCall_Union[] = obj.value.slice(0, visibleNodesCount);
-  //     return { key: obj.key, label: obj.label, value: paginatedValue };
-  //   });
-
-  //   setPaginatedData(paginatedDataArr);
-  // };
-
-  // useEffect(() => paginateTmdbDataArrOnMount(), [tmdbDataArr]);
+  // const [xAxis, setXAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
+  // const [yAxis, setYAxis] = useState<{ prev: number; cur: number }>({ prev: 0, cur: 0 });
 
   /** Carousel Navigation (X-Axis, Y-Axis)
    * Note: An X-Axis state must be created for each carousel; therefore, its state and logic live inside of the mapped component
    * Note: The Y-Axis state only requires a singular fire; therefore, its state and logic live inside this parent
    * */
 
-  const setAxisIndexes = (e: WheelEvent | KeyboardEvent) => {
-    // Event Types
-    const isWheelEvent: boolean = e instanceof WheelEvent;
-    const isKeyboardEvent: boolean = e instanceof KeyboardEvent;
+  // const setAxisIndexes = (e: WheelEvent | KeyboardEvent) => {
+  //   // Event Types
+  //   const isWheelEvent: boolean = e instanceof WheelEvent;
+  //   const isKeyboardEvent: boolean = e instanceof KeyboardEvent;
 
-    // Y Axis Events
-    const deltaY: number = (e as WheelEvent).deltaY;
-    const isArrowUp: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowUp';
-    const isArrowDown: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowDown';
+  //   // Y Axis Events
+  //   const deltaY: number = (e as WheelEvent).deltaY;
+  //   const isArrowUp: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowUp';
+  //   const isArrowDown: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowDown';
 
-    // X Axis Events
-    const isArrowRight: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowRight';
-    const isArrowLeft: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowLeft';
+  //   // X Axis Events
+  //   const isArrowRight: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowRight';
+  //   const isArrowLeft: boolean = isKeyboardEvent && (e as KeyboardEvent).key === 'ArrowLeft';
 
-    // Calculations
-    const fdMediaCarouselsLength: number = fdMediaRef.current ? fdMediaRef.current.children.length : 0;
+  //   // Calculations
+  //   const fdMediaCarouselsLength: number = fdMediaRef.current ? fdMediaRef.current.children.length : 0;
 
-    // Logic
-    switch (true) {
-      case isWheelEvent:
-        setYAxis((prevState: typeof yAxis) => {
-          return {
-            prev: prevState.cur,
-            cur: Math.max(0, Math.min(fdMediaCarouselsLength, prevState.cur + deltaY > 0 ? 1 : -1)),
-          };
-        });
-        break;
+  //   // Logic
+  //   switch (true) {
+  //     case isWheelEvent:
+  //       setYAxis((prevState: typeof yAxis) => {
+  //         return {
+  //           prev: prevState.cur,
+  //           cur: Math.max(0, Math.min(fdMediaCarouselsLength, prevState.cur + deltaY > 0 ? 1 : -1)),
+  //         };
+  //       });
+  //       break;
 
-      case (isKeyboardEvent && isArrowUp) || (isKeyboardEvent && isArrowDown):
-        setYAxis((prevState: typeof yAxis) => {
-          return {
-            prev: prevState.cur,
-            cur: Math.max(0, Math.min(fdMediaCarouselsLength, prevState.cur + (isArrowUp ? -1 : 1))),
-          };
-        });
-        break;
+  //     case (isKeyboardEvent && isArrowUp) || (isKeyboardEvent && isArrowDown):
+  //       setYAxis((prevState: typeof yAxis) => {
+  //         return {
+  //           prev: prevState.cur,
+  //           cur: Math.max(0, Math.min(fdMediaCarouselsLength, prevState.cur + (isArrowUp ? -1 : 1))),
+  //         };
+  //       });
+  //       break;
 
-      case (isKeyboardEvent && isArrowRight) || (isKeyboardEvent && isArrowLeft):
-        setXAxis((prevState: typeof xAxis) => {
-          return {
-            prev: prevState.cur,
-            cur: Math.max(0, Math.min(fdMediaCarouselsLength, prevState.cur + (isArrowRight ? 1 : -1))),
-          };
-        });
-        break;
+  //     case (isKeyboardEvent && isArrowRight) || (isKeyboardEvent && isArrowLeft):
+  //       setXAxis((prevState: typeof xAxis) => {
+  //         return {
+  //           prev: prevState.cur,
+  //           cur: Math.max(0, Math.min(fdMediaCarouselsLength, prevState.cur + (isArrowRight ? 1 : -1))),
+  //         };
+  //       });
+  //       break;
 
-      default:
-        e.preventDefault();
-        break;
-    }
-  };
+  //     default:
+  //       e.preventDefault();
+  //       break;
+  //   }
+  // };
 
   // useEffect(() => {
   //   fdMediaRef.current?.addEventListener('wheel', setAxisIndexes);
@@ -186,54 +182,54 @@ const FDHomePage = () => {
   // }, []);
 
   // Y Axis Scroll method
-  useEffect(() => {
-    if (!fdMediaRef.current || !fdMediaRef.current.children) return;
-    const fdMediaCarouselActiveNode = fdMediaRef.current.children[yAxis.cur] as HTMLElement;
-    const fdMediaCarouselPrevActiveNode = fdMediaRef.current.children[yAxis.prev] as HTMLElement;
+  // useEffect(() => {
+  //   if (!fdMediaRef.current || !fdMediaRef.current.children) return;
+  //   const fdMediaCarouselActiveNode = fdMediaRef.current.children[yAxis.cur] as HTMLElement;
+  //   const fdMediaCarouselPrevActiveNode = fdMediaRef.current.children[yAxis.prev] as HTMLElement;
 
-    if (!fdMediaCarouselActiveNode || !fdMediaCarouselPrevActiveNode) return;
+  //   if (!fdMediaCarouselActiveNode || !fdMediaCarouselPrevActiveNode) return;
 
-    // Calculations
-    const activeCarouselOffsetTop: number = fdMediaCarouselActiveNode.offsetTop;
-    const fdMediaMarginTop: number = parseInt(fdMediaRef.current.style.marginTop);
+  //   // Calculations
+  //   const activeCarouselOffsetTop: number = fdMediaCarouselActiveNode.offsetTop;
+  //   const fdMediaMarginTop: number = parseInt(fdMediaRef.current.style.marginTop);
 
-    // Scroll method
-    fdMediaRef.current.scrollTo({
-      top: activeCarouselOffsetTop - fdMediaMarginTop,
-      behavior: 'smooth',
-    });
+  //   // Scroll method
+  //   fdMediaRef.current.scrollTo({
+  //     top: activeCarouselOffsetTop - fdMediaMarginTop,
+  //     behavior: 'smooth',
+  //   });
 
-    // Data-attribute handler
-    fdMediaCarouselActiveNode.setAttribute('data-visibility', 'visible');
-    fdMediaCarouselPrevActiveNode.setAttribute('data-visibility', 'hidden');
-  }, [yAxis.cur]);
+  //   // Data-attribute handler
+  //   fdMediaCarouselActiveNode.setAttribute('data-visibility', 'visible');
+  //   fdMediaCarouselPrevActiveNode.setAttribute('data-visibility', 'hidden');
+  // }, [yAxis.cur]);
 
-  // X Axis Scroll method
-  useEffect(() => {
-    if (!fdMediaRef.current || !fdMediaRef.current.children || !carouselUlRef.current || !carouselUlRef.current.children) return;
+  // // X Axis Scroll method
+  // useEffect(() => {
+  //   if (!fdMediaRef.current || !fdMediaRef.current.children || !carouselUlRef.current || !carouselUlRef.current.children) return;
 
-    // All mapped carousels
-    const carouselsArr: Element[] = [...fdMediaRef.current.children];
-    const activeCarousel = carouselsArr[yAxis.cur] as HTMLUListElement;
-    const prevActiveCarousel = carouselsArr[yAxis.prev] as HTMLUListElement;
-    if (!carouselsArr || !activeCarousel || !prevActiveCarousel) return;
+  //   // All mapped carousels
+  //   const carouselsArr: Element[] = [...fdMediaRef.current.children];
+  //   const activeCarousel = carouselsArr[yAxis.cur] as HTMLUListElement;
+  //   const prevActiveCarousel = carouselsArr[yAxis.prev] as HTMLUListElement;
+  //   if (!carouselsArr || !activeCarousel || !prevActiveCarousel) return;
 
-    // Inactive && active (active) carousel nodes
-    const activeCarouselWrapper = activeCarousel.children[1] as HTMLHeadElement;
-    const activeCarouselUL = activeCarouselWrapper.children[0] as HTMLUListElement;
-    if (!activeCarouselWrapper || !activeCarouselUL) return;
+  //   // Inactive && active (active) carousel nodes
+  //   const activeCarouselWrapper = activeCarousel.children[1] as HTMLHeadElement;
+  //   const activeCarouselUL = activeCarouselWrapper.children[0] as HTMLUListElement;
+  //   if (!activeCarouselWrapper || !activeCarouselUL) return;
 
-    const activeCarouselLI = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
-    const prevActiveCarouselNode = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
-    if (!activeCarouselLI || !prevActiveCarouselNode) return;
+  //   const activeCarouselLI = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
+  //   const prevActiveCarouselNode = activeCarouselUL.children[xAxis.prev] as HTMLLIElement;
+  //   if (!activeCarouselLI || !prevActiveCarouselNode) return;
 
-    // X Axis scroller
-    activeCarousel.scrollTo({ left: activeCarouselLI.offsetLeft, behavior: 'smooth' });
+  //   // X Axis scroller
+  //   activeCarousel.scrollTo({ left: activeCarouselLI.offsetLeft, behavior: 'smooth' });
 
-    // Data-attributes for active && inactive carousels
-    activeCarouselLI.setAttribute('data-activity', 'focused');
-    prevActiveCarouselNode.removeAttribute('data-activity');
-  }, [xAxis.cur]);
+  //   // Data-attributes for active && inactive carousels
+  //   activeCarouselLI.setAttribute('data-activity', 'focused');
+  //   prevActiveCarouselNode.removeAttribute('data-activity');
+  // }, [xAxis.cur]);
 
   /** VIDEO PLAYER STATE
    * This set of state variables enables the application to utilize a single YouTube iFrame component to produce trailer results for media.
@@ -281,10 +277,27 @@ const FDHomePage = () => {
   //   }
   // };
 
-  /** Determine component's media data */
-  // const getMapData = (isGridLayout: boolean) => {
-  //   return isGridLayout ? tmdbDataArr : paginatedData;
-  // };
+  /** Component props context */
+  const componentProps = {
+    fdMediaRef: fdMediaRef,
+    ref: carouselUlRefReceiver,
+    carouselUlRef: carouselUlRef,
+    visibleNodesCount: visibleNodesCount,
+  };
+
+  const ComponentPropsContext = createContext<typeof componentProps>(componentProps);
+
+  const ComponentPropsProvider = ({ children }: { children?: ReactNode }): ReactElement => {
+    return <ComponentPropsContext.Provider value={componentProps}>{children}</ComponentPropsContext.Provider>;
+  };
+
+  const useComponentProps = useContext(ComponentPropsContext);
+
+  /** Get paginated data by key (autofill provided) */
+  const getPaginatedDataByKey = (key: Type_Tmdb_Movie_Keys_Union) => {
+    const keyValuePair = [key, paginatedData.get(key)];
+    return keyValuePair;
+  };
 
   /** Component */
   return (
@@ -292,24 +305,9 @@ const FDHomePage = () => {
       <FDHeader />
       {/* <FDHero /> */}
       <section className='fdMedia' ref={fdMediaRef}>
-        {/* {tmdbDataArr.map((obj) => (
-          <FDCarousel
-            key={uuidv4()}
-            // Refs
-            fdMediaRef={fdMediaRef}
-            ref={carouselUlRefReceiver}
-            carouselUlRef={carouselUlRef}
-            // State
-            visibleNodesCount={visibleNodesCount}
-            // Layout
-            isGridLayout={false}
-            // Data
-            tmdbDataObject={obj}
-            tmdbDataArr={tmdbDataArr}
-            // Hooks
-            // useFetchTrailer={useFetchTrailer}
-          />
-        ))} */}
+        <ComponentPropsProvider>
+          {getPaginatedDataByKey('now_playing')?.map((data) => <FDCarousel key={uuidv4()} data={data} isGridLayout={false} useComponentProps={useComponentProps} />)}
+        </ComponentPropsProvider>
       </section>
       {/* <FDFooter /> */}
     </div>
