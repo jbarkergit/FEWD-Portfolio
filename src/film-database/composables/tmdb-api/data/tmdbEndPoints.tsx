@@ -4,12 +4,20 @@
  * each object represents an api "category" of endpoints
  */
 
+type Theatrical_Keys = 'now_playing' | 'upcoming';
+type Hot_Keys = 'popular' | 'top_rated';
+type Trending_Keys = 'trending_today' | 'trending_this_week';
+type InformationById_Keys = 'details' | 'releaseDates' | 'watchProviders' | 'credits' | 'similar' | 'recommendations';
+type SearchById_Keys = 'movie' | 'discover' | 'keyword' | 'trailers';
+
+export type Type_Tmdb_Movie_Keys_Union = Theatrical_Keys | Hot_Keys | Trending_Keys | InformationById_Keys | SearchById_Keys;
+
 export type Type_Tmdb_Movie_Endpoints = {
-  theatrical: Map<string, string>;
-  hot: Map<string, string>;
-  trending: Map<string, string>;
-  informationById: Map<string, string>;
-  searchById: Map<string, string>;
+  theatrical: Map<Theatrical_Keys, string>;
+  hot: Map<Hot_Keys, string>;
+  trending: Map<Trending_Keys, string>;
+  informationById: Map<InformationById_Keys, string>;
+  searchById: Map<SearchById_Keys, string>;
 };
 
 export const tmdbMovieEndpoints: Type_Tmdb_Movie_Endpoints = {
