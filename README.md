@@ -1,6 +1,6 @@
 # Front-end Projects Repository
 
-[![React](https://img.shields.io/badge/TypeScript%20%26%20React-Type%20Safe-blue.svg)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Type%20Safe-blue.svg)](https://www.typescriptlang.org/)
 [![BEM Convention](https://img.shields.io/badge/BEM-Compliant-blue.svg)](https://en.bem.info/)
 [![SEO Best Practices](https://img.shields.io/badge/SEO-Best%20Practices-yellow.svg)](https://moz.com/learn/seo)
 [![ARIA Compliant](https://img.shields.io/badge/ARIA-Compliant-green.svg)](https://www.w3.org/TR/wai-aria/)
@@ -32,6 +32,9 @@
 ## Component Libraries
 
 - **[react-youtube](https://www.npmjs.com/package/react-youtube)**: A simple component for embedding YouTube videos in a React application.
+
+### Associated TypeScript Definitions
+
 - **[@types/youtube-player](https://www.npmjs.com/package/@types/youtube-player)**: TypeScript definitions for YouTube Player API.
 
 ## Testing
