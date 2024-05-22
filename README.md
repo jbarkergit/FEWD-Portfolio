@@ -1,9 +1,9 @@
 # Front-end Projects Repository
 
-[![ARIA Compliant](https://img.shields.io/badge/ARIA-Compliant-green.svg)](https://www.w3.org/TR/wai-aria/)
-[![SEO Best Practices](https://img.shields.io/badge/SEO-Best%20Practices-yellow.svg)](https://moz.com/learn/seo)
+[![TypeScript & React](https://img.shields.io/badge/TypeScript%20%26%20React-Type%20Safe-blue.svg)](https://www.typescriptlang.org/)
 [![BEM Convention](https://img.shields.io/badge/BEM-Compliant-blue.svg)](https://en.bem.info/)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![SEO Best Practices](https://img.shields.io/badge/SEO-Best%20Practices-yellow.svg)](https://moz.com/learn/seo)
+[![ARIA Compliant](https://img.shields.io/badge/ARIA-Compliant-green.svg)](https://www.w3.org/TR/wai-aria/)
 
 ## Core Libraries
 
