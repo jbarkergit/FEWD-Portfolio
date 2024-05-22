@@ -52,11 +52,11 @@
   - [eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react): React specific linting rules for ESLint.
   - [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks): ESLint plugin for React hooks.
 
-### Code Formatting
+## Code Formatting
 
 - [prettier](https://www.npmjs.com/package/prettier): Opinionated code formatter.
 
-### Commit Message Convention
+## Commit Message Convention
 
 - **Commitizen and Associated Packages**:
   - [commitizen](https://www.npmjs.com/package/commitizen): Helps with creating structured commit messages when using version control.
