@@ -8,7 +8,8 @@
     "test": "vitest",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "sass-watch": "sass --no-source-map --style=compressed --watch src/sass/index.scss dist/index.css"
+    "sass-watch": "sass --no-source-map --style=compressed --watch src/sass/index.scss dist/index.css",
+    "commit": "cz"
   },
   "dependencies": {
     "dotenv": "^16.4.1",
@@ -30,6 +31,8 @@
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "@vitejs/plugin-react": "^4.0.3",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.44.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
@@ -43,5 +46,10 @@
     "sass": "^1.63.6",
     "vite": "^5.0.8",
     "vitest": "^1.0.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
