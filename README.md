@@ -10,7 +10,7 @@
 - [react-router-dom](https://www.npmjs.com/package/react-router-dom): DOM bindings for React Router.
 - [sass](https://www.npmjs.com/package/sass): Sass compiler written in JavaScript.
 
-### Core TypeScript Definitions
+### Associated TypeScript Definitions
 
 - [@types/node](https://www.npmjs.com/package/@types/node): TypeScript definitions for Node.js.
 - [@types/react](https://www.npmjs.com/package/@types/react): TypeScript definitions for React.
@@ -21,6 +21,9 @@
 
 - [dotenv](https://www.npmjs.com/package/dotenv): Loads environment variables from a `.env` file into `process.env`.
 - [uuid](https://www.npmjs.com/package/uuid): Generates RFC compliant UUIDs.
+
+### Associated TypeScript Definitions
+
 - [@types/uuid](https://www.npmjs.com/package/@types/uuid): TypeScript definitions for UUID.
 
 ## Component Libraries
@@ -28,15 +31,15 @@
 - [react-youtube](https://www.npmjs.com/package/react-youtube): A simple component for embedding YouTube videos in a React application.
 - [@types/youtube-player](https://www.npmjs.com/package/@types/youtube-player): TypeScript definitions for YouTube Player API.
 
-### Testing
+## Testing
 
 - [@testing-library/jest-dom](https://www.npmjs.com/package/@testing-library/jest-dom): Custom Jest matchers for asserting on DOM nodes.
 - [@testing-library/react](https://www.npmjs.com/package/@testing-library/react): Simple and complete testing utilities for React.
 - [vitest](https://www.npmjs.com/package/vitest): Vite test runner for fast unit testing.
 
-### Linting
+## Linting
 
-- **ESLint and Related Packages**:
+- **ESLint and Associated Packages**:
   - [@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin): TypeScript specific linting rules for ESLint.
   - [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser): Parser for TypeScript with ESLint.
   - [eslint](https://www.npmjs.com/package/eslint): A pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript.
@@ -49,13 +52,12 @@
   - [eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react): React specific linting rules for ESLint.
   - [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks): ESLint plugin for React hooks.
 
-### Commit Message Convention
-
-- **Commitizen and Related Packages**:
-  - [commitizen](https://www.npmjs.com/package/commitizen): Helps with creating structured commit messages when using version control.
-  - [cz-conventional-changelog](https://www.npmjs.com/package/cz-conventional-changelog): A commitizen adapter following the conventional-changelog format. It helps standardize commit messages and enables automatic generation of changelogs based on these messages.
-
 ### Code Formatting
 
-- **Prettier**:
-  - [prettier](https://www.npmjs.com/package/prettier): Opinionated code formatter.
+- [prettier](https://www.npmjs.com/package/prettier): Opinionated code formatter.
+
+### Commit Message Convention
+
+- **Commitizen and Associated Packages**:
+  - [commitizen](https://www.npmjs.com/package/commitizen): Helps with creating structured commit messages when using version control.
+  - [cz-conventional-changelog](https://www.npmjs.com/package/cz-conventional-changelog): A commitizen adapter following the conventional-changelog format. It helps standardize commit messages and enables automatic generation of changelogs based on these messages.
