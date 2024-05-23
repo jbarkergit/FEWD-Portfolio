@@ -22,7 +22,7 @@ const ecommerceKeyValuePairs = [
   { path: '/ecommerce/product/:paramId', element: './ecommerce/pages/ProductDetailPage' },
 ];
 
-export const filmDatabaseKeyValuePairs = [{ path: '/film-database', element: './film-database/pages/FDHomePage.tsx' }];
+export const filmDatabaseKeyValuePairs = [{ path: '/film-database', element: './film-database/pages/FilmDatabase' }];
 
 const initialKeyValuePairs = [portfolioKeyValuePairs[0], ecommerceKeyValuePairs[0], filmDatabaseKeyValuePairs[0]];
 
