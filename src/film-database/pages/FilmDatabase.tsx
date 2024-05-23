@@ -133,7 +133,7 @@ const FilmDatabase = () => {
         case undefined:
           return <FDCarouselSkeleton />;
         default:
-          return <FDCarousel key={key} data={getPaginatedData} useComponentProps={useComponentProps} />;
+          return <FDCarousel dataKey={key} dataArr={getPaginatedData} useComponentProps={useComponentProps} />;
       }
     }
   };

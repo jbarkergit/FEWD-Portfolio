@@ -1,4 +1,7 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
+
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
 type PropDrill = {
@@ -12,7 +15,7 @@ const FDCarouselArticles = ({ data }: PropDrill) => {
         const props = useTmdbProps(obj);
 
         return (
-          <li className='fdMedia__carousel__wrapper__ul__li'>
+          <li className='fdMedia__carousel__wrapper__ul__li' key={uuidv4()}>
             <article className='fdMedia__carousel__wrapper__ul__li__article'>
               <header className='fdMedia__carousel__wrapper__ul__li__article__header'>
                 <h2>{props?.heading}</h2>
