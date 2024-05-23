@@ -26,13 +26,11 @@
     }
     &__header {
       padding: 0 var(--fd-padding-generic) 1rem var(--fd-padding-generic);
-      &--h2 {
-        font-family: 'Satoshi-Bold';
-        font-size: var(--fd-font-size-section-header);
-        line-height: normal;
-        text-transform: capitalize;
-        white-space: nowrap;
-      }
+      font-family: 'Satoshi-Bold';
+      font-size: var(--fd-font-size-section-header);
+      line-height: normal;
+      text-transform: capitalize;
+      white-space: nowrap;
     }
     &__wrapper {
       position: relative;
