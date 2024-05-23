@@ -26,7 +26,8 @@
 /** Fetcher Utility Api Call Types
  * TMDB Api Documentation does not provide call types; therefore, manual conversion is required to build respective data structures
  */
-export type Type_Tmdb_ApiCallMovieList_Obj = {
+export type Type_Tmdb_ApiMovieList_Obj = {
+  type_guard: 'movielist';
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -43,7 +44,8 @@ export type Type_Tmdb_ApiCallMovieList_Obj = {
   vote_count: number;
 };
 
-export type Type_Tmdb_ApiCallMovie_Obj = {
+export type Type_Tmdb_ApiMovie_Obj = {
+  type_guard: 'movie';
   adult: boolean;
   backdrop_path: string | null;
   belongs_to_collection: any;
@@ -71,7 +73,8 @@ export type Type_Tmdb_ApiCallMovie_Obj = {
   vote_count: number;
 };
 
-export type Type_Tmdb_ApiCallTrailer_Obj = {
+export type Type_Tmdb_ApiTrailer_Obj = {
+  type_guard: 'trailer';
   value: never[];
   id: string;
   iso_3166_1: string;
@@ -85,4 +88,4 @@ export type Type_Tmdb_ApiCallTrailer_Obj = {
   type: string;
 };
 
-export type Type_Tmdb_ApiCall_Union = Type_Tmdb_ApiCallMovieList_Obj | Type_Tmdb_ApiCallMovie_Obj | Type_Tmdb_ApiCallTrailer_Obj;
+export type Type_Tmdb_Api_Union = Type_Tmdb_ApiMovieList_Obj | Type_Tmdb_ApiMovie_Obj | Type_Tmdb_ApiTrailer_Obj;
