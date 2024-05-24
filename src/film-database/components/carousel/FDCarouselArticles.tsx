@@ -20,14 +20,12 @@ const FDCarouselArticles = ({ data }: PropDrill) => {
               <header className='fdMedia__carousel__wrapper__ul__li__article__header'>
                 <h2>{props?.heading}</h2>
               </header>
-              <div className='fdMedia__carousel__wrapper__ul__li__article__graphic'>
-                <figure>
-                  <picture>
-                    <img src={`https://image.tmdb.org/t/p/original/${props?.poster_path}`} alt={`${props?.alt}`} />
-                    <figcaption>{`${props?.alt}`}</figcaption>
-                  </picture>
-                </figure>
-              </div>
+              <figure className='fdMedia__carousel__wrapper__ul__li__article__graphic'>
+                <picture>
+                  <img src={`https://image.tmdb.org/t/p/original/${props?.poster_path}`} alt={`${props?.alt}`} />
+                  <figcaption>{`${props?.alt}`}</figcaption>
+                </picture>
+              </figure>
             </article>
           </li>
         );
