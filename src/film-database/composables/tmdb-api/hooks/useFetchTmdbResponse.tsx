@@ -1,4 +1,4 @@
-import { Type_Tmdb_ApiCall_Union } from '../types/TmdbDataTypes';
+import { Type_Tmdb_Api_Union } from '../types/TmdbDataTypes';
 import { fetchTmdbResponse } from '../util/fetchTmdbResponse';
 
 export type Type_useFetchTmdbResponse_Payload = {
@@ -6,7 +6,7 @@ export type Type_useFetchTmdbResponse_Payload = {
   opt_movie_id?: number;
 };
 
-export type Type_useFetchTmdbResponse_KeyValuePairArr = [string, Type_Tmdb_ApiCall_Union[]][];
+export type Type_useFetchTmdbResponse_KeyValuePairArr = [string, Type_Tmdb_Api_Union[]][];
 
 /** Invoke fetcher util, filter fulfilled && rejected entries, return fulfilled data as a new arr */
 export const useFetchTmdbResponse = async ({

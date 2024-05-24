@@ -1,4 +1,4 @@
-import { Type_Tmdb_ApiCall_Union } from '../types/TmdbDataTypes';
+import { Type_Tmdb_Api_Union } from '../types/TmdbDataTypes';
 
 /** fetchTmdbResponse Utility Payload && Promise/Resolved Response Types */
 type Type_fetchTmdbResponse_Payload = {
@@ -7,7 +7,7 @@ type Type_fetchTmdbResponse_Payload = {
 };
 
 type Type_fetchTmdbResponse_Response_ResolvedPromise = {
-  results: Type_Tmdb_ApiCall_Union[];
+  results: Type_Tmdb_Api_Union[];
   page?: number;
   total_pages?: number;
   total_results?: number;
