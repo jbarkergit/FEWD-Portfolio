@@ -124,7 +124,6 @@ const FilmDatabase = () => {
     const isKeyInMap: boolean = paginatedData.has(key);
 
     if (!isKeyInMap) {
-      console.error('Failure to identify key within data map.');
       return null;
     } else {
       const getPaginatedData: Type_Tmdb_Api_Union[] | undefined = paginatedData.get(key);
