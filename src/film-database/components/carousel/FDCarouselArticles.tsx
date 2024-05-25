@@ -4,15 +4,17 @@ import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
 
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
-type PropDrill = {
-  data: Type_Tmdb_Api_Union[];
+type Type_FilmDatabase_Props = {
+  articles: Type_Tmdb_Api_Union[];
 };
 
-const FDCarouselArticles = ({ data }: PropDrill) => {
+const FDCarouselArticles = ({ articles }: Type_FilmDatabase_Props) => {
+  const updateNavigationIndex = () => {};
+
   return (
     <ul className='fdMedia__carousel__wrapper__ul' data-layout='carousel'>
-      {data.map((obj: Type_Tmdb_Api_Union) => {
-        const props = useTmdbProps(obj);
+      {articles.map((article) => {
+        const props = useTmdbProps(article);
 
         return (
           <li className='fdMedia__carousel__wrapper__ul__li' key={uuidv4()}>
