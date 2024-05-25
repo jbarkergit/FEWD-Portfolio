@@ -77,7 +77,7 @@ const FilmDatabase = () => {
     if (!isKeyInMap) return null;
 
     const getPaginatedData: Type_Tmdb_Api_Union[][] | undefined = tmdbDataMap.get(key);
-    if (getPaginatedData) return <FDCarousel dataKey={key} mapValue={getPaginatedData} />;
+    if (getPaginatedData) return <FDCarousel dataKey={key} mapValue={getPaginatedData} maxVisibleCarouselNodes={maxVisibleCarouselNodes} />;
     else return null;
   };
 
