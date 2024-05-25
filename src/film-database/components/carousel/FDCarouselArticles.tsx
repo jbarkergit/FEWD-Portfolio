@@ -10,7 +10,7 @@ type Type_FilmDatabase_Props = {
 
 const FDCarouselArticles = ({ articles }: Type_FilmDatabase_Props) => {
   return (
-    <ul className='fdMedia__carousel__wrapper__ul' data-layout='carousel'>
+    <>
       {articles.map((article) => {
         const props = useTmdbProps(article);
 
@@ -30,7 +30,7 @@ const FDCarouselArticles = ({ articles }: Type_FilmDatabase_Props) => {
           </li>
         );
       })}
-    </ul>
+    </>
   );
 };
 

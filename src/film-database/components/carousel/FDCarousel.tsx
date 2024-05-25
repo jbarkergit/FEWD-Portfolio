@@ -15,11 +15,11 @@ const FDCarousel = ({ dataKey, mapValue }: Type_FilmDatabase_Props) => {
   const [articles, setArticles] = useState<Type_Tmdb_Api_Union[][]>([mapValue[0]]);
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
-  const updateCarouselIndex = (delta: number) => {
+  const updateCarouselIndex = (delta: number): void => {
     setCarouselIndex(Math.max(0, Math.min(carouselIndex + delta, mapValue.length - 1)));
   };
 
-  const renderPaginatedDataSet = () => {
+  const renderPaginatedDataSet = (): void => {
     const isIndexInArticles: boolean = articles.some((_, index) => index === carouselIndex);
 
     if (!isIndexInArticles) {
@@ -31,11 +31,17 @@ const FDCarousel = ({ dataKey, mapValue }: Type_FilmDatabase_Props) => {
 
   useEffect(() => renderPaginatedDataSet(), [carouselIndex]);
 
+  const navigate = (): void => {};
+
+  useEffect(() => navigate(), [carouselIndex]);
+
   return (
     <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`}>
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
-        {articles ? <FDCarouselArticles articles={articles.flatMap((innerArray) => innerArray)} /> : null}
+        <ul className='fdMedia__carousel__wrapper__ul' data-layout='carousel'>
+          {articles ? <FDCarouselArticles articles={articles.flatMap((innerArray) => innerArray)} /> : null}
+        </ul>
         <nav className='fdMedia__carousel__wrapper__navigation'>
           <FDCarouselButton caption={'Show Previous'} icon={<MaterialLeftCaret />} func={updateCarouselIndex} funcDelta={-1} />
           <FDCarouselButton caption={'Show More'} icon={<MaterialRightCaret />} func={updateCarouselIndex} funcDelta={1} />
