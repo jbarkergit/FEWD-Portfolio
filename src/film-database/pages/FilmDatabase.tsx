@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Api Data
 import { Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../composables/tmdb-api/data/tmdbEndPoints';
@@ -11,7 +11,6 @@ import FDCarousel from '../components/carousel/FDCarousel';
 import FDHeader from '../components/header/FDHeader';
 import FDFooter from '../components/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';
-import FDCarouselSkeleton from '../components/carousel/FDCarouselSkeleton';
 
 const FilmDatabase = () => {
   /** Fetch data by pathname, pass to pagination func */
