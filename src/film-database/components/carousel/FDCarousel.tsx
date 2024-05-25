@@ -19,19 +19,17 @@ type Type_PropDrill = {
 };
 
 const FDCarousel = ({ dataKey, dataArr, useComponentProps }: Type_PropDrill) => {
-  const heading: string = dataKey.replaceAll('_', ' ');
+  const formattedDataKey: string = dataKey.replaceAll('_', ' ');
   const { fdMediaRef, carouselUlRef, tmdbDataArr, visibleNodesCount } = useComponentProps;
 
   /** Pagination */
   const [paginatedData, setPaginatedData] = useState<typeof dataArr>(dataArr);
 
-  const paginate = (paginationIndex: number) => {
+  const paginate = (paginationIndex: number): void => {
     if (tmdbDataArr) {
       const tmdbDataTarget: Type_Tmdb_Api_Union[] | undefined = tmdbDataArr.get(dataKey);
       const tmdbDataTargetLength: number | undefined = tmdbDataTarget?.length;
-
       const paginatedDataTargetLength: number = dataArr.length;
-
       const isPaginationComplete: boolean = tmdbDataTargetLength === paginatedDataTargetLength;
 
       if (!isPaginationComplete) {
@@ -43,8 +41,8 @@ const FDCarousel = ({ dataKey, dataArr, useComponentProps }: Type_PropDrill) => 
   };
 
   return (
-    <section className='fdMedia__carousel' aria-label={`${heading} Section`}>
-      <h2 className='fdMedia__carousel__header'>{heading}</h2>
+    <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`}>
+      <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
         <FDCarouselArticles data={paginatedData} />
         <FDCarouselNav paginate={paginate} maxPaginationIndex={tmdbDataArr?.get(dataKey)?.length} />
