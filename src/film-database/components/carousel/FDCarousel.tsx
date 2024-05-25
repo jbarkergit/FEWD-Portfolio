@@ -19,7 +19,7 @@ const FDCarousel = ({ dataKey, mapValue }: Type_FilmDatabase_Props) => {
     setCarouselIndex(Math.max(0, Math.min(carouselIndex + delta, mapValue.length - 1)));
   };
 
-  const addDataSet = () => {
+  const renderPaginatedDataSet = () => {
     const isIndexInArticles: boolean = articles.some((_, index) => index === carouselIndex);
 
     if (!isIndexInArticles) {
@@ -29,7 +29,7 @@ const FDCarousel = ({ dataKey, mapValue }: Type_FilmDatabase_Props) => {
     }
   };
 
-  useEffect(() => addDataSet(), [carouselIndex]);
+  useEffect(() => renderPaginatedDataSet(), [carouselIndex]);
 
   return (
     <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`}>
