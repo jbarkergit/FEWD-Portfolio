@@ -1,26 +1,22 @@
-import { RefObject, useState } from 'react';
+import { Dispatch, RefObject, SetStateAction, useState } from 'react';
 
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
 import FDCarouselNav from './FDCarouselNav';
 import FDCarouselArticles from './FDCarouselArticles';
-
 import { Type_PaginatedDataMap } from '../../pages/FilmDatabase';
 
-type Type_PropDrill = {
+type Type_FilmDatabase_Props = {
   dataKey: string;
   dataArr: Type_Tmdb_Api_Union[];
-  useComponentProps: {
-    fdMediaRef: RefObject<HTMLElement>;
-    carouselUlRef: RefObject<HTMLUListElement>;
-    tmdbDataArr: Type_PaginatedDataMap | undefined;
-    visibleNodesCount: number;
-  };
+  fdMediaRef: RefObject<HTMLElement>;
+  tmdbDataArr: Type_PaginatedDataMap | undefined;
+  visibleNodesCount: number;
+  setVisibleNodesCount: Dispatch<SetStateAction<number>>;
 };
 
-const FDCarousel = ({ dataKey, dataArr, useComponentProps }: Type_PropDrill) => {
+const FDCarousel = ({ dataKey, dataArr, tmdbDataArr, visibleNodesCount }: Type_FilmDatabase_Props) => {
   const formattedDataKey: string = dataKey.replaceAll('_', ' ');
-  const { fdMediaRef, carouselUlRef, tmdbDataArr, visibleNodesCount } = useComponentProps;
 
   /** Pagination */
   const [paginatedData, setPaginatedData] = useState<typeof dataArr>(dataArr);
