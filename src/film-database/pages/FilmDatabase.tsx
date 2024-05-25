@@ -13,7 +13,7 @@ import FDFooter from '../components/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';
 import FDCarouselSkeleton from '../components/carousel/FDCarouselSkeleton';
 // Types
-type Type_paginatedDataMap = Map<string, Type_Tmdb_Api_Union[]>;
+export type Type_PaginatedDataMap = Map<string, Type_Tmdb_Api_Union[]>;
 
 const FilmDatabase = () => {
   // References
@@ -25,7 +25,7 @@ const FilmDatabase = () => {
   const useLocationPathname = useLocation().pathname;
 
   /** Fetch and set data */
-  const [tmdbDataArr, setTmdbDataArr] = useState<Type_useFetchTmdbResponse_KeyValuePairArr>([]);
+  const [tmdbDataArr, setTmdbDataArr] = useState<Type_PaginatedDataMap | undefined>(undefined);
 
   useEffect(() => {
     // Fetch data based on the user's location (will change when state navigation is implemented)
@@ -43,22 +43,24 @@ const FilmDatabase = () => {
 
     // Initialize fetch, set state
     useFetchTmdbResponse({ endPoint_keyValuePairArr: keyValuePairArr }).then((data) => {
-      if (data) setTmdbDataArr(data);
+      if (!data) return;
+      const dataMap: Type_PaginatedDataMap = new Map();
+      data.forEach(([key, value]) => dataMap.set(key, value));
+      setTmdbDataArr(dataMap);
     });
   }, []);
 
   /** Initial data pagination */
-  const [paginatedData, setPaginatedData] = useState<Type_paginatedDataMap>(new Map());
+  const [paginatedData, setPaginatedData] = useState<Type_PaginatedDataMap>(new Map());
   const [visibleNodesCount, setVisibleNodesCount] = useState<number>(8);
 
   const paginateTmdbDataArrOnMount = () => {
-    let dataMap: Type_paginatedDataMap = new Map();
+    let dataMap: Type_PaginatedDataMap = new Map();
 
-    tmdbDataArr.forEach(([key, dataArr]) => {
-      dataMap.set(key, dataArr.slice(0, visibleNodesCount));
-    });
-
-    setPaginatedData(dataMap);
+    if (tmdbDataArr) {
+      Array.from(tmdbDataArr?.entries()).forEach(([key, dataArr]) => dataMap.set(key, dataArr.slice(0, visibleNodesCount)));
+      setPaginatedData(dataMap);
+    }
   };
 
   useEffect(() => paginateTmdbDataArrOnMount(), [tmdbDataArr]);
@@ -106,8 +108,9 @@ const FilmDatabase = () => {
   /** Component props context */
   const componentProps = {
     fdMediaRef: fdMediaRef,
-    ref: carouselUlRefReceiver,
+    // ref: carouselUlRefReceiver,
     carouselUlRef: carouselUlRef,
+    tmdbDataArr: tmdbDataArr,
     visibleNodesCount: visibleNodesCount,
   };
 
