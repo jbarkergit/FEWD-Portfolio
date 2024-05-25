@@ -18,12 +18,6 @@
   }
   &__carousel {
     padding-bottom: calc(var(--fd-padding-generic) / 4);
-    &[data-visibility='visible'] {
-      display: block;
-    }
-    &[data-visibility='hidden'] {
-      display: block;
-    }
     &__header {
       padding: 0 var(--fd-padding-generic) 1rem var(--fd-padding-generic);
       font-family: 'Satoshi-Bold';
@@ -84,8 +78,8 @@
             }
             &__graphic {
               z-index: 3;
-              & figure picture,
-              & figure picture img {
+              & picture,
+              & picture img {
                 border-radius: var(--fd-borderRadius-mediaPoster);
               }
             }
