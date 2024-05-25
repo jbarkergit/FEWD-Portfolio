@@ -47,7 +47,7 @@ const FDCarousel = ({ dataKey, dataArr, useComponentProps }: Type_PropDrill) => 
       <h2 className='fdMedia__carousel__header'>{heading}</h2>
       <div className='fdMedia__carousel__wrapper'>
         <FDCarouselArticles data={paginatedData} />
-        <FDCarouselNav paginate={paginate} />
+        <FDCarouselNav paginate={paginate} maxPaginationIndex={tmdbDataArr?.get(dataKey)?.length} />
       </div>
     </section>
   );
