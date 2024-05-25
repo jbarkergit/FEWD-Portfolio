@@ -11,7 +11,9 @@ const FDCarousel = ({ dataKey, mapValue }: Type_FilmDatabase_Props) => {
   return (
     <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`}>
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
-      <FDCarouselArticles articles={flattenedArray} />
+      <div className='fdMedia__carousel__wrapper'>
+        <FDCarouselArticles articles={flattenedArray} />
+      </div>
     </section>
   );
 };
