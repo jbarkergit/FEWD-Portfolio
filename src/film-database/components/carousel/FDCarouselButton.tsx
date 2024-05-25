@@ -7,7 +7,7 @@ type Type_PropDrill = {
 
 const FDCarouselButton = ({ caption, icon, func, funcIndex }: Type_PropDrill) => {
   return (
-    <button className='fdMedia__carousel__ul__navigation' aria-label={caption} onClick={() => func(funcIndex)}>
+    <button className='fdMedia__carousel__wrapper__ul__navigation' aria-label={caption} onClick={() => func(funcIndex)}>
       <figure>
         <picture>
           {icon}
