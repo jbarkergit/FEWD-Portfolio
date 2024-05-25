@@ -10,7 +10,7 @@ type PropDrill = {
 
 const FDCarouselArticles = ({ data }: PropDrill) => {
   return (
-    <ul className='fdMedia__carousel__wrapper__ul'>
+    <ul className='fdMedia__carousel__wrapper__ul' data-layout='carousel'>
       {data.map((obj: Type_Tmdb_Api_Union) => {
         const props = useTmdbProps(obj);
 
@@ -18,7 +18,7 @@ const FDCarouselArticles = ({ data }: PropDrill) => {
           <li className='fdMedia__carousel__wrapper__ul__li' key={uuidv4()}>
             <article className='fdMedia__carousel__wrapper__ul__li__article'>
               <header className='fdMedia__carousel__wrapper__ul__li__article__header'>
-                <h2>{props?.heading}</h2>
+                <h2 className='fdMedia__carousel__wrapper__ul__li__article__header--h2'>{props?.heading}</h2>
               </header>
               <figure className='fdMedia__carousel__wrapper__ul__li__article__graphic'>
                 <picture>
