@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import MaterialLeftCaret from '../../assets/svg-icons/MaterialLeftCaret';
 import MaterialRightCaret from '../../assets/svg-icons/MaterialRightCaret';
@@ -7,12 +7,14 @@ import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTy
 import FDCarouselArticles from './FDCarouselArticles';
 import FDCarouselButton from './FDCarouselButton';
 
-type Type_FilmDatabase_Props = { dataKey: string; mapValue: Type_Tmdb_Api_Union[][] };
+type Type_FilmDatabase_Props = { dataKey: string; mapValue: Type_Tmdb_Api_Union[][]; maxVisibleCarouselNodes: number };
 
-const FDCarousel = ({ dataKey, mapValue }: Type_FilmDatabase_Props) => {
+const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes }: Type_FilmDatabase_Props) => {
   const formattedDataKey: string = dataKey.replaceAll('_', ' ');
 
   const [articles, setArticles] = useState<Type_Tmdb_Api_Union[][]>([mapValue[0]]);
+  const articlesFlatMap: Type_Tmdb_Api_Union[] = articles.flatMap((innerArray) => innerArray);
+
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
   const updateCarouselIndex = (delta: number): void => {
@@ -31,16 +33,38 @@ const FDCarousel = ({ dataKey, mapValue }: Type_FilmDatabase_Props) => {
 
   useEffect(() => renderPaginatedDataSet(), [carouselIndex]);
 
-  const navigate = (): void => {};
+  const carouselRef = useRef<HTMLUListElement>(null);
 
-  useEffect(() => navigate(), [carouselIndex]);
+  const navigate = (): void => {
+    if (!carouselRef.current || !carouselRef.current.children) return;
+
+    const targetIndex: number = carouselIndex * maxVisibleCarouselNodes;
+    const targetArticleIndex: number = targetIndex === 0 ? 0 : targetIndex - 1;
+    const targetElement = carouselRef.current.children[targetArticleIndex] as HTMLLIElement;
+    const lastElement = carouselRef.current.children[articlesFlatMap.findLastIndex((obj) => obj)] as HTMLLIElement;
+
+    let targetElementPosition: number;
+
+    if (!targetElement) {
+      targetElementPosition = lastElement.offsetLeft;
+    } else {
+      targetElementPosition = targetElement.offsetLeft;
+    }
+
+    const carouselPosition: number = carouselRef.current.offsetLeft;
+    const scrollPosition: number = targetElementPosition - carouselPosition;
+
+    carouselRef.current.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+  };
+
+  useEffect(() => navigate(), [articles, carouselIndex]);
 
   return (
     <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`}>
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
-        <ul className='fdMedia__carousel__wrapper__ul' data-layout='carousel'>
-          {articles ? <FDCarouselArticles articles={articles.flatMap((innerArray) => innerArray)} /> : null}
+        <ul className='fdMedia__carousel__wrapper__ul' data-layout='carousel' ref={carouselRef}>
+          {articles ? <FDCarouselArticles articles={articlesFlatMap} /> : null}
         </ul>
         <nav className='fdMedia__carousel__wrapper__navigation'>
           <FDCarouselButton caption={'Show Previous'} icon={<MaterialLeftCaret />} func={updateCarouselIndex} funcDelta={-1} />
