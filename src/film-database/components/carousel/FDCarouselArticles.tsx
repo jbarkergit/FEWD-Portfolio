@@ -9,8 +9,6 @@ type Type_FilmDatabase_Props = {
 };
 
 const FDCarouselArticles = ({ articles }: Type_FilmDatabase_Props) => {
-  const updateNavigationIndex = () => {};
-
   return (
     <ul className='fdMedia__carousel__wrapper__ul' data-layout='carousel'>
       {articles.map((article) => {

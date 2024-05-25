@@ -2,12 +2,12 @@ type Type_PropDrill = {
   caption: string;
   icon: JSX.Element;
   func: (delta: number) => void;
-  funcIndex: number;
+  funcDelta: number;
 };
 
-const FDCarouselButton = ({ caption, icon, func, funcIndex }: Type_PropDrill) => {
+const FDCarouselButton = ({ caption, icon, func, funcDelta }: Type_PropDrill) => {
   return (
-    <button className='fdMedia__carousel__wrapper__navigation--button' aria-label={caption} onClick={() => func(funcIndex)}>
+    <button className='fdMedia__carousel__wrapper__navigation--button' aria-label={caption} onClick={() => func(funcDelta)}>
       <figure>
         <picture>
           {icon}
