@@ -75,7 +75,7 @@ const FilmDatabase = () => {
   const createComponentByMapKey = (key: Type_Tmdb_Movie_Keys_Union): JSX.Element | null => {
     const isKeyInMap: boolean = tmdbDataMap.has(key);
 
-    if (!isKeyInMap) {
+    if (!isKeyInMap && Array.from(tmdbDataMap.entries()).length > 0) {
       console.error(`Failure to retrieve data for ${key}. Please ensure you're fetching it.`);
       return null;
     }
