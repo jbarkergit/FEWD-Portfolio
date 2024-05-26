@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import TmdbLogoShort from '../../assets/svg-icons/TmdbLogoShort';
-import useCreatePicture from '../../hooks/useCreatePicture';
 
 const FDFooter = () => {
   return (
@@ -54,7 +53,12 @@ const FDFooter = () => {
 
       <section className='fdFooter__blockquote'>
         <Link to='https://www.themoviedb.org/' target='_blank'>
-          {useCreatePicture({ svg: <TmdbLogoShort />, alt: 'TMDB API Logo' })}
+          <figure>
+            <picture>
+              <TmdbLogoShort />
+            </picture>
+            <figcaption>TMDB Api Logo</figcaption>
+          </figure>
         </Link>
         <blockquote className='fdFooter__blockquote__tmdbApiCredit'>
           <p>
