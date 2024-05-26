@@ -94,6 +94,7 @@ const FilmDatabase = () => {
         {createComponentByMapKey('now_playing')}
         {createComponentByMapKey('upcoming')}
       </main>
+      <FDFooter />
     </div>
   );
 };
