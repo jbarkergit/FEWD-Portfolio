@@ -74,7 +74,11 @@ const FilmDatabase = () => {
 
   const createComponentByMapKey = (key: Type_Tmdb_Movie_Keys_Union): JSX.Element | null => {
     const isKeyInMap: boolean = tmdbDataMap.has(key);
-    if (!isKeyInMap) return null;
+
+    if (!isKeyInMap) {
+      console.error(`Failure to retrieve data for ${key}. Please ensure you're fetching it.`);
+      return null;
+    }
 
     const getPaginatedData: Type_Tmdb_Api_Union[][] | undefined = tmdbDataMap.get(key);
     if (!getPaginatedData) return null;
