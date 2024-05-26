@@ -44,10 +44,11 @@ const FilmDatabase = () => {
 
   const paginateData = (data: Type_useFetchTmdbResponse_KeyValuePairArr | undefined) => {
     let dataMap: typeof tmdbDataMap = new Map();
-    let iteratorCounter: number = 0;
 
     data?.forEach(([key, value]) => {
       dataMap.set(key, []);
+
+      let iteratorCounter: number = 0;
       const maxIteratorIndex: number = Math.ceil((value.length - 1) / maxVisibleCarouselNodes);
 
       while (iteratorCounter < maxIteratorIndex) {
@@ -64,9 +65,8 @@ const FilmDatabase = () => {
           break;
         }
       }
+      setTmdbDataMap(dataMap);
     });
-
-    setTmdbDataMap(dataMap);
   };
 
   /** Get paginated data by key (autofill provided) */
@@ -77,8 +77,9 @@ const FilmDatabase = () => {
     if (!isKeyInMap) return null;
 
     const getPaginatedData: Type_Tmdb_Api_Union[][] | undefined = tmdbDataMap.get(key);
-    if (getPaginatedData) return <FDCarousel dataKey={key} mapValue={getPaginatedData} maxVisibleCarouselNodes={maxVisibleCarouselNodes} />;
-    else return null;
+    if (!getPaginatedData) return null;
+
+    return <FDCarousel dataKey={key} mapValue={getPaginatedData} maxVisibleCarouselNodes={maxVisibleCarouselNodes} />;
   };
 
   /** Component */
@@ -87,6 +88,7 @@ const FilmDatabase = () => {
       <FDHeader />
       <main className='fdMedia' ref={fdMediaRef}>
         {createComponentByMapKey('now_playing')}
+        {createComponentByMapKey('upcoming')}
       </main>
     </div>
   );

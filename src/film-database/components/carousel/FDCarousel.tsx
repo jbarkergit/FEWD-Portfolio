@@ -64,7 +64,7 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes }: Type_FilmDat
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' data-layout='carousel' ref={carouselRef}>
-          {articles ? <FDCarouselArticles articles={articlesFlatMap} /> : null}
+          <FDCarouselArticles articles={articlesFlatMap} />
         </ul>
         <nav className='fdMedia__carousel__wrapper__navigation'>
           <FDCarouselButton caption={'Show Previous'} icon={<MaterialLeftCaret />} func={updateCarouselIndex} funcDelta={-1} />
