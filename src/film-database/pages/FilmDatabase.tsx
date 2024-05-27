@@ -90,11 +90,11 @@ const FilmDatabase = () => {
   return (
     <div className='filmDatabase'>
       <FDHeader />
+      <FDHero />
       <main className='fdMedia' ref={fdMediaRef}>
         {createComponentByMapKey('now_playing')}
         {createComponentByMapKey('upcoming')}
       </main>
-      <FDFooter />
     </div>
   );
 };
