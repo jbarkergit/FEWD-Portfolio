@@ -9,15 +9,22 @@
 }
 
 .fdMedia {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: block;
-  margin-top: calc(var(--fd-padding-generic) / 4);
+  width: 100%;
   @include m.scrollSnappingYAxis;
   & > * {
     position: relative;
     z-index: 2;
   }
   &__carousel {
-    padding-bottom: calc(var(--fd-padding-generic) / 4);
+    padding-bottom: calc(var(--fd-padding-generic) / 2.5);
+    &:nth-of-type(1) {
+      // 100svh - carousel height - carousel padding-bottom - header font size - header padding-bottom
+      padding-top: calc(100svh - var(--fd-carousel-featured-height) - calc(var(--fd-padding-generic) / 2.5) - var(--fd-font-size-section-header) - 1rem);
+    }
     &__header {
       padding: 0 var(--fd-padding-generic) 1rem var(--fd-padding-generic);
       font-family: 'Satoshi-Bold';
