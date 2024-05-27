@@ -101,7 +101,7 @@ const FilmDatabase = () => {
     if (!fdMediaRef.current || !carouselNodes) return;
     const carouselNodesArr: Element[] = [...carouselNodes];
 
-    const activeNodeIndex: number = [...fdMediaRef.current.children].findIndex((node: Element) => node.hasAttribute(dataIndexTracker));
+    const activeNodeIndex: number = [...fdMediaRef.current.children].findIndex((node: Element) => node.getAttribute(dataIndexTracker) === 'active');
     const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + deltaIndex, carouselNodesArr.length - 1));
 
     carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
