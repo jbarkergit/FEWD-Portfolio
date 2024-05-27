@@ -86,13 +86,45 @@ const FilmDatabase = () => {
     return <FDCarousel dataKey={key} mapValue={getPaginatedData} maxVisibleCarouselNodes={maxVisibleCarouselNodes} />;
   };
 
+  /** Carousel DeltaY scroll logic */
+  const dataIndexTracker: string = 'data-index-tracker';
+  const carouselNodes: HTMLCollection | undefined = fdMediaRef.current?.children;
+
+  // Set data-attribute on first carousel node for index tracking without state (this won't fire post-mount thanks to our lack of state)
+  useEffect(() => {
+    if (carouselNodes) carouselNodes[0].setAttribute(dataIndexTracker, 'active');
+  }, [carouselNodes]);
+
+  // Update previously active and newly active carousel node's data-attr, navigate
+  const deltaScrollCarousels = (deltaY: number): void => {
+    const deltaIndex: 1 | -1 = deltaY > 0 ? 1 : -1;
+
+    if (!fdMediaRef.current || !carouselNodes) return;
+    const carouselNodesArr: Element[] = [...carouselNodes];
+
+    const activeNodeIndex: number = [...fdMediaRef.current.children].findIndex((node: Element) => node.hasAttribute(dataIndexTracker));
+    const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + deltaIndex, carouselNodesArr.length - 1));
+
+    carouselNodesArr[activeNodeIndex].removeAttribute(dataIndexTracker);
+    carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
+
+    window.scrollTo({ top: (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop, behavior: 'smooth' });
+  };
+
   /** Component */
   return (
     <div className='filmDatabase'>
       <FDHeader />
       <FDHero />
-      <main className='fdMedia' ref={fdMediaRef}>
+      <main className='fdMedia' ref={fdMediaRef} onWheel={(event: React.WheelEvent<HTMLElement>) => deltaScrollCarousels(event.deltaY)}>
         {createComponentByMapKey('now_playing')}
+        {createComponentByMapKey('upcoming')}
+        {createComponentByMapKey('upcoming')}
+        {createComponentByMapKey('upcoming')}
+        {createComponentByMapKey('upcoming')}
+        {createComponentByMapKey('upcoming')}
+        {createComponentByMapKey('upcoming')}
+        {createComponentByMapKey('upcoming')}
         {createComponentByMapKey('upcoming')}
       </main>
     </div>
