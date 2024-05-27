@@ -108,7 +108,11 @@ const FilmDatabase = () => {
     carouselNodesArr[activeNodeIndex].removeAttribute(dataIndexTracker);
     carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
 
-    window.scrollTo({ top: (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop, behavior: 'smooth' });
+    const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
+    const firstNodePaddingTop: number = parseInt(window.getComputedStyle(carouselNodes[0] as HTMLElement).paddingTop);
+    const scrollPosition: number = nextActiveNodeOffsetTop - firstNodePaddingTop;
+
+    window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
   };
 
   /** Component */
