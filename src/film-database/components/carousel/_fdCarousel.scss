@@ -22,6 +22,14 @@
       // 100svh - carousel height - carousel padding-bottom - header font size - header padding-bottom
       padding-top: calc(100svh - var(--fd-carousel-featured-height) - calc(var(--fd-padding-generic) / 2.5) - var(--fd-font-size-section-header) - 1rem);
     }
+    &[data-index-tracker='active'] {
+      opacity: 1;
+      transition: opacity 0.35s ease-in;
+    }
+    &[data-index-tracker='disabled'] {
+      opacity: 0;
+      transition: opacity 0.35s ease-out;
+    }
     &__header {
       padding: 0 var(--fd-padding-generic) 1rem var(--fd-padding-generic);
       font-family: 'Satoshi-Bold';
