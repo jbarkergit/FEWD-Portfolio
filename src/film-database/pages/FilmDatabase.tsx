@@ -9,7 +9,6 @@ import { Type_useFetchTmdbResponse_KeyValuePairArr, useFetchTmdbResponse } from 
 // Components
 import FDCarousel from '../components/carousel/FDCarousel';
 import FDHeader from '../components/header/FDHeader';
-import FDFooter from '../components/footer/FDFooter';
 import FDHero from '../components/hero/FDHero';
 
 const FilmDatabase = () => {
@@ -105,7 +104,7 @@ const FilmDatabase = () => {
     const activeNodeIndex: number = [...fdMediaRef.current.children].findIndex((node: Element) => node.hasAttribute(dataIndexTracker));
     const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + deltaIndex, carouselNodesArr.length - 1));
 
-    carouselNodesArr[activeNodeIndex].removeAttribute(dataIndexTracker);
+    carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
     carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
 
     const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
