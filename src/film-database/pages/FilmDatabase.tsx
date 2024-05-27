@@ -96,21 +96,27 @@ const FilmDatabase = () => {
 
   // Update previously active and newly active carousel node's data-attr, navigate
   const deltaScrollCarousels = (deltaY: number): void => {
+    // Convert deltaY to 1 or -1 for incrementation/decrementation
     const deltaIndex: 1 | -1 = deltaY > 0 ? 1 : -1;
 
+    // Get elements
     if (!fdMediaRef.current || !carouselNodes) return;
     const carouselNodesArr: Element[] = [...carouselNodes];
 
+    // Gather indexes
     const activeNodeIndex: number = [...fdMediaRef.current.children].findIndex((node: Element) => node.getAttribute(dataIndexTracker) === 'active');
     const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + deltaIndex, carouselNodesArr.length - 1));
 
+    // Handle attributes
     carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
     carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
 
+    // Get scroll position
     const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
     const firstNodePaddingTop: number = parseInt(window.getComputedStyle(carouselNodes[0] as HTMLElement).paddingTop);
     const scrollPosition: number = nextActiveNodeOffsetTop - firstNodePaddingTop;
 
+    // Scroll
     window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
   };
 
