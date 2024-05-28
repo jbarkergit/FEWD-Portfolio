@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+// Lib
+import Lenis from 'lenis';
 // Api Data
 import { Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../composables/tmdb-api/data/tmdbEndPoints';
 // Api Types
@@ -94,6 +96,14 @@ const FilmDatabase = () => {
     if (carouselNodes) carouselNodes[0].setAttribute(dataIndexTracker, 'active');
   }, [carouselNodes]);
 
+  // Init lenis
+  const lenis = useRef<Lenis>(new Lenis());
+
+  const raf = (time: number): void => {
+    lenis.current.raf(time);
+    requestAnimationFrame(raf);
+  };
+
   // Update previously active and newly active carousel node's data-attr, navigate
   const deltaScrollCarousels = (deltaY: number): void => {
     // Convert deltaY to 1 or -1 for incrementation/decrementation
@@ -107,17 +117,19 @@ const FilmDatabase = () => {
     const activeNodeIndex: number = [...fdMediaRef.current.children].findIndex((node: Element) => node.getAttribute(dataIndexTracker) === 'active');
     const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + deltaIndex, carouselNodesArr.length - 1));
 
-    // Handle attributes
-    carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
-    carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
+    if (activeNodeIndex !== nextActiveNodeIndex) {
+      // Handle attributes
+      carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
+      carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
 
-    // Get scroll position
-    const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
-    const firstNodePaddingTop: number = parseInt(window.getComputedStyle(carouselNodes[0] as HTMLElement).paddingTop);
-    const scrollPosition: number = nextActiveNodeOffsetTop - firstNodePaddingTop;
+      // Get scroll position
+      const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
+      const firstNodePaddingTop: number = parseInt(window.getComputedStyle(carouselNodes[0] as HTMLElement).paddingTop);
+      const scrollPosition: number = nextActiveNodeOffsetTop - firstNodePaddingTop;
 
-    // Scroll
-    window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+      // Scroll
+      lenis.current?.scrollTo(scrollPosition, { lerp: 0.2, duration: 0.03, lock: true, force: true });
+    }
   };
 
   /** Component */
@@ -125,7 +137,14 @@ const FilmDatabase = () => {
     <div className='filmDatabase'>
       <FDHeader />
       <FDHero />
-      <main className='fdMedia' ref={fdMediaRef} onWheel={(event: React.WheelEvent<HTMLElement>) => deltaScrollCarousels(event.deltaY)}>
+      <main
+        className='fdMedia'
+        ref={fdMediaRef}
+        onWheel={(event: React.WheelEvent<HTMLElement>) => {
+          event.preventDefault();
+          requestAnimationFrame(raf);
+          deltaScrollCarousels(event.deltaY);
+        }}>
         {createComponentByMapKey('now_playing')}
         {createComponentByMapKey('upcoming')}
         {createComponentByMapKey('upcoming')}
