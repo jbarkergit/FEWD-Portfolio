@@ -25,6 +25,7 @@
 
 - **[dotenv](https://www.npmjs.com/package/dotenv)**: Loads environment variables from a `.env` file into `process.env`.
 - **[uuid](https://www.npmjs.com/package/uuid)**: Generates RFC compliant UUIDs.
+- **[lenis](https://www.npmjs.com/package/lenis)**: Lightweight, robust, and performant smooth scroll library.
 
 ### Associated TypeScript Definitions
 
