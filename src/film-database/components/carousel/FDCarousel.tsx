@@ -10,16 +10,16 @@ import FDCarouselButton from './FDCarouselButton';
 type Type_FilmDatabase_Props = { dataKey: string; mapValue: Type_Tmdb_Api_Union[][]; maxVisibleCarouselNodes: number };
 
 const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes }: Type_FilmDatabase_Props) => {
-  const formattedDataKey: string = dataKey.replaceAll('_', ' ');
-
-  const [articles, setArticles] = useState<Type_Tmdb_Api_Union[][]>([mapValue[0]]);
-  const articlesFlatMap: Type_Tmdb_Api_Union[] = articles.flatMap((innerArray) => innerArray);
-
+  /** Track carousel navigation index */
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
   const updateCarouselIndex = (delta: number): void => {
     setCarouselIndex(Math.max(0, Math.min(carouselIndex + delta, mapValue.length - 1)));
   };
+
+  /** Render paginated sets on navigation */
+  const [articles, setArticles] = useState<Type_Tmdb_Api_Union[][]>([mapValue[0]]);
+  const articlesFlatMap: Type_Tmdb_Api_Union[] = articles.flatMap((innerArray) => innerArray);
 
   const renderPaginatedDataSet = (): void => {
     const isIndexInArticles: boolean = articles.some((_, index) => index === carouselIndex);
@@ -33,16 +33,19 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes }: Type_FilmDat
 
   useEffect(() => renderPaginatedDataSet(), [carouselIndex]);
 
+  /** Navigation */
   const carouselRef = useRef<HTMLUListElement>(null);
 
   const navigate = (): void => {
     if (!carouselRef.current || !carouselRef.current.children) return;
 
+    // Target indexes and elements
     const targetIndex: number = carouselIndex * maxVisibleCarouselNodes;
     const targetArticleIndex: number = targetIndex === 0 ? 0 : targetIndex - 1;
     const targetElement = carouselRef.current.children[targetArticleIndex] as HTMLLIElement;
     const lastElement = carouselRef.current.children[articlesFlatMap.findLastIndex((obj) => obj)] as HTMLLIElement;
 
+    // Element boundaries
     let targetElementPosition: number;
 
     if (!targetElement) {
@@ -51,13 +54,18 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes }: Type_FilmDat
       targetElementPosition = targetElement.offsetLeft;
     }
 
+    // Positions
     const carouselPosition: number = carouselRef.current.offsetLeft;
     const scrollPosition: number = targetElementPosition - carouselPosition;
 
+    // Scroll
     carouselRef.current.scrollTo({ left: scrollPosition, behavior: 'smooth' });
   };
 
   useEffect(() => navigate(), [articles, carouselIndex]);
+
+  /** Component heading */
+  const formattedDataKey: string = dataKey.replaceAll('_', ' ');
 
   return (
     <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`}>
