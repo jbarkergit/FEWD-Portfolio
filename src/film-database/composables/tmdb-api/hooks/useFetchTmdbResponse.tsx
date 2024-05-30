@@ -1,3 +1,4 @@
+import { Type_Tmdb_Movie_Keys_Union } from '../data/tmdbEndPoints';
 import { Type_Tmdb_Api_Union } from '../types/TmdbDataTypes';
 import { fetchTmdbResponse } from '../util/fetchTmdbResponse';
 
@@ -5,23 +6,26 @@ export type Type_useFetchTmdbResponse_KeyValuePairArr = [string, Type_Tmdb_Api_U
 
 /** Invoke fetcher util, filter fulfilled && rejected entries, return fulfilled data as a new arr */
 export const useFetchTmdbResponse = async (
-  keyEndpointPairArr: [key: string, value: string][],
+  keyEndpointPairArr: [Type_Tmdb_Movie_Keys_Union, string | Type_Tmdb_Api_Union[]][],
   opt_movie_id?: number
 ): Promise<Type_useFetchTmdbResponse_KeyValuePairArr | undefined> => {
   try {
     const fetchEntries = await Promise.allSettled(
       keyEndpointPairArr.map(async (keyEndpointPair) => {
-        const fetchResponse = await fetchTmdbResponse(keyEndpointPair, opt_movie_id);
+        // Prevent unnecessary api calls(keyEndpointPair): Fetch data if keyEndpointPair is of type 'string', not Type_Tmdb_Api_Union[]
+        if (typeof keyEndpointPair[1] === 'string') {
+          const fetchResponse = await fetchTmdbResponse(keyEndpointPair as [Type_Tmdb_Movie_Keys_Union, string], opt_movie_id);
 
-        switch (true) {
-          case !keyEndpointPair[0]:
-            throw new Error('Key is unresponsive.');
+          // Switch for legibility
+          switch (true) {
+            case !fetchResponse:
+              throw new Error('Fetch request unresponsive.');
 
-          case !fetchResponse:
-            throw new Error('Fetch response is unresponsive.');
-
-          default:
-            return [keyEndpointPair[0], fetchResponse.results];
+            default:
+              return [keyEndpointPair[0], fetchResponse.results];
+          }
+        } else {
+          return keyEndpointPair;
         }
       })
     );
