@@ -14,7 +14,7 @@ const FDHero = ({ heroData }: Type_PropDrill) => {
         <section className='fdHero'>
           <article className='fdHero__article'>
             <header className='fdHero__article__header'>
-              <hgroup className='fdHero__article__details'>
+              <hgroup className='fdHero__article__header__details'>
                 <h2>{props.heading}</h2>
                 <p>{props.overview}</p>
                 <span>{props.vote_average}</span>
