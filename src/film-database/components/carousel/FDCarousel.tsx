@@ -10,7 +10,6 @@ import FDCarouselButton from './FDCarouselButton';
 type Type_FilmDatabase_Props = { dataKey: string; mapValue: Type_Tmdb_Api_Union[][]; maxVisibleCarouselNodes: number; isFirstIndex: boolean };
 
 const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, isFirstIndex }: Type_FilmDatabase_Props) => {
-  console.log(mapValue);
   /** Track carousel navigation index */
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
