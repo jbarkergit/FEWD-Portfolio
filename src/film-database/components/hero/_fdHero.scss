@@ -9,7 +9,18 @@
   z-index: 0;
   width: 100svw;
   height: 100svh;
-  &__infographic {
+  &::after {
+    content: '';
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 100%;
+    // carousel height + padding-bottom, heading font size + padding-bottom
+    height: calc(var(--fd-carousel-featured-height) + (var(--fd-padding-generic) / 2.5) + var(--fd-font-size-section-header) + 1rem);
+    background: linear-gradient(to top, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+  }
+  &__article {
     position: relative;
     z-index: 1;
     display: flex;
@@ -17,10 +28,9 @@
     height: 100%;
     aspect-ratio: inherit;
     background-color: var(--fd-backgroundColor-fallback);
-    &__slide,
-    &__slide figure,
-    &__slide figure picture,
-    &__slide figure picture img {
+    & figure,
+    & figure picture,
+    & figure picture img {
       position: relative;
       z-index: 1;
       width: inherit;
