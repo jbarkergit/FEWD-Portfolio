@@ -57,8 +57,8 @@ const FilmDatabase = () => {
     let dataMap: typeof tmdbDataMap = new Map([]);
 
     data.forEach(([key, value]) => {
-      // Init entry with unpaginated data
-      dataMap.set(key, [value]);
+      // Init entry with empty array or unpaginated data for pages
+      dataMap.set(key, []);
 
       // Pagination iteration dependency calculation
       const maxIteratorIndex: number = Math.ceil((value.length - 1) / maxVisibleCarouselNodes);
@@ -71,7 +71,6 @@ const FilmDatabase = () => {
         const iterableMap: Type_Tmdb_Api_Union[][] = dataMap.get(key)!;
 
         iterableMap.push(paginatedData);
-        iteratorCounter = iteratorCounter + 1;
       }
     });
 
