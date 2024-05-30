@@ -12,21 +12,21 @@ const FDHero = ({ heroData }: Type_PropDrill) => {
     if (props)
       return (
         <section className='fdHero'>
-          <div className='fdHero__infographic'>
-            <div className='fdHero__infographic__slide'>
-              <hgroup className='fdHero__infographic__details'>
+          <article className='fdHero__article'>
+            <header className='fdHero__article__header'>
+              <hgroup className='fdHero__article__details'>
                 <h2>{props.heading}</h2>
                 <p>{props.overview}</p>
                 <span>{props.vote_average}</span>
               </hgroup>
-              <figure>
-                <picture>
-                  <img src={`https://image.tmdb.org/t/p/original/${props.backdrop_path}`} alt={props.heading} />
-                </picture>
-                <figcaption></figcaption>
-              </figure>
-            </div>
-          </div>
+            </header>
+            <figure>
+              <picture>
+                <img src={`https://image.tmdb.org/t/p/original/${props.backdrop_path}`} alt={props.heading} />
+              </picture>
+              <figcaption>{props.heading}</figcaption>
+            </figure>
+          </article>
         </section>
       );
   }
