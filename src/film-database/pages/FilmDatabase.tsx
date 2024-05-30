@@ -12,89 +12,91 @@ import { Type_useFetchTmdbResponse_KeyValuePairArr, useFetchTmdbResponse } from 
 import FDCarousel from '../components/carousel/FDCarousel';
 import FDHeader from '../components/header/FDHeader';
 import FDHero from '../components/hero/FDHero';
+// const maxCarouselNodes: number = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--my-variable')); revisit
 
 const FilmDatabase = () => {
-  /** Fetch data by pathname, pass to pagination func */
+  // State map holding [key, [unpaginated data, paginated data arrs]]
+  const [tmdbDataMap, setTmdbDataMap] = useState<Map<string, Type_Tmdb_Api_Union[][]>>(new Map());
+  // Global dependencies
+  const maxVisibleCarouselNodes: number = 8;
+  // Fetcher && session storage dependency
   const useLocationPathname = useLocation().pathname;
 
-  const fetchDataByPathname = () => {
-    let keyValuePairArr: [string, string][] = [];
+  const getMapEntry = (key: Type_Tmdb_Movie_Keys_Union) => {
+    const tmdbEntriesArr = Object.values(tmdbMovieEndpoints).flatMap((map) => [...map.entries()]);
+    // Explicitly cast parameter provides confidence behind the non-null assertion operator
+    const targetEntry = tmdbEntriesArr.find((entry) => entry[0] === key)!;
+    return targetEntry;
+  };
 
+  const fetchDataByPathname = () => {
+    // Init key-endpoint pair arr, store key-endpoint pairs
+    let keyEndpointPairArr: [Type_Tmdb_Movie_Keys_Union, string][] = [];
+
+    // Assign keyEndpointPairArr
     switch (useLocationPathname) {
-      case '/film-database/genre/horror':
-        keyValuePairArr = [];
+      case '/film-database':
+        keyEndpointPairArr = [getMapEntry('now_playing'), getMapEntry('popular')];
         break;
 
       default:
-        keyValuePairArr = Array.from(tmdbMovieEndpoints.theatrical.entries());
+        keyEndpointPairArr = [];
         break;
     }
 
-    useFetchTmdbResponse({ endPoint_keyValuePairArr: keyValuePairArr }).then((data) => {
-      if (!data) return;
-      paginateData(data);
+    // Fetch, pass data to pagination
+    useFetchTmdbResponse(keyEndpointPairArr).then((data) => {
+      if (data) paginateData(data);
     });
   };
 
   useEffect(() => fetchDataByPathname(), []);
 
-  /** Data Pagination, State Setter */
-  const [tmdbDataMap, setTmdbDataMap] = useState<Map<string, Type_Tmdb_Api_Union[][]>>(new Map());
-  // const maxCarouselNodes: number = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--my-variable')); revisit
-  const maxVisibleCarouselNodes: number = 8;
+  const paginateData = (data: Type_useFetchTmdbResponse_KeyValuePairArr) => {
+    // Init mutatable map in outter scope (helps reduce state updates)
+    let dataMap: typeof tmdbDataMap = new Map([]);
 
-  const paginateData = (data: Type_useFetchTmdbResponse_KeyValuePairArr | undefined) => {
-    let dataMap: typeof tmdbDataMap = new Map();
+    data.forEach(([key, value]) => {
+      // Init entry with unpaginated data
+      dataMap.set(key, [value]);
 
-    data?.forEach(([key, value]) => {
-      dataMap.set(key, []);
-
-      let iteratorCounter: number = 0;
+      // Pagination iteration dependency calculation
       const maxIteratorIndex: number = Math.ceil((value.length - 1) / maxVisibleCarouselNodes);
 
-      while (iteratorCounter < maxIteratorIndex) {
+      // Pagination
+      for (let iteratorCounter = 0; iteratorCounter < maxIteratorIndex; iteratorCounter++) {
         const startingSliceIndex: number = maxVisibleCarouselNodes * iteratorCounter + iteratorCounter;
         const endingSliceIndex: number = iteratorCounter === 0 ? maxVisibleCarouselNodes : maxVisibleCarouselNodes * (iteratorCounter + 1) + 1;
         const paginatedData: Type_Tmdb_Api_Union[] = value.slice(startingSliceIndex, endingSliceIndex);
-        const iterableMap: Type_Tmdb_Api_Union[][] | undefined = dataMap.get(key);
+        const iterableMap: Type_Tmdb_Api_Union[][] = dataMap.get(key)!;
 
-        if (iterableMap) {
-          iterableMap.push(paginatedData);
-          iteratorCounter = iteratorCounter + 1;
-        } else {
-          console.error('Failure to push to map, skipping pagination iteration.');
-          break;
-        }
+        iterableMap.push(paginatedData);
+        iteratorCounter = iteratorCounter + 1;
       }
-      setTmdbDataMap(dataMap);
     });
+
+    // Set state
+    setTmdbDataMap(dataMap);
   };
 
-  /** Get paginated data by key (autofill provided) */
-  const fdMediaRef = useRef<HTMLElement>(null);
+  /** JSX carousel component creation */
+  const [carouselComponents, setCarouselComponents] = useState<JSX.Element[]>([]);
 
-  const createComponentByMapKey = (key: Type_Tmdb_Movie_Keys_Union): JSX.Element | null => {
-    const isKeyInMap: boolean = tmdbDataMap.has(key);
+  useEffect(() => {
+    const tmdbStateComponents = (): JSX.Element[] => {
+      return [...tmdbDataMap.entries()].map(([key, value], index) => {
+        // Set data-attribute on first carousel node for index tracking without state
+        return <FDCarousel dataKey={key} mapValue={value} maxVisibleCarouselNodes={maxVisibleCarouselNodes} isFirstIndex={index === 0 ? true : false} />;
+      });
+    };
 
-    if (!isKeyInMap && Array.from(tmdbDataMap.entries()).length > 0) {
-      console.error(`Failure to retrieve data for ${key}. Please ensure you're fetching it.`);
-      return null;
-    }
-
-    const getPaginatedData: Type_Tmdb_Api_Union[][] | undefined = tmdbDataMap.get(key);
-    if (!getPaginatedData) return null;
-
-    return <FDCarousel dataKey={key} mapValue={getPaginatedData} maxVisibleCarouselNodes={maxVisibleCarouselNodes} />;
-  };
+    setCarouselComponents(tmdbStateComponents());
+  }, [tmdbDataMap]);
 
   /** Carousel DeltaY scroll logic */
   const dataIndexTracker: string = 'data-index-tracker';
+  const fdMediaRef = useRef<HTMLElement>(null);
   const carouselNodes: HTMLCollection | undefined = fdMediaRef.current?.children;
-
-  // Set data-attribute on first carousel node for index tracking without state (this won't fire post-mount thanks to our lack of state)
-  useEffect(() => {
-    if (carouselNodes) carouselNodes[0].setAttribute(dataIndexTracker, 'active');
-  }, [carouselNodes]);
 
   // Init lenis
   const lenis = useRef<Lenis>(new Lenis());
@@ -145,15 +147,7 @@ const FilmDatabase = () => {
           requestAnimationFrame(raf);
           deltaScrollCarousels(event.deltaY);
         }}>
-        {createComponentByMapKey('now_playing')}
-        {createComponentByMapKey('upcoming')}
-        {createComponentByMapKey('upcoming')}
-        {createComponentByMapKey('upcoming')}
-        {createComponentByMapKey('upcoming')}
-        {createComponentByMapKey('upcoming')}
-        {createComponentByMapKey('upcoming')}
-        {createComponentByMapKey('upcoming')}
-        {createComponentByMapKey('upcoming')}
+        {...carouselComponents}
       </main>
     </div>
   );

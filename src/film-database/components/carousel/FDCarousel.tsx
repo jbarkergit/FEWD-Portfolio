@@ -7,9 +7,9 @@ import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTy
 import FDCarouselArticles from './FDCarouselArticles';
 import FDCarouselButton from './FDCarouselButton';
 
-type Type_FilmDatabase_Props = { dataKey: string; mapValue: Type_Tmdb_Api_Union[][]; maxVisibleCarouselNodes: number };
+type Type_FilmDatabase_Props = { dataKey: string; mapValue: Type_Tmdb_Api_Union[][]; maxVisibleCarouselNodes: number; isFirstIndex: boolean };
 
-const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes }: Type_FilmDatabase_Props) => {
+const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, isFirstIndex }: Type_FilmDatabase_Props) => {
   /** Track carousel navigation index */
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
@@ -66,9 +66,8 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes }: Type_FilmDat
 
   /** Component heading */
   const formattedDataKey: string = dataKey.replaceAll('_', ' ');
-
   return (
-    <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`}>
+    <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`} data-index-tracker={isFirstIndex ? 'active' : 'disabled'}>
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' data-layout='carousel' ref={carouselRef}>
