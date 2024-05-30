@@ -104,7 +104,15 @@ const FilmDatabase = () => {
     const tmdbStateComponents = (): JSX.Element[] => {
       return [...tmdbDataMap.entries()].map(([key, value], index) => {
         // Set data-attribute on first carousel node for index tracking without state
-        return <FDCarousel dataKey={key} mapValue={value} maxVisibleCarouselNodes={maxVisibleCarouselNodes} isFirstIndex={index === 0 ? true : false} />;
+        return (
+          <FDCarousel
+            dataKey={key}
+            mapValue={value}
+            maxVisibleCarouselNodes={maxVisibleCarouselNodes}
+            isFirstIndex={index === 0 ? true : false}
+            setHeroData={setHeroData}
+          />
+        );
       });
     };
 
