@@ -12,6 +12,7 @@ import { Type_useFetchTmdbResponse_KeyValuePairArr, useFetchTmdbResponse } from 
 import FDCarousel from '../components/carousel/FDCarousel';
 import FDHeader from '../components/header/FDHeader';
 import FDHero from '../components/hero/FDHero';
+import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 // const maxCarouselNodes: number = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--my-variable')); revisit
 
 const FilmDatabase = () => {
@@ -31,17 +32,17 @@ const FilmDatabase = () => {
 
   const fetchDataByPathname = () => {
     // Init key-endpoint pair arr, store key-endpoint pairs
-    let keyEndpointPairArr: [Type_Tmdb_Movie_Keys_Union, string][] = [];
+    let keyEndpointPairArr: [Type_Tmdb_Movie_Keys_Union, string | Type_Tmdb_Api_Union[]][] = [];
 
     // Assign keyEndpointPairArr
     switch (useLocationPathname) {
       case '/film-database':
         keyEndpointPairArr = [
           getMapEntry('now_playing'),
-          // getMapEntry('upcoming'),
-          // getMapEntry('top_rated'),
-          // getMapEntry('trending_today'),
-          // getMapEntry('trending_this_week'),
+          getMapEntry('upcoming'),
+          getMapEntry('top_rated'),
+          getMapEntry('trending_today'),
+          getMapEntry('trending_this_week'),
         ];
         break;
 
@@ -50,9 +51,21 @@ const FilmDatabase = () => {
         break;
     }
 
+    // Prevent unnecessary api calls(keyEndpointPair): Store data in place of endpoint if it exists in sessionStorage
+    keyEndpointPairArr.forEach((keyEndpointPair) => {
+      const getCachedDataByKey: Type_Tmdb_Api_Union[] | undefined = useFilmDatabaseWebStorage(useLocationPathname).getData(keyEndpointPair[0]);
+      const isKeyCached: boolean = !!getCachedDataByKey;
+      if (isKeyCached && getCachedDataByKey!.length > 0) keyEndpointPair[1] = getCachedDataByKey!;
+    });
+
     // Fetch, pass data to pagination
     useFetchTmdbResponse(keyEndpointPairArr).then((data) => {
-      if (data) paginateData(data);
+      if (data) {
+        paginateData(data);
+
+        // Prevent unnecessary api calls(session storage safeguard)
+        data.forEach((entry) => useFilmDatabaseWebStorage(useLocationPathname).setData(entry[0], entry[1]));
+      }
     });
   };
 
