@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
 import MaterialLeftCaret from '../../assets/svg-icons/MaterialLeftCaret';
 import MaterialRightCaret from '../../assets/svg-icons/MaterialRightCaret';
@@ -7,9 +7,15 @@ import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTy
 import FDCarouselArticles from './FDCarouselArticles';
 import FDCarouselButton from './FDCarouselButton';
 
-type Type_FilmDatabase_Props = { dataKey: string; mapValue: Type_Tmdb_Api_Union[][]; maxVisibleCarouselNodes: number; isFirstIndex: boolean };
+type Type_FilmDatabase_Props = {
+  dataKey: string;
+  mapValue: Type_Tmdb_Api_Union[][];
+  maxVisibleCarouselNodes: number;
+  isFirstIndex: boolean;
+  setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>>;
+};
 
-const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, isFirstIndex }: Type_FilmDatabase_Props) => {
+const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, isFirstIndex, setHeroData }: Type_FilmDatabase_Props) => {
   /** Track carousel navigation index */
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
@@ -71,7 +77,7 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, isFirstIndex }
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' data-layout='carousel' ref={carouselRef}>
-          <FDCarouselArticles articles={articlesFlatMap} />
+          <FDCarouselArticles articles={articlesFlatMap} setHeroData={setHeroData} />
         </ul>
         <nav className='fdMedia__carousel__wrapper__navigation'>
           <FDCarouselButton caption={'Show Previous'} icon={<MaterialLeftCaret />} func={updateCarouselIndex} funcDelta={-1} />
