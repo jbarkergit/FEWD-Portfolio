@@ -1,35 +1,27 @@
 import { Type_Tmdb_Api_Union } from '../types/TmdbDataTypes';
 import { fetchTmdbResponse } from '../util/fetchTmdbResponse';
 
-export type Type_useFetchTmdbResponse_Payload = {
-  endPoint_keyValuePairArr: [key: string, value: string][];
-  opt_movie_id?: number;
-};
-
 export type Type_useFetchTmdbResponse_KeyValuePairArr = [string, Type_Tmdb_Api_Union[]][];
 
 /** Invoke fetcher util, filter fulfilled && rejected entries, return fulfilled data as a new arr */
-export const useFetchTmdbResponse = async ({
-  endPoint_keyValuePairArr,
-  opt_movie_id,
-}: Type_useFetchTmdbResponse_Payload): Promise<Type_useFetchTmdbResponse_KeyValuePairArr | undefined> => {
+export const useFetchTmdbResponse = async (
+  keyEndpointPairArr: [key: string, value: string][],
+  opt_movie_id?: number
+): Promise<Type_useFetchTmdbResponse_KeyValuePairArr | undefined> => {
   try {
     const fetchEntries = await Promise.allSettled(
-      endPoint_keyValuePairArr.map(async (keyValuePair) => {
-        const fetchResponse = await fetchTmdbResponse({
-          endPoint_keyValuePair: keyValuePair,
-          opt_movie_id: opt_movie_id,
-        });
+      keyEndpointPairArr.map(async (keyEndpointPair) => {
+        const fetchResponse = await fetchTmdbResponse(keyEndpointPair, opt_movie_id);
 
         switch (true) {
-          case !keyValuePair[0]:
+          case !keyEndpointPair[0]:
             throw new Error('Key is unresponsive.');
 
           case !fetchResponse:
             throw new Error('Fetch response is unresponsive.');
 
           default:
-            return [keyValuePair[0], fetchResponse.results];
+            return [keyEndpointPair[0], fetchResponse.results];
         }
       })
     );

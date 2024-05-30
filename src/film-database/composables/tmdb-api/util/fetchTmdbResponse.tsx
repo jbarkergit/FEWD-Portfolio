@@ -1,10 +1,6 @@
 import { Type_Tmdb_Api_Union } from '../types/TmdbDataTypes';
 
 /** fetchTmdbResponse Utility Payload && Promise/Resolved Response Types */
-type Type_fetchTmdbResponse_Payload = {
-  endPoint_keyValuePair: [key: string, value: string];
-  opt_movie_id?: number;
-};
 
 type Type_fetchTmdbResponse_Response_ResolvedPromise = {
   results: Type_Tmdb_Api_Union[];
@@ -17,7 +13,7 @@ type Type_fetchTmdbResponse_Response_ResolvedPromise = {
 type Type_fetchTmdbResponse_Response_Promise = Promise<Type_fetchTmdbResponse_Response_ResolvedPromise | undefined>;
 
 /** Fetch endpoint responses */
-export const fetchTmdbResponse = async ({ endPoint_keyValuePair, opt_movie_id }: Type_fetchTmdbResponse_Payload): Type_fetchTmdbResponse_Response_Promise => {
+export const fetchTmdbResponse = async (keyEndpointPair: [key: string, value: string], opt_movie_id?: number): Type_fetchTmdbResponse_Response_Promise => {
   /** TMDB Api Authorization with signal attached */
   const abortController = new AbortController();
 
@@ -35,14 +31,14 @@ export const fetchTmdbResponse = async ({ endPoint_keyValuePair, opt_movie_id }:
     const apiKey: string = import.meta.env.VITE_TMDB_API_KEY;
     let fetchUrl: string | undefined;
 
-    switch (endPoint_keyValuePair[0]) {
+    switch (keyEndpointPair[0]) {
       case 'now_playing':
       case 'upcoming':
       case 'popular':
       case 'top_rated':
       case 'trending_today':
       case 'trending_this_week':
-        fetchUrl = `${endPoint_keyValuePair[1]}?api_key=${apiKey}`;
+        fetchUrl = `${keyEndpointPair[1]}?api_key=${apiKey}`;
         break;
 
       case 'details':
@@ -55,13 +51,13 @@ export const fetchTmdbResponse = async ({ endPoint_keyValuePair, opt_movie_id }:
       case 'discover':
       case 'keyword':
       case 'trailers':
-        fetchUrl = `${endPoint_keyValuePair[1].replace('movie_id', `${opt_movie_id as number}`)}`;
+        fetchUrl = `${keyEndpointPair[1].replace('movie_id', `${opt_movie_id as number}`)}`;
         break;
 
       default:
         fetchUrl = undefined;
         // Identify bad API call without leaking API Key to the dom's console
-        throw new Error(`Failure at endpoint creation for key: ${endPoint_keyValuePair[0]}`);
+        throw new Error(`Failure at endpoint creation for key: ${keyEndpointPair[0]}`);
     }
 
     /** Fetch Responses: Status Handler */
@@ -69,7 +65,7 @@ export const fetchTmdbResponse = async ({ endPoint_keyValuePair, opt_movie_id }:
 
     if (!response.ok) {
       abortController?.abort();
-      throw new Error(`Abort issued to fetch for key: ${endPoint_keyValuePair[0]}. Response status: ${response.status}`);
+      throw new Error(`Abort issued to fetch for key: ${keyEndpointPair[0]}. Response status: ${response.status}`);
     } else {
       const awaitResponse: Type_fetchTmdbResponse_Response_Promise = await response.json();
       return awaitResponse;
