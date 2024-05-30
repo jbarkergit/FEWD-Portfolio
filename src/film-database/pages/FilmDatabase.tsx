@@ -92,6 +92,17 @@ const FilmDatabase = () => {
     setCarouselComponents(tmdbStateComponents());
   }, [tmdbDataMap]);
 
+  /** Hero component */
+  const [heroData, setHeroData] = useState<Type_Tmdb_Api_Union | null>(null);
+
+  // Init hero
+  useEffect(() => {
+    if (!tmdbDataMap) return;
+    const tmdbValueFlatMap = [...tmdbDataMap.values()];
+
+    if (tmdbValueFlatMap[0]) setHeroData(tmdbValueFlatMap[0][0][0]);
+  }, [tmdbDataMap]);
+
   /** Carousel DeltaY scroll logic */
   const dataIndexTracker: string = 'data-index-tracker';
   const fdMediaRef = useRef<HTMLElement>(null);
@@ -137,7 +148,7 @@ const FilmDatabase = () => {
   return (
     <div className='filmDatabase'>
       <FDHeader />
-      <FDHero />
+      <FDHero heroData={heroData} />
       <main
         className='fdMedia'
         ref={fdMediaRef}
