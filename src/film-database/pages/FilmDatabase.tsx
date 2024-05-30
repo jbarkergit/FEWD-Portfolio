@@ -36,7 +36,13 @@ const FilmDatabase = () => {
     // Assign keyEndpointPairArr
     switch (useLocationPathname) {
       case '/film-database':
-        keyEndpointPairArr = [getMapEntry('now_playing'), getMapEntry('popular')];
+        keyEndpointPairArr = [
+          getMapEntry('now_playing'),
+          // getMapEntry('upcoming'),
+          // getMapEntry('top_rated'),
+          // getMapEntry('trending_today'),
+          // getMapEntry('trending_this_week'),
+        ];
         break;
 
       default:
