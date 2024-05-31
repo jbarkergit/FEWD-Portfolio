@@ -2,12 +2,8 @@
 @forward '/src/film-database/styles/scss/filmDatabaseStyles';
 @forward '/src/film-database/styles/scss/filmDatabaseMixins';
 
-// nav
-@forward '/src/film-database/components/header/fdHeader';
-
 // features
-@forward '/src/film-database/features/genre-nav/fdGenreNavigation';
-@forward '/src/film-database/features/search-bar/fdSearchBar';
+@forward '/src/film-database/features/menu/fdMenu';
 
 // components
 @forward '/src/film-database/components/hero/fdHero';
