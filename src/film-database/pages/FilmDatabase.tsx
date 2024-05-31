@@ -8,11 +8,12 @@ import { Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../composables/t
 import { Type_Tmdb_Api_Union } from '../composables/tmdb-api/types/TmdbDataTypes';
 // Api Hooks
 import { Type_useFetchTmdbResponse_KeyValuePairArr, useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
+import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 // Components
 import FDCarousel from '../components/carousel/FDCarousel';
-import FDHeader from '../components/header/FDHeader';
 import FDHero from '../components/hero/FDHero';
-import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
+import FDMenu from '../features/menu/FDMenu';
+
 // const maxCarouselNodes: number = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--my-variable')); revisit
 
 const FilmDatabase = () => {
@@ -174,7 +175,6 @@ const FilmDatabase = () => {
   /** Component */
   return (
     <div className='filmDatabase'>
-      <FDHeader />
       <FDHero heroData={heroData} />
       <main
         className='fdMedia'
@@ -186,6 +186,7 @@ const FilmDatabase = () => {
         }}>
         {...carouselComponents}
       </main>
+      <FDMenu />
     </div>
   );
 };
