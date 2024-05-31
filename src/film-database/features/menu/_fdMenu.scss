@@ -1,0 +1,66 @@
+@use '/src/sass/functions' as f;
+@use '/src/film-database/styles/scss/filmDatabaseStyles' as s;
+@use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
+
+.fdMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  display: flex;
+  height: 100%;
+  &::before {
+    content: '';
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 8;
+    width: 100%;
+    height: inherit;
+    background: linear-gradient(to right, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0.7) 100%);
+  }
+
+  &__section {
+    display: table;
+    padding: var(--fd-padding-generic);
+    // background-color: rgba(0, 0, 0, 1);
+    & > * {
+      position: relative;
+      z-index: 10;
+    }
+    & svg {
+      height: 50px;
+      margin-bottom: 18px;
+    }
+    &--heading {
+      padding-bottom: 9px;
+      font-family: 'Satoshi-Medium';
+      font-size: clamp(f.rem(14), f.rem(16) + 1vw, f.rem(22));
+      text-transform: capitalize;
+      letter-spacing: 0.03em;
+      line-height: normal;
+      white-space: nowrap;
+      color: var(--fd-font-color-primary);
+    }
+    &__ul {
+      display: table;
+      &__li {
+        padding-left: 6px;
+        &--button {
+          display: flex;
+          font-family: 'Satoshi-Regular';
+          font-size: clamp(f.rem(14), f.rem(16) + 1vw, f.rem(18));
+          text-transform: capitalize;
+          letter-spacing: 0.03em;
+          line-height: normal;
+          white-space: nowrap;
+          color: var(--fd-font-color-primary);
+          & svg {
+            width: 1.2em;
+            height: 1.2em;
+          }
+        }
+      }
+    }
+  }
+}
