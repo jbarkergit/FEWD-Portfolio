@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
-import MaterialLeftCaret from '../../assets/svg-icons/MaterialLeftCaret';
-import MaterialRightCaret from '../../assets/svg-icons/MaterialRightCaret';
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
 import FDCarouselArticles from './FDCarouselArticles';
 import FDCarouselButton from './FDCarouselButton';
+
+import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/google-material-symbols/googleMaterialSymbols';
 
 type Type_FilmDatabase_Props = {
   dataKey: string;
@@ -80,8 +80,8 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, isFirstIndex, 
           <FDCarouselArticles articles={articlesFlatMap} setHeroData={setHeroData} />
         </ul>
         <nav className='fdMedia__carousel__wrapper__navigation'>
-          <FDCarouselButton caption={'Show Previous'} icon={<MaterialLeftCaret />} func={updateCarouselIndex} funcDelta={-1} />
-          <FDCarouselButton caption={'Show More'} icon={<MaterialRightCaret />} func={updateCarouselIndex} funcDelta={1} />
+          <FDCarouselButton caption={'Show Previous'} icon={<MaterialSymbolsChevronLeft />} func={updateCarouselIndex} funcDelta={-1} />
+          <FDCarouselButton caption={'Show More'} icon={<MaterialSymbolsChevronRight />} func={updateCarouselIndex} funcDelta={1} />
         </nav>
       </div>
     </section>
