@@ -20,7 +20,7 @@
     padding-bottom: calc(var(--fd-padding-generic) / 2.5);
     &:nth-of-type(1) {
       // 100svh - carousel height - carousel padding-bottom - header font size - header padding-bottom
-      padding-top: calc(100svh - var(--fd-carousel-featured-height) - calc(var(--fd-padding-generic) / 2.5) - var(--fd-font-size-section-header) - 1rem);
+      padding-top: calc(100svh - var(--fd-carousel-featured-height) - calc(var(--fd-padding-generic) / 2.5) - var(--fd-font-size-l) - 1rem);
     }
     &[data-index-tracker='active'] {
       opacity: 1;
@@ -32,11 +32,7 @@
     }
     &__header {
       padding: 0 var(--fd-padding-generic) 1rem var(--fd-padding-generic);
-      font-family: 'Satoshi-Bold';
-      font-size: var(--fd-font-size-section-header);
-      line-height: normal;
-      text-transform: capitalize;
-      white-space: nowrap;
+      @include m.fdFontL;
     }
     &__wrapper {
       position: relative;
