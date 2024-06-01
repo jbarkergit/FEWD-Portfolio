@@ -17,7 +17,7 @@
     z-index: 1;
     width: 100%;
     // carousel height + padding-bottom, heading font size + padding-bottom
-    height: calc(var(--fd-carousel-featured-height) + (var(--fd-padding-generic) / 2.5) + var(--fd-font-size-section-header) + 1rem);
+    height: calc(var(--fd-carousel-featured-height) + (var(--fd-padding-generic) / 2.5) + var(--fd-font-size-l) + 1rem);
     background: linear-gradient(to top, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
   }
   &__article {
@@ -51,7 +51,7 @@
         }
         & h2 {
           font-family: 'Satoshi-Black';
-          font-size: calc(var(--fd-font-size-section-header) * 1.25);
+          font-size: calc(var(--fd-font-size-l) * 1.25);
           text-transform: uppercase;
           letter-spacing: 0.03em;
         }
