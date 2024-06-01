@@ -5,7 +5,7 @@ import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTy
 import FDCarouselArticles from './FDCarouselArticles';
 import FDCarouselButton from './FDCarouselButton';
 
-import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/google-material-symbols/googleMaterialSymbols';
+import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/googleMaterialSymbols';
 
 type Type_FilmDatabase_Props = {
   dataKey: string;
