@@ -1,3 +1,57 @@
+@mixin fdFontXXL {
+  font-family: 'Satoshi-Bold';
+  font-size: var(--fd-font-size-l);
+  line-height: normal;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--fd-font-color-primary);
+}
+
+@mixin fdFontXXL {
+  font-family: 'Satoshi-Black';
+  font-size: var(--fd-font-size-xxl);
+  line-height: normal;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--fd-font-color-primary);
+}
+
+@mixin fdFontXL {
+  font-family: 'Satoshi-Bold';
+  font-size: var(--fd-font-size-xl);
+  line-height: normal;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--fd-font-color-primary);
+}
+
+@mixin fdFontL {
+  font-family: 'Satoshi-Medium';
+  font-size: var(--fd-font-size-l);
+  line-height: normal;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--fd-font-color-primary);
+}
+
+@mixin fdFontM {
+  font-family: 'Satoshi-Medium';
+  font-size: var(--fd-font-size-m);
+  line-height: normal;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--fd-font-color-primary);
+}
+
+@mixin fdFontS {
+  font-family: 'Satoshi-Regular';
+  font-size: var(--fd-font-size-s);
+  line-height: normal;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--fd-font-color-primary);
+}
+
 @mixin scrollSnappingXAxis {
   overflow-x: scroll;
   scrollbar-width: none;
@@ -11,10 +65,4 @@
   scroll-behavior: smooth;
   scroll-snap-type: y proximity;
   scroll-padding: 0 0;
-}
-
-@mixin fdButton {
-  padding: 0.625rem 1.5rem;
-  color: var(--fd-font-color-primary);
-  cursor: pointer;
 }

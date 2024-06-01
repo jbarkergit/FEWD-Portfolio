@@ -5,40 +5,37 @@
   position: relative;
   height: 100svh;
   background-color: var(--fd-backgroundColor-primary);
-  //font: {optional: style variant weight} size line-height "family", "fallback-font", fallback-font-type
-  font:
-    normal normal 500 100% / 1.8em 'Satoshi-Medium',
-    sans-serif;
-  font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
-  letter-spacing: 0.01em;
-  color: var(--fd-font-color-primary);
+  @include m.fdFontM;
 }
 
 :root {
-  // Controller
+  // Carousel controller
   --fd-carousel-items-per-page: 7;
   --fd-flat-grid-items-per-page: 6;
 
-  // Font
-  --fd-font-size-section-header: clamp(1rem, 1.4rem + 1vw, 2rem);
-  // Font Colors
-  --fd-font-color-primary: hsl(0, 0%, 100%);
-  --fd-font-color-secondary: hsl(220, 3%, 58%);
-  --fd-font-color-brand: hsl(150, 81%, 51%);
+  // Font sizes
+  --fd-font-size-xxl: clamp(1.875rem, 3vw, 2.25rem); /* 30px to 36px */
+  --fd-font-size-xl: clamp(1.5rem, 2.5vw, 1.875rem); /* 24px to 30px */
+  --fd-font-size-l: clamp(1.125rem, 2vw, 1.5rem); /* 18px to 24px */
+  --fd-font-size-m: clamp(1rem, 1.5vw, 1.125rem); /* 16px to 18px */
+  --fd-font-size-s: clamp(0.875rem, 1vw, 1rem); /* 14px to 16px */
 
-  // Background Colors
+  // Font colors
+  --fd-font-color-primary: hsl(0, 0%, 100%);
+
+  // Background colors
   --fd-backgroundColor-primary: hsl(217, 12%, 13%);
   --fd-backgroundColor-fallback: hsl(240, 11%, 2%);
 
-  // Box Model
+  // Box model
   --fd-padding-generic: 7rem;
   --fd-padding-wrapper: 0 0 var(--fd-padding-generic) 0;
   --fd-padding-innerWrapper: 0 var(--fd-padding-generic);
 
-  // Media Posters
-  --fd-gap-mediaPoster: 22.4px;
+  // Media posters
+  --fd-gap-mediaPoster: 22px;
   --fd-borderRadius-mediaPoster: 9.6px;
-  // Media Posters: Informational Details
+  // Media posters: Informational Details
   --fd-gap-informationalDetails: calc(var(--fd-gap-mediaPoster) / 2.5);
 }
 
@@ -51,13 +48,13 @@
  * © 2024 Indian Type Foundry
  *
  * Font Styles:
- * Satoshi Light
  * Satoshi Regular
  * Satoshi Medium
  * Satoshi Bold
  * Satoshi Black
  *
 */
+
 @font-face {
   font-family: 'Satoshi-Regular';
   src: url('../fonts/Satoshi-Regular.woff2') format('woff2');
