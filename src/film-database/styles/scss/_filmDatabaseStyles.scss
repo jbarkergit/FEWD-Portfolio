@@ -4,7 +4,7 @@
 .filmDatabase {
   position: relative;
   height: 100svh;
-  background-color: var(--fd-backgroundColor-primary);
+  background-color: hsl(217, 12%, 13%);
   @include m.fdFontM;
 }
 
@@ -19,10 +19,6 @@
   --fd-font-size-l: clamp(1.125rem, 2vw, 1.5rem); /* 18px to 24px */
   --fd-font-size-m: clamp(1rem, 1.5vw, 1.125rem); /* 16px to 18px */
   --fd-font-size-s: clamp(0.875rem, 1vw, 1rem); /* 14px to 16px */
-
-  // Background colors
-  --fd-backgroundColor-primary: hsl(217, 12%, 13%);
-  --fd-backgroundColor-fallback: hsl(240, 11%, 2%);
 
   // Box model
   --fd-padding-generic: 7rem;
