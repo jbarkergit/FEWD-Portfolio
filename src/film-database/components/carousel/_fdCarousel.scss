@@ -32,7 +32,8 @@
     }
     &__header {
       padding: 0 var(--fd-padding-generic) 1rem var(--fd-padding-generic);
-      @include m.fdFontL;
+      @include m.fdFontXL;
+      text-transform: capitalize;
     }
     &__wrapper {
       position: relative;
