@@ -8,39 +8,49 @@
   left: 0;
   z-index: 0;
   width: 100svw;
-  height: 100svh;
+  height: 100%;
+  &::before {
+    content: '';
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 4;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+  }
   &::after {
     content: '';
     position: fixed;
     left: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: 4;
     width: 100%;
     // carousel height + padding-bottom, heading font size + padding-bottom
     height: calc(var(--fd-carousel-featured-height) + (var(--fd-padding-generic) / 2.5) + var(--fd-font-size-l) + 1rem);
-    background: linear-gradient(to top, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 1) 65%, rgba(0, 0, 0, 0) 100%);
   }
+
   &__article {
     position: relative;
-    z-index: 1;
     display: flex;
     width: inherit;
     height: 100%;
     aspect-ratio: inherit;
-    & figure,
-    & figure picture,
-    & figure picture img {
-      position: relative;
-      z-index: 1;
-      width: inherit;
-      height: 100%;
-      aspect-ratio: inherit;
+    & figure {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 3;
+      // 100svh - carousel header font-size - carousel height && padding-bottom
+      height: calc(100svh - var(--fd-font-size-xl) - var(--fd-carousel-featured-height));
+      aspect-ratio: 16/9;
     }
     &__header {
       position: absolute;
       top: calc(var(--fd-padding-generic) * 1.5);
-      left: calc(var(--fd-padding-generic));
-      z-index: 2;
+      left: var(--fd-padding-generic);
+      z-index: 5;
       &__details {
         max-width: 57ch;
         & h2 {
