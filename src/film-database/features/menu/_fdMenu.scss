@@ -6,7 +6,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9;
+  z-index: 10;
   display: flex;
   height: 100%;
   &::before {
@@ -14,52 +14,77 @@
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 8;
+    z-index: 9;
     width: 100%;
     height: inherit;
     background: linear-gradient(to right, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0.7) 100%);
   }
+  & > * {
+    position: relative;
+    z-index: 11;
+  }
+}
 
-  &__section {
-    display: table;
-    padding: var(--fd-padding-generic);
-    // background-color: rgba(0, 0, 0, 1);
-    & > * {
-      position: relative;
-      z-index: 10;
+.fdMenu__toolbar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--fd-padding-generic);
+  &__cta {
+    flex: 0 1 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    &__li {
+      &--button {
+        display: flex;
+        gap: 20px;
+        height: fit-content;
+        &--key,
+        &--icon {
+          display: flex;
+          align-items: center;
+          color: white;
+        }
+        &--icon svg {
+          width: 1.5em;
+          height: 1.5em;
+        }
+        &--key {
+          @include m.fdFontL;
+        }
+      }
     }
-    & svg {
-      height: 50px;
-      margin-bottom: 18px;
-    }
-    &--heading {
-      padding-bottom: 9px;
-      font-family: 'Satoshi-Medium';
-      font-size: clamp(f.rem(14), f.rem(16) + 1vw, f.rem(22));
-      text-transform: capitalize;
+  }
+  &__tmdbCredit {
+    flex: 1 0 15%;
+    display: flex;
+    align-items: end;
+    max-width: 32ch;
+    &--p {
+      font-family: 'Satoshi-Regular';
+      font-size: f.rem(16);
       letter-spacing: 0.03em;
       line-height: normal;
-      white-space: nowrap;
-      color: var(--fd-font-color-primary);
+      color: white;
+      & a {
+        color: cyan;
+      }
     }
-    &__ul {
-      display: table;
-      &__li {
-        padding-left: 6px;
-        &--button {
-          display: flex;
-          font-family: 'Satoshi-Regular';
-          font-size: clamp(f.rem(14), f.rem(16) + 1vw, f.rem(18));
-          text-transform: capitalize;
-          letter-spacing: 0.03em;
-          line-height: normal;
-          white-space: nowrap;
-          color: var(--fd-font-color-primary);
-          & svg {
-            width: 1.2em;
-            height: 1.2em;
-          }
-        }
+  }
+}
+
+.fdMenu__genres {
+  padding: var(--fd-padding-generic) 0;
+  &--heading {
+    @include m.fdFontL;
+  }
+  &__ul {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    &__li {
+      &--button {
+        @include m.fdFontM;
       }
     }
   }
