@@ -38,13 +38,7 @@ const FilmDatabase = () => {
     // Assign keyEndpointPairArr
     switch (useLocationPathname) {
       case '/film-database':
-        keyEndpointPairArr = [
-          getMapEntry('now_playing'),
-          getMapEntry('upcoming'),
-          getMapEntry('top_rated'),
-          getMapEntry('trending_today'),
-          getMapEntry('trending_this_week'),
-        ];
+        keyEndpointPairArr = [getMapEntry('now_playing'), getMapEntry('upcoming'), getMapEntry('trending_today'), getMapEntry('trending_this_week')];
         break;
 
       default:
@@ -158,6 +152,9 @@ const FilmDatabase = () => {
     const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + deltaIndex, carouselNodesArr.length - 1));
 
     if (activeNodeIndex !== nextActiveNodeIndex) {
+      // Lenis
+      requestAnimationFrame(raf);
+
       // Handle attributes
       carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
       carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
@@ -176,17 +173,10 @@ const FilmDatabase = () => {
   return (
     <div className='filmDatabase'>
       <FDHero heroData={heroData} />
-      <main
-        className='fdMedia'
-        ref={fdMediaRef}
-        onWheel={(event: React.WheelEvent<HTMLElement>) => {
-          event.preventDefault();
-          requestAnimationFrame(raf);
-          deltaScrollCarousels(event.deltaY);
-        }}>
+      <main className='fdMedia' ref={fdMediaRef} onWheel={(event: React.WheelEvent<HTMLElement>) => deltaScrollCarousels(event.deltaY)}>
         {...carouselComponents}
       </main>
-      <FDMenu />
+      {/* <FDMenu /> */}
     </div>
   );
 };
