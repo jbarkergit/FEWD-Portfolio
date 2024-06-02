@@ -11,6 +11,7 @@ export const useTmdbProps = (obj: Type_Tmdb_Api_Union) => {
         poster_path: movieList.poster_path,
         backdrop_path: movieList.backdrop_path,
         alt: movieList.title,
+        id: movieList.id,
       };
 
     case 'imdb_id' in obj:
@@ -23,6 +24,7 @@ export const useTmdbProps = (obj: Type_Tmdb_Api_Union) => {
         poster_path: poster_path,
         backdrop_path: movie.backdrop_path,
         alt: movie.title,
+        id: movie.id,
       };
 
     case 'published_at' in obj:
