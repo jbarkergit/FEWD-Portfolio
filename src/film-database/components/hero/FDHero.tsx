@@ -4,6 +4,8 @@ import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
 
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
+import FDiFrame from '../../features/iFrame/FDiFrame';
+
 import { TheMovieDatabaseLogo } from '../../assets/googleMaterialSymbols';
 
 type Type_PropDrill = {
@@ -38,6 +40,7 @@ const FDHero = ({ heroData }: Type_PropDrill) => {
               </picture>
               <figcaption>{props.heading}</figcaption>
             </figure>
+            <FDiFrame props={props} />
           </article>
         </section>
       );
