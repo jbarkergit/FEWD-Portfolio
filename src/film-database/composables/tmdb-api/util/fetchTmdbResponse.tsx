@@ -51,7 +51,10 @@ export const fetchTmdbResponse = async (keyEndpointPair: [key: string, value: st
       case 'discover':
       case 'keyword':
       case 'trailers':
-        fetchUrl = `${keyEndpointPair[1].replace('movie_id', `${opt_movie_id as number}`)}`;
+        if (opt_movie_id) {
+          const endpoint: string = keyEndpointPair[1].replace('{movie_id}', opt_movie_id.toString());
+          fetchUrl = `${endpoint}?api_key=${apiKey}`;
+        }
         break;
 
       default:
