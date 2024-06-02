@@ -2,6 +2,8 @@ import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
 
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
+import { TheMovieDatabaseLogo } from '../../assets/googleMaterialSymbols';
+
 type Type_PropDrill = {
   heroData: Type_Tmdb_Api_Union | null;
 };
@@ -14,6 +16,7 @@ const FDHero = ({ heroData }: Type_PropDrill) => {
         <section className='fdHero'>
           <article className='fdHero__article'>
             <header className='fdHero__article__header'>
+              <TheMovieDatabaseLogo />
               <hgroup className='fdHero__article__header__details'>
                 <h2>{props.heading}</h2>
                 <p>{props.overview}</p>
