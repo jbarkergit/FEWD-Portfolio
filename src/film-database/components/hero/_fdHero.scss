@@ -51,6 +51,10 @@
       top: calc(var(--fd-padding-generic) * 1.5);
       left: var(--fd-padding-generic);
       z-index: 5;
+      & svg {
+        width: 135px;
+        padding-bottom: 12px;
+      }
       &__details {
         max-width: 57ch;
         & h2 {
