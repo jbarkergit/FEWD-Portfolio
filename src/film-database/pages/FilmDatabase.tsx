@@ -10,8 +10,8 @@ import { Type_Tmdb_Api_Union } from '../composables/tmdb-api/types/TmdbDataTypes
 import { Type_useFetchTmdbResponse_KeyValuePairArr, useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 // Components
-import FDCarousel from '../components/carousel/FDCarousel';
-import FDHero from '../components/hero/FDHero';
+import FDCarousel from '../features/carousel/FDCarousel';
+import FDHero from '../features/hero/FDHero';
 import FDMenu from '../features/menu/FDMenu';
 
 // const maxCarouselNodes: number = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--my-variable')); revisit
