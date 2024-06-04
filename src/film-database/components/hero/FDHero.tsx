@@ -28,19 +28,21 @@ const FDHero = ({ heroData }: Type_PropDrill) => {
           <article className='fdHero__article'>
             <header className='fdHero__article__header' ref={headerRef}>
               <TheMovieDatabaseLogo />
-              <hgroup className='fdHero__article__header__details'>
+              <hgroup className='fdHero__article__header__hgroup'>
                 <h2>{props.heading}</h2>
                 <p>{props.overview}</p>
                 <span>{props.vote_average}</span>
               </hgroup>
             </header>
-            <figure>
-              <picture ref={backdropRef}>
-                <img src={`https://image.tmdb.org/t/p/original/${props.backdrop_path}`} alt={props.heading} />
-              </picture>
+            <figure className='fdHero__article__visual'>
+              <section className='fdHero__article__visual__backdrop'>
+                <picture ref={backdropRef}>
+                  <img src={`https://image.tmdb.org/t/p/original/${props.backdrop_path}`} alt={props.heading} />
+                </picture>
+              </section>
+              <FDiFrame props={props} />
               <figcaption>{props.heading}</figcaption>
             </figure>
-            <FDiFrame props={props} />
           </article>
         </section>
       );
