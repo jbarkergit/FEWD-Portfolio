@@ -2,7 +2,10 @@
 @forward '/src/film-database/styles/scss/filmDatabaseStyles';
 @forward '/src/film-database/styles/scss/filmDatabaseMixins';
 
-// features
-@forward '/src/film-database/features/carousel/fdCarousel';
+// Pages
+@forward '/src/film-database/pages/filmDatabase';
+
+// Features
 @forward '/src/film-database/features/hero/fdHero';
+@forward '/src/film-database/features/carousel/fdCarousel';
 @forward '/src/film-database/features/menu/fdMenu';

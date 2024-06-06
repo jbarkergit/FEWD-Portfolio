@@ -1,13 +1,6 @@
 @use '/src/sass/functions' as f;
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
-.filmDatabase {
-  position: relative;
-  height: 100svh;
-  background-color: rgba(0, 0, 0, 1);
-  @include m.fdFontM;
-}
-
 :root {
   // Carousel controller
   --fd-carousel-items-per-page: 7;
