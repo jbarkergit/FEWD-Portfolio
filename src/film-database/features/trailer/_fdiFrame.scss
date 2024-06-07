@@ -5,6 +5,9 @@
 .fdiFrame {
   display: flex;
   justify-self: flex-end;
+  &--h2 {
+    display: none;
+  }
   &__backdrop,
   &__wrapper {
     // 100svh - carousel header font-size - carousel header padding-bottom - carousel height && padding-bottom
