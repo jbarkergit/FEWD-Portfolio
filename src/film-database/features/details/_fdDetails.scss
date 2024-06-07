@@ -3,9 +3,10 @@
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
 .fdDetails {
+  width: 100%;
+  height: 100%;
   &__article {
     position: relative;
-    display: flex;
     width: inherit;
     height: 100%;
     aspect-ratio: inherit;
