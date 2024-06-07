@@ -42,16 +42,17 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
       if (!endpoint) return;
       const keyValuePair: [Type_Tmdb_Movie_Keys_Union, string] = ['trailers', endpoint];
       await useFetchTmdbResponse([keyValuePair], props?.id).then((response) => {
-        if (response) {
-          const objArr = response[0][1] as Type_Tmdb_Trailer_ObjArr;
-          const filteredObjArr: Type_Tmdb_Trailer_ObjArr = objArr.filter((obj) => obj.site === 'YouTube' && obj.name === 'Official Trailer');
-          setTrailers(filteredObjArr);
-        }
+        if (!response) return;
+        const objArr = response[0][1] as Type_Tmdb_Trailer_ObjArr;
+        const filteredObjArr: Type_Tmdb_Trailer_ObjArr = objArr.filter((obj) => obj.site === 'YouTube' && obj.name === 'Official Trailer');
+        setTrailers(filteredObjArr);
       });
     })();
   };
 
-  useEffect(() => fetchTrailer(), [props]);
+  useEffect(() => {
+    if (heroData) fetchTrailer();
+  }, [heroData]);
 
   // iFrame options
   const opts: Options = {
@@ -97,21 +98,17 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
           // loading={string}
           onReady={(event: YouTubeEvent) => (player = event)}
           onEnd={() => player.target.destroy()}
-          onError={() => {
-            player.target.destroy();
-          }}
+          onError={() => player.target.destroy()}
         />
       </section>
     );
   } else {
     return (
       <section className='fdiFrame'>
-        <figure className='fdHero__article__visual'>
-          <section className='fdHero__article__visual__backdrop'>
-            <picture>
-              <img src={`https://image.tmdb.org/t/p/original/${props?.backdrop_path}`} alt={props?.heading} />
-            </picture>
-          </section>
+        <figure className='fdiFrame__backdrop'>
+          <picture>
+            <img src={`https://image.tmdb.org/t/p/original/${props?.backdrop_path}`} alt={props?.heading} />
+          </picture>
           <figcaption>{props?.heading}</figcaption>
         </figure>
       </section>
