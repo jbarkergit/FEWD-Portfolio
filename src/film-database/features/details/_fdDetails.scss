@@ -1,0 +1,45 @@
+@use '/src/sass/functions' as f;
+@use '/src/film-database/styles/scss/filmDatabaseStyles' as s;
+@use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
+
+.fdDetails {
+  &__article {
+    position: relative;
+    display: flex;
+    width: inherit;
+    height: 100%;
+    aspect-ratio: inherit;
+    &__header {
+      position: absolute;
+      top: calc(var(--fd-padding-generic) * 1.5);
+      left: var(--fd-padding-generic);
+      z-index: 5;
+      opacity: 0;
+      transform: translateY(-10%);
+      transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+      &[data-anim='fade-in'] {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      & svg {
+        width: 135px;
+        padding-bottom: 12px;
+      }
+      &__hgroup {
+        max-width: 57ch;
+        & h2 {
+          @include m.fdFontXXL;
+          text-shadow: var(--fd-font-shadow);
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+        & p {
+          @include m.fdFontM;
+          text-shadow: var(--fd-font-shadow);
+        }
+      }
+    }
+  }
+}
