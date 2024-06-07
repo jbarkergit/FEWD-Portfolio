@@ -6,6 +6,7 @@
 @forward '/src/film-database/pages/filmDatabase';
 
 // Features
-@forward '/src/film-database/features/hero/fdHero';
 @forward '/src/film-database/features/carousel/fdCarousel';
+@forward '/src/film-database/features/details/fdDetails';
 @forward '/src/film-database/features/menu/fdMenu';
+@forward '/src/film-database/features/trailer/fdiFrame';

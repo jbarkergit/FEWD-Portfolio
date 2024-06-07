@@ -4,7 +4,19 @@
 
 .filmDatabase {
   position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   height: 100svh;
   background-color: rgba(0, 0, 0, 1);
   @include m.fdFontM;
+}
+.fdDetails {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.fdiFrame {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.fdMedia {
+  grid-area: 2 / 1 / 3 / 3;
 }
