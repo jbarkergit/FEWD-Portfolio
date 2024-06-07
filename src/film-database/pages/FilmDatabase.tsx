@@ -162,8 +162,7 @@ const FilmDatabase = () => {
 
       // Get scroll position
       const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
-      const firstNodePaddingTop: number = parseInt(window.getComputedStyle(carouselNodes[0] as HTMLElement).paddingTop);
-      const scrollPosition: number = nextActiveNodeOffsetTop - firstNodePaddingTop;
+      const scrollPosition: number = nextActiveNodeOffsetTop;
 
       // Scroll
       lenis.current?.scrollTo(scrollPosition, { lerp: 0.2, duration: 0.03, lock: true, force: true });
