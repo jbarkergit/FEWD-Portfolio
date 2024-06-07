@@ -10,8 +10,9 @@ import { Type_Tmdb_Api_Union } from '../composables/tmdb-api/types/TmdbDataTypes
 import { Type_useFetchTmdbResponse_KeyValuePairArr, useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 // Components
+import FDDetails from '../features/details/FDDetails';
+import FDiFrame from '../features/trailer/FDiFrame';
 import FDCarousel from '../features/carousel/FDCarousel';
-import FDHero from '../features/hero/FDHero';
 import FDMenu from '../features/menu/FDMenu';
 
 // const maxCarouselNodes: number = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--my-variable')); revisit
@@ -172,7 +173,8 @@ const FilmDatabase = () => {
   /** Component */
   return (
     <div className='filmDatabase'>
-      <FDHero heroData={heroData} />
+      <FDDetails heroData={heroData} />
+      <FDiFrame heroData={heroData} />
       <main className='fdMedia' ref={fdMediaRef} onWheel={(event: React.WheelEvent<HTMLElement>) => deltaScrollCarousels(event.deltaY)}>
         {...carouselComponents}
       </main>
