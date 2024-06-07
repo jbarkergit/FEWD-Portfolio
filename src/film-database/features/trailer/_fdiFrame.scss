@@ -3,8 +3,8 @@
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
 .fdiFrame {
-  // 100svh - carousel header font-size - carousel height && padding-bottom
-  height: calc(100svh - var(--fd-font-size-xl) - var(--fd-carousel-featured-height));
+  // 100svh - carousel header font-size - carousel header padding-bottom - carousel height && padding-bottom
+  height: calc(100svh - var(--fd-font-size-xl) - 1rem - var(--fd-carousel-featured-height) - (var(--fd-padding-generic) / 2.5));
   aspect-ratio: 16/9;
   &__wrapper {
     width: inherit;

@@ -19,10 +19,6 @@
   }
   &__carousel {
     padding-bottom: calc(var(--fd-padding-generic) / 2.5);
-    &:nth-of-type(1) {
-      // 100svh - carousel height - carousel padding-bottom - header font size - header padding-bottom
-      padding-top: calc(100svh - var(--fd-carousel-featured-height) - (var(--fd-padding-generic) / 2.5) - var(--fd-font-size-xl) - 1rem);
-    }
     &[data-index-tracker='active'] {
       opacity: 1;
       transition: opacity 0.3s ease-in;
