@@ -11,7 +11,7 @@ import { Type_useFetchTmdbResponse_KeyValuePairArr, useFetchTmdbResponse } from 
 import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 // Components
 import FDDetails from '../features/details/FDDetails';
-import FDiFrame from '../features/trailer/FDiFrame';
+import FDiFrame from '../features/iframe/FDiFrame';
 import FDCarousel from '../features/carousel/FDCarousel';
 import FDMenu from '../features/menu/FDMenu';
 
