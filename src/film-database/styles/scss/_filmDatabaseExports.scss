@@ -5,6 +5,9 @@
 // Pages
 @forward '/src/film-database/pages/filmDatabase';
 
+// Components
+@forward '/src/film-database/components/searchbar/fdSearchBar';
+
 // Features
 @forward '/src/film-database/features/carousel/fdCarousel';
 @forward '/src/film-database/features/details/fdDetails';
