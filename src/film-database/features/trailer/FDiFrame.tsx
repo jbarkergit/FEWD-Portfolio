@@ -64,7 +64,7 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
       cc_lang_pref: 'eng',
       cc_load_policy: 1,
       // color: undefined,
-      controls: 1,
+      controls: 0,
       disablekb: 0,
       // enablejsapi?: 0 | 1 | undefined;
       // end?: number | undefined;
