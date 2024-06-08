@@ -96,9 +96,18 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
           iframeClassName='fdiFrame__wrapper--iframe'
           title={`YouTube video player: ${trailers[0].name}`}
           // loading={string}
-          onReady={(event: YouTubeEvent) => (player = event)}
-          onEnd={() => player.target.destroy()}
-          onError={() => player.target.destroy()}
+          onReady={(event: YouTubeEvent) => {
+            player = event;
+            player.target.mute();
+          }}
+          onEnd={() => {
+            player.target.destroy();
+            setTrailers(undefined);
+          }}
+          onError={() => {
+            player.target.destroy();
+            setTrailers(undefined);
+          }}
         />
       </section>
     );
