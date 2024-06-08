@@ -4,12 +4,13 @@ import { Type_ReactYouTube_YouTubeEvent } from '../../features/iframe/FDiFrame';
 
 import { MaterialSymbolsVolumeUp, MaterialSymbolsVolumeDown, MaterialSymbolsVolumeOff } from '../../assets/iFrameSymbols';
 
-const IFrameVolumeIndicator = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
+const IFrameControllerVolumeIndicator = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
   const volumeUpRef = useRef<HTMLButtonElement>(null);
   const volumeDownRef = useRef<HTMLButtonElement>(null);
   const volumeOffRef = useRef<HTMLButtonElement>(null);
 
   const volumeIndicator = async (): Promise<void> => {
+    if (!player) return;
     const isMuted: boolean = await player.target.isMuted();
     const getVolume: number = await player.target.getVolume();
 
@@ -47,4 +48,4 @@ const IFrameVolumeIndicator = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
   );
 };
 
-export default IFrameVolumeIndicator;
+export default IFrameControllerVolumeIndicator;

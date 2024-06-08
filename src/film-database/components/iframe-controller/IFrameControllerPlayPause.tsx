@@ -4,11 +4,12 @@ import { Type_ReactYouTube_YouTubeEvent } from '../../features/iframe/FDiFrame';
 
 import { MaterialSymbolsPlayArrow, MaterialSymbolsPause } from '../../assets/iFrameSymbols';
 
-const IFramePlayPause = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
+const IFrameControllerPlayPause = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
   const playRef = useRef<HTMLSpanElement>(null);
   const pauseRef = useRef<HTMLSpanElement>(null);
 
   const playPause = async (): Promise<void> => {
+    if (!player) return;
     const isMuted: boolean = await player.target.isMuted();
 
     if (isMuted) {
@@ -36,4 +37,4 @@ const IFramePlayPause = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
   );
 };
 
-export default IFramePlayPause;
+export default IFrameControllerPlayPause;

@@ -1,8 +1,8 @@
-import IFramePlayPause from '../../components/iframe-controller/IFramePlayPause';
-import IFramePlayback from '../../components/iframe-controller/IFramePlayback';
-import IFrameVolumeIndicator from '../../components/iframe-controller/IFrameVolumeIndicator';
-import IFrameVolumeSlider from '../../components/iframe-controller/IFrameVolumeSlider';
-import { Type_ReactYouTube_YouTubeEvent } from '../iframe/FDiFrame';
+import IFramePlayPause from './IFrameControllerPlayPause';
+import IFramePlayback from './IFrameControllerPlayback';
+import IFrameVolumeIndicator from './IFrameControllerVolumeIndicator';
+import IFrameVolumeSlider from './IFrameControllerVolumeSlider';
+import { Type_ReactYouTube_YouTubeEvent } from '../../features/iframe/FDiFrame';
 
 const IFrameController = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
   return (

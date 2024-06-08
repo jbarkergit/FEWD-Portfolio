@@ -10,7 +10,7 @@ import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTy
 import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
 
-import IFrameController from '../iframe-controller/IFrameController';
+import IFrameController from '../../components/iframe-controller/IFrameController';
 
 /** This component utilizes YouTube Player API
  * https://developers.google.com/youtube/iframe_api_reference
