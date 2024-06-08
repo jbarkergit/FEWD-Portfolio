@@ -134,6 +134,10 @@ const FilmDatabase = () => {
   // Init lenis
   const lenis = useRef<Lenis>(new Lenis());
 
+  useEffect(() => {
+    if (fdMediaRef.current) lenis.current = new Lenis({ wrapper: fdMediaRef.current });
+  }, []);
+
   const raf = (time: number): void => {
     lenis.current.raf(time);
     requestAnimationFrame(raf);
@@ -162,7 +166,8 @@ const FilmDatabase = () => {
 
       // Get scroll position
       const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
-      const scrollPosition: number = nextActiveNodeOffsetTop;
+      const parentOffsetTop: number = fdMediaRef.current.offsetTop;
+      const scrollPosition: number = nextActiveNodeOffsetTop - parentOffsetTop;
 
       // Scroll
       lenis.current?.scrollTo(scrollPosition, { lerp: 0.2, duration: 0.03, lock: true, force: true });
@@ -171,10 +176,10 @@ const FilmDatabase = () => {
 
   /** Component */
   return (
-    <div className='filmDatabase'>
+    <div className='filmDatabase' onWheel={(event: React.WheelEvent<HTMLElement>) => deltaScrollCarousels(event.deltaY)}>
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
-      <main className='fdMedia' ref={fdMediaRef} onWheel={(event: React.WheelEvent<HTMLElement>) => deltaScrollCarousels(event.deltaY)}>
+      <main className='fdMedia' ref={fdMediaRef}>
         {...carouselComponents}
       </main>
       {/* <FDMenu /> */}
