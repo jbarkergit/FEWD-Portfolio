@@ -5,7 +5,7 @@ import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
 
 import { MaterialSymbolsSearch, MaterialSymbolsHomeRounded, MaterialSymbolsMenuRounded } from '../../assets/menuSymbols';
 
-import FDSearchBar from '../../components/searchbar/FDSearchBar';
+import FDSearchBar from '../../components/search-bar/FDSearchBar';
 
 const FDMenu = () => {
   /** Toggle menus */
