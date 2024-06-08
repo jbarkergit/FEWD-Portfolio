@@ -3,9 +3,6 @@
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
 .fdiFrame {
-  position: absolute;
-  top: 0;
-  right: 0;
   &--h2 {
     display: none;
   }
@@ -15,6 +12,9 @@
   }
   &__backdrop,
   &__wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
     // 100svh - carousel height
     height: calc(100svh - var(--fd-carousel-featured-height));
     aspect-ratio: 16/9;
