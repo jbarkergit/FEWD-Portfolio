@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { createContext, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
 
 import YouTube, { YouTubeEvent } from 'react-youtube';
 import { Options } from 'youtube-player/dist/types';
@@ -33,6 +33,8 @@ type Type_Tmdb_Trailer_ObjArr = {
   size: number;
   type: string;
 }[];
+
+export type Type_ReactYouTube_YouTubeEvent = { player: YouTubeEvent | undefined };
 
 const FDiFrame = ({ heroData }: Type_PropDrill) => {
   const [trailers, setTrailers] = useState<Type_Tmdb_Trailer_ObjArr | undefined>(undefined);
@@ -84,7 +86,7 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
   };
 
   // Init player
-  let player: YouTubeEvent;
+  const [player, setPlayer] = useState<YouTubeEvent | undefined>(undefined);
 
   // const volume = async () => {
   //   const isMuted: boolean = await player.target.isMuted();
@@ -98,7 +100,7 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
     return (
       <section className='fdiFrame'>
         <h2 className='fdiFrame--h2'>{trailers[0].name}</h2>
-        <IFrameController />
+        <IFrameController player={player} />
         <YouTube
           videoId={`${trailers[0].key}`}
           opts={opts}
@@ -107,13 +109,13 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
           title={`YouTube video player: ${trailers[0].name}`}
           style={undefined}
           loading={'eager'}
-          onReady={(event: YouTubeEvent) => (player = event)}
+          onReady={(event: YouTubeEvent) => setPlayer(event)}
           onEnd={() => {
-            player.target.destroy();
+            player?.target.destroy();
             setTrailers(undefined);
           }}
           onError={() => {
-            player.target.destroy();
+            player?.target.destroy();
             setTrailers(undefined);
           }}
         />

@@ -1,7 +1,10 @@
 import { useRef } from 'react';
+
+import { Type_ReactYouTube_YouTubeEvent } from '../../features/iframe/FDiFrame';
+
 import { MaterialSymbolsVolumeUp, MaterialSymbolsVolumeDown, MaterialSymbolsVolumeOff } from '../../assets/iFrameSymbols';
 
-const IFrameVolumeIndicator = () => {
+const IFrameVolumeIndicator = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
   const volumeUpRef = useRef<HTMLButtonElement>(null);
   const volumeDownRef = useRef<HTMLButtonElement>(null);
   const volumeOffRef = useRef<HTMLButtonElement>(null);

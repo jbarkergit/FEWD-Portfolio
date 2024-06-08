@@ -1,7 +1,10 @@
 import { useRef } from 'react';
+
+import { Type_ReactYouTube_YouTubeEvent } from '../../features/iframe/FDiFrame';
+
 import { MaterialSymbolsPlayArrow, MaterialSymbolsPause } from '../../assets/iFrameSymbols';
 
-const IFramePlayPause = () => {
+const IFramePlayPause = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
   const playRef = useRef<HTMLSpanElement>(null);
   const pauseRef = useRef<HTMLSpanElement>(null);
 
