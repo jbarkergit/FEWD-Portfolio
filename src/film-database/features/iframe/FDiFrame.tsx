@@ -88,13 +88,6 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
   // Init player
   const [player, setPlayer] = useState<YouTubeEvent | undefined>(undefined);
 
-  // const volume = async () => {
-  //   const isMuted: boolean = await player.target.isMuted();
-  //   const getVolume: number = await player.target.getVolume();
-
-  //   player.target.setVolume(getVolume + 10);
-  // };
-
   /** Component */
   if (trailers && trailers.length > 0) {
     return (
