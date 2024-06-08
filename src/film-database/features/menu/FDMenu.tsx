@@ -7,35 +7,32 @@ import { MaterialSymbolsHomeRounded, MaterialSymbolsMenuRounded, MaterialSymbols
 import FDSearchBar from '../../components/searchbar/FDSearchBar';
 
 const FDMenu = () => {
-  // Section refs
+  /** Toggle menus */
   const menuSearchRef = useRef<HTMLElement>(null);
   const menuGenresRef = useRef<HTMLElement>(null);
 
-  // State
-  const [openMenu, setOpenMenu] = useState<RefObject<HTMLElement> | undefined>(undefined);
-
-  /** Toggle menus */
-  useEffect(() => {
-    if (!openMenu || !openMenu.current || !menuSearchRef.current || !menuGenresRef.current) return;
-    openMenu.current.setAttribute('data-menu', 'open');
-  }, [openMenu]);
-
-  /** Component dependant data */
-  const navigationKeyValuePairsArr = [
-    ['Search', <MaterialSymbolsSearch />],
-    ['Home', <MaterialSymbolsHomeRounded />],
-    ['Genres', <MaterialSymbolsMenuRounded />],
+  const toolbarObjArr = [
+    { key: 'Search', icon: <MaterialSymbolsSearch />, ref: menuSearchRef },
+    { key: 'Home', icon: <MaterialSymbolsHomeRounded />, ref: undefined },
+    { key: 'Genres', icon: <MaterialSymbolsMenuRounded />, ref: menuGenresRef },
   ];
+
+  const toggleMenus = (refParam: RefObject<HTMLElement> | undefined) => {
+    toolbarObjArr.forEach((obj) => {
+      if (!refParam || !refParam.current || !obj.ref || !obj.ref.current) return;
+      obj.ref.current !== refParam.current ? obj.ref.current.setAttribute('data-menu', 'closed') : obj.ref.current.setAttribute('data-menu', 'open');
+    });
+  };
 
   return (
     <section className='fdMenu'>
       <section className='fdMenu__toolbar'>
         <ul className='fdMenu__toolbar__ul'>
-          {navigationKeyValuePairsArr.map(([key, icon]) => (
+          {toolbarObjArr.map((obj) => (
             <li className='fdMenu__toolbar__ul__li'>
-              <button className='fdMenu__toolbar__ul__li--button' aria-label={`Select ${key}`}>
-                <span className='fdMenu__toolbar__ul__li--button--icon'>{icon}</span>
-                {openMenu !== undefined ? <span className='fdMenu__toolbar__ul__li--button--key'>{key}</span> : null}
+              <button className='fdMenu__toolbar__ul__li--button' aria-label={`Select ${obj.key}`} onClick={() => toggleMenus(obj.ref)}>
+                <span className='fdMenu__toolbar__ul__li--button--icon'>{obj.icon}</span>
+                {/* <span className='fdMenu__toolbar__ul__li--button--key'>{obj.key}</span> */}
               </button>
             </li>
           ))}
@@ -43,16 +40,16 @@ const FDMenu = () => {
       </section>
 
       <section className='fdMenu__menu'>
-        <section className='fdMenu__menu__search' ref={menuSearchRef}>
+        <section className='fdMenu__menu__search' ref={menuSearchRef} data-menu='closed'>
           <FDSearchBar />
         </section>
 
-        <section ref={menuGenresRef}>
-          <nav className='fdMenu__menu__genres'>
-            <ul className='fdMenu__menu__genres__ul'>
+        <section className='fdMenu__menu__genres' ref={menuGenresRef} data-menu='closed'>
+          <nav className='fdMenu__menu__genres__nav'>
+            <ul className='fdMenu__menu__genres__nav__ul'>
               {(useTmdbGenres() as string[]).map((genre) => (
-                <li className='fdMenu__menu__genres__ul__li'>
-                  <button className='fdMenu__menu__genres__ul__li--button'>{genre}</button>
+                <li className='fdMenu__menu__genres__nav__ul__li'>
+                  <button className='fdMenu__menu__genres__nav__ul__li--button'>{genre}</button>
                 </li>
               ))}
             </ul>
