@@ -1,4 +1,4 @@
-import { createContext, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import YouTube, { YouTubeEvent } from 'react-youtube';
 import { Options } from 'youtube-player/dist/types';
