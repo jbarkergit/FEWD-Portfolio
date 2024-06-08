@@ -23,7 +23,7 @@
     background: linear-gradient(to right, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0.7) 100%);
   }
   &[data-modal='open'] {
-    .fdMenu::before {
+    &::before {
       width: 100%;
     }
     .fdMenu__menu {
@@ -31,7 +31,7 @@
     }
   }
   &[data-modal='closed'] {
-    .fdMenu::before {
+    &::before {
       width: 5%;
     }
     .fdMenu__menu {
