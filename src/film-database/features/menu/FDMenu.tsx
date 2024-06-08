@@ -8,6 +8,7 @@ import FDSearchBar from '../../components/searchbar/FDSearchBar';
 
 const FDMenu = () => {
   /** Toggle menus */
+  const menuRef = useRef<HTMLElement>(null);
   const menuSearchRef = useRef<HTMLElement>(null);
   const menuGenresRef = useRef<HTMLElement>(null);
 
@@ -18,14 +19,21 @@ const FDMenu = () => {
   ];
 
   const toggleMenus = (refParam: RefObject<HTMLElement> | undefined) => {
-    toolbarObjArr.forEach((obj) => {
-      if (!refParam || !refParam.current || !obj.ref || !obj.ref.current) return;
-      obj.ref.current !== refParam.current ? obj.ref.current.setAttribute('data-menu', 'closed') : obj.ref.current.setAttribute('data-menu', 'open');
-    });
+    if (!menuRef.current) return;
+
+    if (refParam !== undefined) {
+      menuRef.current.setAttribute('data-modal', 'open');
+      toolbarObjArr.forEach((obj) => {
+        if (!refParam || !refParam.current || !obj.ref || !obj.ref.current) return;
+        obj.ref.current !== refParam.current ? obj.ref.current.setAttribute('data-menu', 'closed') : obj.ref.current.setAttribute('data-menu', 'open');
+      });
+    } else {
+      menuRef.current.setAttribute('data-modal', 'closed');
+    }
   };
 
   return (
-    <section className='fdMenu'>
+    <section className='fdMenu' ref={menuRef} data-modal='closed'>
       <section className='fdMenu__toolbar'>
         <ul className='fdMenu__toolbar__ul'>
           {toolbarObjArr.map((obj) => (
