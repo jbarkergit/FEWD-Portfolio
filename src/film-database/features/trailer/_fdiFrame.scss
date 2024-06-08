@@ -37,7 +37,7 @@
       z-index: 0;
       width: 100%;
       height: calc(var(--fd-carousel-featured-height) + (var(--fd-padding-generic) / 2.5) + var(--fd-font-size-l) + 1rem);
-      background: linear-gradient(to top, rgb(0, 0, 0) 90%, rgba(0, 0, 0, 0) 100%);
+      background: linear-gradient(to top, rgb(0, 0, 0) 80%, rgba(0, 0, 0, 0) 100%);
       pointer-events: none;
     }
   }
