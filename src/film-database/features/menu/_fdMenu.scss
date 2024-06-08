@@ -3,7 +3,7 @@
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
 .fdMenu {
-  position: relative;
+  position: fixed;
   z-index: 11;
   display: flex;
   gap: 48px;
@@ -14,14 +14,29 @@
   transition: width ease-in-out 0.36ms;
   &::before {
     content: '';
-    position: absolute; //fixed covers all
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 9;
-    width: 100%;
-    will-change: width;
     height: 100svh;
+    will-change: width;
     background: linear-gradient(to right, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0.7) 100%);
+  }
+  &[data-modal='open'] {
+    .fdMenu::before {
+      width: 100%;
+    }
+    .fdMenu__menu {
+      opacity: 1;
+    }
+  }
+  &[data-modal='closed'] {
+    .fdMenu::before {
+      width: 5%;
+    }
+    .fdMenu__menu {
+      opacity: 0;
+    }
   }
 }
 
@@ -40,10 +55,10 @@
     gap: 6px;
     &__li {
       &--button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         &--icon {
-          display: flex;
-          justify-content: center;
-          align-items: center;
           & svg {
             color: white;
             width: 2em;
@@ -78,18 +93,32 @@
     align-items: center;
   }
   &__genres {
-    &--heading {
-      @include m.fdFontL;
-    }
-    &__ul {
-      overflow-y: scroll;
-      scrollbar-width: none;
-      &__li {
-        &--button {
-          @include m.fdFontL;
-          white-space: nowrap;
+    &__nav {
+      &--heading {
+        @include m.fdFontL;
+      }
+      &__ul {
+        overflow-y: scroll;
+        scrollbar-width: none;
+        &__li {
+          &--button {
+            @include m.fdFontL;
+            white-space: nowrap;
+          }
         }
       }
+    }
+  }
+  &__search,
+  &__genres {
+    transition: opacity 0.35ms ease-in-out;
+    &[data-menu='open'] {
+      width: fit-content;
+    }
+    &[data-menu='closed'] {
+      pointer-events: none;
+      transform: translateX(-50%);
+      opacity: 0;
     }
   }
 }
