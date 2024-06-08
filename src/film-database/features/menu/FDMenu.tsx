@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
 
-import { MaterialSymbolsHomeRounded, MaterialSymbolsMenuRounded, MaterialSymbolsSearch, TheMovieDatabaseLogo } from '../../assets/googleMaterialSymbols';
+import { MaterialSymbolsSearch, MaterialSymbolsHomeRounded, MaterialSymbolsMenuRounded } from '../../assets/menuSymbols';
+
 import FDSearchBar from '../../components/searchbar/FDSearchBar';
 
 const FDMenu = () => {
