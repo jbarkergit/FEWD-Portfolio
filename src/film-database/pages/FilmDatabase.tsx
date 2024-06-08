@@ -177,12 +177,12 @@ const FilmDatabase = () => {
   /** Component */
   return (
     <div className='filmDatabase' onWheel={(event: React.WheelEvent<HTMLElement>) => deltaScrollCarousels(event.deltaY)}>
+      <FDMenu />
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
       <main className='fdMedia' ref={fdMediaRef}>
         {...carouselComponents}
       </main>
-      {/* <FDMenu /> */}
     </div>
   );
 };
