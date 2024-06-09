@@ -22,6 +22,7 @@
     flex: 1 0 50%;
     display: flex;
     align-items: center;
+    gap: f.rem(10);
     height: inherit;
     & > * {
       margin: 0 2px;
@@ -83,6 +84,20 @@
         box-shadow:
           4px 3px 6px rgba(0, 0, 0, 0.25),
           -4px 3px 6px rgba(0, 0, 0, 0.25);
+      }
+    }
+    &__playback {
+      display: flex;
+      gap: 4px;
+      margin-left: 12px;
+      margin-right: 4px;
+      & > * {
+        @include m.fdFontM;
+      }
+      &--current,
+      &--duration {
+      }
+      &--seperator {
       }
     }
   }
