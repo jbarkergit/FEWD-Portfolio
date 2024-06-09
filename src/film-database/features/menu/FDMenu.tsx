@@ -1,6 +1,8 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
 
 import { MaterialSymbolsSearch, MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp } from '../../assets/menuSymbols';
@@ -38,7 +40,7 @@ const FDMenu = () => {
       <section className='fdMenu__toolbar'>
         <ul className='fdMenu__toolbar__ul'>
           {toolbarObjArr.map((obj) => (
-            <li className='fdMenu__toolbar__ul__li'>
+            <li className='fdMenu__toolbar__ul__li' key={uuidv4()}>
               <button className='fdMenu__toolbar__ul__li--button' aria-label={`Select ${obj.key}`} onClick={() => toggleMenus(obj.ref)}>
                 <span className='fdMenu__toolbar__ul__li--button--icon'>{obj.icon}</span>
                 {/* <span className='fdMenu__toolbar__ul__li--button--key'>{obj.key}</span> */}
@@ -57,7 +59,7 @@ const FDMenu = () => {
           <nav className='fdMenu__menu__genres__nav'>
             <ul className='fdMenu__menu__genres__nav__ul'>
               {(useTmdbGenres() as string[]).map((genre) => (
-                <li className='fdMenu__menu__genres__nav__ul__li'>
+                <li className='fdMenu__menu__genres__nav__ul__li' key={uuidv4()}>
                   <button className='fdMenu__menu__genres__nav__ul__li--button'>{genre}</button>
                 </li>
               ))}
