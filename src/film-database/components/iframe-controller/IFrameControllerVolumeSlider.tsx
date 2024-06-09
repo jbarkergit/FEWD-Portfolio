@@ -1,7 +1,8 @@
 import { useRef, useState, PointerEvent } from 'react';
-import { Type_ReactYouTube_YouTubeEvent } from '../../features/iframe/FDiFrame';
 
-const IFrameControllerVolumeSlider = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
+import { Type_iFrameController_Props } from './IFrameController';
+
+const IFrameControllerVolumeSlider = ({ player }: Type_iFrameController_Props) => {
   const sliderRef = useRef<HTMLButtonElement>(null);
   const handleRef = useRef<HTMLSpanElement>(null);
 

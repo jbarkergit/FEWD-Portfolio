@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Type_ReactYouTube_YouTubeEvent } from '../../features/iframe/FDiFrame';
+import { Type_iFrameController_Props } from './IFrameController';
 
-const IFrameControllerPlayback = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
+const IFrameControllerPlayback = ({ player }: Type_iFrameController_Props) => {
   const [current, setCurrent] = useState<string>('00:00');
   const [duration, setDuration] = useState<string>('00:00');
 

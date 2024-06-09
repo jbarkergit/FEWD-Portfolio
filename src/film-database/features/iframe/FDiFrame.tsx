@@ -34,8 +34,6 @@ type Type_Tmdb_Trailer_ObjArr = {
   type: string;
 }[];
 
-export type Type_ReactYouTube_YouTubeEvent = { player: YouTubeEvent | undefined };
-
 const FDiFrame = ({ heroData }: Type_PropDrill) => {
   const [trailers, setTrailers] = useState<Type_Tmdb_Trailer_ObjArr | undefined>(undefined);
   const props = heroData ? useTmdbProps(heroData) : undefined;
