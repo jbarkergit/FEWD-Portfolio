@@ -14,13 +14,11 @@ export type Type_iFrameController_Props = {
 };
 
 const IFrameController = ({ player }: Type_iFrameController_Props) => {
-  if (!player) return;
-
   /** Hoisted dependencies */
   const [playerVolume, setPlayerVolume] = useState<number>(0);
 
   useEffect(() => {
-    player.target.setVolume(playerVolume);
+    if (player) player.target.setVolume(playerVolume);
   }, [playerVolume]);
 
   return (
