@@ -11,13 +11,9 @@ type TYPE_IFRAMECONTROLLER_PROP_REFERENCE = {
 const IFrameController = ({ player }: { player: YouTubeEvent | undefined }) => {
   return (
     <div className='iFrameController'>
-      <div className='iFrameController__features'>
-        <IFrameControllerPlayPause player={player} />
-        <IFrameControllerVolume player={player} />
-        <IFrameControllerPlayback player={player} />
-      </div>
-
-      <div className='iFrameController__features'></div>
+      <IFrameControllerPlayPause player={player} />
+      <IFrameControllerVolume player={player} />
+      <IFrameControllerPlayback player={player} />
     </div>
   );
 };

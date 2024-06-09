@@ -33,10 +33,10 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubeEvent | undefined
   }, [player]);
 
   return (
-    <div className='iFrameController__features__playback'>
-      <div className='iFrameController__features__playback--current'>{current}</div>
-      <div className='iFrameController__features__playback--separator'> / </div>
-      <div className='iFrameController__features__playback--duration'>{duration}</div>
+    <div className='iFrameController__playback'>
+      <div className='iFrameController__playback--current'>{current}</div>
+      <div className='iFrameController__playback--separator'> / </div>
+      <div className='iFrameController__playback--duration'>{duration}</div>
     </div>
   );
 };

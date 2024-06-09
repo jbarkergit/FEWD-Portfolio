@@ -22,14 +22,14 @@ const IFrameControllerVolumeSlider = ({ player, setPlayerVolume }: { player: You
 
   return (
     <button
-      className='iFrameController__features__slider'
+      className='iFrameController__slider'
       ref={sliderRef}
       onPointerDown={() => setIsDragging(true)}
       onPointerUp={() => setIsDragging(false)}
       onPointerLeave={() => setIsDragging(false)}
       onPointerMove={(e: PointerEvent<HTMLButtonElement>) => moveHandle(e)}>
-      <span className='iFrameController__features__slider--range' />
-      <span className='iFrameController__features__slider--handle' ref={handleRef} style={{ left: '0%' }} />
+      <span className='iFrameController__slider--range' />
+      <span className='iFrameController__slider--handle' ref={handleRef} style={{ left: '0%' }} />
     </button>
   );
 };
