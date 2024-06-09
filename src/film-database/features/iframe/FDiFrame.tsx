@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import YouTube, { YouTubeEvent } from 'react-youtube';
 import { Options } from 'youtube-player/dist/types';
@@ -70,7 +70,7 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
       disablekb: 1, // 1 = disabled
       // enablejsapi?: 0 | 1 | undefined;
       // end?: number | undefined;
-      fs: 1,
+      fs: 0, // 0 = disabled
       hl: 'eng',
       iv_load_policy: 3,
       loop: 0,
@@ -85,12 +85,6 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
 
   // Init player
   const [player, setPlayer] = useState<YouTubeEvent | undefined>(undefined);
-
-  useEffect(() => {
-    if (!player) return;
-    player.target.setVolume(0);
-    player.target.mute();
-  }, [player]);
 
   /** Component */
   if (trailers && trailers.length > 0) {
