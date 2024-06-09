@@ -1,49 +1,43 @@
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Type_iFrameController_Props } from './IFrameController';
+import { YouTubeEvent } from 'react-youtube';
 
 import { MaterialSymbolsVolumeUp, MaterialSymbolsVolumeDown, MaterialSymbolsVolumeOff } from '../../assets/iFrameSymbols';
 
-const IFrameControllerVolumeIndicator = ({ player }: Type_iFrameController_Props) => {
-  const volumeUpRef = useRef<HTMLButtonElement>(null);
-  const volumeDownRef = useRef<HTMLButtonElement>(null);
-  const volumeOffRef = useRef<HTMLButtonElement>(null);
+const IFrameControllerVolumeIndicator = ({ player }: { player: YouTubeEvent | undefined }) => {
+  const [symbolComponent, setSymbolComponent] = useState<JSX.Element>(<MaterialSymbolsVolumeOff />);
 
-  const volumeIndicator = async (): Promise<void> => {
+  const handleVolumeIndicator = (): void => {
     if (!player) return;
-    const isMuted: boolean = await player.target.isMuted();
-    const getVolume: number = await player.target.getVolume();
 
-    if (isMuted) {
-      volumeUpRef.current?.setAttribute('data-visible', 'false');
-      volumeDownRef.current?.setAttribute('data-visible', 'false');
-      volumeOffRef.current?.setAttribute('data-visible', 'true');
-    }
+    switch (true) {
+      case playerVolume === 0:
+        setSymbolComponent(<MaterialSymbolsVolumeOff />);
+        break;
 
-    if (getVolume <= 50) {
-      volumeUpRef.current?.setAttribute('data-visible', 'false');
-      volumeDownRef.current?.setAttribute('data-visible', 'true');
-      volumeOffRef.current?.setAttribute('data-visible', 'false');
-    }
+      case playerVolume! <= 50:
+        setSymbolComponent(<MaterialSymbolsVolumeDown />);
+        break;
 
-    if (getVolume >= 90) {
-      volumeUpRef.current?.setAttribute('data-visible', 'true');
-      volumeDownRef.current?.setAttribute('data-visible', 'false');
-      volumeOffRef.current?.setAttribute('data-visible', 'false');
+      case playerVolume! >= 90:
+        setSymbolComponent(<MaterialSymbolsVolumeUp />);
+        break;
+
+      default:
+        setSymbolComponent(<MaterialSymbolsVolumeOff />);
+        break;
     }
   };
 
+  useEffect(() => handleVolumeIndicator(), [playerVolume]);
+
+  const muteUnmute = () => {
+    playerVolume! > 0 ? setPlayerVolume!(0) : setPlayerVolume!((prevVolume) => prevVolume);
+  };
+
   return (
-    <button className='iFrameController__features__button' onClick={() => volumeIndicator()}>
-      <span className='iFrameController__features__button--up' ref={volumeUpRef} data-visible='false'>
-        <MaterialSymbolsVolumeUp />
-      </span>
-      <span className='iFrameController__features__button--down' ref={volumeDownRef} data-visible='true'>
-        <MaterialSymbolsVolumeDown />
-      </span>
-      <span className='iFrameController__features__button--off' ref={volumeOffRef} data-visible='false'>
-        <MaterialSymbolsVolumeOff />
-      </span>
+    <button className='iFrameController__features__button' onClick={() => muteUnmute()}>
+      <span className='iFrameController__features__button--symbol'>{symbolComponent}</span>
     </button>
   );
 };
