@@ -7,8 +7,6 @@ import IFrameVolumeSlider from './IFrameControllerVolumeSlider';
 
 type TYPE_IFRAMECONTROLLER_PROP_REFERENCE = {
   player: YouTubeEvent | undefined;
-  playerVolume: number;
-  setPlayerVolume: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const IFrameController = ({ player }: { player: YouTubeEvent | undefined }) => {
