@@ -26,6 +26,7 @@ const IFrameControllerVolumeSlider = ({ player, setPlayerVolume }: { player: You
       ref={sliderRef}
       onPointerDown={() => setIsDragging(true)}
       onPointerUp={() => setIsDragging(false)}
+      onPointerLeave={() => setIsDragging(false)}
       onPointerMove={(e: PointerEvent<HTMLButtonElement>) => moveHandle(e)}>
       <span className='iFrameController__features__slider--range' />
       <span className='iFrameController__features__slider--handle' ref={handleRef} style={{ left: '0%' }} />
