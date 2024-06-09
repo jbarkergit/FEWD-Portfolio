@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 
-import { Type_iFrameController_Props } from './IFrameController';
+import { YouTubeEvent } from 'react-youtube';
 
 import { MaterialSymbolsPlayArrow, MaterialSymbolsPause } from '../../assets/iFrameSymbols';
 
-const IFrameControllerPlayPause = ({ player }: Type_iFrameController_Props) => {
+const IFrameControllerPlayPause = ({ player }: { player: YouTubeEvent | undefined }) => {
   const playRef = useRef<HTMLSpanElement>(null);
   const pauseRef = useRef<HTMLSpanElement>(null);
 

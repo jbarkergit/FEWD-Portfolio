@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import { YouTubeEvent } from 'react-youtube';
 
 import IFramePlayPause from './IFrameControllerPlayPause';
@@ -7,26 +5,19 @@ import IFramePlayback from './IFrameControllerPlayback';
 import IFrameVolumeIndicator from './IFrameControllerVolumeIndicator';
 import IFrameVolumeSlider from './IFrameControllerVolumeSlider';
 
-export type Type_iFrameController_Props = {
+type TYPE_IFRAMECONTROLLER_PROP_REFERENCE = {
   player: YouTubeEvent | undefined;
-  playerVolume?: number;
-  setPlayerVolume?: React.Dispatch<React.SetStateAction<number>>;
+  playerVolume: number;
+  setPlayerVolume: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const IFrameController = ({ player }: Type_iFrameController_Props) => {
-  /** Hoisted dependencies */
-  const [playerVolume, setPlayerVolume] = useState<number>(0);
-
-  useEffect(() => {
-    if (player) player.target.setVolume(playerVolume);
-  }, [playerVolume]);
-
+const IFrameController = ({ player }: { player: YouTubeEvent | undefined }) => {
   return (
     <div className='iFrameController'>
       <div className='iFrameController__features'>
         <IFramePlayPause player={player} />
-        <IFrameVolumeIndicator player={player} playerVolume={playerVolume} />
-        <IFrameVolumeSlider player={player} playerVolume={playerVolume} setPlayerVolume={setPlayerVolume} />
+        <IFrameVolumeIndicator player={player} />
+        <IFrameVolumeSlider player={player} />
         <IFramePlayback player={player} />
       </div>
 
