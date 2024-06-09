@@ -1,8 +1,8 @@
-import { useRef, useState, PointerEvent } from 'react';
+import { useRef, useState, PointerEvent, Dispatch, SetStateAction } from 'react';
 
 import { YouTubeEvent } from 'react-youtube';
 
-const IFrameControllerVolumeSlider = ({ player }: { player: YouTubeEvent | undefined }) => {
+const IFrameControllerVolumeSlider = ({ player, setPlayerVolume }: { player: YouTubeEvent | undefined; setPlayerVolume: Dispatch<SetStateAction<number>> }) => {
   const sliderRef = useRef<HTMLButtonElement>(null);
   const handleRef = useRef<HTMLSpanElement>(null);
 
@@ -15,7 +15,7 @@ const IFrameControllerVolumeSlider = ({ player }: { player: YouTubeEvent | undef
       const position: number = (xOffset / sliderRect.width) * 100;
       const clampedPosition: number = Math.min(100, Math.max(0, position));
       handleRef.current.style.left = `${clampedPosition}%`;
-      player.target.setVolume(clampedPosition);
+      setPlayerVolume(clampedPosition);
     }
   };
 

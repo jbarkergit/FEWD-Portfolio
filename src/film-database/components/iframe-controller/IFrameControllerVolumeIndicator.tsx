@@ -4,10 +4,10 @@ import { YouTubeEvent } from 'react-youtube';
 
 import { MaterialSymbolsVolumeUp, MaterialSymbolsVolumeDown, MaterialSymbolsVolumeOff } from '../../assets/iFrameSymbols';
 
-const IFrameControllerVolumeIndicator = ({ player }: { player: YouTubeEvent | undefined }) => {
+const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: YouTubeEvent | undefined; playerVolume: number }) => {
   const [symbolComponent, setSymbolComponent] = useState<JSX.Element>(<MaterialSymbolsVolumeOff />);
 
-  const handleVolumeIndicator = (): void => {
+  const handleVolumeIndicator = async () => {
     if (!player) return;
 
     switch (true) {
@@ -15,24 +15,33 @@ const IFrameControllerVolumeIndicator = ({ player }: { player: YouTubeEvent | un
         setSymbolComponent(<MaterialSymbolsVolumeOff />);
         break;
 
-      case playerVolume! <= 50:
+      case playerVolume <= 50:
         setSymbolComponent(<MaterialSymbolsVolumeDown />);
         break;
 
-      case playerVolume! >= 90:
+      case playerVolume > 50:
         setSymbolComponent(<MaterialSymbolsVolumeUp />);
         break;
 
       default:
-        setSymbolComponent(<MaterialSymbolsVolumeOff />);
         break;
     }
   };
 
-  useEffect(() => handleVolumeIndicator(), [playerVolume]);
+  useEffect(() => {
+    handleVolumeIndicator();
+  }, [playerVolume]);
 
-  const muteUnmute = () => {
-    playerVolume! > 0 ? setPlayerVolume!(0) : setPlayerVolume!((prevVolume) => prevVolume);
+  const muteUnmute = async () => {
+    if (!player) return;
+    const isPlayerMuted: boolean = await player.target.isMuted();
+    if (isPlayerMuted) {
+      player.target.unMute();
+      handleVolumeIndicator();
+    } else {
+      player.target.mute();
+      setSymbolComponent(<MaterialSymbolsVolumeOff />);
+    }
   };
 
   return (
