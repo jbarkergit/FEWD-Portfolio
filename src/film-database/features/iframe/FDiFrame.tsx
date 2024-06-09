@@ -86,6 +86,12 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
   // Init player
   const [player, setPlayer] = useState<YouTubeEvent | undefined>(undefined);
 
+  useEffect(() => {
+    if (!player) return;
+    player.target.setVolume(0);
+    player.target.mute();
+  }, [player]);
+
   /** Component */
   if (trailers && trailers.length > 0) {
     return (
