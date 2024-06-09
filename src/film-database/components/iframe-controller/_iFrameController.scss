@@ -13,22 +13,15 @@
   border-radius: 6px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.08) 80%, rgba(0, 0, 0, 0) 100%);
   pointer-events: all;
-  // opacity: 0;
-  transition: opacity 0.1s ease-in-out;
-  // transition: opacity .25s cubic-bezier(0,0,.2,1)
-
+  opacity: 0.1;
+  transition: opacity 0.25s cubic-bezier(0, 0, 0.2, 1);
   &__features {
+    flex: 1 0 50%;
     position: relative;
     display: flex;
     align-items: center;
     gap: f.rem(10);
     height: inherit;
-    &:nth-of-type(1) {
-      flex: 1 0 50%;
-    }
-    &:nth-of-type(2) {
-      flex: 0 1 50%;
-    }
     & > * {
       margin: 0 2px;
       opacity: 0.9;
@@ -92,11 +85,6 @@
       margin-right: 4px;
       & > * {
         @include m.fdFontM;
-      }
-      &--current,
-      &--duration {
-      }
-      &--seperator {
       }
     }
   }
