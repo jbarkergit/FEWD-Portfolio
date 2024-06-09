@@ -34,14 +34,14 @@ const IFrameControllerVolumeIndicator = ({ player }: Type_ReactYouTube_YouTubeEv
   };
 
   return (
-    <button className='iFrameController__interact__volume' onClick={() => volumeIndicator()}>
-      <span className='iFrameController__interact__volume--up' ref={volumeUpRef} data-visible='false'>
+    <button className='iFrameController__features__button' onClick={() => volumeIndicator()}>
+      <span className='iFrameController__features__button--up' ref={volumeUpRef} data-visible='false'>
         <MaterialSymbolsVolumeUp />
       </span>
-      <span className='iFrameController__interact__volume--down' ref={volumeDownRef} data-visible='true'>
+      <span className='iFrameController__features__button--down' ref={volumeDownRef} data-visible='true'>
         <MaterialSymbolsVolumeDown />
       </span>
-      <span className='iFrameController__interact__volume--off' ref={volumeOffRef} data-visible='false'>
+      <span className='iFrameController__features__button--off' ref={volumeOffRef} data-visible='false'>
         <MaterialSymbolsVolumeOff />
       </span>
     </button>

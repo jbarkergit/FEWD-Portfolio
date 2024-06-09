@@ -26,11 +26,11 @@ const IFrameControllerPlayPause = ({ player }: Type_ReactYouTube_YouTubeEvent) =
   };
 
   return (
-    <button className='iFrameController__interact__playpause' onClick={() => playPause()}>
-      <span className='iFrameController__interact__playpause--play' ref={playRef} data-visible='false'>
+    <button className='iFrameController__features__button' onClick={() => playPause()}>
+      <span className='iFrameController__features__button--play' ref={playRef} data-visible='false'>
         <MaterialSymbolsPlayArrow />
       </span>
-      <span className='iFrameController__interact__playpause--pause' ref={pauseRef} data-visible='true'>
+      <span className='iFrameController__features__button--pause' ref={pauseRef} data-visible='true'>
         <MaterialSymbolsPause />
       </span>
     </button>

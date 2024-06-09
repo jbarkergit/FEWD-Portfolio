@@ -7,7 +7,7 @@ import { Type_ReactYouTube_YouTubeEvent } from '../../features/iframe/FDiFrame';
 const IFrameController = ({ player }: Type_ReactYouTube_YouTubeEvent) => {
   return (
     <div className='iFrameController'>
-      <div className='iFrameController__interact'>
+      <div className='iFrameController__features'>
         <IFramePlayPause player={player} />
         <IFrameVolumeIndicator player={player} />
         <IFrameVolumeSlider player={player} />
