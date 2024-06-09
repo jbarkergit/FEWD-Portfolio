@@ -2,8 +2,8 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
-import FDCarouselArticles from './FDCarouselArticles';
-import FDCarouselButton from './FDCarouselButton';
+import FDCarouselArticles from '../../components/carousel/FDCarouselArticles';
+import FDCarouselButton from '../../components/carousel/FDCarouselButton';
 
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/carouselSymbols';
 
