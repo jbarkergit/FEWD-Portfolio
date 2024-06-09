@@ -16,6 +16,7 @@ const IFrameControllerVolumeSlider = ({ player, setPlayerVolume }: { player: You
       const clampedPosition: number = Math.min(100, Math.max(0, position));
       handleRef.current.style.left = `${clampedPosition}%`;
       setPlayerVolume(clampedPosition);
+      player.target.unMute();
     }
   };
 
