@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
 
-import { MaterialSymbolsSearch, MaterialSymbolsHomeRounded, MaterialSymbolsMenuRounded } from '../../assets/menuSymbols';
+import { MaterialSymbolsSearch, MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp } from '../../assets/menuSymbols';
 
 import FDSearchBar from '../../components/search-bar/FDSearchBar';
 
@@ -15,8 +15,8 @@ const FDMenu = () => {
 
   const toolbarObjArr = [
     { key: 'Search', icon: <MaterialSymbolsSearch />, ref: menuSearchRef },
-    { key: 'Home', icon: <MaterialSymbolsHomeRounded />, ref: undefined },
-    { key: 'Genres', icon: <MaterialSymbolsMenuRounded />, ref: menuGenresRef },
+    { key: 'Home', icon: <MaterialSymbolsHome />, ref: undefined },
+    { key: 'Genres', icon: <MaterialSymbolsAnimatedImagesSharp />, ref: menuGenresRef },
   ];
 
   const toggleMenus = (refParam: RefObject<HTMLElement> | undefined) => {

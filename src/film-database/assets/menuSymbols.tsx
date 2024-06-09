@@ -10,22 +10,18 @@ export function MaterialSymbolsSearch(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function MaterialSymbolsHomeRounded(props: SVGProps<SVGSVGElement>) {
+export function MaterialSymbolsHome(props: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...props}>
-      <path
-        fill='currentColor'
-        d='M4 19v-9q0-.475.213-.9t.587-.7l6-4.5q.525-.4 1.2-.4t1.2.4l6 4.5q.375.275.588.7T20 10v9q0 .825-.588 1.413T18 21h-3q-.425 0-.712-.288T14 20v-5q0-.425-.288-.712T13 14h-2q-.425 0-.712.288T10 15v5q0 .425-.288.713T9 21H6q-.825 0-1.412-.587T4 19'></path>
+      <path fill='currentColor' d='M4 21V9l8-6l8 6v12h-6v-7h-4v7z'></path>
     </svg>
   );
 }
 
-export function MaterialSymbolsMenuRounded(props: SVGProps<SVGSVGElement>) {
+export function MaterialSymbolsAnimatedImagesSharp(props: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...props}>
-      <path
-        fill='currentColor'
-        d='M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z'></path>
+      <path fill='currentColor' d='m12 13.5l6-4l-6-4zM7.025 17V2h15v15zM3.75 22.125L1.9 7.2l3.125-.35V19H18.3l.175 1.325z'></path>
     </svg>
   );
 }
