@@ -47,12 +47,6 @@
         align-items: center;
         width: inherit;
         height: inherit;
-        &[data-visible='true'] {
-          opacity: 1;
-        }
-        &[data-visible='false'] {
-          opacity: 0;
-        }
         & svg {
           width: 1.8em;
           height: 1.8em;
