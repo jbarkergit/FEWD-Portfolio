@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import YouTube, { YouTubeEvent } from 'react-youtube';
 import { Options } from 'youtube-player/dist/types';
@@ -64,7 +64,7 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
     width: undefined,
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
+      autoplay: 0,
       cc_lang_pref: 'eng',
       cc_load_policy: 1,
       // color: undefined,
@@ -101,7 +101,7 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
           iframeClassName='fdiFrame__wrapper--iframe'
           title={`YouTube video player: ${trailers[0].name}`}
           style={undefined}
-          loading={'eager'}
+          loading={'lazy'}
           onReady={(event: YouTubeEvent) => setPlayer(event)}
           onEnd={() => {
             player?.target.destroy();
