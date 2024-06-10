@@ -17,12 +17,12 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubeEvent | undefined
 
     const updateCurrentTime = async () => {
       const currentTime: number = await player.target.getCurrentTime();
-      setCurrent(formatTime(currentTime));
+      if (currentTime) setCurrent(formatTime(currentTime));
     };
 
     const updateDuration = async () => {
       const videoDuration: number = await player.target.getDuration();
-      setDuration(formatTime(videoDuration));
+      if (videoDuration) setDuration(formatTime(videoDuration));
     };
 
     updateCurrentTime();
