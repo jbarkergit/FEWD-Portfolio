@@ -61,7 +61,7 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
     width: undefined,
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
-      autoplay: 0,
+      autoplay: 1,
       cc_lang_pref: 'eng',
       cc_load_policy: 1,
       // color: undefined,
@@ -73,7 +73,7 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
       hl: 'eng',
       iv_load_policy: 3,
       loop: 0,
-      origin: 'http://localhost:5173/film-database',
+      // origin: '',
       // playlist?: string | undefined;
       playsinline: 1,
       rel: 0,
@@ -99,7 +99,12 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
           title={`YouTube video player: ${trailers[0].name}`}
           style={undefined}
           loading={'eager'}
-          onReady={(event: YouTubeEvent) => setPlayer(event.target)}
+          onReady={(event: YouTubeEvent) => {
+            setPlayer(event.target);
+            event.target.mute();
+            event.target.setVolume(0);
+            event.target.playVideo();
+          }}
           onEnd={() => {
             player?.destroy();
             setTrailers(undefined);
