@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
-import { YouTubeEvent } from 'react-youtube';
+import { YouTubePlayer } from 'react-youtube';
 
-const IFrameControllerPlayback = ({ player }: { player: YouTubeEvent | undefined }) => {
+const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefined }) => {
   const [current, setCurrent] = useState<string>('00:00');
   const [duration, setDuration] = useState<string>('00:00');
 
@@ -16,12 +16,12 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubeEvent | undefined
     if (!player) return;
 
     const updateCurrentTime = async () => {
-      const currentTime: number = await player.target.getCurrentTime();
+      const currentTime: number = await player.getCurrentTime();
       if (currentTime) setCurrent(formatTime(currentTime));
     };
 
     const updateDuration = async () => {
-      const videoDuration: number = await player.target.getDuration();
+      const videoDuration: number = await player.getDuration();
       if (videoDuration) setDuration(formatTime(videoDuration));
     };
 

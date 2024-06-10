@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import YouTube, { YouTubeEvent, YouTubeProps } from 'react-youtube';
+import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
 
 import { tmdbMovieEndpoints, Type_Tmdb_Movie_Keys_Union } from '../../composables/tmdb-api/data/tmdbEndPoints';
 
@@ -83,7 +83,7 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
   };
 
   // Init player
-  const [player, setPlayer] = useState<YouTubeEvent | undefined>(undefined);
+  const [player, setPlayer] = useState<YouTubePlayer | undefined>(undefined);
 
   /** Component */
   if (trailers && trailers.length > 0) {
@@ -99,13 +99,13 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
           title={`YouTube video player: ${trailers[0].name}`}
           style={undefined}
           loading={'eager'}
-          onReady={(event: YouTubeEvent) => setPlayer(event)}
+          onReady={(event: YouTubeEvent) => setPlayer(event.target)}
           onEnd={() => {
-            player?.target.destroy();
+            player?.destroy();
             setTrailers(undefined);
           }}
           onError={() => {
-            player?.target.destroy();
+            player?.destroy();
             setTrailers(undefined);
           }}
         />

@@ -1,13 +1,13 @@
 import { useRef, useState, PointerEvent, Dispatch, SetStateAction } from 'react';
 
-import { YouTubeEvent } from 'react-youtube';
+import { YouTubePlayer } from 'react-youtube';
 
 const IFrameControllerVolumeSlider = ({
   player,
   playerVolume,
   setPlayerVolume,
 }: {
-  player: YouTubeEvent | undefined;
+  player: YouTubePlayer | undefined;
   playerVolume: number;
   setPlayerVolume: Dispatch<SetStateAction<number>>;
 }) => {
@@ -26,7 +26,7 @@ const IFrameControllerVolumeSlider = ({
       handleRef.current.style.left = `${clampedPosition}%`;
       setPlayerVolume(clampedPosition);
 
-      if (playerVolume !== 0) player.target.unMute();
+      if (playerVolume !== 0) player.unMute();
     }
   };
 

@@ -1,23 +1,23 @@
 import { useState } from 'react';
 
-import { YouTubeEvent } from 'react-youtube';
+import { YouTubePlayer } from 'react-youtube';
 
 import { MaterialSymbolsPlayArrow, MaterialSymbolsPause } from '../../assets/iFrameSymbols';
 
-const IFrameControllerPlayPause = ({ player }: { player: YouTubeEvent | undefined }) => {
+const IFrameControllerPlayPause = ({ player }: { player: YouTubePlayer | undefined }) => {
   const [symbolComponent, setSymbolComponent] = useState<JSX.Element>(<MaterialSymbolsPause />);
 
   const playPause = async (): Promise<void> => {
     if (!player) return;
-    const isMuted: boolean = await player.target.isMuted();
+    const isMuted: boolean = await player.isMuted();
 
     if (isMuted) {
-      player.target.unMute();
-      player.target.playVideo();
+      player.unMute();
+      player.playVideo();
       setSymbolComponent(<MaterialSymbolsPlayArrow />);
     } else {
-      player.target.mute();
-      player.target.pauseVideo();
+      player.mute();
+      player.pauseVideo();
       setSymbolComponent(<MaterialSymbolsPause />);
     }
   };

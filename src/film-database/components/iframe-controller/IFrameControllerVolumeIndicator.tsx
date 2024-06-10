@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { YouTubeEvent } from 'react-youtube';
+import { YouTubePlayer } from 'react-youtube';
 
 import { MaterialSymbolsVolumeUp, MaterialSymbolsVolumeDown, MaterialSymbolsVolumeOff } from '../../assets/iFrameSymbols';
 
-const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: YouTubeEvent | undefined; playerVolume: number }) => {
+const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: YouTubePlayer | undefined; playerVolume: number }) => {
   const [symbolComponent, setSymbolComponent] = useState<JSX.Element>(<MaterialSymbolsVolumeOff />);
 
   const handleVolumeIndicator = async () => {
@@ -34,12 +34,12 @@ const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: You
 
   const muteUnmute = async () => {
     if (!player) return;
-    const isPlayerMuted: boolean = await player.target.isMuted();
+    const isPlayerMuted: boolean = await player.isMuted();
     if (isPlayerMuted) {
-      player.target.unMute();
+      player.unMute();
       handleVolumeIndicator();
     } else {
-      player.target.mute();
+      player.mute();
       setSymbolComponent(<MaterialSymbolsVolumeOff />);
     }
   };

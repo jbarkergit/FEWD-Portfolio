@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import { YouTubeEvent } from 'react-youtube';
+import { YouTubePlayer } from 'react-youtube';
 
 import IFrameControllerVolumeIndicator from './IFrameControllerVolumeIndicator';
 import IFrameControllerVolumeSlider from './IFrameControllerVolumeSlider';
 
-const IFrameControllerVolume = ({ player }: { player: YouTubeEvent | undefined }) => {
+const IFrameControllerVolume = ({ player }: { player: YouTubePlayer | undefined }) => {
   const [playerVolume, setPlayerVolume] = useState<number>(0);
 
   useEffect(() => {
-    if (player) player.target.setVolume(playerVolume);
+    if (player) player.setVolume(playerVolume);
   }, [playerVolume]);
 
   return (
