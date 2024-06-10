@@ -1,18 +1,15 @@
 // Global Styles
 @forward '/src/portfolio/scss/portfolioStyles';
 
-// Main Grid Styles
-@forward '/src/portfolio/pages/application-page/portfolioPage';
+// Pages (Main Grid Styles)
+@forward '/src/portfolio/pages/portfolioPage';
 
-// Project Hub Component
+// Components
 @forward '/src/portfolio/components/project-hub/carousel/projectCarousel.scss';
 @forward '/src/portfolio/components/project-hub/navigation/portNavigation';
 
-// Project Insights Component
 @forward '/src/portfolio/components/project-insights/projectInsights';
 
-// Contact Form Component
 @forward '/src/portfolio/components/contact-form/contactForm';
 
-// Mobile Menu
 @forward '/src/portfolio/components/mobile-menu/portMobileMenu';
