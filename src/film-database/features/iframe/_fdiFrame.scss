@@ -10,16 +10,11 @@
   &--h2 {
     display: none;
   }
-  &__backdrop picture img,
-  &__wrapper iframe {
-    transform: scale(1.4);
-  }
   &__backdrop,
   &__wrapper {
     position: absolute;
     top: 0;
     right: 0;
-    // 100svh - carousel height
     height: calc(100svh - var(--fd-carousel-featured-height));
     aspect-ratio: 16/9;
     &::before {
@@ -45,11 +40,14 @@
       pointer-events: none;
     }
   }
-
+  &__backdrop picture img,
   &__wrapper iframe {
-    width: 100%;
-    height: 100%;
-    // pointer-events: none;
+    transform: scale(1.36);
+  }
+  &__wrapper iframe {
+    width: inherit;
+    height: inherit;
+    aspect-ratio: inherit;
     // YouTube IFrame Player API Requirements (16/9)
     min-width: 480px;
     min-height: 270px;
