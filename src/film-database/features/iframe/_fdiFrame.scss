@@ -47,6 +47,7 @@
     width: inherit;
     height: inherit;
     aspect-ratio: inherit;
+    pointer-events: none;
     // YouTube IFrame Player API Requirements (16/9)
     min-width: 480px;
     min-height: 270px;
