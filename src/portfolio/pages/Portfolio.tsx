@@ -1,8 +1,9 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import ProjectHub from '../structure-pages/ProjectHub';
-import ProjectDetails from '../structure-pages/ProjectInsights';
-import ContactForm from '../structure-pages/ContactForm';
-import PortMobileMenu from '../../components/mobile-menu/PortMobileMenu';
+
+import PortMobileMenu from '../components/mobile-menu/PortMobileMenu';
+import ContactForm from '../features/contact-form/ContactForm';
+import ProjectHub from '../features/project-hub/ProjectHub';
+import ProjectInsights from '../features/project-insights/ProjectInsights';
 
 /** Component */
 const Portfolio = (): JSX.Element => {
@@ -99,7 +100,7 @@ const Portfolio = (): JSX.Element => {
         portMobileMenuRef={portMobileMenuRef}
         usePortMobileMenu={usePortMobileMenu}
       />
-      <ProjectDetails
+      <ProjectInsights
         projectSlideIndex={projectSlideIndex}
         setProjectSlideIndex={setProjectSlideIndex}
         featureState={featureState}
