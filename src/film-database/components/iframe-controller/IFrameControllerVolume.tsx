@@ -15,7 +15,7 @@ const IFrameControllerVolume = ({ player }: { player: YouTubeEvent | undefined }
   return (
     <>
       <IFrameControllerVolumeIndicator player={player} playerVolume={playerVolume} />
-      <IFrameControllerVolumeSlider player={player} setPlayerVolume={setPlayerVolume} />
+      <IFrameControllerVolumeSlider player={player} playerVolume={playerVolume} setPlayerVolume={setPlayerVolume} />
     </>
   );
 };
