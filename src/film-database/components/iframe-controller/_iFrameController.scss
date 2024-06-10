@@ -17,7 +17,7 @@
   border-radius: 6px;
   // background: linear-gradient(to top, rgba(0, 0, 0, 0.08) 80%, rgba(0, 0, 0, 0) 100%);
   pointer-events: all;
-  opacity: 0.065;
+  opacity: 0;
   transition: opacity 0.25s cubic-bezier(0, 0, 0.2, 1);
   & > * {
     margin: 0 2px;
