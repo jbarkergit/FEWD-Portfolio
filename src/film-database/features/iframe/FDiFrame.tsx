@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import YouTube, { YouTubeEvent } from 'react-youtube';
-import { Options } from 'youtube-player/dist/types';
+import YouTube, { YouTubeEvent, YouTubeProps } from 'react-youtube';
 
 import { tmdbMovieEndpoints, Type_Tmdb_Movie_Keys_Union } from '../../composables/tmdb-api/data/tmdbEndPoints';
 
@@ -57,7 +56,7 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
   }, [heroData]);
 
   // iFrame options
-  const opts: Options = {
+  const opts: YouTubeProps['opts'] = {
     height: undefined,
     width: undefined,
     playerVars: {
@@ -99,7 +98,7 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
           iframeClassName='fdiFrame__wrapper--iframe'
           title={`YouTube video player: ${trailers[0].name}`}
           style={undefined}
-          loading={'lazy'}
+          loading={'eager'}
           onReady={(event: YouTubeEvent) => setPlayer(event)}
           onEnd={() => {
             player?.target.destroy();
