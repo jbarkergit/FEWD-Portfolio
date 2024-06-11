@@ -8,6 +8,7 @@ import SuspenseSkeletonHandler from './app/suspense/SuspenseSkeletonHandler';
 const ProtocolErrorHandler = lazy(() => import('./app/protocol-error/ProtocolErrorHandler'));
 // Ecommerce routes for dynamic lazy loading
 import { useUniqueData } from './ecommerce/hooks/useUniqueData';
+import NetworkVisualizer from './app/network-visualizer/NetworkVisualizer';
 
 function App() {
   /** Data */
@@ -102,14 +103,14 @@ function App() {
   // Queue routes when userLocation().pathname changes
   useEffect(() => queueRoute(), [userLocationPathname]);
 
-  /** Get route component hook */
-  const useModule = (path: string) => routeComponents.find((route) => route.path === path);
+  /** Path *: Determine whether to return 404 page or network visualizer */
+  const isPathAvailable: boolean = [...Object.values(appRoutes)].flatMap((entries) => entries).some((route) => route.path === userLocationPathname);
 
   /** Application */
   return (
     <Suspense fallback={<SuspenseSkeletonHandler />}>
       <Routes>
-        <Route path='*' element={<ProtocolErrorHandler />} />
+        <Route path='*' element={isPathAvailable ? <NetworkVisualizer /> : <ProtocolErrorHandler />} />
         {routeComponents.map((route) => {
           const { path, component } = route;
           return <Route path={path} element={component} key={uuidv4()} />;
