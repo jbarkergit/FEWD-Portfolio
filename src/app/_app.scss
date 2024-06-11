@@ -20,3 +20,20 @@
     }
   }
 }
+
+.networkVisualizer {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto repeat(1fr);
+  width: 100svw;
+  height: 100svh;
+  padding-left: 25svw;
+  background-color: hsl(240, 4%, 9%);
+  color: hsl(0, 0%, 96%);
+  overflow-x: clip;
+  overflow-y: scroll;
+  & div {
+    display: flex;
+    gap: 30px;
+  }
+}

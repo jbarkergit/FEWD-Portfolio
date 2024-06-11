@@ -3,10 +3,9 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 // 404
-const ProtocolErrorHandler = lazy(() => import('./app/protocol-error/ProtocolErrorHandler'));
+const ProtocolErrorHandler = lazy(() => import('./app/ProtocolErrorHandler'));
 
 // Suspense fallback
-const NetworkVisualizer = lazy(() => import('./app/network-visualizer/NetworkVisualizer'));
 const HomeSkeleton = lazy(() => import('./ecommerce/skeletons/pages/HomeSkeleton'));
 const ProductCatalogSkeleton = lazy(() => import('./ecommerce/skeletons/pages/ProductCatalogSkeleton'));
 const ProductDetailPageSkeleton = lazy(() => import('./ecommerce/skeletons/pages/ProductDetailPageSkeleton'));
@@ -120,14 +119,14 @@ function App() {
     }
   };
 
-  /** Path *: Determine whether to return 404 page or network visualizer */
+  /** Path *: Determine whether to return 404 page or other */
   const isPathAvailable: boolean = [...Object.values(appRoutes)].flatMap((entries) => entries).some((route) => route.path === userLocationPathname);
 
   /** Application */
   return (
     <Suspense fallback={suspenseFallback()}>
       <Routes>
-        <Route path='*' element={isPathAvailable ? <NetworkVisualizer /> : <ProtocolErrorHandler />} />
+        <Route path='*' element={<ProtocolErrorHandler />} />
         {routeComponents.map((route) => {
           const { path, component } = route;
           return <Route path={path} element={component} key={uuidv4()} />;
