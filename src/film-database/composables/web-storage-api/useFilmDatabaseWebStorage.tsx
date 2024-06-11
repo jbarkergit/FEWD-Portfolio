@@ -1,4 +1,3 @@
-import { filmDatabaseKeyValuePairs } from '../../../App';
 import { Type_Tmdb_Api_Union } from '../tmdb-api/types/TmdbDataTypes';
 
 const fireCrossOriginError = (): void => console.error('Cross-Origin access to sessionStorage is not permitted.');
@@ -22,8 +21,8 @@ const getParsedData = (key: string): Type_Tmdb_Api_Union[] | undefined => {
 };
 
 export const useFilmDatabaseWebStorage = (userLocation: string) => {
-  /** Simple Cross-Origin restriction safety protocol (utilizes project paths from custom app routing solution) */
-  const isSameOrigin: boolean = filmDatabaseKeyValuePairs.some((obj) => obj.path === userLocation);
+  /** Simple Cross-Origin restriction safety protocol */
+  const isSameOrigin: boolean = '/film-database' === userLocation;
 
   const setData = (cacheKey: string, data: Type_Tmdb_Api_Union[]): void => {
     if (isSameOrigin) {
