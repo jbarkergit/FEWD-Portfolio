@@ -2,13 +2,17 @@ import { Suspense, lazy, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-// Suspense Skeleton Route Path Handler
-import SuspenseSkeletonHandler from './app/suspense/SuspenseSkeletonHandler';
-// Protocol Error Handler
+// 404
 const ProtocolErrorHandler = lazy(() => import('./app/protocol-error/ProtocolErrorHandler'));
+
+// Suspense fallback
+const NetworkVisualizer = lazy(() => import('./app/network-visualizer/NetworkVisualizer'));
+const HomeSkeleton = lazy(() => import('./ecommerce/skeletons/pages/HomeSkeleton'));
+const ProductCatalogSkeleton = lazy(() => import('./ecommerce/skeletons/pages/ProductCatalogSkeleton'));
+const ProductDetailPageSkeleton = lazy(() => import('./ecommerce/skeletons/pages/ProductDetailPageSkeleton'));
+
 // Ecommerce routes for dynamic lazy loading
 import { useUniqueData } from './ecommerce/hooks/useUniqueData';
-import NetworkVisualizer from './app/network-visualizer/NetworkVisualizer';
 
 function App() {
   /** Data */
@@ -103,12 +107,25 @@ function App() {
   // Queue routes when userLocation().pathname changes
   useEffect(() => queueRoute(), [userLocationPathname]);
 
+  /** Suspense */
+  const suspenseFallback = () => {
+    if (userLocationPathname === '/ecommerce') {
+      return <HomeSkeleton />;
+    } else if (appRoutes.ecommerce.flatMap((entries) => entries.path).includes(userLocationPathname)) {
+      return <ProductCatalogSkeleton />;
+    } else if (userLocationPathname.startsWith('/ecommerce')) {
+      return <ProductDetailPageSkeleton />;
+    } else {
+      return <div id='defaultSuspense' style={{ height: '100vh', width: '100%', backgroundColor: 'hsl(0, 0%, 10%)' }} />;
+    }
+  };
+
   /** Path *: Determine whether to return 404 page or network visualizer */
   const isPathAvailable: boolean = [...Object.values(appRoutes)].flatMap((entries) => entries).some((route) => route.path === userLocationPathname);
 
   /** Application */
   return (
-    <Suspense fallback={<SuspenseSkeletonHandler />}>
+    <Suspense fallback={suspenseFallback()}>
       <Routes>
         <Route path='*' element={isPathAvailable ? <NetworkVisualizer /> : <ProtocolErrorHandler />} />
         {routeComponents.map((route) => {
