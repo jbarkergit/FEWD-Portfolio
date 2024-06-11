@@ -1,137 +1,119 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
-/**
- * Suspense Skeleton Route Path Handler
- * Protocol Error Handler
- * Lazy load hook required for ecommerce dynamic routes
- */
+// Suspense Skeleton Route Path Handler
 import SuspenseSkeletonHandler from './app/suspense/SuspenseSkeletonHandler';
+// Protocol Error Handler
 const ProtocolErrorHandler = lazy(() => import('./app/protocol-error/ProtocolErrorHandler'));
+// Ecommerce routes for dynamic lazy loading
 import { useUniqueData } from './ecommerce/hooks/useUniqueData';
 
-/** Key value pair arrays */
-const portfolioKeyValuePairs = [{ path: '/', element: './portfolio/pages/Portfolio.tsx' }];
-
-const ecommerceKeyValuePairs = [
-  { path: '/ecommerce', element: './ecommerce/pages/Home' },
-  {
-    path: ['/ecommerce/products', '/ecommerce/headphones', '/ecommerce/amps-dacs', '/ecommerce/microphones', '/ecommerce/interfaces'],
-    element: './ecommerce/pages/ProductCatalog',
-  },
-  { path: '/ecommerce/product/:paramId', element: './ecommerce/pages/ProductDetailPage' },
-];
-
-export const filmDatabaseKeyValuePairs = [{ path: '/film-database', element: './film-database/pages/FilmDatabase' }];
-
-const initialKeyValuePairs = [portfolioKeyValuePairs[0], ecommerceKeyValuePairs[0], filmDatabaseKeyValuePairs[0]];
-
-type GlobalKeyValuePairsType = (
-  | {
-      path: string;
-      element: string;
-    }
-  | {
-      path: string[];
-      element: string;
-    }
-)[];
-
-const globalKeyValuePairs: GlobalKeyValuePairsType = [...portfolioKeyValuePairs, ...ecommerceKeyValuePairs, ...filmDatabaseKeyValuePairs];
-
-type RoutesType = { path: string; module: JSX.Element };
-
-/** Module loader hook */
-const useModuleLoader = async (element: string): Promise<JSX.Element> => {
-  try {
-    const Module = await import(element);
-    return (<Module.default />) as JSX.Element;
-  } catch (error) {
-    console.error(`Error returning route path ${element}`, error);
-    throw error;
-  }
-};
-
-/** Application */
 function App() {
-  /** Dynamic Route Setter */
-  const location = useLocation().pathname as string;
-  const [routes, setRoutes] = useState<RoutesType[]>([]);
+  /** Data */
+  const getEcommerceFilterPaths = () => {
+    const { useUniqueCompanies, useUniqueWearStyles, useUniquePolarPatterns } = useUniqueData();
+    const companyPaths: string[] = useUniqueCompanies.map((company) => `/ecommerce/${company}`);
+    const wearStylePaths: string[] = useUniqueWearStyles.map((wearStyle) => `/ecommerce/${wearStyle}`);
+    const polarPatternPaths: string[] = useUniquePolarPatterns.map((polarPattern) => `/ecommerce/${polarPattern}`);
+    return [...companyPaths, ...wearStylePaths, ...polarPatternPaths];
+  };
 
-  /** Route setter */
-  const useRouteSetter = (keyValuePairs: GlobalKeyValuePairsType): void => {
-    for (const keyValuePair of keyValuePairs) {
-      useModuleLoader(keyValuePair.element as string).then((Module: JSX.Element) => {
-        setRoutes((previousRoutes) => [
-          ...previousRoutes,
-          ...(Array.isArray(keyValuePair.path)
-            ? keyValuePair.path.map((path: string) => ({ path: path, module: Module }))
-            : [{ path: keyValuePair.path, module: Module }]),
-        ]);
-      });
+  const appRoutes = {
+    portfolio: { path: '/', dir: './portfolio/pages/Portfolio.tsx' },
+    ecommerce: [
+      { path: '/ecommerce', dir: './ecommerce/pages/Home' },
+      {
+        path: [
+          '/ecommerce/products',
+          '/ecommerce/headphones',
+          '/ecommerce/amps-dacs',
+          '/ecommerce/microphones',
+          '/ecommerce/interfaces',
+          ...getEcommerceFilterPaths(),
+        ],
+        dir: './ecommerce/pages/ProductCatalog',
+      },
+      { path: '/ecommerce/product/:paramId', dir: './ecommerce/pages/ProductDetailPage' },
+    ],
+    filmDatabase: { path: '/film-database', dir: './film-database/pages/FilmDatabase' },
+  };
+
+  /** Component storage */
+  type Type_routeComponents_Object = { path: string; component: JSX.Element };
+  const [routeComponents, setRouteComponents] = useState<Type_routeComponents_Object[]>([]);
+
+  /** Import module, store route component */
+  type Type_createRoute_Param = { path: string; dir: string };
+
+  const createRoute = async (param: Type_createRoute_Param): Promise<void> => {
+    const { path, dir } = param;
+
+    if (!routeComponents.some((obj) => obj.path === path)) {
+      try {
+        const Module = await import(dir);
+        if (!Module) throw new Error(`${dir}`);
+
+        const component: JSX.Element = <Module.default />;
+        const routeComponentObj: Type_routeComponents_Object = { path, component };
+
+        setRouteComponents((prevRouteComponents) => [...prevRouteComponents, routeComponentObj]);
+      } catch (Error) {
+        console.error('Failure to load module: ', Error);
+      }
     }
   };
 
-  /** Dynamic module loader queue */
-  useEffect(() => {
-    let routeKeyValuePairs: GlobalKeyValuePairsType = [];
+  /** Route loading queue */
+  const userLocationPathname: string = useLocation().pathname;
 
-    // Prioritize importation of project landing pages on initial load
-    if (location === '/') {
-      routeKeyValuePairs = initialKeyValuePairs;
-    } // Handle individual landing page imports if user didn't visit '/'
-    else {
-      routeKeyValuePairs = globalKeyValuePairs.filter(
-        (keyValuePair) => keyValuePair.path === location || (Array.isArray(keyValuePair.path) && keyValuePair.path.includes(location))
-      );
+  const queueRoute = () => {
+    switch (userLocationPathname) {
+      // Prioritize landing pages on portfolio mount
+      case '/':
+        const landingPageRoutes: Type_createRoute_Param[] = [appRoutes.portfolio, appRoutes.filmDatabase, appRoutes.ecommerce[0] as Type_createRoute_Param];
+        landingPageRoutes.forEach((route) => createRoute(route));
+        break;
+
+      // Standard procedure
+      default:
+        for (const route of [...Object.values(appRoutes)]) {
+          // MPA (Routes entry is an array)
+          if (Array.isArray(route)) {
+            route.forEach(({ path, dir }) => {
+              const paths = path;
+
+              // If entry.path is an array, create individual queues
+              if (Array.isArray(paths)) {
+                paths.forEach((path) => createRoute({ path, dir }));
+              } else {
+                createRoute({ path, dir } as Type_createRoute_Param);
+              }
+            });
+            // SPA (Routes entry is an object)
+          } else {
+            createRoute(route);
+          }
+        }
+        break;
     }
+  };
 
-    // Check if all modules have been imported and stored in routes State to prevent useEffect from firing without cause
-    if (!globalKeyValuePairs.every((globalKeyValuePair) => routes.some((route) => route.path === globalKeyValuePair.path))) {
-      // Check if route module has been imported and stored in routes state to prevent unnecessary fires
-      if (!routes.some((route: RoutesType) => route.path === location))
-        // Pass arrays of route paths and elements from routeKeyValuePairs to useRouteSetter
-        // useRouteSetter then invokes useModuleLoader to store modules as JSX.Elements (async await promise conversion) in routes state
-        useRouteSetter(routeKeyValuePairs);
-      // Background Loading Queue order
-      // Note: SPA's (Portfolio) handle imports locally
-      // IMPORTANT NOTE: DON'T FORGET TO SLICE LANDING PAGES FOR NON SPA!
-      if (location.startsWith('/ecommerce')) useRouteSetter(ecommerceKeyValuePairs.slice(0));
-      if (location.startsWith('/film-database')) useRouteSetter(filmDatabaseKeyValuePairs.slice(0));
-    }
-  }, [location]);
+  // Queue routes when userLocation().pathname changes
+  useEffect(() => queueRoute(), [userLocationPathname]);
 
-  /** Simple hook to fetch JSX element from route state */
-  const useModule = (path: string) => routes.find((route) => route.path === path);
+  /** Get route component hook */
+  const useModule = (path: string) => routeComponents.find((route) => route.path === path);
 
   /** Application */
   return (
     <Suspense fallback={<SuspenseSkeletonHandler />}>
       <Routes>
         <Route path='*' element={<ProtocolErrorHandler />} />
-
-        <Route path='/' element={useModule('/')?.module} />
-
-        <Route path='/ecommerce' element={useModule('/ecommerce')?.module} />
-        <Route path='/ecommerce/products' element={useModule('/ecommerce/products')?.module} />
-        <Route path='/ecommerce/headphones' element={useModule('/ecommerce/headphones')?.module} />
-        <Route path='/ecommerce/amps-dacs' element={useModule('/ecommerce/amps-dacs')?.module} />
-        <Route path='/ecommerce/microphones' element={useModule('/ecommerce/microphones')?.module} />
-        <Route path='/ecommerce/interfaces' element={useModule('/ecommerce/interfaces')?.module} />
-        <Route path='/ecommerce/product/:paramId' element={useModule('/ecommerce/product/:paramId')?.module} />
-        {useUniqueData().useUniqueCompanies.map((company: string) => (
-          <Route path={`/ecommerce/${company}`} element={useModule('/ecommerce/products')?.module} key={company} />
-        ))}
-        {useUniqueData().useUniqueWearStyles.map((wearStyle: string) => (
-          <Route path={`/ecommerce/${wearStyle}`} element={useModule('/ecommerce/products')?.module} key={wearStyle} />
-        ))}
-        {useUniqueData().useUniquePolarPatterns.map((polarPattern: string) => (
-          <Route path={`/ecommerce/${polarPattern}`} element={useModule('/ecommerce/products')?.module} key={polarPattern} />
-        ))}
-
-        <Route path='/ecommerce/discord-clone' element={useModule('/ecommerce/discord-clone')?.module} />
-
-        <Route path='/film-database' element={useModule('/film-database')?.module} />
+        {routeComponents.map((route) => {
+          const { path, component } = route;
+          return <Route path={path} element={component} key={uuidv4()} />;
+        })}
       </Routes>
     </Suspense>
   );
