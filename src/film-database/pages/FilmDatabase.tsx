@@ -132,15 +132,15 @@ const FilmDatabase = () => {
   const carouselNodes: HTMLCollection | undefined = fdMediaRef.current?.children;
 
   // Init lenis
-  const lenis = useRef<Lenis>();
+  const [lenis, setLenis] = useState<Lenis>();
 
   useEffect(() => {
-    if (fdMediaRef.current) lenis.current = new Lenis({ wrapper: fdMediaRef.current });
-    return () => lenis.current?.destroy();
-  }, []);
+    if (fdMediaRef.current) setLenis(new Lenis({ wrapper: fdMediaRef.current }));
+    return () => lenis?.destroy();
+  }, [fdMediaRef.current]);
 
   const raf = (time: number): void => {
-    lenis.current?.raf(time);
+    lenis?.raf(time);
     requestAnimationFrame(raf);
   };
 
@@ -167,11 +167,11 @@ const FilmDatabase = () => {
 
       // Get scroll position
       const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
-      const parentOffsetTop: number = fdMediaRef.current.offsetTop;
-      const scrollPosition: number = nextActiveNodeOffsetTop - parentOffsetTop;
+      const firstNodePaddingTop: number = parseInt(window.getComputedStyle(carouselNodes[0] as HTMLElement).paddingTop);
+      const scrollPosition: number = nextActiveNodeOffsetTop - firstNodePaddingTop;
 
       // Scroll
-      lenis.current?.scrollTo(scrollPosition, { lerp: 0.2, duration: 0.03, lock: true, force: true });
+      lenis?.scrollTo(scrollPosition, { lerp: 0.2, duration: 0.03, lock: true, force: true });
     }
   };
 
