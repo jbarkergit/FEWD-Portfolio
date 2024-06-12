@@ -132,7 +132,7 @@ const FilmDatabase = () => {
   const carouselNodes: HTMLCollection | undefined = fdMediaRef.current?.children;
 
   // Init lenis
-  const lenis = useRef<Lenis>(new Lenis());
+  const lenis = useRef<Lenis>();
 
   useEffect(() => {
     if (fdMediaRef.current) lenis.current = new Lenis({ wrapper: fdMediaRef.current });
@@ -140,7 +140,7 @@ const FilmDatabase = () => {
   }, []);
 
   const raf = (time: number): void => {
-    lenis.current.raf(time);
+    lenis.current?.raf(time);
     requestAnimationFrame(raf);
   };
 
