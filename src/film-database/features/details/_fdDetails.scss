@@ -7,6 +7,7 @@
   top: calc(var(--fd-padding-generic) * 1.5);
   left: var(--fd-padding-generic);
   z-index: 3;
+  pointer-events: none;
   &__article {
     &__header {
       opacity: 0;
