@@ -99,8 +99,8 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
         <YouTube
           videoId={`${trailers[0].key}`}
           opts={opts}
-          className='fdiFrame__wrapper'
-          iframeClassName='fdiFrame__wrapper--iframe'
+          className='fdiFrame__player'
+          iframeClassName='fdiFrame__player--iframe'
           title={`YouTube video player: ${trailers[0].name}`}
           style={undefined}
           loading={'eager'}
