@@ -120,7 +120,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 20;
+        z-index: 5;
         display: flex;
         align-items: center;
         width: 100%;
@@ -152,12 +152,6 @@
       }
     }
   }
-}
-
-// transform graphic overlay on hover
-.fdMedia__carousel__wrapper__ul__li__article__graphic:hover .fdMedia__carousel__wrapper__ul__li__article__graphic__overlay,
-.fdMedia__carousel__wrapper__ul__li__article__graphic__overlay:hover .fdMedia__carousel__wrapper__ul__li__article__graphic {
-  opacity: 1;
 }
 
 // navigation overlay on track hover
