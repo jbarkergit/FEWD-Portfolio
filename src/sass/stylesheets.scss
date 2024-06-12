@@ -1,11 +1,11 @@
+// App
+@forward '/src/app/app';
+
 // Boilerplate
 @forward '/src/sass/boilerplate';
 
 // Lib
 @forward '/src/sass/lib';
-
-// HTTP Protocol Errors
-@forward '/src/app/protocol-error/protocolErrorHandler';
 
 // Projects
 @forward '/src/portfolio/scss/portfolioExports';
