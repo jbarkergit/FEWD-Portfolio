@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
+import PlayerStates from 'youtube-player/dist/constants/PlayerStates';
 
 import { tmdbMovieEndpoints, Type_Tmdb_Movie_Keys_Union } from '../../composables/tmdb-api/data/tmdbEndPoints';
 
@@ -79,18 +80,22 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
       rel: 0,
       // start?: number | undefined;
       widget_referrer: undefined,
+      // Required for autoplay, is not defined by react-youtube lib
+      // @ts-ignore
+      mute: 1,
     },
   };
 
   // Init player
   const [player, setPlayer] = useState<YouTubePlayer | undefined>(undefined);
+  const [playerStates, setPlayerStates] = useState<PlayerStates | undefined>(undefined);
 
   /** Component */
   if (trailers && trailers.length > 0) {
     return (
       <section className='fdiFrame'>
         <h2 className='fdiFrame--h2'>{trailers[0].name}</h2>
-        <IFrameController player={player} />
+        <IFrameController player={player} playerStates={playerStates} />
         <YouTube
           videoId={`${trailers[0].key}`}
           opts={opts}
@@ -101,16 +106,18 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
           loading={'eager'}
           onReady={(event: YouTubeEvent) => {
             setPlayer(event.target);
-            event.target.mute();
             event.target.setVolume(0);
-            event.target.playVideo();
           }}
-          onEnd={() => {
-            player?.destroy();
+          onStateChange={async (event: YouTubeEvent) => {
+            const playerStates = await event.target.getPlayerState();
+            setPlayerStates(playerStates);
+          }}
+          onEnd={(event: YouTubeEvent) => {
+            event.target.destroy();
             setTrailers(undefined);
           }}
-          onError={() => {
-            player?.destroy();
+          onError={(event: YouTubeEvent) => {
+            event.target.destroy();
             setTrailers(undefined);
           }}
         />
