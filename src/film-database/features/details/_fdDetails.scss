@@ -3,19 +3,12 @@
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
 .fdDetails {
-  width: 100%;
-  // 100svh - carousel header font-size - carousel header padding-bottom - carousel height && padding-bottom
-  height: calc(100svh - var(--fd-font-size-xl) - 1rem - var(--fd-carousel-featured-height) - (var(--fd-padding-generic) / 2.5));
+  position: fixed;
+  top: calc(var(--fd-padding-generic) * 1.5);
+  left: var(--fd-padding-generic);
+  z-index: 3;
   &__article {
-    position: relative;
-    width: inherit;
-    height: 100%;
-    aspect-ratio: inherit;
     &__header {
-      position: absolute;
-      top: calc(var(--fd-padding-generic) * 1.5);
-      left: var(--fd-padding-generic);
-      z-index: 5;
       opacity: 0;
       transform: translateY(-10%);
       transition:
@@ -30,7 +23,6 @@
         padding-bottom: 12px;
       }
       &__hgroup {
-        max-width: 57ch;
         & h2 {
           @include m.fdFontXXL;
           text-shadow: var(--fd-font-shadow);
@@ -38,6 +30,7 @@
           white-space: nowrap;
         }
         & p {
+          max-width: 57ch;
           @include m.fdFontM;
           text-shadow: var(--fd-font-shadow);
         }
