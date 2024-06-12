@@ -12,19 +12,19 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  useEffect(() => {
+  const updateCurrentTime = async () => {
     if (!player) return;
+    const currentTime: number = await player.getCurrentTime();
+    if (currentTime) setCurrent(formatTime(currentTime));
+  };
 
-    const updateCurrentTime = async () => {
-      const currentTime: number = await player.getCurrentTime();
-      if (currentTime) setCurrent(formatTime(currentTime));
-    };
+  const updateDuration = async () => {
+    if (!player) return;
+    const videoDuration: number = await player.getDuration();
+    if (videoDuration) setDuration(formatTime(videoDuration));
+  };
 
-    const updateDuration = async () => {
-      const videoDuration: number = await player.getDuration();
-      if (videoDuration) setDuration(formatTime(videoDuration));
-    };
-
+  useEffect(() => {
     updateCurrentTime();
     updateDuration();
 
