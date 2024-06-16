@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from 'react';
-import ContactFormErrorHandler from './ContactFormErrorHandler';
 
 //** Contact form field array of objects types */
 export type ContactFormFieldsType = {
@@ -14,7 +13,7 @@ export type ContactFormFieldsType = {
 export type FormValidationStateType = { input: string; regExpPattern: RegExp; validBoolean: boolean };
 
 /** Component */
-const ContactFormStandard = () => {
+const ContactFormFields = () => {
   /** References */
   const arrayOfFormLabels: HTMLLabelElement[] = [];
   const pushFormLabel = (reference: HTMLLabelElement) => {
@@ -109,11 +108,11 @@ const ContactFormStandard = () => {
                     useContactFormValidator(index);
                   }}
                 />
-                {contactFormFields[index].value.length > 0 ? (
+                {/* {contactFormFields[index].value.length > 0 ? (
                   <div className='contactForm__section__standardForm__fieldset__container--errorMessage'>
                     <ContactFormErrorHandler contactFormFields={contactFormFields} formValidation={formValidation} indexParam={index} />
                   </div>
-                ) : null}
+                ) : null} */}
               </div>
             ) : (
               <div className='contactForm__section__standardForm__fieldset__container' key={field.input}>
@@ -144,4 +143,4 @@ const ContactFormStandard = () => {
   );
 };
 
-export default ContactFormStandard;
+export default ContactFormFields;
