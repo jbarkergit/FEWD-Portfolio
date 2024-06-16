@@ -1,8 +1,8 @@
-import EcommerceInsights from '../project-insights/EcommerceInsights';
-import FilmDatabaseInsights from '../project-insights/FilmDatabaseInsights';
-import PortfolioInsights from '../project-insights/PortfolioInsights';
+import EcommerceInsights from '../components/insights/EcommerceInsights';
+import FilmDatabaseInsights from '../components/insights/FilmDatabaseInsights';
+import PortfolioInsights from '../components/insights/PortfolioInsights';
 
-export const projectDatabase = [
+export const projectData = [
   {
     key: 'film database',
     url: 'http://localhost:5173/film-database',
@@ -13,7 +13,7 @@ export const projectDatabase = [
       api: ['tmdb', 'youtube player', 'react-youtube'],
     },
     insights: <FilmDatabaseInsights />,
-    imgSrc: 'src/portfolio/assets/media/film-db-temp.png',
+    imgSrc: '/src/portfolio/assets/carousel-posters/film-db-temp.png',
     imgAlt: 'Film Database Development Project',
     dataStatus: 'active',
   },
@@ -26,7 +26,7 @@ export const projectDatabase = [
       code_quality: ['eslint', 'prettier'],
     },
     insights: <EcommerceInsights />,
-    imgSrc: '/src/portfolio/assets/media/ecommerce-poster.png',
+    imgSrc: '/src/portfolio/assets/carousel-posters/ecommerce-poster.png',
     imgAlt: 'Ecommerce Web Development Project',
     dataStatus: 'active',
   },
@@ -42,7 +42,7 @@ export const projectDatabase = [
       version_control: ['git', 'github'],
     },
     insights: <PortfolioInsights />,
-    imgSrc: '/src/portfolio/assets/media/portfolio-poster.png',
+    imgSrc: '/src/portfolio/assets/carousel-posters/portfolio-poster.png',
     imgAlt: 'Portfolio Project Hub',
     dataStatus: 'disabled',
   },

@@ -1,6 +1,6 @@
 import { Dispatch, MutableRefObject, SetStateAction, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { projectDatabase } from '../../../assets/data/project-database/projectDatabase';
+import { projectData } from '../../../data/projectData';
 
 //Prop drill from Portfolio page
 type PropDrillType = {
@@ -84,7 +84,7 @@ const PortHeader = ({
           <span className='carouselNav__section__left--location'>{`Project 0${projectSlideIndex + 1}.`}</span>
           <nav className='carouselNav__section__left__projectNav' aria-labelledby='project-navigation'>
             <ul ref={unorderedListRef}>
-              {projectDatabase.map((_, index) => (
+              {projectData.map((_, index) => (
                 <li key={_.key + index}>
                   <button
                     className={`${projectSlideIndex === index ? 'projectNavButtonActive' : ''}`}

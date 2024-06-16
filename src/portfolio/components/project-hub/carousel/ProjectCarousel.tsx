@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useReducer, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { projectDatabase } from '../../../assets/data/project-database/projectDatabase';
 import { useCarouselSlideAnimator } from '../hooks/useCarouselSlideAnimator';
+import { projectData } from '../../../data/projectData';
 
 type PropDrillType = {
   projectSlideIndex: number;
@@ -267,7 +267,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
   return (
     <main className='mainContent' ref={mainRef}>
       <div className='mainContent__track' ref={carouselRef} style={state.trackStyle} data-status={!state.pointerDown ? 'smooth' : ''}>
-        {projectDatabase.map((project) => (
+        {projectData.map((project) => (
           <article className='mainContent__track__project' ref={articleRef} key={project.key}>
             <Link
               to={state.anchorEnabled ? project.url : ''}

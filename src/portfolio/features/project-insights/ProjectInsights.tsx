@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { projectDatabase } from '../../assets/data/project-database/projectDatabase';
+import { projectData } from '../../data/projectData';
 
 type PropDrillType = {
   projectSlideIndex: number;
@@ -29,7 +29,7 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
             <button
               id='insights-navigation'
               aria-label='View previous project insights'
-              onClick={() => setProjectSlideIndex((state) => (state === 0 ? projectDatabase.length - 1 : state - 1))}>
+              onClick={() => setProjectSlideIndex((state) => (state === 0 ? projectData.length - 1 : state - 1))}>
               <span>
                 <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
                   <path fill='#ffffff' d='m14 18l-6-6l6-6l1.4 1.4l-4.6 4.6l4.6 4.6z'></path>
@@ -40,7 +40,7 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
             <button
               id='insights-navigation'
               aria-label='View next project insights'
-              onClick={() => setProjectSlideIndex((state) => (state === projectDatabase.length - 1 ? 0 : state + 1))}>
+              onClick={() => setProjectSlideIndex((state) => (state === projectData.length - 1 ? 0 : state + 1))}>
               <span>
                 Next{' '}
                 <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
@@ -56,7 +56,7 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
         <section className='projectDetails__insights__technology'>
           <div className='projectDetails__insights__technology__container'>
             <h2>Technology</h2>
-            {Object.entries(projectDatabase[projectSlideIndex].technologies).map(([category, techArray]) => (
+            {Object.entries(projectData[projectSlideIndex].technologies).map(([category, techArray]) => (
               <section className='projectDetails__insights__technology__container__tech' key={category}>
                 <h3 className='projectDetails__insights__technology__container__tech--key'>{category.replace('_', ' ')}</h3>
                 <ul className='projectDetails__insights__technology__container__tech__values'>
@@ -74,7 +74,7 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
         </section>
 
         <section className='projectDetails__insights__project'>
-          <article className='projectDetails__insights__project__article'>{projectDatabase[projectSlideIndex].insights}</article>
+          <article className='projectDetails__insights__project__article'>{projectData[projectSlideIndex].insights}</article>
         </section>
       </article>
     </section>

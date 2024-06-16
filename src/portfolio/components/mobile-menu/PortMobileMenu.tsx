@@ -1,5 +1,5 @@
 import { Dispatch, ForwardedRef, MutableRefObject, SetStateAction, forwardRef } from 'react';
-import { projectDatabase } from '../../assets/data/project-database/projectDatabase';
+import { projectData } from '../../data/projectData';
 
 type PropDrillType = {
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
@@ -33,7 +33,7 @@ const PortMobileMenu = forwardRef<HTMLElement, PropDrillType>(
             </div>
           </section>
           <ul className='portMobileMenu__nav__projects' aria-labelledby='project-demo-navigation'>
-            {projectDatabase.map((_, index) => (
+            {projectData.map((_, index) => (
               <li className='portMobileMenu__nav__projects__li' key={_.key + index}>
                 <button
                   className='portMobileMenu__nav__projects__li--button'

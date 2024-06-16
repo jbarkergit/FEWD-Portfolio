@@ -1,6 +1,6 @@
-import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { projectDatabase } from '../../../assets/data/project-database/projectDatabase';
+import { projectData } from '../../../data/projectData';
 
 type ProjectNavPropType = {
   projectSlideIndex: number;
@@ -13,7 +13,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
   const footerNavigationRight = useRef<HTMLDivElement>(null);
 
   const [navigationIndicator, setNavigationIndicator] = useState({
-    key: projectDatabase[projectSlideIndex].key,
+    key: projectData[projectSlideIndex].key,
     insights: 'Project Insights',
     demoLink: 'Demo Link',
   });
@@ -26,10 +26,10 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
     footerNavigationLeft.current?.getAttribute('data-transition') === 'false' ? setFooterDataAttr('true') : setFooterDataAttr('false');
 
     setTimeout(() => {
-      if (projectDatabase[projectSlideIndex].key !== '' && projectDatabase[projectSlideIndex].url !== '') {
-        setNavigationIndicator({ key: projectDatabase[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Demo Link' });
-      } else if (projectDatabase[projectSlideIndex].key !== '' && projectDatabase[projectSlideIndex].url === '') {
-        setNavigationIndicator({ key: projectDatabase[projectSlideIndex].key, insights: 'Project Insights', demoLink: '' });
+      if (projectData[projectSlideIndex].key !== '' && projectData[projectSlideIndex].url !== '') {
+        setNavigationIndicator({ key: projectData[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Demo Link' });
+      } else if (projectData[projectSlideIndex].key !== '' && projectData[projectSlideIndex].url === '') {
+        setNavigationIndicator({ key: projectData[projectSlideIndex].key, insights: 'Project Insights', demoLink: '' });
       } else {
         setNavigationIndicator({ key: 'This project is unavailable', insights: '', demoLink: '' });
       }
@@ -87,7 +87,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
     <footer className='carouselNav carouselNav--footer'>
       <section className='carouselNav__section'>
         <nav className='carouselNav__section__left' aria-labelledby='project-links' ref={footerNavigationLeft}>
-          <Link to={projectDatabase[projectSlideIndex].url}>
+          <Link to={projectData[projectSlideIndex].url}>
             <h2 data-activity='visible'>{navigationIndicator.key}</h2>
           </Link>
           <button
@@ -100,7 +100,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
             }>
             {navigationIndicator.insights}
           </button>
-          <Link to={projectDatabase[projectSlideIndex].url} id='project-links' aria-label='Project Demo Link'>
+          <Link to={projectData[projectSlideIndex].url} id='project-links' aria-label='Project Demo Link'>
             {navigationIndicator.demoLink}
           </Link>
         </nav>
