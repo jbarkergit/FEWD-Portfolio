@@ -29,7 +29,11 @@ const ContactFormTicket = () => {
 
         <ul className='contactForm__section__ticket__person'>
           <li>Guest</li>
-          <li>UNKNOWN RESERVER</li>
+          <li>UNKNOWN</li>
+          <li>Company</li>
+          <li>Omitted</li>
+          <li>Website</li>
+          <li>Omitted</li>
         </ul>
 
         <ul className='contactForm__section__ticket__destination'>
@@ -53,23 +57,23 @@ const ContactFormTicket = () => {
         </ul>
 
         <ul className='contactForm__section__ticket__details'>
-          <li>Flight</li>
+          <li>Travel</li>
           <li>Date</li>
           <li>Dep Time</li>
 
-          <li>EMAIL</li>
+          <li>Electronic</li>
           <li>{new Date().toLocaleDateString(undefined, { day: 'numeric', month: 'long' })}</li>
           <li>{currentTime}</li>
         </ul>
 
         <ul className='contactForm__section__ticket__details'>
-          <li />
+          <li></li>
           <li />
           <li>Timezone •</li>
 
+          <li></li>
           <li />
-          <li />
-          <li>CDT(GMT-5) </li>
+          <li>CDT (GMT-5) </li>
         </ul>
 
         <ul className='contactForm__section__ticket__footer'>
