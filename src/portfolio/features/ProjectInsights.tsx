@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { projectData } from '../../data/projectData';
+import { projectData } from '../data/projectData';
 
 type PropDrillType = {
   projectSlideIndex: number;

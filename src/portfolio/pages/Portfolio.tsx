@@ -1,9 +1,9 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import PortMobileMenu from '../components/mobile-menu/PortMobileMenu';
-import ContactForm from '../features/contact-form/ContactForm';
-import ProjectHub from '../features/project-hub/ProjectHub';
-import ProjectInsights from '../features/project-insights/ProjectInsights';
+import ProjectInsights from '../features/ProjectInsights';
+import ProjectHub from '../features/ProjectHub';
+import ContactForm from '../features/ContactForm';
 
 /** Component */
 const Portfolio = (): JSX.Element => {
