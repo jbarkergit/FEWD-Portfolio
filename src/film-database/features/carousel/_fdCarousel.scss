@@ -65,7 +65,7 @@
       position: relative;
       &__ul {
         gap: var(--fd-carousel-gap);
-        padding: var(--fd-padding-innerWrapper);
+        padding: 0 var(--fd-padding-generic);
         &[data-layout='carousel'] {
           display: flex;
           @include m.scrollSnappingXAxis;
