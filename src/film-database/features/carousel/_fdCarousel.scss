@@ -3,15 +3,19 @@
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
 :root {
-  --fd-carousel-featured-height: calc(
-    ((100svw - 2 * var(--fd-padding-generic) - (var(--fd-carousel-items-per-page) - 1) * var(--fd-gap-mediaPoster)) / var(--fd-carousel-items-per-page)) / 0.66667
+  --fd-carousel-items-per-page: 7;
+  --fd-carousel-gap: 22px;
+
+  --fd-carousel-node-width: calc(
+    (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-carousel-gap))) / var(--fd-carousel-items-per-page)
   );
+  --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
 }
 
 .fdMedia {
   position: relative;
   z-index: 1;
-  width: 100%;
+  // Lenis requires height pkg
   height: 100%;
   @include m.scrollSnappingYAxis;
   &::before {
@@ -30,7 +34,7 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    height: calc(var(--fd-carousel-featured-height) + (var(--fd-padding-generic) / 2.5) + var(--fd-font-size-l) + 1rem);
+    height: calc(var(--fd-carousel-node-height) + (var(--fd-padding-generic) / 2.5) + var(--fd-font-size-l) + 1rem);
     background: linear-gradient(to top, rgb(0, 0, 0) 80%, rgba(0, 0, 0, 0) 100%);
     pointer-events: none;
   }
@@ -42,7 +46,7 @@
     padding-bottom: calc(var(--fd-padding-generic) / 2.5);
     &:nth-of-type(1) {
       // 100svh - carousel header font-size - carousel header padding-bottom - carousel height && padding-bottom
-      padding-top: calc(100svh - var(--fd-font-size-xl) - 1rem - var(--fd-carousel-featured-height) - (var(--fd-padding-generic) / 2.5));
+      padding-top: calc(100svh - var(--fd-font-size-xl) - 1rem - var(--fd-carousel-node-height) - (var(--fd-padding-generic) / 2.5));
     }
     &[data-index-tracker='active'] {
       opacity: 1;
@@ -59,45 +63,35 @@
     }
     &__wrapper {
       position: relative;
-      /* Overlapping padding */
-      display: grid;
-      grid-template-areas: 'left right';
-      grid-template-columns: repeat(2, calc(var(--fd-padding-generic) - var(--fd-gap-mediaPoster)));
-      grid-template-rows: 1fr;
-      justify-content: space-between;
       &__ul {
+        gap: var(--fd-carousel-gap);
         padding: var(--fd-padding-innerWrapper);
         &[data-layout='carousel'] {
           display: flex;
           @include m.scrollSnappingXAxis;
-          /* Overlapping padding */
-          grid-column: left-start/right-end;
-          grid-row: 1;
         }
         &[data-layout='grid'] {
           display: grid;
           grid-template-columns: repeat(
             auto-fit,
-            calc((100% - (var(--fd-gap-mediaPoster) * (var(--fd-flat-grid-items-per-page) - 1))) / var(--fd-flat-grid-items-per-page))
+            calc((100% - (var(--fd-carousel-gap) * (var(--fd-flat-grid-items-per-page) - 1))) / var(--fd-flat-grid-items-per-page))
           );
           grid-auto-rows: 1fr;
           justify-content: center;
         }
         &__li {
-          width: calc(var(--fd-carousel-featured-height) * 0.66667);
-          height: var(--fd-carousel-featured-height);
-          margin-right: var(--fd-gap-mediaPoster);
-          /* Scroll snapping */
+          width: var(--fd-carousel-node-width);
+          height: var(--fd-carousel-node-height);
           scroll-snap-align: center;
           /* Width matching (required for dynamic logic) */
           &__article,
           &__article__graphic,
           &__article__graphic > * {
             width: inherit;
+            height: inherit;
           }
           &__article {
             position: relative;
-            height: inherit;
             cursor: pointer;
             & > * {
               position: absolute;
@@ -111,7 +105,7 @@
               z-index: 3;
               & picture,
               & picture img {
-                border-radius: var(--fd-borderRadius-mediaPoster);
+                border-radius: var(--fd-borderRadius);
               }
             }
           }
@@ -142,13 +136,13 @@
         }
         &--button:nth-of-type(1) {
           left: 0;
-          border-top-right-radius: var(--fd-borderRadius-mediaPoster);
-          border-bottom-right-radius: var(--fd-borderRadius-mediaPoster);
+          border-top-right-radius: var(--fd-borderRadius);
+          border-bottom-right-radius: var(--fd-borderRadius);
         }
         &--button:nth-of-type(2) {
           right: 0;
-          border-top-left-radius: var(--fd-borderRadius-mediaPoster);
-          border-bottom-left-radius: var(--fd-borderRadius-mediaPoster);
+          border-top-left-radius: var(--fd-borderRadius);
+          border-bottom-left-radius: var(--fd-borderRadius);
         }
       }
     }
