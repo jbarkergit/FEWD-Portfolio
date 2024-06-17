@@ -2,10 +2,6 @@
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
 :root {
-  // Carousel controller
-  --fd-carousel-items-per-page: 7;
-  --fd-flat-grid-items-per-page: 6;
-
   // Font sizes
   --fd-font-size-xxl: clamp(1.875rem, 3vw, 2.25rem); /* 30px to 36px */
   --fd-font-size-xl: clamp(1.5rem, 2.5vw, 1.875rem); /* 24px to 30px */
@@ -20,12 +16,7 @@
   --fd-padding-generic: 7rem;
   --fd-padding-wrapper: 0 0 var(--fd-padding-generic) 0;
   --fd-padding-innerWrapper: 0 var(--fd-padding-generic);
-
-  // Media posters
-  --fd-gap-mediaPoster: 22px;
-  --fd-borderRadius-mediaPoster: 9.6px;
-  // Media posters: Informational Details
-  --fd-gap-informationalDetails: calc(var(--fd-gap-mediaPoster) / 2.5);
+  --fd-borderRadius: 9.6px;
 }
 
 /**

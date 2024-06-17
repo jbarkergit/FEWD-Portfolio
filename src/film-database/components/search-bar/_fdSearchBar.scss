@@ -16,7 +16,7 @@
     position: relative;
     z-index: 2;
     display: flex;
-    border-radius: var(--fd-borderRadius-mediaPoster);
+    border-radius: var(--fd-borderRadius);
     background-color: white;
     & legend {
       display: none;
@@ -69,8 +69,8 @@
   &__results {
     padding-top: calc(8px + 0.425rem);
     margin-top: -8px;
-    border-bottom-right-radius: var(--fd-borderRadius-mediaPoster);
-    border-bottom-left-radius: var(--fd-borderRadius-mediaPoster);
+    border-bottom-right-radius: var(--fd-borderRadius);
+    border-bottom-left-radius: var(--fd-borderRadius);
     background-color: white;
     &[data-status='active'] {
       opacity: 1;
