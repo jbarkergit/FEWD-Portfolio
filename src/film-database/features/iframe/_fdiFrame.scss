@@ -7,7 +7,7 @@
   top: 0;
   right: 0;
   z-index: 1;
-  height: calc(100svh - var(--fd-carousel-featured-height));
+  height: calc(100svh - var(--fd-carousel-node-height));
   aspect-ratio: 16/9;
   &--h2 {
     display: none;

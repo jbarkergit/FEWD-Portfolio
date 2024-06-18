@@ -6,7 +6,7 @@
   position: absolute;
   // carousel header font-size + carousel header padding-bottom + carousel padding-bottom
   bottom: calc(var(--fd-font-size-xl) + 1rem + (var(--fd-padding-generic) / 2.5));
-  right: calc((100svh - var(--fd-carousel-featured-height)) / 2);
+  right: calc((100svh - var(--fd-carousel-node-height)) / 2);
   z-index: 9;
   display: flex;
   align-items: center;
