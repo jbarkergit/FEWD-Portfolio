@@ -5,11 +5,10 @@
 :root {
   --fd-carousel-items-per-page: 7;
   --fd-carousel-gap: 22px;
-
   --fd-carousel-node-width: calc(
     (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-carousel-gap))) / var(--fd-carousel-items-per-page)
   );
-  --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
+  --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.75); // 0.66667 // 0.75
 }
 
 .fdMedia {
@@ -45,8 +44,7 @@
   &__carousel {
     padding-bottom: calc(var(--fd-padding-generic) / 2.5);
     &:nth-of-type(1) {
-      // 100svh - carousel header font-size - carousel header padding-bottom - carousel height && padding-bottom
-      padding-top: calc(100svh - var(--fd-font-size-xl) - 1rem - var(--fd-carousel-node-height) - (var(--fd-padding-generic) / 2.5));
+      padding-top: 50svh;
     }
     &[data-index-tracker='active'] {
       opacity: 1;
