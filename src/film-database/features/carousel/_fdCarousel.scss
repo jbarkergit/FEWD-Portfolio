@@ -4,9 +4,8 @@
 
 :root {
   --fd-carousel-items-per-page: 7;
-  --fd-carousel-gap: 22px;
   --fd-carousel-node-width: calc(
-    (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-carousel-gap))) / var(--fd-carousel-items-per-page)
+    (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
   );
   --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.75); // 0.66667 // 0.75
 }
@@ -22,7 +21,7 @@
     z-index: 2;
   }
   &__carousel {
-    padding-bottom: calc(0.6rem * 2);
+    padding-bottom: calc(var(--fd-gap) * 2);
     &:nth-of-type(1) {
       padding-top: 50svh;
     }
@@ -35,14 +34,14 @@
       transition: opacity 0.2s ease-out;
     }
     &__header {
-      padding: 0 var(--fd-padding-generic) 0.6rem var(--fd-padding-generic);
+      padding: 0 var(--fd-padding-generic) var(--fd-gap) var(--fd-padding-generic);
       @include m.fdFontXL;
       text-transform: capitalize;
     }
     &__wrapper {
       position: relative;
       &__ul {
-        gap: var(--fd-carousel-gap);
+        gap: var(--fd-gap);
         padding: 0 var(--fd-padding-generic);
         &[data-layout='carousel'] {
           display: flex;
@@ -50,10 +49,7 @@
         }
         &[data-layout='grid'] {
           display: grid;
-          grid-template-columns: repeat(
-            auto-fit,
-            calc((100% - (var(--fd-carousel-gap) * (var(--fd-flat-grid-items-per-page) - 1))) / var(--fd-flat-grid-items-per-page))
-          );
+          grid-template-columns: repeat(auto-fit, calc((100% - (var(--fd-gap) * (var(--fd-flat-grid-items-per-page) - 1))) / var(--fd-flat-grid-items-per-page)));
           grid-auto-rows: 1fr;
           justify-content: center;
         }
