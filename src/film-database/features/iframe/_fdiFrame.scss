@@ -7,7 +7,7 @@
   top: 0;
   right: 0;
   z-index: 1;
-  height: calc(55svh + var(--fd-font-size-xl) + 0.6rem);
+  height: 62svh;
   aspect-ratio: 16/9;
   &--h2 {
     display: none;
@@ -17,7 +17,8 @@
     position: relative;
     height: inherit;
     aspect-ratio: inherit;
-    overflow: clip;
+    transform: scale(1.3);
+    transform-origin: center;
     &::before {
       content: '';
       position: absolute;
@@ -25,21 +26,8 @@
       bottom: 0;
       z-index: 1;
       width: 100%;
-      height: 15%;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.1) 10%,
-        rgba(0, 0, 0, 0.2) 20%,
-        rgba(0, 0, 0, 0.3) 30%,
-        rgba(0, 0, 0, 0.4) 40%,
-        rgba(0, 0, 0, 0.5) 50%,
-        rgba(0, 0, 0, 0.6) 60%,
-        rgba(0, 0, 0, 0.7) 70%,
-        rgba(0, 0, 0, 0.8) 80%,
-        rgba(0, 0, 0, 0.9) 90%,
-        rgba(0, 0, 0, 1) 100%
-      );
+      height: 20%;
+      background: linear-gradient(to top, rgb(0, 0, 1) 50%, rgba(0, 0, 0, 0.65) 85%, rgba(0, 0, 0, 0) 100%);
       pointer-events: none;
     }
     &::after {
@@ -49,35 +37,23 @@
       top: 0;
       width: 15%;
       height: 100%;
-      background: linear-gradient(
-        to left,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.1) 10%,
-        rgba(0, 0, 0, 0.2) 20%,
-        rgba(0, 0, 0, 0.3) 30%,
-        rgba(0, 0, 0, 0.4) 40%,
-        rgba(0, 0, 0, 0.5) 50%,
-        rgba(0, 0, 0, 0.6) 60%,
-        rgba(0, 0, 0, 0.7) 70%,
-        rgba(0, 0, 0, 0.8) 80%,
-        rgba(0, 0, 0, 0.9) 90%,
-        rgba(0, 0, 0, 1) 100%
-      );
+      background: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 1) 100%);
       pointer-events: none;
     }
-  }
-  &__backdrop picture img,
-  &__player--iframe {
-    transform: scale(1.25);
-    transform-origin: center;
-  }
-  &__player--iframe {
-    height: inherit;
-    aspect-ratio: inherit;
-    pointer-events: none;
-    // YouTube IFrame Player API Requirements (16/9)
-    min-width: 480px;
-    min-height: 270px;
+    & picture img,
+    & iframe {
+      position: absolute;
+      top: -10px;
+      right: 0;
+    }
+    & iframe {
+      height: inherit;
+      aspect-ratio: inherit;
+      pointer-events: none;
+      // YouTube IFrame Player API Requirements (16/9)
+      min-width: 480px;
+      min-height: 270px;
+    }
   }
 }
 
