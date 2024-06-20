@@ -11,11 +11,10 @@ type Type_FilmDatabase_Props = {
   dataKey: string;
   mapValue: Type_Tmdb_Api_Union[][];
   maxVisibleCarouselNodes: number;
-  isFirstIndex: boolean;
   setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>>;
 };
 
-const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, isFirstIndex, setHeroData }: Type_FilmDatabase_Props) => {
+const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }: Type_FilmDatabase_Props) => {
   /** Track carousel navigation index */
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
@@ -73,7 +72,7 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, isFirstIndex, 
   /** Component heading */
   const formattedDataKey: string = dataKey.replaceAll('_', ' ');
   return (
-    <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`} data-index-tracker={isFirstIndex ? 'active' : 'disabled'}>
+    <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`} data-index-tracker='active'>
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' data-layout='carousel' ref={carouselRef}>

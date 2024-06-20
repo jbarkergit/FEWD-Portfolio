@@ -100,15 +100,7 @@ const FilmDatabase = () => {
     const tmdbStateComponents = (): JSX.Element[] => {
       return [...tmdbDataMap.entries()].map(([key, value], index) => {
         // Set data-attribute on first carousel node for index tracking without state
-        return (
-          <FDCarousel
-            dataKey={key}
-            mapValue={value}
-            maxVisibleCarouselNodes={maxVisibleCarouselNodes}
-            isFirstIndex={index === 0 ? true : false}
-            setHeroData={setHeroData}
-          />
-        );
+        return <FDCarousel dataKey={key} mapValue={value} maxVisibleCarouselNodes={maxVisibleCarouselNodes} setHeroData={setHeroData} />;
       });
     };
 
@@ -162,7 +154,10 @@ const FilmDatabase = () => {
       requestAnimationFrame(raf);
 
       // Handle attributes
-      carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
+      if (nextActiveNodeIndex > activeNodeIndex) {
+        carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
+      }
+
       carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
 
       // Get scroll position
