@@ -8,7 +8,7 @@ export const projectData = [
     url: 'http://localhost:5173/film-database',
     technologies: {
       api: ['tmdb'],
-      libraries: ['uuid', 'react-youtube', 'lenis'],
+      libraries: ['uuid', 'react-youtube'],
       core_libraries: ['vite', 'react', 'react router dom', 'sass'],
       web_technologies: ['html', 'css', 'javascript', 'typescript'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
