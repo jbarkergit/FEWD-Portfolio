@@ -129,7 +129,7 @@ const FilmDatabase = () => {
   useEffect(() => {
     if (fdMediaRef.current) setLenis(new Lenis({ wrapper: fdMediaRef.current }));
     return () => lenis?.destroy();
-  }, [fdMediaRef.current]);
+  }, [fdMediaRef.current, fdMediaRef.current?.children]);
 
   const raf = (time: number): void => {
     lenis?.raf(time);
