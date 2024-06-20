@@ -7,7 +7,7 @@
   top: 0;
   right: 0;
   z-index: 1;
-  height: calc(55svh + var(--fd-font-size-xl) + 1rem);
+  height: calc(55svh + var(--fd-font-size-xl) + 0.6rem);
   aspect-ratio: 16/9;
   &--h2 {
     display: none;
