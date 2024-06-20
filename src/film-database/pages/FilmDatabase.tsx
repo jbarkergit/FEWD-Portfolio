@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-// Lib
-import Lenis from 'lenis';
 // Api Data
 import { Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../composables/tmdb-api/data/tmdbEndPoints';
 // Api Types
@@ -123,19 +121,6 @@ const FilmDatabase = () => {
   const fdMediaRef = useRef<HTMLElement>(null);
   const carouselNodes: HTMLCollection | undefined = fdMediaRef.current?.children;
 
-  // Init lenis
-  const [lenis, setLenis] = useState<Lenis>();
-
-  useEffect(() => {
-    if (fdMediaRef.current) setLenis(new Lenis({ wrapper: fdMediaRef.current }));
-    return () => lenis?.destroy();
-  }, [fdMediaRef.current, fdMediaRef.current?.children]);
-
-  const raf = (time: number): void => {
-    lenis?.raf(time);
-    requestAnimationFrame(raf);
-  };
-
   // Update previously active and newly active carousel node's data-attr, navigate
   const deltaScrollCarousels = (deltaY: number): void => {
     // Convert deltaY to 1 or -1 for incrementation/decrementation
@@ -150,9 +135,6 @@ const FilmDatabase = () => {
     const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + deltaIndex, carouselNodesArr.length - 1));
 
     if (activeNodeIndex !== nextActiveNodeIndex) {
-      // Lenis
-      requestAnimationFrame(raf);
-
       // Handle attributes
       if (nextActiveNodeIndex > activeNodeIndex) {
         carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
@@ -166,7 +148,7 @@ const FilmDatabase = () => {
       const scrollPosition: number = nextActiveNodeOffsetTop - firstNodePaddingTop;
 
       // Scroll
-      lenis?.scrollTo(scrollPosition, { lerp: 0.2, duration: 0.03, lock: true, force: true });
+      fdMediaRef.current.scrollTo({ top: scrollPosition, behavior: 'smooth' });
     }
   };
 
