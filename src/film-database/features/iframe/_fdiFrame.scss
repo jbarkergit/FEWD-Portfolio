@@ -7,19 +7,69 @@
   top: 0;
   right: 0;
   z-index: 1;
-  height: calc(100svh - var(--fd-carousel-node-height));
+  height: calc(55svh + var(--fd-font-size-xl) + 1rem);
   aspect-ratio: 16/9;
   &--h2 {
     display: none;
   }
   &__backdrop,
   &__player {
+    position: relative;
     height: inherit;
     aspect-ratio: inherit;
+    overflow: clip;
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      z-index: 1;
+      width: 100%;
+      height: 15%;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.1) 10%,
+        rgba(0, 0, 0, 0.2) 20%,
+        rgba(0, 0, 0, 0.3) 30%,
+        rgba(0, 0, 0, 0.4) 40%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0.6) 60%,
+        rgba(0, 0, 0, 0.7) 70%,
+        rgba(0, 0, 0, 0.8) 80%,
+        rgba(0, 0, 0, 0.9) 90%,
+        rgba(0, 0, 0, 1) 100%
+      );
+      pointer-events: none;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 15%;
+      height: 100%;
+      background: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.1) 10%,
+        rgba(0, 0, 0, 0.2) 20%,
+        rgba(0, 0, 0, 0.3) 30%,
+        rgba(0, 0, 0, 0.4) 40%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0.6) 60%,
+        rgba(0, 0, 0, 0.7) 70%,
+        rgba(0, 0, 0, 0.8) 80%,
+        rgba(0, 0, 0, 0.9) 90%,
+        rgba(0, 0, 0, 1) 100%
+      );
+      pointer-events: none;
+    }
   }
   &__backdrop picture img,
   &__player--iframe {
-    transform: scale(1.36);
+    transform: scale(1.25);
+    transform-origin: center;
   }
   &__player--iframe {
     height: inherit;
