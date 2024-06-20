@@ -13,7 +13,6 @@
 .fdMedia {
   position: relative;
   z-index: 1;
-  // Lenis pkg requires css dimension props on container
   height: 100%;
   @include m.scrollSnappingYAxis;
   & > * {
