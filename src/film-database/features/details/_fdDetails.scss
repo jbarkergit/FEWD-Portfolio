@@ -21,7 +21,7 @@
       }
       & svg {
         width: 135px;
-        padding-bottom: 12px;
+        padding-bottom: var(--fd-gap);
       }
       &__hgroup {
         & h2 {
@@ -33,6 +33,7 @@
         & p {
           max-width: 57ch;
           @include m.fdFontM;
+          font-family: 'Plus Jakarta Sans';
           text-shadow: var(--fd-font-shadow);
         }
       }
