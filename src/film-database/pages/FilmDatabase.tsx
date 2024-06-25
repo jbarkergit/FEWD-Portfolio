@@ -11,7 +11,7 @@ import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFil
 import FDDetails from '../features/details/FDDetails';
 import FDiFrame from '../features/iframe/FDiFrame';
 import FDMenu from '../features/menu/FDMenu';
-import FDStandardCarousel from '../features/media/FDStandardCarousel';
+import FDMediaCarousel from '../layouts/media/FDMediaCarousel';
 import FDCarousel from '../components/carousel/FDCarousel';
 
 // const maxCarouselNodes: number = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--my-variable')); revisit
@@ -123,7 +123,7 @@ const FilmDatabase = () => {
       <FDMenu />
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
-      <FDStandardCarousel carouselComponents={carouselComponents} />
+      <FDMediaCarousel carouselComponents={carouselComponents} />
     </div>
   );
 };

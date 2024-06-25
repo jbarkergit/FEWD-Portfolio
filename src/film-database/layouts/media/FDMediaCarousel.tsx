@@ -4,7 +4,7 @@ type Type_PropDrill = {
   carouselComponents: JSX.Element[];
 };
 
-const FDStandardCarousel = ({ carouselComponents }: Type_PropDrill) => {
+const FDMediaCarousel = ({ carouselComponents }: Type_PropDrill) => {
   /** Carousel DeltaY scroll logic */
   const dataIndexTracker: string = 'data-index-tracker';
   const fdMediaRef = useRef<HTMLElement>(null);
@@ -49,4 +49,4 @@ const FDStandardCarousel = ({ carouselComponents }: Type_PropDrill) => {
   );
 };
 
-export default FDStandardCarousel;
+export default FDMediaCarousel;
