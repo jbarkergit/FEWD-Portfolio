@@ -15,6 +15,10 @@
   z-index: 1;
   height: 100%;
   @include m.scrollSnappingYAxis;
+  @media (width >= 1600px) {
+    overscroll-behavior: contain;
+    overflow: hidden;
+  }
   & > * {
     position: relative;
     z-index: 2;
