@@ -6,11 +6,11 @@
 @forward '/src/film-database/pages/filmDatabase';
 
 // Components
+@forward '/src/film-database/components/carousel/fdCarousel';
 @forward '/src/film-database/components/iframe-controller/iFrameController';
 @forward '/src/film-database/components/search-bar/fdSearchBar';
 
 // Features
-@forward '/src/film-database/features/carousel/fdCarousel';
 @forward '/src/film-database/features/details/fdDetails';
-@forward '/src/film-database/features/menu/fdMenu';
 @forward '/src/film-database/features/iframe/fdiFrame';
+@forward '/src/film-database/features/menu/fdMenu';
