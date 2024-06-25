@@ -38,7 +38,7 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }:
 
   useEffect(() => renderPaginatedDataSet(), [carouselIndex]);
 
-  /** Navigation */
+  /** Horizontal Navigation */
   const carouselRef = useRef<HTMLUListElement>(null);
 
   const navigate = (): void => {
@@ -71,6 +71,7 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }:
 
   /** Component heading */
   const formattedDataKey: string = dataKey.replaceAll('_', ' ');
+
   return (
     <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`} data-index-tracker='active'>
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
