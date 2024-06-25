@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Api Data
 import { Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../composables/tmdb-api/data/tmdbEndPoints';
@@ -7,11 +7,12 @@ import { Type_Tmdb_Api_Union } from '../composables/tmdb-api/types/TmdbDataTypes
 // Api Hooks
 import { Type_useFetchTmdbResponse_KeyValuePairArr, useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
-// Components
+// Features
 import FDDetails from '../features/details/FDDetails';
 import FDiFrame from '../features/iframe/FDiFrame';
-import FDCarousel from '../features/carousel/FDCarousel';
 import FDMenu from '../features/menu/FDMenu';
+import FDStandardCarousel from '../features/media/FDStandardCarousel';
+import FDCarousel from '../components/carousel/FDCarousel';
 
 // const maxCarouselNodes: number = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--my-variable')); revisit
 
@@ -116,51 +117,13 @@ const FilmDatabase = () => {
     if (tmdbValueFlatMap[0]) setHeroData(tmdbValueFlatMap[0][0][0]);
   }, [tmdbDataMap]);
 
-  /** Carousel DeltaY scroll logic */
-  const dataIndexTracker: string = 'data-index-tracker';
-  const fdMediaRef = useRef<HTMLElement>(null);
-  const carouselNodes: HTMLCollection | undefined = fdMediaRef.current?.children;
-
-  // Update previously active and newly active carousel node's data-attr, navigate
-  const deltaScrollCarousels = (deltaY: number): void => {
-    // Convert deltaY to 1 or -1 for incrementation/decrementation
-    const deltaIndex: 1 | -1 = deltaY > 0 ? 1 : -1;
-
-    // Get elements
-    if (!fdMediaRef.current || !carouselNodes) return;
-    const carouselNodesArr: Element[] = [...carouselNodes];
-
-    // Gather indexes
-    const activeNodeIndex: number = [...fdMediaRef.current.children].findIndex((node: Element) => node.getAttribute(dataIndexTracker) === 'active');
-    const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + deltaIndex, carouselNodesArr.length - 1));
-
-    if (activeNodeIndex !== nextActiveNodeIndex) {
-      // Handle attributes
-      if (nextActiveNodeIndex > activeNodeIndex) {
-        carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
-      }
-
-      carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
-
-      // Get scroll position
-      const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
-      const firstNodePaddingTop: number = parseInt(window.getComputedStyle(carouselNodes[0] as HTMLElement).paddingTop);
-      const scrollPosition: number = nextActiveNodeOffsetTop - firstNodePaddingTop;
-
-      // Scroll
-      fdMediaRef.current.scrollTo({ top: scrollPosition, behavior: 'smooth' });
-    }
-  };
-
   /** Component */
   return (
     <div className='filmDatabase'>
       <FDMenu />
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
-      <main className='fdMedia' ref={fdMediaRef} onWheel={(event: React.WheelEvent<HTMLElement>) => deltaScrollCarousels(event.deltaY)}>
-        {...carouselComponents}
-      </main>
+      <FDStandardCarousel carouselComponents={carouselComponents} />
     </div>
   );
 };
