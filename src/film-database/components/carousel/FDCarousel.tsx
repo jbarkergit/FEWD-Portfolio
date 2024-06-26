@@ -57,7 +57,7 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }:
 
     observer.observe(lastCarouselNode);
     return () => observer.unobserve(lastCarouselNode);
-  }, [carouselRef.current]);
+  }, []);
 
   /** Horizontal Navigation */
   const navigate = (): void => {
