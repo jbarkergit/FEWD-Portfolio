@@ -27,18 +27,12 @@
   overflow-y: clip;
   @include m.fdFontM;
   &[data-layout='standard-desktop'] {
-    :root {
-      --fd-carousel-items-per-page: 7;
-    }
+    --fd-carousel-items-per-page: 7;
   }
   &[data-layout='standard-tablet'] {
-    :root {
-      --fd-carousel-items-per-page: 6;
-    }
+    --fd-carousel-items-per-page: 6;
   }
   &[data-layout='standard-mobile'] {
-    :root {
-      --fd-carousel-items-per-page: 4;
-    }
+    --fd-carousel-items-per-page: 4;
   }
 }
