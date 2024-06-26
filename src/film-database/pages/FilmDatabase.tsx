@@ -141,6 +141,7 @@ const FilmDatabase = () => {
   };
 
   useEffect(() => {
+    getDataLayout();
     window.addEventListener('resize', getDataLayout);
     return () => window.removeEventListener('resize', getDataLayout);
   }, []);
