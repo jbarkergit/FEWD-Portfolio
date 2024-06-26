@@ -65,7 +65,7 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }:
 
     // Target indexes and elements
     const targetIndex: number = carouselIndex * maxVisibleCarouselNodes;
-    const targetArticleIndex: number = targetIndex === 0 ? 0 : targetIndex - 1;
+    const targetArticleIndex: number = targetIndex === 0 ? 0 : targetIndex;
     const targetElement = carouselRef.current.children[targetArticleIndex] as HTMLLIElement;
     const lastElement = carouselRef.current.children[articlesFlatMap.findLastIndex((obj) => obj)] as HTMLLIElement;
 
