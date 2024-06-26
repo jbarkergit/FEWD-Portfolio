@@ -117,9 +117,37 @@ const FilmDatabase = () => {
     if (tmdbValueFlatMap[0]) setHeroData(tmdbValueFlatMap[0][0][0]);
   }, [tmdbDataMap]);
 
+  /** filmDatabase Breakpoint Attr */
+  const [layoutAttr, setLayoutAttr] = useState<string | null>(null);
+
+  const getDataLayout = (): void => {
+    switch (true) {
+      case window.innerWidth >= 960:
+        setLayoutAttr('standard-desktop');
+        break;
+
+      case window.innerWidth >= 768:
+        setLayoutAttr('standard-tablet');
+        break;
+
+      case window.innerWidth < 768:
+        setLayoutAttr('standard-mobile');
+        break;
+
+      default:
+        setLayoutAttr('standard-desktop');
+        break;
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', getDataLayout);
+    return () => window.removeEventListener('resize', getDataLayout);
+  }, []);
+
   /** Component */
   return (
-    <div className='filmDatabase'>
+    <div className='filmDatabase' data-layout={layoutAttr}>
       <FDMenu />
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
