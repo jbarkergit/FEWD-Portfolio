@@ -152,7 +152,7 @@ const FilmDatabase = () => {
 
   /** Component */
   return (
-    <div className='filmDatabase' data-layout={layoutAttr}>
+    <div className='filmDatabase' data-layout-carousel={layoutAttr}>
       <FDMenu />
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
