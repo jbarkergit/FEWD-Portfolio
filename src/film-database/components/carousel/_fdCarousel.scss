@@ -43,6 +43,9 @@
         &[data-layout='carousel'] {
           display: flex;
           @include m.scrollSnappingXAxis;
+          @media (width <= 1410px) {
+            scroll-snap-type: x mandatory;
+          }
         }
         &[data-layout='grid'] {
           display: grid;
