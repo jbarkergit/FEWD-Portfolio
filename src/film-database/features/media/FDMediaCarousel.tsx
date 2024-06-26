@@ -43,12 +43,7 @@ const FDMediaCarousel = ({ carouselComponents }: Type_PropDrill) => {
   };
 
   return (
-    <main
-      className='fdMedia'
-      ref={fdMediaRef}
-      onWheel={(event: React.WheelEvent<HTMLElement>) => {
-        if (window.innerWidth >= 960) deltaScrollCarousels(event.deltaY);
-      }}>
+    <main className='fdMedia' ref={fdMediaRef} onWheel={(event: React.WheelEvent<HTMLElement>) => deltaScrollCarousels(event.deltaY)}>
       {...carouselComponents}
     </main>
   );
