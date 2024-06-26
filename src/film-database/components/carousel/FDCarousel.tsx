@@ -38,9 +38,28 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }:
 
   useEffect(() => renderPaginatedDataSet(), [carouselIndex]);
 
-  /** Horizontal Navigation */
+  /** Pagination on pointer drag */
   const carouselRef = useRef<HTMLUListElement>(null);
 
+  useEffect(() => {
+    if (!carouselRef.current || !carouselRef.current.children) return;
+    const lastCarouselNode = carouselRef.current.children[carouselRef.current.children.length - 1];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[entries.length - 1];
+        if (entry.isIntersecting) setCarouselIndex(Math.max(0, Math.min(carouselIndex + 1, mapValue.length - 1)));
+      },
+      {
+        threshold: 1.0,
+      }
+    );
+
+    observer.observe(lastCarouselNode);
+    return () => observer.unobserve(lastCarouselNode);
+  }, [carouselRef.current]);
+
+  /** Horizontal Navigation */
   const navigate = (): void => {
     if (!carouselRef.current || !carouselRef.current.children) return;
 
