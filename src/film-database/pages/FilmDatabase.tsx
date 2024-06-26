@@ -121,23 +121,27 @@ const FilmDatabase = () => {
   const [layoutAttr, setLayoutAttr] = useState<string | null>(null);
 
   const getDataLayout = (): void => {
+    let layout: string;
+
     switch (true) {
       case window.innerWidth >= 960:
-        setLayoutAttr('standard-desktop');
+        layout = 'desktop';
         break;
 
       case window.innerWidth >= 768:
-        setLayoutAttr('standard-tablet');
+        layout = 'tablet';
         break;
 
       case window.innerWidth < 768:
-        setLayoutAttr('standard-mobile');
+        layout = 'mobile';
         break;
 
       default:
-        setLayoutAttr('standard-desktop');
+        layout = 'desktop';
         break;
     }
+
+    if (layout !== layoutAttr) setLayoutAttr(layout);
   };
 
   useEffect(() => {
