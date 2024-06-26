@@ -37,7 +37,7 @@
   }
 
   &[data-layout-carousel='tablet'] {
-    --fd-carousel-items-per-page: 6;
+    --fd-carousel-items-per-page: 5;
 
     --fd-carousel-node-width: calc(
       (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
@@ -46,7 +46,7 @@
   }
 
   &[data-layout-carousel='mobile'] {
-    --fd-carousel-items-per-page: 5;
+    --fd-carousel-items-per-page: 3;
 
     --fd-carousel-node-width: calc(
       (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
