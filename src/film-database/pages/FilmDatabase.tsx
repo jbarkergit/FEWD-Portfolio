@@ -117,31 +117,46 @@ const FilmDatabase = () => {
     if (tmdbValueFlatMap[0]) setHeroData(tmdbValueFlatMap[0][0][0]);
   }, [tmdbDataMap]);
 
-  /** filmDatabase Breakpoint Attr */
-  const [layoutAttr, setLayoutAttr] = useState<string | null>(null);
+  /** filmDatabase Breakpoint Attr
+   * Breakpoints at 25% of second row's poster
+   */
+  const [layoutAttr, setLayoutAttr] = useState<string>('xxl');
 
   const getDataLayout = (): void => {
     let layout: string;
 
     switch (true) {
-      case window.innerWidth >= 960:
-        layout = 'desktop';
+      case window.innerWidth >= 1410:
+        layout = 'xxl';
         break;
 
-      case window.innerWidth >= 768:
-        layout = 'tablet';
+      case window.innerWidth < 1410 && window.innerWidth > 1212:
+        layout = 'xl';
         break;
 
-      case window.innerWidth < 768:
-        layout = 'mobile';
+      case window.innerWidth <= 1212 && window.innerWidth > 1032:
+        layout = 'l';
+        break;
+
+      case window.innerWidth <= 1032 && window.innerWidth > 836:
+        layout = 'm';
+        break;
+
+      case window.innerWidth <= 836 && window.innerWidth > 632:
+        layout = 's';
+        break;
+
+      case window.innerWidth <= 632 && window.innerWidth > 0:
+        layout = 'xs';
         break;
 
       default:
-        layout = 'desktop';
+        layout = 'xxl';
         break;
     }
 
-    if (layout !== layoutAttr) setLayoutAttr(layout);
+    // if (layout !== layoutAttr)
+    setLayoutAttr(layout);
   };
 
   useEffect(() => {
