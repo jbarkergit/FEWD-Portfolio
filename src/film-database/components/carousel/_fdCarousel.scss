@@ -3,11 +3,10 @@
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
 :root {
-  --fd-carousel-items-per-page: 7;
   --fd-carousel-node-width: calc(
     (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
   );
-  --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.75); // 0.66667 // 0.75
+  --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
 }
 
 .fdMedia {
