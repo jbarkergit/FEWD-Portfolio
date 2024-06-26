@@ -81,7 +81,7 @@ const FilmDatabase = () => {
       // Pagination
       for (let iteratorCounter = 0; iteratorCounter < maxIteratorIndex; iteratorCounter++) {
         const startingSliceIndex: number = maxVisibleCarouselNodes * iteratorCounter + iteratorCounter;
-        const endingSliceIndex: number = iteratorCounter === 0 ? maxVisibleCarouselNodes : maxVisibleCarouselNodes * (iteratorCounter + 1) + 1;
+        const endingSliceIndex: number = iteratorCounter === 0 ? maxVisibleCarouselNodes + 1 : maxVisibleCarouselNodes * (iteratorCounter + 1) + 1;
         const paginatedData: Type_Tmdb_Api_Union[] = value.slice(startingSliceIndex, endingSliceIndex);
         const iterableMap: Type_Tmdb_Api_Union[][] = dataMap.get(key)!;
 
@@ -98,7 +98,7 @@ const FilmDatabase = () => {
 
   useEffect(() => {
     const tmdbStateComponents = (): JSX.Element[] => {
-      return [...tmdbDataMap.entries()].map(([key, value], index) => {
+      return [...tmdbDataMap.entries()].map(([key, value]) => {
         // Set data-attribute on first carousel node for index tracking without state
         return <FDCarousel dataKey={key} mapValue={value} maxVisibleCarouselNodes={maxVisibleCarouselNodes} setHeroData={setHeroData} />;
       });
@@ -156,8 +156,13 @@ const FilmDatabase = () => {
         break;
     }
 
-    // if (layout !== layoutAttr)
-    setLayoutAttr(layout);
+    setLayoutAttr((prevLayout) => {
+      if (prevLayout !== layout) {
+        return layout;
+      } else {
+        return prevLayout;
+      }
+    });
   };
 
   useEffect(() => {
