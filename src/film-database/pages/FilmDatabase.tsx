@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Api Data
 import { Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../composables/tmdb-api/data/tmdbEndPoints';
@@ -20,19 +20,7 @@ const FilmDatabase = () => {
   // State map holding [key, [unpaginated data, paginated data arrs]]
   const [tmdbDataMap, setTmdbDataMap] = useState<Map<string, Type_Tmdb_Api_Union[][]>>(new Map());
   // Global dependencies
-  const filmDatabaseRef = useRef<HTMLDivElement>(null);
-  const [maxVisibleCarouselNodes, setMaxVisibleCarouselNodes] = useState<number>(7);
-
-  const getMaxVisibleCarouselNodes = () => {
-    if (!filmDatabaseRef.current) return;
-    const globalVar: number = parseInt(getComputedStyle(filmDatabaseRef.current).getPropertyValue('--fd-carousel-items-per-page').trim());
-    if (maxVisibleCarouselNodes !== globalVar) setMaxVisibleCarouselNodes(globalVar);
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', getMaxVisibleCarouselNodes);
-    return () => window.removeEventListener('resize', getMaxVisibleCarouselNodes);
-  }, []);
+  const maxVisibleCarouselNodes: number = 7;
 
   // Fetcher && session storage dependency
   const useLocationPathname = useLocation().pathname;
@@ -180,7 +168,7 @@ const FilmDatabase = () => {
 
   /** Component */
   return (
-    <div className='filmDatabase' ref={filmDatabaseRef} data-layout-carousel={layoutAttr}>
+    <div className='filmDatabase' data-layout-carousel={layoutAttr}>
       <FDMenu />
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
