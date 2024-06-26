@@ -26,7 +26,6 @@ const FilmDatabase = () => {
   const getMaxVisibleCarouselNodes = () => {
     if (!filmDatabaseRef.current) return;
     const globalVar: number = parseInt(getComputedStyle(filmDatabaseRef.current).getPropertyValue('--fd-carousel-items-per-page').trim());
-    console.log(globalVar);
     if (maxVisibleCarouselNodes !== globalVar) setMaxVisibleCarouselNodes(globalVar);
   };
 
