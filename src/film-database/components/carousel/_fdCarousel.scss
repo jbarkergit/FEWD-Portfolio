@@ -7,10 +7,6 @@
   z-index: 1;
   height: 100%;
   @include m.scrollSnappingYAxis;
-  @media (width >= 1600px) {
-    overscroll-behavior: contain;
-    overflow: hidden;
-  }
   & > * {
     position: relative;
     z-index: 2;
@@ -43,9 +39,6 @@
         &[data-layout='carousel'] {
           display: flex;
           @include m.scrollSnappingXAxis;
-          @media (width <= 1410px) {
-            scroll-snap-type: x mandatory;
-          }
         }
         &[data-layout='grid'] {
           display: grid;
@@ -96,9 +89,6 @@
         height: 100%;
         pointer-events: none;
         opacity: 0;
-        @media (width <= 1410px) {
-          display: none;
-        }
         &--button {
           position: absolute;
           z-index: 10;

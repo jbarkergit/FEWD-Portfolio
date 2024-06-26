@@ -19,6 +19,29 @@
   --fd-gap: 14px;
 }
 
+@media (width >= 1600px) {
+  .fdMedia {
+    overscroll-behavior: contain;
+    overflow: hidden;
+  }
+}
+
+@media (width <= 1410px) {
+  .filmDatabase {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+  .fdMedia__carousel__wrapper__ul[data-layout='carousel'] {
+    scroll-snap-type: x mandatory;
+  }
+
+  .fdMedia__carousel__wrapper__navigation {
+    display: none;
+  }
+}
+
 .filmDatabase {
   position: relative;
   display: block;
