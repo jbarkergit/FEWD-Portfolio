@@ -3,6 +3,9 @@
 
 .fdiFrame {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   height: 50svh;
   &--h2 {
     display: none;
