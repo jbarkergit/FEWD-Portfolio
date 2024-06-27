@@ -15,9 +15,6 @@
   }
   &__carousel {
     padding-bottom: calc(var(--fd-gap) * 2);
-    &:nth-of-type(1) {
-      padding-top: 50svh;
-    }
     &[data-index-tracker='active'] {
       opacity: 1;
       transition: opacity 0.3s ease-in;
