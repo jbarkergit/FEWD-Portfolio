@@ -6,6 +6,9 @@
   z-index: 1;
   height: 100%;
   @include m.scrollSnappingYAxis;
+  @media (width >= 1410px) {
+    overflow-y: hidden;
+  }
   & > * {
     position: relative;
     z-index: 2;
