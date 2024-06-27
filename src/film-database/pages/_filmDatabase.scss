@@ -8,6 +8,11 @@
   background-color: rgba(0, 0, 0, 1);
   overflow-y: clip;
   @include m.fdFontM;
+  @media (width <= 1410px) {
+    // display: grid;
+    // grid-template-columns: repeat(2, 1fr);
+    // grid-template-rows: repeat(2, 1fr);
+  }
 
   &[data-layout-carousel='xxl'] {
     --fd-carousel-items-per-page: 7;

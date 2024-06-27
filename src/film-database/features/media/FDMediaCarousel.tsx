@@ -38,7 +38,7 @@ const FDMediaCarousel = ({ carouselComponents }: Type_PropDrill) => {
       const scrollPosition: number = nextActiveNodeOffsetTop - firstNodePaddingTop;
 
       // Scroll
-      fdMediaRef.current.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+      // fdMediaRef.current.scrollTo({ top: scrollPosition, behavior: 'smooth' });
     }
   };
 
