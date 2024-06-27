@@ -2,20 +2,19 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdiFrame {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 1;
-  height: 62svh;
-  aspect-ratio: 16/9;
+  position: relative;
+  height: 50svh;
   &--h2 {
     display: none;
   }
   &__backdrop,
   &__player {
-    position: relative;
-    height: inherit;
-    aspect-ratio: inherit;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    height: 62svh;
+    aspect-ratio: 16/9;
     transform: scale(1.3);
     transform-origin: center;
     &::before {
