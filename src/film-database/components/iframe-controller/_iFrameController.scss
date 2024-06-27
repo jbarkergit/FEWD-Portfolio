@@ -2,10 +2,7 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .iFrameController {
-  position: absolute;
-  // carousel header font-size + carousel header padding-bottom + carousel padding-bottom
-  bottom: calc(var(--fd-font-size-xl) + 1rem + (var(--fd-padding-generic) / 2.5));
-  right: calc((100svh - var(--fd-carousel-node-height)) / 2);
+  position: relative;
   z-index: 9;
   display: flex;
   align-items: center;
@@ -13,6 +10,8 @@
   width: fit-content;
   height: 48px;
   padding: 6px 12px;
+  // iFrame height * 16/9 to decimal point * transform: scale(1.3) / 4
+  margin-right: calc(((62svh * 1.7778) * 1.3) / 4);
   border-radius: 6px;
   opacity: 0;
   transition: opacity 0.25s cubic-bezier(0, 0, 0.2, 1);
