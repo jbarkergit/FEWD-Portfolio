@@ -42,6 +42,7 @@
   scroll-behavior: smooth;
   scroll-snap-type: x proximity;
   scroll-padding: 0 0;
+  overscroll-behavior: contain;
 }
 @mixin scrollSnappingYAxis {
   overflow-y: scroll;
@@ -49,4 +50,5 @@
   scroll-behavior: smooth;
   scroll-snap-type: y proximity;
   scroll-padding: 0 0;
+  overscroll-behavior: contain;
 }
