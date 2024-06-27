@@ -41,8 +41,15 @@ const FDMediaCarousel = ({ carouselComponents }: Type_PropDrill) => {
   };
 
   useEffect(() => {
-    window.addEventListener('wheel', (event) => deltaScrollCarousels(event.deltaY));
-    return () => window.removeEventListener('wheel', (event) => deltaScrollCarousels(event.deltaY));
+    window.addEventListener('wheel', (event) => {
+      event.preventDefault();
+      deltaScrollCarousels(event.deltaY);
+    });
+    return () =>
+      window.removeEventListener('wheel', (event) => {
+        event.preventDefault();
+        deltaScrollCarousels(event.deltaY);
+      });
   }, [fdMediaRef.current]);
 
   return (
