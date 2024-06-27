@@ -2,6 +2,8 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdDetails {
+  position: relative;
+  z-index: 3;
   height: 50svh;
   pointer-events: none;
   &__article {
