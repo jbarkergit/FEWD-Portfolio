@@ -6,9 +6,6 @@
   z-index: 1;
   height: 100%;
   @include m.scrollSnappingYAxis;
-  @media (width >= 1600px) {
-    overflow-y: clip;
-  }
   & > * {
     position: relative;
     z-index: 2;
