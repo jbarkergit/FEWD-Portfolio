@@ -89,13 +89,14 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
   // Init player
   const [player, setPlayer] = useState<YouTubePlayer | undefined>(undefined);
   const [playerStates, setPlayerStates] = useState<PlayerStates | undefined>(undefined);
+  const [playerVolume, setPlayerVolume] = useState<number>(0);
 
   /** Component */
   if (trailers && trailers.length > 0) {
     return (
       <section className='fdiFrame'>
         <h2 className='fdiFrame--h2'>{trailers[0].name}</h2>
-        <IFrameController player={player} playerStates={playerStates} />
+        <IFrameController player={player} playerStates={playerStates} playerVolume={playerVolume} setPlayerVolume={setPlayerVolume} />
         <YouTube
           videoId={`${trailers[0].key}`}
           opts={opts}
@@ -104,13 +105,14 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
           title={`YouTube video player: ${trailers[0].name}`}
           style={undefined}
           loading={'eager'}
-          onReady={(event: YouTubeEvent) => {
-            setPlayer(event.target);
-            event.target.setVolume(0);
-          }}
+          onReady={(event: YouTubeEvent) => setPlayer(event.target)}
           onStateChange={async (event: YouTubeEvent) => {
             const playerStates = await event.target.getPlayerState();
             setPlayerStates(playerStates);
+          }}
+          onPlay={() => {
+            player?.setVolume(playerVolume);
+            player?.unMute();
           }}
           onEnd={(event: YouTubeEvent) => {
             event.target.destroy();
