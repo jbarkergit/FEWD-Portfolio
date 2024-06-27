@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 type Type_PropDrill = {
   carouselComponents: JSX.Element[];
@@ -12,7 +12,7 @@ const FDMediaCarousel = ({ carouselComponents }: Type_PropDrill) => {
 
   // Update previously active and newly active carousel node's data-attr, navigate
   const deltaScrollCarousels = (deltaY: number): void => {
-    if (!fdMediaRef.current || !fdMediaRef.current || !carouselNodes) return;
+    if (!fdMediaRef.current || !carouselNodes) return;
 
     // Convert deltaY to 1 or -1 for incrementation/decrementation
     const deltaIndex: 1 | -1 = deltaY > 0 ? 1 : -1;
@@ -38,12 +38,17 @@ const FDMediaCarousel = ({ carouselComponents }: Type_PropDrill) => {
       const scrollPosition: number = nextActiveNodeOffsetTop - firstNodePaddingTop;
 
       // Scroll
-      // fdMediaRef.current.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+      fdMediaRef.current.scrollTo({ top: scrollPosition, behavior: 'smooth' });
     }
   };
 
+  useEffect(() => {
+    window.addEventListener('wheel', (event) => deltaScrollCarousels(event.deltaY));
+    return () => window.removeEventListener('wheel', (event) => deltaScrollCarousels(event.deltaY));
+  }, [fdMediaRef.current]);
+
   return (
-    <main className='fdMedia' ref={fdMediaRef} onWheel={(event: React.WheelEvent<HTMLElement>) => deltaScrollCarousels(event.deltaY)}>
+    <main className='fdMedia' ref={fdMediaRef}>
       {...carouselComponents}
     </main>
   );
