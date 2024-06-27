@@ -1,16 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useEffect, Dispatch, SetStateAction } from 'react';
 
 import { YouTubePlayer } from 'react-youtube';
 import PlayerStates from 'youtube-player/dist/constants/PlayerStates';
 
 import IFrameControllerPlayPause from './IFrameControllerPlayPause';
-import IFrameControllerPlayback from './IFrameControllerPlayback';
 import IFrameControllerVolumeIndicator from './IFrameControllerVolumeIndicator';
 import IFrameControllerVolumeSlider from './IFrameControllerVolumeSlider';
+import IFrameControllerTimeStamp from './IFrameControllerTimeStamp';
+import IFrameControllerPlayback from './IFrameControllerPlayback';
 
-const IFrameController = ({ player, playerStates }: { player: YouTubePlayer | undefined; playerStates: PlayerStates | undefined }) => {
-  const [playerVolume, setPlayerVolume] = useState<number>(0);
-
+const IFrameController = ({
+  player,
+  playerStates,
+  playerVolume,
+  setPlayerVolume,
+}: {
+  player: YouTubePlayer | undefined;
+  playerStates: PlayerStates | undefined;
+  playerVolume: number;
+  setPlayerVolume: Dispatch<SetStateAction<number>>;
+}) => {
   /** Keep player volume aligned with state */
   const alignPlayerVolume = async () => {
     player?.setVolume(playerVolume);
@@ -26,6 +35,7 @@ const IFrameController = ({ player, playerStates }: { player: YouTubePlayer | un
       <IFrameControllerPlayPause player={player} playerStates={playerStates} />
       <IFrameControllerVolumeIndicator player={player} playerVolume={playerVolume} />
       <IFrameControllerVolumeSlider player={player} playerVolume={playerVolume} setPlayerVolume={setPlayerVolume} />
+      <IFrameControllerTimeStamp player={player} />
       <IFrameControllerPlayback player={player} />
     </div>
   );
