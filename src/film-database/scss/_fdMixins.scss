@@ -1,4 +1,4 @@
-/** Fonts */
+// Fonts
 @mixin fdFontXXL {
   font-family: 'Satoshi';
   font-weight: 900;
@@ -35,7 +35,7 @@
   color: white;
 }
 
-/** Scroll Snapping */
+// Scroll Snapping
 @mixin scrollSnappingXAxis {
   overflow-x: scroll;
   scrollbar-width: none;

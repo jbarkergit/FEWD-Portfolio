@@ -1,9 +1,8 @@
-// Global Styles
-@forward '/src/film-database/styles/scss/filmDatabaseMixins';
-@forward '/src/film-database/styles/scss/filmDatabaseFonts';
-
-// Pages
-@forward '/src/film-database/pages/filmDatabase';
+// Global
+@forward '/src/film-database/scss/fdExports';
+@forward '/src/film-database/scss/fdFonts';
+@forward '/src/film-database/scss/fdQueries';
+@forward '/src/film-database/scss/fdRoot';
 
 // Components
 @forward '/src/film-database/components/carousel/fdCarousel';
@@ -15,5 +14,5 @@
 @forward '/src/film-database/features/iframe/fdiFrame';
 @forward '/src/film-database/features/menu/fdMenu';
 
-// Media Queries
-@forward '/src/film-database/pages/fdMediaQueries';
+// Pages
+@forward '/src/film-database/pages/filmDatabase';

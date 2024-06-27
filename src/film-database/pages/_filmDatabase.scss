@@ -2,23 +2,6 @@
 @use '/src/film-database/styles/scss/filmDatabaseStyles' as s;
 @use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
 
-:root {
-  // Font sizes
-  --fd-font-size-xxl: clamp(1.875rem, 3vw, 2.25rem); /* 30px to 36px */
-  --fd-font-size-xl: clamp(1.5rem, 2.5vw, 1.875rem); /* 24px to 30px */
-  --fd-font-size-l: clamp(1.125rem, 2vw, 1.5rem); /* 18px to 24px */
-  --fd-font-size-m: clamp(1rem, 1.5vw, 1.125rem); /* 16px to 18px */
-  --fd-font-size-s: clamp(0.875rem, 1vw, 1rem); /* 14px to 16px */
-
-  // Font shadows
-  --fd-font-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
-
-  // Box model
-  --fd-padding-generic: clamp(1.5rem, 1rem + 5vw, 7rem);
-  --fd-borderRadius: 9.6px;
-  --fd-gap: 14px;
-}
-
 .filmDatabase {
   position: relative;
   display: block;
