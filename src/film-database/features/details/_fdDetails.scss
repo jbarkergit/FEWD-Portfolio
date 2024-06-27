@@ -2,14 +2,10 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdDetails {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 3;
   height: 50svh;
   pointer-events: none;
   &__article {
-    margin: calc(var(--fd-padding-generic) * 1.5) 0 0 var(--fd-padding-generic);
+    padding: calc(var(--fd-padding-generic) * 1.5) 0 0 var(--fd-padding-generic);
     &__header {
       display: flex;
       flex-direction: column;
