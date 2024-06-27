@@ -9,21 +9,26 @@
   pointer-events: none;
   &__article {
     &__header {
-      opacity: 0;
-      transform: translateY(-10%);
-      transition:
-        opacity 0.5s ease,
-        transform 0.5s ease;
-      &[data-anim='fade-in'] {
-        opacity: 1;
-        transform: translateY(0);
+      display: flex;
+      flex-direction: column;
+      & > * {
+        width: max-content;
       }
-      & svg {
-        width: 135px;
-        padding-bottom: var(--fd-gap);
+      & a {
+        pointer-events: all;
+        padding-bottom: calc(var(--fd-gap) * 1.5);
+        & svg {
+          width: 135px;
+        }
       }
       &__hgroup {
+        & > * {
+          pointer-events: all;
+          user-select: text;
+          cursor: text;
+        }
         & h2 {
+          width: fit-content;
           @include m.fdFontXXL;
           text-shadow: var(--fd-font-shadow);
           text-transform: uppercase;
