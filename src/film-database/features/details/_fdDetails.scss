@@ -1,6 +1,5 @@
 @use '/src/sass/functions' as f;
-@use '/src/film-database/styles/scss/filmDatabaseStyles' as s;
-@use '/src/film-database/styles/scss/filmDatabaseMixins' as m;
+@use '/src/film-database/scss/fdMixins' as m;
 
 .fdDetails {
   position: fixed;
