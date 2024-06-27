@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { YouTubePlayer } from 'react-youtube';
 import PlayerStates from 'youtube-player/dist/constants/PlayerStates';
 
-import { MaterialSymbolsPlayArrow, MaterialSymbolsPause, SvgSpinnersRingResize } from '../../assets/iFrameSymbols';
+import { MaterialSymbolsPlayArrow, MaterialSymbolsPause, SvgSpinnersRingResize } from '../../assets/google-material-symbols/iFrameSymbols';
 
 const IFrameControllerPlayPause = ({ player, playerStates }: { player: YouTubePlayer | undefined; playerStates: PlayerStates | undefined }) => {
   const [symbolComponent, setSymbolComponent] = useState<JSX.Element>(<SvgSpinnersRingResize />);

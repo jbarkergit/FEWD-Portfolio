@@ -4,7 +4,7 @@ import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
 
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
-import { TheMovieDatabaseLogo } from '../../assets/tmdbSymbols';
+import { TheMovieDatabaseLogo } from '../../assets/google-material-symbols/tmdbSymbols';
 
 type Type_PropDrill = {
   heroData: Type_Tmdb_Api_Union | null;

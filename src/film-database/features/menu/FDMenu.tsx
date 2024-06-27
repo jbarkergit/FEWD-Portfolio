@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
 
-import { MaterialSymbolsSearch, MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp } from '../../assets/menuSymbols';
+import { MaterialSymbolsSearch, MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp } from '../../assets/google-material-symbols/menuSymbols';
 
 import FDSearchBar from '../../components/search-bar/FDSearchBar';
 
