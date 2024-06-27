@@ -32,7 +32,6 @@
         & p {
           max-width: 57ch;
           @include m.fdFontM;
-          font-family: 'Plus Jakarta Sans';
           text-shadow: var(--fd-font-shadow);
         }
       }
