@@ -17,14 +17,12 @@ import FDCarousel from '../components/carousel/FDCarousel';
 // const maxCarouselNodes: number = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--my-variable')); revisit
 
 const FilmDatabase = () => {
-  // State map holding [key, [unpaginated data, paginated data arrs]]
-  const [tmdbDataMap, setTmdbDataMap] = useState<Map<string, Type_Tmdb_Api_Union[][]>>(new Map());
   // Global dependencies
   const maxVisibleCarouselNodes: number = 7;
-
   // Fetcher && session storage dependency
   const useLocationPathname = useLocation().pathname;
 
+  /** */
   const getMapEntry = (key: Type_Tmdb_Movie_Keys_Union) => {
     const tmdbEntriesArr = Object.values(tmdbMovieEndpoints).flatMap((map) => [...map.entries()]);
     // Explicitly cast parameter provides confidence behind the non-null assertion operator
@@ -32,6 +30,7 @@ const FilmDatabase = () => {
     return targetEntry;
   };
 
+  /** */
   const fetchDataByPathname = () => {
     // Init key-endpoint pair arr, store key-endpoint pairs
     let keyEndpointPairArr: [Type_Tmdb_Movie_Keys_Union, string | Type_Tmdb_Api_Union[]][] = [];
@@ -51,7 +50,7 @@ const FilmDatabase = () => {
     keyEndpointPairArr.forEach((keyEndpointPair) => {
       const getCachedDataByKey: Type_Tmdb_Api_Union[] | undefined = useFilmDatabaseWebStorage(useLocationPathname).getData(keyEndpointPair[0]);
       const isKeyCached: boolean = !!getCachedDataByKey;
-      if (isKeyCached && getCachedDataByKey!.length > 0) keyEndpointPair[1] = getCachedDataByKey!;
+      if (isKeyCached && getCachedDataByKey && getCachedDataByKey.length > 0) keyEndpointPair[1] = getCachedDataByKey!;
     });
 
     // Fetch, pass data to pagination
@@ -67,9 +66,12 @@ const FilmDatabase = () => {
 
   useEffect(() => fetchDataByPathname(), []);
 
+  /** */
+  const [heroData, setHeroData] = useState<Type_Tmdb_Api_Union | null>(null);
+
   const paginateData = (data: Type_useFetchTmdbResponse_KeyValuePairArr) => {
     // Init mutatable map in outter scope (helps reduce state updates)
-    let dataMap: typeof tmdbDataMap = new Map([]);
+    let dataMap: Map<string, Type_Tmdb_Api_Union[][]> = new Map([]);
 
     data.forEach(([key, value]) => {
       // Init entry with empty array or unpaginated data for pages
@@ -89,34 +91,21 @@ const FilmDatabase = () => {
       }
     });
 
-    // Set state
-    setTmdbDataMap(dataMap);
+    // Create component data
+    createTmdbComponents(dataMap);
+    // Create hero data
+    setHeroData([...data.values()][0][1][0]);
   };
 
   /** JSX carousel component creation */
   const [carouselComponents, setCarouselComponents] = useState<JSX.Element[]>([]);
 
-  useEffect(() => {
-    const tmdbStateComponents = (): JSX.Element[] => {
-      return [...tmdbDataMap.entries()].map(([key, value]) => {
-        // Set data-attribute on first carousel node for index tracking without state
-        return <FDCarousel dataKey={key} mapValue={value} maxVisibleCarouselNodes={maxVisibleCarouselNodes} setHeroData={setHeroData} />;
-      });
-    };
-
-    setCarouselComponents(tmdbStateComponents());
-  }, [tmdbDataMap]);
-
-  /** Hero component */
-  const [heroData, setHeroData] = useState<Type_Tmdb_Api_Union | null>(null);
-
-  // Init hero
-  useEffect(() => {
-    if (!tmdbDataMap) return;
-    const tmdbValueFlatMap = [...tmdbDataMap.values()];
-
-    if (tmdbValueFlatMap[0]) setHeroData(tmdbValueFlatMap[0][0][0]);
-  }, [tmdbDataMap]);
+  const createTmdbComponents = (data: Map<string, Type_Tmdb_Api_Union[][]>): void => {
+    const dataEntries: JSX.Element[] = [...data.entries()].map(([key, value]) => {
+      return <FDCarousel dataKey={key} mapValue={value} maxVisibleCarouselNodes={maxVisibleCarouselNodes} setHeroData={setHeroData} />;
+    });
+    setCarouselComponents(dataEntries);
+  };
 
   /** filmDatabase Breakpoint Attr
    * Breakpoints at 25% of second row's poster
