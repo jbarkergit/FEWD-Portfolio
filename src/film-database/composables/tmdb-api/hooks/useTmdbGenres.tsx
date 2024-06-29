@@ -62,9 +62,9 @@ export type Type_MovieGenre_Keys =
   | 'war'
   | 'western';
 
-export const useTmdbGenres = (genre?: Type_MovieGenre_Keys): string | string[] | undefined => {
+export const useTmdbGenres = (genre?: Type_MovieGenre_Keys): number | string[] => {
   if (genre) {
-    return [...Object.keys(movieGenres)].find((entry) => entry === genre);
+    return movieGenres[genre];
   } else {
     return [...Object.keys(movieGenres)].sort().map((key) => key.replaceAll('_', ' '));
   }
