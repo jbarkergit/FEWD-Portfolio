@@ -67,6 +67,7 @@ const FilmDatabase = () => {
   useEffect(() => fetchDataByPathname(), []);
 
   /** */
+  const [carouselComponents, setCarouselComponents] = useState<JSX.Element[]>([]);
   const [heroData, setHeroData] = useState<Type_Tmdb_Api_Union | null>(null);
 
   const paginateData = (data: Type_useFetchTmdbResponse_KeyValuePairArr) => {
@@ -91,20 +92,14 @@ const FilmDatabase = () => {
       }
     });
 
-    // Create component data
-    createTmdbComponents(dataMap);
-    // Create hero data
-    setHeroData([...data.values()][0][1][0]);
-  };
-
-  /** JSX carousel component creation */
-  const [carouselComponents, setCarouselComponents] = useState<JSX.Element[]>([]);
-
-  const createTmdbComponents = (data: Map<string, Type_Tmdb_Api_Union[][]>): void => {
-    const dataEntries: JSX.Element[] = [...data.entries()].map(([key, value]) => {
+    // JSX carousel component creation
+    const dataEntries: JSX.Element[] = [...dataMap.entries()].map(([key, value]) => {
       return <FDCarousel dataKey={key} mapValue={value} maxVisibleCarouselNodes={maxVisibleCarouselNodes} setHeroData={setHeroData} />;
     });
     setCarouselComponents(dataEntries);
+
+    // Create hero data
+    setHeroData([...data.values()][0][1][0]);
   };
 
   /** filmDatabase Breakpoint Attr
