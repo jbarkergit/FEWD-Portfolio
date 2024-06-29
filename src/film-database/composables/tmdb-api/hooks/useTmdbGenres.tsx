@@ -41,11 +41,30 @@ const movieGenres: Record<string, number> = {
   western: 37,
 };
 
-type Type_MovieGenre_Keys = keyof typeof movieGenres;
+export type Type_MovieGenre_Keys =
+  | 'action'
+  | 'adventure'
+  | 'animation'
+  | 'comedy'
+  | 'crime'
+  | 'documentary'
+  | 'drama'
+  | 'family'
+  | 'fantasy'
+  | 'history'
+  | 'horror'
+  | 'music'
+  | 'mystery'
+  | 'romance'
+  | 'science_fiction'
+  | 'tv_movie'
+  | 'thriller'
+  | 'war'
+  | 'western';
 
-export const useTmdbGenres = (genre?: Type_MovieGenre_Keys): number | string[] => {
+export const useTmdbGenres = (genre?: Type_MovieGenre_Keys): string | string[] | undefined => {
   if (genre) {
-    return movieGenres[genre!.toLowerCase() as Type_MovieGenre_Keys];
+    return [...Object.keys(movieGenres)].find((entry) => entry === genre);
   } else {
     return [...Object.keys(movieGenres)].sort().map((key) => key.replaceAll('_', ' '));
   }
