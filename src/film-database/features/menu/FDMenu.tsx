@@ -59,7 +59,7 @@ const FDMenu = () => {
           <nav className='fdMenu__menu__genres__nav'>
             <ul className='fdMenu__menu__genres__nav__ul'>
               {useTmdbGenres()
-                .map()
+                .sortedMap()
                 .map((genre) => (
                   <li className='fdMenu__menu__genres__nav__ul__li' key={uuidv4()}>
                     <button className='fdMenu__menu__genres__nav__ul__li--button'>{genre}</button>
