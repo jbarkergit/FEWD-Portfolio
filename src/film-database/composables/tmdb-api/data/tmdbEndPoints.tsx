@@ -8,7 +8,7 @@ type Theatrical_Keys = 'now_playing' | 'upcoming';
 type Hot_Keys = 'popular' | 'top_rated';
 type Trending_Keys = 'trending_today' | 'trending_this_week';
 type InformationById_Keys = 'details' | 'releaseDates' | 'watchProviders' | 'credits' | 'similar' | 'recommendations';
-type SearchById_Keys = 'movie' | 'discover' | 'keyword' | 'trailers';
+type SearchById_Keys = 'genre' | 'movie' | 'discover' | 'keyword' | 'trailers';
 
 export type Type_Tmdb_Movie_Keys_Union = Theatrical_Keys | Hot_Keys | Trending_Keys | InformationById_Keys | SearchById_Keys;
 
@@ -42,6 +42,7 @@ export const tmdbMovieEndpoints: Type_Tmdb_Movie_Endpoints = {
     ['recommendations', 'https://api.themoviedb.org/3/movie/{movie_id}/recommendations'],
   ]),
   searchById: new Map([
+    ['genre', 'https://api.themoviedb.org/3/genre/movie/list&with_genres={genre_id}'],
     ['movie', 'https://api.themoviedb.org/3/discover/{movie_id}'],
     ['discover', 'https://api.themoviedb.org/3/discover/{movie_id}'],
     ['keyword', 'https://api.themoviedb.org/3/movie/{movie_id}/keywords'],
