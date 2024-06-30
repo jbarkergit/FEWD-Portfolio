@@ -4,17 +4,27 @@
  * each object represents an api "category" of endpoints
  */
 
-type GetPrefabList_Keys = 'now_playing' | 'upcoming' | 'popular' | 'top_rated' | 'trending_today' | 'trending_this_week';
-type GetIdData_Keys = 'discover' | 'details' | 'credits' | 'keywords' | 'recommendations' | 'releaseDates' | 'reviews' | 'similar' | 'videos' | 'watchProviders';
+type Type_GetPrefabList_Keys = 'now_playing' | 'upcoming' | 'popular' | 'top_rated' | 'trending_today' | 'trending_this_week';
+type Type_GetIdData_Keys =
+  | 'discover'
+  | 'details'
+  | 'credits'
+  | 'keywords'
+  | 'recommendations'
+  | 'releaseDates'
+  | 'reviews'
+  | 'similar'
+  | 'videos'
+  | 'watchProviders';
 
-export type Type_Tmdb_Movie_Keys_Union = GetPrefabList_Keys | GetIdData_Keys;
+export type Type_Tmdb_Movie_Keys_Union = Type_GetPrefabList_Keys | Type_GetIdData_Keys;
 
-type Type_Tmdb_Movie_Endpoints = {
-  getPrefabList: Record<GetPrefabList_Keys, string>;
-  getIdData: Record<GetIdData_Keys, string>;
+type Type_Tmdb_Movie_Endpoint_Obj = {
+  getPrefabList: Record<Type_GetPrefabList_Keys, string>;
+  getIdData: Record<Type_GetIdData_Keys, string>;
 };
 
-export const tmdbMovieEndpoints: Type_Tmdb_Movie_Endpoints = {
+export const tmdbMovieEndpoints: Type_Tmdb_Movie_Endpoint_Obj = {
   getPrefabList: {
     now_playing: 'https://api.themoviedb.org/3/movie/now_playing',
     upcoming: 'https://api.themoviedb.org/3/movie/upcoming',
