@@ -58,11 +58,13 @@ const FDMenu = () => {
         <section className='fdMenu__menu__genres' ref={menuGenresRef} data-menu='closed'>
           <nav className='fdMenu__menu__genres__nav'>
             <ul className='fdMenu__menu__genres__nav__ul'>
-              {(useTmdbGenres() as string[]).map((genre) => (
-                <li className='fdMenu__menu__genres__nav__ul__li' key={uuidv4()}>
-                  <button className='fdMenu__menu__genres__nav__ul__li--button'>{genre}</button>
-                </li>
-              ))}
+              {useTmdbGenres()
+                .map()
+                .map((genre) => (
+                  <li className='fdMenu__menu__genres__nav__ul__li' key={uuidv4()}>
+                    <button className='fdMenu__menu__genres__nav__ul__li--button'>{genre}</button>
+                  </li>
+                ))}
             </ul>
           </nav>
         </section>
