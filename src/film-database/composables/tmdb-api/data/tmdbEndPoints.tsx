@@ -42,8 +42,6 @@ export const tmdbMovieEndpoints: Type_Tmdb_Movie_Endpoints = {
     ['recommendations', 'https://api.themoviedb.org/3/movie/{movie_id}/recommendations'],
   ]),
   searchById: new Map([
-    ['genre', 'https://api.themoviedb.org/3/genre/movie/list&with_genres={genre_id}'],
-    ['movie', 'https://api.themoviedb.org/3/discover/{movie_id}'],
     ['discover', 'https://api.themoviedb.org/3/discover/{movie_id}'],
     ['keyword', 'https://api.themoviedb.org/3/movie/{movie_id}/keywords'],
     ['trailers', 'https://api.themoviedb.org/3/movie/{movie_id}/videos'],
