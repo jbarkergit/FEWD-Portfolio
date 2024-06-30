@@ -9,7 +9,7 @@ type GetIdData_Keys = 'discover' | 'details' | 'credits' | 'keywords' | 'recomme
 
 export type Type_Tmdb_Movie_Keys_Union = GetPrefabList_Keys | GetIdData_Keys;
 
-export type Type_Tmdb_Movie_Endpoints = {
+type Type_Tmdb_Movie_Endpoints = {
   getPrefabList: Record<GetPrefabList_Keys, string>;
   getIdData: Record<GetIdData_Keys, string>;
 };
