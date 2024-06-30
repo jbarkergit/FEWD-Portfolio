@@ -1,23 +1,23 @@
-// const tvGenres: Record<string, number> = {
-//   action_adventure: 10759,
-//   animation: 16,
-//   comedy: 35,
-//   crime: 80,
-//   documentary: 99,
-//   drama: 18,
-//   family: 10751,
-//   kids: 10762,
-//   mystery: 9648,
-//   news: 10763,
-//   reality: 10764,
-//   sciFi_fantasy: 10765,
-//   soap: 10766,
-//   talk: 10767,
-//   war_politics: 10768,
-//   western: 37,
-// };
-
-// type Type_TvGenre_Keys = keyof typeof tvGenres;
+export type Type_MovieGenre_Keys =
+  | 'action'
+  | 'adventure'
+  | 'animation'
+  | 'comedy'
+  | 'crime'
+  | 'documentary'
+  | 'drama'
+  | 'family'
+  | 'fantasy'
+  | 'history'
+  | 'horror'
+  | 'music'
+  | 'mystery'
+  | 'romance'
+  | 'science_fiction'
+  | 'tv_movie'
+  | 'thriller'
+  | 'war'
+  | 'western';
 
 const movieGenres: Record<string, number> = {
   action: 28,
@@ -40,27 +40,6 @@ const movieGenres: Record<string, number> = {
   war: 10752,
   western: 37,
 };
-
-export type Type_MovieGenre_Keys =
-  | 'action'
-  | 'adventure'
-  | 'animation'
-  | 'comedy'
-  | 'crime'
-  | 'documentary'
-  | 'drama'
-  | 'family'
-  | 'fantasy'
-  | 'history'
-  | 'horror'
-  | 'music'
-  | 'mystery'
-  | 'romance'
-  | 'science_fiction'
-  | 'tv_movie'
-  | 'thriller'
-  | 'war'
-  | 'western';
 
 export const useTmdbGenres = (genre?: Type_MovieGenre_Keys): number | string[] => {
   if (genre) {
