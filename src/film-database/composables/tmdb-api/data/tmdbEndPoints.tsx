@@ -1,10 +1,6 @@
 /**
  * https://developer.themoviedb.org/reference/
- * array containing objects with key-value pairs for TMDB API endpoints
- * each object represents an api "category" of endpoints
  */
-
-import { useMemo } from 'react';
 
 type Type_GetPrefabList_Keys = 'now_playing' | 'upcoming' | 'popular' | 'top_rated' | 'trending_today' | 'trending_this_week';
 type Type_GetIdData_Keys =
@@ -48,9 +44,3 @@ export const tmdbMovieEndpoints: Type_Tmdb_Movie_Endpoint_Obj = {
     watchProviders: 'https://api.themoviedb.org/3/movie/{movie_id}/watch/providers',
   },
 };
-
-export const tmdbMovieEndpointsFlatmap = useMemo(() => {
-  return Object.entries(tmdbMovieEndpoints).flatMap(([key, endpoint]) => {
-    return { key: key, endpoint: endpoint };
-  });
-}, [tmdbMovieEndpoints]);
