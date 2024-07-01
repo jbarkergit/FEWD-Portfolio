@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Api Types
 import { Type_Tmdb_Api_Union } from '../composables/tmdb-api/types/TmdbDataTypes';
-import { Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbMovieGenres';
+import { Type_Tmdb_Movie_Keys_Union } from '../composables/tmdb-api/data/tmdbEndPoints';
 // Api Hooks
 import { useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
@@ -16,7 +16,7 @@ import FDCarousel from '../components/carousel/FDCarousel';
 
 const FilmDatabase = () => {
   // Spa navigation state
-  const [route, setRoute] = useState<Type_MovieGenre_Keys | undefined>(undefined);
+  const [route, setRoute] = useState<Type_Tmdb_Movie_Keys_Union | undefined>(undefined);
   // Cross-origin safety layer
   const useLocationPathname = useLocation().pathname;
 
@@ -27,7 +27,7 @@ const FilmDatabase = () => {
 
     // Assign keyEndpointPairArr
     if (route !== undefined) {
-      keyEndpointPairArr = [useTmdbUrlBuilder('top_rated')];
+      keyEndpointPairArr = [useTmdbUrlBuilder(route)];
     } else {
       keyEndpointPairArr = [
         useTmdbUrlBuilder('now_playing'),
@@ -161,7 +161,7 @@ const FilmDatabase = () => {
   /** Component */
   return (
     <div className='filmDatabase' data-layout-carousel={layoutAttr}>
-      <FDMenu />
+      <FDMenu setRoute={setRoute} />
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
       <FDMediaCarousel carouselComponents={carouselComponents} />
