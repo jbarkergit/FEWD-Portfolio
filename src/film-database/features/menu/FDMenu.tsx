@@ -5,11 +5,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
 
+import { Type_Tmdb_Movie_Keys_Union } from '../../composables/tmdb-api/data/tmdbEndPoints';
+
 import { MaterialSymbolsSearch, MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp } from '../../assets/google-material-symbols/menuSymbols';
 
 import FDSearchBar from '../../components/search-bar/FDSearchBar';
 
-const FDMenu = () => {
+const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Type_Tmdb_Movie_Keys_Union | undefined>> }) => {
   /** Toggle menus */
   const menuRef = useRef<HTMLElement>(null);
   const menuSearchRef = useRef<HTMLElement>(null);
@@ -61,7 +63,7 @@ const FDMenu = () => {
               {useTmdbGenres()
                 .sortedMap()
                 .map((genre) => (
-                  <li className='fdMenu__menu__genres__nav__ul__li' key={uuidv4()}>
+                  <li className='fdMenu__menu__genres__nav__ul__li' key={uuidv4()} onClick={() => setRoute(genre as Type_Tmdb_Movie_Keys_Union)}>
                     <button className='fdMenu__menu__genres__nav__ul__li--button'>{genre}</button>
                   </li>
                 ))}
