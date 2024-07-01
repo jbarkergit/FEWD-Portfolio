@@ -1,29 +1,15 @@
-import { Type_Tmdb_Movie_Keys_Union } from '../data/tmdbEndPoints';
 import { Type_Tmdb_Api_Union } from '../types/TmdbDataTypes';
 import { fetchTmdbResponse } from '../util/fetchTmdbResponse';
 
-export type Type_useFetchTmdbResponse_KeyValuePairArr = [string, Type_Tmdb_Api_Union[]][];
-
 /** Invoke fetcher util, filter fulfilled && rejected entries, return fulfilled data as a new arr */
-export const useFetchTmdbResponse = async (
-  keyEndpointPairArr: [Type_Tmdb_Movie_Keys_Union, string | Type_Tmdb_Api_Union[]][],
-  opt_movie_id?: number
-): Promise<Type_useFetchTmdbResponse_KeyValuePairArr | undefined> => {
+export const useFetchTmdbResponse = async (keyEndpointPairArr: { key: string; endpoint: string | Type_Tmdb_Api_Union[] }[]) => {
   try {
     const fetchEntries = await Promise.allSettled(
       keyEndpointPairArr.map(async (keyEndpointPair) => {
         // Prevent unnecessary api calls(keyEndpointPair): Fetch data if keyEndpointPair is of type 'string', not Type_Tmdb_Api_Union[]
-        if (typeof keyEndpointPair[1] === 'string') {
-          const fetchResponse = await fetchTmdbResponse(keyEndpointPair as [Type_Tmdb_Movie_Keys_Union, string], opt_movie_id);
-
-          // Switch for legibility
-          switch (true) {
-            case !fetchResponse:
-              throw new Error('Fetch request unresponsive.');
-
-            default:
-              return [keyEndpointPair[0], fetchResponse.results];
-          }
+        if (typeof keyEndpointPair.endpoint === 'string') {
+          const fetchResponse = await fetchTmdbResponse(keyEndpointPair as { key: string; endpoint: string });
+          return { key: keyEndpointPair.key, endpoint: fetchResponse ? fetchResponse.results : keyEndpointPair.endpoint };
         } else {
           return keyEndpointPair;
         }
@@ -41,8 +27,8 @@ export const useFetchTmdbResponse = async (
     if (rejectedEntries.length > 0) throw new Error('Some entries were rejected.');
 
     //@ts-ignore (narrowing issues, not going to memory cache/type cast two variables to avoid it)
-    const values: Type_useFetchTmdbResponse_KeyValuePairArr = fulfilledEntries.map((entry) => entry.value);
-    return values;
+    const values = fulfilledEntries.map((entry) => entry.value);
+    return values as { key: string; endpoint: Type_Tmdb_Api_Union[] }[];
 
     /** Catch errors */
   } catch (error) {
