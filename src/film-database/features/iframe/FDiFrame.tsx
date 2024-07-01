@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
 import PlayerStates from 'youtube-player/dist/constants/PlayerStates';
 
-import { tmdbMovieEndpoints, Type_Tmdb_Movie_Keys_Union } from '../../composables/tmdb-api/data/tmdbEndPoints';
+import { tmdbMovieEndpoints } from '../../composables/tmdb-api/data/tmdbEndPoints';
 
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
+import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
 import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
 
@@ -21,7 +22,7 @@ type Type_PropDrill = {
   heroData: Type_Tmdb_Api_Union | null;
 };
 
-type Type_Tmdb_Trailer_ObjArr = {
+type Type_Tmdb_Trailer_Obj = {
   id: string;
   iso_3166_1: string;
   iso_639_1: string;
@@ -32,22 +33,21 @@ type Type_Tmdb_Trailer_ObjArr = {
   site: string;
   size: number;
   type: string;
-}[];
+};
 
 const FDiFrame = ({ heroData }: Type_PropDrill) => {
-  const [trailers, setTrailers] = useState<Type_Tmdb_Trailer_ObjArr | undefined>(undefined);
+  const [trailers, setTrailers] = useState<Type_Tmdb_Trailer_Obj[] | undefined>(undefined);
   const props = heroData ? useTmdbProps(heroData) : undefined;
 
   const fetchTrailer = (): void => {
     (async () => {
-      const endpoint: string | undefined = tmdbMovieEndpoints.searchById.get('trailers');
-      if (!endpoint) return;
-      const keyValuePair: [Type_Tmdb_Movie_Keys_Union, string] = ['trailers', endpoint];
-      await useFetchTmdbResponse([keyValuePair], props?.id).then((response) => {
+      await useFetchTmdbResponse([useTmdbUrlBuilder('videos', [{ movie_id: props?.id }])]).then((response) => {
         if (!response) return;
-        const objArr = response[0][1] as Type_Tmdb_Trailer_ObjArr;
-        const filteredObjArr: Type_Tmdb_Trailer_ObjArr = objArr.filter((obj) => obj.site === 'YouTube' && obj.name === 'Official Trailer');
-        setTrailers(filteredObjArr);
+
+        const entries = response.flatMap((result) => result.endpoint) as Type_Tmdb_Trailer_Obj[];
+        const filteredEntries = entries.filter((obj) => obj.name.includes('Trailer'));
+
+        setTrailers(filteredEntries);
       });
     })();
   };
