@@ -18,7 +18,7 @@
   grid-template-rows: repeat(2, 1fr);
   height: 100svh;
   background-color: rgba(0, 0, 0, 1);
-  overflow-y: clip;
+  overflow: clip;
   @include m.fdFontM;
 
   &[data-layout-carousel='xxl'] {
