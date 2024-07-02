@@ -69,7 +69,13 @@ const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Ty
               {useTmdbGenres()
                 .sortedMap()
                 .map((genre) => (
-                  <li className='fdMenu__menu__genres__nav__ul__li' key={uuidv4()} onClick={() => setRoute(genre.replace(' ', '_') as Type_MovieGenre_Keys)}>
+                  <li
+                    className='fdMenu__menu__genres__nav__ul__li'
+                    key={uuidv4()}
+                    onClick={() => {
+                      toggleMenus(undefined);
+                      setRoute(genre.replace(' ', '_') as Type_MovieGenre_Keys);
+                    }}>
                     <button className='fdMenu__menu__genres__nav__ul__li--button'>{genre}</button>
                   </li>
                 ))}
