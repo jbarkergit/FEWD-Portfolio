@@ -5,13 +5,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
 
-import { Type_Tmdb_Movie_Keys_Union } from '../../composables/tmdb-api/data/tmdbEndPoints';
+import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 
 import { MaterialSymbolsSearch, MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp } from '../../assets/google-material-symbols/menuSymbols';
 
 import FDSearchBar from '../../components/search-bar/FDSearchBar';
 
-const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Type_Tmdb_Movie_Keys_Union | undefined>> }) => {
+const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | undefined>> }) => {
   /** Toggle menus */
   const menuRef = useRef<HTMLElement>(null);
   const menuSearchRef = useRef<HTMLElement>(null);
@@ -63,7 +63,7 @@ const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Ty
               {useTmdbGenres()
                 .sortedMap()
                 .map((genre) => (
-                  <li className='fdMenu__menu__genres__nav__ul__li' key={uuidv4()} onClick={() => setRoute(genre as Type_Tmdb_Movie_Keys_Union)}>
+                  <li className='fdMenu__menu__genres__nav__ul__li' key={uuidv4()} onClick={() => setRoute(genre.replace(' ', '_') as Type_MovieGenre_Keys)}>
                     <button className='fdMenu__menu__genres__nav__ul__li--button'>{genre}</button>
                   </li>
                 ))}
@@ -76,16 +76,3 @@ const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Ty
 };
 
 export default FDMenu;
-
-{
-  /* 
-<blockquote className='fdMenu__menu__tmdbCredit'>
-  <p className='fdMenu__menu__tmdbCredit--p'>
-    All media content along with associated information, images, and videos are provided courtesy of{' '}
-    <Link to='https://www.themoviedb.org/' target='_blank'>
-      themoviedb.org
-    </Link>
-    .
-  </p>
-</blockquote> */
-}
