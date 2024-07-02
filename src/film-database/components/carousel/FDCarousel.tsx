@@ -42,6 +42,8 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }:
   const carouselRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
+    if (window.innerWidth >= 1410) return;
+
     if (!carouselRef.current || !carouselRef.current.children) return;
     const lastCarouselNode = carouselRef.current.children[carouselRef.current.children.length - 1];
 
@@ -65,18 +67,13 @@ const FDCarousel = ({ dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }:
 
     // Target indexes and elements
     const targetIndex: number = carouselIndex * maxVisibleCarouselNodes;
-    const targetArticleIndex: number = targetIndex === 0 ? 0 : targetIndex;
-    const targetElement = carouselRef.current.children[targetArticleIndex] as HTMLLIElement;
+    const targetElement = carouselRef.current.children[targetIndex] as HTMLLIElement;
     const lastElement = carouselRef.current.children[articlesFlatMap.findLastIndex((obj) => obj)] as HTMLLIElement;
 
     // Element boundaries
     let targetElementPosition: number;
 
-    if (!targetElement) {
-      targetElementPosition = lastElement.offsetLeft;
-    } else {
-      targetElementPosition = targetElement.offsetLeft;
-    }
+    !targetElement ? (targetElementPosition = lastElement.offsetLeft) : (targetElementPosition = targetElement.offsetLeft);
 
     // Positions
     const carouselPosition: number = carouselRef.current.offsetLeft;
