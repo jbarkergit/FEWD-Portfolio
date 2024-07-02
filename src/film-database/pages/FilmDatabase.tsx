@@ -90,10 +90,10 @@ const FilmDatabase = () => {
         // Pagination
         for (let iteratorCounter = 0; iteratorCounter < maxIteratorIndex; iteratorCounter++) {
           const startingSliceIndex: number = maxVisibleCarouselNodes * iteratorCounter + iteratorCounter;
-          const endingSliceIndex: number = maxVisibleCarouselNodes * (iteratorCounter + 1);
+          const endingSliceIndex: number = maxVisibleCarouselNodes * (iteratorCounter + 1) + 1;
           const paginatedData: Type_Tmdb_Api_Union[] = endpoint.slice(startingSliceIndex, endingSliceIndex);
-          const iterableMap: Type_Tmdb_Api_Union[][] = dataMap.get(key)!;
 
+          const iterableMap: Type_Tmdb_Api_Union[][] = dataMap.get(key)!;
           iterableMap.push(paginatedData);
         }
       });
