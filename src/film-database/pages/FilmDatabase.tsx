@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Api Types
 import { Type_Tmdb_Api_Union } from '../composables/tmdb-api/types/TmdbDataTypes';
-import { Type_Tmdb_Movie_Keys_Union } from '../composables/tmdb-api/data/tmdbEndPoints';
+import { Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbMovieGenres';
 // Api Hooks
 import { useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
 import { useTmdbUrlBuilder } from '../composables/tmdb-api/hooks/useTmdbUrlBuilder';
+import { useTmdbGenres } from '../composables/tmdb-api/hooks/useTmdbGenres';
 // Features
 import FDDetails from '../features/details/FDDetails';
 import FDiFrame from '../features/iframe/FDiFrame';
@@ -16,7 +17,8 @@ import FDCarousel from '../components/carousel/FDCarousel';
 
 const FilmDatabase = () => {
   // Spa navigation state
-  const [route, setRoute] = useState<Type_Tmdb_Movie_Keys_Union | undefined>(undefined);
+  const [route, setRoute] = useState<Type_MovieGenre_Keys | undefined>(undefined);
+
   // Cross-origin safety layer
   const useLocationPathname = useLocation().pathname;
 
@@ -27,7 +29,8 @@ const FilmDatabase = () => {
 
     // Assign keyEndpointPairArr
     if (route !== undefined) {
-      keyEndpointPairArr = [useTmdbUrlBuilder(route)];
+      const routeId: number = useTmdbGenres().id(route as Type_MovieGenre_Keys);
+      keyEndpointPairArr = [useTmdbUrlBuilder('discover', [{ genre: routeId }])];
     } else {
       keyEndpointPairArr = [
         useTmdbUrlBuilder('now_playing'),
@@ -49,7 +52,7 @@ const FilmDatabase = () => {
       const getCachedDataByKey: Type_Tmdb_Api_Union[] | undefined = useFilmDatabaseWebStorage(useLocationPathname).getData(entry.key);
       const isKeyCached: boolean = !!getCachedDataByKey;
 
-      if (isKeyCached && getCachedDataByKey && getCachedDataByKey.length > 0) {
+      if (entry.key !== 'discover' && isKeyCached && getCachedDataByKey && getCachedDataByKey.length > 0) {
         return { key: entry.key, endpoint: getCachedDataByKey };
       } else {
         return entry;
