@@ -100,7 +100,7 @@ const FilmDatabase = () => {
 
     // JSX carousel component creation
     const dataEntries: JSX.Element[] = [...dataMap.entries()].map(([key, value]) => (
-      <FDCarousel key={key} dataKey={key} mapValue={value} maxVisibleCarouselNodes={maxVisibleCarouselNodes} setHeroData={setHeroData} />
+      <FDCarousel key={key} route={route} dataKey={key} mapValue={value} maxVisibleCarouselNodes={maxVisibleCarouselNodes} setHeroData={setHeroData} />
     ));
 
     setCarouselComponents(dataEntries);
