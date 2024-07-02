@@ -5,6 +5,7 @@ type Type_Tmdb_EndpointBuilder_Arr_Opt = Partial<{
   page: number;
   movie_id: number;
   append_to_response: 'videos' | 'images' | 'videos,images';
+  genre: number;
 }>;
 
 export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_Tmdb_EndpointBuilder_Arr_Opt[]) => {
@@ -36,6 +37,10 @@ export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_T
 
         case !!arg.page:
           endpoint = endpoint + `&page=${arg.page}`;
+          break;
+
+        case !!arg.genre:
+          endpoint = endpoint.replace('{genre_ids}', `&with_genres=${arg.genre}`);
           break;
 
         default:
