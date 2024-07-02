@@ -27,7 +27,14 @@ export const fetchTmdbResponse = async (keyEndpointPair: { key: string; endpoint
   try {
     // Construct fetch url
     const apiKey: string = import.meta.env.VITE_TMDB_API_KEY;
-    const fetchUrl: string | undefined = `${keyEndpointPair.endpoint}?api_key=${apiKey}`;
+    let fetchUrl: string | undefined;
+
+    // Tmdb handles 'discover' endpoint with genres string post-endpoint
+    if (keyEndpointPair.key === 'discover') {
+      fetchUrl = keyEndpointPair.endpoint.replace('/movie', `/movie?api_key=${apiKey}`);
+    } else {
+      fetchUrl = `${keyEndpointPair.endpoint}?api_key=${apiKey}`;
+    }
 
     // Fetch Responses: Status Handler
     const response: Response = await fetch(`${fetchUrl}`, options);
