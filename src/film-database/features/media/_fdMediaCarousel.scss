@@ -43,10 +43,8 @@
           }
         }
         &[data-layout='grid'] {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, calc((100% - (var(--fd-gap) * (var(--fd-flat-grid-items-per-page) - 1))) / var(--fd-flat-grid-items-per-page)));
-          grid-auto-rows: 1fr;
-          justify-content: center;
+          display: flex;
+          flex-wrap: wrap;
         }
         &__li {
           width: var(--fd-carousel-node-width);
