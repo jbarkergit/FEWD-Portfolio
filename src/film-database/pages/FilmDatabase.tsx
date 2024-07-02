@@ -99,11 +99,11 @@ const FilmDatabase = () => {
       });
 
     // JSX carousel component creation
-    const dataEntries: JSX.Element[] = [...dataMap.entries()].map(([key, value]) => {
-      return <FDCarousel dataKey={key} mapValue={value} maxVisibleCarouselNodes={maxVisibleCarouselNodes} setHeroData={setHeroData} />;
-    });
-    setCarouselComponents(dataEntries);
+    const dataEntries: JSX.Element[] = [...dataMap.entries()].map(([key, value]) => (
+      <FDCarousel key={key} dataKey={key} mapValue={value} maxVisibleCarouselNodes={maxVisibleCarouselNodes} setHeroData={setHeroData} />
+    ));
 
+    setCarouselComponents(dataEntries);
     // Create hero data
     if (data) setHeroData(data![0].endpoint[0]);
   };
