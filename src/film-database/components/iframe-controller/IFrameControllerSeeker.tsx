@@ -40,7 +40,10 @@ const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer | undefined 
       aria-label='Video time seeker'
       ref={seekerRef}
       onPointerDown={() => setIsDragging(true)}
-      onPointerUp={() => setIsDragging(false)}
+      onPointerUp={(e: React.PointerEvent<HTMLButtonElement>) => {
+        setIsDragging(false);
+        useSlider(e);
+      }}
       onPointerLeave={() => setIsDragging(false)}
       onPointerMove={(e: React.PointerEvent<HTMLButtonElement>) => useSlider(e)}>
       <span className='iFrameController__seeker--range' />
