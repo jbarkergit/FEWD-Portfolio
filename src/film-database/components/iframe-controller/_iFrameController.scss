@@ -117,6 +117,7 @@
   }
   &__playback {
     position: relative;
+    z-index: 3;
     &__cog {
       & svg {
         width: 1.8em;
