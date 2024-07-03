@@ -37,7 +37,7 @@ export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_T
           break;
 
         case !!arg.movie_id:
-          keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1].replace('3/movie/', `3/movie/${arg.movie_id}`) + `/movie?api_key=${apiKey}` };
+          keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1].replace('3/movie/', `3/movie/${arg.movie_id}`) + `?api_key=${apiKey}` };
           break;
 
         case !!arg.page:
