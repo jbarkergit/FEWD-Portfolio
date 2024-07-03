@@ -18,18 +18,8 @@ const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer | undefined 
       const sliderWidth: number = seekerRef.current.clientWidth;
       const ratio: number = travelDistance / sliderWidth;
       const seekTime: number = ratio * duration;
-
-      console.log('Slider Width:', sliderWidth);
-      // console.log('Travel Distance:', travelDistance);
-      // console.log('Ratio:', ratio);
-      // console.log('Seek Time:', seekTime);
-
-      // Ensure seekTime is within valid bounds (0 to duration)
       const clampedSeekTime: number = Math.max(0, Math.min(seekTime, duration));
 
-      // console.log('Clamped Seek Time:', clampedSeekTime);
-
-      // Perform seek operation
       player.seekTo(clampedSeekTime, true);
     }
   };
