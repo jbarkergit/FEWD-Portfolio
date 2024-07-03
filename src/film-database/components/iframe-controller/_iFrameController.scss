@@ -28,6 +28,7 @@
   }
   &:hover .iFrameController__seeker--slider {
     height: 10px;
+    background-color: rgb(255, 255, 255, 0.8);
   }
   &--range,
   &--slider {
@@ -47,7 +48,7 @@
   &--slider {
     z-index: 2;
     width: 0px;
-    background-color: rgb(255, 255, 255, 0.8);
+    background-color: rgb(255, 255, 255, 0.4);
   }
 }
 
