@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { YouTubePlayer } from 'react-youtube';
 
 const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer | undefined }) => {
