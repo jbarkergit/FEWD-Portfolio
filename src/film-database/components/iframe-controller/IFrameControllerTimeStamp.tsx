@@ -33,10 +33,10 @@ const IFrameControllerTimeStamp = ({ player }: { player: YouTubePlayer | undefin
   }, [player]);
 
   return (
-    <div className='iFrameController__timestamp'>
-      <div className='iFrameController__timestamp--current'>{current}</div>
-      <div className='iFrameController__timestamp--separator'> / </div>
-      <div className='iFrameController__timestamp--duration'>{duration}</div>
+    <div className='iFrameController__controls__timestamp'>
+      <div className='iFrameController__controls__timestamp--current'>{current}</div>
+      <div className='iFrameController__controls__timestamp--separator'> / </div>
+      <div className='iFrameController__controls__timestamp--duration'>{duration}</div>
     </div>
   );
 };

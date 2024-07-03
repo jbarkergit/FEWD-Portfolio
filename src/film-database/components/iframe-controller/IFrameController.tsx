@@ -7,6 +7,8 @@ import IFrameControllerPlayPause from './IFrameControllerPlayPause';
 import IFrameControllerVolumeIndicator from './IFrameControllerVolumeIndicator';
 import IFrameControllerVolumeSlider from './IFrameControllerVolumeSlider';
 import IFrameControllerTimeStamp from './IFrameControllerTimeStamp';
+import IFrameControllerSeeker from './IFrameControllerSeeker';
+import IFrameControllerPlayback from './IFrameControllerPlayback';
 
 const IFrameController = ({
   player,
@@ -31,11 +33,14 @@ const IFrameController = ({
   /** Component */
   return (
     <div className='iFrameController'>
-      <IFrameControllerPlayPause player={player} playerStates={playerStates} />
-      <IFrameControllerVolumeIndicator player={player} playerVolume={playerVolume} />
-      <IFrameControllerVolumeSlider player={player} playerVolume={playerVolume} setPlayerVolume={setPlayerVolume} />
-      <IFrameControllerTimeStamp player={player} />
-      {/* <IFrameControllerPlayback player={player} /> */}
+      <IFrameControllerSeeker player={player} />
+      <div className='iFrameController__controls'>
+        <IFrameControllerPlayPause player={player} playerStates={playerStates} />
+        <IFrameControllerVolumeIndicator player={player} playerVolume={playerVolume} />
+        <IFrameControllerVolumeSlider player={player} playerVolume={playerVolume} setPlayerVolume={setPlayerVolume} />
+        <IFrameControllerTimeStamp player={player} />
+        <IFrameControllerPlayback player={player} />
+      </div>
     </div>
   );
 };

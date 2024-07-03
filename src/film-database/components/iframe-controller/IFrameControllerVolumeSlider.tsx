@@ -32,14 +32,14 @@ const IFrameControllerVolumeSlider = ({
 
   return (
     <button
-      className='iFrameController__slider'
+      className='iFrameController__controls__slider'
       ref={sliderRef}
       onPointerDown={() => setIsDragging(true)}
       onPointerUp={() => setIsDragging(false)}
       onPointerLeave={() => setIsDragging(false)}
       onPointerMove={(e: PointerEvent<HTMLButtonElement>) => moveHandle(e)}>
-      <span className='iFrameController__slider--range' />
-      <span className='iFrameController__slider--handle' ref={handleRef} style={{ left: '0%' }} />
+      <span className='iFrameController__controls__slider--range' />
+      <span className='iFrameController__controls__slider--handle' ref={handleRef} style={{ left: '0%' }} />
     </button>
   );
 };

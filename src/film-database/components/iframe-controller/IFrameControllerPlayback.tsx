@@ -50,8 +50,8 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
 
       return (
         <>
-          <span className='iFrameController__playback__cog--rate'>{getRate().resolution}</span>
-          <span className='iFrameController__playback__cog--definition'>{getRate().definition}</span>
+          <span className='iFrameController__controls__playback__cog--rate'>{getRate().resolution}</span>
+          <span className='iFrameController__controls__playback__cog--definition'>{getRate().definition}</span>
         </>
       );
     });
@@ -89,16 +89,16 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
   }, []);
 
   return (
-    <div className='iFrameController__playback'>
+    <div className='iFrameController__controls__playback'>
       <button
-        className='iFrameController__playback__cog'
+        className='iFrameController__controls__playback__cog'
         onClick={() => {
           setIsModalOpen((prevState) => (prevState === true ? false : true));
           mountEventListeners();
         }}>
         <MaterialSymbolsSettings />
       </button>
-      <ul className='iFrameController__playback__menu' ref={menuRef} data-modal='closed'>
+      <ul className='iFrameController__controls__playback__menu' ref={menuRef} data-modal='closed'>
         {playbackRates?.map((rate, index) => (
           <li key={uuidv4()}>
             <button

@@ -45,7 +45,7 @@ const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: You
   };
 
   return (
-    <button className='iFrameController__button' onClick={() => muteUnmute()}>
+    <button className='iFrameController__controls__button' onClick={() => muteUnmute()}>
       {symbolComponent}
     </button>
   );

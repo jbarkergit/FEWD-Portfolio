@@ -52,7 +52,7 @@ const IFrameControllerPlayPause = ({ player, playerStates }: { player: YouTubePl
   };
 
   return (
-    <button className='iFrameController__button' onClick={() => playPause()}>
+    <button className='iFrameController__controls__button' onClick={() => playPause()}>
       {symbolComponent}
     </button>
   );
