@@ -29,8 +29,7 @@ const FilmDatabase = () => {
 
     // Assign keyEndpointPairArr
     if (route !== undefined) {
-      const routeId: number = useTmdbGenres().id(route as Type_MovieGenre_Keys);
-      keyEndpointPairArr = [useTmdbUrlBuilder('discover', [{ genre: routeId }])];
+      keyEndpointPairArr = [useTmdbUrlBuilder('discover', [{ genre: route }])];
     } else {
       keyEndpointPairArr = [
         useTmdbUrlBuilder('now_playing'),
