@@ -93,7 +93,7 @@ const FDCarousel = ({ route, dataKey, mapValue, maxVisibleCarouselNodes, setHero
     <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`} data-index-tracker='active'>
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
-        <ul className='fdMedia__carousel__wrapper__ul' data-layout={route !== undefined ? 'grid' : 'carousel'} ref={carouselRef}>
+        <ul className='fdMedia__carousel__wrapper__ul' data-layout={'carousel'} ref={carouselRef}>
           <FDCarouselArticles articles={articlesFlatMap} setHeroData={setHeroData} />
         </ul>
         <nav className='fdMedia__carousel__wrapper__navigation'>
