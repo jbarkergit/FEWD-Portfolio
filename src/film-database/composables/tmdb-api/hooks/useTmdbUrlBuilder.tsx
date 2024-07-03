@@ -1,11 +1,13 @@
 import { Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../data/tmdbEndPoints';
+import { Type_MovieGenre_Keys } from '../data/tmdbMovieGenres';
+import { useTmdbGenres } from './useTmdbGenres';
 
 type Type_Tmdb_EndpointBuilder_Arr_Opt = Partial<{
   language: 'en-US';
   page: number;
   movie_id: number;
   append_to_response: 'videos' | 'images' | 'videos,images';
-  genre: number;
+  genre: string;
 }>;
 
 export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_Tmdb_EndpointBuilder_Arr_Opt[]) => {
@@ -40,7 +42,8 @@ export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_T
           break;
 
         case !!arg.genre:
-          endpoint = endpoint.replace('{genre_ids}', `&with_genres=${arg.genre}`);
+          const routeId: number = useTmdbGenres().id(arg.genre as Type_MovieGenre_Keys);
+          endpoint = endpoint.replace('{genre_ids}', `&with_genres=${routeId}`);
           break;
 
         default:
