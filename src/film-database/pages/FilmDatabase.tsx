@@ -51,7 +51,7 @@ const FilmDatabase = () => {
       const getCachedDataByKey: Type_Tmdb_Api_Union[] | undefined = useFilmDatabaseWebStorage(useLocationPathname).getData(entry.key);
       const isKeyCached: boolean = !!getCachedDataByKey;
 
-      if (entry.key !== 'discover' && isKeyCached && getCachedDataByKey && getCachedDataByKey.length > 0) {
+      if (isKeyCached && getCachedDataByKey && getCachedDataByKey.length > 0) {
         return { key: entry.key, endpoint: getCachedDataByKey };
       } else {
         return entry;
