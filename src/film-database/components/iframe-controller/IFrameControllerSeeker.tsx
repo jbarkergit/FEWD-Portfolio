@@ -37,6 +37,7 @@ const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer | undefined 
   return (
     <button
       className='iFrameController__seeker'
+      aria-label='Video time seeker'
       ref={seekerRef}
       onPointerDown={() => setIsDragging(true)}
       onPointerUp={() => setIsDragging(false)}

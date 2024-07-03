@@ -6,7 +6,7 @@ import { MaterialSymbolsSettings } from '../../assets/google-material-symbols/iF
 const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefined }) => {
   /** Resolutions */
   const [playerRates, setPlayerRates] = useState<readonly string[]>([]);
-  const [playbackRates, setPlaybackRates] = useState<JSX.Element[]>([]);
+  const [playbackRates, setPlaybackRates] = useState<{ resolution: string; definition: string | undefined }[]>([]);
 
   const handlePlaybackRates = async () => {
     if (!player) return;
@@ -16,7 +16,7 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
 
     setPlayerRates(pbr);
 
-    const rates: JSX.Element[] = pbr.map((rate) => {
+    const rates = pbr.map((rate) => {
       const getRate = () => {
         switch (rate) {
           case 'tiny':
@@ -48,12 +48,7 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
         }
       };
 
-      return (
-        <>
-          <span className='iFrameController__controls__playback__cog--rate'>{getRate().resolution}</span>
-          <span className='iFrameController__controls__playback__cog--definition'>{getRate().definition}</span>
-        </>
-      );
+      return { resolution: getRate().resolution, definition: getRate().definition };
     });
 
     setPlaybackRates(rates);
@@ -92,6 +87,7 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
     <div className='iFrameController__controls__playback'>
       <button
         className='iFrameController__controls__playback__cog'
+        aria-label='Change video playback quality'
         onClick={() => {
           setIsModalOpen((prevState) => (prevState === true ? false : true));
           mountEventListeners();
@@ -102,12 +98,13 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
         {playbackRates?.map((rate, index) => (
           <li key={uuidv4()}>
             <button
-              aria-label={`Set video quality to ${rate}`}
+              aria-label={`Set video quality to ${rate.resolution}`}
               onClick={() => {
                 player?.setPlaybackQuality(`${playerRates[index]}`);
                 setIsModalOpen(false);
               }}>
-              {rate}
+              <span className='iFrameController__controls__playback__cog--rate'>{rate.resolution}</span>
+              {rate.definition !== undefined ? <span className='iFrameController__controls__playback__cog--definition'>{rate.definition}</span> : null}
             </button>
           </li>
         ))}
