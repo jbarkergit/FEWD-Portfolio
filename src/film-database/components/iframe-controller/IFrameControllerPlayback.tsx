@@ -17,7 +17,7 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
     setPlayerRates(pbr);
 
     const rates: JSX.Element[] = pbr.map((rate) => {
-      const rateObj = () => {
+      const getRate = () => {
         switch (rate) {
           case 'tiny':
             return { resolution: '144p', definition: undefined };
@@ -50,8 +50,8 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
 
       return (
         <>
-          <span className='iFrameController__playback__cog--rate'>{rateObj().resolution}</span>
-          <span className='iFrameController__playback__cog--definition'>{rateObj().definition}</span>
+          <span className='iFrameController__playback__cog--rate'>{getRate().resolution}</span>
+          <span className='iFrameController__playback__cog--definition'>{getRate().definition}</span>
         </>
       );
     });

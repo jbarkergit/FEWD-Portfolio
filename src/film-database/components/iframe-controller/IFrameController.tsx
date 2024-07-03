@@ -7,7 +7,6 @@ import IFrameControllerPlayPause from './IFrameControllerPlayPause';
 import IFrameControllerVolumeIndicator from './IFrameControllerVolumeIndicator';
 import IFrameControllerVolumeSlider from './IFrameControllerVolumeSlider';
 import IFrameControllerTimeStamp from './IFrameControllerTimeStamp';
-import IFrameControllerPlayback from './IFrameControllerPlayback';
 
 const IFrameController = ({
   player,
@@ -36,7 +35,7 @@ const IFrameController = ({
       <IFrameControllerVolumeIndicator player={player} playerVolume={playerVolume} />
       <IFrameControllerVolumeSlider player={player} playerVolume={playerVolume} setPlayerVolume={setPlayerVolume} />
       <IFrameControllerTimeStamp player={player} />
-      <IFrameControllerPlayback player={player} />
+      {/* <IFrameControllerPlayback player={player} /> */}
     </div>
   );
 };
