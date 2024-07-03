@@ -69,9 +69,12 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
   }, [isModalOpen]);
 
   /** Modal exterior clicks */
+  const playbackCogRef = useRef<HTMLButtonElement>(null);
+
   const handleExteriorModalClick = (target: EventTarget | null) => {
-    if (menuRef.current && !menuRef.current.contains(target as Node)) {
+    if (menuRef.current && !menuRef.current.contains(target as Node) && !playbackCogRef.current?.contains(target as Node)) {
       setIsModalOpen(false);
+      unmountEventListeners();
     }
   };
 
@@ -79,14 +82,15 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
     window.addEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
   };
 
-  useEffect(() => {
-    return () => window.removeEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
-  }, []);
+  const unmountEventListeners = () => {
+    window.removeEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
+  };
 
   return (
     <div className='iFrameController__controls__playback'>
       <button
         className='iFrameController__controls__playback__cog'
+        ref={playbackCogRef}
         aria-label='Change video playback quality'
         onClick={() => {
           setIsModalOpen((prevState) => (prevState === true ? false : true));
