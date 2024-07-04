@@ -6,6 +6,7 @@ import { MaterialSymbolsVolumeUp, MaterialSymbolsVolumeDown, MaterialSymbolsVolu
 
 const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: YouTubePlayer; playerVolume: number }) => {
   const [symbolComponent, setSymbolComponent] = useState<JSX.Element>(<MaterialSymbolsVolumeOff />);
+  const [prevSymbolComponent, setPrevSymbolComponent] = useState<JSX.Element>(<MaterialSymbolsVolumeOff />);
 
   const handleVolumeIndicator = () => {
     switch (true) {
@@ -36,9 +37,10 @@ const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: You
 
     if (isPlayerMuted) {
       player.unMute();
-      handleVolumeIndicator();
+      setSymbolComponent(prevSymbolComponent);
     } else {
       player.mute();
+      setPrevSymbolComponent(symbolComponent);
       setSymbolComponent(<MaterialSymbolsVolumeOff />);
     }
   };
