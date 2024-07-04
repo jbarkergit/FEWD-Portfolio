@@ -80,10 +80,9 @@
     position: relative;
     z-index: 11;
     height: 100%;
-    padding: var(--fd-padding-generic) calc((var(--fd-padding-generic) / 3.5));
+    padding: var(--fd-padding-generic) var(--fd-padding-generic) var(--fd-padding-generic) calc(var(--fd-padding-generic) / 2);
     &[data-menu='open'] {
       display: flex;
-      flex-direction: column;
     }
     &[data-menu='closed'] {
       display: none;
