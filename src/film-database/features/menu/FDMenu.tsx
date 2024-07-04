@@ -13,7 +13,7 @@ import FDSearchBar from '../../components/search-bar/FDSearchBar';
 
 const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | undefined>> }) => {
   /** Toggle menus */
-  const menuRef = useRef<HTMLElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const menuSearchRef = useRef<HTMLElement>(null);
   const menuGenresRef = useRef<HTMLElement>(null);
 
@@ -38,7 +38,7 @@ const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Ty
   };
 
   return (
-    <section className='fdMenu' ref={menuRef} data-modal='closed'>
+    <div className='fdMenu' ref={menuRef} data-modal='closed'>
       <section className='fdMenu__toolbar'>
         <ul className='fdMenu__toolbar__ul'>
           {toolbarObjArr.map((obj) => (
@@ -58,7 +58,7 @@ const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Ty
         </ul>
       </section>
 
-      <section className='fdMenu__menu'>
+      <div className='fdMenu__menu'>
         <section className='fdMenu__menu__search' ref={menuSearchRef} data-menu='closed'>
           <FDSearchBar />
         </section>
@@ -82,8 +82,8 @@ const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Ty
             </ul>
           </nav>
         </section>
-      </section>
-    </section>
+      </div>
+    </div>
   );
 };
 
