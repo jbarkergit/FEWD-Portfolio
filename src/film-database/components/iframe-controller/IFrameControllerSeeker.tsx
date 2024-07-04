@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { YouTubePlayer } from 'react-youtube';
 
-const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer | undefined }) => {
+const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer }) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const seekerRef = useRef<HTMLButtonElement>(null);
@@ -14,7 +14,6 @@ const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer | undefined 
     const duration = await player.getDuration();
 
     if (time !== null && duration !== null) {
-      console.log(seekerRef.current);
       const sliderWidth: number = seekerRef.current.clientWidth;
       const ratio: number = travelDistance / sliderWidth;
       const seekTime: number = ratio * duration;

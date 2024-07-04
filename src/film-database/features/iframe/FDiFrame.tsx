@@ -1,9 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
-import PlayerStates from 'youtube-player/dist/constants/PlayerStates';
-
-import { tmdbMovieEndpoints } from '../../composables/tmdb-api/data/tmdbEndPoints';
 
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
@@ -87,17 +84,100 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
   };
 
   // Init player
-  const [player, setPlayer] = useState<YouTubePlayer | undefined>(undefined);
-  const [playerStates, setPlayerStates] = useState<PlayerStates | undefined>(undefined);
-  const [playerVolume, setPlayerVolume] = useState<number>(0);
+  const playerRef = useRef<YouTube | null>(null);
+
+  // Global player states
+  const [playState, setPlayState] = useState<'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined>(undefined);
+  // const [qualityState, setQualityState] = useState<{ resolution: string; definition: string | undefined }[] | undefined>(undefined);
+
+  // playState
+  const onStateChange = (playState: number) => {
+    switch (playState) {
+      case -1:
+        setPlayState('unstarted');
+        break;
+
+      case 0:
+        setPlayState('ended');
+        break;
+
+      case 1:
+        setPlayState('playing');
+        break;
+
+      case 2:
+        setPlayState('paused');
+        break;
+
+      case 3:
+        setPlayState('buffering');
+        break;
+
+      case 5:
+        setPlayState('cued');
+        break;
+
+      default:
+        setPlayState('cued');
+        break;
+    }
+  };
+
+  // qualityState (depreciated)
+  // const onPlaybackQualityChange = (qualityState: string) => {
+  //   switch (qualityState) {
+  //     case 'tiny':
+  //       setQualityState((prevState) => [...prevState, { resolution: '144p', definition: undefined }]);
+  //       break;
+
+  //     case 'small':
+  //       setQualityState((prevState) => [...prevState, { resolution: '240p', definition: undefined }]);
+  //       break;
+
+  //     case 'medium':
+  //       setQualityState((prevState) => [...prevState, { resolution: '360p', definition: undefined }]);
+  //       break;
+
+  //     case 'large':
+  //       setQualityState((prevState) => [...prevState, { resolution: '480p', definition: undefined }]);
+  //       break;
+
+  //     case 'hd720':
+  //       setQualityState((prevState) => [...prevState, { resolution: '720p', definition: 'HD' }]);
+  //       break;
+
+  //     case 'hd1080':
+  //       setQualityState((prevState) => [...prevState, { resolution: '1080p', definition: 'FHD' }]);
+  //       break;
+
+  //     case 'hd1440':
+  //       setQualityState((prevState) => [...prevState, { resolution: '1440p', definition: 'QHD' }]);
+  //       break;
+
+  //     case 'hd2160':
+  //       setQualityState((prevState) => [...prevState, { resolution: '2160p', definition: 'UHD' }]);
+  //       break;
+
+  //     default:
+  //       setQualityState((prevState) => [...prevState, { resolution: qualityState, definition: undefined }]);
+  //       break;
+  //   }
+  // };
+
+  // Player destruction
+  const destroyPlayer = (target: YouTubePlayer) => {
+    target.destroy();
+    setTrailers(undefined);
+  };
 
   /** Component */
   if (trailers && trailers.length > 0) {
     return (
       <section className='fdiFrame'>
         <h2 className='fdiFrame--h2'>{trailers[0].name}</h2>
-        <IFrameController player={player} playerStates={playerStates} playerVolume={playerVolume} setPlayerVolume={setPlayerVolume} />
+        {playerRef.current && playerRef.current.internalPlayer ? <IFrameController player={playerRef.current.internalPlayer} playState={playState} /> : null}
         <YouTube
+          ref={playerRef}
           videoId={`${trailers[0].key}`}
           opts={opts}
           className='fdiFrame__player'
@@ -105,23 +185,10 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
           title={`YouTube video player: ${trailers[0].name}`}
           style={undefined}
           loading={'eager'}
-          onReady={(event: YouTubeEvent) => setPlayer(event.target)}
-          onStateChange={async (event: YouTubeEvent) => {
-            const playerStates = await event.target.getPlayerState();
-            setPlayerStates(playerStates);
-          }}
-          onPlay={() => {
-            player?.setVolume(playerVolume);
-            player?.unMute();
-          }}
-          onEnd={(event: YouTubeEvent) => {
-            event.target.destroy();
-            setTrailers(undefined);
-          }}
-          onError={(event: YouTubeEvent) => {
-            event.target.destroy();
-            setTrailers(undefined);
-          }}
+          onStateChange={(event: YouTubeEvent<number>) => onStateChange(event.data)}
+          // onPlaybackQualityChange={(event: YouTubeEvent<string>) => onPlaybackQualityChange(event.data)}
+          onEnd={(event: YouTubeEvent) => destroyPlayer(event.target)}
+          onError={(event: YouTubeEvent) => destroyPlayer(event.target)}
         />
       </section>
     );

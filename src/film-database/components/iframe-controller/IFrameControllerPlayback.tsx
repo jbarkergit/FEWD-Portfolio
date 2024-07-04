@@ -3,68 +3,24 @@ import { YouTubePlayer } from 'react-youtube';
 import { v4 as uuidv4 } from 'uuid';
 import { MaterialSymbolsSettings } from '../../assets/google-material-symbols/iFrameSymbols';
 
-const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefined }) => {
-  /** Resolutions */
-  const [playerRates, setPlayerRates] = useState<readonly string[]>([]);
-  const [playbackRates, setPlaybackRates] = useState<{ resolution: string; definition: string | undefined }[]>([]);
-
-  const handlePlaybackRates = async () => {
-    if (!player) return;
-
-    const pbr: readonly string[] = await player.getAvailableQualityLevels();
-    if (!pbr) return;
-
-    setPlayerRates(pbr);
-
-    const rates = pbr.map((rate) => {
-      const getRate = () => {
-        switch (rate) {
-          case 'tiny':
-            return { resolution: '144p', definition: undefined };
-
-          case 'small':
-            return { resolution: '240p', definition: undefined };
-
-          case 'medium':
-            return { resolution: '360p', definition: undefined };
-
-          case 'large':
-            return { resolution: '480p', definition: undefined };
-
-          case 'hd720':
-            return { resolution: '720p', definition: 'HD' };
-
-          case 'hd1080':
-            return { resolution: '1080p', definition: 'FHD' };
-
-          case 'hd1440':
-            return { resolution: '1440p', definition: 'QHD' };
-
-          case 'hd2160':
-            return { resolution: '2160p', definition: 'UHD' };
-
-          default:
-            return { resolution: rate, definition: undefined };
-        }
-      };
-
-      return { resolution: getRate().resolution, definition: getRate().definition };
-    });
-
-    setPlaybackRates(rates);
-  };
-
-  useEffect(() => {
-    handlePlaybackRates();
-  }, [player]);
-
+const IFrameControllerPlayback = ({
+  player,
+  qualityState,
+}: {
+  player: YouTubePlayer;
+  qualityState:
+    | {
+        resolution: string;
+        definition: string | undefined;
+      }[]
+    | undefined;
+}) => {
   /** Modal */
   const menuRef = useRef<HTMLUListElement>(null);
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const setModal = (arg: string) => menuRef.current?.setAttribute('data-modal', arg);
 
   useEffect(() => {
-    const setModal = (arg: string) => menuRef.current?.setAttribute('data-modal', arg);
     isModalOpen ? setModal('open') : setModal('closed');
   }, [isModalOpen]);
 
@@ -78,13 +34,8 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
     }
   };
 
-  const mountEventListeners = () => {
-    window.addEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
-  };
-
-  const unmountEventListeners = () => {
-    window.removeEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
-  };
+  const mountEventListeners = () => window.addEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
+  const unmountEventListeners = () => window.removeEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
 
   return (
     <div className='iFrameController__controls__playback'>
@@ -99,12 +50,12 @@ const IFrameControllerPlayback = ({ player }: { player: YouTubePlayer | undefine
         <MaterialSymbolsSettings />
       </button>
       <ul className='iFrameController__controls__playback__menu' ref={menuRef} data-modal='closed'>
-        {playbackRates?.map((rate, index) => (
+        {qualityState?.map((rate, index) => (
           <li key={uuidv4()}>
             <button
               aria-label={`Set video quality to ${rate.resolution}`}
               onClick={() => {
-                player?.setPlaybackQuality(`${playerRates[index]}`);
+                player?.setPlaybackQuality(`${qualityState[index]}`);
                 setIsModalOpen(false);
               }}>
               <span className='iFrameController__controls__playback__cog--rate'>{rate.resolution}</span>

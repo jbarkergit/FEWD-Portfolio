@@ -1,59 +1,52 @@
 import { useEffect, useState } from 'react';
 
 import { YouTubePlayer } from 'react-youtube';
-import PlayerStates from 'youtube-player/dist/constants/PlayerStates';
 
 import { MaterialSymbolsPlayArrow, MaterialSymbolsPause, SvgSpinnersRingResize } from '../../assets/google-material-symbols/iFrameSymbols';
 
-const IFrameControllerPlayPause = ({ player, playerStates }: { player: YouTubePlayer | undefined; playerStates: PlayerStates | undefined }) => {
-  const [symbolComponent, setSymbolComponent] = useState<JSX.Element>(<SvgSpinnersRingResize />);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+const IFrameControllerPlayPause = ({
+  player,
+  playState,
+}: {
+  player: YouTubePlayer;
+  playState: 'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined;
+}) => {
+  const alterPlayState = async () => {
+    playState === 'playing' ? player.pauseVideo() : player.playVideo();
+  };
 
-  /** react-youtube PlayerStates
-   * Player.on('stateChange') breaks app
-   * (event as YouTubeEvent).target.addEventListener('stateChange') doesn't work
-   * (event as YouTube).data provides nothing
-   * getPlayerStates() type is Promise<enum> and doesn't provide types
-   *
-   * Solution: mount onStateChange to lib component, prop drill
-   */
+  const [playStateSymbolComponent, setPlayStateSymbolComponent] = useState<JSX.Element>(<SvgSpinnersRingResize />);
 
-  const handleSymbols = async (): Promise<void> => {
-    if (!player) return;
-
-    switch (playerStates) {
-      case 1:
-        setSymbolComponent(<MaterialSymbolsPlayArrow />);
-        setIsPlaying(true);
+  const reflectPlayerState = async (): Promise<void> => {
+    switch (playState) {
+      case 'buffering':
+      case 'cued':
+        setPlayStateSymbolComponent(<SvgSpinnersRingResize />);
         break;
 
-      case 2:
-        setSymbolComponent(<MaterialSymbolsPause />);
-        setIsPlaying(false);
+      case 'unstarted':
+      case 'paused':
+        setPlayStateSymbolComponent(<MaterialSymbolsPause />);
+        break;
+
+      case 'playing':
+      case 'ended':
+        setPlayStateSymbolComponent(<MaterialSymbolsPlayArrow />);
         break;
 
       default:
+        setPlayStateSymbolComponent(<SvgSpinnersRingResize />);
         break;
     }
   };
 
   useEffect(() => {
-    if (playerStates) handleSymbols();
-  }, [playerStates]);
-
-  const playPause = async () => {
-    if (!player) return;
-
-    if (isPlaying) {
-      player.pauseVideo();
-    } else {
-      player.playVideo();
-    }
-  };
+    reflectPlayerState();
+  }, [playState]);
 
   return (
-    <button className='iFrameController__controls__button' aria-label={isPlaying ? 'Pause video' : 'Play video'} onClick={() => playPause()}>
-      {symbolComponent}
+    <button className='iFrameController__controls__button' aria-label={playState === 'playing' ? 'Pause video' : 'Play video'} onClick={() => alterPlayState()}>
+      {playStateSymbolComponent}
     </button>
   );
 };

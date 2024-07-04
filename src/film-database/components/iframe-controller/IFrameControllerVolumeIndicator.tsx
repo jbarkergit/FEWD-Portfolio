@@ -4,13 +4,10 @@ import { YouTubePlayer } from 'react-youtube';
 
 import { MaterialSymbolsVolumeUp, MaterialSymbolsVolumeDown, MaterialSymbolsVolumeOff } from '../../assets/google-material-symbols/iFrameSymbols';
 
-const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: YouTubePlayer | undefined; playerVolume: number }) => {
+const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: YouTubePlayer; playerVolume: number }) => {
   const [symbolComponent, setSymbolComponent] = useState<JSX.Element>(<MaterialSymbolsVolumeOff />);
-  const [isPlayerMuted, setIsPlayerMuted] = useState<boolean>(true);
 
-  const handleVolumeIndicator = async () => {
-    if (!player) return;
-
+  const handleVolumeIndicator = () => {
     switch (true) {
       case playerVolume === 0:
         setSymbolComponent(<MaterialSymbolsVolumeOff />);
@@ -25,6 +22,7 @@ const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: You
         break;
 
       default:
+        setSymbolComponent(<MaterialSymbolsVolumeOff />);
         break;
     }
   };
@@ -33,24 +31,20 @@ const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: You
     handleVolumeIndicator();
   }, [playerVolume]);
 
-  const muteUnmute = async () => {
-    if (!player) return;
-
+  const alterMuteState = async () => {
     const isPlayerMuted: boolean = await player.isMuted();
 
     if (isPlayerMuted) {
       player.unMute();
       handleVolumeIndicator();
-      setIsPlayerMuted(false);
     } else {
       player.mute();
       setSymbolComponent(<MaterialSymbolsVolumeOff />);
-      setIsPlayerMuted(true);
     }
   };
 
   return (
-    <button className='iFrameController__controls__button' aria-label={isPlayerMuted ? 'Unmute video' : 'Mute video'} onClick={() => muteUnmute()}>
+    <button className='iFrameController__controls__button' aria-label={playerVolume === 0 ? 'Unmute video' : 'Mute video'} onClick={() => alterMuteState()}>
       {symbolComponent}
     </button>
   );

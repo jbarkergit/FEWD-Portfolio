@@ -1,45 +1,38 @@
-import { useEffect, Dispatch, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
 
 import { YouTubePlayer } from 'react-youtube';
-import PlayerStates from 'youtube-player/dist/constants/PlayerStates';
 
 import IFrameControllerPlayPause from './IFrameControllerPlayPause';
 import IFrameControllerVolumeIndicator from './IFrameControllerVolumeIndicator';
 import IFrameControllerVolumeSlider from './IFrameControllerVolumeSlider';
 import IFrameControllerTimeStamp from './IFrameControllerTimeStamp';
 import IFrameControllerSeeker from './IFrameControllerSeeker';
-import IFrameControllerPlayback from './IFrameControllerPlayback';
 
 const IFrameController = ({
   player,
-  playerStates,
-  playerVolume,
-  setPlayerVolume,
+  playState,
 }: {
-  player: YouTubePlayer | undefined;
-  playerStates: PlayerStates | undefined;
-  playerVolume: number;
-  setPlayerVolume: Dispatch<SetStateAction<number>>;
+  player: YouTubePlayer;
+  playState: 'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined;
 }) => {
-  /** Keep player volume aligned with state */
-  const alignPlayerVolume = async () => {
-    player?.setVolume(playerVolume);
-  };
+  const [playerVolume, setPlayerVolume] = useState<number>(0);
+  const alignIFrameVolume = () => player.setVolume(playerVolume);
 
   useEffect(() => {
-    alignPlayerVolume();
+    if (playerVolume > 0) player.unMute();
+    alignIFrameVolume();
   }, [playerVolume]);
 
-  /** Component */
   return (
     <div className='iFrameController'>
       <IFrameControllerSeeker player={player} />
       <div className='iFrameController__controls'>
-        <IFrameControllerPlayPause player={player} playerStates={playerStates} />
+        <IFrameControllerPlayPause player={player} playState={playState} />
         <IFrameControllerVolumeIndicator player={player} playerVolume={playerVolume} />
-        <IFrameControllerVolumeSlider player={player} playerVolume={playerVolume} setPlayerVolume={setPlayerVolume} />
-        <IFrameControllerTimeStamp player={player} />
-        <IFrameControllerPlayback player={player} />
+        <IFrameControllerVolumeSlider setPlayerVolume={setPlayerVolume} />
+        <IFrameControllerTimeStamp player={player} playState={playState} />
+        {/* (depreciated) */}
+        {/* <IFrameControllerPlayback player={player} qualityState={qualityState} /> */}
       </div>
     </div>
   );

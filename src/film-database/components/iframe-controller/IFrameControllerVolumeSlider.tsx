@@ -1,23 +1,13 @@
 import { useRef, useState, PointerEvent, Dispatch, SetStateAction } from 'react';
 
-import { YouTubePlayer } from 'react-youtube';
-
-const IFrameControllerVolumeSlider = ({
-  player,
-  playerVolume,
-  setPlayerVolume,
-}: {
-  player: YouTubePlayer | undefined;
-  playerVolume: number;
-  setPlayerVolume: Dispatch<SetStateAction<number>>;
-}) => {
+const IFrameControllerVolumeSlider = ({ setPlayerVolume }: { setPlayerVolume: Dispatch<SetStateAction<number>> }) => {
   const sliderRef = useRef<HTMLButtonElement>(null);
   const handleRef = useRef<HTMLSpanElement>(null);
 
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const moveHandle = (e: PointerEvent<HTMLButtonElement>) => {
-    if (player && sliderRef.current && handleRef.current && isDragging) {
+    if (sliderRef.current && handleRef.current && isDragging) {
       const sliderRect: DOMRect = sliderRef.current.getBoundingClientRect();
       const xOffset: number = e.clientX - sliderRect.left;
       const position: number = (xOffset / sliderRect.width) * 100;
@@ -25,8 +15,6 @@ const IFrameControllerVolumeSlider = ({
 
       handleRef.current.style.left = `${clampedPosition}%`;
       setPlayerVolume(clampedPosition);
-
-      if (playerVolume !== 0) player.unMute();
     }
   };
 

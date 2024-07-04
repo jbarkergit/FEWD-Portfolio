@@ -2,9 +2,14 @@ import { useState, useEffect } from 'react';
 
 import { YouTubePlayer } from 'react-youtube';
 
-const IFrameControllerTimeStamp = ({ player }: { player: YouTubePlayer | undefined }) => {
-  const [current, setCurrent] = useState<string>('00:00');
-  const [duration, setDuration] = useState<string>('00:00');
+const IFrameControllerTimeStamp = ({
+  player,
+  playState,
+}: {
+  player: YouTubePlayer;
+  playState: 'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined;
+}) => {
+  const [timeStamp, setTimeStamp] = useState<{ current: string; duration: string }>({ current: '00:00', duration: '00:00' });
 
   const formatTime = (time: number): string => {
     const minutes: number = Math.floor(time / 60);
@@ -12,34 +17,27 @@ const IFrameControllerTimeStamp = ({ player }: { player: YouTubePlayer | undefin
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  const updateCurrentTime = async () => {
-    if (!player) return;
+  const updatePlayerTimeStamp = async () => {
     const currentTime: number = await player.getCurrentTime();
-    if (currentTime) setCurrent(formatTime(currentTime));
-  };
-
-  const updateDuration = async () => {
-    if (!player) return;
     const videoDuration: number = await player.getDuration();
-    if (videoDuration) setDuration(formatTime(videoDuration));
+
+    setTimeStamp({ current: formatTime(currentTime), duration: formatTime(videoDuration) });
   };
 
   useEffect(() => {
-    updateCurrentTime();
-    updateDuration();
-
-    const interval = setInterval(updateCurrentTime, 1000);
+    updatePlayerTimeStamp();
+    const interval = setInterval(updatePlayerTimeStamp, 1000);
     return () => clearInterval(interval);
   }, [player]);
 
   return (
     <div className='iFrameController__controls__timestamp' aria-label='Video timestamp information'>
-      <div className='iFrameController__controls__timestamp--current' aria-label={`Current playback time ${current}`}>
-        {current}
+      <div className='iFrameController__controls__timestamp--current' aria-label={`Current playback time ${timeStamp.current}`}>
+        {timeStamp.current}
       </div>
       <div className='iFrameController__controls__timestamp--separator'> / </div>
-      <div className='iFrameController__controls__timestamp--duration' aria-label={`Video duration ${duration}`}>
-        {duration}
+      <div className='iFrameController__controls__timestamp--duration' aria-label={`Video duration ${timeStamp.duration}`}>
+        {timeStamp.duration}
       </div>
     </div>
   );
