@@ -276,7 +276,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
               onDrag={(e) => e.stopPropagation()}>
               <figure>
                 <picture>
-                  <img src={project.imgSrc} alt={project.imgAlt} rel='preload' loading='eager' draggable='false' decoding='async' fetchpriority='high' />
+                  <img src={project.imgSrc} alt={project.imgAlt} rel='preload' loading='eager' draggable='false' decoding='async' fetchPriority='high' />
                   <figcaption>{project.imgAlt}</figcaption>
                 </picture>
               </figure>

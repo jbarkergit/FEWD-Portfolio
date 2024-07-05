@@ -14,7 +14,7 @@ const ProductPageImgSelect = ({ findProduct, setActiveDisplay }: PropType) => {
       <figure>
         {images?.small.map((image, index) => (
           <picture key={image}>
-            <img src={image} alt={company + unit} decoding='async' fetchpriority='high' onClick={() => setActiveDisplay(index)} tabIndex={0} />
+            <img src={image} alt={company + unit} decoding='async' fetchPriority='high' onClick={() => setActiveDisplay(index)} tabIndex={0} />
             <figcaption>{`${company} ${unit}`}</figcaption>
           </picture>
         ))}

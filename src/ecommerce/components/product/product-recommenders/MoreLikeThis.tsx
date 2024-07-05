@@ -38,7 +38,7 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
               <article>
                 <figure>
                   <picture>
-                    <img src={product.images?.small[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchpriority='low' />
+                    <img src={product.images?.small[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchPriority='low' />
                     <figcaption>{`${product.company} ${product.unit}`}</figcaption>
                   </picture>
                 </figure>

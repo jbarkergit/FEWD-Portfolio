@@ -111,7 +111,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
             src={images?.large[activeDisplay]}
             alt={company + unit}
             decoding='async'
-            fetchpriority='high'
+            fetchPriority='high'
             ref={primaryImg}
             style={magnifierEnabled ? { cursor: 'none' } : { cursor: 'zoom-in' }}
           />
