@@ -17,6 +17,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["vite.config.ts", ".eslintrc.cjs", "src", "extended-attributes", "sdk"],
+  "include": ["vite.config.ts", ".eslintrc.cjs", "src", "extended-attributes"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
