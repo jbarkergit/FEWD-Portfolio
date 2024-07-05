@@ -6,7 +6,7 @@ const CarouselProps = ({ carouselImg, carouselAlt, navCat, linkTo, tabIndex }: c
   return (
     <figure>
       <picture>
-        <img src={carouselImg} alt={carouselAlt} draggable='false' loading='lazy' decoding='async' fetchpriority='low' />
+        <img src={carouselImg} alt={carouselAlt} draggable='false' loading='lazy' decoding='async' fetchPriority='low' />
         <figcaption>{`${carouselAlt}`}</figcaption>
         <Link to={linkTo} tabIndex={tabIndex}>
           {navCat}
