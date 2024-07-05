@@ -20,6 +20,17 @@
   background-color: rgba(0, 0, 0, 1);
   overflow: clip;
   @include m.fdFontM;
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background-image: url(/src/film-database/assets/giphy/noise_giphy.gif);
+    background-size: 480px;
+    background-attachment: fixed;
+    opacity: 0.04;
+    pointer-events: none;
+  }
 
   &[data-layout-carousel='xxl'] {
     --fd-carousel-items-per-page: 7;
