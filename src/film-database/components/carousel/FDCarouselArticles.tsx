@@ -1,9 +1,12 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { v4 as uuidv4 } from 'uuid';
 
 import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
 
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
-import { Dispatch, SetStateAction } from 'react';
+
+import { MaterialSymbolsPlayArrow } from '../../assets/google-material-symbols/iFrameSymbols';
 
 type Type_FilmDatabase_Props = {
   articles: Type_Tmdb_Api_Union[];
@@ -29,6 +32,11 @@ const FDCarouselArticles = ({ articles, setHeroData }: Type_FilmDatabase_Props) 
                 </picture>
               </figure>
             </article>
+            <div className='fdMedia__carousel__wrapper__ul__li__overlay'>
+              <button className='fdMedia__carousel__wrapper__ul__li__overlay--play' aria-label='Play trailer'>
+                <MaterialSymbolsPlayArrow />
+              </button>
+            </div>
           </li>
         );
       })}
