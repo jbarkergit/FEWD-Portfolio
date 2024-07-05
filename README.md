@@ -21,6 +21,10 @@
 - **[@types/react-dom](https://www.npmjs.com/package/@types/react-dom)**: TypeScript definitions for ReactDOM.
 - **[@total-typescript/ts-reset](https://www.npmjs.com/package/@total-typescript/ts-reset)**: A tool for resetting TypeScript configurations.
 
+## Software Development Kits
+
+- **[firebase](https://www.npmjs.com/package/firebase)**: Google Firebase offers backend services like databases, authentication, and integrations.
+
 ## Utility Libraries
 
 - **[dotenv](https://www.npmjs.com/package/dotenv)**: Loads environment variables from a `.env` file into `process.env`.
