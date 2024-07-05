@@ -1,12 +1,5 @@
 import { Link } from 'react-router-dom';
 
-{
-  /* <source
-            media='(max-width: 1528px)'
-            srcSet='/src/ecommerce/assets/production-images/compressed-home-page/infographic/1528x915/img-by-ilias-chebbi-on-unsplash.jpg'
-          /> */
-}
-
 const InfographicSectionOne = () => {
   return (
     <section className='infographic__section'>
@@ -30,7 +23,7 @@ const InfographicSectionOne = () => {
               src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-1.jpg'
               alt='Man wearing Marshal headphones'
               decoding='async'
-              fetchpriority='high'
+              fetchPriority='high'
             />
             <figcaption>Man wearing Marshal headphones</figcaption>
           </picture>
@@ -51,7 +44,7 @@ const InfographicSectionTwo = () => {
               src='src/ecommerce/assets/production-images/compressed-home-page/infographic\infographic-2.jpg'
               alt='Man listening to notes he is playing'
               decoding='async'
-              fetchpriority='high'
+              fetchPriority='high'
               tabIndex={0}
             />
             <figcaption>Man listening to notes he is playing</figcaption>
@@ -82,7 +75,7 @@ const InfographicSectionThree = () => {
               src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-3.jpg'
               alt='Man singing on stage'
               decoding='async'
-              fetchpriority='high'
+              fetchPriority='high'
               tabIndex={0}
             />
             <figcaption>Man singing on stage</figcaption>
