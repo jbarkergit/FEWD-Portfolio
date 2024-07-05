@@ -1,15 +1,12 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-
-import { v4 as uuidv4 } from 'uuid';
-
-import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
+import { RefObject, useRef } from 'react';
 
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 
 import { MaterialSymbolsSearch, MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp } from '../../assets/google-material-symbols/menuSymbols';
 
-import FDSearchBar from '../../components/search-bar/FDSearchBar';
+import FDMenuToolbar from '../../components/menu/FDMenuToolbar';
+import FDMenuGenres from '../../components/menu/FDMenuGenres';
+import FDMenuSearchBar from '../../components/menu/FDMenuSearchBar';
 
 const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | undefined>> }) => {
   /** Toggle menus */
@@ -39,49 +36,11 @@ const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Ty
 
   return (
     <div className='fdMenu' ref={menuRef} data-modal='closed'>
-      <section className='fdMenu__toolbar'>
-        <ul className='fdMenu__toolbar__ul'>
-          {toolbarObjArr.map((obj) => (
-            <li className='fdMenu__toolbar__ul__li' key={uuidv4()}>
-              <button
-                className='fdMenu__toolbar__ul__li--button'
-                aria-label={`Select ${obj.key}`}
-                onClick={() => {
-                  toggleMenus(obj.ref);
-                  obj.key === 'Home' ? setRoute(undefined) : null;
-                }}>
-                <span className='fdMenu__toolbar__ul__li--button--icon'>{obj.icon}</span>
-                {/* <span className='fdMenu__toolbar__ul__li--button--key'>{obj.key}</span> */}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <FDMenuToolbar setRoute={setRoute} toolbarObjArr={toolbarObjArr} toggleMenus={toggleMenus} />
 
       <div className='fdMenu__menu'>
-        <section className='fdMenu__menu__search' ref={menuSearchRef} data-menu='closed'>
-          <FDSearchBar />
-        </section>
-
-        <section className='fdMenu__menu__genres' ref={menuGenresRef} data-menu='closed'>
-          <nav className='fdMenu__menu__genres__nav'>
-            <ul className='fdMenu__menu__genres__nav__ul'>
-              {useTmdbGenres()
-                .sortedMap()
-                .map((genre) => (
-                  <li
-                    className='fdMenu__menu__genres__nav__ul__li'
-                    key={uuidv4()}
-                    onClick={() => {
-                      toggleMenus(undefined);
-                      setRoute(genre.replace(' ', '_') as Type_MovieGenre_Keys);
-                    }}>
-                    <button className='fdMenu__menu__genres__nav__ul__li--button'>{genre}</button>
-                  </li>
-                ))}
-            </ul>
-          </nav>
-        </section>
+        <FDMenuSearchBar ref={menuSearchRef} />
+        <FDMenuGenres setRoute={setRoute} toggleMenus={toggleMenus} ref={menuGenresRef} />
       </div>
     </div>
   );
