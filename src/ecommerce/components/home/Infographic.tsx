@@ -41,7 +41,7 @@ const InfographicSectionTwo = () => {
         <figure>
           <picture>
             <img
-              src='src/ecommerce/assets/production-images/compressed-home-page/infographic\infographic-2.jpg'
+              src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-2.jpg'
               alt='Man listening to notes he is playing'
               decoding='async'
               fetchPriority='high'
