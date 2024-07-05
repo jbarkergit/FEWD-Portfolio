@@ -24,6 +24,7 @@
 ## Software Development Kits
 
 - **[firebase](https://www.npmjs.com/package/firebase)**: Google Firebase offers backend services like databases, authentication, and integrations.
+- **[firebase-tools](https://www.npmjs.com/package/firebase-tools)**: Utilize Firebase tooling for deploying code, running local web servers, managing database interactions, and importing/exporting users.
 
 ## Utility Libraries
 
