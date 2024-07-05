@@ -55,7 +55,7 @@ const ProductHighlight = (): JSX.Element => {
                 <article>
                   <figure>
                     <picture ref={pictureRef}>
-                      <img src={product.images!.medium[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchpriority='low' />
+                      <img src={product.images!.medium[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchPriority='low' />
                       <figcaption>{`${product.company} ${product.unit}`}</figcaption>
                     </picture>
                   </figure>
