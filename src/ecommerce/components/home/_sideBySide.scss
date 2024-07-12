@@ -13,19 +13,8 @@
   @media (width <= 980px) {
     flex-direction: column;
   }
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -32px;
-    left: 0;
-    width: 100%;
-    height: f.rem(32);
-    z-index: 10;
-    border-bottom-right-radius: f.rem(64);
-    border-bottom-left-radius: f.rem(64);
-    background-color: var(--elemBackgroundPrimaryOffset);
-    @media (width > 981px) {
-    }
+  &::after {
+    @include m.homeSectionAfter;
   }
   &__textArea {
     display: flex;
@@ -35,6 +24,7 @@
     width: 50%;
     height: fit-content;
     @media (width <= 980px) {
+      align-items: center;
       width: 100%;
       height: auto;
     }
@@ -43,8 +33,11 @@
       flex-direction: column;
       width: fit-content;
       @include m.ecoSectionHeader;
-      @media (width <= 467px) {
-        font-size: clamp(f.rem(20), f.rem(28) + 1vw, f.rem(34));
+      @media (width < 853px) {
+        font-size: clamp(f.rem(16), f.rem(18) + 8vw, 2.2rem);
+      }
+      @media (width < 410px) {
+        font-size: clamp(f.rem(16), f.rem(18) + 6vw, 1.8rem);
       }
     }
     & p {
