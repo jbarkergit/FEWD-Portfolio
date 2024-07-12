@@ -4,6 +4,7 @@
 .ecoModalCart {
   display: flex !important;
   flex-direction: column !important;
+  gap: calc(f.rem(10) * 2);
 }
 
 .ecoModal__simpleHeading {
