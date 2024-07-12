@@ -2,86 +2,79 @@ import { Link } from 'react-router-dom';
 
 const InfographicSectionOne = () => {
   return (
-    <section className='infographic__section'>
-      <article className='infographic__section__dynamicAudio'>
-        <div className='infographic__section__dynamicAudio__textBlock'>
-          <strong className='infographic__section__dynamicAudio__textBlock--strong' tabIndex={0}>
-            <span>THE NEW </span>
-            <span>HiFi AUDIO </span>
-            <span className='highlight'>EXPERIENCE</span>
-          </strong>
-          <h1 tabIndex={0}>
-            Unparalleled HiFi audio and <span className='highlight'>superior</span> manufacturing for discerning audiophiles. Crystal-clear sound,{' '}
-            <span className='highlight'>premium </span>
-            materials, meticulous <span className='highlight'>craftsmanship</span>, and lasting durability.
-          </h1>
-        </div>
-        <figure>
-          <picture>
-            <img
-              tabIndex={0}
-              src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-1.jpg'
-              alt='Man wearing Marshal headphones'
-              decoding='async'
-              fetchPriority='high'
-            />
-            <figcaption>Man wearing Marshal headphones</figcaption>
-          </picture>
-        </figure>
-      </article>
-    </section>
+    <article className='infographic__primary'>
+      <section className='infographic__primary__article'>
+        <strong className='infographic__primary__article__strong' tabIndex={0}>
+          <span className='infographic__primary__article__strong--line'>THE NEW </span>
+          <span className='infographic__primary__article__strong--line'>HiFi AUDIO </span>
+          <span className='infographic__primary__article__strong--line highlight'>EXPERIENCE</span>
+        </strong>
+        <h1 className='infographic__primary__article__heading' tabIndex={0}>
+          Unparalleled HiFi audio and <span className='highlight'>superior</span> manufacturing for discerning audiophiles. Crystal-clear sound,{' '}
+          <span className='highlight'>premium </span>
+          materials, meticulous <span className='highlight'>craftsmanship</span>, and lasting durability.
+        </h1>
+      </section>
+
+      <figure className='infographic__primary__graphic'>
+        <picture>
+          <img
+            tabIndex={0}
+            src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-1.jpg'
+            alt='Model wearing Marshal headphones'
+            decoding='async'
+            fetchPriority='high'
+          />
+          <figcaption>Model wearing Marshal headphones</figcaption>
+        </picture>
+      </figure>
+    </article>
   );
 };
 
 const InfographicSectionTwo = () => {
   return (
-    <section className='infographic__section'>
-      <h2>Presentation Image of man listening to notes he is playing</h2>
-      <article className='infographic__section__presentation'>
-        <figure>
-          <picture>
-            <img
-              src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-2.jpg'
-              alt='Man listening to notes he is playing'
-              decoding='async'
-              fetchPriority='high'
-              tabIndex={0}
-            />
-            <figcaption>Man listening to notes he is playing</figcaption>
-          </picture>
-        </figure>
-      </article>
-    </section>
+    <figure className='infographic__supporting'>
+      <picture>
+        <img
+          src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-2.jpg'
+          alt='Man listening to notes he is playing'
+          decoding='async'
+          fetchPriority='high'
+          tabIndex={0}
+        />
+        <figcaption>Model wearing DT 990 Black Special Edition</figcaption>
+      </picture>
+    </figure>
   );
 };
 
 const InfographicSectionThree = () => {
   return (
-    <section className='infographic__section'>
-      <article className='infographic__section__news'>
-        <div className='infographic__section__news__textBlock'>
-          <h2 className='infographic__section__news__textBlock--strong' tabIndex={0}>
-            <span>NEW TECH FROM </span>
-            <span className='highlight'>Beyerdynamic</span>
-          </h2>
-          <p tabIndex={0}>Thanks to our friends over at Beyerdynamic, we're proud to introduce a new line of headphones sporting all new Tesla technology.</p>
-          <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__section__news__textBlock--cta' aria-label='Shop Tesla enhanced Headphones'>
-            Shop Tesla enhanced Headphones
-          </Link>
-        </div>
-        <figure>
-          <picture>
-            <img
-              src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-3.jpg'
-              alt='Man singing on stage'
-              decoding='async'
-              fetchPriority='high'
-              tabIndex={0}
-            />
-            <figcaption>Man singing on stage</figcaption>
-          </picture>
-        </figure>
+    <section className='infographic__cta'>
+      <article className='infographic__cta__article'>
+        <h2 className='infographic__cta__article--heading' tabIndex={0}>
+          <span>NEW TECH FROM </span>
+          <span className='highlight'>Beyerdynamic</span>
+        </h2>
+        <p tabIndex={0}>Thanks to our friends over at Beyerdynamic, we're proud to introduce a new line of headphones sporting all new Tesla technology.</p>
+        <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__section__news__textBlock--cta' aria-label='Shop Tesla enhanced Headphones'>
+          Shop Tesla enhanced Headphones
+        </Link>
       </article>
+
+      <figure className='infographic__cta__graphic'>
+        <picture>
+          <img
+            src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-3.jpg'
+            alt='Model singing into Shure SM58'
+            decoding='async'
+            fetchPriority='high'
+            tabIndex={0}
+          />
+          <figcaption>Model singing into Shure SM58</figcaption>
+        </picture>
+      </figure>
     </section>
   );
 };
