@@ -38,6 +38,7 @@
 
 .fdMenu__menu {
   grid-area: 1 / 2 / 2 / 3;
+  height: 100svh;
   & > * {
     position: relative;
     z-index: 11;
@@ -57,18 +58,50 @@
 }
 
 .fdMenu__menu__genres {
-  &__nav {
-    width: fit-content;
-    &--heading {
-      @include m.fdFontL;
+  justify-content: center;
+  gap: var(--fd-gap);
+  height: 100svh;
+  padding: 0;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  &__container {
+    width: max-content;
+    height: 100svh;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    &__heading {
+      display: none;
     }
-    &__ul {
-      overflow-y: scroll;
-      scrollbar-width: none;
-      &__li {
-        &--button {
-          @include m.fdFontL;
-          white-space: nowrap;
+    &__nav {
+      width: fit-content;
+      // 50 svh - header font size (*2 for button) - global gap - parent padding
+      padding: calc(50svh - var(--fd-font-size-xtreme) * 1 - var(--fd-gap) - var(--fd-padding-generic)) 0;
+      margin: var(--fd-padding-generic) var(--fd-padding-generic) 0 calc(var(--fd-padding-generic) / 2);
+      &__ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        border-top: 1px solid rgba(255, 255, 255, 0.19);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.19);
+        overflow-y: scroll;
+        scrollbar-width: none;
+        &__li {
+          display: flex;
+          padding: 0 calc(var(--fd-gap) * 2);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.19);
+          &[data-activity-tracker='active'] {
+            opacity: 0.9;
+          }
+          &[data-activity-tracker='disabled'] {
+            opacity: 0.3;
+          }
+          &--button {
+            @include m.fdFontL;
+            font-size: var(--fd-font-size-xtreme);
+            text-transform: uppercase;
+            text-shadow: var(--fd-font-shadow);
+            white-space: nowrap;
+          }
         }
       }
     }
