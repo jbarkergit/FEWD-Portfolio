@@ -1,5 +1,6 @@
 :root {
   // Font sizes
+  --fd-font-size-xtreme: clamp(calc(1.875rem * 2), calc(3vw * 2), calc(2.25rem * 2));
   --fd-font-size-xxl: clamp(1.875rem, 3vw, 2.25rem); /* 30px to 36px */
   --fd-font-size-xl: clamp(1.5rem, 2.5vw, 1.875rem); /* 24px to 30px */
   --fd-font-size-l: clamp(1.125rem, 2vw, 1.5rem); /* 18px to 24px */
