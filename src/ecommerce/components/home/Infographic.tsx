@@ -51,8 +51,8 @@ const InfographicSectionTwo = () => {
 
 const InfographicSectionThree = () => {
   return (
-    <section className='infographic__cta'>
-      <article className='infographic__cta__article'>
+    <article className='infographic__cta'>
+      <section className='infographic__cta__article'>
         <h2 className='infographic__cta__article--heading' tabIndex={0}>
           <span>NEW TECH FROM </span>
           <span className='highlight'>Beyerdynamic</span>
@@ -61,7 +61,7 @@ const InfographicSectionThree = () => {
         <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__section__news__textBlock--cta' aria-label='Shop Tesla enhanced Headphones'>
           Shop Tesla enhanced Headphones
         </Link>
-      </article>
+      </section>
 
       <figure className='infographic__cta__graphic'>
         <picture>
@@ -75,7 +75,7 @@ const InfographicSectionThree = () => {
           <figcaption>Model singing into Shure SM58</figcaption>
         </picture>
       </figure>
-    </section>
+    </article>
   );
 };
 
