@@ -37,8 +37,11 @@
   overflow-y: auto;
   scrollbar-width: none;
   transform: translateX(50%);
+  opacity: 0;
   pointer-events: none;
-  transition: transform 250ms ease-in;
+  transition:
+    transform 250ms ease-in,
+    opacity 250ms ease-in;
   @media (width <= 778px) {
     top: 0;
     left: 0;
@@ -54,6 +57,7 @@
   }
   &[data-status='active'] {
     transform: translateX(0);
+
     pointer-events: all;
   }
 }
