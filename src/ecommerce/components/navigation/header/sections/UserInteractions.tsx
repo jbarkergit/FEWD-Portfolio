@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import SearchBar from '../../../features/search-bar/SearchBar';
+import SearchBar from '../../../../features/search-bar/SearchBar';
 
 type UserInteractionsType = {
   uiModal: string;

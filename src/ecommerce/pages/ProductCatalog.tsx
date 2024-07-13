@@ -1,15 +1,11 @@
 import { useLocation } from 'react-router-dom';
-
-// Context
-import { CartProvider } from '../context/CartContext';
-
-// Components
-import Header from '../components/navigation/header/EcoHeader';
 import EFooter from '../components/navigation/footer/eFooter';
 import ProductProvider from '../components/product/product-provider/ProductProvider';
-import { useUniqueData } from '../hooks/useUniqueData';
+import { CartProvider } from '../context/CartContext';
 import ConditionallyRenderedProductFilters from '../features/product-filters/ConditionallyRenderedProductFilters';
 import ProductFilterConstructor from '../features/product-filters/ProductFilterConstructor';
+import { useUniqueData } from '../hooks/useUniqueData';
+import EcoHeader from '../components/navigation/header/EcoHeader';
 
 const ProductCatalog = (): JSX.Element => {
   const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData().useUniqueCompanies);
@@ -17,7 +13,7 @@ const ProductCatalog = (): JSX.Element => {
   return (
     <CartProvider>
       <div id='ecommerce'>
-        <Header />
+        <EcoHeader />
         <section className='browseProduct'>
           <section className='productCatalogTopper'>
             <div className='productCatalogTopper__panel breadCrumbs' aria-label={breadcrumb} tabIndex={0}>
