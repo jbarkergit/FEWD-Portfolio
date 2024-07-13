@@ -36,7 +36,7 @@ function App() {
           '/ecommerce/interfaces',
           ...getEcommerceFilterPaths(),
         ],
-        dir: './ecommerce/pages/ProductCatalog',
+        dir: '/ecommerce/pages/ProductCatalog',
       },
       { path: '/ecommerce/product/:paramId', dir: './ecommerce/pages/ProductDetailPage' },
     ],
