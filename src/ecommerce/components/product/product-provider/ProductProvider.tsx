@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePaginatedProductSets } from '../../../hooks/usePaginatedProductSets';
-import { ProductType } from '../../../types/ProductType';
 import ProductProp from './ProductProp';
+import { ProductType } from '../../../context/CartContext';
 
 /* usePaginatedSets utilizes useProductFilter, which uses window.location.pathname to render appropriate product arrays */
 

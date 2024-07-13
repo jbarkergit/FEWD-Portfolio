@@ -1,4 +1,4 @@
-import { ProductType } from '../types/ProductType';
+import { ProductType } from '../context/CartContext';
 
 const fetchProductDatabase = async (): Promise<ProductType[]> => {
   try {

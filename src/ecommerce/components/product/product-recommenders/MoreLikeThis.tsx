@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { ProductType } from '../../../types/ProductType';
 import { useProductDatabase } from '../../../hooks/useProductDatabase';
+import { ProductType } from '../../../context/CartContext';
 
 type MoreLikeThisType = {
   findProduct: ProductType;

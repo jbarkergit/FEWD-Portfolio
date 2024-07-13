@@ -1,5 +1,5 @@
+import { ProductType } from '../context/CartContext';
 import { useProductDatabase } from './useProductDatabase';
-import { ProductType } from '../types/ProductType';
 
 export const useProductSearch = (searchTerm: string) => {
   let productSearchResults: ProductType[] = [];

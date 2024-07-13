@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
-import { ProductType } from '../../../types/ProductType';
 import { v4 as uuidv4 } from 'uuid';
+import { ProductType } from '../../../context/CartContext';
 
 type PropType = {
   findProduct: ProductType;

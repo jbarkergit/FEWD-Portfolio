@@ -1,6 +1,24 @@
-import { ReactElement, createContext, useMemo, useReducer } from 'react';
-import { ChildrenType } from '../types/ChildrenType';
+import { ReactElement, ReactNode, createContext, useMemo, useReducer } from 'react';
 import { useProductDatabase } from '../hooks/useProductDatabase';
+
+// Product type
+export type ProductType = {
+  sku: string;
+  stock: number;
+  company: string;
+  unit: string;
+  description?: string;
+  price: number;
+  category?: string;
+  polarPattern?: string | string[];
+  wearStyle?: string;
+  productshowcase?: boolean;
+  images?: {
+    small: string[];
+    medium: string[];
+    large: string[];
+  };
+};
 
 //define type for product in shopping cart
 export type CartProductType = {
@@ -133,6 +151,6 @@ const initCartContextState: UseCartContextType = {
 export const CartContext = createContext<UseCartContextType>(initCartContextState);
 
 //export CartContext Provider to pass required Shopping Cart data throughout application
-export const CartProvider = ({ children }: ChildrenType): ReactElement => {
+export const CartProvider = ({ children }: { children?: ReactNode }): ReactElement => {
   return <CartContext.Provider value={useCartContext(initCartState)}>{children}</CartContext.Provider>;
 };

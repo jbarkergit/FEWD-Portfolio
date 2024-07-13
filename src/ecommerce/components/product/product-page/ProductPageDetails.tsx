@@ -1,5 +1,5 @@
+import { ProductType } from '../../../context/CartContext';
 import { useCart } from '../../../hooks/useCart';
-import { ProductType } from '../../../types/ProductType';
 
 type PropType = {
   findProduct: ProductType;

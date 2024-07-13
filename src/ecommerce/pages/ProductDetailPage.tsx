@@ -3,13 +3,12 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 // Context
-import { CartProvider } from '../context/CartContext';
+import { CartProvider, ProductType } from '../context/CartContext';
 
 // Components
 import Header from '../components/navigation/header/EcoHeader';
 import EFooter from '../components/navigation/footer/eFooter';
 import { useProductDatabase } from '../hooks/useProductDatabase';
-import { ProductType } from '../types/ProductType';
 import ProductPageDetails from '../components/product/product-page/ProductPageDetails';
 import ProductPageImgDisplay from '../components/product/product-page/ProductPageImgDisplay';
 import ProductPageImgSelect from '../components/product/product-page/ProductPageImgSelect';

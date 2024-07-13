@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { ProductType } from '../types/ProductType';
 import { useProductDatabase } from './useProductDatabase';
+import { ProductType } from '../context/CartContext';
 
 /** Filters array string properties from ProductDatabase into sets */
 const uniqueDataProps = useProductDatabase.reduce(

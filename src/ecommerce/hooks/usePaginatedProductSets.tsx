@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { ProductType } from '../types/ProductType';
 import { useProductFilter } from './useProductFilter';
+import { ProductType } from '../context/CartContext';
 
 /** Utilizes useProductFilter hook to create product arrays with a length of 7 */
 export const usePaginatedProductSets = (): ProductType[][] => {
