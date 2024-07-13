@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import UserInteractions from './sections/UserInteractions';
-import ModalFeatures from '../../features/ModalFeatures';
 import EcoNavigationLinks from '../links/EcoNavigationLinks';
+import ModalFeatures from '../../../features/ModalFeatures';
 
 const EcoHeader = (): JSX.Element => {
   const [uiModal, setUiModal] = useState<string>('');
