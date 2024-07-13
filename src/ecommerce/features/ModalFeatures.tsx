@@ -1,9 +1,9 @@
 import { useRef, useEffect, Dispatch, SetStateAction, useState } from 'react';
 import ShoppingCart from './shopping-cart/ShoppingCart';
 import UserAccountActive from './user-account/UserAccountActive';
-import UserLoginModal from './user-account/UserLoginModal';
 import UserAccountRegistry from './user-account/UserAccountRegistry';
 import MobileMenu from '../components/navigation/header/mobile/MobileMenu';
+import UserLoginModal from './user-account/UserLoginModal';
 
 type ModalFeatureType = {
   uiModal: string;
