@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
-import EcoNavigationLinks from '../../links/EcoNavigationLinks';
+import EcoNavigationLinks from '../navigation-links/EcoNavigationLinks';
 
 type MobileMenuType = {
   setUnmount: Dispatch<SetStateAction<boolean>>;

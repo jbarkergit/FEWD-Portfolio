@@ -5,7 +5,7 @@ import { CartProvider } from '../context/CartContext';
 import ConditionallyRenderedProductFilters from '../features/product-filters/ConditionallyRenderedProductFilters';
 import ProductFilterConstructor from '../features/product-filters/ProductFilterConstructor';
 import { useUniqueData } from '../hooks/useUniqueData';
-import EcoHeader from '../components/navigation/header/EcoHeader';
+import EcoHeader from '../components/navigation/header-desktop/EcoHeader';
 
 const ProductCatalog = (): JSX.Element => {
   const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData().useUniqueCompanies);

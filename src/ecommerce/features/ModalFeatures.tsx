@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useRef, useState, useEffect } from 'react';
-import MobileMenu from '../components/navigation/header/mobile/MobileMenu';
+import MobileMenu from '../components/navigation/header-mobile/MobileMenu';
 import ShoppingCart from './shopping-cart/ShoppingCart';
 import UserAccountActive from './user-account/UserAccountActive';
 import UserAccountRegistry from './user-account/UserAccountRegistry';

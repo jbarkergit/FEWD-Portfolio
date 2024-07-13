@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import EcoNavigationLinks from '../links/EcoNavigationLinks';
+import EcoNavigationLinks from '../navigation-links/EcoNavigationLinks';
 import ModalFeatures from '../../../features/ModalFeatures';
 import SearchBar from '../../../features/search-bar/SearchBar';
 

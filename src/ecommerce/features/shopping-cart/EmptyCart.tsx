@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import EcoNavigationLinks from '../../components/navigation/links/EcoNavigationLinks';
+import EcoNavigationLinks from '../../components/navigation/navigation-links/EcoNavigationLinks';
 
 type EmptyCartType = {
   setUnmount: Dispatch<SetStateAction<boolean>>;

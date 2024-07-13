@@ -1,0 +1,101 @@
+@use '/src/ecommerce/scss/ecommerceStyles' as m;
+@use '/src/sass/functions' as f;
+
+.navkit {
+  position: relative;
+  top: 0;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: 1fr;
+  width: 100%;
+  padding: var(--sectionYPadding) var(--sectionXPadding);
+  z-index: 11;
+  margin: 0 auto;
+  @media (width < 1550px) {
+    grid-template-columns: auto auto;
+  }
+  @media (width < 780px) {
+    display: flex;
+    flex-direction: column;
+    height: 11rem;
+    padding: 0;
+  }
+  @media (width <= 640px) {
+    height: 11rem;
+  }
+  &__section {
+    display: flex;
+    align-items: center;
+    gap: var(--ecoGap);
+    width: 100%;
+    height: 100%;
+    z-index: 13;
+    &:nth-of-type(1) {
+      font-size: clamp(f.rem(16), f.rem(14) + 1vw, f.rem(20));
+      font-weight: 700;
+      text-transform: uppercase;
+      @media (width < 780px) {
+        justify-content: center;
+      }
+    }
+    &:nth-of-type(2) {
+      @media (width < 1550px) {
+        display: none;
+      }
+    }
+    &:nth-of-type(3) {
+      justify-content: flex-end;
+      @media (width < 780px) {
+        justify-content: center;
+        align-items: flex-start;
+      }
+      & div:first-child {
+        @media (width <= 640px) {
+          display: none;
+        }
+      }
+    }
+    &__links {
+      display: flex;
+      width: 100%;
+      & li a {
+        @include m.ecoBtn;
+        font-size: f.rem(14);
+        border-radius: 0;
+        color: var(--fontPrimary);
+      }
+    }
+  }
+}
+
+div.searchBar:nth-child(2) > div:nth-child(1) > input:nth-child(2) {
+  box-shadow:
+    #f0f0f0 -1px -1px 20px 0px,
+    #fff -4px -4px 5px 0px,
+    rgba(255, 255, 255, 0.97) 7px 7px 20px 0px,
+    rgb(232, 232, 232) 4px 4px 5px 0px !important;
+}
+
+.ctaBtn {
+  @include m.ecoBtn;
+  @include m.ecoBtnLight;
+  box-shadow: var(--shadowRefined);
+  & .text {
+    @media (width <= 1840px) {
+      display: none;
+    }
+  }
+  &:nth-child(3) {
+    @include m.ecoBtnDark;
+  }
+}
+
+.navkit__section__mobileMenuBtn {
+  @include m.ecoBtn;
+  @include m.ecoBtnDark;
+  justify-content: flex-end;
+  max-height: f.rem(42);
+  @media (width >= 1550px) {
+    display: none;
+  }
+}

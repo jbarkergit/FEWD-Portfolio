@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { CartProvider, ProductType } from '../context/CartContext';
 
 // Components
-import Header from '../components/navigation/header/EcoHeader';
+import Header from '../components/navigation/header-desktop/EcoHeader';
 import EFooter from '../components/navigation/footer/EFooter';
 import { useProductDatabase } from '../hooks/useProductDatabase';
 import ProductPageDetails from '../components/product/product-page/ProductPageDetails';
