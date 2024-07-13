@@ -1,5 +1,6 @@
 import { RefObject, useEffect, useReducer, useRef } from 'react';
-import CarouselProps from './CarouselProps';
+import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 type initSliderStateType = {
   pointerDown: boolean;
@@ -98,6 +99,43 @@ const Carousel = (): JSX.Element => {
     };
   }, []);
 
+  // Carousel items
+  const carouselUlArr = [
+    {
+      carouselImg: 'src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg',
+      carouselAlt: 'Slide A',
+      navCat: 'All Products',
+      linkTo: 'products',
+    },
+    {
+      carouselImg: 'src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg',
+      carouselAlt: 'Slide B',
+      navCat: 'Headphones',
+      linkTo: 'headphones',
+    },
+    {
+      carouselImg: 'src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg',
+      carouselAlt: 'Slide C',
+      navCat: 'Amps & Dacs',
+      linkTo: 'amps-dacs',
+      tabIndex: -1,
+    },
+    {
+      carouselImg: 'src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg',
+      carouselAlt: 'Slide D',
+      navCat: 'Microphones',
+      linkTo: 'microphones',
+      tabIndex: -1,
+    },
+    {
+      carouselImg: 'src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg',
+      carouselAlt: 'Slide E',
+      navCat: 'Interfaces',
+      linkTo: 'interfaces',
+      tabIndex: -1,
+    },
+  ];
+
   return (
     <section className='carousel'>
       <div className='carousel__heading'>
@@ -107,39 +145,17 @@ const Carousel = (): JSX.Element => {
         </h2>
       </div>
       <div className='carousel__track' ref={targetElementRef} style={state.style}>
-        <CarouselProps
-          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg'
-          carouselAlt='Slide A'
-          navCat='All Products'
-          linkTo='products'
-        />
-        <CarouselProps
-          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg'
-          carouselAlt='Slide C'
-          navCat='Headphones'
-          linkTo='headphones'
-        />
-        <CarouselProps
-          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg'
-          carouselAlt='Slide E'
-          navCat='Amps & Dacs'
-          linkTo='amps-dacs'
-          tabIndex={-1}
-        />
-        <CarouselProps
-          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg'
-          carouselAlt='Slide F'
-          navCat='Microphones'
-          linkTo='microphones'
-          tabIndex={-1}
-        />
-        <CarouselProps
-          carouselImg='src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg'
-          carouselAlt='Slide G'
-          navCat='Interfaces'
-          linkTo='interfaces'
-          tabIndex={-1}
-        />
+        {carouselUlArr.map((li) => (
+          <figure key={uuidv4()}>
+            <picture>
+              <img src={li.carouselImg} alt={li.carouselAlt} draggable='false' loading='lazy' decoding='async' fetchPriority='low' />
+              <figcaption>{`${li.carouselAlt}`}</figcaption>
+              <Link to={li.linkTo} tabIndex={li.tabIndex}>
+                {li.navCat}
+              </Link>
+            </picture>
+          </figure>
+        ))}
       </div>
     </section>
   );
