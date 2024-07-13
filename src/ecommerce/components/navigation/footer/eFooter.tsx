@@ -38,7 +38,7 @@ const EFooter = (): JSX.Element => {
           </section>
           <section className='eFooter__customer__policies__support'>
             <ul>
-              {support.map((listItem: string) => (
+              {services.map((listItem: string) => (
                 <li key={listItem}>
                   <Link to={`/${listItem}`}>{listItem}</Link>
                 </li>
