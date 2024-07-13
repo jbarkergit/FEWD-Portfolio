@@ -7,7 +7,7 @@ import { CartProvider, ProductType } from '../context/CartContext';
 
 // Components
 import Header from '../components/navigation/header/EcoHeader';
-import EFooter from '../components/navigation/footer/eFooter';
+import EFooter from '../components/navigation/footer/EFooter';
 import { useProductDatabase } from '../hooks/useProductDatabase';
 import ProductPageDetails from '../components/product/product-page/ProductPageDetails';
 import ProductPageImgDisplay from '../components/product/product-page/ProductPageImgDisplay';

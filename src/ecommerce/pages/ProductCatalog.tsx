@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import EFooter from '../components/navigation/footer/eFooter';
+import EFooter from '../components/navigation/footer/EFooter';
 import ProductProvider from '../components/product/product-provider/ProductProvider';
 import { CartProvider } from '../context/CartContext';
 import ConditionallyRenderedProductFilters from '../features/product-filters/ConditionallyRenderedProductFilters';
