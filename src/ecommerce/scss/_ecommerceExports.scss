@@ -5,8 +5,8 @@
 @forward '../../ecommerce/skeletons/skeletonDefaults';
 
 // Header && Footer
-@forward '../../ecommerce/components/navigation/header/ecoHeader';
-@forward '../../ecommerce/components/navigation/header/mobile/mobileMenu';
+@forward '../../ecommerce/components/navigation/header-desktop/ecoHeader';
+@forward '../../ecommerce/components/navigation/header-mobile/mobileMenu';
 @forward '../../ecommerce/components/navigation/footer/ecoFooter';
 
 // Home
