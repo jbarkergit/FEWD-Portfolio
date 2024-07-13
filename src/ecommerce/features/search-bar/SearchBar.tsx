@@ -1,6 +1,6 @@
-import { useState, ChangeEvent, useEffect, useRef } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useRef, useState, useEffect, ChangeEvent } from 'react';
 import { useProductSearch } from '../../hooks/useProductSearch';
+import { v4 as uuidv4 } from 'uuid';
 
 const SearchBar = (): JSX.Element => {
   const searchBarRef = useRef<HTMLDivElement>(null!);

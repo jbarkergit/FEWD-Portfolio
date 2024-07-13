@@ -1,6 +1,6 @@
-import { Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState } from 'react';
-import { userEmailAddressRegex, userPasswordRegex } from './userAccountRegExp';
+import { Dispatch, SetStateAction, useRef, useState, useEffect, FormEvent } from 'react';
 import { Google, LinkedIn, Apple } from '../../assets/production-images/user-account-svg/PasskeySvgs';
+import { userEmailAddressRegex, userPasswordRegex } from './userAccountRegExp';
 
 //Prop drill from UserAccountModal
 type PropType = {

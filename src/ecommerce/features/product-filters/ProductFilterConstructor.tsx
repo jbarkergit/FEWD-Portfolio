@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useRef, useState, useEffect } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 
 const ProductFilterConstructor = (initFilterName: string, filterData: string[] | Set<string>): JSX.Element => {
   //** react-router-dom hooks (must be stored in variable) */
