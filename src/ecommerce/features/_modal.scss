@@ -1,5 +1,5 @@
-@use '../../scss/ecommerceStyles' as m;
-@use '../../../sass/functions' as f;
+@use '/src/ecommerce/scss/ecommerceStyles' as m;
+@use '/src/sass/functions' as f;
 
 .modalWrapper {
   position: fixed;

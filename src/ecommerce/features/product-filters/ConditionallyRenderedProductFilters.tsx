@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { useUniqueData } from '../../../hooks/useUniqueData';
+import { useUniqueData } from '../../hooks/useUniqueData';
 import ProductFilterConstructor from './ProductFilterConstructor';
 
 const ConditionallyRenderedProductFilters = () => {

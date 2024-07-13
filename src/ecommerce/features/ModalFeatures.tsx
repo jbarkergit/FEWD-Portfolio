@@ -3,7 +3,7 @@ import ShoppingCart from './shopping-cart/ShoppingCart';
 import UserAccountActive from './user-account/UserAccountActive';
 import UserLoginModal from './user-account/UserLoginModal';
 import UserAccountRegistry from './user-account/UserAccountRegistry';
-import MobileMenu from '../navigation/header/mobile/MobileMenu';
+import MobileMenu from '../components/navigation/header/mobile/MobileMenu';
 
 type ModalFeatureType = {
   uiModal: string;

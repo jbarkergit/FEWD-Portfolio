@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { useCart } from '../../../hooks/useCart';
+import { useCart } from '../../hooks/useCart';
 import CartProduct from './CartProduct';
 import EmptyCart from './EmptyCart';
 
