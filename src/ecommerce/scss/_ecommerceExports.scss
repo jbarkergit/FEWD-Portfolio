@@ -1,36 +1,27 @@
-//Mixins, Global Vars
+// Mixins, Global Vars
 @forward '../scss/ecommerceStyles';
 
-//Skeletons
+// Skeletons
 @forward '../../ecommerce/skeletons/skeletonDefaults';
 
-//Header
+// Header && Footer
 @forward '../../ecommerce/components/navigation/header/ecoHeader';
 @forward '../../ecommerce/components/navigation/header/mobile/mobileMenu';
-
-//Footer
 @forward '../../ecommerce/components/navigation/footer/ecoFooter';
 
-//Home
+// Home
 @forward '../../ecommerce/components/home/carousel';
 @forward '../../ecommerce/components/home/infographic';
-
 @forward '../../ecommerce/components/home/productHighlight';
 @forward '../../ecommerce/components/home/sideBySide';
 
-//Product
+// Product
 @forward '../../ecommerce/components/product/product-provider/productProvider';
 @forward '../../ecommerce/components/product/product-page/productPages';
 @forward '../../ecommerce/components/product/product-recommenders/productRecommenders.scss';
 
-//Feature: Product Filters
-@forward '../../ecommerce/components/features/product-filters/productFilters';
-
-//Feature: Search Bar
-@forward '../../ecommerce/components/features/search-bar/searchBar';
-
-//Feature: Shopping Cart
-@forward '../../ecommerce/components/features/shopping-cart/shoppingCartModal';
-
-/* Shared Feature: Modals */
-@forward '../../ecommerce/components/features/modal';
+// Features
+@forward '../../ecommerce/features/product-filters/productFilters';
+@forward '../../ecommerce/features/search-bar/searchBar';
+@forward '../../ecommerce/features/shopping-cart/shoppingCartModal';
+@forward '../../ecommerce/features/modal';
