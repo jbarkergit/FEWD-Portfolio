@@ -10,27 +10,26 @@ const ProductHighlight = (): JSX.Element => {
   const pictureRef = (element: HTMLPictureElement) => (element && !pictureArrayRef.current.includes(element) ? pictureArrayRef.current.push(element) : null);
 
   //Play video on user pointer hover
+  const userPointerOver = (e: PointerEvent): void => {
+    const asideTarget = (e.currentTarget as HTMLPictureElement).parentElement!.nextSibling as HTMLElement;
+    (asideTarget.children[0] as HTMLVideoElement).play();
+  };
+
+  //Pause and restart video on user pointer leave
+  const userPointerLeave = (e: PointerEvent): void => {
+    const asideTarget = (e.currentTarget as HTMLPictureElement).parentElement!.nextSibling as HTMLElement;
+    const videoTarget = asideTarget.children[0] as HTMLVideoElement;
+    videoTarget.pause();
+    videoTarget.currentTime = 0;
+  };
+
+  // Event listeners
   useEffect(() => {
-    const userPointerOver = (e: PointerEvent): void => {
-      const asideTarget = (e.currentTarget as HTMLPictureElement).parentElement!.nextSibling as HTMLElement;
-      (asideTarget.children[0] as HTMLVideoElement).play();
-    };
-
-    //Pause and restart video on user pointer leave
-    const userPointerLeave = (e: PointerEvent): void => {
-      const asideTarget = (e.currentTarget as HTMLPictureElement).parentElement!.nextSibling as HTMLElement;
-      const videoTarget = asideTarget.children[0] as HTMLVideoElement;
-      videoTarget.pause();
-      videoTarget.currentTime = 0;
-    };
-
-    //Mount
     pictureArrayRef.current?.forEach((ref) => {
       ref.addEventListener('pointerover', userPointerOver);
       ref.addEventListener('pointerleave', userPointerLeave);
     });
 
-    //Unmount
     return () => {
       pictureArrayRef.current?.forEach((ref) => {
         ref.removeEventListener('pointerover', userPointerOver);
@@ -51,7 +50,7 @@ const ProductHighlight = (): JSX.Element => {
           .filter((product: ProductType) => product.productshowcase === true)
           .map((product: ProductType) => (
             <li key={uuidv4()}>
-              <Link to={`/ecommerce/product/${product.sku}`} onClick={() => window.scrollTo({ top: 0 })} tabIndex={0}>
+              <Link to={`/ecommerce/product/${product.sku}`} tabIndex={0}>
                 <article>
                   <figure>
                     <picture ref={pictureRef}>
