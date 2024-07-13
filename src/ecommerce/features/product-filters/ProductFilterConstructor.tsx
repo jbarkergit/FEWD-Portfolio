@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 const ProductFilterConstructor = (initFilterName: string, filterData: string[] | Set<string>): JSX.Element => {
   //** react-router-dom hooks (must be stored in variable) */
@@ -58,7 +59,7 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
       </div>
       <ul className='productFilter__accordion' data-status='false' ref={accordionRef}>
         {useFilterData().map((data: string) => (
-          <li className='productFilter__accordion__listItem' key={data}>
+          <li className='productFilter__accordion__listItem' key={uuidv4()}>
             <label className='productFilter__accordion__listItem--label' htmlFor={data}>
               {data}
             </label>
