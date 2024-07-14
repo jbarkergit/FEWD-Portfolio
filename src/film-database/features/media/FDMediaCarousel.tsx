@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Type_PropDrill = {
   carouselComponents: JSX.Element[];
@@ -55,14 +55,11 @@ const FDMediaCarousel = ({ carouselComponents }: Type_PropDrill) => {
   };
 
   useEffect(() => {
-    window.addEventListener('wheel', (event) => {
-      event.preventDefault();
-      deltaScrollCarousels(event.deltaY);
-    });
-
+    window.addEventListener('wheel', (event) => deltaScrollCarousels(event.deltaY));
     return () => window.removeEventListener('wheel', (event) => deltaScrollCarousels(event.deltaY));
   }, [fdMediaRef.current]);
 
+  /** Component */
   return (
     <main className='fdMedia' ref={fdMediaRef}>
       {...carouselComponents}
