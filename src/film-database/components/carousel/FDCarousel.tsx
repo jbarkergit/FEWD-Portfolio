@@ -8,6 +8,7 @@ import FDCarouselButton from '../../components/carousel/FDCarouselButton';
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/google-material-symbols/carouselSymbols';
 
 type Type_FilmDatabase_Props = {
+  mapIndex: number;
   route: string | undefined;
   dataKey: string;
   mapValue: Type_Tmdb_Api_Union[][];
@@ -15,7 +16,7 @@ type Type_FilmDatabase_Props = {
   setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>>;
 };
 
-const FDCarousel = ({ route, dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }: Type_FilmDatabase_Props) => {
+const FDCarousel = ({ mapIndex, route, dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }: Type_FilmDatabase_Props) => {
   /** Track carousel navigation index */
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
@@ -90,7 +91,21 @@ const FDCarousel = ({ route, dataKey, mapValue, maxVisibleCarouselNodes, setHero
   const formattedDataKey: string = dataKey.replaceAll('_', ' ');
 
   return (
-    <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`} data-index-tracker='active'>
+    <section
+      className='fdMedia__carousel'
+      aria-label={`${formattedDataKey} Section`}
+      data-anim={() => {
+        switch (mapIndex) {
+          case 0:
+            return 'active';
+
+          case 1:
+            return 'after';
+
+          default:
+            return 'disabled-after';
+        }
+      }}>
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' data-layout={'carousel'} ref={carouselRef}>
