@@ -30,6 +30,7 @@
       opacity: 0;
       // carousel height + ul gap + header padding-bottom + header font size
       transform: translateY(calc((var(--fd-carousel-node-height) + var(--fd-gap) * 2 + var(--fd-font-size-xl)) * -1));
+      pointer-events: none;
     }
     &[data-anim='after'] {
       opacity: 1;
