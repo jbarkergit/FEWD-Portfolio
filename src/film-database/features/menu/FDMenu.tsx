@@ -1,4 +1,4 @@
-import { RefObject, useRef, useState } from 'react';
+import { RefObject, useRef } from 'react';
 
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 
@@ -8,9 +8,15 @@ import FDMenuToolbar from '../../components/menu/FDMenuToolbar';
 import FDMenuGenres from '../../components/menu/FDMenuGenres';
 import FDMenuSearchBar from '../../components/menu/FDMenuSearchBar';
 
-const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | undefined>> }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
+const FDMenu = ({
+  isMenuOpen,
+  setIsMenuOpen,
+  setRoute,
+}: {
+  isMenuOpen: boolean;
+  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | undefined>>;
+}) => {
   /** Toggle menus */
   const menuRef = useRef<HTMLDivElement>(null);
   const menuSearchRef = useRef<HTMLElement>(null);

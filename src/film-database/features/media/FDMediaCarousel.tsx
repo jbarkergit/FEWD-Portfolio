@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 
 type Type_PropDrill = {
   carouselComponents: JSX.Element[];
+  isMenuOpen: boolean;
 };
 
-const FDMediaCarousel = ({ carouselComponents }: Type_PropDrill) => {
+const FDMediaCarousel = ({ carouselComponents, isMenuOpen }: Type_PropDrill) => {
   /** Carousel DeltaY scroll logic */
   const dataAttr: string = 'data-anim';
   const fdMediaRef = useRef<HTMLElement>(null);
@@ -54,10 +55,13 @@ const FDMediaCarousel = ({ carouselComponents }: Type_PropDrill) => {
     }
   };
 
+  const handleWheel = (event: WheelEvent) => deltaScrollCarousels(event.deltaY);
+
   useEffect(() => {
-    window.addEventListener('wheel', (event) => deltaScrollCarousels(event.deltaY));
-    return () => window.removeEventListener('wheel', (event) => deltaScrollCarousels(event.deltaY));
-  }, [fdMediaRef.current]);
+    if (isMenuOpen) window.removeEventListener('wheel', handleWheel);
+    else window.addEventListener('wheel', handleWheel);
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [isMenuOpen]);
 
   /** Component */
   return (

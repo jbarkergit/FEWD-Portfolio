@@ -168,13 +168,16 @@ const FilmDatabase = () => {
     return () => window.removeEventListener('resize', getDataLayout);
   }, []);
 
+  /** Menu */
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
   /** Component */
   return (
     <div className='filmDatabase' data-layout-carousel={layoutAttr}>
-      <FDMenu setRoute={setRoute} />
+      <FDMenu setRoute={setRoute} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
-      <FDMediaCarousel carouselComponents={carouselComponents} />
+      <FDMediaCarousel carouselComponents={carouselComponents} isMenuOpen={isMenuOpen} />
     </div>
   );
 };
