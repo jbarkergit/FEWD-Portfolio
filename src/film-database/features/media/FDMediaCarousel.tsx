@@ -61,7 +61,7 @@ const FDMediaCarousel = ({ carouselComponents, isMenuOpen }: Type_PropDrill) => 
     if (isMenuOpen) window.removeEventListener('wheel', handleWheel);
     else window.addEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [isMenuOpen]);
+  }, [fdMediaRef.current, isMenuOpen]);
 
   /** Component */
   return (
