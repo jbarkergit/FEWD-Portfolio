@@ -6,7 +6,7 @@ type Type_PropDrill = {
 
 const FDMediaCarousel = ({ carouselComponents }: Type_PropDrill) => {
   /** Carousel DeltaY scroll logic */
-  const dataIndexTracker: string = 'data-index-tracker';
+  const dataAttr: string = 'data-anim';
   const fdMediaRef = useRef<HTMLElement>(null);
   const carouselNodes: HTMLCollection | undefined = fdMediaRef.current?.children;
 
@@ -21,22 +21,36 @@ const FDMediaCarousel = ({ carouselComponents }: Type_PropDrill) => {
     const carouselNodesArr: Element[] = [...carouselNodes];
 
     // Gather indexes
-    const activeNodeIndex: number = [...fdMediaRef.current.children].findIndex((node: Element) => node.getAttribute(dataIndexTracker) === 'active');
+    const activeNodeIndex: number = [...fdMediaRef.current.children].findIndex((node: Element) => node.getAttribute(dataAttr) === 'active');
     const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + deltaIndex, carouselNodesArr.length - 1));
 
     if (activeNodeIndex !== nextActiveNodeIndex) {
-      // Handle attributes
-      if (nextActiveNodeIndex > activeNodeIndex) {
-        carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
-      }
+      const activeNode: Element = carouselNodesArr[activeNodeIndex];
+      const nextActiveNode: Element = carouselNodesArr[nextActiveNodeIndex];
+      const postActiveNode: Element = carouselNodesArr[nextActiveNodeIndex + 1];
 
-      carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
+      // Attr data-anim 'disabled-after'
+      carouselNodesArr.forEach((node, index) => {
+        const nodeAttr: string | null = node.getAttribute(dataAttr);
+
+        activeNode.setAttribute(dataAttr, deltaIndex === 1 ? 'before' : 'after');
+
+        if (index === nextActiveNodeIndex) nextActiveNode.setAttribute(dataAttr, 'active');
+
+        if (index === nextActiveNodeIndex + 1) {
+          const attribute: string | null = postActiveNode.getAttribute(dataAttr);
+          if (attribute === 'disabled-after') postActiveNode.setAttribute(dataAttr, 'after');
+        }
+
+        if (index !== activeNodeIndex && index !== nextActiveNodeIndex && nodeAttr === 'after' && index > nextActiveNodeIndex)
+          node.setAttribute(dataAttr, 'disabled-after');
+      });
 
       // Get scroll position
-      const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
+      // const nextActiveNodeOffsetTop: number = (nextActiveNode as HTMLElement).offsetTop;
 
       // Scroll
-      fdMediaRef.current.scrollTo({ top: nextActiveNodeOffsetTop, behavior: 'smooth' });
+      // fdMediaRef.current.scrollTo({ top: nextActiveNodeOffsetTop, behavior: 'smooth' });
     }
   };
 
