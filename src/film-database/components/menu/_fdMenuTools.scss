@@ -63,6 +63,8 @@
   padding: 0;
   mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
   &__container {
+    display: flex;
+    align-items: center;
     width: max-content;
     height: 100svh;
     overflow-y: scroll;
