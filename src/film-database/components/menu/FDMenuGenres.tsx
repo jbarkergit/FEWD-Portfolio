@@ -4,13 +4,11 @@ import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
 import { forwardRef, RefObject, useRef } from 'react';
 
 type Type_PropDrill = {
-  isMenuOpen: boolean;
   toggleMenus: (refParam: RefObject<HTMLElement> | undefined) => void;
   setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | undefined>>;
-  menuSearchReference: HTMLElement | null;
 };
 
-const FDMenuGenres = forwardRef<HTMLElement, Type_PropDrill>(({ isMenuOpen, toggleMenus, setRoute, menuSearchReference }, menuGenresRef) => {
+const FDMenuGenres = forwardRef<HTMLElement, Type_PropDrill>(({ toggleMenus, setRoute }, menuGenresRef) => {
   /** Add genres to visibleGenres on scroll */
   const ulRef = useRef<HTMLUListElement>(null);
 

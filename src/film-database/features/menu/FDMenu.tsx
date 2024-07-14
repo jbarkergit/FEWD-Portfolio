@@ -42,7 +42,7 @@ const FDMenu = ({ setRoute }: { setRoute: React.Dispatch<React.SetStateAction<Ty
 
       <div className='fdMenu__menu'>
         <FDMenuSearchBar ref={menuSearchRef} />
-        <FDMenuGenres isMenuOpen={isMenuOpen} toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} menuSearchReference={menuSearchRef.current} />
+        <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
       </div>
     </div>
   );
