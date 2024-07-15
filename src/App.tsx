@@ -115,7 +115,7 @@ function App() {
     } else if (userLocationPathname.startsWith('/ecommerce')) {
       return <ProductDetailPageSkeleton />;
     } else {
-      return <div id='defaultSuspense' style={{ height: '100vh', width: '100%', backgroundColor: 'hsl(0, 0%, 10%)' }} />;
+      return <ProtocolErrorHandler />;
     }
   };
 
