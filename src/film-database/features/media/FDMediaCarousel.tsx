@@ -36,7 +36,8 @@ const FDMediaCarousel = ({ carouselComponents, isMenuOpen }: Type_PropDrill) => 
       const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
 
       // Scroll
-      fdMediaRef.current.scrollTo({ top: nextActiveNodeOffsetTop, behavior: 'smooth' });
+      // fdMediaRef.current.scrollTo({ top: nextActiveNodeOffsetTop, behavior: 'smooth' });
+      fdMediaRef.current.style.top = `${nextActiveNodeOffsetTop * -1}px`;
     }
   };
 
