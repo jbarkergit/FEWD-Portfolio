@@ -16,7 +16,6 @@
     @include m.homeSectionAfter;
   }
   & > * {
-    flex: 0 1 calc(100% / 3);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -24,6 +23,15 @@
     border-bottom-right-radius: var(--ec-border-radius);
     border-bottom-left-radius: var(--ec-border-radius);
     overflow: clip;
+    &:nth-child(1) {
+      flex: 0 1 30%;
+    }
+    &:nth-child(2) {
+      flex: 0 1 40%;
+    }
+    &:nth-child(3) {
+      flex: 0 1 30%;
+    }
     @media (width <= 1300px) {
       flex: 0 1 50%;
     }
