@@ -32,7 +32,7 @@ const FDMenuToolbar = ({
               aria-label={`Select ${obj.key}`}
               onClick={() => {
                 toggleMenus(obj.ref);
-                obj.key === 'Home' ? setRoute(undefined) : null;
+                obj.key === 'Home' ? setRoute('home') : null;
               }}>
               <span className='fdMenu__toolbar__ul__li--button--icon'>{obj.icon}</span>
               {/* <span className='fdMenu__toolbar__ul__li--button--key'>{obj.key}</span> */}
