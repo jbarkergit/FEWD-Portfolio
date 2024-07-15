@@ -17,10 +17,27 @@ import FDCarousel from '../components/carousel/FDCarousel';
 
 const FilmDatabase = () => {
   // Spa navigation state
-  const [route, setRoute] = useState<'home' | 'userAccount' | Type_MovieGenre_Keys | undefined>(undefined);
+  const [route, setRoute] = useState<'home' | 'userAccount' | Type_MovieGenre_Keys>('userAccount');
 
   // Cross-origin safety layer
   const useLocationPathname = useLocation().pathname;
+
+  // User location pathname based routing
+  useEffect(() => {
+    switch (useLocationPathname) {
+      case '/film-database':
+        setRoute('userAccount');
+        break;
+
+      case '/film-database/home':
+        setRoute('home');
+        break;
+
+      default:
+        setRoute('userAccount');
+        break;
+    }
+  }, [useLocationPathname]);
 
   /** Assign fetch data based on state route */
   const gatherDataByRoute = () => {
