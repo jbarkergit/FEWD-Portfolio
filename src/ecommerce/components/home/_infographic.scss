@@ -4,13 +4,13 @@
 .infographic {
   position: relative;
   display: flex;
-  gap: var(--ecoGap);
+  gap: var(--ec-gap);
   height: calc(100svh - 11rem);
-  padding: 0 var(--sectionXPadding) calc(f.rem(32) + var(--sectionYPadding)) var(--sectionXPadding);
+  padding: 0 var(--ec-section-x-padding) calc(f.rem(32) + var(--ec-section-y-padding)) var(--ec-section-x-padding);
   @media (width <= 650px) {
     height: auto;
     min-height: 520px;
-    padding: 0 var(--sectionXPadding) var(--sectionYPadding) var(--sectionXPadding);
+    padding: 0 var(--ec-section-x-padding) var(--ec-section-y-padding) var(--ec-section-x-padding);
   }
   &:after {
     @include m.homeSectionAfter;
@@ -20,16 +20,16 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: var(--ecoGap);
-    border-bottom-right-radius: var(--ecoBorderRadius);
-    border-bottom-left-radius: var(--ecoBorderRadius);
+    gap: var(--ec-gap);
+    border-bottom-right-radius: var(--ec-border-radius);
+    border-bottom-left-radius: var(--ec-border-radius);
     overflow: clip;
     @media (width <= 1300px) {
       flex: 0 1 50%;
     }
   }
   & figure {
-    border-radius: var(--ecoBorderRadius);
+    border-radius: var(--ec-border-radius);
     overflow: clip;
     & picture,
     picture img {
@@ -50,7 +50,7 @@
     }
   }
   @media (width <= 650px) {
-    border-radius: var(--ecoBorderRadius);
+    border-radius: var(--ec-border-radius);
     overflow: clip;
   }
   &__article {

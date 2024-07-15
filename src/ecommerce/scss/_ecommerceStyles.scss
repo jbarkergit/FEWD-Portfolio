@@ -22,26 +22,23 @@
 }
 
 :root {
-  --fontPrimary: hsl(0, 0%, 20%);
-  --fontSecondary: hsl(0, 0%, 100%);
-  --fontSecondaryOffset: hsl(0, 7%, 76%);
+  --ec-font-accent: #ff5900;
+  --ec-font-primary: hsl(0, 0%, 20%);
+  --ec-font-secondary: hsl(0, 0%, 100%);
 
-  --elemBackgroundPrimary: hsl(0, 0%, 100%);
-  --elemBackgroundSecondary: hsl(0, 0%, 20%);
-  --elemBackgroundPrimaryOffset: hsl(0, 0%, 91%);
-  --gradientMono: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(0, 0%, 94%));
+  --ec-background-primary: hsl(0, 0%, 100%);
+  --ec-background-secondary: hsl(0, 0%, 20%);
+  --ec-background-primaryOffset: hsl(0, 0%, 91%);
+  --ec-background-gradientMono: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(0, 0%, 94%));
 
-  --ecoFontAccent: #ff5900;
+  --ec-shadow-refined: -2px -3px 3px hsl(0, 0%, 100%), 2px 3px 3px hsl(0, 0%, 65%);
+  --ec-shadow-soft: 0.3rem 0.3rem 0.6rem hsl(0, 0%, 80.8%), -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%);
 
-  --ecoBtnShadow: -2px -3px 1px hsla(0, 0%, 100%, 0.4), 2px 3px 4px hsl(0, 0%, 78%);
-  --shadowRefined: -2px -3px 3px hsl(0, 0%, 100%), 2px 3px 3px hsl(0, 0%, 65%);
-  --shadowSoft: 0.3rem 0.3rem 0.6rem hsl(0, 0%, 80.8%), -0.2rem -0.2rem 0.5rem hsl(0, 0%, 100%);
-  --borderChunky: 0.13rem solid hsl(0, 0%, 94%);
-
-  --ecoGap: 2.25rem;
-  --sectionYPadding: 4.375rem;
-  --sectionXPadding: 8.335%;
-  --ecoBorderRadius: 1.5rem;
+  --ec-gap: 2.25rem;
+  --ec-section-x-padding: 8.335%;
+  --ec-section-y-padding: 4.375rem;
+  --ec-border-chunky: 0.13rem solid hsl(0, 0%, 94%);
+  --ec-border-radius: 1.5rem;
 }
 
 #ecommerce {
@@ -56,7 +53,7 @@
 }
 
 .highlight {
-  color: var(--ecoFontAccent);
+  color: var(--ec-font-accent);
 }
 
 @mixin ecoSectionHeader {
@@ -73,7 +70,7 @@
   gap: f.rem(3);
   max-height: f.rem(45);
   padding: f.rem(10) f.rem(14);
-  border-radius: calc(var(--ecoBorderRadius) / 4);
+  border-radius: calc(var(--ec-border-radius) / 4);
   cursor: pointer;
   font-size: f.rem(12);
   font-weight: 600;
@@ -82,12 +79,12 @@
   white-space: nowrap;
 }
 @mixin ecoBtnDark {
-  background-color: var(--elemBackgroundSecondary);
-  color: var(--fontSecondary);
+  background-color: var(--ec-background-secondary);
+  color: var(--ec-font-secondary);
 }
 @mixin ecoBtnLight {
-  background-color: var(--elemBackgroundPrimary);
-  color: var(--fontPrimary);
+  background-color: var(--ec-background-primary);
+  color: var(--ec-font-primary);
 }
 
 @mixin productPhoto {
@@ -143,5 +140,5 @@
   height: 2rem;
   border-top-right-radius: 4rem;
   border-top-left-radius: 4rem;
-  background-color: var(--elemBackgroundPrimaryOffset);
+  background-color: var(--ec-background-primaryOffset);
 }

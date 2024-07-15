@@ -9,8 +9,8 @@
   max-width: f.rem(260);
   height: f.rem(38);
   z-index: 6;
-  border-radius: calc(var(--ecoBorderRadius) / 4);
-  box-shadow: var(--shadowRefined);
+  border-radius: calc(var(--ec-border-radius) / 4);
+  box-shadow: var(--ec-shadow-refined);
   @include m.ecoBtnLight;
   &__label {
     display: none;
@@ -54,7 +54,7 @@
     padding-top: f.rem(6);
     border-bottom-right-radius: f.rem(6);
     border-bottom-left-radius: f.rem(6);
-    background-color: var(--elemBackgroundPrimary);
+    background-color: var(--ec-background-primary);
     &__ul {
       display: flex;
       flex-direction: column;
@@ -68,7 +68,7 @@
         justify-content: center;
         width: 100%;
         height: 100%;
-        border-radius: calc(var(--ecoBorderRadius) / 4);
+        border-radius: calc(var(--ec-border-radius) / 4);
         cursor: pointer;
         &:hover {
           background: hsl(0, 0%, 92%);

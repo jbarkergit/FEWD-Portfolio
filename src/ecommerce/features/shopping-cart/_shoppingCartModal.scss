@@ -58,14 +58,14 @@
         display: flex;
         gap: f.rem(6);
         width: fit-content;
-        border-radius: calc(var(--ecoBorderRadius) / 4);
+        border-radius: calc(var(--ec-border-radius) / 4);
         @include m.ecoBtnDark;
         & button,
         & span {
           display: grid;
           place-items: center;
           padding: f.rem(6) f.rem(12);
-          color: var(--fontSecondary);
+          color: var(--ec-font-secondary);
         }
         & button {
           &:nth-of-type(1) {

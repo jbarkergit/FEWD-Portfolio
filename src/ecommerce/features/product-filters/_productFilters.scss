@@ -9,12 +9,12 @@
   padding: 0 0 f.rem(50) 0;
   @media (width <= 1370px) {
     flex-direction: column;
-    gap: var(--ecoGap);
+    gap: var(--ec-gap);
   }
   &__panel {
     display: flex;
     flex: 1 1 auto;
-    gap: var(--ecoGap);
+    gap: var(--ec-gap);
     height: fit-content;
     @media (width <= 870px) {
       flex-direction: column;
@@ -65,7 +65,7 @@
     padding: f.rem(6) 0.5em 0.6em 0.5em;
     border-bottom-right-radius: f.rem(6);
     border-bottom-left-radius: f.rem(6);
-    background-color: var(--elemBackgroundSecondary);
+    background-color: var(--ec-background-secondary);
     transform: translateX(-50%);
     &[data-status='active'] {
       display: table;
@@ -82,7 +82,7 @@
         height: 100%;
         padding: 1em 0.8em;
         border-radius: 0.5em;
-        color: var(--fontSecondary);
+        color: var(--ec-font-secondary);
         font-size: f.rem(16);
         text-transform: capitalize;
         text-align: start;

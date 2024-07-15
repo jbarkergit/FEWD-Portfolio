@@ -19,7 +19,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
-    gap: var(--ecoGap);
+    gap: var(--ec-gap);
     max-width: f.rem(1600);
     @media (width <= 1380px) {
       grid-template-columns: repeat(3, 1fr);
@@ -36,7 +36,7 @@
       display: flex;
       justify-content: center;
       aspect-ratio: 0.8/1;
-      border-radius: var(--ecoBorderRadius);
+      border-radius: var(--ec-border-radius);
       overflow: hidden;
       box-shadow:
         -1px -1px 20px 0px #ffffff,
@@ -50,14 +50,14 @@
         display: flex;
         align-items: flex-end;
         z-index: 3;
-        border-radius: var(--ecoBorderRadius);
+        border-radius: var(--ec-border-radius);
         @include m.productPhoto;
         &::before {
           content: '';
           position: absolute;
           inset: 0;
-          border-radius: var(--ecoBorderRadius);
-          background-color: var(--gradientMono);
+          border-radius: var(--ec-border-radius);
+          background-color: var(--ec-background-gradientMono);
           opacity: 0.8;
         }
         & img {

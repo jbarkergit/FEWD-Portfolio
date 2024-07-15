@@ -4,7 +4,7 @@
 .productHighlight {
   display: grid;
   place-items: center;
-  padding: calc(var(--sectionYPadding) + f.rem(32)) var(--sectionXPadding) calc(var(--sectionYPadding) + f.rem(32)) var(--sectionXPadding);
+  padding: calc(var(--ec-section-y-padding) + f.rem(32)) var(--ec-section-x-padding) calc(var(--ec-section-y-padding) + f.rem(32)) var(--ec-section-x-padding);
   @media (width <= 530px) {
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    padding-bottom: calc(var(--sectionYPadding) / 2);
+    padding-bottom: calc(var(--ec-section-y-padding) / 2);
     @include m.ecoSectionHeader;
     @media (width <= 416px) {
       padding: f.rem(25) 0;
@@ -25,9 +25,9 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
-    gap: var(--ecoGap);
+    gap: var(--ec-gap);
     max-width: f.rem(1600);
-    padding-bottom: var(--sectionYPadding);
+    padding-bottom: var(--ec-section-y-padding);
     @media (width <= 1265px) {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -42,7 +42,7 @@
       position: relative;
       flex: 0 0 calc(1600 / 4 - 100);
       aspect-ratio: 0.8/1;
-      border-radius: var(--ecoBorderRadius);
+      border-radius: var(--ec-border-radius);
       overflow: hidden;
       box-shadow:
         -1px -1px 20px 0px #ececec,
@@ -102,15 +102,15 @@
           display: flex;
           align-items: flex-end;
           z-index: 3;
-          border-radius: var(--ecoBorderRadius);
+          border-radius: var(--ec-border-radius);
           @include m.productPhoto;
           pointer-events: all;
           &::before {
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: var(--ecoBorderRadius);
-            background-color: var(--gradientMono);
+            border-radius: var(--ec-border-radius);
+            background-color: var(--ec-background-gradientMono);
             opacity: 0.8;
           }
           &:hover {
@@ -135,7 +135,7 @@
         & video {
           aspect-ratio: inherit;
           border: 2px solid white;
-          border-radius: var(--ecoBorderRadius);
+          border-radius: var(--ec-border-radius);
           object-fit: cover;
           filter: brightness(0) invert(1) blur(4px);
         }

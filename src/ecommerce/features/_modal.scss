@@ -31,9 +31,9 @@
   height: 80svh;
   z-index: 13;
   padding: f.rem(50);
-  border-radius: var(--ecoBorderRadius);
+  border-radius: var(--ec-border-radius);
   margin: 0 8.335%;
-  background: var(--gradientMono);
+  background: var(--ec-background-gradientMono);
   overflow-y: auto;
   scrollbar-width: none;
   transform: translateX(50%);
@@ -70,10 +70,10 @@
   width: 100%;
   overflow: hidden;
   & > * {
-    padding-bottom: var(--ecoGap);
+    padding-bottom: var(--ec-gap);
   }
   & legend {
-    padding-bottom: calc(var(--ecoGap) / 2);
+    padding-bottom: calc(var(--ec-gap) / 2);
     & h2 {
       width: 100%;
       font-size: clamp(f.rem(18), f.rem(22) + 1vw, f.rem(28));
@@ -87,16 +87,16 @@
   & fieldset {
     display: grid;
     place-items: center;
-    gap: calc(var(--ecoGap) / 2.5);
-    padding-bottom: calc(var(--ecoGap) / 1.5);
+    gap: calc(var(--ec-gap) / 2.5);
+    padding-bottom: calc(var(--ec-gap) / 1.5);
     width: 100%;
     cursor: default;
     & label {
       position: relative;
       width: 90%;
       height: auto;
-      border-radius: calc(var(--ecoBorderRadius) / 4);
-      background: var(--elemBackgroundPrimary);
+      border-radius: calc(var(--ec-border-radius) / 4);
+      background: var(--ec-background-primary);
       outline: 1px solid hsl(0, 0%, 86%);
       & input {
         width: 100%;
@@ -126,9 +126,9 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: calc(var(--ecoGap) / 4);
+    gap: calc(var(--ec-gap) / 4);
     width: 90%;
-    padding-bottom: var(--ecoGap);
+    padding-bottom: var(--ec-gap);
     & button {
       @include m.ecoBtn;
       @include m.ecoBtnDark;
@@ -160,7 +160,7 @@
       max-width: 30ch;
       font-size: f.rem(16);
       line-height: f.rem(18);
-      color: var(--fontPrimary);
+      color: var(--ec-font-primary);
     }
   }
 }
