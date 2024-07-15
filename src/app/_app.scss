@@ -1,39 +1,25 @@
-@use '/src/sass/functions' as f;
-
-.notfound {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.protocolError {
   width: 100%;
   height: 100svh;
-  background-color: hsl(0, 0%, 95%);
-  &__container {
-    max-width: 45ch;
-    & h1 {
-      min-height: f.rem(50);
-      font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__article {
+    display: table;
+    text-align: center;
+    &--h1 {
+      padding-bottom: 8px;
+      white-space: nowrap;
+      text-transform: uppercase;
     }
-    & p {
-      font-weight: 400;
-      max-width: 45ch;
+    &--h2 {
+      padding-bottom: 10px;
     }
-  }
-}
-
-.networkVisualizer {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto repeat(1fr);
-  width: 100svw;
-  height: 100svh;
-  padding-left: 25svw;
-  background-color: hsl(240, 4%, 9%);
-  color: hsl(0, 0%, 96%);
-  overflow-x: clip;
-  overflow-y: scroll;
-  & div {
-    display: flex;
-    gap: 30px;
+    &--p {
+      max-width: 60ch;
+    }
+    &--a {
+      color: #ffca65;
+    }
   }
 }
