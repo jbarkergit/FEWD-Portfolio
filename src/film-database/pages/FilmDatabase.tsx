@@ -14,6 +14,7 @@ import FDiFrame from '../features/iframe/FDiFrame';
 import FDMenu from '../features/menu/FDMenu';
 import FDMediaCarousel from '../features/media/FDMediaCarousel';
 import FDCarousel from '../components/carousel/FDCarousel';
+import FDUserAccount from '../features/user-account/FDUserAccount';
 
 const FilmDatabase = () => {
   // Spa navigation state
@@ -197,14 +198,18 @@ const FilmDatabase = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   /** Component */
-  return (
-    <div className='filmDatabase' data-layout-carousel={layoutAttr}>
-      <FDMenu setRoute={setRoute} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-      <FDDetails heroData={heroData} />
-      <FDiFrame heroData={heroData} />
-      <FDMediaCarousel carouselComponents={carouselComponents} isMenuOpen={isMenuOpen} />
-    </div>
-  );
+  if (route !== 'userAccount') {
+    return (
+      <div className='filmDatabase' data-layout-carousel={layoutAttr}>
+        <FDMenu setRoute={setRoute} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+        <FDDetails heroData={heroData} />
+        <FDiFrame heroData={heroData} />
+        <FDMediaCarousel carouselComponents={carouselComponents} isMenuOpen={isMenuOpen} />
+      </div>
+    );
+  } else {
+    return <FDUserAccount />;
+  }
 };
 
 export default FilmDatabase;
