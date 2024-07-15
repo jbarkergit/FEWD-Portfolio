@@ -40,7 +40,10 @@ function App() {
       },
       { path: '/ecommerce/product/:paramId', dir: './ecommerce/pages/ProductDetailPage' },
     ],
-    filmDatabase: { path: '/film-database', dir: './film-database/pages/FilmDatabase' },
+    filmDatabase: [
+      { path: '/film-database/home', dir: './film-database/pages/FilmDatabase' },
+      { path: '/film-database', dir: './film-database/pages/FDUserAccount' },
+    ],
   };
 
   /** Component storage */
@@ -75,7 +78,7 @@ function App() {
     switch (userLocationPathname) {
       // Prioritize landing pages on portfolio mount
       case '/':
-        const landingPageRoutes: Type_createRoute_Param[] = [appRoutes.portfolio, appRoutes.filmDatabase, appRoutes.ecommerce[0] as Type_createRoute_Param];
+        const landingPageRoutes: Type_createRoute_Param[] = [appRoutes.portfolio, appRoutes.filmDatabase[0], appRoutes.ecommerce[0] as Type_createRoute_Param];
         landingPageRoutes.forEach((route) => createRoute(route));
         break;
 
@@ -150,6 +153,7 @@ function App() {
         ))}
 
         <Route path='/film-database' element={getElementByPath('/film-database')} />
+        <Route path='/film-database/home' element={getElementByPath('/film-database/home')} />
       </Routes>
     </Suspense>
   );
