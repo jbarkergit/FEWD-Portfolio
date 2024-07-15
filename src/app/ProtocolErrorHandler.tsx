@@ -1,19 +1,17 @@
 const ProtocolErrorHandler = () => {
   return (
-    <main className='notfound'>
-      <div
-        className='notfound__container'
-        aria-label='HTTP 404 The browser was able to communicate with the server; however, the requested page could not be found.'>
-        <h1 className='highlight'>HTTP 404</h1>
-        <p>
+    <main className='protocolError'>
+      <article className='protocolError__article'>
+        <h1 className='protocolError__article--h1'>Status 404</h1>
+        <h2 className='protocolError__article--h2'>The requested page couldn't be found.</h2>
+        <p className='protocolError__article--p'>
           The browser was able to communicate with the server; however, the requested page could not be found. Please return to the{' '}
-          <a href='/' className='notFound--link highlight'>
+          <a className='protocolError__article--a' aria-label='Return to landing page' href='/'>
             landing page
           </a>
           &nbsp;to continue browsing.
         </p>
-        <a href='/' className='notFound--link highlight'></a>
-      </div>
+      </article>
     </main>
   );
 };
