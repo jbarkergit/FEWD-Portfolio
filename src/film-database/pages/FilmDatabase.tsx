@@ -17,7 +17,7 @@ import FDCarousel from '../components/carousel/FDCarousel';
 
 const FilmDatabase = () => {
   // Spa navigation state
-  const [route, setRoute] = useState<Type_MovieGenre_Keys | undefined>(undefined);
+  const [route, setRoute] = useState<'home' | 'userAccount' | Type_MovieGenre_Keys | undefined>(undefined);
 
   // Cross-origin safety layer
   const useLocationPathname = useLocation().pathname;
@@ -28,15 +28,23 @@ const FilmDatabase = () => {
     let keyEndpointPairArr: ReturnType<typeof useTmdbUrlBuilder>[];
 
     // Assign keyEndpointPairArr
-    if (route !== undefined) {
-      keyEndpointPairArr = [useTmdbUrlBuilder('discover', [{ genre: route }])];
-    } else {
-      keyEndpointPairArr = [
-        useTmdbUrlBuilder('now_playing'),
-        useTmdbUrlBuilder('upcoming'),
-        useTmdbUrlBuilder('trending_today'),
-        useTmdbUrlBuilder('trending_this_week'),
-      ];
+    switch (route) {
+      case 'home':
+        keyEndpointPairArr = [
+          useTmdbUrlBuilder('now_playing'),
+          useTmdbUrlBuilder('upcoming'),
+          useTmdbUrlBuilder('trending_today'),
+          useTmdbUrlBuilder('trending_this_week'),
+        ];
+        break;
+
+      case 'userAccount':
+        keyEndpointPairArr = [useTmdbUrlBuilder('discover', [{ genre: 'family' }])];
+        break;
+
+      default:
+        keyEndpointPairArr = [useTmdbUrlBuilder('discover', [{ genre: route }])];
+        break;
     }
 
     fetchDesiredData(keyEndpointPairArr as { key: string; endpoint: string }[]);

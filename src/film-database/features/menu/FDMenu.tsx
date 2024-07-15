@@ -15,7 +15,7 @@ const FDMenu = ({
 }: {
   isMenuOpen: boolean;
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | undefined>>;
+  setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | 'home' | 'userAccount' | undefined>>;
 }) => {
   /** Toggle menus */
   const menuRef = useRef<HTMLDivElement>(null);

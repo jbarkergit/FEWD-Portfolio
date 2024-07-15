@@ -7,7 +7,7 @@ const FDMenuToolbar = ({
   toolbarObjArr,
   toggleMenus,
 }: {
-  setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | undefined>>;
+  setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | 'home' | 'userAccount' | undefined>>;
   toolbarObjArr: (
     | {
         key: string;

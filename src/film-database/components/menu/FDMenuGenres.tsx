@@ -5,7 +5,7 @@ import { forwardRef, RefObject, useEffect, useMemo, useRef, useState } from 'rea
 
 type Type_PropDrill = {
   toggleMenus: (refParam: RefObject<HTMLElement> | undefined) => void;
-  setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | undefined>>;
+  setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | 'home' | 'userAccount' | undefined>>;
 };
 
 const FDMenuGenres = forwardRef<HTMLElement, Type_PropDrill>(({ toggleMenus, setRoute }, menuGenresRef) => {
