@@ -22,6 +22,10 @@
 }
 
 :root {
+  --fontPrimary: hsl(0, 0%, 20%);
+  --fontSecondary: hsl(0, 0%, 100%);
+  --fontSecondaryOffset: hsl(0, 7%, 76%);
+
   --elemBackgroundPrimary: hsl(0, 0%, 100%);
   --elemBackgroundSecondary: hsl(0, 0%, 20%);
   --elemBackgroundPrimaryOffset: hsl(0, 0%, 91%);
@@ -47,6 +51,8 @@
     'PT Sans',
     sans-serif;
   font-size: f.rem(16);
+  color: hsl(0, 0%, 20%);
+  background-color: hsl(0, 0%, 100%);
 }
 
 .highlight {
