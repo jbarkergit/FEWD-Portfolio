@@ -1,12 +1,5 @@
 @use './functions' as f;
 
-/* Custom Properties */
-:root {
-  --fontPrimary: hsl(0, 0%, 20%);
-  --fontSecondary: hsl(0, 0%, 100%);
-  --fontSecondaryOffset: hsl(0, 7%, 76%);
-}
-
 /* Document Selectors */
 html {
   box-sizing: border-box;
@@ -15,12 +8,12 @@ html {
 body {
   padding: 0;
   margin: 0;
-  background-color: hsl(0, 0%, 96%);
+  background-color: hsl(0, 0%, 20%);
   overflow-x: hidden;
   user-select: none; // Disable text highlighting
   cursor: default;
   text-rendering: optimizeSpeed;
-  color: var(--fontPrimary);
+  color: hsl(0, 0%, 100%);
 }
 *,
 *::before,
