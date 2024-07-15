@@ -47,35 +47,33 @@ html {
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-// body {
-// font:
-//   normal normal 500 1.1rem / 1.25em 'Helvetica',
-//   'PT Sans',
-//   sans-serif;
-// letter-spacing: 0.04rem;
-// }
+body {
+  font:
+    normal normal 500 1.1rem / 1.25em 'Helvetica',
+    'PT Sans',
+    sans-serif;
+  letter-spacing: 0.04rem;
+}
 h1 {
-  font-size: clamp(f.rem(24), f.rem(34) + 1vw, f.rem(36));
+  font-size: clamp(1.5rem, 2.5vw, 1.875rem);
   font-weight: 600;
 }
-h2,
-h3,
-h4,
-p {
+h2 {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
   font-weight: 500;
 }
-h2 {
-  font-size: clamp(f.rem(22), f.rem(28) + 1vw, f.rem(32));
-}
 h3 {
-  font-size: clamp(f.rem(20), f.rem(22) + 1vw, f.rem(28));
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  font-weight: 500;
 }
 h4 {
-  font-size: clamp(f.rem(18), f.rem(16) + 1vw, f.rem(22));
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  font-weight: 500;
 }
 p,
 summary {
-  font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  font-weight: 500;
 }
 summary {
   list-style: none;
