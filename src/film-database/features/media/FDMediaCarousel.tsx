@@ -26,32 +26,17 @@ const FDMediaCarousel = ({ carouselComponents, isMenuOpen }: Type_PropDrill) => 
     const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + deltaIndex, carouselNodesArr.length - 1));
 
     if (activeNodeIndex !== nextActiveNodeIndex) {
-      const activeNode: Element = carouselNodesArr[activeNodeIndex];
-      const nextActiveNode: Element = carouselNodesArr[nextActiveNodeIndex];
-      const postActiveNode: Element = carouselNodesArr[nextActiveNodeIndex + 1];
+      const dataIndexTracker: string = 'data-anim';
 
-      // Attr data-anim 'disabled-after'
-      carouselNodesArr.forEach((node, index) => {
-        const nodeAttr: string | null = node.getAttribute(dataAttr);
-
-        activeNode.setAttribute(dataAttr, deltaIndex === 1 ? 'before' : 'after');
-
-        if (index === nextActiveNodeIndex) nextActiveNode.setAttribute(dataAttr, 'active');
-
-        if (index === nextActiveNodeIndex + 1) {
-          const attribute: string | null = postActiveNode.getAttribute(dataAttr);
-          if (attribute === 'disabled-after') postActiveNode.setAttribute(dataAttr, 'after');
-        }
-
-        if (index !== activeNodeIndex && index !== nextActiveNodeIndex && nodeAttr === 'after' && index > nextActiveNodeIndex)
-          node.setAttribute(dataAttr, 'disabled-after');
-      });
+      // Handle attributes
+      if (nextActiveNodeIndex > activeNodeIndex) carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
+      carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
 
       // Get scroll position
-      // const nextActiveNodeOffsetTop: number = (nextActiveNode as HTMLElement).offsetTop;
+      const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
 
       // Scroll
-      // fdMediaRef.current.scrollTo({ top: nextActiveNodeOffsetTop, behavior: 'smooth' });
+      fdMediaRef.current.scrollTo({ top: nextActiveNodeOffsetTop, behavior: 'smooth' });
     }
   };
 
