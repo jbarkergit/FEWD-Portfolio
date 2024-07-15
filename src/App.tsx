@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -119,18 +119,37 @@ function App() {
     }
   };
 
-  /** Path *: Determine whether to return 404 page or other */
-  const isPathAvailable: boolean = [...Object.values(appRoutes)].flatMap((entries) => entries).some((route) => route.path === userLocationPathname);
+  /** Dynamic route elements */
+  const getElementByPath = (path: string) => {
+    return routeComponents.find((route) => route.path === path)?.component;
+  };
 
   /** Application */
   return (
     <Suspense fallback={suspenseFallback()}>
       <Routes>
         <Route path='*' element={<ProtocolErrorHandler />} />
-        {routeComponents.map((route) => {
-          const { path, component } = route;
-          return <Route path={path} element={component} key={uuidv4()} />;
-        })}
+
+        <Route path='/' element={getElementByPath('/')} />
+
+        <Route path='/ecommerce' element={getElementByPath('/ecommerce')} />
+        <Route path='/ecommerce/products' element={getElementByPath('/ecommerce/products')} />
+        <Route path='/ecommerce/headphones' element={getElementByPath('/ecommerce/headphones')} />
+        <Route path='/ecommerce/amps-dacs' element={getElementByPath('/ecommerce/amps-dacs')} />
+        <Route path='/ecommerce/microphones' element={getElementByPath('/ecommerce/microphones')} />
+        <Route path='/ecommerce/interfaces' element={getElementByPath('/ecommerce/interfaces')} />
+        <Route path='/ecommerce/product/:paramId' element={getElementByPath('/ecommerce/product/:paramId')} />
+        {useUniqueData().useUniqueCompanies.map((company: string) => (
+          <Route path={`/ecommerce/${company}`} element={getElementByPath('/ecommerce/products')} key={company} />
+        ))}
+        {useUniqueData().useUniqueWearStyles.map((wearStyle: string) => (
+          <Route path={`/ecommerce/${wearStyle}`} element={getElementByPath('/ecommerce/products')} key={wearStyle} />
+        ))}
+        {useUniqueData().useUniquePolarPatterns.map((polarPattern: string) => (
+          <Route path={`/ecommerce/${polarPattern}`} element={getElementByPath('/ecommerce/products')} key={polarPattern} />
+        ))}
+
+        <Route path='/film-database' element={getElementByPath('/film-database')} />
       </Routes>
     </Suspense>
   );
