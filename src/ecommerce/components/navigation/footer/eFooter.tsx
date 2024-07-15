@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+
 import ENewsletter from './ENewsletter';
 import SocialMedia from './SocialMedia';
+
 import { Klarna, Mastercard, Visa, Discover, Paypal } from '../../../assets/production-images/user-account-svg/PaymentMethodSVGS';
 
 const FooterSplitter = (sectionHeading: string) => {
