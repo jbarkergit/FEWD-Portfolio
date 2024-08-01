@@ -41,8 +41,8 @@ function App() {
       { path: '/ecommerce/product/:paramId', dir: './ecommerce/pages/ProductDetailPage' },
     ],
     filmDatabase: [
-      { path: '/film-database/home', dir: './film-database/pages/FilmDatabase' },
-      { path: '/film-database', dir: './film-database/pages/FDUserAccount' },
+      { path: '/film-database', dir: './film-database/pages/user-account/FDUserAccount' },
+      { path: '/film-database/home', dir: './film-database/pages/catalog/FilmDatabase' },
     ],
   };
 
