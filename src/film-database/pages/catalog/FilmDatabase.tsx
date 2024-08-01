@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Api Types
-import { Type_Tmdb_Api_Union } from '../composables/tmdb-api/types/TmdbDataTypes';
-import { Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbMovieGenres';
+import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
+import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 // Api Hooks
-import { useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
-import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFilmDatabaseWebStorage';
-import { useTmdbUrlBuilder } from '../composables/tmdb-api/hooks/useTmdbUrlBuilder';
-import { useTmdbGenres } from '../composables/tmdb-api/hooks/useTmdbGenres';
+import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
+import { useFilmDatabaseWebStorage } from '../../composables/web-storage-api/useFilmDatabaseWebStorage';
+import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
+import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
 // Features
-import FDDetails from '../features/details/FDDetails';
-import FDiFrame from '../features/iframe/FDiFrame';
-import FDMenu from '../features/menu/FDMenu';
-import FDMediaCarousel from '../features/media/FDMediaCarousel';
-import FDCarousel from '../components/carousel/FDCarousel';
-import FDUserAccount from '../features/user-account/FDUserAccount';
+import FDDetails from '../../features/details/FDDetails';
+import FDiFrame from '../../features/iframe/FDiFrame';
+import FDMenu from '../../features/menu/FDMenu';
+import FDMediaCarousel from '../../features/media/FDMediaCarousel';
+import FDCarousel from '../../components/carousel/FDCarousel';
+import FDUserAccount from '../user-account/FDUserAccount';
 
 const FilmDatabase = () => {
   // Spa navigation state
@@ -208,7 +208,7 @@ const FilmDatabase = () => {
       </div>
     );
   } else {
-    return <FDUserAccount />;
+    return <FDUserAccount carouselComponents={carouselComponents} isMenuOpen={false} />;
   }
 };
 
