@@ -15,7 +15,7 @@ import { useUniqueData } from './ecommerce/hooks/useUniqueData';
 
 function App() {
   /** Data */
-  const getEcommerceFilterPaths = () => {
+  const getEcommerceFilterPaths = (): string[] => {
     const { useUniqueCompanies, useUniqueWearStyles, useUniquePolarPatterns } = useUniqueData();
     const companyPaths: string[] = useUniqueCompanies.map((company) => `/ecommerce/${company}`);
     const wearStylePaths: string[] = useUniqueWearStyles.map((wearStyle) => `/ecommerce/${wearStyle}`);
@@ -74,7 +74,7 @@ function App() {
   /** Route loading queue */
   const userLocationPathname: string = useLocation().pathname;
 
-  const queueRoute = () => {
+  const queueRoute = (): void => {
     switch (userLocationPathname) {
       // Prioritize landing pages on portfolio mount
       case '/':
@@ -110,7 +110,7 @@ function App() {
   useEffect(() => queueRoute(), [userLocationPathname]);
 
   /** Suspense */
-  const suspenseFallback = () => {
+  const suspenseFallback = (): JSX.Element => {
     if (userLocationPathname === '/ecommerce') {
       return <HomeSkeleton />;
     } else if (appRoutes.ecommerce.flatMap((entries) => entries.path).includes(userLocationPathname)) {
@@ -123,7 +123,7 @@ function App() {
   };
 
   /** Dynamic route elements */
-  const getElementByPath = (path: string) => {
+  const getElementByPath = (path: string): JSX.Element | undefined => {
     return routeComponents.find((route) => route.path === path)?.component;
   };
 
