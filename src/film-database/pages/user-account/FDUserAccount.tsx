@@ -1,4 +1,3 @@
-import FDWelcomeArticle from '../../components/auth-page/FDWelcomeArticle';
 import FDAccountRegistery from '../../features/account/registery/FDAccountRegistery';
 
 type Type_PropDrill = {
@@ -10,7 +9,11 @@ const FDUserAccount = ({ carouselComponents, isMenuOpen }: Type_PropDrill) => {
   // console.log(carouselComponents);
   return (
     <main className='fdUserAccount'>
-      <FDWelcomeArticle />
+      <article className='fdUserAccount__article'>
+        <h1 className='fdUserAccount__article--h1'>Stay in the know about the hottest new movies.</h1>
+        <h2>Create an account to queue release notifications via sms.</h2>
+        <h3>Powered by TMDB</h3>
+      </article>
       <FDAccountRegistery />
       {/* <section className='fdUserAccount__display'>{carouselComponents.slice(0, 7).map((component) => component.props)}</section> */}
     </main>
