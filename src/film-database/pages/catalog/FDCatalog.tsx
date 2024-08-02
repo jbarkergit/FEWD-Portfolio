@@ -16,7 +16,7 @@ import FDMediaCarousel from '../../features/media/FDMediaCarousel';
 import FDCarousel from '../../components/carousel/FDCarousel';
 import FDUserAccount from '../user-account/FDUserAccount';
 
-const FilmDatabase = () => {
+const FDCatalog = () => {
   // Spa navigation state
   const [route, setRoute] = useState<'home' | 'userAccount' | Type_MovieGenre_Keys>('userAccount');
 
@@ -198,18 +198,14 @@ const FilmDatabase = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   /** Component */
-  if (route !== 'userAccount') {
-    return (
-      <div className='filmDatabase' data-layout-carousel={layoutAttr}>
-        <FDMenu setRoute={setRoute} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-        <FDDetails heroData={heroData} />
-        <FDiFrame heroData={heroData} />
-        <FDMediaCarousel carouselComponents={carouselComponents} isMenuOpen={isMenuOpen} />
-      </div>
-    );
-  } else {
-    return <FDUserAccount carouselComponents={carouselComponents} isMenuOpen={false} />;
-  }
+  return (
+    <div className='fdCatalog' data-layout-carousel={layoutAttr}>
+      <FDMenu setRoute={setRoute} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+      <FDDetails heroData={heroData} />
+      <FDiFrame heroData={heroData} />
+      <FDMediaCarousel carouselComponents={carouselComponents} isMenuOpen={isMenuOpen} />
+    </div>
+  );
 };
 
-export default FilmDatabase;
+export default FDCatalog;
