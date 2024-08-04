@@ -28,19 +28,24 @@
       position: relative;
       width: 100%;
       &__ul {
+        display: flex;
         gap: var(--fd-gap);
         padding: 0 var(--fd-padding-generic);
-        &[data-layout='carousel'] {
-          display: flex;
-          @include m.scrollSnappingXAxis;
-          @media (width <= 1410px) {
-            scroll-snap-type: x mandatory;
-          }
+        @include m.scrollSnappingXAxis;
+        @media (width <= 1410px) {
+          scroll-snap-type: x mandatory;
         }
-        &[data-layout='grid'] {
-          display: flex;
-          flex-wrap: wrap;
-        }
+        // &[data-layout='carousel'] {
+        //   display: flex;
+        //   @include m.scrollSnappingXAxis;
+        //   @media (width <= 1410px) {
+        //     scroll-snap-type: x mandatory;
+        //   }
+        // }
+        // &[data-layout='grid'] {
+        //   display: flex;
+        //   flex-wrap: wrap;
+        // }
         &__li {
           position: relative;
           width: var(--fd-carousel-node-width);
