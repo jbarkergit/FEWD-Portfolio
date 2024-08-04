@@ -15,28 +15,10 @@ import FDMediaCarousel from '../../features/media/FDMediaCarousel';
 import FDCarousel from '../../components/carousel/FDCarousel';
 
 const FDCatalog = () => {
-  // Spa navigation state
-  const [route, setRoute] = useState<'home' | 'userAccount' | Type_MovieGenre_Keys>('userAccount');
-
+  // SPA Routes (enables menu nav)
+  const [route, setRoute] = useState<'home' | Type_MovieGenre_Keys>('home');
   // Cross-origin safety layer
-  const useLocationPathname = useLocation().pathname;
-
-  // User location pathname based routing
-  useEffect(() => {
-    switch (useLocationPathname) {
-      case '/film-database':
-        setRoute('userAccount');
-        break;
-
-      case '/film-database/home':
-        setRoute('home');
-        break;
-
-      default:
-        setRoute('userAccount');
-        break;
-    }
-  }, [useLocationPathname]);
+  const pathname: string = useLocation().pathname;
 
   /** Assign fetch data based on state route */
   const gatherDataByRoute = () => {
@@ -44,23 +26,15 @@ const FDCatalog = () => {
     let keyEndpointPairArr: ReturnType<typeof useTmdbUrlBuilder>[];
 
     // Assign keyEndpointPairArr
-    switch (route) {
-      case 'home':
-        keyEndpointPairArr = [
-          useTmdbUrlBuilder('now_playing'),
-          useTmdbUrlBuilder('upcoming'),
-          useTmdbUrlBuilder('trending_today'),
-          useTmdbUrlBuilder('trending_this_week'),
-        ];
-        break;
-
-      case 'userAccount':
-        keyEndpointPairArr = [useTmdbUrlBuilder('discover', [{ genre: 'family' }])];
-        break;
-
-      default:
-        keyEndpointPairArr = [useTmdbUrlBuilder('discover', [{ genre: route }])];
-        break;
+    if (route === 'home') {
+      keyEndpointPairArr = [
+        useTmdbUrlBuilder('now_playing'),
+        useTmdbUrlBuilder('upcoming'),
+        useTmdbUrlBuilder('trending_today'),
+        useTmdbUrlBuilder('trending_this_week'),
+      ];
+    } else {
+      keyEndpointPairArr = [useTmdbUrlBuilder('discover', [{ genre: route }])];
     }
 
     fetchDesiredData(keyEndpointPairArr as { key: string; endpoint: string }[]);
@@ -72,7 +46,7 @@ const FDCatalog = () => {
   const fetchDesiredData = (keyEndpointPairArr: { key: string; endpoint: string }[]) => {
     // Prevent unnecessary api calls(keyEndpointPair): Store data in place of endpoint if it exists in sessionStorage via mutation
     const sessionSafeKeyEndpointPairArr = keyEndpointPairArr.map((entry) => {
-      const getCachedDataByKey: Type_Tmdb_Api_Union[] | undefined = useFilmDatabaseWebStorage(useLocationPathname).getData(entry.key);
+      const getCachedDataByKey: Type_Tmdb_Api_Union[] | undefined = useFilmDatabaseWebStorage(pathname).getData(entry.key);
       const isKeyCached: boolean = !!getCachedDataByKey;
 
       if (isKeyCached && getCachedDataByKey && getCachedDataByKey.length > 0) {
@@ -85,9 +59,10 @@ const FDCatalog = () => {
     // Fetch, pass data to pagination
     useFetchTmdbResponse(sessionSafeKeyEndpointPairArr).then((data) => {
       if (data) {
+        // Priority
         paginateData(data);
         // Prevent unnecessary api calls(session storage safeguard)
-        data.forEach((entry) => useFilmDatabaseWebStorage(useLocationPathname).setData(entry.key, entry.endpoint));
+        data.forEach((entry) => useFilmDatabaseWebStorage(pathname).setData(entry.key, entry.endpoint));
       }
     });
   };
@@ -127,6 +102,7 @@ const FDCatalog = () => {
     ));
 
     setCarouselComponents(dataEntries);
+
     // Create hero data
     if (data) setHeroData(data![0].endpoint[0]);
   };

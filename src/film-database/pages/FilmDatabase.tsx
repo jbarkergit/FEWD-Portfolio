@@ -60,8 +60,8 @@ const FilmDatabase = () => {
 
   return (
     <div className='filmDatabase' data-layout-carousel={layoutAttr}>
-      <FDUserAccount />
-      {/* <FDCatalog /> */}
+      {/* <FDUserAccount /> */}
+      <FDCatalog />
     </div>
   );
 };
