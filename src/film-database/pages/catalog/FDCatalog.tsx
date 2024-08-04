@@ -15,8 +15,14 @@ import FDMediaCarousel from '../../features/media/FDMediaCarousel';
 import FDCarousel from '../../components/carousel/FDCarousel';
 
 const FDCatalog = () => {
+  /** Global */
   // SPA Routes (enables menu nav)
   const [route, setRoute] = useState<'home' | Type_MovieGenre_Keys>('home');
+  // Menu
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  // Data
+  const [carouselComponents, setCarouselComponents] = useState<JSX.Element[]>([]);
+  const [heroData, setHeroData] = useState<Type_Tmdb_Api_Union | null>(null);
   // Cross-origin safety layer
   const pathname: string = useLocation().pathname;
 
@@ -68,9 +74,6 @@ const FDCatalog = () => {
   };
 
   /** Carousel components, hero data, pagination */
-  const [carouselComponents, setCarouselComponents] = useState<JSX.Element[]>([]);
-  const [heroData, setHeroData] = useState<Type_Tmdb_Api_Union | null>(null);
-
   const paginateData = (data: { key: string; endpoint: Type_Tmdb_Api_Union[] }[] | undefined) => {
     const maxVisibleCarouselNodes: number = 7;
 
@@ -106,9 +109,6 @@ const FDCatalog = () => {
     // Create hero data
     if (data) setHeroData(data![0].endpoint[0]);
   };
-
-  /** Menu */
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   /** Component */
   return (
