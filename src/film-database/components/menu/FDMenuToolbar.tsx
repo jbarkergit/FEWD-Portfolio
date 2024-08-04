@@ -1,4 +1,4 @@
-import { RefObject } from 'react';
+import { Dispatch, RefObject, SetStateAction } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 
@@ -7,7 +7,7 @@ const FDMenuToolbar = ({
   toolbarObjArr,
   toggleMenus,
 }: {
-  setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | 'home' | 'userAccount'>>;
+  setRoute: Dispatch<SetStateAction<Type_MovieGenre_Keys | 'home'>>;
   toolbarObjArr: (
     | {
         key: string;

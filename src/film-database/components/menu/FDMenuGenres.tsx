@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
-import { forwardRef, RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import { Dispatch, forwardRef, RefObject, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 
 type Type_PropDrill = {
   toggleMenus: (refParam: RefObject<HTMLElement> | undefined) => void;
-  setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | 'home' | 'userAccount'>>;
+  setRoute: Dispatch<SetStateAction<Type_MovieGenre_Keys | 'home'>>;
 };
 
 const FDMenuGenres = forwardRef<HTMLElement, Type_PropDrill>(({ toggleMenus, setRoute }, menuGenresRef) => {

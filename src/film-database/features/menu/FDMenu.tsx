@@ -1,4 +1,4 @@
-import { RefObject, useRef } from 'react';
+import { Dispatch, RefObject, SetStateAction, useRef } from 'react';
 
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 
@@ -14,8 +14,8 @@ const FDMenu = ({
   setRoute,
 }: {
   isMenuOpen: boolean;
-  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setRoute: React.Dispatch<React.SetStateAction<Type_MovieGenre_Keys | 'home' | 'userAccount'>>;
+  setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
+  setRoute: Dispatch<SetStateAction<Type_MovieGenre_Keys | 'home'>>;
 }) => {
   /** Toggle menus */
   const menuRef = useRef<HTMLDivElement>(null);
