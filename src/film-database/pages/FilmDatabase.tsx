@@ -1,4 +1,8 @@
+// Deps
 import { useState, useEffect } from 'react';
+// Pages
+import FDUserAccount from './user-account/FDUserAccount';
+import FDCatalog from './catalog/FDCatalog';
 
 const FilmDatabase = () => {
   /** filmDatabase Breakpoint Attr
@@ -54,7 +58,12 @@ const FilmDatabase = () => {
     return () => window.removeEventListener('resize', getDataLayout);
   }, []);
 
-  return <div className='filmDatabase' data-layout-carousel={layoutAttr}></div>;
+  return (
+    <div className='filmDatabase' data-layout-carousel={layoutAttr}>
+      <FDUserAccount />
+      {/* <FDCatalog /> */}
+    </div>
+  );
 };
 
 export default FilmDatabase;
