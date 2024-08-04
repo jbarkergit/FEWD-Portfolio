@@ -6,11 +6,11 @@ import TDARPassword from '../../../components/account/registery/FDARPassword';
 const FDAccountRegistery = () => {
   return (
     <form className='fdUserAccount__form' id='fdRegistery'>
-      <fieldset>
-        <legend>
-          <h2>Create an account</h2>
+      <fieldset className='fdUserAccount__form__fieldset'>
+        <legend className='fdUserAccount__form__fieldset__legend'>
+          <h2 className='fdUserAccount__form__fieldset__legend--h2'>Create an account</h2>
         </legend>
-        <ul>
+        <ul className='fdUserAccount__form__ul'>
           <TDARFirstName />
           <TDARLastName />
           <TDAREmailAddress />
