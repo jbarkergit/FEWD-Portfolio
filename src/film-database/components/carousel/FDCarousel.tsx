@@ -9,14 +9,13 @@ import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../a
 
 type Type_FilmDatabase_Props = {
   mapIndex: number;
-  route: string | undefined;
   dataKey: string;
   mapValue: Type_Tmdb_Api_Union[][];
   maxVisibleCarouselNodes: number;
   setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>>;
 };
 
-const FDCarousel = ({ mapIndex, route, dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }: Type_FilmDatabase_Props) => {
+const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }: Type_FilmDatabase_Props) => {
   /** Track carousel navigation index */
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
