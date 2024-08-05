@@ -79,8 +79,8 @@ const FDUserAccount = () => {
     <div className='fdUserAccount'>
       <h2 className='fdUserAccount--h2'>Account centre</h2>
       <main className='fdUserAccount__account'>
-        <FDUserAccountArticle />
-        {/* <FDAccountRegistery /> */}
+        {/* <FDUserAccountArticle /> */}
+        <FDAccountRegistery />
       </main>
       <ul className='fdUserAccount__ul' ref={ulRef}>
         {objArr
