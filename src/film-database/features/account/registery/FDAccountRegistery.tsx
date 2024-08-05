@@ -9,6 +9,8 @@ const FDAccountRegistery = () => {
     passwordConfirmation: { value: '', valid: false },
   });
 
+  useEffect(() => console.log(values), [values]);
+
   type Type_ValuesKey = keyof typeof values;
 
   const regex = {
@@ -75,8 +77,8 @@ const FDAccountRegistery = () => {
         <legend className='fdUserAccount__form__fieldset__legend'>
           <h2 className='fdUserAccount__form__fieldset__legend--h2'>Create an account</h2>
         </legend>
-        <ul className='fdUserAccount__form__ul'>
-          <li className='fdUserAccount__form__ul__firstName'>
+        <ul className='fdUserAccount__form__fieldset__ul'>
+          <li className='fdUserAccount__form__fieldset__ul__firstName'>
             <label htmlFor='fdUserAccountFirstName'>First name</label>
             <input
               form='fdRegistery'
@@ -93,9 +95,10 @@ const FDAccountRegistery = () => {
               onClick={() => focus()}
               onBlur={(e: FocusEvent<HTMLInputElement, Element>) => validateField(e.target.name as Type_ValuesKey)}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+              data-valid={values.firstName.valid ? 'true' : 'false'}
             />
           </li>
-          <li className='fdUserAccount__form__ul__lastName'>
+          <li className='fdUserAccount__form__fieldset__ul__lastName'>
             <label htmlFor='fdUserAccountLastName'>Last name</label>
             <input
               form='fdRegistery'
@@ -111,9 +114,10 @@ const FDAccountRegistery = () => {
               onClick={() => focus()}
               onBlur={(e: FocusEvent<HTMLInputElement, Element>) => validateField(e.target.name as Type_ValuesKey)}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+              data-valid={values.lastName.valid ? 'true' : 'false'}
             />
           </li>
-          <li className='fdUserAccount__form__ul__emailAddress'>
+          <li className='fdUserAccount__form__fieldset__ul__emailAddress'>
             <label htmlFor='fdUserAccountEmailAddress'>Email address</label>
             <input
               form='fdRegistery'
@@ -133,9 +137,10 @@ const FDAccountRegistery = () => {
               onClick={() => focus()}
               onBlur={(e: FocusEvent<HTMLInputElement, Element>) => validateField(e.target.name as Type_ValuesKey)}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+              data-valid={values.emailAddress.valid ? 'true' : 'false'}
             />
           </li>
-          <li className='fdUserAccount__form__ul__password'>
+          <li className='fdUserAccount__form__fieldset__ul__password'>
             <label htmlFor='fdUserAccountPassword'>Password</label>
             <input
               form='fdRegistery'
@@ -155,9 +160,10 @@ const FDAccountRegistery = () => {
               onClick={() => focus()}
               onBlur={(e: FocusEvent<HTMLInputElement, Element>) => validateField(e.target.name as Type_ValuesKey)}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+              data-valid={values.password.valid ? 'true' : 'false'}
             />
           </li>
-          <li className='fdUserAccount__form__ul__passwordConfirmation'>
+          <li className='fdUserAccount__form__fieldset__ul__passwordConfirmation'>
             <label htmlFor='fdUserAccountPasswordConfirmation'>Retype your password</label>
             <input
               form='fdRegistery'
@@ -177,9 +183,10 @@ const FDAccountRegistery = () => {
               onClick={() => focus()}
               onBlur={(e: FocusEvent<HTMLInputElement, Element>) => validateField(e.target.name as Type_ValuesKey)}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+              data-valid={values.passwordConfirmation.valid ? 'true' : 'false'}
             />
           </li>
-          <li className='fdUserAccount__form__ul__submitRegistrationForm'>
+          <li className='fdUserAccount__form__fieldset__ul__submitRegistrationForm'>
             <input id='fdUserAccountSubmitForm' type='submit' aria-label='Submit registration form' value='Submit' />
           </li>
         </ul>
