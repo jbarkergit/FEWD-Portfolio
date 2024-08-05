@@ -65,7 +65,7 @@ const FDUserAccount = () => {
       const { left, top, width, height } = child.getBoundingClientRect();
       const elemCenter = { x: left + width / 2, y: top + height / 2 };
       const deltas = { x: cursorX - elemCenter.x, y: cursorY - elemCenter.y };
-      child.style.transform = `translate(${deltas.x * 0.1}px, ${deltas.y * 0.1}px)`;
+      child.style.transform = `translate(${deltas.x * Math.random()}px, ${deltas.y * Math.random()}px)`;
     });
   };
 
