@@ -21,13 +21,16 @@ const FDUserAccountArticle = () => {
       </section>
       <section className='fdUserAccount__article__cta'>
         <button className='fdUserAccount__article__cta--accBtn fdUserAccount__article--signin' aria-label='Sign in'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+            <path fill='currentColor' d='m17.5 11l-2.09 9H10.5l2.09-9zM20 9h-9L8 22h9zM4 6l4-4v3h8v2H8v3z'></path>
+          </svg>{' '}
           Sign in
         </button>
-        <button className='fdUserAccount__article__cta--accBtn fdUserAccount__article--guest' aria-label='Browse as a guest with limited functionality'>
-          Guest (limited) access
-        </button>
         <button className='fdUserAccount__article__cta--accBtn fdUserAccount__article--signup' aria-label='Sign up'>
-          New member
+          Sign up{' '}
+          <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+            <path fill='currentColor' d='m12.5 11l-2.09 9H5.5l2.09-9zM15 9H6L3 22h9zm6-3l-4-4v3H9v2h8v3z'></path>
+          </svg>
         </button>
       </section>
     </article>
