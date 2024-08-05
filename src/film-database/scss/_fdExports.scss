@@ -2,15 +2,15 @@
 @forward '/src/film-database/scss/fdFonts';
 @forward '/src/film-database/scss/fdRoot';
 
-// Components
-@forward '/src/film-database/components/iframe-controller/iFrameController';
-@forward '/src/film-database/components/menu/fdMenuTools';
-
 // Features
 @forward '/src/film-database/features/details/fdDetails';
 @forward '/src/film-database/features/iframe/fdiFrame';
 @forward '/src/film-database/features/media/fdMediaCarousel';
 @forward '/src/film-database/features/menu/fdMenu';
+
+// Components
+@forward '/src/film-database/components/iframe-controller/iFrameController';
+@forward '/src/film-database/components/menu/fdMenuTools';
 
 // Pages
 @forward '/src/film-database/pages/filmDatabase';
