@@ -62,19 +62,17 @@ const FDUserAccount = () => {
     const ulRefChildren = [...ulRef.current.children] as HTMLLIElement[];
 
     ulRefChildren.forEach((child: HTMLLIElement, index: number) => {
-      if (index !== 0) {
-        const { left, top, width, height } = child.getBoundingClientRect();
-        const elemCenter = { x: left + width / 2, y: top + height / 2 };
-        const deltas = { x: cursorX - elemCenter.x, y: cursorY - elemCenter.y };
-        child.style.transform = `translate(${deltas.x * 0.1}px, ${deltas.y * 0.1}px) rotate3D(0,1,0,40deg)`;
-      }
+      const { left, top, width, height } = child.getBoundingClientRect();
+      const elemCenter = { x: left + width / 2, y: top + height / 2 };
+      const deltas = { x: cursorX - elemCenter.x, y: cursorY - elemCenter.y };
+      child.style.transform = `translate(${deltas.x * 0.1}px, ${deltas.y * 0.1}px)`;
     });
   };
 
-  // useEffect(() => {
-  //   window.addEventListener('pointermove', followCursor);
-  //   return () => window.removeEventListener('pointermove', followCursor);
-  // }, []);
+  useEffect(() => {
+    window.addEventListener('pointermove', followCursor);
+    return () => window.removeEventListener('pointermove', followCursor);
+  }, []);
 
   /** Component */
   return (
