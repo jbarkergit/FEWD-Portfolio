@@ -49,9 +49,17 @@ const FDAccountRegistery = () => {
   const validateField = (targetName: Type_ValuesKey): void => {
     const regexPattern: RegExp = regex[targetName];
 
-    setValues((prevValues) => {
-      return { ...prevValues, [targetName]: { ...prevValues[targetName], valid: !regexPattern.test(values[targetName].value) ? false : true } };
-    });
+    if (targetName === 'passwordConfirmation') {
+      const isMatchingPassword: boolean = values[targetName].value === values['password'].value;
+      setValues((prevValues) => {
+        return { ...prevValues, [targetName]: { ...prevValues[targetName], valid: isMatchingPassword ? true : false } };
+      });
+    } else {
+      setValues((prevValues) => {
+        const isValueValid: boolean = regexPattern.test(values[targetName].value);
+        return { ...prevValues, [targetName]: { ...prevValues[targetName], valid: isValueValid ? true : false } };
+      });
+    }
   };
 
   const submitForm = (e: FormEvent<HTMLFormElement>): void => {
