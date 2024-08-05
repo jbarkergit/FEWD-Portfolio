@@ -1,21 +1,23 @@
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, FocusEvent, useState, useEffect } from 'react';
 
 const FDAccountRegistery = () => {
-  const [values, setValues] = useState<Record<string, string>>({
-    firstName: '',
-    lastName: '',
-    emailAddress: '',
-    password: '',
-    passwordConfirmation: '',
+  const [values, setValues] = useState({
+    firstName: { value: '', valid: false },
+    lastName: { value: '', valid: false },
+    emailAddress: { value: '', valid: false },
+    password: { value: '', valid: false },
+    passwordConfirmation: { value: '', valid: false },
   });
 
-  const regex: Record<string, RegExp> = {
+  type Type_ValuesKey = keyof typeof values;
+
+  const regex = {
     /** First name, Last name
-     * ^[A-Z]: Starts with an uppercase letter.
      * [a-zA-Z-']{1,}$: Followed by one or more letters, hyphens, or apostrophes.
-     * This pattern ensures names start with a capital letter and can include hyphens and apostrophes.
+     * Can include hyphens and apostrophes.
      */
-    name: /^[A-Z][a-zA-Z-']{1,}$/,
+    firstName: /[a-zA-Z-']{1,}$/,
+    lastName: /[a-zA-Z-']{1,}$/,
     /** Email address
      * RFC 5322
      * (?i): Case-insensitive matching.
@@ -25,7 +27,7 @@ const FDAccountRegistery = () => {
      * @[a-z0-9.-]+: Domain part of the email address.
      * \.[a-z]{2,}$: Top-level domain with at least two letters.
      */
-    email: /^(?=.{1,256}$)(?=.{1,64}@)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i,
+    emailAddress: /^(?=.{1,256}$)(?=.{1,64}@)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i,
     /** Password, Password confirmation
      * (?=.*[A-Za-z]): At least one letter.
      * (?=.*\d): At least one digit.
@@ -33,80 +35,34 @@ const FDAccountRegistery = () => {
      * [A-Za-z\d@$!%*?&]{8,}$: At least 8 characters long.
      */
     password: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    passwordConfirmation: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
   };
 
   const valueSetter = (e: ChangeEvent<HTMLInputElement>): void => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
+    const key = e.target.name as Type_ValuesKey;
 
-  const [isFormValid, setIsFormValid] = useState<boolean>(false);
-
-  const validateField = (targetName: keyof typeof values): void => {
-    const targetValue: string = values[targetName];
-
-    switch (targetName) {
-      case 'firstName':
-      case 'lastName':
-        if (!regex.name.test(targetValue)) setIsFormValid(false);
-        break;
-
-      case 'emailAddress':
-        if (!regex.email.test(targetValue)) setIsFormValid(false);
-        break;
-
-      case 'password':
-      case 'passwordConfirmation':
-        if (!regex.password.test(targetValue)) setIsFormValid(false);
-        break;
-
-      default:
-        break;
-    }
-  };
-
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const validateForm = (): void => {
-    [values.firstName, values.lastName].forEach((value) => {
-      if (!regex.name.test(value)) {
-        setIsFormValid(false);
-        console.log(`Invalid ${value}`);
-      }
+    setValues((prevValues) => {
+      return { ...prevValues, [key]: { ...prevValues[key], value: e.target.value } };
     });
-
-    if (!regex.email.test(values.emailAddress)) {
-      setIsFormValid(false);
-      console.log('Invalid email address');
-    }
-
-    [values.password, values.passwordConfirmation].forEach((value) => {
-      if (!regex.password.test(value)) {
-        setIsFormValid(false);
-        console.log('Invalid password');
-      }
-    });
-
-    // Invoke submitForm()
-    if (isFormValid) (e: FormEvent<HTMLFormElement>) => submitForm(e);
   };
 
-  const shakeForm = (): void => {
-    formRef.current?.setAttribute('data-anim', 'invalid');
-    setTimeout(() => formRef.current?.removeAttribute('data-anim'), 250);
+  const validateField = (targetName: Type_ValuesKey): void => {
+    const regexPattern: RegExp = regex[targetName];
+
+    setValues((prevValues) => {
+      return { ...prevValues, [targetName]: { ...prevValues[targetName], valid: !regexPattern.test(values[targetName].value) ? false : true } };
+    });
   };
 
   const submitForm = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-
-    if (isFormValid) {
-      // firebase logic
-    } else {
-      shakeForm();
+    if (!Object.values(values).some((field) => field.valid === false)) {
+      e.preventDefault();
+      // Firebase logic
     }
   };
 
   return (
-    <form className='fdUserAccount__form' id='fdRegistery' ref={formRef} onSubmit={() => validateForm()}>
+    <form className='fdUserAccount__form' id='fdRegistery' onSubmit={(e: FormEvent<HTMLFormElement>) => submitForm(e)}>
       <fieldset className='fdUserAccount__form__fieldset'>
         <legend className='fdUserAccount__form__fieldset__legend'>
           <h2 className='fdUserAccount__form__fieldset__legend--h2'>Create an account</h2>
@@ -120,16 +76,14 @@ const FDAccountRegistery = () => {
               name='firstName'
               type='text'
               inputMode='text'
-              placeholder='First name'
               size={12}
               required={true}
               aria-required='true'
-              aria-invalid={'false'}
-              aria-describedby=''
+              aria-invalid={values.firstName.valid ? true : false}
               autoFocus
-              autoCapitalize='true'
+              autoCapitalize='words'
               onClick={() => focus()}
-              onBlur={(e) => validateField(e.target.name as keyof typeof values)}
+              onBlur={(e: FocusEvent<HTMLInputElement, Element>) => validateField(e.target.name as Type_ValuesKey)}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
           </li>
@@ -141,16 +95,13 @@ const FDAccountRegistery = () => {
               name='lastName'
               type='text'
               inputMode='text'
-              placeholder='Last name'
               size={12}
               required={true}
               aria-required='true'
-              aria-invalid={'false'}
-              aria-describedby=''
-              autoFocus
-              autoCapitalize='true'
+              aria-invalid={values.lastName.valid ? true : false}
+              autoCapitalize='words'
               onClick={() => focus()}
-              onBlur={(e) => validateField(e.target.name as keyof typeof values)}
+              onBlur={(e: FocusEvent<HTMLInputElement, Element>) => validateField(e.target.name as Type_ValuesKey)}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
           </li>
@@ -166,16 +117,13 @@ const FDAccountRegistery = () => {
               minLength={3}
               // RFC 2045
               maxLength={76}
-              placeholder='Email address'
               size={12}
               required={true}
               aria-required='true'
-              aria-invalid={'false'}
-              aria-describedby=''
-              autoFocus
-              autoCapitalize='false'
+              aria-invalid={values.emailAddress.valid ? true : false}
+              autoCapitalize='off'
               onClick={() => focus()}
-              onBlur={(e) => validateField(e.target.name as keyof typeof values)}
+              onBlur={(e: FocusEvent<HTMLInputElement, Element>) => validateField(e.target.name as Type_ValuesKey)}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
           </li>
@@ -191,16 +139,13 @@ const FDAccountRegistery = () => {
               minLength={8}
               // RFC XOS
               maxLength={32}
-              placeholder='Password'
               size={12}
               required={true}
               aria-required='true'
-              aria-invalid={'false'}
-              aria-describedby=''
-              autoFocus
-              autoCapitalize='false'
+              aria-invalid={values.password.valid ? true : false}
+              autoCapitalize='off'
               onClick={() => focus()}
-              onBlur={(e) => validateField(e.target.name as keyof typeof values)}
+              onBlur={(e: FocusEvent<HTMLInputElement, Element>) => validateField(e.target.name as Type_ValuesKey)}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
           </li>
@@ -216,21 +161,17 @@ const FDAccountRegistery = () => {
               minLength={8}
               // RFC XOS
               maxLength={32}
-              placeholder='Retype your password'
               size={12}
               required={true}
               aria-required='true'
-              aria-invalid={'false'}
-              aria-describedby=''
-              autoFocus
-              autoCapitalize='false'
+              aria-invalid={values.passwordConfirmation.valid ? true : false}
+              autoCapitalize='off'
               onClick={() => focus()}
-              onBlur={(e) => validateField(e.target.name as keyof typeof values)}
+              onBlur={(e: FocusEvent<HTMLInputElement, Element>) => validateField(e.target.name as Type_ValuesKey)}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
           </li>
           <li className='fdUserAccount__form__ul__submitRegistrationForm'>
-            <label htmlFor='fdUserAccountSubmitForm'>Submit registration form</label>
             <input id='fdUserAccountSubmitForm' type='submit' aria-label='Submit registration form' value='Submit' />
           </li>
         </ul>
