@@ -34,17 +34,20 @@
   &__about {
     &--blockquote {
       @include m.fdFontS;
+      text-shadow: var(--fd-font-shadow);
       padding-bottom: 12px;
     }
     &__hgroup {
       max-width: 68ch;
       &--h1 {
         @include m.fdFontXXL;
+        text-shadow: var(--fd-font-shadow);
         text-transform: uppercase;
         line-height: 1.2em;
       }
       &--h2 {
         @include m.fdFontL;
+        text-shadow: var(--fd-font-shadow);
       }
     }
   }
@@ -90,7 +93,7 @@
         inset 39px 21px 100px 65px rgba(0, 0, 0, 0.705),
         0px 0px 100px 100px rgba(0, 0, 0, 0.58),
         0px 0px 600px 10px rgba(0, 0, 0, 0.7);
-      opacity: 0.5;
+      opacity: 0.6;
     }
   }
   &__ul {
