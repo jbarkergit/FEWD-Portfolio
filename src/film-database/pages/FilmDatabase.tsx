@@ -1,8 +1,8 @@
 // Deps
 import { useState, useEffect } from 'react';
 // Pages
-import FDUserAccount from './user-account/FDUserAccount';
-import FDCatalog from './catalog/FDCatalog';
+import FDUserAccount from './FDUserAccount';
+import FDCatalog from './FDCatalog';
 
 const FilmDatabase = () => {
   /** filmDatabase Breakpoint Attr
