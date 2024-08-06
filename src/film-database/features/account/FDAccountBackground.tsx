@@ -47,8 +47,8 @@ const FDAccountBackground = () => {
     const responseArr: Type_Tmdb_Api_Union[] = [...response].flatMap((obj) => obj.endpoint);
     let responseSetArr: Type_Tmdb_Api_Union[][] = [];
 
-    for (let i = 0; i < Math.ceil(responseArr.length / 5); i++) {
-      responseSetArr.push(responseArr.slice(i * 5, i * 5 + 5));
+    for (let i = 0; i < Math.ceil(responseArr.length / 4); i++) {
+      responseSetArr.push(responseArr.slice(i * 4, i * 4 + 4));
     }
 
     return responseSetArr;
@@ -58,7 +58,7 @@ const FDAccountBackground = () => {
     <div className='fdAccountBackground'>
       {responseSetArr?.map((set) => {
         return (
-          <ul className='fdAccountBackground__set'>
+          <ul className='fdAccountBackground__set' key={uuidv4()}>
             {set.map((article) => {
               const props = useTmdbProps(article);
               return (
