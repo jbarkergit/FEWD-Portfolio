@@ -2,6 +2,9 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdAccountArticle {
+  position: relative;
+  z-index: 2;
+  width: 100%;
   &__article {
     z-index: 9;
     display: grid;
