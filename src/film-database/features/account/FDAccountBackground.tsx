@@ -41,56 +41,43 @@ const FDAccountBackground = () => {
 
   useEffect(() => fetch(), []);
 
-  const objArr: Type_Tmdb_Api_Union[] | undefined = useMemo(() => {
-    if (response) {
-      return [...response].flatMap((obj) => obj.endpoint);
-    } else {
-      return undefined;
+  const responseSetArr: Type_Tmdb_Api_Union[][] | undefined = useMemo(() => {
+    if (!response) return undefined;
+
+    const responseArr: Type_Tmdb_Api_Union[] = [...response].flatMap((obj) => obj.endpoint);
+    let responseSetArr: Type_Tmdb_Api_Union[][] = [];
+
+    for (let i = 0; i < Math.ceil(responseArr.length / 5); i++) {
+      responseSetArr.push(responseArr.slice(i * 5, i * 5 + 5));
     }
+
+    return responseSetArr;
   }, [response]);
 
-  /** Background cursor follow */
-  const ulRef = useRef<HTMLUListElement>(null);
-
-  const followCursor = (e: PointerEvent) => {
-    const { clientX: cursorX, clientY: cursorY } = e;
-
-    if (!ulRef.current) return;
-    const ulRefChildren = [...ulRef.current.children] as HTMLLIElement[];
-
-    ulRefChildren.forEach((child: HTMLLIElement, index: number) => {
-      const { left, top, width, height } = child.getBoundingClientRect();
-      const elemCenter = { x: left + width / 2, y: top + height / 2 };
-      const deltas = { x: cursorX - elemCenter.x, y: cursorY - elemCenter.y };
-      child.style.transform = `translate(${deltas.x * Math.random()}px, ${deltas.y * Math.random()}px)`;
-    });
-  };
-
-  useEffect(() => {
-    window.addEventListener('pointermove', followCursor);
-    return () => window.removeEventListener('pointermove', followCursor);
-  }, []);
-
   return (
-    <ul className='fdAccountBackground' ref={ulRef}>
-      {objArr
-        ? objArr.map((article) => {
-            const props = useTmdbProps(article);
-            return (
-              <li className='fdAccountBackground__li' key={uuidv4()}>
-                <article className='fdAccountBackground__li__article'>
-                  <figure className='fdAccountBackground__li__article__graphic'>
-                    <picture>
-                      <img src={`https://image.tmdb.org/t/p/original/${props?.poster_path}`} alt={`${props?.alt}`} />
-                      <figcaption>{`${props?.alt}`}</figcaption>
-                    </picture>
-                  </figure>
-                </article>
-              </li>
-            );
-          })
-        : null}
-    </ul>
+    <div className='fdAccountBackground'>
+      {responseSetArr?.map((set) => {
+        return (
+          <ul className='fdAccountBackground__set'>
+            {set.map((article) => {
+              const props = useTmdbProps(article);
+              return (
+                <li className='fdAccountBackground__set__li' key={uuidv4()}>
+                  <article className='fdAccountBackground__set__li__article'>
+                    <figure className='fdAccountBackground__set__li__article__graphic'>
+                      <picture>
+                        <img src={`https://image.tmdb.org/t/p/original/${props?.poster_path}`} alt={`${props?.alt}`} />
+                        <figcaption>{`${props?.alt}`}</figcaption>
+                      </picture>
+                    </figure>
+                  </article>
+                </li>
+              );
+            })}
+          </ul>
+        );
+      })}
+    </div>
   );
 };
 
