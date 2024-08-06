@@ -2,6 +2,7 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdDetails {
+  grid-area: 1 / 1 / 2 / 2;
   position: relative;
   z-index: 3;
   height: 50svh;
