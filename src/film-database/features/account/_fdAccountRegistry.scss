@@ -1,0 +1,97 @@
+@use '/src/sass/functions' as f;
+@use '/src/film-database/scss/fdMixins' as m;
+
+.fdAccountRegistry {
+  z-index: 9;
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--fd-gap) * 2);
+    width: fit-content;
+    padding: f.rem(32) calc(f.rem(32) * 2);
+    border-radius: var(--fd-borderRadius);
+    background: linear-gradient(90deg, rgba(26, 25, 40, 1) 0%, rgba(19, 6, 6, 1) 100%);
+    box-shadow: 0px -21px 50px 13px rgba(0, 0, 0, 0.78);
+    &__fieldset {
+      display: flex;
+      flex-direction: column;
+      width: min-content;
+      &__legend {
+        padding-bottom: f.rem(32);
+        @include m.fdFontL;
+        &--h2 {
+          text-wrap: nowrap;
+          text-shadow: var(--fd-font-shadow);
+        }
+      }
+      &__ul {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--fd-gap) / 2);
+        & li {
+          position: relative;
+          &:last-child {
+            padding: calc(var(--fd-gap) / 2) 0 0 3px;
+          }
+          & label,
+          & label input {
+            text-wrap: nowrap;
+            text-shadow: var(--fd-font-shadow);
+            @include m.fdFontM;
+          }
+          & label {
+            position: absolute;
+            top: 0;
+            left: 3px;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+    &__tooltips {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      padding: f.rem(16) 0 f.rem(32) 0;
+      align-items: center;
+      &--h2 {
+        display: none;
+      }
+      & > * {
+        height: 100%;
+      }
+      &__tipper {
+        display: grid;
+        place-items: center;
+        width: 65px;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        background: linear-gradient(90deg, rgba(26, 25, 40, 1) 0%, rgba(19, 6, 6, 1) 100%);
+        box-shadow: inset 0px -2px 7px 4px rgba(0, 0, 0, 0.7);
+        & svg {
+          width: 80%;
+        }
+      }
+      &__tip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        text-wrap: wrap;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        &--p {
+          width: 24ch;
+          height: min-content;
+          padding: 2px 12px;
+          @include m.fdFontM;
+          text-transform: lowercase;
+          text-shadow: var(--fd-font-shadow);
+          color: black;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+@use '/src/sass/functions' as f;
+@use '/src/film-database/scss/fdMixins' as m;
+
+.fdAccountArticle {
+  &__article {
+    z-index: 9;
+    display: grid;
+    place-items: center;
+    gap: calc(var(--fd-gap) * 2);
+    margin-bottom: 2.5%;
+    text-align: center;
+    &__about {
+      &--blockquote {
+        @include m.fdFontM;
+        font-weight: 900;
+        text-transform: lowercase;
+        text-shadow: var(--fd-font-shadow);
+        padding-bottom: var(--fd-gap);
+        &--tmdb {
+          color: #2ebbd0;
+        }
+      }
+      &__hgroup {
+        max-width: 68ch;
+        &--h1 {
+          @include m.fdFontXXL;
+          text-shadow: var(--fd-font-shadow);
+          text-transform: uppercase;
+          line-height: 1.2em;
+        }
+        &--h2 {
+          @include m.fdFontL;
+          text-shadow: var(--fd-font-shadow);
+        }
+      }
+    }
+    &__cta {
+      display: flex;
+      gap: var(--fd-gap);
+      & button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 18px;
+        border-radius: var(--fd-borderRadius);
+        background: linear-gradient(90deg, rgba(248, 249, 237, 1) 0%, rgba(247, 243, 230, 1) 100%);
+        box-shadow:
+          0px 10px 15px -3px rgba(0, 0, 0, 0.1),
+          inset 0px 10px 15px -3px hsl(46, 36%, 60%);
+        @include m.fdFontM;
+        font-weight: 500;
+        text-transform: lowercase;
+        text-shadow: var(--fd-font-shadow);
+        color: rgb(59, 59, 59);
+      }
+      &--signin {
+      }
+      &--guest {
+      }
+      &--signup {
+      }
+    }
+  }
+}
