@@ -2,7 +2,13 @@
 @forward '/src/film-database/scss/fdFonts';
 @forward '/src/film-database/scss/fdRoot';
 
+// Pages
+@forward '/src/film-database/pages/fdPages';
+
 // Features
+@forward '/src/film-database/features/account/fdAccountArticle';
+@forward '/src/film-database/features/account/fdAccountBackground';
+@forward '/src/film-database/features/account/fdAccountRegistry';
 @forward '/src/film-database/features/details/fdDetails';
 @forward '/src/film-database/features/iframe/fdiFrame';
 @forward '/src/film-database/features/media/fdMediaCarousel';
@@ -11,8 +17,3 @@
 // Components
 @forward '/src/film-database/components/iframe-controller/iFrameController';
 @forward '/src/film-database/components/menu/fdMenuTools';
-
-// Pages
-@forward '/src/film-database/pages/filmDatabase';
-@forward '/src/film-database/pages/user-account/fdUserAccount';
-@forward '/src/film-database/pages/catalog/fdCatalog';
