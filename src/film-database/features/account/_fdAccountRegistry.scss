@@ -2,7 +2,11 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdAccountRegistry {
-  z-index: 9;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 100%;
   &__container {
     display: flex;
     flex-direction: column;
