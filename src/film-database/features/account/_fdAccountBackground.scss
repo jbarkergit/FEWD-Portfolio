@@ -6,67 +6,100 @@
   top: 0;
   left: 0;
   z-index: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  // gap: var(--fd-gap);
   width: 100%;
   height: 100%;
-  gap: var(--fd-gap);
   pointer-events: none;
-  & > * {
-    position: relative;
+  &::after {
+    content: '';
+    position: inherit;
+    inset: 0;
     z-index: 2;
+    width: inherit;
+    height: inherit;
+    background: linear-gradient(90deg, rgba(26, 25, 40, 1) 0%, rgba(19, 6, 6, 1) 100%);
+    box-shadow: inset 0px -2px 7px 4px rgba(0, 0, 0, 0.7);
+    opacity: 0.65;
   }
-  &__li {
+  &__set {
+    flex: 0 0 calc(100% / 4);
     position: relative;
-    width: 100%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
     height: auto;
-    border-radius: var(--fd-borderRadius);
-    box-shadow: 0px -21px 50px 13px rgba(0, 0, 0, 0.78);
-    filter: blur(1px);
-    transition: all 0.5s cubic-bezier(0.755, 0.05, 0.855, 0.8);
-    /* Width matching (required for dynamic logic) */
-    &__article,
-    &__article__graphic,
-    &__article__graphic > * {
-      width: inherit;
-      height: inherit;
-    }
-    &__article {
+    &__li {
       position: relative;
-      cursor: pointer;
-      & > * {
-        position: absolute;
-        top: 0;
-        left: 0;
+      z-index: 3;
+      width: 100%;
+      height: var(--fd-carousel-node-height);
+      border-radius: var(--fd-borderRadius);
+      box-shadow: 0px -21px 50px 13px rgba(0, 0, 0, 0.78);
+      filter: blur(1px);
+      transition: all 0.5s cubic-bezier(0.755, 0.05, 0.855, 0.8);
+      &__article,
+      &__article__graphic,
+      &__article__graphic > * {
+        width: inherit;
+        height: inherit;
       }
-      &__graphic {
-        z-index: 3;
-        &::after {
-          content: '';
+      &__article {
+        position: relative;
+        height: 100%;
+        & > * {
           position: absolute;
           top: 0;
           left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(
-            226deg,
-            rgba(255, 255, 255, 0.18) 0%,
-            rgba(255, 255, 255, 0) 35%,
-            rgba(255, 255, 255, 0.16) 42%,
-            rgba(255, 255, 255, 0.26) 60%
-          );
         }
-        & picture,
-        & picture img {
-          border-radius: var(--fd-borderRadius);
-        }
-        & picture {
-          box-shadow: inset 0px 15px 17px -11px rgb(0, 0, 0);
-        }
-        & img {
-          filter: grayscale(70%) saturate(70%);
+        &__graphic {
+          &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+              226deg,
+              rgba(255, 255, 255, 0.18) 0%,
+              rgba(255, 255, 255, 0) 35%,
+              rgba(255, 255, 255, 0.16) 42%,
+              rgba(255, 255, 255, 0.26) 60%
+            );
+          }
+          & picture,
+          & picture img {
+            border-top-right-radius: var(--fd-borderRadius);
+            border-top-left-radius: var(--fd-borderRadius);
+          }
+          & picture {
+            box-shadow: inset 0px 15px 17px -11px rgb(0, 0, 0);
+          }
+          & img {
+            filter: grayscale(70%) saturate(70%);
+            object-position: top;
+          }
         }
       }
     }
+  }
+}
+
+@keyframes evenColumns {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes oddColumns {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
   }
 }
