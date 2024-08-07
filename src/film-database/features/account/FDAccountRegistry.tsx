@@ -1,6 +1,10 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, FormEvent, forwardRef, SetStateAction, useState } from 'react';
 
-const FDAccountRegistry = () => {
+type Type_PropDrill = {
+  setModal: Dispatch<SetStateAction<'article' | 'registry' | 'signin'>>;
+};
+
+const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ setModal }, registryRefReceiver) => {
   const [values, setValues] = useState({
     firstName: { value: '', valid: false },
     lastName: { value: '', valid: false },
@@ -72,7 +76,12 @@ const FDAccountRegistry = () => {
   };
 
   return (
-    <form className='fdAccountRegistry' id='fdRegistery' onSubmit={(e: FormEvent<HTMLFormElement>) => submitForm(e)}>
+    <form
+      className='fdAccountRegistry'
+      id='fdRegistery'
+      onSubmit={(e: FormEvent<HTMLFormElement>) => submitForm(e)}
+      data-activity='active'
+      ref={registryRefReceiver}>
       <div className='fdAccountRegistry__container'>
         <fieldset className='fdAccountRegistry__container__fieldset'>
           <legend className='fdAccountRegistry__container__fieldset__legend'>
@@ -202,6 +211,6 @@ const FDAccountRegistry = () => {
       </div>
     </form>
   );
-};
+});
 
 export default FDAccountRegistry;
