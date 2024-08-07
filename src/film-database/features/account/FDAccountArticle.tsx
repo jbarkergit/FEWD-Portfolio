@@ -17,7 +17,7 @@ const FDAccountArticle = () => {
           </blockquote>
           <hgroup className='fdAccountArticle__article__about__hgroup'>
             <h1 className='fdAccountArticle__article__about__hgroup--h1'>Stay in the know with the latest releases</h1>
-            <h2 className='fdAccountArticle__article__about__hgroup--h2'>Never miss a new release with sms alerts.</h2>
+            <h2 className='fdAccountArticle__article__about__hgroup--h2'>Free now, free forever</h2>
           </hgroup>
         </section>
         <section className='fdAccountArticle__article__cta'>
