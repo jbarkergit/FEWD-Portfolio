@@ -150,7 +150,6 @@ function App() {
         ))}
 
         <Route path='/film-database' element={getElementByPath('/film-database')} />
-        <Route path='/film-database/home' element={getElementByPath('/film-database/home')} />
       </Routes>
     </Suspense>
   );
