@@ -1,8 +1,13 @@
+import { Dispatch, forwardRef, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 
-const FDAccountArticle = () => {
+type Type_PropDrill = {
+  setModal: Dispatch<SetStateAction<'article' | 'registry' | 'signin'>>;
+};
+
+const FDAccountArticle = forwardRef<HTMLElement, Type_PropDrill>(({ setModal }, articleRefReceiver) => {
   return (
-    <main className='fdAccountArticle'>
+    <main className='fdAccountArticle' ref={articleRefReceiver} data-activity='active'>
       <article className='fdAccountArticle__article'>
         <section className='fdAccountArticle__article__about'>
           <blockquote className='fdAccountArticle__article__about--blockquote' cite='https://www.themoviedb.org/?language=en-US'>
@@ -22,13 +27,13 @@ const FDAccountArticle = () => {
         </section>
         <section className='fdAccountArticle__article__cta'>
           <h2>Account options</h2>
-          <button className='fdAccountArticle__article__cta--accBtn fdAccountArticle__article--signin' aria-label='Sign in'>
+          <button className='fdAccountArticle__article__cta--accBtn fdAccountArticle__article--signin' aria-label='Sign in' onClick={() => setModal('signin')}>
             <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
               <path fill='currentColor' d='m17.5 11l-2.09 9H10.5l2.09-9zM20 9h-9L8 22h9zM4 6l4-4v3h8v2H8v3z'></path>
             </svg>{' '}
             Sign in
           </button>
-          <button className='fdAccountArticle__article__cta--accBtn fdAccountArticle__article--signup' aria-label='Sign up'>
+          <button className='fdAccountArticle__article__cta--accBtn fdAccountArticle__article--signup' aria-label='Sign up' onClick={() => setModal('registry')}>
             Sign up{' '}
             <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
               <path fill='currentColor' d='m12.5 11l-2.09 9H5.5l2.09-9zM15 9H6L3 22h9zm6-3l-4-4v3H9v2h8v3z'></path>
@@ -38,6 +43,6 @@ const FDAccountArticle = () => {
       </article>
     </main>
   );
-};
+});
 
 export default FDAccountArticle;
