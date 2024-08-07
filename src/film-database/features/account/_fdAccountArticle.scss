@@ -43,6 +43,9 @@
     &__cta {
       display: flex;
       gap: var(--fd-gap);
+      & h2 {
+        display: none;
+      }
       & button {
         display: flex;
         justify-content: center;
@@ -50,13 +53,11 @@
         gap: 6px;
         padding: 6px 18px;
         border-radius: var(--fd-borderRadius);
-        background: linear-gradient(90deg, rgba(248, 249, 237, 1) 0%, rgba(247, 243, 230, 1) 100%);
-        box-shadow:
-          0px 10px 15px -3px rgba(0, 0, 0, 0.1),
-          inset 0px 10px 15px -3px hsl(46, 36%, 60%);
+        background-color: white;
+        box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
         @include m.fdFontM;
         font-weight: 500;
-        text-transform: lowercase;
+        text-transform: none;
         text-shadow: var(--fd-font-shadow);
         color: rgb(59, 59, 59);
       }
