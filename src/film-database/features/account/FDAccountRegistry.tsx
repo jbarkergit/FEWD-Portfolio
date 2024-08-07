@@ -1,10 +1,12 @@
-import { ChangeEvent, Dispatch, FormEvent, forwardRef, SetStateAction, useState } from 'react';
+import { ChangeEvent, Dispatch, FormEvent, forwardRef, SetStateAction, useEffect, useRef, useState } from 'react';
 
 type Type_PropDrill = {
   setModal: Dispatch<SetStateAction<'article' | 'registry' | 'signin'>>;
 };
 
 const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ setModal }, registryRefReceiver) => {
+  const ulRef = useRef<HTMLUListElement>(null);
+
   const [values, setValues] = useState({
     firstName: { value: '', valid: false },
     lastName: { value: '', valid: false },
@@ -75,6 +77,21 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ setModa
     }
   };
 
+  useEffect(() => {
+    if (!ulRef.current) return;
+    const ulChildren = Array.from(ulRef.current.children) as HTMLLIElement[];
+
+    Object.entries(values).forEach(([name, { value }]) => {
+      const element = ulChildren.find((child) => (child.children[0] as HTMLLabelElement).id === name);
+
+      if (value.length > 0) {
+        if (element) (element.children[0] as HTMLLabelElement).setAttribute('data-entry', 'true');
+      } else {
+        if (element) (element.children[0] as HTMLLabelElement).setAttribute('data-entry', 'false');
+      }
+    });
+  }, [values]);
+
   return (
     <form
       className='fdAccountRegistry'
@@ -87,9 +104,11 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ setModa
           <legend className='fdAccountRegistry__container__fieldset__legend'>
             <h2 className='fdAccountRegistry__container__fieldset__legend--h2'>Create an account</h2>
           </legend>
-          <ul className='fdAccountRegistry__container__fieldset__ul'>
+          <ul className='fdAccountRegistry__container__fieldset__ul' ref={ulRef}>
             <li className='fdAccountRegistry__container__fieldset__ul__firstName'>
-              <label htmlFor='fdUserAccountFirstName'>First name</label>
+              <label id='firstName' htmlFor='fdUserAccountFirstName'>
+                First name
+              </label>
               <input
                 form='fdRegistery'
                 id='fdUserAccountFirstName'
@@ -107,7 +126,9 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ setModa
               />
             </li>
             <li className='fdAccountRegistry__container__fieldset__ul__lastName'>
-              <label htmlFor='fdUserAccountLastName'>Last name</label>
+              <label id='lastName' htmlFor='fdUserAccountLastName'>
+                Last name
+              </label>
               <input
                 form='fdRegistery'
                 id='fdUserAccountLastName'
@@ -124,7 +145,9 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ setModa
               />
             </li>
             <li className='fdAccountRegistry__container__fieldset__ul__emailAddress'>
-              <label htmlFor='fdUserAccountEmailAddress'>Email address</label>
+              <label id='emailAddress' htmlFor='fdUserAccountEmailAddress'>
+                Email address
+              </label>
               <input
                 form='fdRegistery'
                 id='fdUserAccountEmailAddress'
@@ -145,7 +168,9 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ setModa
               />
             </li>
             <li className='fdAccountRegistry__container__fieldset__ul__password'>
-              <label htmlFor='fdUserAccountPassword'>Password</label>
+              <label id='password' htmlFor='fdUserAccountPassword'>
+                Password
+              </label>
               <input
                 form='fdRegistery'
                 id='fdUserAccountPassword'
@@ -166,7 +191,9 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ setModa
               />
             </li>
             <li className='fdAccountRegistry__container__fieldset__ul__passwordConfirmation'>
-              <label htmlFor='fdUserAccountPasswordConfirmation'>Retype your password</label>
+              <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation'>
+                Retype your password
+              </label>
               <input
                 form='fdRegistery'
                 id='fdUserAccountPasswordConfirmation'
