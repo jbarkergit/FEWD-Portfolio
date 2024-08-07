@@ -1,5 +1,5 @@
 // Deps
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 // Pages
 import FDUserAccount from './FDUserAccount';
 import FDCatalog from './FDCatalog';
@@ -58,9 +58,12 @@ const FilmDatabase = () => {
     return () => window.removeEventListener('resize', getDataLayout);
   }, []);
 
+  // Prop
+  const rootRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div className='filmDatabase' data-layout-carousel={layoutAttr}>
-      <FDUserAccount />
+    <div className='filmDatabase' data-layout-carousel={layoutAttr} ref={rootRef}>
+      <FDUserAccount rootRef={rootRef} />
       {/* <FDCatalog /> */}
     </div>
   );
