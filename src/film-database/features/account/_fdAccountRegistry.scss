@@ -36,29 +36,31 @@
         flex-direction: column;
         gap: calc(var(--fd-gap) / 2);
         & li {
-          position: relative;
-          &:last-child {
-            padding: calc(var(--fd-gap) / 2) 0 0 3px;
-          }
-          & label,
-          & label input {
-            text-wrap: nowrap;
-            text-shadow: var(--fd-font-shadow);
-            @include m.fdFontM;
-          }
-          & label {
-            position: absolute;
-            pointer-events: none;
-            transition: top ease 0.25s;
-            &[data-entry='true'] {
-              top: -28px;
+          margin-bottom: 28px;
+          & div {
+            position: relative;
+            border-radius: var(--fd-borderRadius);
+            background-color: black;
+            & label,
+            & label input {
+              text-wrap: nowrap;
+              text-shadow: var(--fd-font-shadow);
+              @include m.fdFontM;
             }
-            &[data-entry='false'] {
-              top: 0;
+            & label {
+              position: absolute;
+              pointer-events: none;
+              transition: top ease 0.25s;
+              &[data-entry='true'] {
+                top: -28px;
+              }
+              &[data-entry='false'] {
+                top: 0;
+              }
             }
-          }
-          & input {
-            min-height: 24px;
+            & input {
+              min-height: 24px;
+            }
           }
         }
       }
