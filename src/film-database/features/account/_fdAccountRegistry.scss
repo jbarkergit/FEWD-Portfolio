@@ -13,7 +13,8 @@
     flex-direction: column;
     align-items: center;
     gap: calc(var(--fd-gap) * 2);
-    width: fit-content;
+    min-height: f.rem(650);
+    aspect-ratio: 2/3;
     padding: f.rem(32) calc(f.rem(32) * 2);
     border-radius: var(--fd-borderRadius);
     background: linear-gradient(90deg, rgba(26, 25, 40, 1) 0%, rgba(19, 6, 6, 1) 100%);
@@ -47,9 +48,17 @@
           }
           & label {
             position: absolute;
-            top: 0;
-            left: 3px;
             pointer-events: none;
+            transition: top ease 0.25s;
+            &[data-entry='true'] {
+              top: -28px;
+            }
+            &[data-entry='false'] {
+              top: 0;
+            }
+          }
+          & input {
+            min-height: 24px;
           }
         }
       }
