@@ -77,20 +77,22 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ setModa
     }
   };
 
-  useEffect(() => {
+  const handleLabels = (): void => {
     if (!ulRef.current) return;
     const ulChildren = Array.from(ulRef.current.children) as HTMLLIElement[];
 
     Object.entries(values).forEach(([name, { value }]) => {
-      const element = ulChildren.find((child) => (child.children[0] as HTMLLabelElement).id === name);
+      const element = ulChildren.find((child) => ((child.children[0] as HTMLDivElement).children[0] as HTMLLabelElement).id === name);
 
       if (value.length > 0) {
-        if (element) (element.children[0] as HTMLLabelElement).setAttribute('data-entry', 'true');
+        if (element) ((element.children[0] as HTMLDivElement).children[0] as HTMLLabelElement).setAttribute('data-entry', 'true');
       } else {
-        if (element) (element.children[0] as HTMLLabelElement).setAttribute('data-entry', 'false');
+        if (element) ((element.children[0] as HTMLDivElement).children[0] as HTMLLabelElement).setAttribute('data-entry', 'false');
       }
     });
-  }, [values]);
+  };
+
+  useEffect(() => handleLabels(), [values]);
 
   return (
     <form
@@ -106,114 +108,129 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ setModa
           </legend>
           <ul className='fdAccountRegistry__container__fieldset__ul' ref={ulRef}>
             <li className='fdAccountRegistry__container__fieldset__ul__firstName'>
-              <label id='firstName' htmlFor='fdUserAccountFirstName'>
-                First name
-              </label>
-              <input
-                form='fdRegistery'
-                id='fdUserAccountFirstName'
-                name='firstName'
-                type='text'
-                inputMode='text'
-                size={12}
-                required={true}
-                aria-required='true'
-                aria-invalid={values.firstName.valid ? true : false}
-                autoFocus
-                autoCapitalize='words'
-                onClick={() => focus()}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-              />
+              <div className='fdAccountRegistry__container__field__ul__firstName__container'>
+                <label id='firstName' htmlFor='fdUserAccountFirstName'>
+                  First name
+                </label>
+                <input
+                  form='fdRegistery'
+                  id='fdUserAccountFirstName'
+                  name='firstName'
+                  type='text'
+                  inputMode='text'
+                  size={12}
+                  required={true}
+                  aria-required='true'
+                  aria-invalid={values.firstName.valid ? true : false}
+                  autoFocus
+                  autoCapitalize='words'
+                  onClick={() => focus()}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+                />
+              </div>
             </li>
+
             <li className='fdAccountRegistry__container__fieldset__ul__lastName'>
-              <label id='lastName' htmlFor='fdUserAccountLastName'>
-                Last name
-              </label>
-              <input
-                form='fdRegistery'
-                id='fdUserAccountLastName'
-                name='lastName'
-                type='text'
-                inputMode='text'
-                size={12}
-                required={true}
-                aria-required='true'
-                aria-invalid={values.lastName.valid ? true : false}
-                autoCapitalize='words'
-                onClick={() => focus()}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-              />
+              <div className='fdAccountRegistry__container__field__ul__lastName__container'>
+                <label id='lastName' htmlFor='fdUserAccountLastName'>
+                  Last name
+                </label>
+                <input
+                  form='fdRegistery'
+                  id='fdUserAccountLastName'
+                  name='lastName'
+                  type='text'
+                  inputMode='text'
+                  size={12}
+                  required={true}
+                  aria-required='true'
+                  aria-invalid={values.lastName.valid ? true : false}
+                  autoCapitalize='words'
+                  onClick={() => focus()}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+                />
+              </div>
             </li>
+
             <li className='fdAccountRegistry__container__fieldset__ul__emailAddress'>
-              <label id='emailAddress' htmlFor='fdUserAccountEmailAddress'>
-                Email address
-              </label>
-              <input
-                form='fdRegistery'
-                id='fdUserAccountEmailAddress'
-                name='emailAddress'
-                type='email'
-                inputMode='email'
-                // name, @, domain
-                minLength={3}
-                // RFC 2045
-                maxLength={76}
-                size={12}
-                required={true}
-                aria-required='true'
-                aria-invalid={values.emailAddress.valid ? true : false}
-                autoCapitalize='off'
-                onClick={() => focus()}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-              />
+              <div className='fdAccountRegistry__container__field__ul__emailAddress__container'>
+                <label id='emailAddress' htmlFor='fdUserAccountEmailAddress'>
+                  Email address
+                </label>
+                <input
+                  form='fdRegistery'
+                  id='fdUserAccountEmailAddress'
+                  name='emailAddress'
+                  type='email'
+                  inputMode='email'
+                  // name, @, domain
+                  minLength={3}
+                  // RFC 2045
+                  maxLength={76}
+                  size={12}
+                  required={true}
+                  aria-required='true'
+                  aria-invalid={values.emailAddress.valid ? true : false}
+                  autoCapitalize='off'
+                  onClick={() => focus()}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+                />
+              </div>
             </li>
+
             <li className='fdAccountRegistry__container__fieldset__ul__password'>
-              <label id='password' htmlFor='fdUserAccountPassword'>
-                Password
-              </label>
-              <input
-                form='fdRegistery'
-                id='fdUserAccountPassword'
-                name='password'
-                type='password'
-                inputMode='text'
-                // RFC 5310, NIST Special Publication 800-63B
-                minLength={8}
-                // RFC XOS
-                maxLength={32}
-                size={12}
-                required={true}
-                aria-required='true'
-                aria-invalid={values.password.valid ? true : false}
-                autoCapitalize='off'
-                onClick={() => focus()}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-              />
+              <div className='fdAccountRegistry__container__field__ul__password__container'>
+                <label id='password' htmlFor='fdUserAccountPassword'>
+                  Password
+                </label>
+                <input
+                  form='fdRegistery'
+                  id='fdUserAccountPassword'
+                  name='password'
+                  type='password'
+                  inputMode='text'
+                  // RFC 5310, NIST Special Publication 800-63B
+                  minLength={8}
+                  // RFC XOS
+                  maxLength={32}
+                  size={12}
+                  required={true}
+                  aria-required='true'
+                  aria-invalid={values.password.valid ? true : false}
+                  autoCapitalize='off'
+                  onClick={() => focus()}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+                />
+              </div>
             </li>
+
             <li className='fdAccountRegistry__container__fieldset__ul__passwordConfirmation'>
-              <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation'>
-                Retype your password
-              </label>
-              <input
-                form='fdRegistery'
-                id='fdUserAccountPasswordConfirmation'
-                name='passwordConfirmation'
-                type='password'
-                inputMode='text'
-                // RFC 5310, NIST Special Publication 800-63B
-                minLength={8}
-                // RFC XOS
-                maxLength={32}
-                size={12}
-                required={true}
-                aria-required='true'
-                aria-invalid={values.passwordConfirmation.valid ? true : false}
-                autoCapitalize='off'
-                onClick={() => focus()}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-              />
+              <div className='fdAccountRegistry__container__field__ul__passwordConfirmation__container'>
+                <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation'>
+                  Retype your password
+                </label>
+                <input
+                  form='fdRegistery'
+                  id='fdUserAccountPasswordConfirmation'
+                  name='passwordConfirmation'
+                  type='password'
+                  inputMode='text'
+                  // RFC 5310, NIST Special Publication 800-63B
+                  minLength={8}
+                  // RFC XOS
+                  maxLength={32}
+                  size={12}
+                  required={true}
+                  aria-required='true'
+                  aria-invalid={values.passwordConfirmation.valid ? true : false}
+                  autoCapitalize='off'
+                  onClick={() => focus()}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+                />
+              </div>
             </li>
-            <li className='fdAccountRegistry__container__fieldset__ul__submitRegistrationForm'>
+
+            <li className='fdAccountRegistry__container__fieldset__ul__container__submitRegistrationForm'>
               <input id='fdUserAccountSubmitForm' type='submit' aria-label='Submit registration form' value='Submit' />
             </li>
           </ul>
