@@ -4,7 +4,10 @@
 .fdAccountArticle {
   position: relative;
   z-index: 2;
+  display: grid;
+  place-items: center;
   width: 100%;
+  height: 100svh;
   &__article {
     z-index: 9;
     display: grid;
