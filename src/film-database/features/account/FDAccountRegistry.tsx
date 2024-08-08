@@ -1,10 +1,10 @@
-import { ChangeEvent, Dispatch, FormEvent, forwardRef, SetStateAction, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, forwardRef, useEffect, useRef, useState } from 'react';
 
 type Type_PropDrill = {
-  setModal: Dispatch<SetStateAction<'article' | 'registry' | 'signin'>>;
+  toggleComponent: (modal: 'article' | 'registry' | 'signin') => void;
 };
 
-const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ setModal }, registryRefReceiver) => {
+const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleComponent }, registryRefReceiver) => {
   const ulRef = useRef<HTMLUListElement>(null);
 
   const [values, setValues] = useState({

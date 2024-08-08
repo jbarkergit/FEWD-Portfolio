@@ -1,5 +1,5 @@
 // Deps
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 // Features
 import FDAccountArticle from '../features/account/FDAccountArticle';
 import FDAccountBackground from '../features/account/FDAccountBackground';
@@ -11,26 +11,10 @@ type Type_PropDrill = {
 
 const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
   /** Attribute setter */
-  const [modal, setModal] = useState<'article' | 'registry' | 'signin'>('article');
   const articleRefReceiver = useRef<HTMLElement>(null);
   const registryRefReceiver = useRef<HTMLFormElement>(null);
 
-  const handleAttributes = (ref: RefObject<HTMLElement>): void => {
-    console.log(ref);
-
-    if (!rootRef.current) return;
-    const rootRefChildren = [...rootRef.current.children];
-
-    rootRefChildren.forEach((child: Element) => {
-      if (child.getAttribute('data-activity') === 'active') {
-        child.setAttribute('data-activity', 'disabled');
-      }
-    });
-
-    ref.current?.setAttribute('data-activity', 'active');
-  };
-
-  useEffect(() => {
+  const toggleComponent = (modal: 'article' | 'registry' | 'signin'): void => {
     switch (modal) {
       case 'article':
         if (articleRefReceiver.current) handleAttributes(articleRefReceiver);
@@ -48,14 +32,31 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
         console.log('default');
         break;
     }
-  }, [modal]);
+  };
+
+  useEffect(() => toggleComponent('article'), []);
+
+  const handleAttributes = (ref: RefObject<HTMLElement>): void => {
+    console.log(ref);
+
+    if (!rootRef.current) return;
+    const rootRefChildren = [...rootRef.current.children];
+
+    rootRefChildren.forEach((child: Element) => {
+      if (child.getAttribute('data-activity') === 'active') {
+        child.setAttribute('data-activity', 'disabled');
+      }
+    });
+
+    ref.current?.setAttribute('data-activity', 'active');
+  };
 
   /** Component */
   return (
     <>
       <FDAccountBackground />
-      <FDAccountArticle setModal={setModal} ref={articleRefReceiver} />
-      <FDAccountRegistry setModal={setModal} ref={registryRefReceiver} />
+      <FDAccountArticle toggleComponent={toggleComponent} ref={articleRefReceiver} />
+      <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} />
     </>
   );
 };
