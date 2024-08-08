@@ -19,9 +19,7 @@
     width: inherit;
     height: inherit;
     background: linear-gradient(90deg, rgba(26, 25, 40, 1) 0%, rgba(19, 6, 6, 1) 100%);
-    box-shadow: inset 0px -2px 7px 4px rgba(0, 0, 0, 0.7);
-    opacity: 0.8;
-    animation: fadeOpacity 1s ease 1s forwards;
+    opacity: 0.95;
   }
   &__set {
     flex: 0 0 calc(100% / 5);
@@ -51,20 +49,16 @@
         box-shadow: 7px 17px 22px 7px rgba(0, 0, 0, 0.25);
       }
       .fdAccountBackground__set__li:nth-of-type(1) {
-        z-index: 1;
-        animation: oddLiOne 2s ease 1.5s forwards;
+        animation: LiOne 2s ease 1.5s forwards;
       }
       .fdAccountBackground__set__li:nth-of-type(2) {
-        z-index: 2;
-        animation: oddLiTwo 2s ease 1s forwards;
+        animation: LiTwo 2s ease 1s forwards;
       }
       .fdAccountBackground__set__li:nth-of-type(3) {
-        z-index: 3;
-        animation: oddLiThree 2s ease 0.5s forwards;
+        animation: LiThree 2s ease 0.5s forwards;
       }
       .fdAccountBackground__set__li:nth-of-type(4) {
-        z-index: 4;
-        animation: oddLiFour 2s ease 0s forwards;
+        animation: LiFour 2s ease 0s forwards;
       }
     }
     &:nth-of-type(even) {
@@ -73,16 +67,16 @@
         box-shadow: 4px 3px 16px 9px rgba(0, 0, 0, 0.2);
       }
       .fdAccountBackground__set__li:nth-of-type(1) {
-        animation: evenLiOne 2s ease 0s forwards;
+        animation: LiOne 2s ease 0s forwards;
       }
       .fdAccountBackground__set__li:nth-of-type(2) {
-        animation: evenLiTwo 2s ease 0.5s forwards;
+        animation: LiTwo 2s ease 0.5s forwards;
       }
       .fdAccountBackground__set__li:nth-of-type(3) {
-        animation: evenLiThree 2s ease 1s forwards;
+        animation: LiThree 2s ease 1s forwards;
       }
       .fdAccountBackground__set__li:nth-of-type(4) {
-        animation: evenLiFour 2s ease 1.5s forwards;
+        animation: LiFour 2s ease 1.5s forwards;
       }
     }
     &__li {
@@ -139,49 +133,7 @@
   }
 }
 
-@keyframes fadeOpacity {
-  0% {
-    opacity: 0.8;
-  }
-  100% {
-    opacity: 0.95;
-  }
-}
-
-@keyframes oddLiOne {
-  0% {
-    top: 100svh;
-  }
-  100% {
-    top: 75%;
-  }
-}
-@keyframes oddLiTwo {
-  0% {
-    top: 100svh;
-  }
-  100% {
-    top: 50%;
-  }
-}
-@keyframes oddLiThree {
-  0% {
-    top: 100svh;
-  }
-  100% {
-    top: 25%;
-  }
-}
-@keyframes oddLiFour {
-  0% {
-    top: 100svh;
-  }
-  100% {
-    top: 0%;
-  }
-}
-
-@keyframes evenLiOne {
+@keyframes LiOne {
   0% {
     top: calc(100svh * -1);
   }
@@ -189,7 +141,7 @@
     top: 0%;
   }
 }
-@keyframes evenLiTwo {
+@keyframes LiTwo {
   0% {
     top: calc(100svh * -1);
   }
@@ -197,7 +149,7 @@
     top: 25%;
   }
 }
-@keyframes evenLiThree {
+@keyframes LiThree {
   0% {
     top: calc(100svh * -1);
   }
@@ -205,7 +157,7 @@
     top: 50%;
   }
 }
-@keyframes evenLiFour {
+@keyframes LiFour {
   0% {
     top: calc(100svh * -1);
   }
