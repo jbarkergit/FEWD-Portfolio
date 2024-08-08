@@ -66,7 +66,7 @@ const FDAccountBackground = () => {
                   <article className='fdAccountBackground__set__li__article'>
                     <figure className='fdAccountBackground__set__li__article__graphic'>
                       <picture>
-                        <img src={`https://image.tmdb.org/t/p/original/${props?.poster_path}`} alt={`${props?.alt}`} />
+                        <img src={`https://image.tmdb.org/t/p/original/${props?.backdrop_path}`} alt={`${props?.alt}`} />
                         <figcaption>{`${props?.alt}`}</figcaption>
                       </picture>
                     </figure>
