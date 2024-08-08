@@ -15,9 +15,26 @@
   transform: translate(0, 0) scale(1);
   transform-origin: center center;
   animation: viewportScale 1.6s ease 2.4s forwards;
+  /* Psuedo background animation */
+  &::after {
+    content: '';
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 3;
+    width: inherit;
+    height: inherit;
+    background-color: hsl(0, 0%, 8%);
+    opacity: 0;
+    animation: fadePsuedo 1.6s ease 2s forwards;
+  }
   &__set {
     flex: 0 0 calc((100% - 4 * var(--fd-gap)) / 5);
     position: relative;
+    /* Psuedo background animation */
+    &:nth-of-type(3) .fdAccountBackground__set__li:nth-of-type(2) {
+      z-index: 4;
+    }
     /* Positioning for odd list items */
     &:nth-of-type(odd) .fdAccountBackground__set__li {
       top: 100svh;
@@ -166,6 +183,15 @@
   }
   100% {
     filter: blur(0);
-    transform: translate(0, -54%) scale(4.2);
+    transform: translate(0, -12.5%) scale(5);
+  }
+}
+
+@keyframes fadePsuedo {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
