@@ -7,84 +7,60 @@
   left: 0;
   z-index: 0;
   display: flex;
-  // gap: var(--fd-gap);
+  gap: var(--fd-gap);
   width: 100%;
   height: 100%;
+  padding: var(--fd-gap);
   pointer-events: none;
-  &::after {
-    content: '';
-    position: inherit;
-    inset: 0;
-    z-index: 10;
-    width: inherit;
-    height: inherit;
-    background: linear-gradient(90deg, rgba(26, 25, 40, 1) 0%, rgba(19, 6, 6, 1) 100%);
-    opacity: 0.95;
-  }
+  transform: translate(0, 0) scale(1);
+  transform-origin: center center;
+  animation: viewportScale 1.6s ease 2.4s forwards;
   &__set {
-    flex: 0 0 calc(100% / 5);
+    flex: 0 0 calc((100% - 4 * var(--fd-gap)) / 5);
     position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    &:nth-of-type(1) {
-      z-index: 2;
+    /* Positioning for odd list items */
+    &:nth-of-type(odd) .fdAccountBackground__set__li {
+      top: 100svh;
     }
-    &:nth-of-type(2) {
-      z-index: 3;
+    /* Positioning for even list items */
+    &:nth-of-type(even) .fdAccountBackground__set__li {
+      top: calc(100svh * -1);
     }
-    &:nth-of-type(3) {
-      z-index: 4;
+    /* Staggered animation for odd list items */
+    &:nth-of-type(odd) .fdAccountBackground__set__li:nth-of-type(1) {
+      animation: oddLiOne 2s ease 1.8s forwards;
     }
-    &:nth-of-type(4) {
-      z-index: 3;
+    &:nth-of-type(odd) .fdAccountBackground__set__li:nth-of-type(2) {
+      animation: oddLiTwo 2s ease 1.4s forwards;
     }
-    &:nth-of-type(5) {
-      z-index: 2;
+    &:nth-of-type(odd) .fdAccountBackground__set__li:nth-of-type(3) {
+      animation: oddLiThree 2s ease 1s forwards;
     }
-    &:nth-of-type(odd) {
-      .fdAccountBackground__set__li {
-        top: 100svh;
-        box-shadow: 7px 17px 22px 7px rgba(0, 0, 0, 0.25);
-      }
-      .fdAccountBackground__set__li:nth-of-type(1) {
-        animation: LiOne 2s ease 1.5s forwards;
-      }
-      .fdAccountBackground__set__li:nth-of-type(2) {
-        animation: LiTwo 2s ease 1s forwards;
-      }
-      .fdAccountBackground__set__li:nth-of-type(3) {
-        animation: LiThree 2s ease 0.5s forwards;
-      }
-      .fdAccountBackground__set__li:nth-of-type(4) {
-        animation: LiFour 2s ease 0s forwards;
-      }
+    &:nth-of-type(odd) .fdAccountBackground__set__li:nth-of-type(4) {
+      animation: oddLiFour 2s ease 0.6s forwards;
     }
-    &:nth-of-type(even) {
-      .fdAccountBackground__set__li {
-        top: calc(100svh * -1);
-        box-shadow: 4px 3px 16px 9px rgba(0, 0, 0, 0.2);
-      }
-      .fdAccountBackground__set__li:nth-of-type(1) {
-        animation: LiOne 2s ease 0s forwards;
-      }
-      .fdAccountBackground__set__li:nth-of-type(2) {
-        animation: LiTwo 2s ease 0.5s forwards;
-      }
-      .fdAccountBackground__set__li:nth-of-type(3) {
-        animation: LiThree 2s ease 1s forwards;
-      }
-      .fdAccountBackground__set__li:nth-of-type(4) {
-        animation: LiFour 2s ease 1.5s forwards;
-      }
+    /* Staggered animation for even list items */
+    &:nth-of-type(even) .fdAccountBackground__set__li:nth-of-type(1) {
+      animation: evenLiOne 2s ease 0.6s forwards;
     }
+    &:nth-of-type(even) .fdAccountBackground__set__li:nth-of-type(2) {
+      animation: evenLiTwo 2s ease 0.4s forwards;
+    }
+    &:nth-of-type(even) .fdAccountBackground__set__li:nth-of-type(3) {
+      animation: evenLiThree 2s ease 0.2s forwards;
+    }
+    &:nth-of-type(even) .fdAccountBackground__set__li:nth-of-type(4) {
+      animation: evenLiFour 2s ease 0s forwards;
+    }
+
     &__li {
       position: absolute;
       z-index: 3;
       width: 100%;
-      height: calc(100svh * 0.66667);
+      height: calc(25% - var(--fd-gap));
       border-radius: var(--fd-borderRadius);
+      box-shadow: 7px 17px 22px 7px rgba(0, 0, 0, 0.25);
+      overflow: clip;
       &__article,
       &__article__graphic,
       &__article__graphic > * {
@@ -92,48 +68,58 @@
         height: inherit;
       }
       &__article {
-        position: relative;
         height: 100%;
-        & > * {
+        &::after {
+          content: '';
           position: absolute;
           top: 0;
           left: 0;
-        }
-        &__graphic {
-          &::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-              226deg,
-              rgba(255, 255, 255, 0.18) 0%,
-              rgba(255, 255, 255, 0) 35%,
-              rgba(255, 255, 255, 0.23) 42%,
-              rgba(255, 255, 255, 0.26) 60%
-            );
-          }
-          & picture,
-          & picture img {
-            border-top-right-radius: var(--fd-borderRadius);
-            border-top-left-radius: var(--fd-borderRadius);
-          }
-          & picture {
-            box-shadow: inset 0px 15px 17px -11px rgb(0, 0, 0);
-          }
-          & img {
-            filter: grayscale(60%) saturate(90%);
-            object-position: top;
-          }
+          z-index: 5;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(226deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 35%),
+            linear-gradient(135deg, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0) 60%),
+            linear-gradient(45deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 70%);
         }
       }
     }
   }
 }
 
-@keyframes LiOne {
+@keyframes oddLiOne {
+  0% {
+    top: 100svh;
+  }
+  100% {
+    top: calc(75% + var(--fd-gap));
+  }
+}
+@keyframes oddLiTwo {
+  0% {
+    top: 100svh;
+  }
+  100% {
+    top: calc(50% + var(--fd-gap));
+  }
+}
+@keyframes oddLiThree {
+  0% {
+    top: 100svh;
+  }
+  100% {
+    top: calc(25% + var(--fd-gap));
+  }
+}
+@keyframes oddLiFour {
+  0% {
+    top: 100svh;
+  }
+  100% {
+    top: calc(0% + var(--fd-gap));
+  }
+}
+
+@keyframes evenLiOne {
   0% {
     top: calc(100svh * -1);
   }
@@ -141,7 +127,7 @@
     top: 0%;
   }
 }
-@keyframes LiTwo {
+@keyframes evenLiTwo {
   0% {
     top: calc(100svh * -1);
   }
@@ -149,7 +135,7 @@
     top: 25%;
   }
 }
-@keyframes LiThree {
+@keyframes evenLiThree {
   0% {
     top: calc(100svh * -1);
   }
@@ -157,11 +143,29 @@
     top: 50%;
   }
 }
-@keyframes LiFour {
+@keyframes evenLiFour {
   0% {
     top: calc(100svh * -1);
   }
   100% {
     top: 75%;
+  }
+}
+
+@keyframes viewportScale {
+  0% {
+    filter: blur(0);
+    transform: translate(0, 0) scale(1);
+  }
+  35% {
+    filter: blur(0);
+    transform: translate(0, 0) scale(1);
+  }
+  43% {
+    filter: blur(2px);
+  }
+  100% {
+    filter: blur(0);
+    transform: translate(0, -54%) scale(4.2);
   }
 }
