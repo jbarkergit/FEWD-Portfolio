@@ -1,4 +1,6 @@
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ChangeEvent, FormEvent, forwardRef, useEffect, useRef, useState } from 'react';
+import { firebaseAuth } from '../../../config/firebaseConfig';
 
 type Type_PropDrill = {
   toggleComponent: (modal: 'article' | 'registry' | 'signin') => void;
@@ -14,6 +16,8 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
     password: { value: '', valid: false },
     passwordConfirmation: { value: '', valid: false },
   });
+
+  useEffect(() => console.log(values), [values]);
 
   type Type_ValuesKey = keyof typeof values;
 
@@ -55,25 +59,19 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
   };
 
   const validateField = (targetName: Type_ValuesKey): void => {
-    const regexPattern: RegExp = regex[targetName];
-
-    if (targetName === 'passwordConfirmation') {
-      const isMatchingPassword: boolean = values[targetName].value === values['password'].value;
-      setValues((prevValues) => {
-        return { ...prevValues, [targetName]: { ...prevValues[targetName], valid: isMatchingPassword ? true : false } };
-      });
-    } else {
-      setValues((prevValues) => {
-        const isValueValid: boolean = regexPattern.test(values[targetName].value);
-        return { ...prevValues, [targetName]: { ...prevValues[targetName], valid: isValueValid ? true : false } };
-      });
-    }
+    setValues((prevValues) => {
+      const isValueValid: boolean = regex[targetName].test(prevValues[targetName].value);
+      const isMatchingPassword: boolean = prevValues['passwordConfirmation'].value === prevValues['password'].value;
+      const propArg: boolean = targetName === 'passwordConfirmation' ? isMatchingPassword : isValueValid;
+      return { ...prevValues, [targetName]: { ...prevValues[targetName], valid: propArg } };
+    });
   };
 
-  const submitForm = (e: FormEvent<HTMLFormElement>): void => {
+  const submitForm = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     if (!Object.values(values).some((field) => field.valid === false)) {
       e.preventDefault();
-      // Firebase logic
+    } else {
+      await createUserWithEmailAndPassword(firebaseAuth, values.emailAddress.value, values.password.value);
     }
   };
 
@@ -125,7 +123,7 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
                   size={12}
                   required={true}
                   aria-required='true'
-                  aria-invalid={values.firstName.valid ? true : false}
+                  aria-invalid={values.firstName.valid}
                   autoFocus
                   autoCapitalize='words'
                   onClick={() => focus()}
@@ -148,7 +146,7 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
                   size={12}
                   required={false}
                   aria-required='true'
-                  aria-invalid={values.lastName.valid ? true : false}
+                  aria-invalid={values.lastName.valid}
                   autoCapitalize='words'
                   onClick={() => focus()}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
@@ -174,7 +172,7 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
                   size={12}
                   required={true}
                   aria-required='true'
-                  aria-invalid={values.emailAddress.valid ? true : false}
+                  aria-invalid={values.emailAddress.valid}
                   autoCapitalize='off'
                   onClick={() => focus()}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
@@ -200,7 +198,7 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
                   size={12}
                   required={true}
                   aria-required='true'
-                  aria-invalid={values.password.valid ? true : false}
+                  aria-invalid={values.password.valid}
                   autoCapitalize='off'
                   onClick={() => focus()}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
@@ -226,7 +224,7 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
                   size={12}
                   required={true}
                   aria-required='true'
-                  aria-invalid={values.passwordConfirmation.valid ? true : false}
+                  aria-invalid={values.passwordConfirmation.valid}
                   autoCapitalize='off'
                   onClick={() => focus()}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
