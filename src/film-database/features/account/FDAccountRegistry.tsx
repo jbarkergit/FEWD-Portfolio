@@ -103,9 +103,13 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
       ref={registryRefReceiver}>
       <div className='fdAccountRegistry__container'>
         <fieldset className='fdAccountRegistry__container__fieldset'>
-          <legend className='fdAccountRegistry__container__fieldset__legend'>
-            <h2 className='fdAccountRegistry__container__fieldset__legend--h2'>Create an account</h2>
-          </legend>
+          <section className='fdAccountRegistry__container__col'>
+            <div className='fdAccountRegistry__container__col__logo'>Film Database</div>
+            <legend className='fdAccountRegistry__container__fieldset__legend'>
+              <h2 className='fdAccountRegistry__container__fieldset__legend--h2'>Create an account</h2>
+            </legend>
+            <div className='fdAccountRegistry__container__col__hint'>Enter your name</div>
+          </section>
           <ul className='fdAccountRegistry__container__fieldset__ul' ref={ulRef}>
             <li className='fdAccountRegistry__container__fieldset__ul__firstName'>
               <div className='fdAccountRegistry__container__field__ul__firstName__container'>
@@ -133,7 +137,7 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
             <li className='fdAccountRegistry__container__fieldset__ul__lastName'>
               <div className='fdAccountRegistry__container__field__ul__lastName__container'>
                 <label id='lastName' htmlFor='fdUserAccountLastName'>
-                  Last name
+                  Last name (optional)
                 </label>
                 <input
                   form='fdRegistery'
@@ -142,7 +146,7 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
                   type='text'
                   inputMode='text'
                   size={12}
-                  required={true}
+                  required={false}
                   aria-required='true'
                   aria-invalid={values.lastName.valid ? true : false}
                   autoCapitalize='words'
@@ -207,7 +211,7 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
             <li className='fdAccountRegistry__container__fieldset__ul__passwordConfirmation'>
               <div className='fdAccountRegistry__container__field__ul__passwordConfirmation__container'>
                 <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation'>
-                  Retype your password
+                  Retype password
                 </label>
                 <input
                   form='fdRegistery'
@@ -235,23 +239,6 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
             </li>
           </ul>
         </fieldset>
-        <section className='fdAccountRegistry__container__tooltips'>
-          <h2 className='fdAccountRegistry__container__tooltips--h2'>Visual Guide for invalid form fields</h2>
-          <div className='fdAccountRegistry__container__tooltips__tipper'>
-            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
-              <g fill='currentColor'>
-                <path d='M10.976 9a1 1 0 1 1-2 0a1 1 0 0 1 2 0m2.995 1a1 1 0 1 0 0-2a1 1 0 0 0 0 2'></path>
-                <path
-                  fillRule='evenodd'
-                  d='M19 21V10a7 7 0 1 0-14 0v11h2.828l1.415-1.414L10.657 21h2.686l1.414-1.414L16.172 21zm-2-11a5 5 0 0 0-10 0v9l2.243-2.243L12 19.515l2.757-2.758L17 19z'
-                  clipRule='evenodd'></path>
-              </g>
-            </svg>
-          </div>
-          <div className='fdAccountRegistry__container__tooltips__tip'>
-            <p className='fdAccountRegistry__container__tooltips__tip--p'>test</p>
-          </div>
-        </section>
       </div>
     </form>
   );
