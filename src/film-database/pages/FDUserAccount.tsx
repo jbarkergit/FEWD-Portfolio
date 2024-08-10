@@ -4,6 +4,7 @@ import { RefObject, useEffect, useRef } from 'react';
 import FDAccountArticle from '../features/account/FDAccountArticle';
 import FDAccountBackground from '../features/account/FDAccountBackground';
 import FDAccountRegistry from '../features/account/FDAccountRegistry';
+import FDAccountSignIn from '../features/account/FDAccountSignIn';
 
 type Type_PropDrill = {
   rootRef: RefObject<HTMLDivElement>;
@@ -13,6 +14,7 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
   /** Attribute setter */
   const articleRefReceiver = useRef<HTMLElement>(null);
   const registryRefReceiver = useRef<HTMLDivElement>(null);
+  const signInRefReceiver = useRef<HTMLDivElement>(null);
 
   const toggleComponent = (modal: 'article' | 'registry' | 'signin'): void => {
     switch (modal) {
@@ -24,12 +26,11 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
         handleAttributes(registryRefReceiver);
         break;
 
-      // case 'signin':
-      //   enableAttribute()
-      //   break;
+      case 'signin':
+        handleAttributes(signInRefReceiver);
+        break;
 
       default:
-        console.log('default');
         break;
     }
   };
@@ -37,8 +38,6 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
   useEffect(() => toggleComponent('article'), []);
 
   const handleAttributes = (ref: RefObject<HTMLElement>): void => {
-    console.log(ref);
-
     if (!rootRef.current) return;
     const rootRefChildren = [...rootRef.current.children];
 
@@ -56,6 +55,7 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
     <>
       <FDAccountBackground />
       <FDAccountArticle toggleComponent={toggleComponent} ref={articleRefReceiver} />
+      <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />
       <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} />
     </>
   );
