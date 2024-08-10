@@ -6,7 +6,7 @@ type Type_PropDrill = {
   toggleComponent: (modal: 'article' | 'registry' | 'signin') => void;
 };
 
-const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleComponent }, registryRefReceiver) => {
+const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleComponent }, registryRefReceiver) => {
   const ulRef = useRef<HTMLUListElement>(null);
 
   const [values, setValues] = useState({
@@ -16,8 +16,6 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
     password: { value: '', valid: false },
     passwordConfirmation: { value: '', valid: false },
   });
-
-  useEffect(() => console.log(values), [values]);
 
   type Type_ValuesKey = keyof typeof values;
 
@@ -67,11 +65,15 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
     });
   };
 
-  const submitForm = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    if (!Object.values(values).some((field) => field.valid === false)) {
+  const submitForm = async (e: React.PointerEvent<HTMLButtonElement>): Promise<void> => {
+    if (Object.values(values).some((field) => field.valid === false)) {
       e.preventDefault();
     } else {
-      await createUserWithEmailAndPassword(firebaseAuth, values.emailAddress.value, values.password.value);
+      try {
+        await createUserWithEmailAndPassword(firebaseAuth, values.emailAddress.value, values.password.value);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -93,12 +95,7 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
   useEffect(() => handleLabels(), [values]);
 
   return (
-    <form
-      className='fdAccountRegistry'
-      id='fdRegistery'
-      onSubmit={(e: FormEvent<HTMLFormElement>) => submitForm(e)}
-      data-activity='active'
-      ref={registryRefReceiver}>
+    <div className='fdAccountRegistry' id='fdRegistery' data-activity='active' ref={registryRefReceiver}>
       <div className='fdAccountRegistry__container'>
         <fieldset className='fdAccountRegistry__container__fieldset'>
           <section className='fdAccountRegistry__container__col'>
@@ -135,7 +132,7 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
             <li className='fdAccountRegistry__container__fieldset__ul__lastName'>
               <div className='fdAccountRegistry__container__field__ul__lastName__container'>
                 <label id='lastName' htmlFor='fdUserAccountLastName'>
-                  Last name (optional)
+                  Last name
                 </label>
                 <input
                   form='fdRegistery'
@@ -233,12 +230,18 @@ const FDAccountRegistry = forwardRef<HTMLFormElement, Type_PropDrill>(({ toggleC
             </li>
 
             <li className='fdAccountRegistry__container__fieldset__ul__container__submitRegistrationForm'>
-              <input id='fdUserAccountSubmitForm' type='submit' aria-label='Submit registration form' value='Submit' />
+              <button
+                id='fdUserAccountSubmitForm'
+                aria-label='Submit registration form'
+                style={{ color: 'black' }}
+                onClick={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
+                Register Account
+              </button>
             </li>
           </ul>
         </fieldset>
       </div>
-    </form>
+    </div>
   );
 });
 
