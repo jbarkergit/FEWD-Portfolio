@@ -1,11 +1,43 @@
 // Deps
 import { useState, useEffect, useRef } from 'react';
+// Firebase
+import { User, onAuthStateChanged } from 'firebase/auth';
+import { firebaseAuth } from '../../config/firebaseConfig';
 // Pages
 import FDUserAccount from './FDUserAccount';
 import FDCatalog from './FDCatalog';
 
+type Type_authorizedUser = {
+  user: undefined | User;
+  verified: boolean;
+};
+
 const FilmDatabase = () => {
   const rootRef = useRef<HTMLDivElement>(null);
+
+  /** Firebase user auth */
+  const [isUserFetched, setIsUserFetched] = useState<boolean>(false);
+
+  const [authorizedUser, setAuthorizedUser] = useState<Type_authorizedUser>({
+    user: undefined,
+    verified: false,
+  });
+
+  useEffect(() => {
+    const authListener = onAuthStateChanged(firebaseAuth, (user) => {
+      console.log(user);
+
+      if (!user) {
+        setAuthorizedUser({ user: undefined, verified: false });
+      } else {
+        setAuthorizedUser({ user: user, verified: user.emailVerified });
+      }
+
+      setIsUserFetched(true);
+    });
+
+    return () => authListener();
+  }, []);
 
   /** filmDatabase Breakpoint Attr
    * Breakpoints at 25% of second row's poster
@@ -62,8 +94,7 @@ const FilmDatabase = () => {
 
   return (
     <div className='filmDatabase' data-layout-carousel={layoutAttr} ref={rootRef}>
-      <FDUserAccount rootRef={rootRef} />
-      {/* <FDCatalog /> */}
+      {isUserFetched ? authorizedUser.user && authorizedUser.verified ? <FDCatalog /> : <FDUserAccount rootRef={rootRef} /> : null}
     </div>
   );
 };
