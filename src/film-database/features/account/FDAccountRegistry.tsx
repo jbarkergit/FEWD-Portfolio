@@ -7,11 +7,18 @@ type Type_PropDrill = {
 };
 
 const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleComponent }, registryRefReceiver) => {
-  const ulRef = useRef<HTMLUListElement>(null);
+  /** Collect array of labels */
+  const [labelElements, setLabelElements] = useState<HTMLLabelElement[]>([]);
+  const labelsRef = (reference: HTMLLabelElement) => {
+    if (reference && !labelElements.includes(reference)) setLabelElements((prevState) => [...prevState, reference]);
+  };
 
   const [values, setValues] = useState({
     firstName: { value: '', valid: false },
     lastName: { value: '', valid: false },
+    dobMonth: { value: undefined, valid: false },
+    dobDay: { value: undefined, valid: false },
+    dobYear: { value: undefined, valid: false },
     emailAddress: { value: '', valid: false },
     password: { value: '', valid: false },
     passwordConfirmation: { value: '', valid: false },
@@ -57,12 +64,14 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
   };
 
   const validateField = (targetName: Type_ValuesKey): void => {
-    setValues((prevValues) => {
-      const isValueValid: boolean = regex[targetName].test(prevValues[targetName].value);
-      const isMatchingPassword: boolean = prevValues['passwordConfirmation'].value === prevValues['password'].value;
-      const propArg: boolean = targetName === 'passwordConfirmation' ? isMatchingPassword : isValueValid;
-      return { ...prevValues, [targetName]: { ...prevValues[targetName], valid: propArg } };
-    });
+    if (targetName !== 'dobMonth' && targetName !== 'dobDay' && targetName !== 'dobYear') {
+      setValues((prevValues) => {
+        const isValueValid: boolean = regex[targetName].test(prevValues[targetName].value);
+        const isMatchingPassword: boolean = prevValues['passwordConfirmation'].value === prevValues['password'].value;
+        const propArg: boolean = targetName === 'passwordConfirmation' ? isMatchingPassword : isValueValid;
+        return { ...prevValues, [targetName]: { ...prevValues[targetName], valid: propArg } };
+      });
+    }
   };
 
   const submitForm = async (e: React.PointerEvent<HTMLButtonElement>): Promise<void> => {
@@ -78,37 +87,42 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
   };
 
   const handleLabels = (): void => {
-    if (!ulRef.current) return;
-    const ulChildren = Array.from(ulRef.current.children) as HTMLLIElement[];
+    if (!fieldsetRef.current) return;
 
     Object.entries(values).forEach(([name, { value }]) => {
-      const element = ulChildren.find((child) => ((child.children[0] as HTMLDivElement).children[0] as HTMLLabelElement).id === name);
-
-      if (value.length > 0) {
-        if (element) ((element.children[0] as HTMLDivElement).children[0] as HTMLLabelElement).setAttribute('data-entry', 'true');
-      } else {
-        if (element) ((element.children[0] as HTMLDivElement).children[0] as HTMLLabelElement).setAttribute('data-entry', 'false');
-      }
+      const element: HTMLLabelElement | undefined = labelElements.find((child: HTMLLabelElement) => child.id === name);
+      if (!element) return;
+      element.setAttribute('data-entry', value || (value && value.length > 0) ? 'true' : 'false');
     });
   };
 
   useEffect(() => handleLabels(), [values]);
 
+  const fieldsetRef = useRef<HTMLFieldSetElement>(null);
+
+  const handleUls = (): void => {
+    if (!fieldsetRef.current) return;
+    const fieldsetChildren = Array.from(fieldsetRef.current.children) as HTMLUListElement[];
+  };
+
   return (
-    <div className='fdAccountRegistry' id='fdRegistery' data-activity='active' ref={registryRefReceiver}>
+    <section className='fdAccountRegistry' id='fdRegistery' data-activity='active' ref={registryRefReceiver}>
       <div className='fdAccountRegistry__container'>
-        <fieldset className='fdAccountRegistry__container__fieldset'>
-          <section className='fdAccountRegistry__container__col'>
-            <div className='fdAccountRegistry__container__col__logo'>Film Database</div>
-            <legend className='fdAccountRegistry__container__fieldset__legend'>
-              <h2 className='fdAccountRegistry__container__fieldset__legend--h2'>Create an account</h2>
-            </legend>
-            <div className='fdAccountRegistry__container__col__hint'>Enter your name</div>
-          </section>
-          <ul className='fdAccountRegistry__container__fieldset__ul' ref={ulRef}>
+        {/*  */}
+        <section className='fdAccountRegistry__container__col'>
+          <div className='fdAccountRegistry__container__col__logo'>Film Database</div>
+          <legend className='fdAccountRegistry__container__fieldset__legend'>
+            <h2 className='fdAccountRegistry__container__fieldset__legend--h2'>Create an account</h2>
+          </legend>
+          <div className='fdAccountRegistry__container__col__hint'>Enter your name</div>
+        </section>
+        {/*  */}
+        <fieldset className='fdAccountRegistry__container__fieldset' ref={fieldsetRef}>
+          {/*  */}
+          <ul className='fdAccountRegistry__container__fieldset__ul'>
             <li className='fdAccountRegistry__container__fieldset__ul__firstName'>
               <div className='fdAccountRegistry__container__field__ul__firstName__container'>
-                <label id='firstName' htmlFor='fdUserAccountFirstName'>
+                <label id='firstName' htmlFor='fdUserAccountFirstName' ref={labelsRef}>
                   First name
                 </label>
                 <input
@@ -131,7 +145,7 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
 
             <li className='fdAccountRegistry__container__fieldset__ul__lastName'>
               <div className='fdAccountRegistry__container__field__ul__lastName__container'>
-                <label id='lastName' htmlFor='fdUserAccountLastName'>
+                <label id='lastName' htmlFor='fdUserAccountLastName' ref={labelsRef}>
                   Last name
                 </label>
                 <input
@@ -150,10 +164,81 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
                 />
               </div>
             </li>
+          </ul>
+          {/*  */}
+          <ul className='fdAccountRegistry__container__fieldset__ul'>
+            <li className='fdAccountRegistry__container__fieldset__ul__dobMonth'>
+              <div className='fdAccountRegistry__container__field__ul__dobMonth__container'>
+                <label id='dobMonth' htmlFor='fdUserAccountDobMonth' ref={labelsRef}>
+                  Month
+                </label>
+                <input
+                  form='fdRegistery'
+                  id='fdUserAccountDobMonth'
+                  name='dobMonth'
+                  type='text'
+                  inputMode='text'
+                  size={12}
+                  required={true}
+                  aria-required='true'
+                  aria-invalid={values.dobMonth.valid}
+                  autoFocus
+                  autoCapitalize='words'
+                  onClick={() => focus()}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+                />
+              </div>
+            </li>
 
+            <li className='fdAccountRegistry__container__fieldset__ul__dobDay'>
+              <div className='fdAccountRegistry__container__field__ul__dobDay__container'>
+                <label id='dobDay' htmlFor='fdUserAccountDobDay' ref={labelsRef}>
+                  Day
+                </label>
+                <input
+                  form='fdRegistery'
+                  id='fdUserAccountDobDay'
+                  name='dobDay'
+                  type='text'
+                  inputMode='text'
+                  size={12}
+                  required={false}
+                  aria-required='true'
+                  aria-invalid={values.dobDay.valid}
+                  autoCapitalize='words'
+                  onClick={() => focus()}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+                />
+              </div>
+            </li>
+
+            <li className='fdAccountRegistry__container__fieldset__ul__dobYear'>
+              <div className='fdAccountRegistry__container__field__ul__dobYear__container'>
+                <label id='dobYear' htmlFor='fdUserAccountDobYear' ref={labelsRef}>
+                  Year
+                </label>
+                <input
+                  form='fdRegistery'
+                  id='fdUserAccountDobYear'
+                  name='dobYear'
+                  type='text'
+                  inputMode='text'
+                  size={12}
+                  required={false}
+                  aria-required='true'
+                  aria-invalid={values.dobYear.valid}
+                  autoCapitalize='words'
+                  onClick={() => focus()}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+                />
+              </div>
+            </li>
+          </ul>
+          {/*  */}
+          <ul className='fdAccountRegistry__container__fieldset__ul'>
             <li className='fdAccountRegistry__container__fieldset__ul__emailAddress'>
               <div className='fdAccountRegistry__container__field__ul__emailAddress__container'>
-                <label id='emailAddress' htmlFor='fdUserAccountEmailAddress'>
+                <label id='emailAddress' htmlFor='fdUserAccountEmailAddress' ref={labelsRef}>
                   Email address
                 </label>
                 <input
@@ -176,10 +261,13 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
                 />
               </div>
             </li>
+            {/*  */}
+          </ul>
 
+          <ul className='fdAccountRegistry__container__fieldset__ul'>
             <li className='fdAccountRegistry__container__fieldset__ul__password'>
               <div className='fdAccountRegistry__container__field__ul__password__container'>
-                <label id='password' htmlFor='fdUserAccountPassword'>
+                <label id='password' htmlFor='fdUserAccountPassword' ref={labelsRef}>
                   Password
                 </label>
                 <input
@@ -205,7 +293,7 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
 
             <li className='fdAccountRegistry__container__fieldset__ul__passwordConfirmation'>
               <div className='fdAccountRegistry__container__field__ul__passwordConfirmation__container'>
-                <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation'>
+                <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation' ref={labelsRef}>
                   Retype password
                 </label>
                 <input
@@ -228,7 +316,6 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
                 />
               </div>
             </li>
-
             <li className='fdAccountRegistry__container__fieldset__ul__container__submitRegistrationForm'>
               <button
                 id='fdUserAccountSubmitForm'
@@ -241,7 +328,7 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
           </ul>
         </fieldset>
       </div>
-    </div>
+    </section>
   );
 });
 
