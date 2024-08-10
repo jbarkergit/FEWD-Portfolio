@@ -12,12 +12,12 @@ const FDMenuToolbar = ({
     | {
         key: string;
         icon: JSX.Element;
-        ref: RefObject<HTMLElement>;
+        ref: undefined;
       }
     | {
         key: string;
         icon: JSX.Element;
-        ref: undefined;
+        ref: RefObject<HTMLElement>;
       }
   )[];
   toggleMenus: (refParam: RefObject<HTMLElement> | undefined) => void;
