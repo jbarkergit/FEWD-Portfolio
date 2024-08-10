@@ -47,7 +47,7 @@
       & h2 {
         display: none;
       }
-      & button {
+      &--accBtn {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -61,12 +61,6 @@
         text-transform: none;
         text-shadow: var(--fd-font-shadow);
         color: rgb(59, 59, 59);
-      }
-      &--signin {
-      }
-      &--guest {
-      }
-      &--signup {
       }
     }
   }
