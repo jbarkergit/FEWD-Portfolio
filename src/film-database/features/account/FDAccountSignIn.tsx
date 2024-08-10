@@ -1,8 +1,12 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, forwardRef, useRef, useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { firebaseAuth } from '../../../config/firebaseConfig';
 
-const FDAccountSignIn = () => {
+type Type_PropDrill = {
+  toggleComponent: (modal: 'article' | 'registry' | 'signin') => void;
+};
+
+const FDAccountSignIn = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleComponent }, signInRefReceiver) => {
   const ulRef = useRef<HTMLUListElement>(null);
 
   const [values, setValues] = useState({
@@ -33,7 +37,7 @@ const FDAccountSignIn = () => {
   };
 
   return (
-    <section className='fdAccountSignIn'>
+    <div className='fdAccountSignIn' ref={signInRefReceiver}>
       <fieldset>
         <section className='fdAccountSignIn__container__col'>
           <div className='fdAccountSignIn__container__col__logo'>Film Database</div>
@@ -109,8 +113,8 @@ const FDAccountSignIn = () => {
           </li>
         </ul>
       </fieldset>
-    </section>
+    </div>
   );
-};
+});
 
 export default FDAccountSignIn;
