@@ -37,7 +37,7 @@ const FDAccountSignIn = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleComp
   };
 
   return (
-    <div className='fdAccountSignIn' ref={signInRefReceiver}>
+    <div className='fdAccountSignIn' ref={signInRefReceiver} data-activity='disabled'>
       <fieldset>
         <section className='fdAccountSignIn__container__col'>
           <div className='fdAccountSignIn__container__col__logo'>Film Database</div>
