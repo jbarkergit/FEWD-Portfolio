@@ -12,7 +12,7 @@ type Type_PropDrill = {
 const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
   /** Attribute setter */
   const articleRefReceiver = useRef<HTMLElement>(null);
-  const registryRefReceiver = useRef<HTMLFormElement>(null);
+  const registryRefReceiver = useRef<HTMLDivElement>(null);
 
   const toggleComponent = (modal: 'article' | 'registry' | 'signin'): void => {
     switch (modal) {
