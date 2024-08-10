@@ -5,6 +5,8 @@ import FDUserAccount from './FDUserAccount';
 import FDCatalog from './FDCatalog';
 
 const FilmDatabase = () => {
+  const rootRef = useRef<HTMLDivElement>(null);
+
   /** filmDatabase Breakpoint Attr
    * Breakpoints at 25% of second row's poster
    */
@@ -57,9 +59,6 @@ const FilmDatabase = () => {
     window.addEventListener('resize', getDataLayout);
     return () => window.removeEventListener('resize', getDataLayout);
   }, []);
-
-  // Prop
-  const rootRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className='filmDatabase' data-layout-carousel={layoutAttr} ref={rootRef}>
