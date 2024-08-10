@@ -1,4 +1,6 @@
 import { ChangeEvent, useRef, useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { firebaseAuth } from '../../../config/firebaseConfig';
 
 const FDAccountSignIn = () => {
   const ulRef = useRef<HTMLUListElement>(null);
@@ -16,6 +18,18 @@ const FDAccountSignIn = () => {
     setValues((prevValues) => {
       return { ...prevValues, [key]: { ...prevValues[key], value: e.target.value } };
     });
+  };
+
+  const authorizeSignIn = async (): Promise<void> => {
+    const isValuesValid: boolean = !Object.values(values).some((value) => value.valid === false);
+
+    if (isValuesValid) {
+      try {
+        await signInWithEmailAndPassword(firebaseAuth, values.emailAddress.value, values.password.value);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -89,7 +103,7 @@ const FDAccountSignIn = () => {
           </li>
 
           <li className='fdAccountSignIn__container__fieldset__ul__container__submitRegistrationForm'>
-            <button id='fdUserAccountSubmitForm' aria-label='Sign in' style={{ color: 'black' }} onClick={(e: React.PointerEvent<HTMLButtonElement>) => {}}>
+            <button id='fdUserAccountSubmitForm' aria-label='Sign in' onClick={() => authorizeSignIn()}>
               Sign in
             </button>
           </li>
