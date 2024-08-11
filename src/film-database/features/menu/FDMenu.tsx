@@ -3,12 +3,19 @@ import { Dispatch, RefObject, SetStateAction, useRef } from 'react';
 // Composable types
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 // Assets
-import { MaterialSymbolsSearch, MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, IcBaselinePerson2 } from '../../assets/google-material-symbols/menuSymbols';
+import {
+  MaterialSymbolsSearch,
+  MaterialSymbolsHome,
+  MaterialSymbolsAnimatedImagesSharp,
+  IcBaselinePerson2,
+  MaterialSymbolsMovie,
+} from '../../assets/google-material-symbols/menuSymbols';
 // Components
 import FDMenuToolbar from '../../components/menu/FDMenuToolbar';
 import FDMenuGenres from '../../components/menu/FDMenuGenres';
 import FDMenuSearchBar from '../../components/menu/FDMenuSearchBar';
 import FDMenuAccount from '../../components/menu/FDMenuAccount';
+import FDMenuQueue from '../../components/menu/FDMenuQueue';
 
 const FDMenu = ({
   isMenuOpen,
@@ -20,16 +27,18 @@ const FDMenu = ({
   setRoute: Dispatch<SetStateAction<Type_MovieGenre_Keys | 'home'>>;
 }) => {
   /** Toggle menus */
-  const menuRef = useRef<HTMLDivElement>(null);
   const menuAccountRef = useRef<HTMLElement>(null);
-  const menuSearchRef = useRef<HTMLElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const menuGenresRef = useRef<HTMLElement>(null);
+  const menuSearchRef = useRef<HTMLElement>(null);
+  const menuQueueRef = useRef<HTMLElement>(null);
 
   const toolbarObjArr = [
     { key: 'Account', icon: <IcBaselinePerson2 />, ref: menuAccountRef },
     { key: 'Home', icon: <MaterialSymbolsHome />, ref: undefined },
     { key: 'Genres', icon: <MaterialSymbolsAnimatedImagesSharp />, ref: menuGenresRef },
     { key: 'Search', icon: <MaterialSymbolsSearch />, ref: menuSearchRef },
+    { key: 'Queue', icon: <MaterialSymbolsMovie />, ref: menuQueueRef },
   ];
 
   const toggleMenus = (refParam: RefObject<HTMLElement> | undefined) => {
@@ -52,8 +61,9 @@ const FDMenu = ({
 
       <div className='fdMenu__menu'>
         <FDMenuAccount ref={menuAccountRef} />
-        <FDMenuSearchBar ref={menuSearchRef} />
         <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
+        <FDMenuSearchBar ref={menuSearchRef} />
+        <FDMenuQueue ref={menuQueueRef} />
       </div>
     </div>
   );
