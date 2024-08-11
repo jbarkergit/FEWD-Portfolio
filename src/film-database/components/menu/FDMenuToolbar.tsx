@@ -35,7 +35,6 @@ const FDMenuToolbar = ({
                 obj.key === 'Home' ? setRoute('home') : null;
               }}>
               <span className='fdMenu__toolbar__ul__li--button--icon'>{obj.icon}</span>
-              {/* <span className='fdMenu__toolbar__ul__li--button--key'>{obj.key}</span> */}
             </button>
           </li>
         ))}

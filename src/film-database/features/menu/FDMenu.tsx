@@ -26,9 +26,10 @@ const FDMenu = ({
   setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
   setRoute: Dispatch<SetStateAction<Type_MovieGenre_Keys | 'home'>>;
 }) => {
+  const menuRef = useRef<HTMLElement>(null);
+
   /** Toggle menus */
   const menuAccountRef = useRef<HTMLElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
   const menuGenresRef = useRef<HTMLElement>(null);
   const menuSearchRef = useRef<HTMLElement>(null);
   const menuQueueRef = useRef<HTMLElement>(null);
@@ -56,16 +57,15 @@ const FDMenu = ({
   };
 
   return (
-    <div className='fdMenu' ref={menuRef} data-modal={isMenuOpen ? 'open' : 'closed'}>
+    <section className='fdMenu' ref={menuRef} data-modal={isMenuOpen ? 'open' : 'closed'}>
       <FDMenuToolbar setRoute={setRoute} toolbarObjArr={toolbarObjArr} toggleMenus={toggleMenus} />
-
       <div className='fdMenu__menu'>
-        <FDMenuAccount ref={menuAccountRef} />
         <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
         <FDMenuSearchBar ref={menuSearchRef} />
         <FDMenuQueue ref={menuQueueRef} />
+        <FDMenuAccount ref={menuAccountRef} />
       </div>
-    </div>
+    </section>
   );
 };
 
