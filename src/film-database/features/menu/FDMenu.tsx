@@ -35,10 +35,10 @@ const FDMenu = ({
 
   const toolbarObjArr = [
     { key: 'Account', icon: <IcBaselinePerson2 />, ref: menuAccountRef },
+    { key: 'Queue', icon: <MaterialSymbolsMovie />, ref: menuQueueRef },
     { key: 'Home', icon: <MaterialSymbolsHome />, ref: undefined },
     { key: 'Genres', icon: <MaterialSymbolsAnimatedImagesSharp />, ref: menuGenresRef },
     { key: 'Search', icon: <MaterialSymbolsSearch />, ref: menuSearchRef },
-    { key: 'Queue', icon: <MaterialSymbolsMovie />, ref: menuQueueRef },
   ];
 
   const toggleMenus = (refParam: RefObject<HTMLElement> | undefined) => {
