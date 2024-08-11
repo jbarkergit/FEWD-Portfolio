@@ -3,6 +3,7 @@
  */
 
 type Type_GetPrefabList_Keys = 'now_playing' | 'upcoming' | 'popular' | 'top_rated' | 'trending_today' | 'trending_this_week';
+
 type Type_GetIdData_Keys =
   | 'discover'
   | 'details'
@@ -15,11 +16,14 @@ type Type_GetIdData_Keys =
   | 'videos'
   | 'watchProviders';
 
-export type Type_Tmdb_Movie_Keys_Union = Type_GetPrefabList_Keys | Type_GetIdData_Keys;
+type Type_GetSearchResult_Keys = 'querieMovie';
+
+export type Type_Tmdb_Movie_Keys_Union = Type_GetPrefabList_Keys | Type_GetIdData_Keys | Type_GetSearchResult_Keys;
 
 type Type_Tmdb_Movie_Endpoint_Obj = {
   getPrefabList: Record<Type_GetPrefabList_Keys, string>;
   getIdData: Record<Type_GetIdData_Keys, string>;
+  getSearchResult: Record<Type_GetSearchResult_Keys, string>;
 };
 
 export const tmdbMovieEndpoints: Type_Tmdb_Movie_Endpoint_Obj = {
@@ -42,5 +46,8 @@ export const tmdbMovieEndpoints: Type_Tmdb_Movie_Endpoint_Obj = {
     similar: 'https://api.themoviedb.org/3/movie/{movie_id}/similar',
     videos: 'https://api.themoviedb.org/3/movie/{movie_id}/videos',
     watchProviders: 'https://api.themoviedb.org/3/movie/{movie_id}/watch/providers',
+  },
+  getSearchResult: {
+    querieMovie: 'https://api.themoviedb.org/3/search/movie',
   },
 };
