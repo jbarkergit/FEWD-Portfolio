@@ -8,6 +8,7 @@ type Type_Tmdb_EndpointBuilder_Arr_Opt = Partial<{
   movie_id: number;
   append_to_response: 'videos' | 'images' | 'videos,images';
   genre: string;
+  querie: string;
 }>;
 
 export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_Tmdb_EndpointBuilder_Arr_Opt[]) => {
@@ -50,6 +51,9 @@ export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_T
             key: arg.genre,
             endpoint: keyEntry[1].replace('/movie', `/movie?api_key=${apiKey}`).replace('{genre_ids}', `&with_genres=${routeId}`),
           };
+
+        case !!arg.querie:
+          keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1] + `?query=${arg.querie}&include_adult=false&language=en-US&page=1` };
           break;
 
         default:
