@@ -86,6 +86,8 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
     }
   };
 
+  const fieldsetRef = useRef<HTMLFieldSetElement>(null);
+
   const handleLabels = (): void => {
     if (!fieldsetRef.current) return;
 
@@ -97,13 +99,6 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
   };
 
   useEffect(() => handleLabels(), [values]);
-
-  const fieldsetRef = useRef<HTMLFieldSetElement>(null);
-
-  const handleUls = (): void => {
-    if (!fieldsetRef.current) return;
-    const fieldsetChildren = Array.from(fieldsetRef.current.children) as HTMLUListElement[];
-  };
 
   return (
     <section className='fdAccountRegistry' id='fdRegistery' data-activity='active' ref={registryRefReceiver}>
