@@ -88,4 +88,21 @@ export type Type_Tmdb_ApiTrailer_Obj = {
   type: string;
 };
 
+export type Type_Tmdb_QuerieMovie_Obj = {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
+
 export type Type_Tmdb_Api_Union = Type_Tmdb_ApiMovieList_Obj | Type_Tmdb_ApiMovie_Obj | Type_Tmdb_ApiTrailer_Obj;
