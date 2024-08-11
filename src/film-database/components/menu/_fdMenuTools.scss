@@ -77,7 +77,7 @@
       width: fit-content;
       // 50 svh - header font size (*2 for button) - global gap - parent padding
       // padding: calc(50svh - var(--fd-font-size-xtreme) * 1 - var(--fd-gap) - var(--fd-padding-generic)) 0;
-      margin: var(--fd-padding-generic) var(--fd-padding-generic) 0 calc(var(--fd-padding-generic) / 2);
+      margin: calc(var(--fd-padding-generic) / 2);
       &__ul {
         display: flex;
         flex-direction: column;
@@ -86,6 +86,12 @@
         // border-bottom: 1px solid rgba(255, 255, 255, 0.19);
         overflow-y: scroll;
         scrollbar-width: none;
+        &:hover .fdMenu__menu__genres__container__nav__ul__li--button {
+          opacity: 0.3;
+        }
+        &:hover .fdMenu__menu__genres__container__nav__ul__li--button:hover {
+          opacity: 1;
+        }
         &__li {
           display: flex;
           padding: 0 calc(var(--fd-gap) * 2);
@@ -96,6 +102,7 @@
             text-transform: uppercase;
             text-shadow: var(--fd-font-shadow);
             white-space: nowrap;
+            transition: opacity 400ms ease;
           }
         }
       }
