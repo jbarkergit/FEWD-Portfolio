@@ -3,17 +3,10 @@ import { Dispatch, RefObject, SetStateAction, useRef } from 'react';
 // Composable types
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 // Assets
-import {
-  MaterialSymbolsSearch,
-  MaterialSymbolsHome,
-  MaterialSymbolsAnimatedImagesSharp,
-  IcBaselinePerson2,
-  MaterialSymbolsMovie,
-} from '../../assets/google-material-symbols/menuSymbols';
+import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, IcBaselinePerson2, MaterialSymbolsMovie } from '../../assets/google-material-symbols/menuSymbols';
 // Components
 import FDMenuToolbar from '../../components/menu/FDMenuToolbar';
 import FDMenuGenres from '../../components/menu/FDMenuGenres';
-import FDMenuSearchBar from '../../components/menu/FDMenuSearchBar';
 import FDMenuAccount from '../../components/menu/FDMenuAccount';
 import FDMenuQueue from '../../components/menu/FDMenuQueue';
 
@@ -31,13 +24,11 @@ const FDMenu = ({
   /** Toggle menus */
   const menuAccountRef = useRef<HTMLElement>(null);
   const menuGenresRef = useRef<HTMLElement>(null);
-  const menuSearchRef = useRef<HTMLElement>(null);
   const menuQueueRef = useRef<HTMLElement>(null);
 
   const toolbarObjArr = [
     { key: 'Home', icon: <MaterialSymbolsHome />, ref: undefined },
     { key: 'Genres', icon: <MaterialSymbolsAnimatedImagesSharp />, ref: menuGenresRef },
-    { key: 'Search', icon: <MaterialSymbolsSearch />, ref: menuSearchRef },
     { key: 'Queue', icon: <MaterialSymbolsMovie />, ref: menuQueueRef },
     { key: 'Account', icon: <IcBaselinePerson2 />, ref: menuAccountRef },
   ];
@@ -61,7 +52,6 @@ const FDMenu = ({
       <FDMenuToolbar setRoute={setRoute} toolbarObjArr={toolbarObjArr} toggleMenus={toggleMenus} />
       <div className='fdMenu__menu'>
         <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
-        <FDMenuSearchBar ref={menuSearchRef} />
         <FDMenuQueue ref={menuQueueRef} />
         <FDMenuAccount ref={menuAccountRef} />
       </div>
