@@ -110,11 +110,8 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
                       </picture>
                     </figure>
                   </article>
-                  <div className='fdSearchBar__results__ul__li__overlay'>
-                    <button
-                      className='fdSearchBar__results__ul__li__overlay--play'
-                      aria-label='Play trailer'
-                      onClick={() => setHeroData(props as Type_Tmdb_Api_Union)}>
+                  <div className='fdSearchBar__results__ul__li__overlay' onClick={() => setHeroData(props as Type_Tmdb_Api_Union)}>
+                    <button className='fdSearchBar__results__ul__li__overlay--play' aria-label='Play trailer'>
                       <MaterialSymbolsPlayArrow />
                     </button>
                   </div>
