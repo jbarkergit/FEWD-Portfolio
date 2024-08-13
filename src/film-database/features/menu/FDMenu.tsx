@@ -29,7 +29,7 @@ const FDMenu = ({
   const toolbarObjArr = [
     { key: 'Home', icon: <MaterialSymbolsHome />, ref: undefined },
     { key: 'Genres', icon: <MaterialSymbolsAnimatedImagesSharp />, ref: menuGenresRef },
-    { key: 'Queue', icon: <MaterialSymbolsMovie />, ref: menuQueueRef },
+    // { key: 'Queue', icon: <MaterialSymbolsMovie />, ref: menuQueueRef },
     { key: 'Account', icon: <IcBaselinePerson2 />, ref: menuAccountRef },
   ];
 
