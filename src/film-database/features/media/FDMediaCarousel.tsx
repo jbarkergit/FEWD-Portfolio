@@ -1,12 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 import FDCarouselSearch from '../../components/carousel-search/FDCarouselSearch';
 
 type Type_PropDrill = {
   carouselComponents: JSX.Element[];
   isMenuOpen: boolean;
+  setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>>;
 };
 
-const FDMediaCarousel = ({ carouselComponents, isMenuOpen }: Type_PropDrill) => {
+const FDMediaCarousel = ({ carouselComponents, isMenuOpen, setHeroData }: Type_PropDrill) => {
   /** Carousel DeltaY scroll logic */
   const dataAttr: string = 'data-anim';
   const fdMediaRef = useRef<HTMLElement>(null);
@@ -54,7 +56,7 @@ const FDMediaCarousel = ({ carouselComponents, isMenuOpen }: Type_PropDrill) => 
   return (
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
       {...carouselComponents}
-      <FDCarouselSearch />
+      <FDCarouselSearch setHeroData={setHeroData} />
     </main>
   );
 };

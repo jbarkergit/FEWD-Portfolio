@@ -117,7 +117,7 @@ const FDCatalog = () => {
       <FDMenu setRoute={setRoute} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
-      <FDMediaCarousel carouselComponents={carouselComponents} isMenuOpen={isMenuOpen} />
+      <FDMediaCarousel carouselComponents={carouselComponents} isMenuOpen={isMenuOpen} setHeroData={setHeroData} />
     </div>
   );
 };
