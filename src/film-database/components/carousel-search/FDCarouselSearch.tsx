@@ -15,7 +15,6 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
   /** User is searching */
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isTyping, setIsTyping] = useState<boolean>(false);
-  useEffect(() => console.log(isTyping), [isTyping]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   /** Handle label */
@@ -23,7 +22,6 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
 
   /** Fetch */
   const [searchResults, setSearchResults] = useState<Type_Tmdb_QuerieMovie_Obj[] | undefined>(undefined);
-  useEffect(() => console.log(searchResults), [searchResults]);
 
   const fetchResults = async (): Promise<void> => {
     const fetchUrl = useTmdbUrlBuilder('querieMovie', [{ querie: searchTerm }]);

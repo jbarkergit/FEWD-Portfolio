@@ -25,8 +25,6 @@ const FilmDatabase = () => {
 
   useEffect(() => {
     const authListener = onAuthStateChanged(firebaseAuth, (user) => {
-      console.log(user);
-
       if (!user) {
         setAuthorizedUser({ user: undefined, verified: false });
       } else {
