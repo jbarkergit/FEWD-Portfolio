@@ -1,4 +1,4 @@
-import { ChangeEvent, forwardRef, useRef, useState } from 'react';
+import { ChangeEvent, forwardRef, useEffect, useRef, useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { firebaseAuth } from '../../../config/firebaseConfig';
 
@@ -7,6 +7,7 @@ type Type_PropDrill = {
 };
 
 const FDAccountSignIn = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleComponent }, signInRefReceiver) => {
+  /** Value setter */
   const ulRef = useRef<HTMLUListElement>(null);
 
   const [values, setValues] = useState({
@@ -24,6 +25,7 @@ const FDAccountSignIn = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleComp
     });
   };
 
+  /** Auth */
   const authorizeSignIn = async (): Promise<void> => {
     const isValuesValid: boolean = !Object.values(values).some((value) => value.valid === false);
 
@@ -36,19 +38,30 @@ const FDAccountSignIn = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleComp
     }
   };
 
+  /** Form sections */
+  const [counter, setCounter] = useState<number>(0);
+
+  const LIArr: HTMLLIElement[] = [];
+
+  const liRef = (reference: HTMLLIElement): void => {
+    if (reference && !LIArr.includes(reference)) LIArr.push(reference);
+  };
+
+  useEffect(() => LIArr.forEach((li, index) => li.setAttribute('data-status', index === counter ? 'enabled' : 'disabled')), [counter]);
+
   return (
     <div className='fdAccountSignIn' ref={signInRefReceiver} data-activity='disabled'>
-      <fieldset>
+      <fieldset className='fdAccountSignIn__container'>
         <section className='fdAccountSignIn__container__col'>
           <div className='fdAccountSignIn__container__col__logo'>Film Database</div>
-          <legend className='fdAccountSignIn__container__fieldset__legend'>
-            <h2 className='fdAccountSignIn__container__fieldset__legend--h2'>Sign in</h2>
+          <legend className='fdAccountSignIn__container__legend'>
+            <h2 className='fdAccountSignIn__container__legend--h2'>Sign in</h2>
           </legend>
           <div className='fdAccountSignIn__container__col__hint'>to continue</div>
         </section>
 
-        <ul className='fdAccountSignIn__container__fieldset__ul' ref={ulRef}>
-          <li className='fdAccountSignIn__container__fieldset__ul__emailAddress'>
+        <ul className='fdAccountSignIn__container__ul' ref={ulRef}>
+          <li className='fdAccountSignIn__container__ul__emailAddress' ref={liRef} data-status='enabled'>
             <div className='fdAccountSignIn__container__field__ul__emailAddress__container'>
               <label id='emailAddress' htmlFor='fdUserAccountEmailAddress'>
                 Email address
@@ -77,7 +90,7 @@ const FDAccountSignIn = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleComp
             </button>
           </li>
 
-          <li className='fdAccountSignIn__container__fieldset__ul__password'>
+          <li className='fdAccountSignIn__container__ul__password' ref={liRef} data-status='disabled'>
             <div className='fdAccountSignIn__container__field__ul__password__container'>
               <label id='password' htmlFor='fdUserAccountPassword'>
                 Password
@@ -106,7 +119,7 @@ const FDAccountSignIn = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleComp
             </button>
           </li>
 
-          <li className='fdAccountSignIn__container__fieldset__ul__container__submitRegistrationForm'>
+          <li className='fdAccountSignIn__container__ul__container__submitRegistrationForm' ref={liRef} data-status='disabled'>
             <button id='fdUserAccountSubmitForm' aria-label='Sign in' onClick={() => authorizeSignIn()}>
               Sign in
             </button>
