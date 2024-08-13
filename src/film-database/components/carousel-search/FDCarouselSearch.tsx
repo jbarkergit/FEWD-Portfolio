@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, ChangeEvent } from 'react';
+import { useState, useEffect, useRef, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { MaterialSymbolsPlayArrow, SvgSpinnersRingResize } from '../../assets/google-material-symbols/iFrameSymbols';
@@ -8,10 +8,10 @@ import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../a
 import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
 
-import { Type_Tmdb_QuerieMovie_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
+import { Type_Tmdb_Api_Union, Type_Tmdb_QuerieMovie_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
 import FDCarouselButton from '../carousel/FDCarouselButton';
 
-const FDCarouselSearch = () => {
+const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>> }) => {
   /** User is searching */
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isTyping, setIsTyping] = useState<boolean>(false);
@@ -113,7 +113,10 @@ const FDCarouselSearch = () => {
                     </figure>
                   </article>
                   <div className='fdSearchBar__results__ul__li__overlay'>
-                    <button className='fdSearchBar__results__ul__li__overlay--play' aria-label='Play trailer'>
+                    <button
+                      className='fdSearchBar__results__ul__li__overlay--play'
+                      aria-label='Play trailer'
+                      onClick={() => setHeroData(props as Type_Tmdb_Api_Union)}>
                       <MaterialSymbolsPlayArrow />
                     </button>
                   </div>
