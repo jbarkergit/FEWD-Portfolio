@@ -23,23 +23,21 @@ const FDMenuToolbar = ({
   toggleMenus: (refParam: RefObject<HTMLElement> | undefined) => void;
 }) => {
   return (
-    <section className='fdMenu__toolbar'>
-      <ul className='fdMenu__toolbar__ul'>
-        {toolbarObjArr.map((obj) => (
-          <li className='fdMenu__toolbar__ul__li' key={uuidv4()}>
-            <button
-              className='fdMenu__toolbar__ul__li--button'
-              aria-label={`Select ${obj.key}`}
-              onClick={() => {
-                toggleMenus(obj.ref);
-                obj.key === 'Home' ? setRoute('home') : null;
-              }}>
-              <span className='fdMenu__toolbar__ul__li--button--icon'>{obj.icon}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <>
+      {toolbarObjArr.map((obj) => (
+        <li className='fdMenu__toolbar__ul__li' key={uuidv4()}>
+          <button
+            className='fdMenu__toolbar__ul__li--button'
+            aria-label={`Select ${obj.key}`}
+            onClick={() => {
+              toggleMenus(obj.ref);
+              obj.key === 'Home' ? setRoute('home') : null;
+            }}>
+            <span className='fdMenu__toolbar__ul__li--button--icon'>{obj.icon}</span>
+          </button>
+        </li>
+      ))}
+    </>
   );
 };
 
