@@ -3,7 +3,13 @@ import { Dispatch, RefObject, SetStateAction, useRef } from 'react';
 // Composable types
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 // Assets
-import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, IcBaselinePerson2, MaterialSymbolsMovie } from '../../assets/google-material-symbols/menuSymbols';
+import {
+  MaterialSymbolsHome,
+  MaterialSymbolsAnimatedImagesSharp,
+  IcBaselinePerson2,
+  MaterialSymbolsMovie,
+  IcOutlinePowerSettingsNew,
+} from '../../assets/google-material-symbols/menuSymbols';
 // Components
 import FDMenuToolbar from '../../components/menu/FDMenuToolbar';
 import FDMenuGenres from '../../components/menu/FDMenuGenres';
@@ -30,7 +36,7 @@ const FDMenu = ({
     { key: 'Home', icon: <MaterialSymbolsHome />, ref: undefined },
     { key: 'Genres', icon: <MaterialSymbolsAnimatedImagesSharp />, ref: menuGenresRef },
     // { key: 'Queue', icon: <MaterialSymbolsMovie />, ref: menuQueueRef },
-    { key: 'Account', icon: <IcBaselinePerson2 />, ref: menuAccountRef },
+    { key: 'Account', icon: <IcOutlinePowerSettingsNew />, ref: menuAccountRef },
   ];
 
   const toggleMenus = (refParam: RefObject<HTMLElement> | undefined) => {
@@ -52,7 +58,7 @@ const FDMenu = ({
       <FDMenuToolbar setRoute={setRoute} toolbarObjArr={toolbarObjArr} toggleMenus={toggleMenus} />
       <div className='fdMenu__menu'>
         <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
-        <FDMenuQueue ref={menuQueueRef} />
+        {/* <FDMenuQueue ref={menuQueueRef} /> */}
         <FDMenuAccount ref={menuAccountRef} />
       </div>
     </section>
