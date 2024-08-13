@@ -2,7 +2,6 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdSearchBar {
-  padding-bottom: calc(var(--fd-gap) * 2);
   transition: all 280ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
   &[data-anim='disabled'] {
     opacity: 0;
@@ -17,19 +16,25 @@
   &__fieldset {
     position: relative;
     display: flex;
-    width: 100%;
+    width: 40%;
     &__legend {
       display: none;
     }
     &__label {
       position: absolute;
       left: 0;
+      display: flex;
+      align-items: center;
+      gap: f.rem(6);
       white-space: nowrap;
       pointer-events: none;
-      &[data-status='enabled'] {
+      &[data-opacity='visible'] {
         opacity: 1;
       }
-      &[data-status='disabled'] {
+      &[data-opacity='barelyVisible'] {
+        opacity: 0.3;
+      }
+      &[data-opacity='hidden'] {
         opacity: 0;
       }
     }
@@ -40,10 +45,14 @@
 }
 
 .fdSearchBar__results {
-  padding-bottom: calc(var(--fd-gap) * 2);
   transition: all 280ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  &[data-status='enabled'] {
+    opacity: 1;
+    padding-bottom: calc(var(--fd-gap) * 2);
+  }
   &[data-anim='disabled'] {
     opacity: 0;
+    pointer-events: none;
   }
   &:hover .fdSearchBar__results__navigation {
     opacity: 1;
