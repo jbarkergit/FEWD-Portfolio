@@ -9,6 +9,7 @@ type Type_Tmdb_EndpointBuilder_Arr_Opt = Partial<{
   append_to_response: 'videos' | 'images' | 'videos,images';
   genre: string;
   querie: string;
+  provider: number;
 }>;
 
 export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_Tmdb_EndpointBuilder_Arr_Opt[]) => {
@@ -54,6 +55,10 @@ export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_T
 
         case !!arg.querie:
           keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1] + `?query=${arg.querie}&include_adult=false&language=en-US&page=1` };
+          break;
+
+        case !!arg.provider:
+          keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1].replace('{movie_id}', `${arg.provider}`) + `?api_key=${apiKey}` };
           break;
 
         default:
