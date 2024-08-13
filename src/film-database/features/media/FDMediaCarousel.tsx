@@ -53,8 +53,8 @@ const FDMediaCarousel = ({ carouselComponents, isMenuOpen }: Type_PropDrill) => 
   /** Component */
   return (
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
-      <FDCarouselSearch />
       {...carouselComponents}
+      <FDCarouselSearch />
     </main>
   );
 };
