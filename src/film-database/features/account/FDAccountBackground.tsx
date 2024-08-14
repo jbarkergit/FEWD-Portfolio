@@ -1,5 +1,5 @@
 // Deps
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 // Hooks
@@ -56,27 +56,49 @@ const FDAccountBackground = () => {
 
   return (
     <div className='fdAccountBackground'>
-      {responseSetArr?.map((set) => {
-        return (
-          <ul className='fdAccountBackground__set' key={uuidv4()}>
-            {set.map((article) => {
-              const props = useTmdbProps(article);
-              return (
-                <li className='fdAccountBackground__set__li' key={uuidv4()}>
-                  <article className='fdAccountBackground__set__li__article'>
-                    <figure className='fdAccountBackground__set__li__article__graphic'>
-                      <picture>
-                        <img src={`https://image.tmdb.org/t/p/original/${props?.backdrop_path}`} alt={`${props?.alt}`} />
-                        <figcaption>{`${props?.alt}`}</figcaption>
-                      </picture>
-                    </figure>
-                  </article>
-                </li>
-              );
-            })}
-          </ul>
-        );
-      })}
+      <div className='fdAccountBackground__backdrop'>
+        {responseSetArr?.map((set: Type_Tmdb_Api_Union[]) => {
+          return (
+            <ul className='fdAccountBackground__backdrop__set' key={uuidv4()}>
+              {set.map((article: Type_Tmdb_Api_Union) => {
+                const props = useTmdbProps(article);
+                return (
+                  <li className='fdAccountBackground__backdrop__set__li' key={uuidv4()}>
+                    <article className='fdAccountBackground__backdrop__set__li__article'>
+                      <figure className='fdAccountBackground__backdrop__set__li__article__graphic'>
+                        <picture>
+                          <img src={`https://image.tmdb.org/t/p/original/${props?.backdrop_path}`} alt={`${props?.alt}`} />
+                          <figcaption>{`${props?.alt}`}</figcaption>
+                        </picture>
+                      </figure>
+                    </article>
+                  </li>
+                );
+              })}
+            </ul>
+          );
+        })}
+      </div>
+
+      {/* <ul className='fdAccountBackground__selection' key={uuidv4()}>
+        {response?.map((obj) =>
+          obj.endpoint.map((item) => {
+            const props = useTmdbProps(item);
+            return (
+              <li className='fdAccountBackground__selection__li' key={uuidv4()}>
+                <article className='fdAccountBackground__selection__li__article'>
+                  <figure className='fdAccountBackground__selection__li__article__graphic'>
+                    <picture>
+                      <img src={`https://image.tmdb.org/t/p/original/${props?.backdrop_path}`} alt={`${props?.alt}`} />
+                      <figcaption>{`${props?.alt}`}</figcaption>
+                    </picture>
+                  </figure>
+                </article>
+              </li>
+            );
+          })
+        )}
+      </ul> */}
     </div>
   );
 };
