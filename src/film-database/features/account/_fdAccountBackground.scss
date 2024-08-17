@@ -43,7 +43,8 @@
     &:nth-of-type(odd) {
       .fdAccountBackground__backdrop__set:nth-of-type(2) + & li:nth-of-type(2) {
         & article figure picture img {
-          animation: centeredElementScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.65s forwards;
+          image-rendering: optimizeQuality;
+          // animation: centeredElementScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.65s forwards;
         }
       }
     }
@@ -108,6 +109,9 @@
           background: linear-gradient(226deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 35%),
             linear-gradient(135deg, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0) 60%),
             linear-gradient(45deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 70%);
+        }
+        &__graphic figure picture img {
+          image-rendering: optimizeSpeed;
         }
       }
     }
