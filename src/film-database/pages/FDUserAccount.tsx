@@ -54,9 +54,9 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
   return (
     <>
       <FDAccountBackground />
-      {/* <FDAccountArticle toggleComponent={toggleComponent} ref={articleRefReceiver} /> */}
-      {/* <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} /> */}
-      {/* <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} /> */}
+      <FDAccountArticle toggleComponent={toggleComponent} ref={articleRefReceiver} />
+      <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />
+      <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} />
     </>
   );
 };
