@@ -30,6 +30,7 @@
 .fdAccountRegistry {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: calc(var(--fd-gap) * 2);
   &__container {
