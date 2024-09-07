@@ -63,12 +63,12 @@ const FDAccountSignIn = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleComp
         <ul className='fdAccountSignIn__container__ul' ref={ulRef}>
           <li className='fdAccountSignIn__container__ul__emailAddress' ref={liRef} data-status='enabled'>
             <div className='fdAccountSignIn__container__field__ul__emailAddress__container'>
-              <label id='emailAddress' htmlFor='fdUserAccountEmailAddress'>
+              <label id='emailAddress' htmlFor='fdUserAccountSignInEmailAddress'>
                 Email address
               </label>
               <input
                 form='fdRegistery'
-                id='fdUserAccountEmailAddress'
+                id='fdUserAccountSignInEmailAddress'
                 name='emailAddress'
                 type='email'
                 inputMode='email'
@@ -92,12 +92,12 @@ const FDAccountSignIn = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleComp
 
           <li className='fdAccountSignIn__container__ul__password' ref={liRef} data-status='disabled'>
             <div className='fdAccountSignIn__container__field__ul__password__container'>
-              <label id='password' htmlFor='fdUserAccountPassword'>
+              <label id='password' htmlFor='fdUserAccountSignInPassword'>
                 Password
               </label>
               <input
                 form='fdRegistery'
-                id='fdUserAccountPassword'
+                id='fdUserAccountSignInPassword'
                 name='password'
                 type='password'
                 inputMode='text'
