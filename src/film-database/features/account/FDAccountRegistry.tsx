@@ -66,9 +66,10 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
   };
 
   const validateField = (targetName: Type_ValuesKey): void => {
-    if (targetName !== 'dobMonth' && targetName !== 'dobDay' && targetName !== 'dobYear') {
+    const pattern: [string, RegExp] | undefined = Object.entries(regex).find(([name]) => name === targetName);
+    if (pattern) {
       setValues((prevValues) => {
-        const isValueValid: boolean = regex[targetName].test(prevValues[targetName].value);
+        const isValueValid: boolean = pattern[1].test(prevValues[targetName].value);
         const isMatchingPassword: boolean = prevValues['passwordConfirmation'].value === prevValues['password'].value;
         const propArg: boolean = targetName === 'passwordConfirmation' ? isMatchingPassword : isValueValid;
         return { ...prevValues, [targetName]: { ...prevValues[targetName], valid: propArg } };
