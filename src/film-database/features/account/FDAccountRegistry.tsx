@@ -1,5 +1,5 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ChangeEvent, FormEvent, forwardRef, useEffect, useRef, useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { firebaseAuth } from '../../../config/firebaseConfig';
 
 type Type_PropDrill = {
@@ -16,9 +16,9 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
   const [values, setValues] = useState({
     firstName: { value: '', valid: false },
     lastName: { value: '', valid: false },
-    dobMonth: { value: undefined, valid: false },
-    dobDay: { value: undefined, valid: false },
-    dobYear: { value: undefined, valid: false },
+    dobMonth: { value: 'January', valid: false },
+    dobDay: { value: '01', valid: false },
+    dobYear: { value: `${new Date().getFullYear() - 18}`, valid: false },
     emailAddress: { value: '', valid: false },
     password: { value: '', valid: false },
     passwordConfirmation: { value: '', valid: false },
@@ -53,14 +53,16 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
     passwordConfirmation: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
   };
 
-  const valueSetter = (e: ChangeEvent<HTMLInputElement>): void => {
+  const valueSetter = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const key = e.target.name as Type_ValuesKey;
+    const value: string = e.target.value;
 
     setValues((prevValues) => {
-      return { ...prevValues, [key]: { ...prevValues[key], value: e.target.value } };
+      return { ...prevValues, [key]: { ...prevValues[key], value: value } };
     });
 
     validateField(key);
+    handleLabels(key);
   };
 
   const validateField = (targetName: Type_ValuesKey): void => {
@@ -88,242 +90,258 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
 
   const fieldsetRef = useRef<HTMLFieldSetElement>(null);
 
-  const handleLabels = (): void => {
-    if (!fieldsetRef.current) return;
-
-    Object.entries(values).forEach(([name, { value }]) => {
-      const element: HTMLLabelElement | undefined = labelElements.find((child: HTMLLabelElement) => child.id === name);
-      if (!element) return;
-      element.setAttribute('data-entry', value || (value && value.length > 0) ? 'true' : 'false');
-    });
+  const handleLabels = (key: Type_ValuesKey): void => {
+    const matchingEntry = Object.entries(values).find(([name]) => name === key);
+    const matchingElement = labelElements.find((child: HTMLLabelElement) => child.id === key);
+    if (!matchingEntry || !matchingElement) return;
+    matchingElement.setAttribute('data-entry', matchingEntry[0] && matchingEntry[0].length > 0 ? 'true' : 'false');
   };
 
-  useEffect(() => handleLabels(), [values]);
+  const [formSections, setFormSections] = useState<HTMLUListElement[]>([]);
+
+  const formSectionReceiver = (ref: HTMLUListElement) => {
+    if (ref && !formSections.includes(ref))
+      setFormSections((prevArr: HTMLUListElement[]) => {
+        return [...prevArr, ref];
+      });
+  };
+
+  const [activeFormSection, setActiveFormSection] = useState<number>(0);
+
+  useEffect(() => {
+    formSections.forEach((section: HTMLUListElement, index: number) => {
+      section.setAttribute('data-visibility', index === activeFormSection ? 'visible' : 'hidden');
+    });
+  }, [activeFormSection]);
+
+  const requestNextSection = (index: number): void => {
+    let isValid: boolean = false;
+
+    switch (index) {
+      case 0:
+        isValid = values.firstName.valid && values.lastName.valid;
+        break;
+
+      case 2:
+        isValid = values.emailAddress.valid;
+        break;
+
+      case 3:
+        isValid = values.password.valid && values.passwordConfirmation.valid;
+        break;
+
+      default:
+        break;
+    }
+
+    if (isValid) setActiveFormSection((prev) => prev + 1);
+  };
+
+  const getOptionalYears = (): number[] => {
+    const currentYear: number = new Date().getFullYear();
+    const initYear: number = currentYear - 110;
+    const ofAgeYear: number = currentYear - 18;
+    const optionalYears: number[] = Array.from({ length: 111 }, (_, index: number) => initYear + index);
+    const filteredYears: number[] = optionalYears.filter((year: number) => year <= ofAgeYear).reverse();
+    return filteredYears;
+  };
 
   return (
-    <section className='fdAccountRegistry' id='fdRegistery' data-activity='active' ref={registryRefReceiver}>
-      <div className='fdAccountRegistry__container'>
-        {/*  */}
+    <div className='fdAccountRegistry' id='fdRegistery' data-activity='active' ref={registryRefReceiver}>
+      <section className='fdAccountRegistry__container'>
         <section className='fdAccountRegistry__container__col'>
           <div className='fdAccountRegistry__container__col__logo'>Film Database</div>
-          <legend className='fdAccountRegistry__container__fieldset__legend'>
-            <h2 className='fdAccountRegistry__container__fieldset__legend--h2'>Create an account</h2>
+          <legend className='fdAccountRegistry__container__col__legend'>
+            <h2>Create an account</h2>
           </legend>
           <div className='fdAccountRegistry__container__col__hint'>Enter your name</div>
         </section>
-        {/*  */}
+
         <fieldset className='fdAccountRegistry__container__fieldset' ref={fieldsetRef}>
-          {/*  */}
-          <ul className='fdAccountRegistry__container__fieldset__ul'>
-            <li className='fdAccountRegistry__container__fieldset__ul__firstName'>
-              <div className='fdAccountRegistry__container__field__ul__firstName__container'>
-                <label id='firstName' htmlFor='fdUserAccountFirstName' ref={labelsRef}>
-                  First name
+          <ul className='fdAccountRegistry__container__fieldset__ul' ref={formSectionReceiver} data-visibility='visible'>
+            {[
+              { labelId: 'firstName', id: 'fdUserAccountFirstName', name: 'firstName', label: 'First name', isRequired: true },
+              { labelId: 'lastName', id: 'fdUserAccountLastName', name: 'lastName', label: 'Last name', isRequired: false },
+            ].map((field) => (
+              <li className='fdAccountRegistry__container__fieldset__ul__firstName' key={field.id}>
+                <label id={field.labelId} htmlFor={field.id} ref={labelsRef} data-entry='false'>
+                  {field.label}
                 </label>
                 <input
                   form='fdRegistery'
-                  id='fdUserAccountFirstName'
-                  name='firstName'
+                  id={field.id}
+                  name={field.name}
                   type='text'
                   inputMode='text'
                   size={12}
-                  required={true}
-                  aria-required='true'
+                  required={field.isRequired}
+                  aria-required={field.isRequired ? 'true' : 'false'}
                   aria-invalid={values.firstName.valid}
-                  autoFocus
                   autoCapitalize='words'
                   onClick={() => focus()}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
                 />
-              </div>
-            </li>
+              </li>
+            ))}
+          </ul>
 
-            <li className='fdAccountRegistry__container__fieldset__ul__lastName'>
-              <div className='fdAccountRegistry__container__field__ul__lastName__container'>
-                <label id='lastName' htmlFor='fdUserAccountLastName' ref={labelsRef}>
-                  Last name
-                </label>
-                <input
-                  form='fdRegistery'
-                  id='fdUserAccountLastName'
-                  name='lastName'
-                  type='text'
-                  inputMode='text'
-                  size={12}
-                  required={false}
-                  aria-required='true'
-                  aria-invalid={values.lastName.valid}
-                  autoCapitalize='words'
-                  onClick={() => focus()}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-                />
-              </div>
+          <ul className='fdAccountRegistry__container__fieldset__ul' ref={formSectionReceiver} data-visibility='hidden'>
+            <li>
+              <label id='dobMonth' htmlFor='fdUserAccountDobMonth' ref={labelsRef} data-entry='false'>
+                Month
+              </label>
+              <select
+                id='fdUserAccountDobMonth'
+                name='dobMonth'
+                form='fdRegistery'
+                required={true}
+                aria-required='true'
+                aria-invalid={values.dobMonth.valid}
+                value={values.dobMonth.value}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) => valueSetter(e)}>
+                {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((month: string) => (
+                  <option key={`dobMonth${month}`} value={month} aria-label={month}>
+                    {month}
+                  </option>
+                ))}
+              </select>
+            </li>
+            <li>
+              <label id='dobDay' htmlFor='fdUserAccountDobDay' ref={labelsRef} data-entry='false'>
+                Day
+              </label>
+              <select
+                id='fdUserAccountDobDay'
+                name='dobDay'
+                form='fdRegistery'
+                required={true}
+                aria-required='true'
+                aria-invalid={values.dobDay.valid}
+                value={values.dobDay.value}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) => valueSetter(e)}>
+                {Array.from({ length: 31 }).map((_, index: number) => (
+                  <option key={`dobDay${index + 1}`} value={`${index + 1}`} aria-label={`${index + 1}`}>
+                    {index + 1 < 10 ? `0${index + 1}` : index + 1}
+                  </option>
+                ))}
+              </select>
+            </li>
+            <li>
+              <label id='dobYear' htmlFor='fdUserAccountDobYear' ref={labelsRef} data-entry='false'>
+                Year
+              </label>
+              <select
+                id='fdUserAccountDobYear'
+                name='dobYear'
+                form='fdRegistery'
+                required={true}
+                aria-required='true'
+                aria-invalid={values.dobYear.valid}
+                value={values.dobYear.value}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) => valueSetter(e)}>
+                {getOptionalYears().map((year: number) => (
+                  <option key={`dobYear${year}`} value={year} aria-label={year.toString()}>
+                    {year}
+                  </option>
+                ))}
+              </select>
             </li>
           </ul>
-          {/*  */}
-          <ul className='fdAccountRegistry__container__fieldset__ul'>
-            <li className='fdAccountRegistry__container__fieldset__ul__dobMonth'>
-              <div className='fdAccountRegistry__container__field__ul__dobMonth__container'>
-                <label id='dobMonth' htmlFor='fdUserAccountDobMonth' ref={labelsRef}>
-                  Month
-                </label>
-                <input
-                  form='fdRegistery'
-                  id='fdUserAccountDobMonth'
-                  name='dobMonth'
-                  type='text'
-                  inputMode='text'
-                  size={12}
-                  required={true}
-                  aria-required='true'
-                  aria-invalid={values.dobMonth.valid}
-                  autoFocus
-                  autoCapitalize='words'
-                  onClick={() => focus()}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-                />
-              </div>
-            </li>
 
-            <li className='fdAccountRegistry__container__fieldset__ul__dobDay'>
-              <div className='fdAccountRegistry__container__field__ul__dobDay__container'>
-                <label id='dobDay' htmlFor='fdUserAccountDobDay' ref={labelsRef}>
-                  Day
-                </label>
-                <input
-                  form='fdRegistery'
-                  id='fdUserAccountDobDay'
-                  name='dobDay'
-                  type='text'
-                  inputMode='text'
-                  size={12}
-                  required={false}
-                  aria-required='true'
-                  aria-invalid={values.dobDay.valid}
-                  autoCapitalize='words'
-                  onClick={() => focus()}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-                />
-              </div>
-            </li>
-
-            <li className='fdAccountRegistry__container__fieldset__ul__dobYear'>
-              <div className='fdAccountRegistry__container__field__ul__dobYear__container'>
-                <label id='dobYear' htmlFor='fdUserAccountDobYear' ref={labelsRef}>
-                  Year
-                </label>
-                <input
-                  form='fdRegistery'
-                  id='fdUserAccountDobYear'
-                  name='dobYear'
-                  type='text'
-                  inputMode='text'
-                  size={12}
-                  required={false}
-                  aria-required='true'
-                  aria-invalid={values.dobYear.valid}
-                  autoCapitalize='words'
-                  onClick={() => focus()}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-                />
-              </div>
-            </li>
-          </ul>
-          {/*  */}
-          <ul className='fdAccountRegistry__container__fieldset__ul'>
+          <ul className='fdAccountRegistry__container__fieldset__ul' ref={formSectionReceiver} data-visibility='hidden'>
             <li className='fdAccountRegistry__container__fieldset__ul__emailAddress'>
-              <div className='fdAccountRegistry__container__field__ul__emailAddress__container'>
-                <label id='emailAddress' htmlFor='fdUserAccountEmailAddress' ref={labelsRef}>
-                  Email address
-                </label>
-                <input
-                  form='fdRegistery'
-                  id='fdUserAccountEmailAddress'
-                  name='emailAddress'
-                  type='email'
-                  inputMode='email'
-                  // name, @, domain
-                  minLength={3}
-                  // RFC 2045
-                  maxLength={76}
-                  size={12}
-                  required={true}
-                  aria-required='true'
-                  aria-invalid={values.emailAddress.valid}
-                  autoCapitalize='off'
-                  onClick={() => focus()}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-                />
-              </div>
+              <label id='emailAddress' htmlFor='fdUserAccountEmailAddress' ref={labelsRef} data-entry='false'>
+                Email address
+              </label>
+              <input
+                form='fdRegistery'
+                id='fdUserAccountEmailAddress'
+                name='emailAddress'
+                type='email'
+                inputMode='email'
+                // name, @, domain
+                minLength={3}
+                // RFC 2045
+                maxLength={76}
+                size={12}
+                required={true}
+                aria-required='true'
+                aria-invalid={values.emailAddress.valid}
+                autoCapitalize='off'
+                onClick={() => focus()}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+              />
             </li>
-            {/*  */}
           </ul>
 
-          <ul className='fdAccountRegistry__container__fieldset__ul'>
+          <ul className='fdAccountRegistry__container__fieldset__ul' ref={formSectionReceiver} data-visibility='hidden'>
             <li className='fdAccountRegistry__container__fieldset__ul__password'>
-              <div className='fdAccountRegistry__container__field__ul__password__container'>
-                <label id='password' htmlFor='fdUserAccountPassword' ref={labelsRef}>
-                  Password
-                </label>
-                <input
-                  form='fdRegistery'
-                  id='fdUserAccountPassword'
-                  name='password'
-                  type='password'
-                  inputMode='text'
-                  // RFC 5310, NIST Special Publication 800-63B
-                  minLength={8}
-                  // RFC XOS
-                  maxLength={32}
-                  size={12}
-                  required={true}
-                  aria-required='true'
-                  aria-invalid={values.password.valid}
-                  autoCapitalize='off'
-                  onClick={() => focus()}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-                />
-              </div>
+              <label id='password' htmlFor='fdUserAccountPassword' ref={labelsRef} data-entry='false'>
+                Password
+              </label>
+              <input
+                form='fdRegistery'
+                id='fdUserAccountPassword'
+                name='password'
+                type='password'
+                inputMode='text'
+                // RFC 5310, NIST Special Publication 800-63B
+                minLength={8}
+                // RFC XOS
+                maxLength={32}
+                size={12}
+                required={true}
+                aria-required='true'
+                aria-invalid={values.password.valid}
+                autoCapitalize='off'
+                onClick={() => focus()}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+              />
             </li>
 
             <li className='fdAccountRegistry__container__fieldset__ul__passwordConfirmation'>
-              <div className='fdAccountRegistry__container__field__ul__passwordConfirmation__container'>
-                <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation' ref={labelsRef}>
-                  Retype password
-                </label>
-                <input
-                  form='fdRegistery'
-                  id='fdUserAccountPasswordConfirmation'
-                  name='passwordConfirmation'
-                  type='password'
-                  inputMode='text'
-                  // RFC 5310, NIST Special Publication 800-63B
-                  minLength={8}
-                  // RFC XOS
-                  maxLength={32}
-                  size={12}
-                  required={true}
-                  aria-required='true'
-                  aria-invalid={values.passwordConfirmation.valid}
-                  autoCapitalize='off'
-                  onClick={() => focus()}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-                />
-              </div>
-            </li>
-            <li className='fdAccountRegistry__container__fieldset__ul__container__submitRegistrationForm'>
-              <button
-                id='fdUserAccountSubmitForm'
-                aria-label='Submit registration form'
-                style={{ color: 'black' }}
-                onClick={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
-                Register Account
-              </button>
+              <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation' ref={labelsRef} data-entry='false'>
+                Retype password
+              </label>
+              <input
+                form='fdRegistery'
+                id='fdUserAccountPasswordConfirmation'
+                name='passwordConfirmation'
+                type='password'
+                inputMode='text'
+                // RFC 5310, NIST Special Publication 800-63B
+                minLength={8}
+                // RFC XOS
+                maxLength={32}
+                size={12}
+                required={true}
+                aria-required='true'
+                aria-invalid={values.passwordConfirmation.valid}
+                autoCapitalize='off'
+                onClick={() => focus()}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+              />
             </li>
           </ul>
         </fieldset>
-      </div>
-    </section>
+
+        <section className='fdAccountRegistry__container__cta'>
+          {activeFormSection < 3 ? (
+            <button aria-label='Continue' onClick={() => requestNextSection(0)}>
+              <h2>Continue</h2>
+            </button>
+          ) : (
+            <button
+              id='fdUserAccountSubmitForm'
+              aria-label='Submit registration form'
+              style={{ color: 'black' }}
+              onClick={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
+              <h2>Register Account</h2>
+            </button>
+          )}
+        </section>
+      </section>
+    </div>
   );
 });
 
