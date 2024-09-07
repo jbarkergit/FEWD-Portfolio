@@ -327,19 +327,26 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
         </fieldset>
 
         <section className='fdAccountRegistry__container__cta'>
-          {activeFormSection < 3 ? (
-            <button aria-label='Continue' onClick={() => requestNextSection(0)}>
-              <h2>Continue</h2>
+          <div className='fdAccountRegistry__container__cta__container'>
+            <button aria-label='Return to home' onClick={() => toggleComponent('article')}>
+              Return
             </button>
-          ) : (
-            <button
-              id='fdUserAccountSubmitForm'
-              aria-label='Submit registration form'
-              style={{ color: 'black' }}
-              onClick={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
-              <h2>Register Account</h2>
-            </button>
-          )}
+          </div>
+          <div className='fdAccountRegistry__container__cta__container'>
+            {activeFormSection < 3 ? (
+              <button aria-label='Continue' onClick={() => requestNextSection(0)}>
+                <h2>Continue</h2>
+              </button>
+            ) : (
+              <button
+                id='fdUserAccountSubmitForm'
+                aria-label='Submit registration form'
+                style={{ color: 'black' }}
+                onClick={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
+                <h2>Register Account</h2>
+              </button>
+            )}
+          </div>
         </section>
       </section>
     </div>
