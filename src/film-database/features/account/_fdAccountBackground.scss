@@ -21,7 +21,8 @@
   height: 100%;
   transform: scale(1.2);
   transform-origin: center center;
-  animation: viewportScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.65s forwards;
+  // 0.65s + 300ms delay for lis
+  animation: viewportScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.95s forwards;
   will-change: scale;
   /* Psuedo background animation */
   &::after {
@@ -34,27 +35,14 @@
     height: inherit;
     background-color: hsl(0, 0%, 8%);
     opacity: 0;
-    animation: fadePsuedo 1.5s ease 1.3s forwards;
+    // 1.3s + 300ms delay for lis
+    animation: fadePsuedo 1.5s ease 1.6s forwards;
     will-change: opacity;
   }
   &__set {
     flex: 0 0 calc((100% - 4 * var(--fd-gap)) / 5);
     position: relative;
     pointer-events: none;
-    /* Psuedo background animation */
-    &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
-      z-index: 4;
-    }
-    /* Scaling for second odd list item's second element */
-    &:nth-of-type(odd) {
-      .fdAccountBackground__backdrop__set:nth-of-type(2) + & li:nth-of-type(2) {
-        & article figure picture img {
-          image-rendering: optimizeQuality;
-          animation: centeredElementScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.65s forwards;
-          will-change: scale;
-        }
-      }
-    }
     /* Positioning for odd list items */
     &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li {
       transform: translateY(100svh);
@@ -65,29 +53,66 @@
     }
     /* Staggered animation for odd list items */
     &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(1) {
-      animation: oddLiOne 1.5s ease 1.15s forwards;
+      transition: transform 1.5s ease 1.15s;
+      &[data-anim='mount'] {
+        transform: translateY(calc(75svh - var(--accountBackgroundLIAnimCalc)));
+      }
     }
     &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
-      animation: oddLiTwo 1.5s ease 0.9s forwards;
+      transition: transform 1.5s ease 0.9s;
+      &[data-anim='mount'] {
+        transform: translateY(calc(50svh - var(--accountBackgroundLIAnimCalc)));
+      }
     }
     &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(3) {
-      animation: oddLiThree 1.5s ease 0.65s forwards;
+      transition: transform 1.5s ease 0.65s;
+      &[data-anim='mount'] {
+        transform: translateY(calc(25svh - var(--accountBackgroundLIAnimCalc)));
+      }
     }
     &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(4) {
-      animation: oddLiFour 1.5s ease 0s forwards;
+      transition: transform 1.5s ease 0s;
+      &[data-anim='mount'] {
+        transform: translateY(calc(0svh - var(--accountBackgroundLIAnimCalc)));
+      }
     }
     /* Staggered animation for even list items */
     &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(1) {
-      animation: evenLiOne 1.5s ease 1.15s forwards;
+      transition: transform 1.5s ease 1.15s;
+      &[data-anim='mount'] {
+        transform: translateY(calc(0svh + var(--accountBackgroundLIAnimCalc)));
+      }
     }
     &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
-      animation: evenLiTwo 1.5s ease 0.9s forwards;
+      transition: transform 1.5s ease 0.9s;
+      &[data-anim='mount'] {
+        transform: translateY(calc(25svh + var(--accountBackgroundLIAnimCalc)));
+      }
     }
     &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(3) {
-      animation: evenLiThree 1.5s ease 0.65s forwards;
+      transition: transform 1.5s ease 0.65s;
+      &[data-anim='mount'] {
+        transform: translateY(calc(50svh + var(--accountBackgroundLIAnimCalc)));
+      }
     }
     &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(4) {
-      animation: evenLiFour 1.5s ease 0s forwards;
+      transition: transform 1.5s ease 0s;
+      &[data-anim='mount'] {
+        transform: translateY(calc(75svh + var(--accountBackgroundLIAnimCalc)));
+      }
+    }
+    /* Psuedo background animation */
+    &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
+      z-index: 4;
+    }
+    /* Scaling for second odd list item's second element */
+    &:nth-of-type(odd) {
+      .fdAccountBackground__backdrop__set:nth-of-type(2) + & li:nth-of-type(2) article figure picture img {
+        image-rendering: optimizeQuality;
+        // 0.65s + 300ms delay for lis
+        animation: centeredElementScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.95s forwards;
+        will-change: scale;
+      }
     }
     &__li {
       position: absolute;
@@ -104,7 +129,7 @@
         width: inherit;
         height: inherit;
       }
-      &__article {
+      & article {
         height: 100%;
         &::after {
           content: '';
@@ -118,83 +143,11 @@
             linear-gradient(135deg, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0) 60%),
             linear-gradient(45deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 70%);
         }
-        &__graphic figure picture img {
+        & figure picture img {
           image-rendering: optimizeSpeed;
         }
       }
     }
-  }
-}
-
-@keyframes oddLiOne {
-  0% {
-    transform: translateY(100svh);
-  }
-  100% {
-    transform: translateY(calc(75svh - var(--accountBackgroundLIAnimCalc)));
-  }
-}
-
-@keyframes oddLiTwo {
-  0% {
-    transform: translateY(100svh);
-  }
-  100% {
-    transform: translateY(calc(50svh - var(--accountBackgroundLIAnimCalc)));
-  }
-}
-
-@keyframes oddLiThree {
-  0% {
-    transform: translateY(100svh);
-  }
-  100% {
-    transform: translateY(calc(25svh - var(--accountBackgroundLIAnimCalc)));
-  }
-}
-
-@keyframes oddLiFour {
-  0% {
-    transform: translateY(100svh);
-  }
-  100% {
-    transform: translateY(calc(0svh - var(--accountBackgroundLIAnimCalc)));
-  }
-}
-
-@keyframes evenLiOne {
-  0% {
-    transform: translateY(-100svh);
-  }
-  100% {
-    transform: translateY(calc(0svh + var(--accountBackgroundLIAnimCalc)));
-  }
-}
-
-@keyframes evenLiTwo {
-  0% {
-    transform: translateY(-100svh);
-  }
-  100% {
-    transform: translateY(calc(25svh + var(--accountBackgroundLIAnimCalc)));
-  }
-}
-
-@keyframes evenLiThree {
-  0% {
-    transform: translateY(-100svh);
-  }
-  100% {
-    transform: translateY(calc(50svh + var(--accountBackgroundLIAnimCalc)));
-  }
-}
-
-@keyframes evenLiFour {
-  0% {
-    transform: translateY(-100svh);
-  }
-  100% {
-    transform: translateY(calc(75svh + var(--accountBackgroundLIAnimCalc)));
   }
 }
 
