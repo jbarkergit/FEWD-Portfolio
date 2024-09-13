@@ -1,11 +1,11 @@
 // Deps
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy } from 'react';
 // Firebase
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { firebaseAuth } from '../../config/firebaseConfig';
 // Pages
-import FDUserAccount from './FDUserAccount';
-import FDCatalog from './FDCatalog';
+const FDUserAccount = lazy(() => import('./FDUserAccount'));
+const FDCatalog = lazy(() => import('./FDCatalog'));
 
 type Type_authorizedUser = {
   user: undefined | User;
