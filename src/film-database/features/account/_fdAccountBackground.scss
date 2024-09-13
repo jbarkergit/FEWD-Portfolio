@@ -9,200 +9,156 @@
   position: fixed;
   width: 100%;
   height: 100%;
-}
-
-.fdAccountBackground__backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  gap: var(--fd-gap);
-  width: 100%;
-  height: 100%;
-  transform: scale(1.2);
-  transform-origin: center center;
-  // 0.65s + 300ms delay for lis
-  animation: viewportScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.95s forwards;
-  will-change: scale;
-  /* Psuedo background animation */
-  &::after {
-    content: '';
+  &__backdrop {
+    position: fixed;
     top: 0;
     left: 0;
-    position: fixed;
-    z-index: 3;
-    width: inherit;
-    height: inherit;
-    background-color: hsl(0, 0%, 8%);
-    opacity: 0;
-    // 1.3s + 300ms delay for lis
-    animation: fadePsuedo 1.5s ease 1.6s forwards;
-    will-change: opacity;
-  }
-  &__set {
-    flex: 0 0 calc((100% - 4 * var(--fd-gap)) / 5);
-    position: relative;
-    pointer-events: none;
-    /* Positioning for odd list items */
-    &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li {
-      transform: translateY(100svh);
+    display: flex;
+    gap: var(--fd-gap);
+    width: 100%;
+    height: 100%;
+    transform: scale(1.2);
+    transform-origin: center center;
+    // 0.65s + 300ms delay for lis
+    animation: viewportScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.95s forwards;
+    will-change: scale;
+    /* Psuedo background animation */
+    &::after {
+      content: '';
+      top: 0;
+      left: 0;
+      position: fixed;
+      z-index: 3;
+      width: inherit;
+      height: inherit;
+      background-color: hsl(0, 0%, 8%);
+      opacity: 0;
+      // 1.3s + 300ms delay for lis
+      animation: fadePsuedo 1.5s ease 1.6s forwards;
+      will-change: opacity;
     }
-    /* Positioning for even list items */
-    &:nth-of-type(even) .fdAccountBackground__backdrop__set__li {
-      transform: translateY(-100svh);
-    }
-    /* Staggered animation for odd list items */
-    &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(1) {
-      transition: transform 1.5s ease 1.15s;
-      &[data-anim='mount'] {
+    &__set {
+      flex: 0 0 calc((100% - 4 * var(--fd-gap)) / 5);
+      position: relative;
+      pointer-events: none;
+      /* Positioning for odd list items */
+      &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li {
+        transform: translateY(100svh);
+      }
+      /* Positioning for even list items */
+      &:nth-of-type(even) .fdAccountBackground__backdrop__set__li {
+        transform: translateY(-100svh);
+      }
+      /* Staggered animation for odd list items */
+      &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(1)[data-anim='mount'] {
+        transition: transform 1.5s ease 1.15s;
         transform: translateY(calc(75svh - var(--accountBackgroundLIAnimCalc)));
       }
-    }
-    &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
-      transition: transform 1.5s ease 0.9s;
-      &[data-anim='mount'] {
+      &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(2)[data-anim='mount'] {
+        transition: transform 1.5s ease 0.9s;
         transform: translateY(calc(50svh - var(--accountBackgroundLIAnimCalc)));
       }
-    }
-    &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(3) {
-      transition: transform 1.5s ease 0.65s;
-      &[data-anim='mount'] {
+      &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(3)[data-anim='mount'] {
+        transition: transform 1.5s ease 0.65s;
         transform: translateY(calc(25svh - var(--accountBackgroundLIAnimCalc)));
       }
-    }
-    &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(4) {
-      transition: transform 1.5s ease 0s;
-      &[data-anim='mount'] {
+      &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(4)[data-anim='mount'] {
+        transition: transform 1.5s ease 0s;
         transform: translateY(calc(0svh - var(--accountBackgroundLIAnimCalc)));
       }
-    }
-    /* Staggered animation for even list items */
-    &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(1) {
-      transition: transform 1.5s ease 1.15s;
-      &[data-anim='mount'] {
+      /* Staggered animation for even list items */
+      &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(1)[data-anim='mount'] {
+        transition: transform 1.5s ease 1.15s;
         transform: translateY(calc(0svh + var(--accountBackgroundLIAnimCalc)));
       }
-    }
-    &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
-      transition: transform 1.5s ease 0.9s;
-      &[data-anim='mount'] {
+      &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(2)[data-anim='mount'] {
+        transition: transform 1.5s ease 0.9s;
         transform: translateY(calc(25svh + var(--accountBackgroundLIAnimCalc)));
       }
-    }
-    &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(3) {
-      transition: transform 1.5s ease 0.65s;
-      &[data-anim='mount'] {
+      &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(3)[data-anim='mount'] {
+        transition: transform 1.5s ease 0.65s;
         transform: translateY(calc(50svh + var(--accountBackgroundLIAnimCalc)));
       }
-    }
-    &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(4) {
-      transition: transform 1.5s ease 0s;
-      &[data-anim='mount'] {
+      &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(4)[data-anim='mount'] {
+        transition: transform 1.5s ease 0s;
         transform: translateY(calc(75svh + var(--accountBackgroundLIAnimCalc)));
       }
-    }
-    /* Psuedo background animation */
-    &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
-      z-index: 4;
-    }
-    /* Scaling for second odd list item's second element */
-    &:nth-of-type(odd) {
-      .fdAccountBackground__backdrop__set:nth-of-type(2) + & li:nth-of-type(2) article figure picture img {
+      /* Psuedo background animation */
+      &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
+        z-index: 4;
+      }
+      /* Scaling for second odd list item's second element */
+      &:nth-of-type(odd) .fdAccountBackground__backdrop__set:nth-of-type(2) + & li:nth-of-type(2) article figure picture img {
         image-rendering: optimizeQuality;
         // 0.65s + 300ms delay for lis
         animation: centeredElementScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.95s forwards;
         will-change: scale;
       }
-    }
-    &__li {
-      position: absolute;
-      z-index: 3;
-      width: 100%;
-      height: calc(25% - var(--fd-gap));
-      border-radius: var(--fd-borderRadius);
-      box-shadow: 7px 17px 22px 7px rgba(0, 0, 0, 0.25);
-      overflow: clip;
-      will-change: transform;
-      &__article,
-      &__article__graphic,
-      &__article__graphic > * {
-        width: inherit;
-        height: inherit;
-      }
-      & article {
-        height: 100%;
-        &::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          z-index: 5;
-          width: 100%;
+      &__li {
+        position: absolute;
+        z-index: 3;
+        width: 100%;
+        height: calc(25% - var(--fd-gap));
+        border-radius: var(--fd-borderRadius);
+        box-shadow: 7px 17px 22px 7px rgba(0, 0, 0, 0.25);
+        overflow: clip;
+        will-change: transform;
+        &__article,
+        &__article__graphic,
+        &__article__graphic picture,
+        &__article__graphic picture img {
+          width: inherit;
+          height: inherit;
+        }
+        & article {
           height: 100%;
-          background: linear-gradient(226deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 35%),
-            linear-gradient(135deg, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0) 60%),
-            linear-gradient(45deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 70%);
-        }
-        & figure picture img {
-          image-rendering: optimizeSpeed;
+          &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 5;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(226deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 35%),
+              linear-gradient(135deg, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0) 60%),
+              linear-gradient(45deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 70%);
+          }
+          & figure picture img {
+            image-rendering: optimizeSpeed;
+          }
         }
       }
     }
   }
-}
-
-@keyframes centeredElementScale {
-  0% {
-    transform: scale(1.6);
+  @keyframes centeredElementScale {
+    0% {
+      transform: scale(1.6);
+    }
+    35% {
+      transform: scale(1.6);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
-  35% {
-    transform: scale(1.6);
+  @keyframes viewportScale {
+    0% {
+      transform: scale(1.2);
+    }
+    35% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(5.25);
+    }
   }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes viewportScale {
-  0% {
-    transform: scale(1.2);
-  }
-  35% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(5.25);
-  }
-}
-
-@keyframes fadePsuedo {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
+  @keyframes fadePsuedo {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 }
-
-// .fdAccountBackground__selection {
-//   position: absolute;
-//   right: 0;
-//   bottom: 0;
-//   display: flex;
-//   gap: var(--fd-gap);
-//   width: 40svw;
-//   padding: calc(var(--fd-padding-generic) / 2) 0;
-//   overflow-y: clip;
-//   @include m.scrollSnappingXAxis;
-//   @media (width <= 1410px) {
-//     scroll-snap-type: x mandatory;
-//   }
-//   &__li {
-//     flex: 1 0 calc(40svw / 2.5 - var(--fd-gap) * 2);
-//     border-radius: var(--fd-borderRadius);
-//     box-shadow: 7px 17px 22px 7px rgba(0, 0, 0, 0.25);
-//     overflow: clip;
-//     cursor: pointer;
-//     scroll-snap-align: center;
-//   }
-// }
