@@ -1,5 +1,5 @@
 // Deps
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 // Hooks
@@ -54,16 +54,32 @@ const FDAccountBackground = () => {
     return responseSetArr;
   }, [response]);
 
+  const backdropRef = useRef<HTMLDivElement>(null);
+
+  const animateMount = (): void => {
+    if (!backdropRef.current) return;
+    const backdropRefChildren = [...backdropRef.current.children] as HTMLUListElement[];
+
+    setTimeout(() => {
+      backdropRefChildren.forEach((set: HTMLUListElement) => {
+        const setChildren = [...set.children] as HTMLLIElement[];
+        setChildren.forEach((child: HTMLLIElement) => child.setAttribute('data-anim', 'mount'));
+      });
+    }, 300);
+  };
+
+  useEffect(() => animateMount(), [response]);
+
   return (
     <div className='fdAccountBackground'>
-      <div className='fdAccountBackground__backdrop'>
+      <div className='fdAccountBackground__backdrop' ref={backdropRef} data-anim='false'>
         {responseSetArr?.map((set: Type_Tmdb_Api_Union[]) => {
           return (
             <ul className='fdAccountBackground__backdrop__set' key={uuidv4()}>
               {set.map((article: Type_Tmdb_Api_Union) => {
                 const props = useTmdbProps(article);
                 return (
-                  <li className='fdAccountBackground__backdrop__set__li' key={uuidv4()}>
+                  <li className='fdAccountBackground__backdrop__set__li' key={uuidv4()} data-anim='false'>
                     <article className='fdAccountBackground__backdrop__set__li__article'>
                       <figure className='fdAccountBackground__backdrop__set__li__article__graphic'>
                         <picture>
