@@ -1,14 +1,14 @@
 // Fonts
 @mixin fdFontXXL {
   font-family: 'Satoshi';
-  font-weight: 900;
+  font-weight: 700;
   font-size: var(--fd-font-size-xxl);
   line-height: normal;
   color: white;
 }
 @mixin fdFontXL {
   font-family: 'Satoshi';
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fd-font-size-xl);
   line-height: normal;
   color: white;
@@ -22,14 +22,14 @@
 }
 @mixin fdFontM {
   font-family: 'Satoshi';
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--fd-font-size-m);
   line-height: normal;
   color: white;
 }
 @mixin fdFontS {
   font-family: 'Satoshi';
-  font-weight: 400;
+  font-weight: 300;
   font-size: var(--fd-font-size-s);
   line-height: normal;
   color: white;
