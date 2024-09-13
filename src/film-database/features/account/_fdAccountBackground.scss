@@ -39,57 +39,60 @@
       flex: 0 0 calc((100% - 4 * var(--fd-gap)) / 5);
       position: relative;
       pointer-events: none;
-      /* Positioning for odd list items */
-      &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li {
-        transform: translateY(100svh);
-      }
-      /* Positioning for even list items */
-      &:nth-of-type(even) .fdAccountBackground__backdrop__set__li {
-        transform: translateY(-100svh);
-      }
       /* Staggered animation for odd list items */
-      &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(1)[data-anim='mount'] {
-        transition: transform 1.5s ease 1.15s;
-        transform: translateY(calc(75svh - var(--accountBackgroundLIAnimCalc)));
-      }
-      &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(2)[data-anim='mount'] {
-        transition: transform 1.5s ease 0.9s;
-        transform: translateY(calc(50svh - var(--accountBackgroundLIAnimCalc)));
-      }
-      &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(3)[data-anim='mount'] {
-        transition: transform 1.5s ease 0.65s;
-        transform: translateY(calc(25svh - var(--accountBackgroundLIAnimCalc)));
-      }
-      &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(4)[data-anim='mount'] {
-        transition: transform 1.5s ease 0s;
-        transform: translateY(calc(0svh - var(--accountBackgroundLIAnimCalc)));
+      &:nth-of-type(odd) {
+        .fdAccountBackground__backdrop__set__li {
+          transform: translateY(100svh);
+        }
+        .fdAccountBackground__backdrop__set__li:nth-of-type(1)[data-anim='mount'] {
+          transition: transform 1.5s ease 1.15s;
+          transform: translateY(calc(75svh - var(--accountBackgroundLIAnimCalc)));
+        }
+        .fdAccountBackground__backdrop__set__li:nth-of-type(2)[data-anim='mount'] {
+          transition: transform 1.5s ease 0.9s;
+          transform: translateY(calc(50svh - var(--accountBackgroundLIAnimCalc)));
+        }
+        .fdAccountBackground__backdrop__set__li:nth-of-type(3)[data-anim='mount'] {
+          transition: transform 1.5s ease 0.65s;
+          transform: translateY(calc(25svh - var(--accountBackgroundLIAnimCalc)));
+        }
+        .fdAccountBackground__backdrop__set__li:nth-of-type(4)[data-anim='mount'] {
+          transition: transform 1.5s ease 0s;
+          transform: translateY(calc(0svh - var(--accountBackgroundLIAnimCalc)));
+        }
       }
       /* Staggered animation for even list items */
-      &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(1)[data-anim='mount'] {
-        transition: transform 1.5s ease 1.15s;
-        transform: translateY(calc(0svh + var(--accountBackgroundLIAnimCalc)));
+      &:nth-of-type(even) {
+        .fdAccountBackground__backdrop__set__li {
+          transform: translateY(-100svh);
+        }
+        .fdAccountBackground__backdrop__set__li:nth-of-type(1)[data-anim='mount'] {
+          transition: transform 1.5s ease 1.15s;
+          transform: translateY(calc(0svh + var(--accountBackgroundLIAnimCalc)));
+        }
+        .fdAccountBackground__backdrop__set__li:nth-of-type(2)[data-anim='mount'] {
+          transition: transform 1.5s ease 0.9s;
+          transform: translateY(calc(25svh + var(--accountBackgroundLIAnimCalc)));
+        }
+        .fdAccountBackground__backdrop__set__li:nth-of-type(3)[data-anim='mount'] {
+          transition: transform 1.5s ease 0.65s;
+          transform: translateY(calc(50svh + var(--accountBackgroundLIAnimCalc)));
+        }
+        .fdAccountBackground__backdrop__set__li:nth-of-type(4)[data-anim='mount'] {
+          transition: transform 1.5s ease 0s;
+          transform: translateY(calc(75svh + var(--accountBackgroundLIAnimCalc)));
+        }
       }
-      &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(2)[data-anim='mount'] {
-        transition: transform 1.5s ease 0.9s;
-        transform: translateY(calc(25svh + var(--accountBackgroundLIAnimCalc)));
-      }
-      &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(3)[data-anim='mount'] {
-        transition: transform 1.5s ease 0.65s;
-        transform: translateY(calc(50svh + var(--accountBackgroundLIAnimCalc)));
-      }
-      &:nth-of-type(even) .fdAccountBackground__backdrop__set__li:nth-of-type(4)[data-anim='mount'] {
-        transition: transform 1.5s ease 0s;
-        transform: translateY(calc(75svh + var(--accountBackgroundLIAnimCalc)));
-      }
-      /* Psuedo background animation */
-      &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
-        z-index: 4;
-      }
-      /* Scaling for second odd list item's second element */
-      &:nth-of-type(odd) .fdAccountBackground__backdrop__set:nth-of-type(2) + & li:nth-of-type(2) article figure picture img {
-        image-rendering: optimizeQuality;
-        animation: centeredElementScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.65s forwards;
-        will-change: scale;
+      /* Scaling for third odd list item's second element */
+      &:nth-of-type(3) {
+        .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
+          z-index: 4;
+          & article figure picture img {
+            image-rendering: high-quality;
+            animation: centeredElementScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.65s forwards;
+            will-change: scale;
+          }
+        }
       }
       &__li {
         position: absolute;
