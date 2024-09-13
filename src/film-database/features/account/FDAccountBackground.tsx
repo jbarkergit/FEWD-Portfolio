@@ -54,32 +54,29 @@ const FDAccountBackground = () => {
     return responseSetArr;
   }, [response]);
 
-  const backdropRef = useRef<HTMLDivElement>(null);
+  const liRefs = useRef<HTMLLIElement[]>([]);
 
-  const animateMount = (): void => {
-    if (!backdropRef.current) return;
-    const backdropRefChildren = [...backdropRef.current.children] as HTMLUListElement[];
-
-    setTimeout(() => {
-      backdropRefChildren.forEach((set: HTMLUListElement) => {
-        const setChildren = [...set.children] as HTMLLIElement[];
-        setChildren.forEach((child: HTMLLIElement) => child.setAttribute('data-anim', 'mount'));
-      });
-    }, 300);
+  const liRef = (ref: HTMLLIElement) => {
+    if (ref && !liRefs.current.includes(ref)) liRefs.current.push(ref);
   };
 
-  useEffect(() => animateMount(), [response]);
+  const animateListItems = () => {
+    if (liRefs.current.length !== 20) return;
+    liRefs.current.forEach((li: HTMLLIElement) => li.setAttribute('data-anim', 'mount'));
+  };
+
+  useEffect(() => animateListItems(), [responseSetArr]);
 
   return (
     <div className='fdAccountBackground'>
-      <div className='fdAccountBackground__backdrop' ref={backdropRef} data-anim='false'>
+      <div className='fdAccountBackground__backdrop' data-anim='false'>
         {responseSetArr?.map((set: Type_Tmdb_Api_Union[]) => {
           return (
             <ul className='fdAccountBackground__backdrop__set' key={uuidv4()}>
               {set.map((article: Type_Tmdb_Api_Union) => {
                 const props = useTmdbProps(article);
                 return (
-                  <li className='fdAccountBackground__backdrop__set__li' key={uuidv4()} data-anim='false'>
+                  <li className='fdAccountBackground__backdrop__set__li' ref={liRef} key={uuidv4()} data-anim='false'>
                     <article className='fdAccountBackground__backdrop__set__li__article'>
                       <figure className='fdAccountBackground__backdrop__set__li__article__graphic'>
                         <picture>
@@ -95,26 +92,6 @@ const FDAccountBackground = () => {
           );
         })}
       </div>
-
-      {/* <ul className='fdAccountBackground__selection' key={uuidv4()}>
-        {response?.map((obj) =>
-          obj.endpoint.map((item) => {
-            const props = useTmdbProps(item);
-            return (
-              <li className='fdAccountBackground__selection__li' key={uuidv4()}>
-                <article className='fdAccountBackground__selection__li__article'>
-                  <figure className='fdAccountBackground__selection__li__article__graphic'>
-                    <picture>
-                      <img src={`https://image.tmdb.org/t/p/original/${props?.backdrop_path}`} alt={`${props?.alt}`} />
-                      <figcaption>{`${props?.alt}`}</figcaption>
-                    </picture>
-                  </figure>
-                </article>
-              </li>
-            );
-          })
-        )}
-      </ul> */}
     </div>
   );
 };
