@@ -1,5 +1,5 @@
 // Deps
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 // Hooks
@@ -10,67 +10,61 @@ import { useFilmDatabaseWebStorage } from '../../composables/web-storage-api/use
 // Hook Types
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
-const FDAccountBackground = () => {
-  const [response, setResponse] = useState<{ key: string; endpoint: Type_Tmdb_Api_Union[] }[] | undefined>();
-  const pathname: string = useLocation().pathname;
-
-  /** Fetch */
-  const fetch = () => {
-    // Prevent unnecessary api calls(keyEndpointPair): Store data in place of endpoint if it exists in sessionStorage via mutation
-    const sessionSafeKeyEndpointPairArr = [useTmdbUrlBuilder('now_playing')].map((entry) => {
-      const getCachedDataByKey: Type_Tmdb_Api_Union[] | undefined = useFilmDatabaseWebStorage(pathname).getData(entry.key);
-      const isKeyCached: boolean = !!getCachedDataByKey;
-
-      if (isKeyCached && getCachedDataByKey && getCachedDataByKey.length > 0) {
-        return { key: entry.key, endpoint: getCachedDataByKey };
-      } else {
-        return entry;
-      }
-    });
-
-    // Fetch, set state
-    useFetchTmdbResponse(sessionSafeKeyEndpointPairArr).then((data) => {
-      if (data) {
-        // Set state
-        setResponse(data);
-        // Prevent unnecessary api calls(session storage safeguard)
-        data.forEach((entry) => useFilmDatabaseWebStorage(pathname).setData(entry.key, entry.endpoint));
-      }
-    });
-  };
-
-  useEffect(() => fetch(), []);
-
-  const responseSetArr: Type_Tmdb_Api_Union[][] | undefined = useMemo(() => {
-    if (!response) return undefined;
-
-    const responseArr: Type_Tmdb_Api_Union[] = [...response].flatMap((obj) => obj.endpoint);
-    let responseSetArr: Type_Tmdb_Api_Union[][] = [];
-
-    for (let i = 0; i < Math.ceil(responseArr.length / 4); i++) {
-      responseSetArr.push(responseArr.slice(i * 4, i * 4 + 4));
-    }
-
-    return responseSetArr;
-  }, [response]);
-
+const FDAccountBackground = (): JSX.Element => {
+  const pathname = useLocation().pathname;
+  const [responseSets, setResponseSets] = useState<Type_Tmdb_Api_Union[][]>([]);
   const liRefs = useRef<HTMLLIElement[]>([]);
 
+  /** Fetch data */
+  const fetchData = async (): Promise<void> => {
+    try {
+      const sessionSafeKeyEndpointPairArr = [useTmdbUrlBuilder('now_playing')].map((entry) => {
+        const cachedData = useFilmDatabaseWebStorage(pathname).getData(entry.key);
+        return cachedData && cachedData.length > 0 ? { key: entry.key, endpoint: cachedData } : entry;
+      });
+
+      const data = await useFetchTmdbResponse(sessionSafeKeyEndpointPairArr);
+      if (!data) throw new Error('An error occured while fetching data.');
+      createResponseSets(data);
+      data.forEach((entry) => useFilmDatabaseWebStorage(pathname).setData(entry.key, entry.endpoint));
+    } catch (Error) {
+      console.error(Error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [pathname]);
+
+  /** Create sets from response data */
+  const createResponseSets = (data: { key: string; endpoint: Type_Tmdb_Api_Union[] }[]): void => {
+    const responseArr = data.flatMap((obj) => obj.endpoint);
+    let responseSetArr: Type_Tmdb_Api_Union[][] = [];
+    for (let i = 0; i < Math.ceil(responseArr.length / 4); i++) responseSetArr.push(responseArr.slice(i * 4, i * 4 + 4));
+    setResponseSets(responseSetArr);
+  };
+
+  /** Gather list item refs */
   const liRef = (ref: HTMLLIElement) => {
     if (ref && !liRefs.current.includes(ref)) liRefs.current.push(ref);
   };
 
-  const animateListItems = () => {
-    if (liRefs.current.length !== 20) return;
-    liRefs.current.forEach((li: HTMLLIElement) => li.setAttribute('data-anim', 'mount'));
+  /** Handle list items animations */
+  const animateListItems = (): void => {
+    if (liRefs.current.length === responseSets.flat().length) {
+      liRefs.current.forEach((li: HTMLLIElement) => li.setAttribute('data-anim', 'mount'));
+    }
   };
 
-  useEffect(() => animateListItems(), [responseSetArr]);
+  useEffect(() => {
+    requestAnimationFrame(() => animateListItems());
+  }, [responseSets]);
 
+  /** Component */
   return (
     <div className='fdAccountBackground'>
       <div className='fdAccountBackground__backdrop' data-anim='false'>
-        {responseSetArr?.map((set: Type_Tmdb_Api_Union[]) => {
+        {responseSets.map((set: Type_Tmdb_Api_Union[]) => {
           return (
             <ul className='fdAccountBackground__backdrop__set' key={uuidv4()}>
               {set.map((article: Type_Tmdb_Api_Union) => {
