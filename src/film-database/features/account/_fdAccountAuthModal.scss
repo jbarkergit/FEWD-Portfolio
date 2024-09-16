@@ -23,6 +23,7 @@
     flex-wrap: wrap;
     gap: var(--fd-gap);
     width: f.rem(1040);
+    min-height: f.rem(400);
     padding: f.rem(36) f.rem(50);
     border-radius: var(--fd-borderRadius);
     background-color: white;
