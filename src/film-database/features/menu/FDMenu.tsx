@@ -76,7 +76,6 @@ const FDMenu = ({
           </li>
         </ul>
       </section>
-      <IcOutlinePowerSettingsNew />
       <div className='fdMenu__menu'>
         <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
         {/* <FDMenuQueue ref={menuQueueRef} /> */}
