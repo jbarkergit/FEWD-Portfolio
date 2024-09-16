@@ -9,21 +9,6 @@
   position: fixed;
   width: 100%;
   height: 100%;
-  &__blackout {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    width: 100%;
-    height: 100svh;
-    background-color: hsl(0, 0%, 8%);
-    opacity: 0;
-    will-change: opacity;
-    // &[data-anim='mount'] {
-    //   transition: opacity 1.5s ease 1.3s forwards;
-    //   opacity: 1;
-    // }
-  }
   &__backdrop {
     position: fixed;
     top: 0;
@@ -35,10 +20,11 @@
     transform: scale(1.2);
     transform-origin: center center;
     will-change: scale;
-    // &[data-anim='mount'] {
-    //   transition: transform 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 1.65s;
-    //   transform: scale(5.25);
-    // }
+    &[data-anim='mount'] {
+      /* Scale animation */
+      transition: transform 2.4s cubic-bezier(0.785, 0.135, 0.15, 0.86) 1.35s;
+      transform: scale(3.5);
+    }
     &__set {
       flex: 0 0 calc((100% - 4 * var(--fd-gap)) / 5);
       position: relative;
@@ -87,13 +73,13 @@
           transform: translateY(calc(75svh + var(--accountBackgroundLIAnimCalc)));
         }
       }
-      /* Z-index for ul 3, li 2 */
+      /* Opacity for ul:3 li:2 */
       &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
-        z-index: 4;
+        opacity: 0;
+        // transition: opacity 1.5s ease 1.3s;
       }
       &__li {
         position: absolute;
-        z-index: 3;
         width: 100%;
         height: calc(25% - var(--fd-gap));
         border-radius: var(--fd-borderRadius);
