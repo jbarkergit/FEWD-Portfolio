@@ -9,6 +9,21 @@
   position: fixed;
   width: 100%;
   height: 100%;
+  &__blackout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100svh;
+    background-color: hsl(0, 0%, 8%);
+    opacity: 0;
+    will-change: opacity;
+    // &[data-anim='mount'] {
+    //   transition: opacity 1.5s ease 1.3s forwards;
+    //   opacity: 1;
+    // }
+  }
   &__backdrop {
     position: fixed;
     top: 0;
@@ -19,22 +34,11 @@
     height: 100%;
     transform: scale(1.2);
     transform-origin: center center;
-    animation: viewportScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.65s forwards;
     will-change: scale;
-    /* Psuedo background animation */
-    &::after {
-      content: '';
-      top: 0;
-      left: 0;
-      position: fixed;
-      z-index: 3;
-      width: inherit;
-      height: inherit;
-      background-color: hsl(0, 0%, 8%);
-      opacity: 0;
-      animation: fadePsuedo 1.5s ease 1.3s forwards;
-      will-change: opacity;
-    }
+    // &[data-anim='mount'] {
+    //   transition: transform 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 1.65s;
+    //   transform: scale(5.25);
+    // }
     &__set {
       flex: 0 0 calc((100% - 4 * var(--fd-gap)) / 5);
       position: relative;
@@ -83,16 +87,9 @@
           transform: translateY(calc(75svh + var(--accountBackgroundLIAnimCalc)));
         }
       }
-      /* Scaling for third odd list item's second element */
-      &:nth-of-type(3) {
-        .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
-          z-index: 4;
-          & article figure picture img {
-            image-rendering: high-quality;
-            animation: centeredElementScale 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.65s forwards;
-            will-change: scale;
-          }
-        }
+      /* Z-index for ul 3, li 2 */
+      &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
+        z-index: 4;
       }
       &__li {
         position: absolute;
@@ -125,40 +122,10 @@
               linear-gradient(45deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 70%);
           }
           & figure picture img {
-            image-rendering: optimizeSpeed;
+            image-rendering: pixelated;
           }
         }
       }
-    }
-  }
-  @keyframes centeredElementScale {
-    0% {
-      transform: scale(1.6);
-    }
-    35% {
-      transform: scale(1.6);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  @keyframes viewportScale {
-    0% {
-      transform: scale(1.2);
-    }
-    35% {
-      transform: scale(1.2);
-    }
-    100% {
-      transform: scale(5.25);
-    }
-  }
-  @keyframes fadePsuedo {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
     }
   }
 }
