@@ -46,7 +46,6 @@ const FDAccountBackground = (): JSX.Element => {
   };
 
   /** Reference dependencies */
-  const blackoutRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
 
   /** Mutation observer tracking responseSets mapping in DOM */
@@ -80,13 +79,11 @@ const FDAccountBackground = (): JSX.Element => {
     const listItems: HTMLLIElement[] = sets?.flatMap((set: HTMLElement) => [...set.children]) as HTMLLIElement[];
     listItems.forEach((li: HTMLLIElement) => li.setAttribute('data-anim', 'mount'));
     backdropRef.current?.setAttribute('data-anim', 'mount');
-    blackoutRef.current?.setAttribute('data-anim', 'mount');
   }, [isLastUlMounted]);
 
   /** Component */
   return (
     <div className='fdAccountBackground'>
-      <div className='fdAccountBackground__blackout' ref={blackoutRef} data-anim='false' />
       <div className='fdAccountBackground__backdrop' ref={backdropRef} data-anim='false'>
         {responseSets.map((set: Type_Tmdb_Api_Union[]) => {
           return (
