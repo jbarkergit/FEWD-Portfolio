@@ -17,11 +17,13 @@
     gap: var(--fd-gap);
     width: 100%;
     height: 100%;
-    transform: scale(1.2);
     transform-origin: center center;
     will-change: scale;
+    /* Scale animation */
+    &[data-anim='false'] {
+      transform: scale(1.2);
+    }
     &[data-anim='mount'] {
-      /* Scale animation */
       transition: transform 2.4s cubic-bezier(0.785, 0.135, 0.15, 0.86) 1.35s;
       transform: scale(3.5);
     }
@@ -31,7 +33,7 @@
       pointer-events: none;
       /* Staggered animation for odd list items */
       &:nth-of-type(odd) {
-        .fdAccountBackground__backdrop__set__li {
+        .fdAccountBackground__backdrop__set__li[data-anim='false'] {
           transform: translateY(100svh);
         }
         .fdAccountBackground__backdrop__set__li:nth-of-type(1)[data-anim='mount'] {
@@ -53,7 +55,7 @@
       }
       /* Staggered animation for even list items */
       &:nth-of-type(even) {
-        .fdAccountBackground__backdrop__set__li {
+        .fdAccountBackground__backdrop__set__li[data-anim='false'] {
           transform: translateY(-100svh);
         }
         .fdAccountBackground__backdrop__set__li:nth-of-type(1)[data-anim='mount'] {
