@@ -108,15 +108,15 @@
       align-items: center;
       gap: s.$portfolio-gap;
       height: 100%;
-      & > * {
-        @include animator;
-        white-space: nowrap;
-      }
       & h2,
       & nav button,
       & nav a {
         text-transform: capitalize;
         white-space: nowrap;
+      }
+      & > * {
+        white-space: nowrap;
+        @include animator;
       }
     }
     &__left {

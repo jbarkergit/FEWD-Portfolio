@@ -65,10 +65,10 @@
         position: relative;
         border-top-right-radius: f.rem(18);
         border-top-left-radius: f.rem(18);
-        @include m.productPhoto;
-        @include m.productPhotoHover;
         pointer-events: all;
         transition: ease-in-out 0.35s;
+        @include m.productPhoto;
+        @include m.productPhotoHover;
         & img {
           max-height: f.rem(400);
           object-fit: scale-down;
