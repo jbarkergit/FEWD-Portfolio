@@ -7,6 +7,7 @@ export const projectData = [
     key: 'film database',
     url: 'http://localhost:5173/film-database',
     technologies: {
+      sdk: ['firebase', 'firebase-tools'],
       api: ['tmdb'],
       libraries: ['uuid', 'react-youtube'],
       core_libraries: ['vite', 'react', 'react router dom', 'sass'],
