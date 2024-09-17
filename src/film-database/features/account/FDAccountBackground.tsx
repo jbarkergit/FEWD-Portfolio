@@ -13,7 +13,14 @@ import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTy
 const FDAccountBackground = (): JSX.Element => {
   const pathname: string = useLocation().pathname;
   const [responseSets, setResponseSets] = useState<Type_Tmdb_Api_Union[][]>([]);
-  const [isLastUlMounted, setIsLastUlMounted] = useState<boolean>(false);
+
+  /** Reference dependencies */
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const ulRefs = useRef<HTMLUListElement[]>([]);
+
+  const ulRef = (ref: HTMLUListElement): void => {
+    if (ref && !ulRefs.current.includes(ref)) ulRefs.current.push(ref);
+  };
 
   /** Fetch data */
   const fetchData = async (): Promise<void> => {
@@ -44,60 +51,16 @@ const FDAccountBackground = (): JSX.Element => {
     setResponseSets(responseSetArr);
   };
 
-  /** Reference dependencies */
-  const backdropRef = useRef<HTMLDivElement>(null);
-
-  /** Mutation observer tracking responseSets mapping in DOM */
-  const observer = new MutationObserver((mutations: MutationRecord[]) => {
-    if (!backdropRef.current) return;
-
-    // Flattened mutations arr
-    const flattenedEntries: MutationRecord[] = mutations.flat();
-
-    // List items arr
-    const sets = Array.from(backdropRef.current.children) as HTMLUListElement[];
-    const listItems = sets.flatMap((set) => Array.from(set.children) as HTMLLIElement[]);
-    const lastListItem: HTMLLIElement = listItems[listItems.length - 1];
-
-    // Check if iterations of ul contain lastListItem
-    const isLastItemAdded = flattenedEntries.some((entry) => {
-      return Array.from(entry.addedNodes).some((node) => {
-        const ul = node as HTMLElement;
-
-        // In the event that ul doesn't exist, we have to re-mount the observer to ensure the animation fires.
-        if (!ul) {
-          observer.disconnect();
-          observer.observe(backdropRef.current!, { childList: true, subtree: true });
-        } else {
-          const ulLis = Array.from(ul.children) as HTMLLIElement[];
-          return ulLis.includes(lastListItem);
-        }
-      });
-    });
-
-    // Update state based on whether the last item has been added
-    setIsLastUlMounted(isLastItemAdded);
-  });
-
-  useEffect(() => {
-    if (backdropRef.current) observer.observe(backdropRef.current, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, [responseSets]);
-
-  /** Handle list items animations */
-  useEffect(() => {
-    if (!isLastUlMounted || !backdropRef.current) return;
-
-    // List items arr
-    const sets: HTMLUListElement[] = [...backdropRef.current.children] as HTMLUListElement[];
-    const listItems: HTMLLIElement[] = sets?.flatMap((set: HTMLElement) => [...set.children]) as HTMLLIElement[];
-
-    // Animation mount iteration with minor delay to ensure LI's receive data-attribute mountings
+  /** Mount animations */
+  const animator = (): void => {
     setTimeout(() => {
-      listItems.forEach((li: HTMLLIElement) => li.setAttribute('data-anim', 'mount'));
-      backdropRef.current?.setAttribute('data-anim', 'mount');
-    }, 200);
-  }, [isLastUlMounted]);
+      if (!backdropRef.current || !ulRefs.current) return;
+      backdropRef.current.setAttribute('data-anim', 'mount');
+      ulRefs.current.forEach((ul) => ul.setAttribute('data-anim', 'mount'));
+    }, 50);
+  };
+
+  useEffect(() => animator(), [responseSets]);
 
   /** Component */
   return (
@@ -105,11 +68,11 @@ const FDAccountBackground = (): JSX.Element => {
       <div className='fdAccountBackground__backdrop' ref={backdropRef} data-anim='false'>
         {responseSets.map((set: Type_Tmdb_Api_Union[]) => {
           return (
-            <ul className='fdAccountBackground__backdrop__set' key={uuidv4()}>
+            <ul className='fdAccountBackground__backdrop__set' key={uuidv4()} ref={ulRef} data-anim='false'>
               {set.map((article: Type_Tmdb_Api_Union) => {
                 const props = useTmdbProps(article);
                 return (
-                  <li className='fdAccountBackground__backdrop__set__li' key={article.id} data-anim='false'>
+                  <li className='fdAccountBackground__backdrop__set__li' key={article.id}>
                     <article className='fdAccountBackground__backdrop__set__li__article'>
                       <figure className='fdAccountBackground__backdrop__set__li__article__graphic'>
                         <picture>
