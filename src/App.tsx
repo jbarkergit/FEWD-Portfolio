@@ -55,7 +55,7 @@ function App() {
 
     if (!routeComponents.some((obj) => obj.path === path)) {
       try {
-        const Module = await import(dir);
+        const Module = await import(/* @vite-ignore */ dir);
         if (!Module) throw new Error(`${dir}`);
 
         const component: JSX.Element = <Module.default />;
