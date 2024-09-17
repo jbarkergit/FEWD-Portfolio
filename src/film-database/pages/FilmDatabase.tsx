@@ -1,5 +1,5 @@
 // Deps
-import { useState, useEffect, useRef, lazy } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense, startTransition } from 'react';
 // Firebase
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { firebaseAuth } from '../../config/firebaseConfig';
@@ -25,13 +25,14 @@ const FilmDatabase = () => {
 
   useEffect(() => {
     const authListener = onAuthStateChanged(firebaseAuth, (user) => {
-      if (!user) {
-        setAuthorizedUser({ user: undefined, verified: false });
-      } else {
-        setAuthorizedUser({ user: user, verified: user.emailVerified });
-      }
-
-      setIsUserFetched(true);
+      startTransition(() => {
+        if (!user) {
+          setAuthorizedUser({ user: undefined, verified: false });
+        } else {
+          setAuthorizedUser({ user: user, verified: user.emailVerified });
+        }
+        setIsUserFetched(true);
+      });
     });
 
     return () => authListener();
