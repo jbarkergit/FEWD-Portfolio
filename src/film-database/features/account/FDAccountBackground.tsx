@@ -14,7 +14,6 @@ const FDAccountBackground = (): JSX.Element => {
   const pathname: string = useLocation().pathname;
   const [responseSets, setResponseSets] = useState<Type_Tmdb_Api_Union[][]>([]);
   const [isLastUlMounted, setIsLastUlMounted] = useState<boolean>(false);
-  useEffect(() => console.log(isLastUlMounted), [isLastUlMounted]);
 
   /** Fetch data */
   const fetchData = async (): Promise<void> => {
