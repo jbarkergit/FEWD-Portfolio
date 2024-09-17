@@ -48,22 +48,35 @@ const FDAccountBackground = (): JSX.Element => {
   const backdropRef = useRef<HTMLDivElement>(null);
 
   /** Mutation observer tracking responseSets mapping in DOM */
-  const observer = new MutationObserver((entries) => {
-    if (!backdropRef.current) return undefined;
+  const observer = new MutationObserver((mutations: MutationRecord[]) => {
+    if (!backdropRef.current) return;
 
-    const flattenedEntries: MutationRecord[] = entries.flat();
-    const sets: HTMLUListElement[] = [...backdropRef.current.children] as HTMLUListElement[];
-    const listItems: HTMLLIElement[] = sets?.flatMap((set: HTMLElement) => [...set.children]) as HTMLLIElement[];
+    // Flattened mutations arr
+    const flattenedEntries: MutationRecord[] = mutations.flat();
+
+    // List items arr
+    const sets = Array.from(backdropRef.current.children) as HTMLUListElement[];
+    const listItems = sets.flatMap((set) => Array.from(set.children) as HTMLLIElement[]);
     const lastListItem: HTMLLIElement = listItems[listItems.length - 1];
 
-    const isLastItemAdded: boolean = flattenedEntries.some((entry: MutationRecord) => {
-      const ul = entry.addedNodes[0] as HTMLElement;
-      const ulLis: Element[] = [...ul.children];
-      return ulLis.includes(lastListItem);
+    // Check if iterations of ul contain lastListItem
+    const isLastItemAdded = flattenedEntries.some((entry) => {
+      return Array.from(entry.addedNodes).some((node) => {
+        const ul = node as HTMLElement;
+
+        // In the event that ul doesn't exist, we have to re-mount the observer to ensure the animation fires.
+        if (!ul) {
+          observer.disconnect();
+          observer.observe(backdropRef.current!, { childList: true, subtree: true });
+        } else {
+          const ulLis = Array.from(ul.children) as HTMLLIElement[];
+          return ulLis.includes(lastListItem);
+        }
+      });
     });
 
-    if (isLastItemAdded) setIsLastUlMounted(true);
-    else setIsLastUlMounted(false);
+    // Update state based on whether the last item has been added
+    setIsLastUlMounted(isLastItemAdded);
   });
 
   useEffect(() => {
@@ -74,10 +87,16 @@ const FDAccountBackground = (): JSX.Element => {
   /** Handle list items animations */
   useEffect(() => {
     if (!isLastUlMounted || !backdropRef.current) return;
+
+    // List items arr
     const sets: HTMLUListElement[] = [...backdropRef.current.children] as HTMLUListElement[];
     const listItems: HTMLLIElement[] = sets?.flatMap((set: HTMLElement) => [...set.children]) as HTMLLIElement[];
-    listItems.forEach((li: HTMLLIElement) => li.setAttribute('data-anim', 'mount'));
-    backdropRef.current?.setAttribute('data-anim', 'mount');
+
+    // Animation mount iteration with minor delay to ensure LI's receive data-attribute mountings
+    setTimeout(() => {
+      listItems.forEach((li: HTMLLIElement) => li.setAttribute('data-anim', 'mount'));
+      backdropRef.current?.setAttribute('data-anim', 'mount');
+    }, 200);
   }, [isLastUlMounted]);
 
   /** Component */
@@ -90,11 +109,11 @@ const FDAccountBackground = (): JSX.Element => {
               {set.map((article: Type_Tmdb_Api_Union) => {
                 const props = useTmdbProps(article);
                 return (
-                  <li className='fdAccountBackground__backdrop__set__li' key={uuidv4()} data-anim='false'>
+                  <li className='fdAccountBackground__backdrop__set__li' key={article.id} data-anim='false'>
                     <article className='fdAccountBackground__backdrop__set__li__article'>
                       <figure className='fdAccountBackground__backdrop__set__li__article__graphic'>
                         <picture>
-                          <img src={`https://image.tmdb.org/t/p/w300/${props?.backdrop_path}`} alt={`${props?.alt}`} />
+                          <img src={`https://image.tmdb.org/t/p/w780/${props?.backdrop_path}`} alt={`${props?.alt}`} />
                           <figcaption>{`${props?.alt}`}</figcaption>
                         </picture>
                       </figure>
