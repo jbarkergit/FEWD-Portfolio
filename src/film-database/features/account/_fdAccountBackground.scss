@@ -19,7 +19,6 @@
     height: 100%;
     transform-origin: center center;
     will-change: scale;
-    /* Scale animation */
     &[data-anim='false'] {
       transform: scale(1.2);
     }
@@ -31,51 +30,56 @@
       flex: 0 0 calc((100% - 4 * var(--fd-gap)) / 5);
       position: relative;
       pointer-events: none;
-      /* Staggered animation for odd list items */
-      &:nth-of-type(odd) {
-        .fdAccountBackground__backdrop__set__li[data-anim='false'] {
+      &[data-anim='false'] {
+        &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li {
           transform: translateY(100svh);
         }
-        .fdAccountBackground__backdrop__set__li:nth-of-type(1)[data-anim='mount'] {
-          transition: transform 1.5s ease 1.15s;
-          transform: translateY(calc(75svh - var(--accountBackgroundLIAnimCalc)));
-        }
-        .fdAccountBackground__backdrop__set__li:nth-of-type(2)[data-anim='mount'] {
-          transition: transform 1.5s ease 0.9s;
-          transform: translateY(calc(50svh - var(--accountBackgroundLIAnimCalc)));
-        }
-        .fdAccountBackground__backdrop__set__li:nth-of-type(3)[data-anim='mount'] {
-          transition: transform 1.5s ease 0.65s;
-          transform: translateY(calc(25svh - var(--accountBackgroundLIAnimCalc)));
-        }
-        .fdAccountBackground__backdrop__set__li:nth-of-type(4)[data-anim='mount'] {
-          transition: transform 1.5s ease 0s;
-          transform: translateY(calc(0svh - var(--accountBackgroundLIAnimCalc)));
-        }
-      }
-      /* Staggered animation for even list items */
-      &:nth-of-type(even) {
-        .fdAccountBackground__backdrop__set__li[data-anim='false'] {
+        &:nth-of-type(even) .fdAccountBackground__backdrop__set__li {
           transform: translateY(-100svh);
         }
-        .fdAccountBackground__backdrop__set__li:nth-of-type(1)[data-anim='mount'] {
-          transition: transform 1.5s ease 1.15s;
-          transform: translateY(calc(0svh + var(--accountBackgroundLIAnimCalc)));
+      }
+      &[data-anim='mount'] {
+        &:nth-of-type(odd) {
+          .fdAccountBackground__backdrop__set__li {
+            &:nth-of-type(1) {
+              transition: transform 1.5s ease 1.15s;
+              transform: translateY(calc(75svh - var(--accountBackgroundLIAnimCalc)));
+            }
+            &:nth-of-type(2) {
+              transition: transform 1.5s ease 0.9s;
+              transform: translateY(calc(50svh - var(--accountBackgroundLIAnimCalc)));
+            }
+            &:nth-of-type(3) {
+              transition: transform 1.5s ease 0.65s;
+              transform: translateY(calc(25svh - var(--accountBackgroundLIAnimCalc)));
+            }
+            &:nth-of-type(4) {
+              transition: transform 1.5s ease 0s;
+              transform: translateY(calc(0svh - var(--accountBackgroundLIAnimCalc)));
+            }
+          }
         }
-        .fdAccountBackground__backdrop__set__li:nth-of-type(2)[data-anim='mount'] {
-          transition: transform 1.5s ease 0.9s;
-          transform: translateY(calc(25svh + var(--accountBackgroundLIAnimCalc)));
-        }
-        .fdAccountBackground__backdrop__set__li:nth-of-type(3)[data-anim='mount'] {
-          transition: transform 1.5s ease 0.65s;
-          transform: translateY(calc(50svh + var(--accountBackgroundLIAnimCalc)));
-        }
-        .fdAccountBackground__backdrop__set__li:nth-of-type(4)[data-anim='mount'] {
-          transition: transform 1.5s ease 0s;
-          transform: translateY(calc(75svh + var(--accountBackgroundLIAnimCalc)));
+        &:nth-of-type(even) {
+          .fdAccountBackground__backdrop__set__li {
+            &:nth-of-type(1) {
+              transition: transform 1.5s ease 1.15s;
+              transform: translateY(calc(0svh + var(--accountBackgroundLIAnimCalc)));
+            }
+            &:nth-of-type(2) {
+              transition: transform 1.5s ease 0.9s;
+              transform: translateY(calc(25svh + var(--accountBackgroundLIAnimCalc)));
+            }
+            &:nth-of-type(3) {
+              transition: transform 1.5s ease 0.65s;
+              transform: translateY(calc(50svh + var(--accountBackgroundLIAnimCalc)));
+            }
+            &:nth-of-type(4) {
+              transition: transform 1.5s ease 0s;
+              transform: translateY(calc(75svh + var(--accountBackgroundLIAnimCalc)));
+            }
+          }
         }
       }
-      /* Opacity for ul:3 li:2 */
       &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
         opacity: 0;
         // transition: opacity 1.5s ease 1.3s;
