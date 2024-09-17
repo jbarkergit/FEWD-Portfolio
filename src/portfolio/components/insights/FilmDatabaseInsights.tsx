@@ -21,6 +21,12 @@ const FilmDatabaseInsights = (): JSX.Element => {
         succeeded in creating a functional and visually appealing custom controller overlay. This involved overcoming difficulties with the iFrame’s native behavior
         and integrating the player seamlessly into the design.
       </p>
+      <p>
+        A key aspect of this project was delving into CSS animations. Although this proved time-consuming, it provided invaluable experience, enhancing my skills and
+        fostered a deep appreciation for intricate, yet simple, purely CSS-based animations. Navigating the complexities of CSS-driven animations necessitated a
+        thorough cleanup of my stylesheets and compelled me to explore previously unfamiliar properties. Through trial and error, I identified and addressed the
+        limitations of various methods, ultimately optimizing performance to ensure a seamless user experience on all user devices.
+      </p>
     </>
   );
 };
