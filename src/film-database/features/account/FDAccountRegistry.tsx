@@ -148,7 +148,7 @@ const FDAccountRegistry = forwardRef<HTMLDivElement, Type_PropDrill>(({ toggleCo
   };
 
   return (
-    <div className='fdAccountRegistry' id='fdRegistery' data-activity='active' ref={registryRefReceiver}>
+    <div className='fdAccountRegistry' id='fdRegistery' data-activity='disabled' ref={registryRefReceiver}>
       <section className='fdAccountRegistry__container'>
         <section className='fdAccountRegistry__container__col'>
           <div className='fdAccountRegistry__container__col__logo'>Film Database</div>
