@@ -40,7 +40,8 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
     const rootRefChildren = [...rootRef.current.children];
 
     rootRefChildren.forEach((child: Element) => {
-      if (child.getAttribute('data-activity') === 'active') {
+      const activity: string | null = child.getAttribute('data-activity');
+      if (activity === 'active' || activity === 'mount') {
         child.setAttribute('data-activity', 'disabled');
       }
     });
