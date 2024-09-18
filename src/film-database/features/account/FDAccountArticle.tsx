@@ -17,7 +17,7 @@ const FDAccountArticle = forwardRef<HTMLElement, Type_PropDrill>(({ toggleCompon
   };
 
   return (
-    <main className='fdAccountArticle' ref={articleRefReceiver} data-activity='active'>
+    <main className='fdAccountArticle' ref={articleRefReceiver} data-activity='disabled'>
       <article className='fdAccountArticle__article'>
         <section className='fdAccountArticle__article__about'>
           <blockquote className='fdAccountArticle__article__about--blockquote' cite='https://www.themoviedb.org/?language=en-US'>
