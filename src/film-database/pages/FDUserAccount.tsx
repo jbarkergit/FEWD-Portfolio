@@ -23,19 +23,17 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
         break;
 
       case 'registry':
-        handleAttributes(registryRefReceiver);
+        if (registryRefReceiver.current) handleAttributes(registryRefReceiver);
         break;
 
       case 'signin':
-        handleAttributes(signInRefReceiver);
+        if (signInRefReceiver.current) handleAttributes(signInRefReceiver);
         break;
 
       default:
         break;
     }
   };
-
-  useEffect(() => toggleComponent('article'), []);
 
   const handleAttributes = (ref: RefObject<HTMLElement>): void => {
     if (!rootRef.current) return;
@@ -49,6 +47,10 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
 
     ref.current?.setAttribute('data-activity', 'active');
   };
+
+  useEffect(() => {
+    setTimeout(() => articleRefReceiver.current?.setAttribute('data-activity', 'mount'), 50);
+  }, []);
 
   /** Component */
   return (
