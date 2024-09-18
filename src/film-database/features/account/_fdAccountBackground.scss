@@ -23,7 +23,7 @@
       transform: scale(1.2);
     }
     &[data-anim='mount'] {
-      transition: transform 2.4s cubic-bezier(0.785, 0.135, 0.15, 0.86) 1.35s;
+      transition: transform 2.65s cubic-bezier(1, 0, 0.62, 1) 0s;
       transform: scale(3.5);
     }
     &__set {
