@@ -11,9 +11,10 @@ import { MaterialSymbolsPlayArrow } from '../../assets/google-material-symbols/i
 type Type_FilmDatabase_Props = {
   articles: Type_Tmdb_Api_Union[];
   setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>>;
+  mapIndex: number;
 };
 
-const FDCarouselArticles = ({ articles, setHeroData }: Type_FilmDatabase_Props) => {
+const FDCarouselArticles = ({ articles, setHeroData, mapIndex }: Type_FilmDatabase_Props) => {
   return (
     <>
       {articles.map((article) => {
@@ -27,7 +28,7 @@ const FDCarouselArticles = ({ articles, setHeroData }: Type_FilmDatabase_Props) 
               </header>
               <figure className='fdMedia__carousel__wrapper__ul__li__article__graphic'>
                 <picture>
-                  <img src={`https://image.tmdb.org/t/p/original/${props?.poster_path}`} alt={`${props?.alt}`} />
+                  <img src={`https://image.tmdb.org/t/p/original/${props?.poster_path}`} alt={`${props?.alt}`} fetchPriority={mapIndex === 0 ? 'high' : 'low'} />
                   <figcaption>{`${props?.alt}`}</figcaption>
                 </picture>
               </figure>
