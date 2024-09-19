@@ -89,22 +89,8 @@ const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setH
   /** Component heading */
   const formattedDataKey: string = dataKey.replaceAll('_', ' ');
 
-  /** Attr data-anim */
-  const getDataAnim = (): string => {
-    switch (mapIndex) {
-      case 0:
-        return 'active';
-
-      case 1:
-        return 'after';
-
-      default:
-        return 'disabled-after';
-    }
-  };
-
   return (
-    <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`} data-anim={getDataAnim()}>
+    <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`} data-anim={mapIndex === 0 ? 'active' : 'disabled'}>
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' ref={carouselRef}>
