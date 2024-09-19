@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef } from 'react';
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 import FDCarouselSearch from '../../components/carousel-search/FDCarouselSearch';
 
@@ -10,41 +10,29 @@ type Type_PropDrill = {
 
 const FDMediaCarousel = ({ carouselComponents, isMenuOpen, setHeroData }: Type_PropDrill) => {
   /** Carousel DeltaY scroll logic */
-  const dataAttr: string = 'data-anim';
   const fdMediaRef = useRef<HTMLElement>(null);
-  const carouselNodes: HTMLCollection | undefined = fdMediaRef.current?.children;
 
   // Update previously active and newly active carousel node's data-attr, navigate
-  const deltaScrollCarousels = (deltaY: number): void => {
-    if (!fdMediaRef.current || !carouselNodes) return;
-
-    // Convert deltaY to 1 or -1 for incrementation/decrementation
-    const deltaIndex: 1 | -1 = deltaY > 0 ? 1 : -1;
-
-    // Get elements
-    const carouselNodesArr: Element[] = [...carouselNodes];
+  const deltaScrollCarousels = (delta: 1 | -1): void => {
+    if (!fdMediaRef.current) return;
+    const carouselNodesArr: Element[] = [...fdMediaRef.current?.children];
 
     // Gather indexes
-    const activeNodeIndex: number = [...fdMediaRef.current.children].findIndex((node: Element) => node.getAttribute(dataAttr) === 'active');
-    const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + deltaIndex, carouselNodesArr.length - 1));
+    const activeNodeIndex: number = carouselNodesArr.findIndex((node: Element) => node.getAttribute('data-anim') === 'active');
+    const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + delta, carouselNodesArr.length - 1));
 
-    if (activeNodeIndex !== nextActiveNodeIndex) {
-      const dataIndexTracker: string = 'data-anim';
-
-      // Handle attributes
-      if (nextActiveNodeIndex > activeNodeIndex) carouselNodesArr[activeNodeIndex].setAttribute(dataIndexTracker, 'disabled');
-      carouselNodesArr[nextActiveNodeIndex].setAttribute(dataIndexTracker, 'active');
-
-      // Get scroll position
-      const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
-
-      // Scroll
-      // fdMediaRef.current.scrollTo({ top: nextActiveNodeOffsetTop, behavior: 'smooth' });
-      fdMediaRef.current.style.top = `${nextActiveNodeOffsetTop * -1}px`;
+    // Handle attributes
+    if (nextActiveNodeIndex !== activeNodeIndex) {
+      if (nextActiveNodeIndex > activeNodeIndex) carouselNodesArr[activeNodeIndex].setAttribute('data-anim', 'disabled');
+      carouselNodesArr[nextActiveNodeIndex].setAttribute('data-anim', 'active');
     }
+
+    // Scroll
+    const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
+    fdMediaRef.current.style.top = `${nextActiveNodeOffsetTop * -1}px`;
   };
 
-  const handleWheel = (event: WheelEvent) => deltaScrollCarousels(event.deltaY);
+  const handleWheel = (event: WheelEvent) => deltaScrollCarousels(event.deltaY > 0 ? 1 : -1);
 
   useEffect(() => {
     if (isMenuOpen) window.removeEventListener('wheel', handleWheel);
