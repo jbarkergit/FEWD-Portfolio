@@ -1,5 +1,5 @@
 // Deps
-import { useState, useEffect, useRef, lazy, Suspense, startTransition } from 'react';
+import { useState, useEffect, useRef, lazy, startTransition } from 'react';
 // Firebase
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { firebaseAuth } from '../../config/firebaseConfig';
@@ -16,8 +16,6 @@ const FilmDatabase = () => {
   const rootRef = useRef<HTMLDivElement>(null);
 
   /** Firebase user auth */
-  const [isUserFetched, setIsUserFetched] = useState<boolean>(false);
-
   const [authorizedUser, setAuthorizedUser] = useState<Type_authorizedUser>({
     user: undefined,
     verified: false,
@@ -26,12 +24,8 @@ const FilmDatabase = () => {
   useEffect(() => {
     const authListener = onAuthStateChanged(firebaseAuth, (user) => {
       startTransition(() => {
-        if (!user) {
-          setAuthorizedUser({ user: undefined, verified: false });
-        } else {
-          setAuthorizedUser({ user: user, verified: user.emailVerified });
-        }
-        setIsUserFetched(true);
+        if (!user) setAuthorizedUser({ user: undefined, verified: false });
+        else setAuthorizedUser({ user: user, verified: user.emailVerified });
       });
     });
 
@@ -44,30 +38,31 @@ const FilmDatabase = () => {
   const [layoutAttr, setLayoutAttr] = useState<string>('xxl');
 
   const getDataLayout = (): void => {
+    const winX: number = window.innerWidth;
     let layout: string;
 
     switch (true) {
-      case window.innerWidth >= 1410:
+      case winX >= 1410:
         layout = 'xxl';
         break;
 
-      case window.innerWidth < 1410 && window.innerWidth > 1212:
+      case winX < 1410 && winX > 1212:
         layout = 'xl';
         break;
 
-      case window.innerWidth <= 1212 && window.innerWidth > 1032:
+      case winX <= 1212 && winX > 1032:
         layout = 'l';
         break;
 
-      case window.innerWidth <= 1032 && window.innerWidth > 836:
+      case winX <= 1032 && winX > 836:
         layout = 'm';
         break;
 
-      case window.innerWidth <= 836 && window.innerWidth > 632:
+      case winX <= 836 && winX > 632:
         layout = 's';
         break;
 
-      case window.innerWidth <= 632 && window.innerWidth > 0:
+      case winX <= 632 && winX > 0:
         layout = 'xs';
         break;
 
@@ -93,7 +88,7 @@ const FilmDatabase = () => {
 
   return (
     <div className='filmDatabase' data-layout-carousel={layoutAttr} ref={rootRef}>
-      {isUserFetched ? authorizedUser.user && authorizedUser.verified ? <FDCatalog /> : <FDUserAccount rootRef={rootRef} /> : null}
+      {authorizedUser.user && authorizedUser.verified ? <FDCatalog /> : <FDUserAccount rootRef={rootRef} />}
     </div>
   );
 };
