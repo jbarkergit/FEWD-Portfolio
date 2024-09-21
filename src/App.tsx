@@ -1,15 +1,11 @@
 import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
-
 // 404
 const ProtocolErrorHandler = lazy(() => import('./app/ProtocolErrorHandler'));
-
 // Suspense fallback
 const HomeSkeleton = lazy(() => import('./ecommerce/skeletons/pages/HomeSkeleton'));
 const ProductCatalogSkeleton = lazy(() => import('./ecommerce/skeletons/pages/ProductCatalogSkeleton'));
 const ProductDetailPageSkeleton = lazy(() => import('./ecommerce/skeletons/pages/ProductDetailPageSkeleton'));
-
 // Ecommerce routes for dynamic lazy loading
 import { useUniqueData } from './ecommerce/hooks/useUniqueData';
 
@@ -40,7 +36,7 @@ function App() {
       },
       { path: '/ecommerce/product/:paramId', dir: './ecommerce/pages/ProductDetailPage' },
     ],
-    filmDatabase: [{ path: '/film-database', dir: './film-database/pages/FilmDatabase' }],
+    filmDatabase: { path: '/film-database', dir: './film-database/pages/FilmDatabase' },
   };
 
   /** Component storage */
@@ -59,9 +55,15 @@ function App() {
         if (!Module) throw new Error(`${dir}`);
 
         const component: JSX.Element = <Module.default />;
-        const routeComponentObj: Type_routeComponents_Object = { path, component };
+        const routeComponentObj: Type_routeComponents_Object = { path: path, component };
 
-        setRouteComponents((prevRouteComponents) => [...prevRouteComponents, routeComponentObj]);
+        // Use functional update to avoid closure issues
+        setRouteComponents((prevRouteComponents) => {
+          if (!prevRouteComponents.some((obj) => obj.path === path)) {
+            return [...prevRouteComponents, routeComponentObj];
+          }
+          return prevRouteComponents;
+        });
       } catch (Error) {
         console.error('Failure to load module: ', Error);
       }
@@ -75,29 +77,21 @@ function App() {
     switch (userLocationPathname) {
       // Prioritize landing pages on portfolio mount
       case '/':
-        const landingPageRoutes: Type_createRoute_Param[] = [appRoutes.portfolio, appRoutes.filmDatabase[0], appRoutes.ecommerce[0] as Type_createRoute_Param];
+        const landingPageRoutes: Type_createRoute_Param[] = [appRoutes.portfolio, appRoutes.filmDatabase, appRoutes.ecommerce[0] as Type_createRoute_Param];
         landingPageRoutes.forEach((route) => createRoute(route));
         break;
 
       // Standard procedure
       default:
-        for (const route of [...Object.values(appRoutes)]) {
+        for (const route of Object.values(appRoutes)) {
           // MPA (Routes entry is an array)
-          if (Array.isArray(route)) {
-            route.forEach(({ path, dir }) => {
-              const paths = path;
-
-              // If entry.path is an array, create individual queues
-              if (Array.isArray(paths)) {
-                paths.forEach((path) => createRoute({ path, dir }));
-              } else {
-                createRoute({ path, dir } as Type_createRoute_Param);
-              }
-            });
-            // SPA (Routes entry is an object)
-          } else {
-            createRoute(route);
-          }
+          Array.isArray(route)
+            ? // If entry.path is an array, create individual queues
+              route.forEach(({ path, dir }) => {
+                const paths = path;
+                Array.isArray(paths) ? paths.forEach((path) => createRoute({ path, dir })) : createRoute({ path, dir } as Type_createRoute_Param);
+              }) // SPA (Routes entry is an object)
+            : createRoute(route);
         }
         break;
     }
@@ -115,7 +109,16 @@ function App() {
     } else if (userLocationPathname.startsWith('/ecommerce')) {
       return <ProductDetailPageSkeleton />;
     } else {
-      return <ProtocolErrorHandler />;
+      return (
+        <div id='standardSuspenseFallback'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='6em' height='6em' viewBox='0 0 24 24'>
+            <path fill='currentColor' d='M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z' opacity='.5'></path>
+            <path fill='currentColor' d='M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z'>
+              <animateTransform attributeName='transform' dur='1s' from='0 12 12' repeatCount='indefinite' to='360 12 12' type='rotate'></animateTransform>
+            </path>
+          </svg>
+        </div>
+      );
     }
   };
 
