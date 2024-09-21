@@ -24,7 +24,7 @@
     }
     &[data-anim='mount'] {
       transition: transform 2.65s cubic-bezier(1, 0, 0.62, 1) 0s;
-      transform: scale(3.5);
+      transform: scale(5);
     }
     &__set {
       flex: 0 0 calc((100% - 4 * var(--fd-gap)) / 5);
