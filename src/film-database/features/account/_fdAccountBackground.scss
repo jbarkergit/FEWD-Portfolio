@@ -2,9 +2,25 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdAccountBackground {
-  position: fixed;
+  position: relative;
   width: 100%;
   height: 100%;
+  &::before,
+  &::after {
+    content: '';
+    position: fixed;
+    z-index: 6;
+    left: 0;
+    width: 100%;
+    height: calc(100svh / 16);
+    background-color: hsl(0, 0%, 8%);
+  }
+  &::before {
+    top: 0;
+  }
+  &::after {
+    bottom: 0;
+  }
   &__backdrop {
     position: fixed;
     top: 0;
@@ -19,7 +35,7 @@
       transform: scale(1.15);
     }
     &[data-anim='mount'] {
-      transition: transform 1.55s cubic-bezier(1, 0, 0.62, 1) 1.15s;
+      transition: transform 2.5s cubic-bezier(1, 0, 0.62, 1) 2s;
       transform: scale(5.3);
     }
     &__set {
@@ -38,19 +54,19 @@
         &:nth-of-type(odd) {
           .fdAccountBackground__backdrop__set__li {
             &:nth-of-type(1) {
-              transition: transform 1.5s ease 1.15s;
+              transition: transform 2.35s ease 1.15s;
               transform: translateY(calc(75svh - ((25svh - var(--fd-gap) * 2) / 2)));
             }
             &:nth-of-type(2) {
-              transition: transform 1.5s ease 0.9s;
+              transition: transform 2.35s ease 0.9s;
               transform: translateY(calc(50svh - ((25svh - var(--fd-gap) * 2) / 2)));
             }
             &:nth-of-type(3) {
-              transition: transform 1.5s ease 0.65s;
+              transition: transform 2.35s ease 0.65s;
               transform: translateY(calc(25svh - ((25svh - var(--fd-gap) * 2) / 2)));
             }
             &:nth-of-type(4) {
-              transition: transform 1.5s ease 0s;
+              transition: transform 2.35s ease 0s;
               transform: translateY(calc(0svh - ((25svh - var(--fd-gap) * 2) / 2)));
             }
           }
@@ -58,22 +74,27 @@
         &:nth-of-type(even) {
           .fdAccountBackground__backdrop__set__li {
             &:nth-of-type(1) {
-              transition: transform 1.5s ease 1.15s;
+              transition: transform 2.35s ease 1.15s;
               transform: translateY(calc(0svh));
             }
             &:nth-of-type(2) {
-              transition: transform 1.5s ease 0.9s;
+              transition: transform 2.35s ease 0.9s;
               transform: translateY(calc(25svh));
             }
             &:nth-of-type(3) {
-              transition: transform 1.5s ease 0.65s;
+              transition: transform 2.35s ease 0.65s;
               transform: translateY(calc(50svh));
             }
             &:nth-of-type(4) {
-              transition: transform 1.5s ease 0s;
+              transition: transform 2.35s ease 0s;
               transform: translateY(calc(75svh));
             }
           }
+        }
+        &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) article figure picture img {
+          transform: scale(1.25);
+          animation: imgScale 2.5s cubic-bezier(1, 0, 0.62, 1) 2s forwards;
+          will-change: scale;
         }
       }
       &__li {
@@ -99,9 +120,7 @@
             z-index: 5;
             width: 100%;
             height: 100%;
-            background: linear-gradient(226deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 35%),
-              linear-gradient(135deg, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0) 60%),
-              linear-gradient(45deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 70%);
+            background: linear-gradient(226deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 35%, rgba(255, 255, 255, 0.2) 42%, rgba(255, 255, 255, 0) 60%);
           }
           & figure picture img {
             image-rendering: crisp-edges;
@@ -109,5 +128,14 @@
         }
       }
     }
+  }
+}
+
+@keyframes imgScale {
+  from {
+    transform: scale(1.25);
+  }
+  to {
+    transform: scale(1);
   }
 }
