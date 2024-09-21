@@ -1,10 +1,6 @@
 @use '/src/sass/functions' as f;
 @use '/src/film-database/scss/fdMixins' as m;
 
-:root {
-  --accountBackgroundLIAnimCalc: ((25svh - var(--fd-gap)) / 2);
-}
-
 .fdAccountBackground {
   position: fixed;
   width: 100%;
@@ -14,20 +10,20 @@
     top: 0;
     left: 0;
     display: flex;
-    gap: var(--fd-gap);
+    gap: calc(var(--fd-gap) * 2);
     width: 100%;
     height: 100%;
     transform-origin: center center;
     will-change: scale;
     &[data-anim='false'] {
-      transform: scale(1.2);
+      transform: scale(1.15);
     }
     &[data-anim='mount'] {
-      transition: transform 2.65s cubic-bezier(1, 0, 0.62, 1) 0s;
-      transform: scale(5);
+      transition: transform 1.55s cubic-bezier(1, 0, 0.62, 1) 1.15s;
+      transform: scale(5.3);
     }
     &__set {
-      flex: 0 0 calc((100% - 4 * var(--fd-gap)) / 5);
+      flex: 0 0 calc((100% - 4 * (var(--fd-gap) * 2)) / 5);
       position: relative;
       pointer-events: none;
       &[data-anim='false'] {
@@ -43,19 +39,19 @@
           .fdAccountBackground__backdrop__set__li {
             &:nth-of-type(1) {
               transition: transform 1.5s ease 1.15s;
-              transform: translateY(calc(75svh - var(--accountBackgroundLIAnimCalc)));
+              transform: translateY(calc(75svh - ((25svh - var(--fd-gap) * 2) / 2)));
             }
             &:nth-of-type(2) {
               transition: transform 1.5s ease 0.9s;
-              transform: translateY(calc(50svh - var(--accountBackgroundLIAnimCalc)));
+              transform: translateY(calc(50svh - ((25svh - var(--fd-gap) * 2) / 2)));
             }
             &:nth-of-type(3) {
               transition: transform 1.5s ease 0.65s;
-              transform: translateY(calc(25svh - var(--accountBackgroundLIAnimCalc)));
+              transform: translateY(calc(25svh - ((25svh - var(--fd-gap) * 2) / 2)));
             }
             &:nth-of-type(4) {
               transition: transform 1.5s ease 0s;
-              transform: translateY(calc(0svh - var(--accountBackgroundLIAnimCalc)));
+              transform: translateY(calc(0svh - ((25svh - var(--fd-gap) * 2) / 2)));
             }
           }
         }
@@ -63,33 +59,27 @@
           .fdAccountBackground__backdrop__set__li {
             &:nth-of-type(1) {
               transition: transform 1.5s ease 1.15s;
-              transform: translateY(calc(0svh + var(--accountBackgroundLIAnimCalc)));
+              transform: translateY(calc(0svh));
             }
             &:nth-of-type(2) {
               transition: transform 1.5s ease 0.9s;
-              transform: translateY(calc(25svh + var(--accountBackgroundLIAnimCalc)));
+              transform: translateY(calc(25svh));
             }
             &:nth-of-type(3) {
               transition: transform 1.5s ease 0.65s;
-              transform: translateY(calc(50svh + var(--accountBackgroundLIAnimCalc)));
+              transform: translateY(calc(50svh));
             }
             &:nth-of-type(4) {
               transition: transform 1.5s ease 0s;
-              transform: translateY(calc(75svh + var(--accountBackgroundLIAnimCalc)));
+              transform: translateY(calc(75svh));
             }
           }
         }
       }
-      &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) {
-        opacity: 0;
-        // transition: opacity 1.5s ease 1.3s;
-      }
       &__li {
         position: absolute;
         width: 100%;
-        height: calc(25% - var(--fd-gap));
-        border-radius: var(--fd-borderRadius);
-        box-shadow: 7px 17px 22px 7px rgba(0, 0, 0, 0.25);
+        height: calc(25% - var(--fd-gap) * 2);
         overflow: clip;
         will-change: transform;
         &__article,
