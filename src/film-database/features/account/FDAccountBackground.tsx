@@ -66,17 +66,20 @@ const FDAccountBackground = (): JSX.Element => {
   return (
     <div className='fdAccountBackground'>
       <div className='fdAccountBackground__backdrop' ref={backdropRef} data-anim='false'>
-        {responseSets.map((set: Type_Tmdb_Api_Union[]) => {
+        {responseSets.map((set: Type_Tmdb_Api_Union[], setIndex: number) => {
           return (
             <ul className='fdAccountBackground__backdrop__set' key={uuidv4()} ref={ulRef} data-anim='false'>
-              {set.map((article: Type_Tmdb_Api_Union) => {
+              {set.map((article: Type_Tmdb_Api_Union, liIndex: number) => {
                 const props = useTmdbProps(article);
                 return (
                   <li className='fdAccountBackground__backdrop__set__li' key={article.id}>
                     <article className='fdAccountBackground__backdrop__set__li__article'>
                       <figure className='fdAccountBackground__backdrop__set__li__article__graphic'>
                         <picture>
-                          <img src={`https://image.tmdb.org/t/p/w780/${props?.backdrop_path}`} alt={`${props?.alt}`} />
+                          <img
+                            src={`https://image.tmdb.org/t/p/${setIndex === 2 && liIndex === 1 ? `original` : `w780`}/${props?.backdrop_path}`}
+                            alt={`${props?.alt}`}
+                          />
                           <figcaption>{`${props?.alt}`}</figcaption>
                         </picture>
                       </figure>
