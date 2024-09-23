@@ -33,7 +33,8 @@
     transform-origin: center center;
     will-change: scale;
     &[data-anim='false'] {
-      transform: scale(1.15);
+      // transform: scale(1.15);
+      transform: scale(0.9);
     }
     &[data-anim='mount'] {
       // Transition duration mimics &__set&[data-anim='mount']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(4)
@@ -50,11 +51,8 @@
           transform: translateY(100svh);
         }
         &:nth-of-type(even) .fdAccountBackground__backdrop__set__li {
-          // All transition properties mimic their (odd) counterpart
-          // whereas transform properies mimic without offset calc to center odd rows with even's centered gaps
-          // because of this transform destination change, the original initial transform of (even) counterparts must inherit the offset
-          // to allow for the rows to reflect each others animations (WIP)
-          transform: translateY(-100svh);
+          // Mimics height of list items
+          transform: translateY(calc(0svh - (25svh - var(--fd-gap) * 2)));
         }
       }
       &[data-anim='mount'] {
