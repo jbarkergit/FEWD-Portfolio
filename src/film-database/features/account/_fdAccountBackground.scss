@@ -33,13 +33,15 @@
     transform-origin: center center;
     will-change: scale;
     &[data-anim='false'] {
+      // Hide initial ul:odd li offsets
       transform: scale(1.15);
     }
     &[data-anim='mount'] {
+      // Scaling animation
       // Transition duration mimics &__set&[data-anim='mount']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(4)
       // Transition delay mimics &__set&[data-anim='mount']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(1)
       transition: transform 1.8s cubic-bezier(1, 0, 0.62, 1) 1.4s;
-      transform: scale(5.3);
+      // transform: scale(5.3);
     }
     &__set {
       flex: 0 0 calc((100% - 4 * (var(--fd-gap) * 2)) / 5);
@@ -50,10 +52,6 @@
           transform: translateY(100svh);
         }
         &:nth-of-type(even) .fdAccountBackground__backdrop__set__li {
-          // All transition properties mimic their (odd) counterpart
-          // whereas transform properies mimic without offset calc to center odd rows with even's centered gaps
-          // because of this transform destination change, the original initial transform of (even) counterparts must inherit the offset
-          // to allow for the rows to reflect each others animations (WIP)
           transform: translateY(-100svh);
         }
       }
@@ -80,17 +78,18 @@
         }
         &:nth-of-type(odd) {
           .fdAccountBackground__backdrop__set__li {
+            // Offset transforms by 1/8th of the viewport to center ul:3 li :2 for scaling animation
             &:nth-of-type(1) {
-              transform: translateY(calc(75svh - ((25svh - var(--fd-gap) * 2) / 2)));
+              transform: translateY(calc(75svh - 25svh / 2));
             }
             &:nth-of-type(2) {
-              transform: translateY(calc(50svh - ((25svh - var(--fd-gap) * 2) / 2)));
+              transform: translateY(calc(50svh - 25svh / 2));
             }
             &:nth-of-type(3) {
-              transform: translateY(calc(25svh - ((25svh - var(--fd-gap) * 2) / 2)));
+              transform: translateY(calc(25svh - 25svh / 2));
             }
             &:nth-of-type(4) {
-              transform: translateY(calc(0svh - ((25svh - var(--fd-gap) * 2) / 2)));
+              transform: translateY(calc(0svh - 25svh / 2));
             }
           }
         }
