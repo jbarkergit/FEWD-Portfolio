@@ -53,14 +53,10 @@ const FDAccountBackground = (): JSX.Element => {
 
   /** Mount animations */
   const animator = (): void => {
-    setTimeout(() => {
-      if (!backdropRef.current || !ulRefs.current) return;
-      backdropRef.current.setAttribute('data-anim', 'mount');
-      ulRefs.current.forEach((ul) => ul.setAttribute('data-anim', 'mount'));
-    }, 50);
+    if (!backdropRef.current || !ulRefs.current) return;
+    backdropRef.current.setAttribute('data-anim', 'mount');
+    ulRefs.current.forEach((ul) => ul.setAttribute('data-anim', 'mount'));
   };
-
-  useEffect(() => animator(), [responseSets]);
 
   /** Component */
   return (
@@ -68,7 +64,7 @@ const FDAccountBackground = (): JSX.Element => {
       <div className='fdAccountBackground__backdrop' ref={backdropRef} data-anim='false'>
         {responseSets.map((set: Type_Tmdb_Api_Union[], setIndex: number) => {
           return (
-            <ul className='fdAccountBackground__backdrop__set' key={uuidv4()} ref={ulRef} data-anim='false'>
+            <ul className='fdAccountBackground__backdrop__set' key={`backdropset${setIndex}`} ref={ulRef} data-anim='false'>
               {set.map((article: Type_Tmdb_Api_Union, liIndex: number) => {
                 const props = useTmdbProps(article);
                 return (
@@ -79,6 +75,7 @@ const FDAccountBackground = (): JSX.Element => {
                           <img
                             src={`https://image.tmdb.org/t/p/${setIndex === 2 && liIndex === 1 ? `original` : `w780`}/${props?.backdrop_path}`}
                             alt={`${props?.alt}`}
+                            onLoad={() => (setIndex === responseSets.length - 1 && liIndex === 3 ? animator() : null)}
                           />
                           <figcaption>{`${props?.alt}`}</figcaption>
                         </picture>
