@@ -67,15 +67,17 @@ const FDAccountBackground = (): JSX.Element => {
             <ul className='fdAccountBackground__backdrop__set' key={`backdropset${setIndex}`} ref={ulRef} data-anim='false'>
               {set.map((article: Type_Tmdb_Api_Union, liIndex: number) => {
                 const props = useTmdbProps(article);
+                const isCenteredListItem: boolean = setIndex === 2 && liIndex === 1;
+                const isLastListItem: boolean = setIndex === responseSets.length - 1 && liIndex === 3;
                 return (
                   <li className='fdAccountBackground__backdrop__set__li' key={article.id}>
                     <article className='fdAccountBackground__backdrop__set__li__article'>
                       <figure className='fdAccountBackground__backdrop__set__li__article__graphic'>
                         <picture>
                           <img
-                            src={`https://image.tmdb.org/t/p/${setIndex === 2 && liIndex === 1 ? `original` : `w780`}/${props?.backdrop_path}`}
+                            src={`https://image.tmdb.org/t/p/${isCenteredListItem ? `original` : `w780`}/${props?.backdrop_path}`}
                             alt={`${props?.alt}`}
-                            onLoad={() => (setIndex === responseSets.length - 1 && liIndex === 3 ? animator() : null)}
+                            onLoad={() => (isLastListItem ? animator() : null)}
                           />
                           <figcaption>{`${props?.alt}`}</figcaption>
                         </picture>
