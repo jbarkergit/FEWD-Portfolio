@@ -5,15 +5,19 @@
 // Pages
 @forward '/src/film-database/pages/fdPages';
 
-// Features
+// Features, Components
+@forward '/src/film-database/features/account/fdAccountAllShared';
 @forward '/src/film-database/features/account/fdAccountArticle';
 @forward '/src/film-database/features/account/fdAccountBackground';
-@forward '/src/film-database/features/account/fdAccountAuthModal';
-@forward '/src/film-database/features/details/fdDetails';
-@forward '/src/film-database/features/iframe/fdiFrame';
-@forward '/src/film-database/features/media/fdMediaCarousel';
-@forward '/src/film-database/features/menu/fdMenu';
+@forward '/src/film-database/features/account/fdAccountHeader';
+@forward '/src/film-database/features/account/fdAccountRegistry';
+@forward '/src/film-database/features/account/fdAccountSignIn';
 
-// Components
-@forward '/src/film-database/components/carousel-search/fdCarouselSearch';
+@forward '/src/film-database/features/details/fdDetails';
+
+@forward '/src/film-database/features/iframe/fdiFrame';
 @forward '/src/film-database/components/iframe-controller/iFrameController';
+
+@forward '/src/film-database/features/media/fdMediaCarousel';
+
+@forward '/src/film-database/features/menu/fdMenu';
