@@ -119,21 +119,6 @@
           will-change: scale;
         }
       }
-      &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) article::after {
-        // Grid block overlay
-        content: '';
-        width: inherit;
-        height: inherit;
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-        gap: var(--fd-gap);
-        background: linear-gradient(to right, hsl(0, 0%, 8%) 1.5px, transparent 1.5px), linear-gradient(to bottom, hsl(0, 0%, 8%) 1.5px, transparent 1.5px);
-        background-size: calc(100% / 6) calc(100% / 6);
-        transform: scale(1.2);
-        overflow: clip;
-        pointer-events: none;
-      }
       &__li {
         position: absolute;
         width: 100%;
