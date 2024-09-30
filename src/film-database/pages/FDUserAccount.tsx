@@ -5,6 +5,7 @@ import FDAccountArticle from '../features/account/FDAccountArticle';
 import FDAccountBackground from '../features/account/FDAccountBackground';
 import FDAccountRegistry from '../features/account/FDAccountRegistry';
 import FDAccountSignIn from '../features/account/FDAccountSignIn';
+import FDAccountHeader from '../features/account/FDAccountHeader';
 
 type Type_PropDrill = {
   rootRef: RefObject<HTMLDivElement>;
@@ -56,6 +57,7 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
   /** Component */
   return (
     <>
+      <FDAccountHeader toggleComponent={toggleComponent} />
       <FDAccountBackground />
       <FDAccountArticle toggleComponent={toggleComponent} ref={articleRefReceiver} />
       <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />
