@@ -10,19 +10,23 @@
   // Mimics fdAccountBackground blackbars (psuedo)
   height: calc(100svh / 16);
   overflow: clip;
-  &__ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: calc(var(--fd-gap) * 2);
+  &__nav {
+    width: inherit;
     height: inherit;
-    &__li {
-      & button {
-        @include m.fdFontM;
-        text-wrap: nowrap;
-        text-transform: capitalize;
-        & svg {
-          transform: translateY(4px);
+    &__ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: calc(var(--fd-gap) * 2);
+      height: inherit;
+      &__li {
+        & button {
+          @include m.fdFontM;
+          text-wrap: nowrap;
+          text-transform: capitalize;
+          & svg {
+            transform: translateY(4px);
+          }
         }
       }
     }
