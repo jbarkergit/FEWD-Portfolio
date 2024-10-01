@@ -1,6 +1,5 @@
 // Deps
-import { useEffect, useRef, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { Dispatch, useEffect, useRef } from 'react';
 // Hooks
 import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
@@ -10,9 +9,13 @@ import { useFilmDatabaseWebStorage } from '../../composables/web-storage-api/use
 // Hook Types
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
-const FDAccountBackground = (): JSX.Element => {
+type Type_PropDrill = {
+  responseSets: Type_Tmdb_Api_Union[][];
+  setResponseSets: Dispatch<React.SetStateAction<Type_Tmdb_Api_Union[][]>>;
+};
+
+const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill): JSX.Element => {
   const pathname: string = useLocation().pathname;
-  const [responseSets, setResponseSets] = useState<Type_Tmdb_Api_Union[][]>([]);
 
   /** Reference dependencies */
   const backdropRef = useRef<HTMLDivElement>(null);
