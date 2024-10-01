@@ -16,14 +16,14 @@ const FDAccountHeader = ({ toggleComponent }: Type_PropDrill) => {
   };
 
   return (
-    <header className='fdUserAccount__header'>
-      <ul>
-        <div className='fdUserAccount__header__li'>
+    <header className='fdAccountHeader'>
+      <ul className='fdAccountHeader__ul'>
+        <li className='fdAccountHeader__ul__li'>
           <button className='fdUserAccount__article__cta--accBtn fdUserAccount__article--signin' aria-label='Sign in' onClick={() => toggleComponent('signin')}>
             Sign in
           </button>
-        </div>
-        <div className='fdUserAccount__header__li'>
+        </li>
+        <li className='fdAccountHeader__ul__li'>
           <button
             className='fdUserAccount__article__cta--accBtn fdUserAccount__article--signup'
             aria-label='Sign in with Google'
@@ -43,15 +43,15 @@ const FDAccountHeader = ({ toggleComponent }: Type_PropDrill) => {
                 d='M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251'></path>
             </svg>
           </button>
-        </div>
-        <div className='fdUserAccount__header__li'>
+        </li>
+        <li className='fdAccountHeader__ul__li'>
           <button
             className='fdUserAccount__article__cta--accBtn fdUserAccount__article--signup'
             aria-label='Register new account'
             onClick={() => toggleComponent('registry')}>
             Register
           </button>
-        </div>
+        </li>
       </ul>
     </header>
   );
