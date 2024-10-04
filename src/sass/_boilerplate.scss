@@ -1,6 +1,11 @@
 @use './functions' as f;
 
 /* User Preferences */
+html {
+  font-size: 100%;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
 @media (prefers-reduced-motion: no-preference) {
   :has(:target) {
     scroll-behavior: smooth;
@@ -11,7 +16,6 @@
 /* Document */
 html {
   box-sizing: border-box;
-  font-size: 100%;
   hanging-punctuation: first last;
 }
 body {
@@ -41,10 +45,6 @@ img {
 }
 
 /** Typography - font: (optional: style variant weight) size line-height "family", "fallback-font", fallback-font-type */
-html {
-  text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-}
 body {
   font:
     normal normal 500 1.1rem / 1.25em 'Helvetica',
