@@ -8,7 +8,6 @@ import FDAccountBackground from '../features/account/FDAccountBackground';
 import FDAccountRegistry from '../features/account/FDAccountRegistry';
 import FDAccountSignIn from '../features/account/FDAccountSignIn';
 import FDAccountHeader from '../features/account/FDAccountHeader';
-import FDAccountBackgroundSlider from '../features/account/FDAccountBackgroundSlider';
 
 type Type_PropDrill = {
   rootRef: RefObject<HTMLDivElement>;
@@ -63,7 +62,6 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
   return (
     <>
       <FDAccountBackground responseSets={responseSets} setResponseSets={setResponseSets} />
-      <FDAccountBackgroundSlider responseSets={responseSets} />
       <FDAccountHeader toggleComponent={toggleComponent} />
       <FDAccountArticle toggleComponent={toggleComponent} ref={articleRefReceiver} />
       <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />

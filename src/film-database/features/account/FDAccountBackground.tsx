@@ -93,27 +93,6 @@ const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill):
           );
         })}
       </div>
-      <div className='fdAccountBackgroundSlider'>
-        <ul className='fdAccountBackgroundSlider__ul'>
-          {responseSets.flat().map((item) => {
-            const li = useTmdbProps(item);
-            return (
-              <li className='fdAccountBackgroundSlider__ul__li'>
-                <button className='fdAccountBackgroundSlider__ul__li--button' aria-label={`Change background to ${li?.alt}`}>
-                  <article>
-                    <figure>
-                      <picture>
-                        <img src={`https://image.tmdb.org/t/p/w342/${li?.poster_path}`} alt={li?.alt}></img>
-                        <figcaption>{li?.alt}</figcaption>
-                      </picture>
-                    </figure>
-                  </article>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
     </div>
   );
 };
