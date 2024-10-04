@@ -6,6 +6,12 @@ html {
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
+select,
+textarea,
+input,
+button {
+  font: inherit;
+}
 @media (prefers-reduced-motion: no-preference) {
   :has(:target) {
     scroll-behavior: smooth;
@@ -106,12 +112,6 @@ li {
   color: inherit;
   text-decoration: none;
   list-style: none;
-}
-input,
-button,
-textarea,
-select {
-  font: inherit;
 }
 figcaption {
   display: none;
