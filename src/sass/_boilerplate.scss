@@ -1,41 +1,46 @@
 @use './functions' as f;
 
-/* Document Selectors */
+/* User Preferences */
+@media (prefers-reduced-motion: no-preference) {
+  :has(:target) {
+    scroll-behavior: smooth;
+    scroll-padding-top: f.rem(20);
+  }
+}
+
+/* Document */
 html {
   box-sizing: border-box;
   font-size: 100%;
+  hanging-punctuation: first last;
 }
 body {
   padding: 0;
   margin: 0;
   background-color: hsl(0, 0%, 8%);
   overflow-x: hidden;
-  user-select: none; // Disable text highlighting
-  cursor: default;
-  text-rendering: optimizeSpeed;
+  text-rendering: optimizeLegibility;
   color: hsl(0, 0%, 97%);
+  cursor: default;
 }
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
-// Disable element interactions
+
+/* Disabled element interactions */
+body,
 iframe,
 video,
 picture,
-img,
-button {
+img {
   user-select: none;
 }
 
-/**
-Typography Selectors
-font: {optional: style variant weight} size line-height "family", "fallback-font", fallback-font-type
-*/
-
+/** Typography - font: (optional: style variant weight) size line-height "family", "fallback-font", fallback-font-type */
 html {
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -47,6 +52,14 @@ body {
     sans-serif;
   letter-spacing: 0.04rem;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
 h1 {
   font-size: clamp(1.5rem, 2.5vw, 1.875rem);
   font-weight: 600;
@@ -55,30 +68,34 @@ h2 {
   font-size: clamp(1.125rem, 2vw, 1.5rem);
   font-weight: 500;
 }
-h3 {
+h3,
+h4,
+h5,
+h6 {
   font-size: clamp(1rem, 1.5vw, 1.125rem);
   font-weight: 500;
 }
-h4 {
-  font-size: clamp(1rem, 1.5vw, 1.125rem);
-  font-weight: 500;
+article {
+  scroll-padding: f.rem(10) 0 0 0;
 }
 p,
-summary {
+blockquote,
+summary,
+address {
+  min-width: 30ch;
+  max-width: 75ch;
   font-size: clamp(1rem, 1.5vw, 1.125rem);
   font-weight: 500;
+  text-wrap: pretty;
 }
 summary {
   list-style: none;
 }
-abbr {
-  text-decoration: none;
-}
 address {
   font-style: normal;
 }
-article {
-  scroll-padding: f.rem(10) 0 0 0;
+abbr {
+  text-decoration: none;
 }
 a,
 // a:hover,
@@ -109,14 +126,13 @@ button,
 select {
   text-transform: capitalize;
 }
-//Corrects odd em font sizing in all browsers
+// Corrects odd em font sizing in all browsers
 pre,
 code,
 kbd,
 samp {
   font-size: 1em;
 }
-
 /* Native Selectors */
 ul[role='list'],
 ol[role='list'] {
