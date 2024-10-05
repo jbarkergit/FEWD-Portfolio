@@ -1,21 +1,24 @@
-@use './functions' as f;
-
 /* User Preferences */
 html {
   font-size: 100%;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-select,
 textarea,
-input,
-button {
+input:not([type='checkbox']):not([type='file']):not([type='image']):not([type='radio']):not([type='range']) {
   font: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+}
+@media print {
+  body {
+    font-size: 8pt;
+  }
 }
 @media (prefers-reduced-motion: no-preference) {
   :has(:target) {
     scroll-behavior: smooth;
-    scroll-padding-top: f.rem(20);
+    scroll-padding-top: 1.25rem;
   }
 }
 
@@ -28,7 +31,7 @@ body {
   padding: 0;
   margin: 0;
   background-color: hsl(0, 0%, 8%);
-  overflow-x: hidden;
+  overflow-x: clip;
   text-rendering: optimizeLegibility;
   color: hsl(0, 0%, 97%);
   cursor: default;
@@ -41,8 +44,7 @@ body {
   box-sizing: border-box;
 }
 
-/* Disabled element interactions */
-body,
+/* Disable Interactions */
 iframe,
 video,
 picture,
@@ -50,13 +52,13 @@ img {
   user-select: none;
 }
 
-/** Typography - font: (optional: style variant weight) size line-height "family", "fallback-font", fallback-font-type */
+/** Typography */
 body {
+  // font: (optional: style variant weight) size line-height "family", "fallback-font", fallback-font-type
   font:
     normal normal 500 1.1rem / 1.25em 'Helvetica',
     'PT Sans',
     sans-serif;
-  letter-spacing: 0.04rem;
 }
 h1,
 h2,
@@ -65,6 +67,7 @@ h4,
 h5,
 h6 {
   text-wrap: balance;
+  cursor: text;
 }
 h1 {
   font-size: clamp(1.5rem, 2.5vw, 1.875rem);
@@ -81,192 +84,62 @@ h6 {
   font-size: clamp(1rem, 1.5vw, 1.125rem);
   font-weight: 500;
 }
-article {
-  scroll-padding: f.rem(10) 0 0 0;
-}
 p,
+input,
 blockquote,
 summary,
-address {
-  min-width: 30ch;
-  max-width: 75ch;
+address,
+textarea {
+  width: clamp(45ch, 100%, 75ch);
   font-size: clamp(1rem, 1.5vw, 1.125rem);
   font-weight: 500;
   text-wrap: pretty;
+  cursor: text;
 }
-summary {
-  list-style: none;
+figcaption {
+  cursor: text;
 }
 address {
   font-style: normal;
 }
-abbr {
-  text-decoration: none;
-}
-a,
-// a:hover,
-a:active,
-// a:visited,
-ul,
-li {
-  color: inherit;
-  text-decoration: none;
-  list-style: none;
-}
-figcaption {
-  display: none;
-}
-// Correct font weight in Chrome/Edge/Safari
-b,
-strong {
-  font-weight: bolder;
-}
-// Remove inheritance of text transform in Firefox
-button,
-select {
-  text-transform: capitalize;
-}
-// Corrects odd em font sizing in all browsers
-pre,
-code,
-kbd,
-samp {
-  font-size: 1em;
-}
-/* Native Selectors */
-ul[role='list'],
-ol[role='list'] {
-  list-style: none;
-}
 
-/* Graphical Selectors */
-iframe,
-video,
-picture {
-  display: block;
-  max-width: 100%;
-}
-picture {
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
+/* Graphical */
 img {
-  vertical-align: middle;
-  width: 100%;
+  // Prevents overflow
   max-width: 100%;
-  height: inherit;
+  // Maintains aspect-ratio
+  height: auto;
+  // Fixes alignment
+  vertical-align: middle;
+  // Edge case: floats
   shape-margin: 0.75rem;
+  // 'Fake' lazy loading (rendering lower resolution variants during large loads)
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center center;
+  // Positioning
   object-fit: cover;
   object-position: center center;
-  pointer-events: none;
+  // Fail-safe for missing img
   font-style: italic;
 }
 img[src=''] {
   border: none;
   outline: none;
 }
-
-/* Interactive Selectors */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
-}
-button {
-  border: none;
-  outline-color: transparent;
-  background-color: transparent;
-}
-select {
-  all: unset;
-  border: none;
-}
-option {
-  all: unset;
-  display: inline-block;
-  pointer-events: all;
-  cursor: pointer;
-}
-a,
-button {
-  cursor: pointer;
-}
-fieldset {
-  all: unset; // WARNING: Position priority
-  box-sizing: border-box;
-}
-input,
-textarea {
-  all: unset; // WARNING: Position priority
-  box-sizing: border-box;
-  width: clamp(45ch, 100%, 75ch);
-  white-space: normal;
-  word-wrap: break-word;
-  cursor: text;
-}
-input {
-  width: 100%;
-  height: 100%;
-  &[type='radio'] {
-    display: none;
-  }
-}
-details {
-  cursor: pointer;
-  & summary {
-    cursor: pointer;
-  }
-  & > * {
-    cursor: default;
-  }
-}
-
-/* Miscellaneous fixes for native browser selectors */
-// Correct inability to style clickable types in iOS/Safari
-button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
-  appearance: button;
-}
-// Corrects inability to style clickable types iOS/Safari //Changes Sarafi font properties to inherit
-::-webkit-file-upload-button {
-  appearance: button;
-  font: inherit;
-}
-// Removes Chrome 57- border-bottom
-abbr[title] {
-  border-bottom: none;
-}
-// Corrects text wrapping Edge/IE //Removes padding to prevent issues when zeroing out fieldset elements all browsers
-legend {
-  box-sizing: border-box;
-  display: table;
-  max-width: 100%;
-  padding: 0;
-  white-space: normal;
-}
-// Corrects vertical alignment Chrome/Firefox/Opera
-progress {
-  vertical-align: baseline;
-}
-// Corrects Chrome cursor style of increment/decrement buttons
-[type='number']::-webkit-inner-spin-button,
-[type='number']::-webkit-outer-spin-button {
-  height: auto;
-}
-// Corrects odd appearance in Chrome/Safari and outline style in Safari
-[type='search'] {
-  appearance: textfield;
-  outline-offset: -2px;
-}
-// Corrects display Edge/IE10+/Firefox
-details {
+iframe,
+video {
   display: block;
+  max-width: 100%;
 }
-// Corrects display all browsers.
-summary {
-  display: list-item;
+
+/* Miscellaneous Reset */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+input[type='radio'] {
+  display: none;
+}
+article {
+  scroll-padding: 0.625rem 0 0 0;
 }
