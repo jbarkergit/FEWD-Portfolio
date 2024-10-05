@@ -14,10 +14,10 @@
   @include fdFont('l', 600);
 }
 @mixin fdFontM {
-  @include fdFont('m', 400);
+  @include fdFont('m', 500);
 }
 @mixin fdFontS {
-  @include fdFont('s', 400);
+  @include fdFont('s', 800);
 }
 
 /* Scroll Snapping */
