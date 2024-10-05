@@ -126,14 +126,7 @@
         height: calc(25% - var(--fd-gap) * 2);
         overflow: clip;
         will-change: transform;
-        &__article,
-        &__article__graphic,
-        &__article__graphic picture,
-        &__article__graphic picture img {
-          width: inherit;
-          height: inherit;
-        }
-        & article {
+        & picture {
           position: relative;
           height: 100%;
           // Glossy overlay for a little spice
@@ -149,7 +142,9 @@
             background-size: 200% 200%;
             background-position: 65% 0px;
           }
-          & figure picture img {
+          & img {
+            width: inherit;
+            height: inherit;
             image-rendering: crisp-edges;
           }
         }
