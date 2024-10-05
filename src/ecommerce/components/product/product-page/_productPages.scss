@@ -33,9 +33,12 @@
 
 .skuPage__grid__imgSelection {
   position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto;
+  grid-auto-flow: row;
   width: 20%;
   height: 100%;
-  z-index: 1;
   border-right: var(--ec-border-chunky);
   border-top-left-radius: f.rem(24);
   border-bottom-left-radius: f.rem(24);
@@ -51,26 +54,21 @@
     border-top: var(--ec-border-chunky);
     border-radius: 0;
   }
-  & figure {
-    display: grid;
-    grid-template-rows: auto;
-    grid-auto-flow: row;
+  & picture {
+    position: relative;
     width: 100%;
-    height: inherit;
-    & picture {
-      position: relative;
+    overflow: hidden;
+    @include m.productPhoto;
+    & img {
+      position: absolute;
       width: 100%;
-      overflow: hidden;
-      @include m.productPhoto;
-      & img {
-        position: absolute;
-        object-fit: scale-down;
-        mix-blend-mode: darken;
-        pointer-events: all;
-        transition: transform 0.35s ease-in-out;
-        &:hover {
-          transform: scale(130%);
-        }
+      height: 100%;
+      object-fit: scale-down;
+      mix-blend-mode: darken;
+      pointer-events: all;
+      transition: transform 0.35s ease-in-out;
+      &:hover {
+        transform: scale(130%);
       }
     }
   }

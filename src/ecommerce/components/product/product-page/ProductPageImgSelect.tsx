@@ -12,14 +12,11 @@ const ProductPageImgSelect = ({ findProduct, setActiveDisplay }: PropType) => {
 
   return (
     <aside className='skuPage__grid__imgSelection'>
-      <figure>
-        {images?.small.map((image, index) => (
-          <picture key={uuidv4()}>
-            <img src={image} alt={company + unit} decoding='async' fetchPriority='high' onClick={() => setActiveDisplay(index)} tabIndex={0} />
-            <figcaption>{`${company} ${unit}`}</figcaption>
-          </picture>
-        ))}
-      </figure>
+      {images?.small.map((image, index) => (
+        <picture key={uuidv4()}>
+          <img src={image} alt={company + unit} decoding='async' fetchPriority='high' onClick={() => setActiveDisplay(index)} tabIndex={0} />
+        </picture>
+      ))}
     </aside>
   );
 };
