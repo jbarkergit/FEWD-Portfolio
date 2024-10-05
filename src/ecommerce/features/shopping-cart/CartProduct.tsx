@@ -15,10 +15,7 @@ const CartProducts = (): JSX.Element[] => {
     return (
       <li key={uuidv4()}>
         <article className='shoppingCart__products__lineItem'>
-          <figure>
-            <picture>{product.images ? <img src={product.images.small[0]} alt={product.unit} loading='lazy' decoding='sync' fetchPriority='low' /> : null}</picture>
-            <figcaption>{`${product.company} ${product.unit}`}</figcaption>
-          </figure>
+          <picture>{product.images ? <img src={product.images.small[0]} alt={product.unit} loading='lazy' decoding='sync' fetchPriority='low' /> : null}</picture>
 
           <div className='shoppingCart__products__lineItem__information'>
             <hgroup className='shoppingCart__products__lineItem__information__details'>

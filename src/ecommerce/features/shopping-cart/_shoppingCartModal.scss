@@ -17,30 +17,35 @@
   height: auto;
   margin-bottom: f.rem(36);
   & li {
-    display: contents;
+    height: fit-content;
   }
   &__lineItem {
     display: flex;
     align-items: center;
-    & figure {
-      display: contents;
-      & picture {
-        width: 45%;
-        height: 100%;
-        mix-blend-mode: darken;
-        & img {
-          object-fit: scale-down;
-        }
+    & picture {
+      width: 45%;
+      height: 100%;
+      mix-blend-mode: darken;
+      & img {
+        object-fit: scale-down;
       }
     }
     &__information {
-      display: inline-table;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
       width: 55%;
       height: fit-content;
       padding-left: f.rem(6);
       margin-top: -20px;
       &__details {
-        display: inline-table;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        & > * {
+          width: fit-content;
+          text-align: end;
+        }
         & h2 {
           display: none;
         }
