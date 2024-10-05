@@ -39,19 +39,19 @@
     text-align: center;
     &--blockquote {
       @include m.fdFontM;
-      font-weight: 700;
       text-shadow: var(--fd-font-shadow);
       text-transform: lowercase;
       text-wrap: nowrap;
       &--tmdb {
         color: #2ebbd0;
+        text-transform: uppercase;
         font-weight: 900;
       }
     }
     &__hgroup {
       max-width: 68ch;
       &--h1 {
-        @include m.fdFontXXL;
+        @include m.fdFontXL;
         text-shadow: var(--fd-font-shadow);
         text-transform: capitalize;
         text-wrap: nowrap;
