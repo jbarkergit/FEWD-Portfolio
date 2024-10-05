@@ -1,42 +1,26 @@
-// Fonts
+/* Typography */
+@mixin fdFont($size, $weight) {
+  font-family: 'Satoshi', 'PT Sans', sans-serif;
+  font-size: var(--fd-font-size-#{$size});
+  font-weight: $weight;
+}
 @mixin fdFontXXL {
-  font-family: 'Satoshi';
-  font-weight: 700;
-  font-size: var(--fd-font-size-xxl);
-  line-height: normal;
-  color: white;
+  @include fdFont('xxl', 800);
 }
 @mixin fdFontXL {
-  font-family: 'Satoshi';
-  font-weight: 600;
-  font-size: var(--fd-font-size-xl);
-  line-height: normal;
-  color: white;
+  @include fdFont('xl', 700);
 }
 @mixin fdFontL {
-  font-family: 'Satoshi';
-  font-weight: 500;
-  font-size: var(--fd-font-size-l);
-  line-height: normal;
-  color: white;
+  @include fdFont('l', 600);
 }
 @mixin fdFontM {
-  font-family: 'Satoshi';
-  font-weight: 400;
-  font-size: var(--fd-font-size-m);
-  letter-spacing: 0.015em;
-  line-height: normal;
-  color: white;
+  @include fdFont('m', 400);
 }
 @mixin fdFontS {
-  font-family: 'Satoshi';
-  font-weight: 300;
-  font-size: var(--fd-font-size-s);
-  line-height: normal;
-  color: white;
+  @include fdFont('s', 400);
 }
 
-// Scroll Snapping
+/* Scroll Snapping */
 @mixin scrollSnappingXAxis {
   overflow-x: scroll;
   scrollbar-width: none;
