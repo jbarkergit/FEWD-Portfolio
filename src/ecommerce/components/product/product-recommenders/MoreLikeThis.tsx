@@ -36,12 +36,9 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
           <li key={uuidv4()} className='recommenders__unorderedList__item'>
             <Link to={`/ecommerce/product/${product.sku}`}>
               <article>
-                <figure>
-                  <picture>
-                    <img src={product.images?.small[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchPriority='low' />
-                    <figcaption>{`${product.company} ${product.unit}`}</figcaption>
-                  </picture>
-                </figure>
+                <picture>
+                  <img src={product.images?.small[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchPriority='low' />
+                </picture>
                 <hgroup>
                   <h2>{product.unit}</h2>
                   <h3>Starting at {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h3>
