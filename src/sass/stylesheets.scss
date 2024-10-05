@@ -1,8 +1,9 @@
 // App
 @forward '/src/app/app';
 
-// Boilerplate
+// CSS Reset
 @forward '/src/sass/boilerplate';
+@forward '/src/sass/preflight';
 
 // Projects
 @forward '/src/portfolio/scss/portfolioExports';
