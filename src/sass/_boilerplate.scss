@@ -143,3 +143,8 @@ input[type='radio'] {
 article {
   scroll-padding: 0.625rem 0 0 0;
 }
+input {
+  all: unset; // WARNING: Position priority
+  box-sizing: border-box;
+  cursor: text;
+}
