@@ -46,7 +46,7 @@
     @media (width <= 480px) {
       height: f.rem(280);
     }
-    & figure {
+    & li {
       display: contents;
       &:first-child picture {
         aspect-ratio: 4/2;
@@ -72,6 +72,7 @@
           aspect-ratio: 1/1;
         }
         & img {
+          height: 100%;
           border-radius: var(--ec-border-radius);
           box-shadow: var(--ec-shadow-soft);
         }

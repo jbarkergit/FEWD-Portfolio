@@ -27,7 +27,7 @@ type actionType =
   | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number };
 
 const Carousel = (): JSX.Element => {
-  const targetElementRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null),
+  const targetElementRef = useRef<HTMLUListElement>(null),
     targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
     targetElementWidth: number = targetElement?.scrollWidth as number;
 
@@ -144,19 +144,18 @@ const Carousel = (): JSX.Element => {
           Audio solutions for <span className='highlight'>dynamic</span> environments
         </h2>
       </div>
-      <div className='carousel__track' ref={targetElementRef} style={state.style}>
+      <ul className='carousel__track' ref={targetElementRef} style={state.style}>
         {carouselUlArr.map((li) => (
-          <figure key={uuidv4()}>
+          <li key={uuidv4()}>
             <picture>
               <img src={li.carouselImg} alt={li.carouselAlt} draggable='false' loading='lazy' decoding='async' fetchPriority='low' />
-              <figcaption>{`${li.carouselAlt}`}</figcaption>
               <Link to={li.linkTo} tabIndex={li.tabIndex}>
                 {li.navCat}
               </Link>
             </picture>
-          </figure>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 };
