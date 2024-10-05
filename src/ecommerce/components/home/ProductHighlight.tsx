@@ -5,38 +5,17 @@ import { useProductDatabase } from '../../hooks/useProductDatabase';
 import { ProductType } from '../../context/CartContext';
 
 const ProductHighlight = (): JSX.Element => {
-  //Push all instances of pictureRef references into useRef array
-  const pictureArrayRef = useRef<HTMLPictureElement[]>([]);
-  const pictureRef = (element: HTMLPictureElement) => (element && !pictureArrayRef.current.includes(element) ? pictureArrayRef.current.push(element) : null);
-
   //Play video on user pointer hover
-  const userPointerOver = (e: PointerEvent): void => {
-    const asideTarget = (e.currentTarget as HTMLPictureElement).parentElement!.nextSibling as HTMLElement;
-    (asideTarget.children[0] as HTMLVideoElement).play();
+  const playPauseVideo = (e: React.PointerEvent<HTMLElement>, play: boolean): void => {
+    const videoTarget = (e.currentTarget as HTMLPictureElement).parentNode?.children[1].children[0] as HTMLVideoElement;
+
+    if (play) {
+      videoTarget.play();
+    } else {
+      videoTarget.pause();
+      videoTarget.currentTime = 0;
+    }
   };
-
-  //Pause and restart video on user pointer leave
-  const userPointerLeave = (e: PointerEvent): void => {
-    const asideTarget = (e.currentTarget as HTMLPictureElement).parentElement!.nextSibling as HTMLElement;
-    const videoTarget = asideTarget.children[0] as HTMLVideoElement;
-    videoTarget.pause();
-    videoTarget.currentTime = 0;
-  };
-
-  // Event listeners
-  useEffect(() => {
-    pictureArrayRef.current?.forEach((ref) => {
-      ref.addEventListener('pointerover', userPointerOver);
-      ref.addEventListener('pointerleave', userPointerLeave);
-    });
-
-    return () => {
-      pictureArrayRef.current?.forEach((ref) => {
-        ref.removeEventListener('pointerover', userPointerOver);
-        ref.removeEventListener('pointerleave', userPointerLeave);
-      });
-    };
-  }, []);
 
   return (
     <section className='productHighlight'>
@@ -52,12 +31,11 @@ const ProductHighlight = (): JSX.Element => {
             <li key={uuidv4()}>
               <Link to={`/ecommerce/product/${product.sku}`} tabIndex={0}>
                 <article>
-                  <figure>
-                    <picture ref={pictureRef}>
-                      <img src={product.images!.medium[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchPriority='low' />
-                      <figcaption>{`${product.company} ${product.unit}`}</figcaption>
-                    </picture>
-                  </figure>
+                  <picture
+                    onPointerOver={(e: React.PointerEvent<HTMLPictureElement>) => playPauseVideo(e, true)}
+                    onPointerLeave={(e: React.PointerEvent<HTMLPictureElement>) => playPauseVideo(e, false)}>
+                    <img src={product.images!.medium[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchPriority='low' />
+                  </picture>
                   <aside>
                     <video preload='none' playsInline loop muted aria-label='Video of joyful people wearing headphones listening to music' tabIndex={-1}>
                       <source src='/src/ecommerce/assets/production-videos/stock-footage-splice-374x467.webm' type='video/webm' />
