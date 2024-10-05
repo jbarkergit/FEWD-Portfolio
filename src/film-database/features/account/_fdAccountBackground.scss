@@ -113,6 +113,7 @@
           // Duration mimics :nth-of-type(4)
           // Delay mimics :nth-of-type(1)
           // Bezier mimics &__set[data-anim='mount']
+          filter: brightness(100%);
           transform: scale(1.25);
           animation: imgScale 1.8s cubic-bezier(1, 0, 0.62, 1) 1.4s forwards;
           will-change: scale;
@@ -160,8 +161,10 @@
 @keyframes imgScale {
   from {
     transform: scale(1.25);
+    filter: brightness(100%);
   }
   to {
     transform: scale(1);
+    filter: brightness(50%);
   }
 }
