@@ -107,7 +107,7 @@
             }
           }
         }
-        &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) article figure picture img {
+        &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) picture img {
           // NOTE: transform doesn't play nice with nested tags post psuedo; therefore, we've opted for a single animation (which hurts performance)
           // Animation mimics transition properties from &__set&[data-anim='mount'] .fdAccountBackground__backdrop__set__li
           // Duration mimics :nth-of-type(4)
