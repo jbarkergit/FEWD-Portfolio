@@ -90,7 +90,7 @@ const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setH
   const formattedDataKey: string = dataKey.replaceAll('_', ' ');
 
   return (
-    <section className='fdMedia__carousel' aria-label={`${formattedDataKey} Section`} data-anim={mapIndex === 0 ? 'active' : 'disabled'}>
+    <section className='fdMedia__carousel' data-anim={mapIndex === 0 ? 'active' : 'disabled'}>
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' ref={carouselRef}>
