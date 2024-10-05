@@ -26,12 +26,9 @@ const FDCarouselArticles = ({ articles, setHeroData, mapIndex }: Type_FilmDataba
               <header className='fdMedia__carousel__wrapper__ul__li__article__header'>
                 <h2 className='fdMedia__carousel__wrapper__ul__li__article__header--h2'>{props?.heading}</h2>
               </header>
-              <figure className='fdMedia__carousel__wrapper__ul__li__article__graphic'>
-                <picture>
-                  <img src={`https://image.tmdb.org/t/p/original/${props?.poster_path}`} alt={`${props?.alt}`} fetchPriority={mapIndex === 0 ? 'high' : 'low'} />
-                  <figcaption>{`${props?.alt}`}</figcaption>
-                </picture>
-              </figure>
+              <picture className='fdMedia__carousel__wrapper__ul__li__article__graphic'>
+                <img src={`https://image.tmdb.org/t/p/original/${props?.poster_path}`} alt={`${props?.alt}`} fetchPriority={mapIndex === 0 ? 'high' : 'low'} />
+              </picture>
             </article>
             <div className='fdMedia__carousel__wrapper__ul__li__overlay'>
               <button className='fdMedia__carousel__wrapper__ul__li__overlay--play' aria-label='Play trailer'>
