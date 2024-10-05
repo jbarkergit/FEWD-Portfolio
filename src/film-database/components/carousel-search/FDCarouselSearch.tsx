@@ -62,7 +62,6 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
     <section className='fdSearchBar'>
       <section className='fdSearchBar__header'>
         <fieldset className='fdSearchBar__header__fieldset'>
-          <legend className='fdSearchBar__header__fieldset__legend'>Find the movies you're interested in</legend>
           <label
             className='fdSearchBar__header__fieldset__label'
             htmlFor='fdSearchBar__fieldset__input'
@@ -94,7 +93,7 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
         </fieldset>
       </section>
 
-      <section className='fdSearchBar__results' data-status={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
+      <section className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
           {searchResults && !isTyping
             ? searchResults?.map((props) => (
