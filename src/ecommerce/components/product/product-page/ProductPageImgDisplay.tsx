@@ -88,7 +88,7 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
         {company} {unit}
       </div>
 
-      <figure className='skuPage__grid__display__primaryImg' ref={primaryImgContainer}>
+      <div className='skuPage__grid__display__primaryImg' ref={primaryImgContainer}>
         {magnifierEnabled ? (
           <div
             className='skuPage__grid__display__primaryImg__magnifier'
@@ -115,9 +115,8 @@ const ProductPageImgDisplay = ({ findProduct, activeDisplay, setActiveDisplay }:
             ref={primaryImg}
             style={magnifierEnabled ? { cursor: 'none' } : { cursor: 'zoom-in' }}
           />
-          <figcaption>{`${company} ${unit}`}</figcaption>
         </picture>
-      </figure>
+      </div>
       {images?.large.length === 1 ? null : (
         <div className='skuPage__grid__display__nav'>
           <div className='skuPage__grid__display__nav__container'>
