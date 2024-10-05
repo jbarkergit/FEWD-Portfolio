@@ -80,7 +80,6 @@ const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill):
                         alt={`${props?.alt}`}
                         onLoad={() => (isLastListItem ? animator() : null)}
                       />
-                      <figcaption>{`${props?.alt}`}</figcaption>
                     </picture>
                   </li>
                 );
