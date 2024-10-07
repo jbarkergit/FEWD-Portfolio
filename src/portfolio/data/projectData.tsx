@@ -15,7 +15,7 @@ export const projectData = [
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
     },
     insights: <FilmDatabaseInsights />,
-    imgSrc: '/src/portfolio/assets/carousel-posters/film-db-temp.png',
+    imgSrc: '/src/portfolio/assets/carousel-posters/film-database-screenshot.webp',
     imgAlt: 'Film Database Development Project',
   },
   {
@@ -28,7 +28,7 @@ export const projectData = [
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
     },
     insights: <EcommerceInsights />,
-    imgSrc: '/src/portfolio/assets/carousel-posters/ecommerce-poster.png',
+    imgSrc: '/src/portfolio/assets/carousel-posters/ecommerce-screenshot.webp',
     imgAlt: 'Ecommerce Web Development Project',
   },
   {
@@ -42,7 +42,7 @@ export const projectData = [
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
     },
     insights: <PortfolioInsights />,
-    imgSrc: '/src/portfolio/assets/carousel-posters/portfolio-poster.png',
+    imgSrc: '/src/portfolio/assets/carousel-posters/portfolio-screenshot.webp',
     imgAlt: 'Portfolio Project Hub',
   },
 ];
