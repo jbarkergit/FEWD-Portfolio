@@ -96,7 +96,7 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
       <section className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
           {searchResults && !isTyping
-            ? searchResults?.map((props) => (
+            ? searchResults?.splice(0, 7).map((props) => (
                 <li className='fdSearchBar__results__ul__li' key={uuidv4()}>
                   <article className='fdSearchBar__results__ul__li__article'>
                     <header className='fdSearchBar__results__ul__li__article__header'>
@@ -118,10 +118,6 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
               ))
             : null}
         </ul>
-        <nav className='fdSearchBar__results__navigation'>
-          <FDCarouselButton caption={'Show Previous'} icon={<MaterialSymbolsChevronLeft />} func={() => {}} funcDelta={-1} />
-          <FDCarouselButton caption={'Show More'} icon={<MaterialSymbolsChevronRight />} func={() => {}} funcDelta={1} />
-        </nav>
       </section>
     </section>
   );
