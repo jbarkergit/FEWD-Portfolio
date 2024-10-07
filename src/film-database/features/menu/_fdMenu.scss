@@ -37,7 +37,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 6px;
+      gap: var(--fd-gap);
       height: 50%;
       &__li {
         &--button {
