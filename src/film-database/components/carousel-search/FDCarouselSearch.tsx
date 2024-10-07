@@ -9,7 +9,6 @@ import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchT
 import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
 
 import { Type_Tmdb_Api_Union, Type_Tmdb_QuerieMovie_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
-import FDCarouselButton from '../carousel/FDCarouselButton';
 
 const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>> }) => {
   /** User is searching */
