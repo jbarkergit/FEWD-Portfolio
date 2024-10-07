@@ -54,7 +54,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
   const mainRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const articleArray = useRef<HTMLElement[]>([]);
-  const articleRef = (reference: HTMLElement) => {
+  const articleRef = (reference: HTMLDivElement) => {
     if (reference && !articleArray.current.includes(reference)) articleArray.current.push(reference);
   };
 
@@ -268,20 +268,17 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
     <main className='mainContent' ref={mainRef}>
       <div className='mainContent__track' ref={carouselRef} style={state.trackStyle} data-status={!state.pointerDown ? 'smooth' : ''}>
         {projectData.map((project) => (
-          <article className='mainContent__track__project' ref={articleRef} key={project.key}>
+          <div className='mainContent__track__project' ref={articleRef} key={project.key}>
             <Link
               to={state.anchorEnabled ? project.url : ''}
               aria-label={`${project.key} Demo Link`}
               onDragStart={(e) => e.preventDefault()}
               onDrag={(e) => e.stopPropagation()}>
-              <figure>
-                <picture>
-                  <img src={project.imgSrc} alt={project.imgAlt} rel='preload' loading='eager' draggable='false' decoding='async' fetchPriority='high' />
-                  <figcaption>{project.imgAlt}</figcaption>
-                </picture>
-              </figure>
+              <picture>
+                <img src={project.imgSrc} alt={project.imgAlt} rel='preload' loading='eager' draggable='false' decoding='async' fetchPriority='high' />
+              </picture>
             </Link>
-          </article>
+          </div>
         ))}
       </div>
     </main>
