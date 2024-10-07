@@ -78,8 +78,9 @@
         width: inherit;
         height: inherit;
         cursor: pointer;
-        &__header {
-          display: none;
+        & img {
+          width: 100%;
+          height: 100%;
         }
       }
       &__overlay {
@@ -111,43 +112,6 @@
           transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
         }
       }
-    }
-  }
-  &__navigation {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    width: 100svw;
-    height: 100%;
-    pointer-events: none;
-    opacity: 0;
-    @media (width <= 1410px) {
-      display: none;
-    }
-    &--button {
-      position: absolute;
-      z-index: 10;
-      height: 50%;
-      background-color: hsla(216, 100%, 3%, 0.5);
-      pointer-events: all;
-      & svg {
-        width: 3em;
-        height: 3em;
-        color: white;
-      }
-    }
-    &--button:nth-of-type(1) {
-      left: 0;
-      border-top-right-radius: var(--fd-borderRadius);
-      border-bottom-right-radius: var(--fd-borderRadius);
-    }
-    &--button:nth-of-type(2) {
-      right: 0;
-      border-top-left-radius: var(--fd-borderRadius);
-      border-bottom-left-radius: var(--fd-borderRadius);
     }
   }
 }
