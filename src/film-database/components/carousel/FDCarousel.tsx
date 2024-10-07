@@ -1,10 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
-
 import FDCarouselArticles from '../../components/carousel/FDCarouselArticles';
-import FDCarouselButton from '../../components/carousel/FDCarouselButton';
-
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/google-material-symbols/carouselSymbols';
 
 type Type_FilmDatabase_Props = {
@@ -97,8 +93,16 @@ const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setH
           <FDCarouselArticles articles={articlesFlatMap} setHeroData={setHeroData} mapIndex={mapIndex} />
         </ul>
         <nav className='fdMedia__carousel__wrapper__navigation'>
-          <FDCarouselButton caption={'Show Previous'} icon={<MaterialSymbolsChevronLeft />} func={updateCarouselIndex} funcDelta={-1} />
-          <FDCarouselButton caption={'Show More'} icon={<MaterialSymbolsChevronRight />} func={updateCarouselIndex} funcDelta={1} />
+          <button className='fdMedia__carousel__wrapper__navigation--button' aria-label={'Show Previous'} onClick={() => updateCarouselIndex(-1)}>
+            <picture>
+              <MaterialSymbolsChevronLeft />
+            </picture>
+          </button>
+          <button className='fdMedia__carousel__wrapper__navigation--button' aria-label={'Show More'} onClick={() => updateCarouselIndex(1)}>
+            <picture>
+              <MaterialSymbolsChevronRight />
+            </picture>
+          </button>
         </nav>
       </div>
     </section>
