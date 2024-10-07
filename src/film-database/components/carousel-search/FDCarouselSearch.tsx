@@ -98,9 +98,8 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
             ? searchResults?.splice(0, 7).map((props) => (
                 <li className='fdSearchBar__results__ul__li' key={uuidv4()}>
                   <picture className='fdSearchBar__results__ul__li__article'>
-                    <img src={`https://image.tmdb.org/t/p/original/${props?.poster_path}`} alt={`${props?.overview}`} />
+                    <img src={`https://image.tmdb.org/t/p/w780/${props?.poster_path}`} alt={`${props.title}`} />
                   </picture>
-
                   <div className='fdSearchBar__results__ul__li__overlay' onClick={() => setHeroData(props as Type_Tmdb_Api_Union)}>
                     <button className='fdSearchBar__results__ul__li__overlay--play' aria-label='Play trailer'>
                       <MaterialSymbolsPlayArrow />
