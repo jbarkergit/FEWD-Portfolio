@@ -111,9 +111,10 @@ const PortHeader = ({
           animatorLineArray.current?.forEach((line: HTMLSpanElement) => line.removeAttribute('data-status'));
         }}>
         <div className='carouselNav__section__right' ref={carouselNavSectionRight}>
-          <h2>Contact Form and GitHub Links</h2>
+          {/* <h2>Contact Form and GitHub Links</h2> */}
+          <h2>GitHub Link</h2>
           <nav className='carouselNav__section__right__nav carouselNavHeaderRight' aria-labelledby='contact-and-external-links' ref={carouselNavSectionRightNav}>
-            <button
+            {/* <button
               id='contact-and-external-links'
               aria-label='Contact Form'
               onClick={() =>
@@ -122,7 +123,7 @@ const PortHeader = ({
                   : setFeatureState({ ...featureState, contactFormActive: true })
               }>
               Contact
-            </button>
+            </button> */}
             <Link to='https://github.com/jbarkergit' id='contact-and-external-links' target='_blank' aria-label='Visit GitHub Profile'>
               GitHub
             </Link>

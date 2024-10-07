@@ -106,7 +106,7 @@ const Portfolio = (): JSX.Element => {
         featureState={featureState}
         setFeatureState={setFeatureState}
       />
-      <ContactForm featureState={featureState} setFeatureState={setFeatureState} />
+      {/* <ContactForm featureState={featureState} setFeatureState={setFeatureState} /> */}
       <PortMobileMenu
         setProjectSlideIndex={setProjectSlideIndex}
         featureState={featureState}

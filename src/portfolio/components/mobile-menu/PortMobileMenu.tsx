@@ -50,7 +50,7 @@ const PortMobileMenu = forwardRef<HTMLElement, PropDrillType>(
             <div className='portMobileMenu__nav__footer__block'>
               <span>Front End Developer</span>
             </div>
-            <div className='portMobileMenu__nav__footer__block'>
+            {/* <div className='portMobileMenu__nav__footer__block'>
               <button
                 id='contact-and-external-links'
                 aria-label='Contact Form'
@@ -61,7 +61,7 @@ const PortMobileMenu = forwardRef<HTMLElement, PropDrillType>(
                 }>
                 Contact
               </button>
-            </div>
+            </div> */}
           </section>
         </nav>
       </section>
