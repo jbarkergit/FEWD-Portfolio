@@ -1,5 +1,5 @@
 // Deps
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 // Composable Types
 import { Type_Tmdb_Api_Union } from '../composables/tmdb-api/types/TmdbDataTypes';
 // Features
@@ -20,7 +20,7 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
   const registryRefReceiver = useRef<HTMLDivElement>(null);
   const signInRefReceiver = useRef<HTMLDivElement>(null);
 
-  const toggleComponent = (modal: 'article' | 'registry' | 'signin'): void => {
+  const toggleComponent = useCallback((modal: 'article' | 'registry' | 'signin'): void => {
     switch (modal) {
       case 'article':
         if (articleRefReceiver.current) handleAttributes(articleRefReceiver);
@@ -37,7 +37,7 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
       default:
         break;
     }
-  };
+  }, []);
 
   const handleAttributes = (ref: RefObject<HTMLElement>): void => {
     if (!rootRef.current) return;
@@ -59,12 +59,12 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
 
   /** Component */
   return (
-    <>
+    <div className='fdAccount'>
       <FDAccountBackground responseSets={responseSets} setResponseSets={setResponseSets} />
       <FDAccountArticle toggleComponent={toggleComponent} ref={articleRefReceiver} />
       <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />
       <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} />
-    </>
+    </div>
   );
 };
 
