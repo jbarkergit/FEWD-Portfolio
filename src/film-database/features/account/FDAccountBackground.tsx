@@ -74,13 +74,14 @@ const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill):
                 const isLastListItem: boolean = setIndex === responseSets.length - 1 && liIndex === 3;
                 return (
                   <li className='fdAccountBackground__backdrop__set__li' key={article.id}>
-                    <picture>
+                    <div className='fdAccountBackground__backdrop__set__li__container'>
                       <img
+                        className='fdAccountBackground__backdrop__set__li__container--img'
                         src={`https://image.tmdb.org/t/p/${isCenteredListItem ? `original` : `w780`}/${props?.backdrop_path}`}
                         alt={`${props?.alt}`}
                         onLoad={() => (isLastListItem ? animator() : null)}
                       />
-                    </picture>
+                    </div>
                   </li>
                 );
               })}

@@ -126,7 +126,7 @@
         height: calc(25% - var(--fd-gap) * 2);
         overflow: clip;
         will-change: transform;
-        & picture {
+        &__container {
           position: relative;
           height: 100%;
           // Glossy overlay for a little spice
@@ -142,7 +142,7 @@
             background-size: 200% 200%;
             background-position: 65% 0px;
           }
-          & img {
+          &--img {
             width: inherit;
             height: inherit;
             image-rendering: crisp-edges;
