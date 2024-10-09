@@ -59,12 +59,12 @@ const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
 
   /** Component */
   return (
-    <div className='fdAccount'>
+    <>
       <FDAccountBackground responseSets={responseSets} setResponseSets={setResponseSets} />
       <FDAccountArticle toggleComponent={toggleComponent} ref={articleRefReceiver} />
       <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />
       <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} />
-    </div>
+    </>
   );
 };
 
