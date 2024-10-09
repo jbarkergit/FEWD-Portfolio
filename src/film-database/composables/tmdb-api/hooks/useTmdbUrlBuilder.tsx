@@ -47,7 +47,8 @@ export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_T
           break;
 
         case !!arg.genre:
-          const routeId: number = useTmdbGenres().id(arg.genre as Type_MovieGenre_Keys);
+          const { sortedMap, id } = useTmdbGenres();
+          const routeId: number = id(arg.genre as Type_MovieGenre_Keys);
           keyValuePair = {
             key: arg.genre,
             endpoint: keyEntry[1].replace('/movie', `/movie?api_key=${apiKey}`).replace('{genre_ids}', `&with_genres=${routeId}`),

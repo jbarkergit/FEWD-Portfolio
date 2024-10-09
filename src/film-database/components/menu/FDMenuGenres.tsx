@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 import { useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
-import { Dispatch, forwardRef, RefObject, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
+import { Dispatch, forwardRef, RefObject, SetStateAction, useEffect, useState } from 'react';
 
 type Type_PropDrill = {
   toggleMenus: (refParam: RefObject<HTMLElement> | undefined) => void;
@@ -9,18 +9,10 @@ type Type_PropDrill = {
 };
 
 const FDMenuGenres = forwardRef<HTMLElement, Type_PropDrill>(({ toggleMenus, setRoute }, menuGenresRef) => {
-  const sortedGenres = useMemo((): string[] => {
-    return useTmdbGenres().sortedMap();
-  }, []);
-
   const [genres, setGenres] = useState<string[]>([]);
 
-  const handleGenres = () => {
-    const store: string[] = sortedGenres;
-    setGenres(store);
-  };
-
-  useEffect(() => handleGenres(), []);
+  const { sortedMap, id } = useTmdbGenres();
+  useEffect(() => setGenres(sortedMap), []);
 
   return (
     <section className='fdMenuGenres' ref={menuGenresRef} data-menu='closed'>
