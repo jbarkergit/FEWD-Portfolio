@@ -2,7 +2,7 @@
 import { Dispatch, RefObject, SetStateAction, useRef } from 'react';
 // Firebase
 import { signOut } from 'firebase/auth';
-import { firebaseAuth } from '../../../config/firebaseConfig';
+import { firebaseAuth } from '../../../app/config/firebaseConfig';
 // Composable types
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
 // Assets

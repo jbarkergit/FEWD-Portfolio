@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef, lazy, startTransition } from 'react';
 // Firebase
 import { User, onAuthStateChanged } from 'firebase/auth';
-import { firebaseAuth } from '../../config/firebaseConfig';
+import { firebaseAuth } from '../../app/config/firebaseConfig';
 // Pages
 const FDUserAccount = lazy(() => import('./FDUserAccount'));
 const FDCatalog = lazy(() => import('./FDCatalog'));
