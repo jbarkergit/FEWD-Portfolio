@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 // 404
 const ProtocolErrorHandler = lazy(() => import('./app/ProtocolErrorHandler'));
@@ -6,38 +6,11 @@ const ProtocolErrorHandler = lazy(() => import('./app/ProtocolErrorHandler'));
 const HomeSkeleton = lazy(() => import('./ecommerce/skeletons/pages/HomeSkeleton'));
 const ProductCatalogSkeleton = lazy(() => import('./ecommerce/skeletons/pages/ProductCatalogSkeleton'));
 const ProductDetailPageSkeleton = lazy(() => import('./ecommerce/skeletons/pages/ProductDetailPageSkeleton'));
-// Ecommerce routes for dynamic lazy loading
-import { useUniqueData } from './ecommerce/hooks/useUniqueData';
+// Routes data
+import { useAppRoutes } from './app/hooks/useAppRoutes';
 
 function App() {
-  /** Data */
-  const getEcommerceFilterPaths = (): string[] => {
-    const { useUniqueCompanies, useUniqueWearStyles, useUniquePolarPatterns } = useUniqueData();
-    const companyPaths: string[] = useUniqueCompanies.map((company) => `/ecommerce/${company}`);
-    const wearStylePaths: string[] = useUniqueWearStyles.map((wearStyle) => `/ecommerce/${wearStyle}`);
-    const polarPatternPaths: string[] = useUniquePolarPatterns.map((polarPattern) => `/ecommerce/${polarPattern}`);
-    return [...companyPaths, ...wearStylePaths, ...polarPatternPaths];
-  };
-
-  const appRoutes = {
-    portfolio: { path: '/', dir: './portfolio/pages/Portfolio.tsx' },
-    ecommerce: [
-      { path: '/ecommerce', dir: './ecommerce/pages/Home' },
-      {
-        path: [
-          '/ecommerce/products',
-          '/ecommerce/headphones',
-          '/ecommerce/amps-dacs',
-          '/ecommerce/microphones',
-          '/ecommerce/interfaces',
-          ...getEcommerceFilterPaths(),
-        ],
-        dir: '/src/ecommerce/pages/ProductCatalog.tsx',
-      },
-      { path: '/ecommerce/product/:paramId', dir: './ecommerce/pages/ProductDetailPage' },
-    ],
-    filmDatabase: { path: '/film-database', dir: './film-database/pages/FilmDatabase' },
-  };
+  const appRoutes = useAppRoutes();
 
   /** Component storage */
   type Type_routeComponents_Object = { path: string; component: JSX.Element };
@@ -77,13 +50,17 @@ function App() {
     switch (userLocationPathname) {
       // Prioritize landing pages on portfolio mount
       case '/':
-        const landingPageRoutes: Type_createRoute_Param[] = [appRoutes.portfolio, appRoutes.filmDatabase, appRoutes.ecommerce[0] as Type_createRoute_Param];
+        const landingPageRoutes: Type_createRoute_Param[] = [
+          appRoutes.routes.portfolio,
+          appRoutes.routes.filmDatabase,
+          appRoutes.routes.ecommerce[0] as Type_createRoute_Param,
+        ];
         landingPageRoutes.forEach((route) => createRoute(route));
         break;
 
       // Standard procedure
       default:
-        for (const route of Object.values(appRoutes)) {
+        for (const route of Object.values(appRoutes.routes)) {
           // MPA (Routes entry is an array)
           Array.isArray(route)
             ? // If entry.path is an array, create individual queues
@@ -104,7 +81,7 @@ function App() {
   const suspenseFallback = (): JSX.Element => {
     if (userLocationPathname === '/ecommerce') {
       return <HomeSkeleton />;
-    } else if (appRoutes.ecommerce.flatMap((entries) => entries.path).includes(userLocationPathname)) {
+    } else if (appRoutes.routes.ecommerce.flatMap((entries) => entries.path).includes(userLocationPathname)) {
       return <ProductCatalogSkeleton />;
     } else if (userLocationPathname.startsWith('/ecommerce')) {
       return <ProductDetailPageSkeleton />;
@@ -132,9 +109,7 @@ function App() {
     <Suspense fallback={suspenseFallback()}>
       <Routes>
         <Route path='*' element={<ProtocolErrorHandler />} />
-
         <Route path='/' element={getElementByPath('/')} />
-
         <Route path='/ecommerce' element={getElementByPath('/ecommerce')} />
         <Route path='/ecommerce/products' element={getElementByPath('/ecommerce/products')} />
         <Route path='/ecommerce/headphones' element={getElementByPath('/ecommerce/headphones')} />
@@ -142,16 +117,9 @@ function App() {
         <Route path='/ecommerce/microphones' element={getElementByPath('/ecommerce/microphones')} />
         <Route path='/ecommerce/interfaces' element={getElementByPath('/ecommerce/interfaces')} />
         <Route path='/ecommerce/product/:paramId' element={getElementByPath('/ecommerce/product/:paramId')} />
-        {useUniqueData().useUniqueCompanies.map((company: string) => (
-          <Route path={`/ecommerce/${company}`} element={getElementByPath('/ecommerce/products')} key={company} />
+        {appRoutes.ecommercePaths.map((path) => (
+          <Route path={path} element={getElementByPath('/ecommerce/products')} key={path} />
         ))}
-        {useUniqueData().useUniqueWearStyles.map((wearStyle: string) => (
-          <Route path={`/ecommerce/${wearStyle}`} element={getElementByPath('/ecommerce/products')} key={wearStyle} />
-        ))}
-        {useUniqueData().useUniquePolarPatterns.map((polarPattern: string) => (
-          <Route path={`/ecommerce/${polarPattern}`} element={getElementByPath('/ecommerce/products')} key={polarPattern} />
-        ))}
-
         <Route path='/film-database' element={getElementByPath('/film-database')} />
       </Routes>
     </Suspense>
