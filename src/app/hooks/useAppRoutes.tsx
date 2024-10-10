@@ -26,3 +26,5 @@ export const useAppRoutes = () => {
 
   return { routes, ecommercePaths };
 };
+
+export type Type_useAppRoutes = ReturnType<typeof useAppRoutes>;
