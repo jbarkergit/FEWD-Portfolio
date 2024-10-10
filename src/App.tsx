@@ -1,7 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 // 404
-const ProtocolErrorHandler = lazy(() => import('./app/ProtocolErrorHandler'));
+const ProtocolErrorHandler = lazy(() => import('./app/features/ProtocolErrorHandler'));
 // Routes data
 import { useAppRoutes } from './app/hooks/useAppRoutes';
 import { useSuspense } from './app/hooks/useSuspense';
