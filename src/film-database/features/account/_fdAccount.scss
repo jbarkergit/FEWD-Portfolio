@@ -1,0 +1,218 @@
+@use '/src/sass/functions' as f;
+@use '/src/film-database/scss/fdMixins' as m;
+
+.fdAccount {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100svh;
+  padding: calc((100svh / 16) * 2);
+  &__container {
+    display: flex;
+    width: 65%;
+    height: 100%;
+    border-radius: var(--fd-borderRadius);
+    overflow: clip;
+    & > * {
+      z-index: 9;
+      will-change: opacity;
+      &:first-child {
+        flex: 0 1 40%;
+        background-color: hsl(220, 33%, 96%);
+        color: black;
+      }
+      &:last-child {
+        flex: 1 0 60%;
+        background-color: hsl(220, 33%, 98%);
+        color: black;
+      }
+      &[data-activity='active'] {
+        opacity: 1;
+        transform: opacity 0.5s ease-in-out;
+      }
+      &[data-activity='disabled'] {
+        opacity: 0;
+        pointer-events: none;
+      }
+      &[data-activity='mount'] {
+        opacity: 1;
+        transition: opacity 1.65s cubic-bezier(1, 0, 0.62, 1) 0.9s;
+      }
+    }
+  }
+}
+
+.fdAccount__container__guide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fd-gap);
+  &__section {
+    padding: 0 calc(var(--fd-gap) * 4);
+    & svg {
+      width: 1.3em;
+      height: 1.3em;
+    }
+    &:nth-child(1) {
+      flex: 1 0 15%;
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      gap: calc(var(--fd-gap) / 2);
+      @include m.fdFontM;
+      font-weight: 800;
+    }
+    &:nth-child(2) {
+      flex: 0 1 70%;
+    }
+    &:nth-child(3) {
+      flex: 1 0 15%;
+      display: flex;
+      align-items: flex-end;
+      & blockquote {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        @include m.fdFontS;
+        font-weight: 500;
+        & a {
+          font-weight: 700;
+        }
+      }
+    }
+    &__ul {
+      &__li {
+        &[data-status='none'] {
+          opacity: 0.5;
+        }
+        &[data-status='active'] {
+          opacity: 1;
+        }
+        & button {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          & div:nth-child(1) {
+            position: absolute;
+            left: calc((var(--fd-gap) * 2.25) * -1);
+            top: 3px;
+            & svg {
+              width: 1.3em;
+              height: 1.3em;
+            }
+          }
+          & div:nth-child(2) {
+            display: flex;
+            flex-direction: column;
+            padding: 0 0 var(--fd-gap) calc((var(--fd-gap) / 4));
+            &[data-cursor='disabled'] {
+              cursor: default;
+              pointer-events: none;
+            }
+            &[data-cursor='enabled'] {
+              cursor: pointer;
+              pointer-events: all;
+            }
+            & span {
+              @include m.fdFontS;
+              text-align: start;
+            }
+            & span:nth-child(1) {
+              font-weight: 600;
+              text-wrap: nowrap;
+            }
+            & span:nth-child(2) {
+              font-weight: 500;
+              text-wrap: pretty;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.fdAccount__container__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--fd-gap) * 2.5);
+  padding: calc(var(--fd-gap) * 6) calc(var(--fd-gap) * 6);
+  &__article {
+    display: grid;
+    place-items: center;
+    gap: var(--fd-gap);
+    &__hgroup {
+      text-align: center;
+      & span {
+        @include m.fdFontL;
+        text-wrap: balance;
+      }
+      & p {
+        @include m.fdFontS;
+        font-weight: 500;
+        text-wrap: pretty;
+      }
+    }
+  }
+  &__fieldset {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    &__ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: calc(var(--fd-gap) * 1.25);
+      width: 100%;
+      & li {
+        display: flex;
+        flex-direction: column;
+        & label {
+          padding: 0 0 2px 3px;
+          @include m.fdFontS;
+          font-weight: 700;
+        }
+        & input,
+        select {
+          padding: f.rem(3) 1ch;
+          border: 1px solid #e5e5e7;
+          border-radius: calc(var(--fd-borderRadius) / 2);
+          background-color: white;
+        }
+      }
+      &__li__forgot {
+        width: fit-content;
+        padding: f.rem(3) 0 0 f.rem(3);
+        @include m.fdFontS;
+        font-weight: 400;
+      }
+      &__name,
+      &__dob,
+      &__password {
+        display: flex;
+        gap: var(--fd-gap);
+      }
+      &__name li,
+      &__password li {
+        flex: 1 1 calc(100% / 2);
+      }
+      &__dob li {
+        flex: 1 1 calc(100% / 3);
+      }
+      &__cta {
+        padding-top: var(--fd-gap);
+        & button {
+          background-color: #004eec;
+          padding: calc(var(--fd-gap) / 2);
+          border-radius: calc(var(--fd-borderRadius) / 2);
+          @include m.fdFontM;
+          color: white;
+        }
+      }
+    }
+  }
+}
