@@ -6,11 +6,8 @@
 @forward '/src/film-database/pages/fdPages';
 
 // Features, Components
-@forward '/src/film-database/features/account/fdAccountAllShared';
-@forward '/src/film-database/features/account/fdAccountArticle';
+@forward '/src/film-database/features/account/fdAccount';
 @forward '/src/film-database/features/account/fdAccountBackground';
-@forward '/src/film-database/features/account/fdAccountRegistry';
-@forward '/src/film-database/features/account/fdAccountSignIn';
 
 @forward '/src/film-database/features/details/fdDetails';
 
