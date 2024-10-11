@@ -1,8 +1,8 @@
 import { useRef, useCallback, RefObject, useEffect } from 'react';
 // Features
-import FDAccountArticle from './FDAccountArticle';
 import FDAccountRegistry from './FDAccountRegistry';
 import FDAccountSignIn from './FDAccountSignIn';
+import FDAccountGuide from './FDAccountGuide';
 
 type Type_PropDrill = {
   rootRef: RefObject<HTMLDivElement>;
@@ -10,14 +10,14 @@ type Type_PropDrill = {
 
 const FDAccount = ({ rootRef }: Type_PropDrill) => {
   /** Attribute setter */
-  const articleRefReceiver = useRef<HTMLElement>(null);
-  const registryRefReceiver = useRef<HTMLDivElement>(null);
-  const signInRefReceiver = useRef<HTMLDivElement>(null);
+  const guideRef = useRef<HTMLElement>(null),
+    registryRefReceiver = useRef<HTMLUListElement>(null),
+    signInRefReceiver = useRef<HTMLUListElement>(null);
 
-  const toggleComponent = useCallback((modal: 'article' | 'registry' | 'signin'): void => {
+  const toggleComponent = useCallback((modal: 'guide' | 'registry' | 'signin'): void => {
     switch (modal) {
-      case 'article':
-        if (articleRefReceiver.current) handleAttributes(articleRefReceiver);
+      case 'guide':
+        if (guideRef.current) handleAttributes(guideRef);
         break;
 
       case 'registry':
@@ -48,14 +48,28 @@ const FDAccount = ({ rootRef }: Type_PropDrill) => {
   };
 
   useEffect(() => {
-    setTimeout(() => articleRefReceiver.current?.setAttribute('data-activity', 'mount'), 50);
+    setTimeout(() => guideRef.current?.setAttribute('data-activity', 'mount'), 50);
   }, []);
 
   return (
     <div className='fdAccount'>
-      <FDAccountArticle toggleComponent={toggleComponent} ref={articleRefReceiver} />
-      <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />
-      <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} />
+      <div className='fdAccount__container'>
+        <aside className='fdAccount__container__guide' ref={guideRef} data-activity='disabled'>
+          <FDAccountGuide toggleComponent={toggleComponent} />
+        </aside>
+        <main className='fdAccount__container__form'>
+          <article className='fdAccount__container__form__article'>
+            <hgroup className='fdAccount__container__form__article__hgroup'>
+              <span>Film Database</span>
+              <p>Watch trailers, get cast details, save movies, create a watch queue and more. Free of charge now, free forever.</p>
+            </hgroup>
+          </article>
+          <fieldset className='fdAccount__container__form__fieldset'>
+            <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />
+            {/* <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} /> */}
+          </fieldset>
+        </main>
+      </div>
     </div>
   );
 };
