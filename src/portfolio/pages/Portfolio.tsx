@@ -3,7 +3,6 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import PortMobileMenu from '../components/mobile-menu/PortMobileMenu';
 import ProjectInsights from '../features/ProjectInsights';
 import ProjectHub from '../features/ProjectHub';
-import ContactForm from '../features/ContactForm';
 
 /** Component */
 const Portfolio = (): JSX.Element => {
