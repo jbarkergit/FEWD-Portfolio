@@ -50,18 +50,6 @@ const PortMobileMenu = forwardRef<HTMLElement, PropDrillType>(
             <div className='portMobileMenu__nav__footer__block'>
               <span>Front End Developer</span>
             </div>
-            {/* <div className='portMobileMenu__nav__footer__block'>
-              <button
-                id='contact-and-external-links'
-                aria-label='Contact Form'
-                onClick={() =>
-                  featureState.contactFormActive
-                    ? setFeatureState({ ...featureState, contactFormActive: false })
-                    : setFeatureState({ ...featureState, contactFormActive: true })
-                }>
-                Contact
-              </button>
-            </div> */}
           </section>
         </nav>
       </section>
