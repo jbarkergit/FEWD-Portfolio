@@ -15,7 +15,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
   const [navigationIndicator, setNavigationIndicator] = useState({
     key: projectData[projectSlideIndex].key,
     insights: 'Project Insights',
-    demoLink: 'Demo Link',
+    demoLink: 'Live Demo',
   });
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
 
     setTimeout(() => {
       if (projectData[projectSlideIndex].key !== '' && projectData[projectSlideIndex].url !== '') {
-        setNavigationIndicator({ key: projectData[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Demo Link' });
+        setNavigationIndicator({ key: projectData[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Live Demo' });
       } else if (projectData[projectSlideIndex].key !== '' && projectData[projectSlideIndex].url === '') {
         setNavigationIndicator({ key: projectData[projectSlideIndex].key, insights: 'Project Insights', demoLink: '' });
       } else {
@@ -100,7 +100,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
             }>
             {navigationIndicator.insights}
           </button>
-          <Link to={projectData[projectSlideIndex].url} id='project-links' aria-label='Project Demo Link'>
+          <Link to={projectData[projectSlideIndex].url} id='project-links' aria-label='Project Live Demo'>
             {navigationIndicator.demoLink}
           </Link>
         </nav>
