@@ -14,7 +14,6 @@ const Portfolio = (): JSX.Element => {
   /** Active grid position tracker */
   const [featureState, setFeatureState] = useState<Record<string, boolean>>({
     projectDetailsActive: false,
-    contactFormActive: false,
   });
 
   /** Grid position transitions && animators */
@@ -37,10 +36,6 @@ const Portfolio = (): JSX.Element => {
         useFeatureScroll(1, scrollBehavior);
         break;
 
-      case featureState.contactFormActive:
-        useFeatureScroll(2, scrollBehavior);
-        break;
-
       default:
         if (index) useFeatureScroll(index, scrollBehavior);
         else useFeatureScroll(0, scrollBehavior);
@@ -59,9 +54,6 @@ const Portfolio = (): JSX.Element => {
       switch (true) {
         case featureState.projectDetailsActive:
           activeGridPosition = 1;
-          break;
-        case featureState.contactFormActive:
-          activeGridPosition = 2;
           break;
         default:
           activeGridPosition = 0;
@@ -105,7 +97,6 @@ const Portfolio = (): JSX.Element => {
         featureState={featureState}
         setFeatureState={setFeatureState}
       />
-      {/* <ContactForm featureState={featureState} setFeatureState={setFeatureState} /> */}
       <PortMobileMenu
         setProjectSlideIndex={setProjectSlideIndex}
         featureState={featureState}
