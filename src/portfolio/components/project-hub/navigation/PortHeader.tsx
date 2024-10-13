@@ -114,16 +114,6 @@ const PortHeader = ({
           {/* <h2>Contact Form and GitHub Links</h2> */}
           <h2>GitHub Link</h2>
           <nav className='carouselNav__section__right__nav carouselNavHeaderRight' aria-labelledby='contact-and-external-links' ref={carouselNavSectionRightNav}>
-            {/* <button
-              id='contact-and-external-links'
-              aria-label='Contact Form'
-              onClick={() =>
-                featureState.contactFormActive
-                  ? setFeatureState({ ...featureState, contactFormActive: false })
-                  : setFeatureState({ ...featureState, contactFormActive: true })
-              }>
-              Contact
-            </button> */}
             <Link to='https://github.com/jbarkergit' id='contact-and-external-links' target='_blank' aria-label='Visit GitHub Profile'>
               GitHub
             </Link>
