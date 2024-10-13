@@ -111,10 +111,9 @@ const PortHeader = ({
           animatorLineArray.current?.forEach((line: HTMLSpanElement) => line.removeAttribute('data-status'));
         }}>
         <div className='carouselNav__section__right' ref={carouselNavSectionRight}>
-          {/* <h2>Contact Form and GitHub Links</h2> */}
           <h2>GitHub Link</h2>
-          <nav className='carouselNav__section__right__nav carouselNavHeaderRight' aria-labelledby='contact-and-external-links' ref={carouselNavSectionRightNav}>
-            <Link to='https://github.com/jbarkergit' id='contact-and-external-links' target='_blank' aria-label='Visit GitHub Profile'>
+          <nav className='carouselNav__section__right__nav carouselNavHeaderRight' aria-labelledby='external-links' ref={carouselNavSectionRightNav}>
+            <Link to='https://github.com/jbarkergit' id='external-links' target='_blank' aria-label='Visit GitHub Profile'>
               GitHub
             </Link>
           </nav>
