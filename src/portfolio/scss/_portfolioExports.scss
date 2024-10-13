@@ -4,10 +4,10 @@
 // Pages (Main Grid Styles)
 @forward '/src/portfolio/pages/portfolioPage';
 
+// Features
+@forward '/src/portfolio/features/projectInsights';
+
 // Components
 @forward '/src/portfolio/components/project-hub/carousel/projectCarousel.scss';
 @forward '/src/portfolio/components/project-hub/navigation/portNavigation';
-
-@forward '/src/portfolio/components/insights/projectInsights';
-
 @forward '/src/portfolio/components/mobile-menu/portMobileMenu';
