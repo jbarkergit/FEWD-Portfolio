@@ -16,27 +16,29 @@ export const projectData = [
       <>
         <h2>Film Database</h2>
         <p>
-          From the core architecture to the user interface elements, this project represents a self-directed effort to build a movie-database website from scratch,
-          without relying on external templates or guides. It provided a valuable opportunity to deepen my JavaScript skills and enhance my critical thinking
-          abilities.
+          From the core architecture to the user interface elements, this project represents a self-directed effort to build a movie-database website from scratch.
+          It was an excellent opportunity to deepen my JavaScript knowledge and sharpen my critical thinking skills. The project utilizes{' '}
+          <Link to='https://www.themoviedb.org/'>TheMovieDatabase API</Link> for data, the{' '}
+          <Link to='https://www.npmjs.com/package/react-youtube'>React-YouTube</Link> library for integrating a custom iFrame controller, and Firebase for
+          authentication and CRUD functionality.
         </p>
         <p>
-          One of the major challenges was working with the <Link to='https://www.themoviedb.org/'>TheMovieDatabase API</Link> and the{' '}
-          <Link to='https://www.npmjs.com/package/react-youtube'>React-YouTube</Link> library. TMDB does not offer WEBP images or consistently formatted URLs, which
-          required additional logic and custom TypeGuards to handle image fetching. I addressed this through performance checks and iterative refactoring, developing
-          custom hooks to process data efficiently. While there is always room for optimization, the initial page loads now perform satisfactorily.
+          Working with <Link to='https://www.themoviedb.org/'>TMDB</Link> presented several challenges, such as inconsistently formatted URLs and the lack of WEBP
+          images. To address these issues, I implemented additional type-guarded fetch logic to ensure successful HTTP responses. Through iterative refactoring and
+          performance checks, I developed custom hooks to process data safely and efficiently. While the final solution is somewhat verbose, it performs well, though
+          there’s always room for further optimization.
         </p>
         <p>
-          Customizing the YouTube iFrame API presented another significant challenge. To achieve a uniform and cohesive UI similar to Netflix, I needed to create a
-          custom solution for the video player interface. Despite the limitations of the available documentation and issues with third-party React packages, I
-          succeeded in creating a functional and visually appealing custom controller overlay. This involved overcoming difficulties with the iFrame’s native
-          behavior and integrating the player seamlessly into the design.
+          The UI design was heavily inspired by Netflix and Prime Video. To create a consistent and visually appealing interface, I used{' '}
+          <Link to='https://developers.google.com/youtube/iframe_api_reference'>YouTube's Player API</Link> to display trailers. However, the native controls didn't
+          fit the desired aesthetic, which led me to develop a custom solution for the video player interface. Despite the challenges with the iFrame’s native
+          behavior and limited documentation, I successfully integrated a custom controller overlay using{' '}
+          <Link to='https://www.npmjs.com/package/react-youtube'>React-YouTube</Link>, achieving a seamless design.
         </p>
         <p>
-          A key aspect of this project was delving into CSS animations. Although this proved time-consuming, it provided invaluable experience, enhancing my skills
-          and fostered a deep appreciation for intricate, yet simple, purely CSS-based animations. Navigating the complexities of CSS-driven animations necessitated
-          a thorough cleanup of my stylesheets and compelled me to explore previously unfamiliar properties. Through trial and error, I identified and addressed the
-          limitations of various methods, ultimately optimizing performance to ensure a seamless user experience on all user devices.
+          Once the UI was complete, I focused on improving my CSS transition skills, which provided invaluable experience. This project deepened my appreciation for
+          intricate, CSS-based animations. Navigating new complexities required a thorough cleanup of my stylesheets and exploration of unfamiliar properties.
+          Through trial and error, I optimized performance to ensure a smooth user experience across all devices.
         </p>
       </>
     ),
