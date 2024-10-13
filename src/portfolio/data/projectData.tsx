@@ -58,34 +58,31 @@ export const projectData = [
       <>
         <h2>A dynamic eCommerce application with monochromatic and neumorphic styling.</h2>
         <p>
-          This audio shop was built with a dynamic foundation, keeping production maintenance and performance in mind. To streamline potential complexities,
-          site-wide conditionals had to be satisfied prior to building components. This posed the challenge of acquiring a database with diverse key value pairs.
-          Pending issues ensued from routing to persisting data site-wide and component re-renders. I quickly understood the real challenge of this application was
-          idealizing solutions before writing any code.
+          This audio shop was built with a focus on maintainability and performance. To streamline potential complexities, site-wide conditions were defined before
+          building components. This introduced the challenge of acquiring a database with diverse key-value pairs. Issues such as routing, data persistence, and
+          component re-renders arose, highlighting that the real challenge of this project was idealizing solutions before writing any code.
         </p>
         <p>
-          If I wasn't a glutton for punishment, I would have opted for the use of an API. Instead, I chose to partially scrape images and data. This involved image
-          touch-ups, aspect-ratio matching, and large batch exports to satisfy Web Core Vitals for three device breakpoints. If that wasn't bad enough, I initially
-          wrote the database in TSX format, then post-application completion, converted it to JSON. Utilizing the product database, I built numerous custom hooks
-          that filtered and returned alphabetized unique data. Naturally, this paved the way for dynamic route mapping, product search functionality, product
-          filters, and product categories. The vast majority of the application's data was dealt with, resolving any pending issues.
+          Instead of using an API, I opted to partially scrape images and data, which involved image touch-ups, aspect ratio matching, and large batch exports to
+          meet Web Core Vitals for three device breakpoints. Initially, the database was written in TSX format but was later converted to JSON post-completion—a
+          clear example of why planning ahead is essential. I built custom hooks to filter and return alphabetized, unique data from the database; enabling dynamic
+          route mapping, product search functionality, filters, and categories—effectively resolving most pending issues.
         </p>
         <p>
-          Incorporating reusable, type-safe functional components that adhered to best practices, such as lazy loading and leveraging the Intersection Observer API
-          for efficient querying, became an integral integration to reduce bloat and optimize performance. With React's performance hooks, constructor patterns, BEM
-          methodology, and DRY, documented logic, refactoring component architecture was less of an issue than SEO and WAI-ARIA compliance. Side effect management,
-          event propagation, and conditional rendering conflicts with animations took the most effort.
+          The app utilizes reusable, type-safe functional components, incorporating best practices like lazy loading and the Intersection Observer API to reduce
+          bloat and optimize performance. React's performance hooks, constructor patterns, BEM methodology, and DRY principles helped streamline refactoring, though
+          SEO and WAI-ARIA compliance posed a bigger challenge. Managing side effects, event propagation, and resolving conflicts between conditional rendering and
+          animations required the most effort.
         </p>
         <p>
-          Conceptualization of the application's UX and UI was the next big priority. By blending style structures from miscellaneous domains, I created something
-          imperfect, experimental, and fun. I put a lot of emphasis on subtle element interactions throughout the application. Additionally, covered all edge cases
-          for conditional mapping of images and data. Please note that if your monitor(s) are not calibrated, the neumorphic styling that is not suitable for
-          production applications, may be lost.
+          Conceptualizing the UX and UI was a major focus. By blending various style structures from miscellaneous domains, I aimed for an experimental and playful
+          design with subtle interactive elements throughout the application. I also accounted for edge cases in image and data mappings. However, the neumorphic
+          styling, not ideal for production environments, may not display correctly if monitors aren’t calibrated.
         </p>
         <p>
-          To truly mark this as an eCommerce project, user registry and authentication had to be simulated. I employed localStorage to handle data and Regular
-          Expressions to handle field validation. The last step was shopping cart functionality, which gave me the great pleasure of writing useReducer boilerplate.
-          Stripe and user account pages were omitted due to lack of a backend.
+          To simulate the core functionality of an eCommerce site, I implemented user registration and authentication using localStorage, solely for practice, with
+          Regular Expressions for field validation. The final step was adding shopping cart functionality, which provided the highly sought-after honor and absolute
+          pleasure of writing useReducer boilerplate. Stripe integration is currently omitted, with plans to revisit it later.
         </p>
       </>
     ),
