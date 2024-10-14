@@ -14,12 +14,8 @@ const FDAccount = ({ rootRef }: Type_PropDrill) => {
     registryRefReceiver = useRef<HTMLUListElement>(null),
     signInRefReceiver = useRef<HTMLUListElement>(null);
 
-  const toggleComponent = useCallback((modal: 'guide' | 'registry' | 'signin'): void => {
+  const toggleComponent = useCallback((modal: 'registry' | 'signin'): void => {
     switch (modal) {
-      case 'guide':
-        if (guideRef.current) handleAttributes(guideRef);
-        break;
-
       case 'registry':
         if (registryRefReceiver.current) handleAttributes(registryRefReceiver);
         break;
@@ -55,7 +51,7 @@ const FDAccount = ({ rootRef }: Type_PropDrill) => {
     <div className='fdAccount'>
       <div className='fdAccount__container'>
         <aside className='fdAccount__container__guide' ref={guideRef} data-activity='disabled'>
-          <FDAccountGuide toggleComponent={toggleComponent} />
+          <FDAccountGuide />
         </aside>
         <main className='fdAccount__container__form'>
           <article className='fdAccount__container__form__article'>
@@ -66,7 +62,7 @@ const FDAccount = ({ rootRef }: Type_PropDrill) => {
           </article>
           <fieldset className='fdAccount__container__form__fieldset'>
             <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />
-            {/* <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} /> */}
+            <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} />
           </fieldset>
         </main>
       </div>

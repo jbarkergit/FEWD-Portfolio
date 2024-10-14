@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { firebaseAuth, googleProvider } from '../../../app/config/firebaseConfig';
 
 type Type_PropDrill = {
-  toggleComponent: (modal: 'guide' | 'registry' | 'signin') => void;
+  toggleComponent: (modal: 'registry' | 'signin') => void;
 };
 
 const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggleComponent }, signInRefReceiver) => {

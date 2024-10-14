@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { firebaseAuth } from '../../../app/config/firebaseConfig';
 
 type Type_PropDrill = {
-  toggleComponent: (modal: 'guide' | 'registry' | 'signin') => void;
+  toggleComponent: (modal: 'registry' | 'signin') => void;
 };
 
 const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggleComponent }, registryRefReceiver) => {
