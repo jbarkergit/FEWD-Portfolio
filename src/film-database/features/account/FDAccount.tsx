@@ -50,7 +50,7 @@ const FDAccount = ({ rootRef }: Type_PropDrill) => {
   return (
     <div className='fdAccount'>
       <div className='fdAccount__container'>
-        <aside className='fdAccount__container__guide' ref={guideRef} data-activity='disabled'>
+        <aside className='fdAccount__container__guide'>
           <FDAccountGuide />
         </aside>
         <main className='fdAccount__container__form'>
