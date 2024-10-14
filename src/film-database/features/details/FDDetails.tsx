@@ -30,36 +30,38 @@ const FDDetails = ({ heroData }: Type_PropDrill) => {
   if (!heroData) return;
   const props = useTmdbProps(heroData);
 
-  // const [providers, setProviders] = useState<Type_Tmdb_Provider_Arr[]>([]);
+  const [providers, setProviders] = useState<Type_Tmdb_Provider_Arr[]>([]);
 
-  // const getProviders = async (): Promise<void> => {
-  //   const fetchUrl = useTmdbUrlBuilder('watchProviders', [{ provider: props!.id }]);
-  //   const getResults = useFetchTmdbResponse([{ key: fetchUrl.key, endpoint: fetchUrl.endpoint }]);
+  const getProviders = async (): Promise<void> => {
+    const fetchUrl = useTmdbUrlBuilder('watchProviders', [{ provider: props!.id }]);
+    const getResults = useFetchTmdbResponse([{ key: fetchUrl.key, endpoint: fetchUrl.endpoint }]);
 
-  //   getResults.then((data) => {
-  //     if (data) {
-  //       const dataResults = data.flatMap((obj) => obj.endpoint) as unknown as Type_Tmdb_Provider_Arr[];
-  //       setProviders(dataResults);
-  //     }
-  //   });
-  // };
+    getResults.then((data) => {
+      if (data) {
+        const dataResults = data.flatMap((obj) => obj.endpoint) as unknown as Type_Tmdb_Provider_Arr[];
+        setProviders(dataResults);
+      }
+    });
+  };
 
-  // useEffect(() => {
-  //   if (props) getProviders();
-  // }, [heroData]);
+  useEffect(() => {
+    if (props) getProviders();
+  }, [heroData]);
 
   return (
     <section className='fdDetails'>
+      <div className='fdDetails__apiRef'>
+        <Link to='https://www.themoviedb.org/?language=en-US'>
+          <TheMovieDatabaseLogo />
+        </Link>
+      </div>
       <article className='fdDetails__article'>
         <header className='fdDetails__article__header'>
-          <Link to='https://www.themoviedb.org/?language=en-US'>
-            <TheMovieDatabaseLogo />
-          </Link>
-          <hgroup className='fdDetails__article__header__hgroup'>
-            <h2>{props?.heading}</h2>
-            <p>{props?.overview}</p>
-          </hgroup>
+          <h2>{props?.heading}</h2>
         </header>
+        <div className='fdDetails__article__info'>
+          <p>{props?.overview}</p>
+        </div>
       </article>
     </section>
   );
