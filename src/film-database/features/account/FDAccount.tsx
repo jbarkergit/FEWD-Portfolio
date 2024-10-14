@@ -57,8 +57,11 @@ const FDAccount = ({ rootRef }: Type_PropDrill) => {
             </hgroup>
           </article>
           <fieldset className='fdAccount__container__form__fieldset'>
-            <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />
-            <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} />
+            {modal === 'signin' ? (
+              <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />
+            ) : (
+              <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} />
+            )}
           </fieldset>
         </main>
       </div>
