@@ -21,15 +21,14 @@ const FDMenuGenres = forwardRef<HTMLElement, Type_PropDrill>(({ toggleMenus, set
         <nav className='fdMenuGenres__container__nav'>
           <ul className='fdMenuGenres__container__nav__ul'>
             {genres?.map((genre: string) => (
-              <li
-                className='fdMenuGenres__container__nav__ul__li'
-                key={uuidv4()}
-                data-activity-tracker='disabled'
-                onClick={() => {
-                  toggleMenus(undefined);
-                  setRoute(genre.replace(' ', '_') as Type_MovieGenre_Keys);
-                }}>
-                <button className='fdMenuGenres__container__nav__ul__li--button' aria-label={`Select genre ${genre}`}>
+              <li className='fdMenuGenres__container__nav__ul__li' key={uuidv4()} data-activity-tracker='disabled'>
+                <button
+                  className='fdMenuGenres__container__nav__ul__li--button'
+                  aria-label={`Select genre ${genre}`}
+                  onClick={() => {
+                    toggleMenus(undefined);
+                    setRoute(genre.replace(' ', '_') as Type_MovieGenre_Keys);
+                  }}>
                   {genre}
                 </button>
               </li>
