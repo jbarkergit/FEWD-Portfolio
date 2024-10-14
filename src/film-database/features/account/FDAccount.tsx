@@ -9,7 +9,7 @@ type Type_PropDrill = {
 };
 
 const FDAccount = ({ rootRef }: Type_PropDrill) => {
-  const guideRef = useRef<HTMLElement>(null),
+  const accountRef = useRef<HTMLDivElement>(null),
     registryRefReceiver = useRef<HTMLUListElement>(null),
     signInRefReceiver = useRef<HTMLUListElement>(null);
 
@@ -40,11 +40,11 @@ const FDAccount = ({ rootRef }: Type_PropDrill) => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => guideRef.current?.setAttribute('data-activity', 'mount'), 50);
+    setTimeout(() => accountRef.current?.setAttribute('data-visibility', 'active'), 3200);
   }, []);
 
   return (
-    <div className='fdAccount'>
+    <div className='fdAccount' ref={accountRef}>
       <div className='fdAccount__container'>
         <aside className='fdAccount__container__guide'>
           <FDAccountGuide modal={modal} />
