@@ -37,8 +37,8 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggleCo
   };
 
   return (
-    <ul className='fdAccount__container__form__fieldset__ul' ref={signInRefReceiver}>
-      <li className='fdAccount__container__form__fieldset__ul__li' data-status='enabled'>
+    <ul className='fdAccount__container__form__fieldset__ul' ref={signInRefReceiver} data-status='visible'>
+      <li className='fdAccount__container__form__fieldset__ul__li'>
         <label id='emailAddress' htmlFor='fdUserAccountSignInEmailAddress'>
           Email address
         </label>

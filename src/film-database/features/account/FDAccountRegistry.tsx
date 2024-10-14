@@ -146,7 +146,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggle
   };
 
   return (
-    <ul className='fdAccount__container__form__fieldset__ul' data-visibility='visible' ref={registryRefReceiver}>
+    <ul className='fdAccount__container__form__fieldset__ul' ref={registryRefReceiver} data-status='none'>
       <div className='fdAccount__container__form__fieldset__ul__name'>
         {[
           { labelId: 'firstName', id: 'fdUserAccountFirstName', name: 'firstName', label: 'First name', isRequired: true, placeholder: 'John' },
