@@ -1,4 +1,4 @@
-import { useRef, useCallback, RefObject, useEffect } from 'react';
+import { useRef, useCallback, RefObject, useEffect, useState } from 'react';
 // Features
 import FDAccountRegistry from './FDAccountRegistry';
 import FDAccountSignIn from './FDAccountSignIn';
@@ -9,27 +9,13 @@ type Type_PropDrill = {
 };
 
 const FDAccount = ({ rootRef }: Type_PropDrill) => {
-  /** Attribute setter */
   const guideRef = useRef<HTMLElement>(null),
     registryRefReceiver = useRef<HTMLUListElement>(null),
     signInRefReceiver = useRef<HTMLUListElement>(null);
 
-  const toggleComponent = useCallback((modal: 'registry' | 'signin'): void => {
-    switch (modal) {
-      case 'registry':
-        if (registryRefReceiver.current) handleAttributes(registryRefReceiver);
-        break;
+  const [modal, setModal] = useState<'signin' | 'registry'>('signin');
 
-      case 'signin':
-        if (signInRefReceiver.current) handleAttributes(signInRefReceiver);
-        break;
-
-      default:
-        break;
-    }
-  }, []);
-
-  const handleAttributes = (ref: RefObject<HTMLElement>): void => {
+  const toggleComponent = useCallback((modal: 'signin' | 'registry') => {
     if (!rootRef.current) return;
     const rootRefChildren = [...rootRef.current.children];
 
@@ -40,8 +26,18 @@ const FDAccount = ({ rootRef }: Type_PropDrill) => {
       }
     });
 
-    ref.current?.setAttribute('data-activity', 'active');
-  };
+    let compRef;
+
+    if (modal === 'signin') {
+      compRef = signInRefReceiver;
+      setModal('signin');
+    } else {
+      compRef = registryRefReceiver;
+      setModal('registry');
+    }
+
+    compRef.current?.setAttribute('data-activity', 'active');
+  }, []);
 
   useEffect(() => {
     setTimeout(() => guideRef.current?.setAttribute('data-activity', 'mount'), 50);
@@ -51,7 +47,7 @@ const FDAccount = ({ rootRef }: Type_PropDrill) => {
     <div className='fdAccount'>
       <div className='fdAccount__container'>
         <aside className='fdAccount__container__guide'>
-          <FDAccountGuide />
+          <FDAccountGuide modal={modal} />
         </aside>
         <main className='fdAccount__container__form'>
           <article className='fdAccount__container__form__article'>

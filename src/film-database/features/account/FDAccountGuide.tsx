@@ -11,7 +11,10 @@ const CheckSvg = () => (
   </div>
 );
 
-const FDAccountGuide = () => {
+type Type_PropDrill = {
+  modal: 'signin' | 'registry';
+};
+const FDAccountGuide = ({ modal }: Type_PropDrill) => {
   return (
     <>
       <div className='fdAccount__container__guide__section'>
