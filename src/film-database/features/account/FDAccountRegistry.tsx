@@ -7,12 +7,6 @@ type Type_PropDrill = {
 };
 
 const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggleComponent }, registryRefReceiver) => {
-  /** Collect array of labels */
-  const [labelElements, setLabelElements] = useState<HTMLLabelElement[]>([]);
-  const labelsRef = (reference: HTMLLabelElement) => {
-    if (reference && !labelElements.includes(reference)) setLabelElements((prevState) => [...prevState, reference]);
-  };
-
   const [values, setValues] = useState({
     firstName: { value: '', valid: false },
     lastName: { value: '', valid: false },
@@ -62,7 +56,6 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggle
     });
 
     validateField(key);
-    handleLabels(key);
   };
 
   const validateField = (targetName: Type_ValuesKey): void => {
@@ -89,13 +82,6 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggle
     }
   };
 
-  const handleLabels = (key: Type_ValuesKey): void => {
-    const matchingEntry = Object.entries(values).find(([name]) => name === key);
-    const matchingElement = labelElements.find((child: HTMLLabelElement) => child.id === key);
-    if (!matchingEntry || !matchingElement) return;
-    matchingElement.setAttribute('data-entry', matchingEntry[0] && matchingEntry[0].length > 0 ? 'true' : 'false');
-  };
-
   const getOptionalYears = (): number[] => {
     const currentYear: number = new Date().getFullYear();
     const initYear: number = currentYear - 110;
@@ -113,7 +99,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggle
           { labelId: 'lastName', id: 'fdUserAccountLastName', name: 'lastName', label: 'Last name', isRequired: false, placeholder: 'Doe' },
         ].map((field) => (
           <li key={field.id}>
-            <label id={field.labelId} htmlFor={field.id} ref={labelsRef} data-entry='false'>
+            <label id={field.labelId} htmlFor={field.id}>
               {field.label}
             </label>
             <input
@@ -136,7 +122,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggle
       </div>
       <div className='fdAccount__container__form__fieldset__ul__dob'>
         <li>
-          <label id='dobMonth' htmlFor='fdUserAccountDobMonth' ref={labelsRef} data-entry='false'>
+          <label id='dobMonth' htmlFor='fdUserAccountDobMonth'>
             Month
           </label>
           <select
@@ -156,7 +142,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggle
           </select>
         </li>
         <li>
-          <label id='dobDay' htmlFor='fdUserAccountDobDay' ref={labelsRef} data-entry='false'>
+          <label id='dobDay' htmlFor='fdUserAccountDobDay'>
             Day
           </label>
           <select
@@ -176,7 +162,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggle
           </select>
         </li>
         <li>
-          <label id='dobYear' htmlFor='fdUserAccountDobYear' ref={labelsRef} data-entry='false'>
+          <label id='dobYear' htmlFor='fdUserAccountDobYear'>
             Year
           </label>
           <select
@@ -197,7 +183,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggle
         </li>
       </div>
       <li className='fdAccount__container__form__fieldset__ul__emailAddress'>
-        <label id='emailAddress' htmlFor='fdUserAccountEmailAddress' ref={labelsRef} data-entry='false'>
+        <label id='emailAddress' htmlFor='fdUserAccountEmailAddress'>
           Email address
         </label>
         <input
@@ -222,7 +208,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggle
       </li>
       <div className='fdAccount__container__form__fieldset__ul__password'>
         <li>
-          <label id='password' htmlFor='fdUserAccountPassword' ref={labelsRef} data-entry='false'>
+          <label id='password' htmlFor='fdUserAccountPassword'>
             Password
           </label>
           <input
@@ -246,7 +232,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggle
           />
         </li>
         <li>
-          <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation' ref={labelsRef} data-entry='false'>
+          <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation'>
             Retype password
           </label>
           <input
