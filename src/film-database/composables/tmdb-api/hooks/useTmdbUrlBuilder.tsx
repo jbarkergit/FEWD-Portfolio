@@ -1,6 +1,5 @@
 import { Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../data/tmdbEndPoints';
-import { Type_MovieGenre_Keys } from '../data/tmdbMovieGenres';
-import { useTmdbGenres } from './useTmdbGenres';
+import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbMovieGenres';
 
 type Type_Tmdb_EndpointBuilder_Arr_Opt = Partial<{
   language: 'en-US';
@@ -27,6 +26,9 @@ export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_T
   if (args) {
     // Init mutatable variable with endpoint (by-pass custom types with loose type cast)
     let keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1] as unknown as string };
+    const id = (genre: Type_MovieGenre_Keys): number => {
+      return tmdbMovieGenres[genre];
+    };
 
     args.forEach((arg) => {
       switch (true) {
@@ -47,7 +49,6 @@ export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_T
           break;
 
         case !!arg.genre:
-          const { sortedMap, id } = useTmdbGenres();
           const routeId: number = id(arg.genre as Type_MovieGenre_Keys);
           keyValuePair = {
             key: arg.genre,
