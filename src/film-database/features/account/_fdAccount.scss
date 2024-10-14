@@ -10,6 +10,11 @@
   width: 100%;
   height: 100svh;
   padding: calc((100svh / 16) * 2);
+  opacity: 0;
+  transition: opacity ease-in 1.1s;
+  &[data-visibility='active'] {
+    opacity: 1;
+  }
   &__container {
     display: flex;
     width: 65%;
