@@ -1,5 +1,5 @@
 // Deps
-import { Dispatch, RefObject, SetStateAction, useRef } from 'react';
+import { Dispatch, RefObject, SetStateAction, useCallback, useRef } from 'react';
 // Firebase
 import { signOut } from 'firebase/auth';
 import { firebaseAuth } from '../../../app/config/firebaseConfig';
@@ -42,7 +42,7 @@ const FDMenu = ({
     // { key: 'Account', icon: <IcOutlinePowerSettingsNew />, ref: menuAccountRef },
   ];
 
-  const toggleMenus = (refParam: RefObject<HTMLElement> | undefined) => {
+  const toggleMenus = useCallback((refParam: RefObject<HTMLElement> | undefined) => {
     if (!menuRef.current) return;
 
     if (refParam !== undefined) {
@@ -54,7 +54,7 @@ const FDMenu = ({
     } else {
       setIsMenuOpen(false);
     }
-  };
+  }, []);
 
   return (
     <section className='fdMenu' ref={menuRef} data-modal={isMenuOpen ? 'open' : 'closed'}>
