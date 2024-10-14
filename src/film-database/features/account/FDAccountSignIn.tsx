@@ -94,10 +94,10 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggleCo
         </button>
       </li>
       <li className='fdAccount__container__form__fieldset__ul__cta'>
-        <button id='fdUserAccountSubmitForm' aria-label='Sign in' onClick={() => authorizeSignIn()}>
+        <button id='fdUserAccountSubmitForm' aria-label='Sign in with your credentials' onClick={() => authorizeSignIn()}>
           Sign in
         </button>
-        <button onClick={() => signInWithPopup(firebaseAuth, googleProvider)}>
+        <button aria-label='Sign in with Google' onClick={() => signInWithPopup(firebaseAuth, googleProvider)}>
           <svg xmlns='http://www.w3.org/2000/svg' width='0.98em' height='1em' viewBox='0 0 256 262'>
             <path
               fill='#4285F4'
