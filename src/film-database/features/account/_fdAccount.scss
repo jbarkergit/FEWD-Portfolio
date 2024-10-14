@@ -184,6 +184,10 @@
           background-color: white;
         }
       }
+      &__signup button {
+        display: flex;
+        justify-content: flex-start;
+      }
       &__li__forgot {
         width: fit-content;
         padding: f.rem(3) 0 0 f.rem(3);
@@ -205,18 +209,32 @@
       }
       &__cta {
         display: flex;
-        gap: var(--fd-gap);
+        flex-direction: row !important;
         padding-top: var(--fd-gap);
         & button {
           display: flex;
           justify-content: center;
           align-items: center;
           gap: 0.65ch;
-          background-color: #004eec;
+          height: f.rem(46);
           padding: calc(var(--fd-gap) / 2);
-          border-radius: calc(var(--fd-borderRadius) / 2);
+          background-color: #004eec;
           @include m.fdFontM;
           color: white;
+          transition: flex ease-in-out 250ms;
+        }
+        & button:nth-child(1) {
+          flex: 0 1 90%;
+          border-top-left-radius: calc(var(--fd-borderRadius) / 2);
+          border-bottom-left-radius: calc(var(--fd-borderRadius) / 2);
+        }
+        & button:nth-child(2) {
+          flex: 1 0 10%;
+          display: flex;
+          border-left: 1px solid #e5e5e7;
+          border-top-right-radius: calc(var(--fd-borderRadius) / 2);
+          border-bottom-right-radius: calc(var(--fd-borderRadius) / 2);
+          @include m.fdFontM;
         }
       }
     }
