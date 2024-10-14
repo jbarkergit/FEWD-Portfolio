@@ -277,6 +277,11 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggle
           </svg>
         </button>
       </li>
+      <li className='fdAccount__container__form__fieldset__ul__signup'>
+        <button aria-label='Sign in' onClick={() => toggleComponent('signin')}>
+          Already a member? Sign in.
+        </button>
+      </li>
     </ul>
   );
 });
