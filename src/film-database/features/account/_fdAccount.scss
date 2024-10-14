@@ -204,8 +204,14 @@
         flex: 1 1 calc(100% / 3);
       }
       &__cta {
+        display: flex;
+        gap: var(--fd-gap);
         padding-top: var(--fd-gap);
         & button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 0.65ch;
           background-color: #004eec;
           padding: calc(var(--fd-gap) / 2);
           border-radius: calc(var(--fd-borderRadius) / 2);
