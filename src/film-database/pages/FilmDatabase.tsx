@@ -4,8 +4,8 @@ import { useState, useEffect, useRef, lazy, startTransition } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { firebaseAuth } from '../../app/config/firebaseConfig';
 // Pages
-const FDUserAccount = lazy(() => import('./FDUserAccount'));
-const FDCatalog = lazy(() => import('./FDCatalog'));
+const FDUserAccount = lazy(() => import('../layouts/FDUserAccount'));
+const FDCatalog = lazy(() => import('../layouts/FDCatalog'));
 
 type Type_authorizedUser = {
   user: undefined | User;
