@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Type_MovieGenre_Keys, useTmdbGenres } from '../../composables/tmdb-api/hooks/useTmdbGenres';
-import { Dispatch, forwardRef, RefObject, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, forwardRef, RefObject, SetStateAction } from 'react';
 
 type Type_PropDrill = {
   toggleMenus: (refParam: RefObject<HTMLElement> | undefined) => void;
