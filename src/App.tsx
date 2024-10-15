@@ -49,7 +49,7 @@ function App() {
       case '/':
         const landingPageRoutes: Type_createRoute_Param[] = [
           appRoutes.routes.portfolio,
-          appRoutes.routes.filmDatabase,
+          appRoutes.routes.filmDatabase[0],
           appRoutes.routes.ecommerce[0] as Type_createRoute_Param,
         ];
         landingPageRoutes.forEach((route) => createRoute(route));
@@ -96,6 +96,7 @@ function App() {
           <Route path={path} element={getElementByPath('/ecommerce/products')} key={path} />
         ))}
         <Route path='/film-database' element={getElementByPath('/film-database')} />
+        <Route path='/film-database/:paramId' element={getElementByPath('/film-database/:paramId')} />
       </Routes>
     </Suspense>
   );
