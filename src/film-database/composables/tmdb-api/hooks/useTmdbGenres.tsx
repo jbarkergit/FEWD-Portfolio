@@ -21,7 +21,7 @@ export type Type_MovieGenre_Keys =
   | 'war'
   | 'western';
 
-const tmdbMovieGenres: Record<Type_MovieGenre_Keys, number> = {
+export const tmdbMovieGenres: Record<Type_MovieGenre_Keys, number> = {
   action: 28,
   adventure: 12,
   animation: 16,
