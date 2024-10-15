@@ -1,5 +1,5 @@
 import { Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../data/tmdbEndPoints';
-import { Type_MovieGenre_Keys, useTmdbGenres } from './useTmdbGenres';
+import { tmdbMovieGenres, Type_MovieGenre_Keys } from './useTmdbGenres';
 
 type Type_Tmdb_EndpointBuilder_Arr_Opt = Partial<{
   language: 'en-US';
@@ -46,27 +46,6 @@ export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_T
           break;
 
         case !!arg.genre:
-          const tmdbMovieGenres: Record<Type_MovieGenre_Keys, number> = {
-            action: 28,
-            adventure: 12,
-            animation: 16,
-            comedy: 35,
-            crime: 80,
-            documentary: 99,
-            drama: 18,
-            family: 10751,
-            fantasy: 14,
-            history: 36,
-            horror: 27,
-            music: 10402,
-            mystery: 9648,
-            romance: 10749,
-            science_fiction: 878,
-            tv_movie: 10770,
-            thriller: 53,
-            war: 10752,
-            western: 37,
-          };
           keyValuePair = {
             key: arg.genre,
             endpoint: keyEntry[1]
