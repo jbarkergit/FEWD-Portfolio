@@ -8,7 +8,7 @@ import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBu
 import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
 
-import IFrameController from '../../components/iframe-controller/IFrameController';
+import IFrameController from './iframe-controller/IFrameController';
 
 /** This component utilizes YouTube Player API
  * https://developers.google.com/youtube/iframe_api_reference
