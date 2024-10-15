@@ -80,7 +80,6 @@
 .fdMenuGenres {
   gap: var(--fd-gap);
   padding: 0;
-  // mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
   &::before {
     content: '';
     z-index: 5;
@@ -106,15 +105,9 @@
     }
     &__nav {
       width: fit-content;
-      // 50 svh - header font size (*2 for button) - global gap - parent padding
-      // padding: calc(50svh - var(--fd-font-size-xtreme) * 1 - var(--fd-gap) - var(--fd-padding-generic)) 0;
       margin: calc(var(--fd-padding-generic) / 2) 0;
       &__ul {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        // border-top: 1px solid rgba(255, 255, 255, 0.19);
-        // border-bottom: 1px solid rgba(255, 255, 255, 0.19);
+        display: table;
         overflow-y: scroll;
         scrollbar-width: none;
         &:hover .fdMenuGenres__container__nav__ul__li--button {
@@ -126,7 +119,6 @@
         &__li {
           display: flex;
           padding: 0 calc(var(--fd-gap) * 2);
-          // border-bottom: 1px solid rgba(255, 255, 255, 0.19);
           &--button {
             @include m.fdFontL;
             font-size: var(--fd-font-size-xl);
