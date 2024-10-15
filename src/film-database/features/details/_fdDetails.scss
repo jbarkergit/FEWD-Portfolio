@@ -28,14 +28,20 @@
     }
     &__header {
       & h2 {
-        width: fit-content;
+        max-width: 29ch;
+        white-space: nowrap;
+        overflow: clip;
+        text-overflow: ellipsis;
         @include m.fdFontXXL;
         text-shadow: var(--fd-font-shadow);
         text-transform: uppercase;
-        white-space: nowrap;
       }
     }
     & p {
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: clip;
       max-width: 57ch;
       @include m.fdFontM;
       text-shadow: var(--fd-font-shadow);
