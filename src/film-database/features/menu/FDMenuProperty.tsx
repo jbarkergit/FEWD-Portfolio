@@ -30,7 +30,7 @@ type Type_Tmdb_Provider_Arr = {
   };
 };
 
-const FDProperty = ({ heroData }: Type_PropDrill) => {
+const FDMenuProperty = ({ heroData }: Type_PropDrill) => {
   const [movieStore, setMovieStore] = useState<any[]>([]);
 
   const props = useMemo(() => {
@@ -77,4 +77,4 @@ const FDProperty = ({ heroData }: Type_PropDrill) => {
   );
 };
 
-export default FDProperty;
+export default FDMenuProperty;

@@ -9,9 +9,9 @@ import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbGenres
 // Assets
 import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, IcOutlinePowerSettingsNew } from '../../assets/google-material-symbols/menuSymbols';
 // Components
-import FDMenuToolbar from '../../components/menu/FDMenuToolbar';
-import FDMenuGenres from '../../components/menu/FDMenuGenres';
-import FDProperty from '../../components/menu/FDProperty';
+import FDMenuToolbar from './FDMenuToolbar';
+import FDMenuGenres from './FDMenuGenres';
+import FDPropertyModal from './FDMenuProperty';
 
 const FDMenu = ({
   isMenuOpen,
@@ -73,7 +73,7 @@ const FDMenu = ({
       </section>
       <div className='fdMenu__menu'>
         <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
-        <FDProperty heroData={heroData} />
+        <FDPropertyModal heroData={heroData} />
       </div>
     </section>
   );
