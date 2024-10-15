@@ -10,20 +10,23 @@ import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, IcOutlinePower
 // Components
 import FDMenuToolbar from '../../components/menu/FDMenuToolbar';
 import FDMenuGenres from '../../components/menu/FDMenuGenres';
+import FDProperty from '../../components/menu/FDProperty';
+import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
 const FDMenu = ({
   isMenuOpen,
   setIsMenuOpen,
   setRoute,
+  heroData,
 }: {
   isMenuOpen: boolean;
   setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
   setRoute: Dispatch<SetStateAction<Type_MovieGenre_Keys | 'home'>>;
+  heroData: Type_Tmdb_Api_Union | null;
 }) => {
   const menuRef = useRef<HTMLElement>(null);
 
   /** Toggle menus */
-  const menuAccountRef = useRef<HTMLElement>(null);
   const menuGenresRef = useRef<HTMLElement>(null);
   // const menuQueueRef = useRef<HTMLElement>(null);
 
@@ -70,7 +73,7 @@ const FDMenu = ({
       </section>
       <div className='fdMenu__menu'>
         <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
-        {/* <FDMenuQueue ref={menuQueueRef} /> */}
+        <FDProperty heroData={heroData} />
       </div>
     </section>
   );
