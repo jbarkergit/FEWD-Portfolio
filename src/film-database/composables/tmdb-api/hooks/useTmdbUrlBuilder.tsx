@@ -1,5 +1,5 @@
 import { Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../data/tmdbEndPoints';
-import { tmdbMovieGenres, Type_MovieGenre_Keys } from './useTmdbGenres';
+import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
 
 type Type_Tmdb_EndpointBuilder_Arr_Opt = Partial<{
   language: 'en-US';

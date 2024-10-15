@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // Tmdb Api Data
-import { Type_MovieGenre_Keys } from '../composables/tmdb-api/hooks/useTmdbGenres';
+import { Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbGenres';
 import { useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { Type_Tmdb_Api_Union } from '../composables/tmdb-api/types/TmdbDataTypes';
 // Tmdb Api Hooks

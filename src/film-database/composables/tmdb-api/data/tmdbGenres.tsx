@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 export type Type_MovieGenre_Keys =
   | 'action'
   | 'adventure'
@@ -41,17 +39,4 @@ export const tmdbMovieGenres: Record<Type_MovieGenre_Keys, number> = {
   thriller: 53,
   war: 10752,
   western: 37,
-};
-
-export const useTmdbGenres = (): {
-  tmdbMovieGenres: typeof tmdbMovieGenres;
-  sortedGenreKeys: string[];
-} => {
-  const sortedGenreKeys = useMemo((): string[] => {
-    return Object.keys(tmdbMovieGenres)
-      .sort()
-      .map((key) => key.replaceAll('_', ' '));
-  }, [tmdbMovieGenres]);
-
-  return { tmdbMovieGenres, sortedGenreKeys };
 };

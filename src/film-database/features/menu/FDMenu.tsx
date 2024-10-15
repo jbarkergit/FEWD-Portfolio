@@ -5,7 +5,7 @@ import { signOut } from 'firebase/auth';
 import { firebaseAuth } from '../../../app/config/firebaseConfig';
 // Composable types
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
-import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/hooks/useTmdbGenres';
+import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbGenres';
 // Assets
 import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, IcOutlinePowerSettingsNew } from '../../assets/google-material-symbols/menuSymbols';
 // Components
