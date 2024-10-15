@@ -14,6 +14,7 @@ import FDiFrame from '../features/iframe/FDiFrame';
 import FDMediaCarousel from '../features/media/FDMediaCarousel';
 import FDMenu from '../features/menu/FDMenu';
 import FDCarousel from '../components/carousel/FDCarousel';
+import FDProperty from '../features/property/FDProperty';
 
 const FDCatalog = () => {
   /** Global */
@@ -118,6 +119,7 @@ const FDCatalog = () => {
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
       <FDMediaCarousel carouselComponents={carouselComponents} isMenuOpen={isMenuOpen} setHeroData={setHeroData} />
+      <FDProperty heroData={heroData} />
     </div>
   );
 };
