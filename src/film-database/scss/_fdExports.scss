@@ -8,9 +8,9 @@
 // Layouts
 @forward '/src/film-database/layouts/fdCatalog';
 
-// Features, Components
-@forward '/src/film-database/features/account/fdAccount';
-@forward '/src/film-database/features/account/fdAccountBackground';
+// Features
+@forward '/src/film-database/features/account/background/fdAccountBackground';
+@forward '/src/film-database/features/account/modal/fdAccount';
 
 @forward '/src/film-database/features/details/fdDetails';
 

@@ -1,8 +1,8 @@
 import { useRef, useCallback, RefObject, useEffect, useState } from 'react';
 // Features
-import FDAccountRegistry from './FDAccountRegistry';
-import FDAccountSignIn from './FDAccountSignIn';
-import FDAccountGuide from './FDAccountGuide';
+import FDAccountGuide from './guide/FDAccountGuide';
+import FDAccountRegistry from './fieldsets/FDAccountRegistry';
+import FDAccountSignIn from './fieldsets/FDAccountSignIn';
 
 type Type_PropDrill = {
   rootRef: RefObject<HTMLDivElement>;

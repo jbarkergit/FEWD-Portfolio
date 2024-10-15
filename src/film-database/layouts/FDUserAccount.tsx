@@ -3,8 +3,8 @@ import { RefObject, useState } from 'react';
 // Composable Types
 import { Type_Tmdb_Api_Union } from '../composables/tmdb-api/types/TmdbDataTypes';
 // Features
-import FDAccountBackground from '../features/account/FDAccountBackground';
-import FDAccount from '../features/account/FDAccount';
+import FDAccountBackground from '../features/account/background/FDAccountBackground';
+import FDAccount from '../features/account/modal/FDAccount';
 
 type Type_PropDrill = {
   rootRef: RefObject<HTMLDivElement>;
