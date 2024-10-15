@@ -47,11 +47,12 @@
       text-shadow: var(--fd-font-shadow);
     }
   }
-  &__moreInfo button {
+  &__moreInfo a {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.65ch;
+    width: fit-content;
     border-radius: calc(var(--fd-borderRadius) / 2);
     @include m.fdFontM;
     color: white;
