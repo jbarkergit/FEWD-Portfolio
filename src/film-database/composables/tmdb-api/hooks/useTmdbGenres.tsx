@@ -46,7 +46,6 @@ const tmdbMovieGenres: Record<Type_MovieGenre_Keys, number> = {
 export const useTmdbGenres = (): {
   tmdbMovieGenres: typeof tmdbMovieGenres;
   sortedGenreKeys: string[];
-  useTmdbGenreId: (genre: Type_MovieGenre_Keys) => number;
 } => {
   const sortedGenreKeys = useMemo((): string[] => {
     return Object.keys(tmdbMovieGenres)
@@ -54,9 +53,5 @@ export const useTmdbGenres = (): {
       .map((key) => key.replaceAll('_', ' '));
   }, [tmdbMovieGenres]);
 
-  const useTmdbGenreId = (genre: Type_MovieGenre_Keys): number => {
-    return tmdbMovieGenres[genre];
-  };
-
-  return { tmdbMovieGenres, sortedGenreKeys, useTmdbGenreId };
+  return { tmdbMovieGenres, sortedGenreKeys };
 };
