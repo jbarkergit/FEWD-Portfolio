@@ -30,13 +30,6 @@ const FDDetails = ({ heroData }: Type_PropDrill) => {
           <p>{props?.overview}</p>
         </div>
       </article>
-      <div className='fdDetails__cta'>
-        <button aria-label='View movie details'>
-          <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
-            <path fill='currentColor' d='M12 7q.425 0 .713-.288T13 6t-.288-.712T12 5t-.712.288T11 6t.288.713T12 7m-1 8h2V9h-2zm-9 7V2h20v16H6z'></path>
-          </svg>
-        </button>
-      </div>
     </section>
   );
 };
