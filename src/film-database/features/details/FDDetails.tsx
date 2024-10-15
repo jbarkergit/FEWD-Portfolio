@@ -31,7 +31,9 @@ const FDDetails = ({ heroData }: Type_PropDrill) => {
         </div>
       </article>
       <div className='fdDetails__moreInfo'>
-        <button aria-label={`More details about ${props?.heading}`}>Read more</button>
+        <Link to={`/film-database/${props?.id}`} aria-label={`More details about ${props?.heading}`}>
+          More details
+        </Link>
       </div>
     </section>
   );
