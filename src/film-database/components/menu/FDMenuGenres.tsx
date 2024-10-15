@@ -8,7 +8,7 @@ type Type_PropDrill = {
 };
 
 const FDMenuGenres = forwardRef<HTMLElement, Type_PropDrill>(({ toggleMenus, setRoute }, menuGenresRef) => {
-  const { sortedMap, id } = useTmdbGenres();
+  const { sortedGenreKeys } = useTmdbGenres();
 
   return (
     <section className='fdMenuGenres' ref={menuGenresRef} data-menu='closed'>
@@ -16,7 +16,7 @@ const FDMenuGenres = forwardRef<HTMLElement, Type_PropDrill>(({ toggleMenus, set
         <h2 className='fdMenuGenres__container--heading'>Select genre menu</h2>
         <nav className='fdMenuGenres__container__nav'>
           <ul className='fdMenuGenres__container__nav__ul'>
-            {sortedMap?.map((genre: string) => (
+            {sortedGenreKeys?.map((genre: string) => (
               <li className='fdMenuGenres__container__nav__ul__li' key={uuidv4()} data-activity-tracker='disabled'>
                 <button
                   className='fdMenuGenres__container__nav__ul__li--button'
