@@ -21,7 +21,7 @@ export type Type_MovieGenre_Keys =
   | 'war'
   | 'western';
 
-export const tmdbMovieGenres: Record<Type_MovieGenre_Keys, number> = {
+const tmdbMovieGenres: Record<Type_MovieGenre_Keys, number> = {
   action: 28,
   adventure: 12,
   animation: 16,
@@ -44,6 +44,7 @@ export const tmdbMovieGenres: Record<Type_MovieGenre_Keys, number> = {
 };
 
 export const useTmdbGenres = (): {
+  tmdbMovieGenres: typeof tmdbMovieGenres;
   sortedMap: string[];
   id: (genre: Type_MovieGenre_Keys) => number;
 } => {
@@ -57,5 +58,5 @@ export const useTmdbGenres = (): {
     return tmdbMovieGenres[genre];
   };
 
-  return { sortedMap, id };
+  return { tmdbMovieGenres, sortedMap, id };
 };
