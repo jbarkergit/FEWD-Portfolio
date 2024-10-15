@@ -3,7 +3,10 @@
 @forward '/src/film-database/scss/fdRoot';
 
 // Pages
-@forward '/src/film-database/pages/fdPages';
+@forward '/src/film-database/pages/filmDatabase';
+
+// Layouts
+@forward '/src/film-database/layouts/fdCatalog';
 
 // Features, Components
 @forward '/src/film-database/features/account/fdAccount';
