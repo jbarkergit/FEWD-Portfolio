@@ -1,9 +1,8 @@
 import { Dispatch, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useFetchTmdbResponse } from '../../../composables/tmdb-api/hooks/useFetchTmdbResponse';
-import { useTmdbProps } from '../../../composables/tmdb-api/hooks/useTmdbProps';
 import { useTmdbUrlBuilder } from '../../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
-import { Type_Tmdb_Api_Union } from '../../../composables/tmdb-api/types/TmdbDataTypes';
+import { Type_Tmdb_Api_Union, Type_Tmdb_ApiMovieList_Obj } from '../../../composables/tmdb-api/types/TmdbDataTypes';
 import { useFilmDatabaseWebStorage } from '../../../composables/web-storage-api/useFilmDatabaseWebStorage';
 
 type Type_PropDrill = {
@@ -66,7 +65,7 @@ const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill):
           return (
             <ul className='fdAccountBackground__backdrop__set' key={`backdropset${setIndex}`} ref={ulRef} data-anim='false'>
               {set.map((article: Type_Tmdb_Api_Union, liIndex: number) => {
-                const props = useTmdbProps(article);
+                const props = article as Type_Tmdb_ApiMovieList_Obj;
                 const isCenteredListItem: boolean = setIndex === 2 && liIndex === 1;
                 const isLastListItem: boolean = setIndex === responseSets.length - 1 && liIndex === 3;
                 return (
@@ -75,7 +74,7 @@ const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill):
                       <img
                         className='fdAccountBackground__backdrop__set__li__container--img'
                         src={`https://image.tmdb.org/t/p/${isCenteredListItem ? `original` : `w780`}/${props?.backdrop_path}`}
-                        alt={`${props?.alt}`}
+                        alt={`${props?.title}`}
                         onLoad={() => (isLastListItem ? animator() : null)}
                       />
                     </div>

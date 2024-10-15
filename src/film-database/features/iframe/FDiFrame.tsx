@@ -2,11 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
 
-import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
+import { Type_Tmdb_Api_Union, Type_Tmdb_ApiMovieList_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
 import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
 import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
-import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
 
 import IFrameController from './iframe-controller/IFrameController';
 
@@ -34,7 +33,7 @@ type Type_Tmdb_Trailer_Obj = {
 
 const FDiFrame = ({ heroData }: Type_PropDrill) => {
   const [trailers, setTrailers] = useState<Type_Tmdb_Trailer_Obj[] | undefined>(undefined);
-  const props = heroData ? useTmdbProps(heroData) : undefined;
+  const props = heroData as Type_Tmdb_ApiMovieList_Obj;
 
   const fetchTrailer = (): void => {
     (async () => {
@@ -197,9 +196,9 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
       <section className='fdiFrame'>
         <figure className='fdiFrame__backdrop'>
           <picture>
-            <img src={`https://image.tmdb.org/t/p/original/${props?.backdrop_path}`} alt={props?.heading} />
+            <img src={`https://image.tmdb.org/t/p/original/${props?.backdrop_path}`} alt={props?.title} />
           </picture>
-          <figcaption>{props?.heading}</figcaption>
+          <figcaption>{props?.title}</figcaption>
         </figure>
       </section>
     );

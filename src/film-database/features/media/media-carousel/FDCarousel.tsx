@@ -2,8 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../../assets/google-material-symbols/carouselSymbols';
 import { MaterialSymbolsPlayArrow } from '../../../assets/google-material-symbols/iFrameSymbols';
-import { useTmdbProps } from '../../../composables/tmdb-api/hooks/useTmdbProps';
-import { Type_Tmdb_Api_Union } from '../../../composables/tmdb-api/types/TmdbDataTypes';
+import { Type_Tmdb_Api_Union, Type_Tmdb_ApiMovieList_Obj } from '../../../composables/tmdb-api/types/TmdbDataTypes';
 
 type Type_FilmDatabase_Props = {
   mapIndex: number;
@@ -93,11 +92,11 @@ const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setH
       <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' ref={carouselRef}>
           {articles.flat().map((article) => {
-            const props = useTmdbProps(article);
+            const props = article as Type_Tmdb_ApiMovieList_Obj;
             return (
               <li className='fdMedia__carousel__wrapper__ul__li' key={uuidv4()} onClick={() => setHeroData(article)}>
                 <picture className='fdMedia__carousel__wrapper__ul__li__article'>
-                  <img src={`https://image.tmdb.org/t/p/w780/${props?.poster_path}`} alt={`${props?.alt}`} fetchPriority={mapIndex === 0 ? 'high' : 'low'} />
+                  <img src={`https://image.tmdb.org/t/p/w780/${props?.poster_path}`} alt={`${props?.title}`} fetchPriority={mapIndex === 0 ? 'high' : 'low'} />
                 </picture>
                 <div className='fdMedia__carousel__wrapper__ul__li__overlay'>
                   <button className='fdMedia__carousel__wrapper__ul__li__overlay--play' aria-label='Play trailer'>

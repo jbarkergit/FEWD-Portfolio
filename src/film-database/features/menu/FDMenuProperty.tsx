@@ -1,8 +1,7 @@
 import { useState, useEffect, useMemo, RefObject, forwardRef } from 'react';
 import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
-import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
-import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
+import { Type_Tmdb_Api_Union, Type_Tmdb_ApiMovieList_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
 type Type_PropDrill = {
   heroData: Type_Tmdb_Api_Union | null;
@@ -34,7 +33,7 @@ const FDMenuProperty = forwardRef<HTMLElement, Type_PropDrill>(({ heroData }, me
   const [movieStore, setMovieStore] = useState<any[]>([]);
 
   const props = useMemo(() => {
-    if (heroData) return useTmdbProps(heroData);
+    if (heroData) return heroData as Type_Tmdb_ApiMovieList_Obj;
   }, [heroData]);
 
   /** Fetch stores */

@@ -105,4 +105,4 @@ export type Type_Tmdb_QuerieMovie_Obj = {
   vote_count: number;
 };
 
-export type Type_Tmdb_Api_Union = Type_Tmdb_ApiMovieList_Obj | Type_Tmdb_ApiMovie_Obj | Type_Tmdb_ApiTrailer_Obj;
+export type Type_Tmdb_Api_Union = Type_Tmdb_ApiMovieList_Obj | Type_Tmdb_ApiMovie_Obj | Type_Tmdb_ApiTrailer_Obj | Type_Tmdb_QuerieMovie_Obj;

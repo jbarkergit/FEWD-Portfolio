@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
-import { useTmdbProps } from '../composables/tmdb-api/hooks/useTmdbProps';
 import { useTmdbUrlBuilder } from '../composables/tmdb-api/hooks/useTmdbUrlBuilder';
 import { Type_Tmdb_Provider_Arr } from '../composables/tmdb-api/types/TmdbDataTypes';
 
