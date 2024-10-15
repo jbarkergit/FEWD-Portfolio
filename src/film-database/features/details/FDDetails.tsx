@@ -1,10 +1,7 @@
 // Deps
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // Composable Hooks
 import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
-import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
-import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
 // Composable Hook Types
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 // Assets
@@ -14,39 +11,9 @@ type Type_PropDrill = {
   heroData: Type_Tmdb_Api_Union | null;
 };
 
-type Type_Tmdb_Provider_Arr = {
-  US: {
-    link: string;
-    buy: {
-      logo_path: string;
-      provider_id: number;
-      provider_name: string;
-      display_priority?: number;
-    }[];
-  };
-};
-
 const FDDetails = ({ heroData }: Type_PropDrill) => {
   if (!heroData) return;
   const props = useTmdbProps(heroData);
-
-  const [providers, setProviders] = useState<Type_Tmdb_Provider_Arr[]>([]);
-
-  const getProviders = async (): Promise<void> => {
-    const fetchUrl = useTmdbUrlBuilder('watchProviders', [{ provider: props!.id }]);
-    const getResults = useFetchTmdbResponse([{ key: fetchUrl.key, endpoint: fetchUrl.endpoint }]);
-
-    getResults.then((data) => {
-      if (data) {
-        const dataResults = data.flatMap((obj) => obj.endpoint) as unknown as Type_Tmdb_Provider_Arr[];
-        setProviders(dataResults);
-      }
-    });
-  };
-
-  useEffect(() => {
-    if (props) getProviders();
-  }, [heroData]);
 
   return (
     <section className='fdDetails'>
@@ -63,6 +30,13 @@ const FDDetails = ({ heroData }: Type_PropDrill) => {
           <p>{props?.overview}</p>
         </div>
       </article>
+      <div className='fdDetails__cta'>
+        <button aria-label='View movie details'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
+            <path fill='currentColor' d='M12 7q.425 0 .713-.288T13 6t-.288-.712T12 5t-.712.288T11 6t.288.713T12 7m-1 8h2V9h-2zm-9 7V2h20v16H6z'></path>
+          </svg>
+        </button>
+      </div>
     </section>
   );
 };
