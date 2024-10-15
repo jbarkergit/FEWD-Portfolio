@@ -1,75 +1,69 @@
-import { Type_Tmdb_Movie_Keys_Union, tmdbMovieEndpoints } from '../data/tmdbEndPoints';
+import { Type_Tmdb_Movie_Keys_Union, tmdbEndpoints } from '../data/tmdbEndPoints';
 import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
 
-type Type_Tmdb_EndpointBuilder_Arr_Opt = Partial<{
-  language: 'en-US';
-  page: number;
+type Type_Tmdb_BuildEndpoint_Arr_Opt = Partial<{
   movie_id: number;
-  append_to_response: 'videos' | 'images' | 'videos,images';
   genre: string;
   querie: string;
-  provider: number;
 }>;
 
-export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_Tmdb_EndpointBuilder_Arr_Opt[]) => {
-  const tmdbMovieEndpointsFlatmap: string[][] = Object.entries(tmdbMovieEndpoints).flatMap(([key, endpoint]) =>
-    Object.entries(endpoint).map(([endpointKey, endpointValue]) => [endpointKey, endpointValue])
+export const useTmdbUrlBuilder = (keyArg: Type_Tmdb_Movie_Keys_Union, optArgs?: Type_Tmdb_BuildEndpoint_Arr_Opt | Type_Tmdb_BuildEndpoint_Arr_Opt[]) => {
+  // Generate array of key-value pairs
+  const tmdbKeyEndpointArr: { [key: string]: string }[] = Object.entries(tmdbEndpoints).flatMap(([category, endpoints]) =>
+    Object.entries(endpoints).map(([key, value]) => ({ [key]: value }))
   );
 
-  // Target entry (autofill provides type security; therefore, we're set to use the non-null assertion operator)
-  let keyEntry: string[] = tmdbMovieEndpointsFlatmap.find((entry) => entry[0] === key)!;
+  // Find requested object
+  const requestedObj: { [key: string]: string } | undefined = tmdbKeyEndpointArr.find((obj) => Object.keys(obj)[0] === keyArg);
 
-  // Api Key
+  // Throw error func
+  const throwError = (error: string): void => {
+    return console.error(`Failure to build endpoint: ${error}.`);
+  };
+
+  // !requestedObj ? throw error, short return : null
+  if (!requestedObj) {
+    throwError('requested object not found');
+    return;
+  }
+
+  // Import API Key
   const apiKey: string = import.meta.env.VITE_TMDB_API_KEY;
 
-  // If args, iterate args, mutate endpoint
-  if (args) {
-    // Init mutatable variable with endpoint (by-pass custom types with loose type cast)
-    let keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1] as unknown as string };
+  // !apiKey ? throw error, short return : null
+  if (!apiKey) {
+    throwError('API Key could not be retrieved');
+    return;
+  }
 
-    args.forEach((arg) => {
-      switch (true) {
-        case !!arg.append_to_response:
-          keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1] + `&append_to_response=${arg.append_to_response}` + `/movie?api_key=${apiKey}` };
-          break;
+  // Build endpoints function
+  const buildEndpoint = (arg?: Type_Tmdb_BuildEndpoint_Arr_Opt): { [key: string]: string } => {
+    let [key, endpoint] = Object.entries(requestedObj)[0];
 
-        case !!arg.language:
-          keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1] + `?language=${arg.language}` + `/movie?api_key=${apiKey}` };
-          break;
+    switch (true) {
+      case arg && !!arg.movie_id:
+        endpoint = endpoint.replace('{movie_id}', `${arg.movie_id}`) + `?api_key=${apiKey}`;
+        break;
+      case arg && !!arg.genre:
+        endpoint = endpoint
+          .replace('/movie', `/movie?api_key=${apiKey}`)
+          .replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[arg.genre as Type_MovieGenre_Keys]}`);
+        break;
+      case arg && !!arg.querie:
+        endpoint = endpoint + `?query=${arg.querie}&include_adult=false&language=en-US&page=1`;
+        break;
+      default:
+        endpoint = endpoint + `?api_key=${apiKey}`;
+        break;
+    }
 
-        case !!arg.movie_id:
-          keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1].replace('3/movie/', `3/movie/${arg.movie_id}`) + `?api_key=${apiKey}` };
-          break;
+    return { key, endpoint };
+  };
 
-        case !!arg.page:
-          keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1] + `&page=${arg.page}` + `/movie?api_key=${apiKey}` };
-          break;
-
-        case !!arg.genre:
-          keyValuePair = {
-            key: arg.genre,
-            endpoint: keyEntry[1]
-              .replace('/movie', `/movie?api_key=${apiKey}`)
-              .replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[arg.genre as Type_MovieGenre_Keys]}`),
-          };
-          break;
-
-        case !!arg.querie:
-          keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1] + `?query=${arg.querie}&include_adult=false&language=en-US&page=1` };
-          break;
-
-        case !!arg.provider:
-          keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1].replace('{movie_id}', `${arg.provider}`) + `?api_key=${apiKey}` };
-          break;
-
-        default:
-          keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1] + `/movie?api_key=${apiKey}` };
-          break;
-      }
-    });
-
-    return keyValuePair;
+  // Args && isArray(args) ? Iterate, mutate endpoint : requestedObj with API Key
+  if (optArgs && Array.isArray(optArgs)) {
+    return optArgs.forEach((arg) => buildEndpoint(arg));
   } else {
-    return { key: keyEntry[0], endpoint: keyEntry[1] };
+    return buildEndpoint(optArgs);
   }
 };
