@@ -4,6 +4,7 @@ import { Dispatch, RefObject, SetStateAction, useCallback, useRef } from 'react'
 import { signOut } from 'firebase/auth';
 import { firebaseAuth } from '../../../app/config/firebaseConfig';
 // Composable types
+import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/hooks/useTmdbGenres';
 // Assets
 import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, IcOutlinePowerSettingsNew } from '../../assets/google-material-symbols/menuSymbols';
@@ -11,7 +12,6 @@ import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, IcOutlinePower
 import FDMenuToolbar from '../../components/menu/FDMenuToolbar';
 import FDMenuGenres from '../../components/menu/FDMenuGenres';
 import FDProperty from '../../components/menu/FDProperty';
-import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 
 const FDMenu = ({
   isMenuOpen,
