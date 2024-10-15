@@ -27,11 +27,6 @@ export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_T
     // Init mutatable variable with endpoint (by-pass custom types with loose type cast)
     let keyValuePair = { key: keyEntry[0], endpoint: keyEntry[1] as unknown as string };
 
-    const getId = (genre: Type_MovieGenre_Keys) => {
-      const { id } = useTmdbGenres();
-      return id(genre);
-    };
-
     args.forEach((arg) => {
       switch (true) {
         case !!arg.append_to_response:
@@ -51,7 +46,7 @@ export const useTmdbUrlBuilder = (key: Type_Tmdb_Movie_Keys_Union, args?: Type_T
           break;
 
         case !!arg.genre:
-          const routeId: number = getId(arg.genre as Type_MovieGenre_Keys);
+          const routeId: number = useTmdbGenres().useTmdbGenreId(arg.genre as Type_MovieGenre_Keys);
           keyValuePair = {
             key: arg.genre,
             endpoint: keyEntry[1].replace('/movie', `/movie?api_key=${apiKey}`).replace('{genre_ids}', `&with_genres=${routeId}`),
