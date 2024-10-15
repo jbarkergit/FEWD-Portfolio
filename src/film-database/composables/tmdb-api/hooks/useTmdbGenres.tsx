@@ -45,18 +45,18 @@ const tmdbMovieGenres: Record<Type_MovieGenre_Keys, number> = {
 
 export const useTmdbGenres = (): {
   tmdbMovieGenres: typeof tmdbMovieGenres;
-  sortedMap: string[];
-  id: (genre: Type_MovieGenre_Keys) => number;
+  sortedGenreKeys: string[];
+  useTmdbGenreId: (genre: Type_MovieGenre_Keys) => number;
 } => {
-  const sortedMap = useMemo((): string[] => {
+  const sortedGenreKeys = useMemo((): string[] => {
     return Object.keys(tmdbMovieGenres)
       .sort()
       .map((key) => key.replaceAll('_', ' '));
   }, [tmdbMovieGenres]);
 
-  const id = (genre: Type_MovieGenre_Keys): number => {
+  const useTmdbGenreId = (genre: Type_MovieGenre_Keys): number => {
     return tmdbMovieGenres[genre];
   };
 
-  return { tmdbMovieGenres, sortedMap, id };
+  return { tmdbMovieGenres, sortedGenreKeys, useTmdbGenreId };
 };
