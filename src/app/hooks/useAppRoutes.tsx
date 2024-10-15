@@ -12,16 +12,19 @@ export const useAppRoutes = () => {
   }, [useUniqueCompanies, useUniqueWearStyles, useUniquePolarPatterns]);
 
   const routes = {
-    portfolio: { path: '/', dir: './portfolio/pages/Portfolio.tsx' },
+    portfolio: { path: '/', dir: '/src/portfolio/pages/Portfolio.tsx' },
     ecommerce: [
-      { path: '/ecommerce', dir: './ecommerce/pages/Home' },
+      { path: '/ecommerce', dir: '/src/ecommerce/pages/Home.tsx' },
       {
         path: ['/ecommerce/products', '/ecommerce/headphones', '/ecommerce/amps-dacs', '/ecommerce/microphones', '/ecommerce/interfaces', ...ecommercePaths],
         dir: '/src/ecommerce/pages/ProductCatalog.tsx',
       },
-      { path: '/ecommerce/product/:paramId', dir: './ecommerce/pages/ProductDetailPage' },
+      { path: '/ecommerce/product/:paramId', dir: '/src/ecommerce/pages/ProductDetailPage.tsx' },
     ],
-    filmDatabase: { path: '/film-database', dir: './film-database/pages/FilmDatabase' },
+    filmDatabase: [
+      { path: '/film-database', dir: '/src/film-database/pages/FilmDatabase.tsx' },
+      { path: '/film-database/:paramId', dir: '/src/film-database/pages/FDMovie.tsx' },
+    ],
   };
 
   return { routes, ecommercePaths };
