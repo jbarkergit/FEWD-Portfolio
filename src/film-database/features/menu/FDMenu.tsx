@@ -10,7 +10,6 @@ import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, IcOutlinePower
 // Components
 import FDMenuToolbar from '../../components/menu/FDMenuToolbar';
 import FDMenuGenres from '../../components/menu/FDMenuGenres';
-import FDMenuAccount from '../../components/menu/FDMenuAccount';
 
 const FDMenu = ({
   isMenuOpen,
@@ -72,7 +71,6 @@ const FDMenu = ({
       <div className='fdMenu__menu'>
         <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
         {/* <FDMenuQueue ref={menuQueueRef} /> */}
-        <FDMenuAccount ref={menuAccountRef} />
       </div>
     </section>
   );
