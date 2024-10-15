@@ -4,7 +4,12 @@ import { Dispatch, RefObject, SetStateAction, useCallback, useRef } from 'react'
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbGenres';
 // Assets
-import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, IcOutlinePowerSettingsNew } from '../../assets/google-material-symbols/menuSymbols';
+import {
+  MaterialSymbolsHome,
+  MaterialSymbolsAnimatedImagesSharp,
+  IcOutlinePowerSettingsNew,
+  MaterialSymbolsChatInfoSharp,
+} from '../../assets/google-material-symbols/menuSymbols';
 // Components
 import FDMenuToolbar from './FDMenuToolbar';
 import FDMenuGenres from './FDMenuGenres';
@@ -24,11 +29,13 @@ const FDMenu = ({
   const menuRef = useRef<HTMLElement>(null);
 
   /** Toggle menus */
-  const menuGenresRef = useRef<HTMLElement>(null);
+  const menuGenresRef = useRef<HTMLElement>(null),
+    menuPropertyRef = useRef<HTMLElement>(null);
 
   const toolbarObjArr = [
     { key: 'Home', icon: <MaterialSymbolsHome />, ref: undefined },
     { key: 'Genres', icon: <MaterialSymbolsAnimatedImagesSharp />, ref: menuGenresRef },
+    { key: 'Property', icon: <MaterialSymbolsChatInfoSharp />, ref: menuPropertyRef },
   ];
 
   const toggleMenus = useCallback((refParam: RefObject<HTMLElement> | undefined) => {
@@ -52,7 +59,7 @@ const FDMenu = ({
       </section>
       <div className='fdMenu__menu'>
         <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
-        <FDPropertyModal heroData={heroData} />
+        <FDPropertyModal heroData={heroData} ref={menuPropertyRef} />
       </div>
     </section>
   );

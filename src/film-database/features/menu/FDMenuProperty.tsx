@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, RefObject, forwardRef } from 'react';
 import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
@@ -30,7 +30,7 @@ type Type_Tmdb_Provider_Arr = {
   };
 };
 
-const FDMenuProperty = ({ heroData }: Type_PropDrill) => {
+const FDMenuProperty = forwardRef<HTMLElement, Type_PropDrill>(({ heroData }, menuPropertyRef) => {
   const [movieStore, setMovieStore] = useState<any[]>([]);
 
   const props = useMemo(() => {
@@ -70,11 +70,7 @@ const FDMenuProperty = ({ heroData }: Type_PropDrill) => {
   // const movieCast = useMemo(() => {}, [heroData]);
 
   /** Component */
-  return (
-    <div className='fdProperty'>
-      <section className='fdProperty__container'>.</section>
-    </div>
-  );
-};
+  return <section className='fdProperty' ref={menuPropertyRef} data-menu='closed'></section>;
+});
 
 export default FDMenuProperty;
