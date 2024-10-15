@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useRef } from 'react';
 import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
-import FDCarouselSearch from '../../components/carousel-search/FDCarouselSearch';
+import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 
 type Type_PropDrill = {
   carouselComponents: JSX.Element[];

@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
-import { useTmdbProps } from '../../composables/tmdb-api/hooks/useTmdbProps';
-import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/google-material-symbols/carouselSymbols';
-import { MaterialSymbolsPlayArrow } from '../../assets/google-material-symbols/iFrameSymbols';
+import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../../assets/google-material-symbols/carouselSymbols';
+import { MaterialSymbolsPlayArrow } from '../../../assets/google-material-symbols/iFrameSymbols';
+import { useTmdbProps } from '../../../composables/tmdb-api/hooks/useTmdbProps';
+import { Type_Tmdb_Api_Union } from '../../../composables/tmdb-api/types/TmdbDataTypes';
 
 type Type_FilmDatabase_Props = {
   mapIndex: number;

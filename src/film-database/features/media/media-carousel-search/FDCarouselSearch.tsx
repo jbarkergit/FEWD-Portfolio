@@ -1,14 +1,10 @@
 import { useState, useEffect, useRef, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
-import { MaterialSymbolsPlayArrow, SvgSpinnersRingResize } from '../../assets/google-material-symbols/iFrameSymbols';
-import { MaterialSymbolsSearch } from '../../assets/google-material-symbols/menuSymbols';
-import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/google-material-symbols/carouselSymbols';
-
-import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
-import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
-
-import { Type_Tmdb_Api_Union, Type_Tmdb_QuerieMovie_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
+import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../assets/google-material-symbols/iFrameSymbols';
+import { MaterialSymbolsSearch } from '../../../assets/google-material-symbols/menuSymbols';
+import { useFetchTmdbResponse } from '../../../composables/tmdb-api/hooks/useFetchTmdbResponse';
+import { useTmdbUrlBuilder } from '../../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
+import { Type_Tmdb_Api_Union, Type_Tmdb_QuerieMovie_Obj } from '../../../composables/tmdb-api/types/TmdbDataTypes';
 
 const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>> }) => {
   /** User is searching */

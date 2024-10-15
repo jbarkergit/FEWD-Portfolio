@@ -13,7 +13,7 @@ import FDDetails from '../features/details/FDDetails';
 import FDiFrame from '../features/iframe/FDiFrame';
 import FDMediaCarousel from '../features/media/FDMediaCarousel';
 import FDMenu from '../features/menu/FDMenu';
-import FDCarousel from '../components/carousel/FDCarousel';
+import FDCarousel from '../features/media/media-carousel/FDCarousel';
 
 const FDCatalog = () => {
   /** Global */
