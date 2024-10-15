@@ -8,7 +8,7 @@ type Type_PropDrill = {
   setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>>;
 };
 
-const FDMediaCarousel = ({ carouselComponents, isMenuOpen, setHeroData }: Type_PropDrill) => {
+const FDMedia = ({ carouselComponents, isMenuOpen, setHeroData }: Type_PropDrill) => {
   /** Carousel DeltaY scroll logic */
   const fdMediaRef = useRef<HTMLElement>(null);
 
@@ -49,4 +49,4 @@ const FDMediaCarousel = ({ carouselComponents, isMenuOpen, setHeroData }: Type_P
   );
 };
 
-export default FDMediaCarousel;
+export default FDMedia;

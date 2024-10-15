@@ -11,9 +11,9 @@ import { useFilmDatabaseWebStorage } from '../composables/web-storage-api/useFil
 // Components
 import FDDetails from '../features/details/FDDetails';
 import FDiFrame from '../features/iframe/FDiFrame';
-import FDMediaCarousel from '../features/media/FDMediaCarousel';
 import FDMenu from '../features/menu/FDMenu';
 import FDCarousel from '../features/media/media-carousel/FDCarousel';
+import FDMedia from '../features/media/FDMedia';
 
 const FDCatalog = () => {
   /** Global */
@@ -117,7 +117,7 @@ const FDCatalog = () => {
       <FDMenu setRoute={setRoute} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} heroData={heroData} />
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
-      <FDMediaCarousel carouselComponents={carouselComponents} isMenuOpen={isMenuOpen} setHeroData={setHeroData} />
+      <FDMedia carouselComponents={carouselComponents} isMenuOpen={isMenuOpen} setHeroData={setHeroData} />
     </div>
   );
 };
