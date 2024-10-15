@@ -47,4 +47,19 @@
       text-shadow: var(--fd-font-shadow);
     }
   }
+  &__moreInfo button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.65ch;
+    border-radius: calc(var(--fd-borderRadius) / 2);
+    @include m.fdFontM;
+    color: white;
+    opacity: 0.3;
+    transition: opacity ease-in-out 250ms;
+    pointer-events: all;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
