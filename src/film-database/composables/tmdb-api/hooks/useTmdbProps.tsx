@@ -27,10 +27,6 @@ export const useTmdbProps = (obj: Type_Tmdb_Api_Union) => {
         id: movie.id,
       };
 
-    case 'published_at' in obj:
-      console.error('useTmdbProps does not accept trailers, please refer to useFetchTmdbTrailer.');
-      break;
-
     default:
       console.error('Failure to reach object type_guard.');
       break;
