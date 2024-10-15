@@ -4,20 +4,13 @@ import { Dispatch, RefObject, SetStateAction, useCallback, useRef } from 'react'
 import { signOut } from 'firebase/auth';
 import { firebaseAuth } from '../../../app/config/firebaseConfig';
 // Composable types
-import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbMovieGenres';
+import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/hooks/useTmdbGenres';
 // Assets
-import {
-  MaterialSymbolsHome,
-  MaterialSymbolsAnimatedImagesSharp,
-  IcBaselinePerson2,
-  MaterialSymbolsMovie,
-  IcOutlinePowerSettingsNew,
-} from '../../assets/google-material-symbols/menuSymbols';
+import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, IcOutlinePowerSettingsNew } from '../../assets/google-material-symbols/menuSymbols';
 // Components
 import FDMenuToolbar from '../../components/menu/FDMenuToolbar';
 import FDMenuGenres from '../../components/menu/FDMenuGenres';
 import FDMenuAccount from '../../components/menu/FDMenuAccount';
-import FDMenuQueue from '../../components/menu/FDMenuQueue';
 
 const FDMenu = ({
   isMenuOpen,
