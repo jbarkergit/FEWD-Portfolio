@@ -38,9 +38,9 @@ const fetchTmdbData = async (keyValuePair: { key: Type_Tmdb_Movie_Keys_Union; en
   }
 };
 
-export const useTmdbFetcher = async (
-  keyValuePairs: { key: Type_Tmdb_Movie_Keys_Union; endpoint: string } | { key: Type_Tmdb_Movie_Keys_Union; endpoint: string }[]
-) => {
+type Type_TmdbFetcher_Params = { key: Type_Tmdb_Movie_Keys_Union; endpoint: string } | { key: Type_Tmdb_Movie_Keys_Union; endpoint: string }[];
+
+const processFetch = async (keyValuePairs: Type_TmdbFetcher_Params) => {
   if (Array.isArray(keyValuePairs)) {
     try {
       const responses = await Promise.allSettled(
@@ -52,7 +52,7 @@ export const useTmdbFetcher = async (
 
           if (cachedData) {
             const parsedData: Type_Tmdb_Api_Union[] | undefined = JSON.parse(cachedData);
-            return { key: key, endpoint: parsedData };
+            return { key: key, results: parsedData };
           }
 
           // Fetch
@@ -62,7 +62,7 @@ export const useTmdbFetcher = async (
           const dataResults: Type_Tmdb_Api_Union[] = data.results;
           // Cache and return data
           sessionStorage.setItem(key, JSON.stringify(dataResults));
-          return dataResults;
+          return { key: key, results: dataResults };
         })
       );
 
@@ -83,7 +83,7 @@ export const useTmdbFetcher = async (
 
     if (cachedData) {
       const parsedData: Type_Tmdb_Api_Union[] | undefined = JSON.parse(cachedData);
-      return { key: keyValuePairs.key, endpoint: parsedData };
+      return { key: keyValuePairs.key, results: parsedData };
     }
 
     // Fetch, cache and return data
@@ -93,9 +93,15 @@ export const useTmdbFetcher = async (
 
       const dataResults: Type_Tmdb_Api_Union[] = data.results;
       sessionStorage.setItem(keyValuePairs.key, JSON.stringify(dataResults));
-      return dataResults;
+      return { key: keyValuePairs.key, results: dataResults };
     } catch (error) {
       console.error('Failure to fetch data: ', error);
     }
   }
+};
+
+export const useTmdbFetcher = (keyValuePair: Type_TmdbFetcher_Params) => {
+  processFetch(keyValuePair).then((data) => {
+    if (data) return data;
+  });
 };
