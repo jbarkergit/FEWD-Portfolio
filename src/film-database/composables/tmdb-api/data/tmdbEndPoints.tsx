@@ -5,7 +5,7 @@
 /** Category Keys */
 type Type_Prefabs_Keys = 'now_playing' | 'upcoming' | 'popular' | 'top_rated' | 'trending_today' | 'trending_this_week';
 
-type Type_MovieId_Keys = 'details' | 'credits' | 'recommendations' | 'reviews' | 'watchProviders';
+type Type_MovieId_Keys = 'details' | 'credits' | 'videos' | 'watchProviders' | 'reviews' | 'recommendations';
 
 type Type_Miscellaneous_Keys = 'discover' | 'genreQuerie';
 
@@ -30,9 +30,10 @@ export const tmdbEndpoints: Type_Tmdb_Movie_Endpoint_Obj = {
   movieId: {
     details: 'https://api.themoviedb.org/3/movie/{movie_id}',
     credits: 'https://api.themoviedb.org/3/movie/{movie_id}/credits',
-    recommendations: 'https://api.themoviedb.org/3/movie/{movie_id}/recommendations',
-    reviews: 'https://api.themoviedb.org/3/movie/{movie_id}/reviews',
+    videos: 'https://api.themoviedb.org/3/movie/{movie_id}/videos',
     watchProviders: 'https://api.themoviedb.org/3/movie/{movie_id}/watch/providers',
+    reviews: 'https://api.themoviedb.org/3/movie/{movie_id}/reviews',
+    recommendations: 'https://api.themoviedb.org/3/movie/{movie_id}/recommendations',
   },
   miscellaneous: {
     discover: 'https://api.themoviedb.org/3/discover/movie{genre_ids}',
