@@ -7,7 +7,7 @@ type Type_Tmdb_BuildEndpoint_Arr_Opt = Partial<{
   querie: string;
 }>;
 
-export const useTmdbUrlBuilder = (keyArg: Type_Tmdb_Movie_Keys_Union, optArgs?: Type_Tmdb_BuildEndpoint_Arr_Opt | Type_Tmdb_BuildEndpoint_Arr_Opt[]) => {
+export const useTmdbUrlBuilder = (keyArg: Type_Tmdb_Movie_Keys_Union, optArgs?: Type_Tmdb_BuildEndpoint_Arr_Opt) => {
   // Generate array of key-value pairs
   const tmdbKeyEndpointArr: { [key: string]: string }[] = Object.entries(tmdbEndpoints).flatMap(([category, endpoints]) =>
     Object.entries(endpoints).map(([key, value]) => ({ [key]: value }))
@@ -24,7 +24,7 @@ export const useTmdbUrlBuilder = (keyArg: Type_Tmdb_Movie_Keys_Union, optArgs?: 
   // !requestedObj ? throw error, short return : null
   if (!requestedObj) {
     throwError('requested object not found');
-    return;
+    return undefined;
   }
 
   // Import API Key
@@ -33,7 +33,7 @@ export const useTmdbUrlBuilder = (keyArg: Type_Tmdb_Movie_Keys_Union, optArgs?: 
   // !apiKey ? throw error, short return : null
   if (!apiKey) {
     throwError('API Key could not be retrieved');
-    return;
+    return undefined;
   }
 
   // Build endpoints function
@@ -60,10 +60,5 @@ export const useTmdbUrlBuilder = (keyArg: Type_Tmdb_Movie_Keys_Union, optArgs?: 
     return { key, endpoint };
   };
 
-  // Args && isArray(args) ? Iterate, mutate endpoint : requestedObj with API Key
-  if (optArgs && Array.isArray(optArgs)) {
-    return optArgs.forEach((arg) => buildEndpoint(arg));
-  } else {
-    return buildEndpoint(optArgs);
-  }
+  return buildEndpoint(optArgs);
 };
