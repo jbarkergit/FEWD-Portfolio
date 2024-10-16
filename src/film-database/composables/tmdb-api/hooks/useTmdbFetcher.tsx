@@ -40,7 +40,7 @@ const fetchTmdbData = async (keyValuePair: { key: Type_Tmdb_Movie_Keys_Union; en
 
 type Type_TmdbFetcher_Params = { key: Type_Tmdb_Movie_Keys_Union; endpoint: string } | { key: Type_Tmdb_Movie_Keys_Union; endpoint: string }[];
 
-const processFetch = async (keyValuePairs: Type_TmdbFetcher_Params) => {
+export const useTmdbFetcher = async (keyValuePairs: Type_TmdbFetcher_Params) => {
   if (Array.isArray(keyValuePairs)) {
     try {
       const responses = await Promise.allSettled(
@@ -73,7 +73,7 @@ const processFetch = async (keyValuePairs: Type_TmdbFetcher_Params) => {
 
       // Return mapped fulfilled entries values
       const values = fulfilledEntries.map((entry) => entry.value);
-      return values as unknown as Type_Tmdb_Api_Union[];
+      return values;
     } catch (error) {
       console.error('Failure to fetch data: ', error);
     }
@@ -92,16 +92,10 @@ const processFetch = async (keyValuePairs: Type_TmdbFetcher_Params) => {
       if (!data) return undefined;
 
       const dataResults: Type_Tmdb_Api_Union[] = data.results;
-      sessionStorage.setItem(keyValuePairs.key, JSON.stringify(dataResults));
+      // sessionStorage.setItem(keyValuePairs.key, JSON.stringify(dataResults));
       return { key: keyValuePairs.key, results: dataResults };
     } catch (error) {
       console.error('Failure to fetch data: ', error);
     }
   }
-};
-
-export const useTmdbFetcher = (keyValuePair: Type_TmdbFetcher_Params) => {
-  processFetch(keyValuePair).then((data) => {
-    if (data) return data;
-  });
 };
