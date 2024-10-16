@@ -7,7 +7,10 @@ type Type_Tmdb_BuildEndpoint_Arr_Opt = Partial<{
   querie: string;
 }>;
 
-export const useTmdbUrlBuilder = (keyArg: Type_Tmdb_Movie_Keys_Union, optArgs?: Type_Tmdb_BuildEndpoint_Arr_Opt): { key: string; endpoint: string } | undefined => {
+export const useTmdbUrlBuilder = (
+  keyArg: Type_Tmdb_Movie_Keys_Union,
+  optArgs?: Type_Tmdb_BuildEndpoint_Arr_Opt
+): { key: Type_Tmdb_Movie_Keys_Union; endpoint: string } | undefined => {
   // Generate array of key-value pairs
   const tmdbKeyEndpointArr: { [key: string]: string }[] = Object.entries(tmdbEndpoints).flatMap(([category, endpoints]) =>
     Object.entries(endpoints).map(([key, value]) => ({ [key]: value }))
@@ -37,7 +40,7 @@ export const useTmdbUrlBuilder = (keyArg: Type_Tmdb_Movie_Keys_Union, optArgs?: 
   }
 
   // Build endpoints function
-  const buildEndpoint = (arg?: Type_Tmdb_BuildEndpoint_Arr_Opt): { key: string; endpoint: string } => {
+  const buildEndpoint = (arg?: Type_Tmdb_BuildEndpoint_Arr_Opt): { key: Type_Tmdb_Movie_Keys_Union; endpoint: string } => {
     let [key, endpoint] = Object.entries(requestedObj)[0];
 
     switch (true) {
@@ -57,7 +60,7 @@ export const useTmdbUrlBuilder = (keyArg: Type_Tmdb_Movie_Keys_Union, optArgs?: 
         break;
     }
 
-    return { key: key, endpoint: endpoint };
+    return { key: key as Type_Tmdb_Movie_Keys_Union, endpoint: endpoint };
   };
 
   return buildEndpoint(optArgs);
