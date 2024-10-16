@@ -1,3 +1,4 @@
+import { Type_Tmdb_Api_Union } from '../types/TmdbDataTypes';
 import { fetchTmdbResponse } from '../util/fetchTmdbResponse';
 
 /** Invoke fetcher util, filter fulfilled && rejected entries, return fulfilled data as a new arr */
@@ -19,13 +20,13 @@ export const useFetchTmdbResponse = async (keyValuePairs: { [key: string]: strin
       if (rejectedEntries.length > 0) throw new Error('Some entries were rejected.');
 
       const values = fulfilledEntries.map((entry) => entry.value?.results);
-      return values;
+      return values as unknown as Type_Tmdb_Api_Union[];
     } catch (error) {
       console.error('Failure at entries processing:', error);
     }
   } else {
     const fetch = await fetchTmdbResponse(keyValuePairs);
-    return fetch?.results;
+    return fetch?.results as unknown as Type_Tmdb_Api_Union;
   }
 };
 
