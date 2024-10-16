@@ -11,7 +11,7 @@ type Type_fetchTmdbResponse_Response_ResolvedPromise = {
 
 type Type_fetchTmdbResponse_Response_Promise = Promise<Type_fetchTmdbResponse_Response_ResolvedPromise | undefined>;
 
-export const fetchTmdbResponse = async (keyEndpointPair: { key: string; endpoint: string }): Type_fetchTmdbResponse_Response_Promise => {
+export const fetchTmdbResponse = async (keyValuePair: { [key: string]: string }): Type_fetchTmdbResponse_Response_Promise => {
   // TMDB API Authorization with Signal
   const abortController = new AbortController();
 
@@ -26,11 +26,11 @@ export const fetchTmdbResponse = async (keyEndpointPair: { key: string; endpoint
 
   try {
     // Fetch Responses: Status Handler
-    const response: Response = await fetch(`${keyEndpointPair.endpoint}`, options);
+    const response: Response = await fetch(`${keyValuePair.endpoint}`, options);
 
     if (!response.ok) {
       abortController?.abort();
-      throw new Error(`Abort issued to fetch for key: ${keyEndpointPair.key}. Response status: ${response.status}`);
+      throw new Error(`Abort issued to fetch for key: ${keyValuePair.key}. Response status: ${response.status}`);
     } else {
       const awaitResponse: Type_fetchTmdbResponse_Response_Promise = await response.json();
       return awaitResponse;
