@@ -1,8 +1,11 @@
+import { Type_Tmdb_Movie_Keys_Union } from '../data/tmdbEndPoints';
 import { Type_Tmdb_Api_Union } from '../types/TmdbDataTypes';
 import { fetchTmdbResponse } from '../util/fetchTmdbResponse';
 
 /** Invoke fetcher util, filter fulfilled && rejected entries, return fulfilled data as a new arr */
-export const useFetchTmdbResponse = async (keyValuePairs: { [key: string]: string } | { [key: string]: string }[]) => {
+export const useFetchTmdbResponse = async (
+  keyValuePairs: { key: Type_Tmdb_Movie_Keys_Union; endpoint: string } | { key: Type_Tmdb_Movie_Keys_Union; endpoint: string }[]
+) => {
   if (Array.isArray(keyValuePairs)) {
     try {
       const responses = await Promise.allSettled(

@@ -1,3 +1,4 @@
+import { Type_Tmdb_Movie_Keys_Union } from '../data/tmdbEndPoints';
 import { Type_Tmdb_Api_Union } from '../types/TmdbDataTypes';
 
 /** fetchTmdbResponse Utility Payload && Promise/Resolved Response Types */
@@ -11,8 +12,7 @@ type Type_fetchTmdbResponse_Response_ResolvedPromise = {
 
 type Type_fetchTmdbResponse_Response_Promise = Promise<Type_fetchTmdbResponse_Response_ResolvedPromise | undefined>;
 
-export const fetchTmdbResponse = async (keyValuePair: { [key: string]: string }): Type_fetchTmdbResponse_Response_Promise => {
-  // TMDB API Authorization with Signal
+export const fetchTmdbResponse = async (keyValuePair: { key: Type_Tmdb_Movie_Keys_Union; endpoint: string }): Type_fetchTmdbResponse_Response_Promise => {
   const abortController = new AbortController();
 
   const options: RequestInit = {
@@ -25,7 +25,6 @@ export const fetchTmdbResponse = async (keyValuePair: { [key: string]: string })
   };
 
   try {
-    // Fetch Responses: Status Handler
     const response: Response = await fetch(`${keyValuePair.endpoint}`, options);
 
     if (!response.ok) {
