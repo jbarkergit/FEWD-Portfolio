@@ -18,12 +18,32 @@ export const useFetchTmdbResponse = async (keyValuePairs: { [key: string]: strin
       if (fulfilledEntries.length === 0) throw new Error('No entries were viable.');
       if (rejectedEntries.length > 0) throw new Error('Some entries were rejected.');
 
-      const values = fulfilledEntries.map((entry) => entry.value);
+      const values = fulfilledEntries.map((entry) => entry.value?.results);
       return values;
     } catch (error) {
       console.error('Failure at entries processing:', error);
     }
   } else {
-    return fetchTmdbResponse(keyValuePairs);
+    const fetch = await fetchTmdbResponse(keyValuePairs);
+    return fetch?.results;
   }
 };
+
+// Cross-origin safety layer
+// const pathname: string = useLocation().pathname;
+
+// Prevent http requests if data exists in sessionStorage
+// const sessionSafeKeyValuePairs = keyValuePairs.map((entry) => {
+//   console.log(Object.values(entry));
+//   const getCachedDataByKey: Type_Tmdb_Api_Union[] | undefined = useFilmDatabaseWebStorage(pathname).getData(Object.entries(entry));
+//   const isKeyCached: boolean = !!getCachedDataByKey;
+
+//   if (getCachedDataByKey && isKeyCached) {
+//     return { key: entry.key, endpoint: getCachedDataByKey };
+//   } else {
+//     return entry;
+//   }
+// });
+
+// Prevent unnecessary api calls(session storage safeguard)
+// data.forEach((entry) => useFilmDatabaseWebStorage(pathname).setData(entry.key, entry.endpoint));
