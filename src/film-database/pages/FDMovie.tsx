@@ -1,33 +1,19 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useFetchTmdbResponse } from '../composables/tmdb-api/hooks/useFetchTmdbResponse';
 import { useTmdbUrlBuilder } from '../composables/tmdb-api/hooks/useTmdbUrlBuilder';
-import { Type_Tmdb_Provider_Arr } from '../composables/tmdb-api/types/TmdbDataTypes';
-
-type Type_FDMovie_MixedStore_Arr = Type_Tmdb_Provider_Arr | any;
+import { useTmdbFetcher } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 
 const FDMovie = () => {
-  const [movieStore, setMovieStore] = useState<Type_FDMovie_MixedStore_Arr[]>([]);
+  const [movieStore, setMovieStore] = useState<[]>([]);
 
   const propertyId = parseInt(useLocation().pathname.slice('/film-database/'.length));
 
-  const fetchStores = async (): Promise<void> => {
-    const providers = useTmdbUrlBuilder('watchProviders', [{ provider: propertyId }]);
-    const cast = useTmdbUrlBuilder('credits', [{ credits_id: propertyId }]);
-
-    const requests = [providers, cast].map((request) => {
-      return useFetchTmdbResponse([{ key: request.key, endpoint: request.endpoint }]);
-    });
-
-    try {
-      const results = await Promise.all(requests);
-      const movieProviders = results[0]?.flatMap((obj) => obj.endpoint.US);
-      const credits = results[1];
-      console.log(credits);
-      // setMovieStore(results);
-    } catch (error) {
-      console.error('Error fetching stores:', error);
-    }
+  const fetchStores = async () => {
+    const providers = useTmdbUrlBuilder('watchProviders', { movie_id: propertyId })!;
+    const cast = useTmdbUrlBuilder('credits', { movie_id: propertyId })!;
+    const data = await useTmdbFetcher([providers, cast]);
+    // useTmdbFetcher(providers);
+    // console.log(data);
   };
 
   useEffect(() => {
