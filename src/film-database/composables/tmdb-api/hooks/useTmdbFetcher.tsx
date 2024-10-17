@@ -38,44 +38,41 @@ const fetchTmdbData = async (keyValuePair: { key: Type_Tmdb_Movie_Keys_Union; en
   }
 };
 
+const processFetch = async (keyValuePair: { key: Type_Tmdb_Movie_Keys_Union; endpoint: string }) => {
+  const { key, endpoint } = keyValuePair;
+
+  // Prevent http requests if data exists in sessionStorage
+  const cachedData: string | null = sessionStorage.getItem(key);
+
+  if (cachedData) {
+    const parsedData: Type_Tmdb_Api_Union[] | undefined = JSON.parse(cachedData);
+    if (parsedData !== undefined) return { key: key, results: parsedData };
+  }
+
+  // Fetch
+  const data: Type_TmdbFetch_Response_ResolvedPromise | undefined = await fetchTmdbData(keyValuePair);
+  if (!data) throw new Error('Http response failure.');
+
+  // Cache and return data
+  sessionStorage.setItem(key, JSON.stringify(data));
+  return { key: key, results: data };
+};
+
 type Type_TmdbFetcher_Params = { key: Type_Tmdb_Movie_Keys_Union; endpoint: string } | { key: Type_Tmdb_Movie_Keys_Union; endpoint: string }[];
 
 export const useTmdbFetcher = async (keyValuePairs: Type_TmdbFetcher_Params) => {
   if (Array.isArray(keyValuePairs)) {
     try {
-      const responses = await Promise.allSettled(
-        keyValuePairs.map(async (keyValuePair) => {
-          const { key, endpoint } = keyValuePair;
-
-          // Prevent http requests if data exists in sessionStorage
-          const cachedData = sessionStorage.getItem(key);
-
-          if (cachedData) {
-            const parsedData: Type_Tmdb_Api_Union[] | undefined = JSON.parse(cachedData);
-            return { key: key, results: parsedData };
-          }
-
-          // Fetch
-          const data: Type_TmdbFetch_Response_ResolvedPromise | undefined = await fetchTmdbData(keyValuePair);
-          if (!data) return undefined;
-
-          const dataResults: Type_Tmdb_Api_Union[] = data.results;
-          // Cache and return data
-          sessionStorage.setItem(key, JSON.stringify(dataResults));
-          return { key: key, results: dataResults };
-        })
-      );
-
+      const responses = await Promise.allSettled(keyValuePairs.map(async (keyValuePair) => processFetch(keyValuePair)));
       // Filter entries
       const fulfilledEntries = responses.filter((entry) => entry.status === 'fulfilled');
       // Short circuit in the event of no viable entries
       if (fulfilledEntries.length === 0) throw new Error('No entries were viable.');
-
       // Return mapped fulfilled entries values
       const values = fulfilledEntries.map((entry) => entry.value);
       return values;
     } catch (error) {
-      console.error('Failure to fetch data: ', error);
+      console.error('Failure at fetch.', error);
     }
   } else {
     // Prevent http requests if data exists in sessionStorage
@@ -83,17 +80,12 @@ export const useTmdbFetcher = async (keyValuePairs: Type_TmdbFetcher_Params) => 
 
     if (cachedData) {
       const parsedData: Type_Tmdb_Api_Union[] | undefined = JSON.parse(cachedData);
-      return { key: keyValuePairs.key, results: parsedData };
+      if (parsedData !== undefined) return { key: keyValuePairs.key, results: parsedData };
     }
 
     // Fetch, cache and return data
     try {
-      const data: Type_TmdbFetch_Response_ResolvedPromise | undefined = await fetchTmdbData(keyValuePairs);
-      if (!data) return undefined;
-
-      const dataResults: Type_Tmdb_Api_Union[] = data.results;
-      // sessionStorage.setItem(keyValuePairs.key, JSON.stringify(dataResults));
-      return { key: keyValuePairs.key, results: dataResults };
+      processFetch(keyValuePairs);
     } catch (error) {
       console.error('Failure to fetch data: ', error);
     }
