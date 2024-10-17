@@ -1,16 +1,13 @@
-import { Type_Tmdb_Movie_Keys_Union, tmdbEndpoints } from '../data/tmdbEndPoints';
+import { tmdbEndpoints, Type_TmdbEndpoint_Keys_Union } from '../data/tmdbEndPoints';
 import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
 
-type Type_Tmdb_BuildEndpoint_Arr_Opt = Partial<{
+type Type_Tmdb_UrlBuilder_Obj_isOpt = Partial<{
   movie_id: number;
   genre: string;
   querie: string;
 }>;
 
-export const useTmdbUrlBuilder = (
-  keyArg: Type_Tmdb_Movie_Keys_Union,
-  optArgs?: Type_Tmdb_BuildEndpoint_Arr_Opt
-): { key: Type_Tmdb_Movie_Keys_Union; endpoint: string } | undefined => {
+export const useTmdbUrlBuilder = (keyArg: Type_TmdbEndpoint_Keys_Union, optArgs?: Type_Tmdb_UrlBuilder_Obj_isOpt): { [x: string]: string } | undefined => {
   // Generate array of key-value pairs
   const tmdbKeyEndpointArr: { [key: string]: string }[] = Object.entries(tmdbEndpoints).flatMap(([category, endpoints]) =>
     Object.entries(endpoints).map(([key, value]) => ({ [key]: value }))
@@ -39,29 +36,25 @@ export const useTmdbUrlBuilder = (
     return undefined;
   }
 
-  // Build endpoints function
-  const buildEndpoint = (arg?: Type_Tmdb_BuildEndpoint_Arr_Opt): { key: Type_Tmdb_Movie_Keys_Union; endpoint: string } => {
-    let [key, endpoint] = Object.entries(requestedObj)[0];
+  // Build endpoint
+  let [key, endpoint] = Object.entries(requestedObj)[0];
 
-    switch (true) {
-      case arg && !!arg.movie_id:
-        endpoint = endpoint.replace('{movie_id}', `${arg.movie_id}`) + `?api_key=${apiKey}`;
-        break;
-      case arg && !!arg.genre:
-        endpoint = endpoint
-          .replace('/movie', `/movie?api_key=${apiKey}`)
-          .replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[arg.genre as Type_MovieGenre_Keys]}`);
-        break;
-      case arg && !!arg.querie:
-        endpoint = endpoint + `?query=${arg.querie}&include_adult=false&language=en-US&page=1`;
-        break;
-      default:
-        endpoint = endpoint + `?api_key=${apiKey}`;
-        break;
-    }
+  switch (true) {
+    case !!optArgs?.movie_id:
+      endpoint = endpoint.replace('{movie_id}', `${optArgs?.movie_id}`) + `?api_key=${apiKey}`;
+      break;
+    case !!optArgs?.genre:
+      endpoint = endpoint
+        .replace('/movie', `/movie?api_key=${apiKey}`)
+        .replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[optArgs?.genre as Type_MovieGenre_Keys]}`);
+      break;
+    case !!optArgs?.querie:
+      endpoint = endpoint + `?query=${optArgs?.querie}&include_adult=false&language=en-US&page=1`;
+      break;
+    default:
+      endpoint = endpoint + `?api_key=${apiKey}`;
+      break;
+  }
 
-    return { key: key as Type_Tmdb_Movie_Keys_Union, endpoint: endpoint };
-  };
-
-  return buildEndpoint(optArgs);
+  return { [key as Type_TmdbEndpoint_Keys_Union]: endpoint };
 };
