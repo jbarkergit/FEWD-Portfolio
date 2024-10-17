@@ -1,24 +1,20 @@
-/**
- * https://developer.themoviedb.org/reference/
- */
+/** Category Key Types */
+type Type_Tmdb_Prefabs_Keys = 'now_playing' | 'upcoming' | 'popular' | 'top_rated' | 'trending_today' | 'trending_this_week';
 
-/** Category Keys */
-type Type_Prefabs_Keys = 'now_playing' | 'upcoming' | 'popular' | 'top_rated' | 'trending_today' | 'trending_this_week';
+type Type_Tmdb_MovieId_Keys = 'details' | 'credits' | 'videos' | 'watchProviders' | 'reviews' | 'recommendations';
 
-type Type_MovieId_Keys = 'details' | 'credits' | 'videos' | 'watchProviders' | 'reviews' | 'recommendations';
+type Type_Tmdb_Miscellaneous_Keys = 'discover' | 'genreQuerie';
 
-type Type_Miscellaneous_Keys = 'discover' | 'genreQuerie';
+export type Type_TmdbEndpoint_Keys_Union = Type_Tmdb_Prefabs_Keys | Type_Tmdb_MovieId_Keys | Type_Tmdb_Miscellaneous_Keys;
 
-export type Type_Tmdb_Movie_Keys_Union = Type_Prefabs_Keys | Type_MovieId_Keys | Type_Miscellaneous_Keys;
-
-type Type_Tmdb_Movie_Endpoint_Obj = {
-  prefabs: Record<Type_Prefabs_Keys, string>;
-  movieId: Record<Type_MovieId_Keys, string>;
-  miscellaneous: Record<Type_Miscellaneous_Keys, string>;
+type Type_Tmdb_Endpoint_Obj = {
+  prefabs: Record<Type_Tmdb_Prefabs_Keys, string>;
+  movieId: Record<Type_Tmdb_MovieId_Keys, string>;
+  miscellaneous: Record<Type_Tmdb_Miscellaneous_Keys, string>;
 };
 
 /** Endpoint Collection */
-export const tmdbEndpoints: Type_Tmdb_Movie_Endpoint_Obj = {
+export const tmdbEndpoints: Type_Tmdb_Endpoint_Obj = {
   prefabs: {
     now_playing: 'https://api.themoviedb.org/3/movie/now_playing',
     upcoming: 'https://api.themoviedb.org/3/movie/upcoming',
