@@ -16,7 +16,7 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
  * #3. Assign unique identifier
  *      e.g. Type_Tmdb_Movie_#4_#5?
  *
- * #4. OPTIONAL: Define data structure if of types: Arr | Obj | Union
+ * #4. OPTIONAL: Define data structure if of types: Arr | Obj | Union OR identify use-case e.g. Response, Params
  *      e.g. Type_Tmdb_Movie_Union_#5?
  *
  * #5. OPTIONAL: Determine if desired input/output is potentially OPTIONAL | UNKNOWN | UNDEFINED | NULL, else OMIT
@@ -118,7 +118,7 @@ type Type_Tmdb_Credits_Response = {
   original_name: string;
   popularity: number;
   profile_path: string | null;
-}[];
+};
 
 type Type_Tmdb_Videos_Response = {
   id: string;
