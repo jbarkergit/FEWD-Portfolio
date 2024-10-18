@@ -29,26 +29,189 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
  *      e.g. Type_Tmdb_Movie_Map_isUndefined
  */
 
-/** Fetch Utility Function */
-export type Type_Tmdb_Prefabs_Obj = {
+/** Response types */
+type Type_Tmdb_Prefabs_Response = {
+  now_playing: {
+    dates: {
+      maximum: string;
+      minimum: string;
+    };
+  };
+  page: number;
+  results: {
+    adult: boolean;
+    backdrop_path: string | null;
+    genre_ids: number[];
+    id: number;
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
+    poster_path: string | null;
+    release_date: string;
+    title: string;
+    video: boolean;
+    vote_average: number;
+    vote_count: number;
+  }[];
+  total_pages: number;
+  total_results: number;
+};
+
+type Type_Tmdb_Details_Response = {
   adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
+  backdrop_path: string | null;
+  belongs_to_collection: {
+    backdrop_path: string | null;
+    id: number;
+    name: string;
+    poster_path: string | null;
+  } | null;
+  budget: number;
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  homepage: string | null;
   id: number;
+  imdb_id: string;
+  origin_country: string[];
   original_language: string;
   original_title: string;
   overview: string;
   popularity: number;
-  poster_path: string;
+  poster_path: string | null;
+  production_companies: {
+    id: number;
+    logo_path: string | null;
+    name: string;
+    origin_country: string;
+  }[];
+  production_countries: {
+    iso_3166_1: string;
+    name: string;
+  }[];
   release_date: string;
+  revenue: number;
+  runtime: number;
+  spoken_languages: {
+    english_name: string;
+    iso_639_1: string;
+    name: string;
+  }[];
+  status: string;
+  tagline: string;
   title: string;
   video: boolean;
   vote_average: number;
   vote_count: number;
 };
 
-export type Type_Tmdb_Response_Union = Type_Tmdb_Prefabs_Obj;
+type Type_Tmdb_Credits_Response = {
+  adult: boolean;
+  credit_id: string;
+  department: string;
+  gender: 1 | 2 | 0;
+  id: number;
+  job: string;
+  known_for_department: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+}[];
 
+type Type_Tmdb_Videos_Response = {
+  id: string;
+  iso_639_1: string;
+  iso_3166_1: string;
+  key: string;
+  name: string;
+  official: boolean;
+  published_at: string;
+  site: string;
+  size: number;
+  type: string;
+};
+
+type WatchProvidersProvider = {
+  logo_path?: string;
+  provider_id: number;
+  provider_name: string;
+  display_priority?: number;
+};
+type Type_Tmdb_WatchProviders_Response = {
+  id: number;
+  results: {
+    [locale: string]: {
+      link: string;
+      buy: Array<WatchProvidersProvider>;
+      rent: Array<WatchProvidersProvider>;
+      flatrate?: Array<WatchProvidersProvider>;
+    };
+  };
+};
+
+type Type_Tmdb_Reviews_Response = {
+  id: string;
+  author: string;
+  authorDetails: {
+    avatarPath: string | null;
+    name: string;
+    rating: number;
+    username: string;
+  };
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  url: string;
+};
+
+type Type_Tmdb_Recommendations_Response = {
+  adult: boolean;
+  backdropPath: string | null;
+  genreIds: number[];
+  id: number;
+  mediaType: 'movie';
+  originalLanguage: string;
+  originalTitle: string;
+  overview: string;
+  popularity: number;
+  posterPath: string | null;
+  releaseDate: string;
+  title: string;
+  video: boolean;
+  voteAverage: number;
+  voteCount: number;
+};
+
+type Type_Tmdb_Discover_Response = {
+  adult: boolean;
+  backdropPath: string | null;
+  genreIds: number[];
+  id: number;
+  originalLanguage: string;
+  originalTitle: string;
+  overview: string;
+  popularity: number;
+  posterPath: string | null;
+  releaseDate: string;
+  title: string;
+  video: boolean;
+  voteAverage: number;
+  voteCount: number;
+};
+
+export type Type_Tmdb_Response_Union =
+  | Type_Tmdb_Prefabs_Response
+  | Type_Tmdb_Details_Response
+  | Type_Tmdb_Credits_Response
+  | Type_Tmdb_Videos_Response
+  | Type_Tmdb_WatchProviders_Response
+  | Type_Tmdb_Reviews_Response
+  | Type_Tmdb_Recommendations_Response
+  | Type_Tmdb_Discover_Response;
+
+/** Fetch util */
 const fetchTmdbData = async (keyValuePair: { key: Type_TmdbEndpoint_Keys_Union; endpoint: string }): Promise<unknown | undefined> => {
   const abortController = new AbortController();
 
