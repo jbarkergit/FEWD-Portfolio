@@ -30,7 +30,7 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
  */
 
 /** Response types */
-type Type_Tmdb_Prefabs_Response = {
+export type Type_Tmdb_Prefabs_Response = {
   now_playing: {
     dates: {
       maximum: string;
@@ -58,7 +58,7 @@ type Type_Tmdb_Prefabs_Response = {
   total_results: number;
 };
 
-type Type_Tmdb_Details_Response = {
+export type Type_Tmdb_Details_Response = {
   adult: boolean;
   backdrop_path: string | null;
   belongs_to_collection: {
@@ -107,7 +107,7 @@ type Type_Tmdb_Details_Response = {
   vote_count: number;
 };
 
-type Type_Tmdb_Credits_Response = {
+export type Type_Tmdb_Credits_Response = {
   adult: boolean;
   credit_id: string;
   department: string;
@@ -120,7 +120,7 @@ type Type_Tmdb_Credits_Response = {
   profile_path: string | null;
 };
 
-type Type_Tmdb_Videos_Response = {
+export type Type_Tmdb_Videos_Response = {
   id: string;
   iso_639_1: string;
   iso_3166_1: string;
@@ -133,7 +133,7 @@ type Type_Tmdb_Videos_Response = {
   type: string;
 };
 
-type WatchProvidersProvider = {
+export type WatchProvidersProvider = {
   logo_path?: string;
   provider_id: number;
   provider_name: string;
@@ -151,7 +151,7 @@ type Type_Tmdb_WatchProviders_Response = {
   };
 };
 
-type Type_Tmdb_Reviews_Response = {
+export type Type_Tmdb_Reviews_Response = {
   id: string;
   author: string;
   authorDetails: {
@@ -166,7 +166,7 @@ type Type_Tmdb_Reviews_Response = {
   url: string;
 };
 
-type Type_Tmdb_Recommendations_Response = {
+export type Type_Tmdb_Recommendations_Response = {
   adult: boolean;
   backdropPath: string | null;
   genreIds: number[];
@@ -184,7 +184,7 @@ type Type_Tmdb_Recommendations_Response = {
   voteCount: number;
 };
 
-type Type_Tmdb_Discover_Response = {
+export type Type_Tmdb_Discover_Response = {
   adult: boolean;
   backdropPath: string | null;
   genreIds: number[];
