@@ -153,9 +153,7 @@ const buildEndpoint = (params: Type_Tmdb_UseTmdbFetcher_Params_Obj): Type_Tmdb_I
       endpoint = endpoint.replace('{movie_id}', `${params.args.movie_id}`) + `?api_key=${apiKey}`;
       break;
     case !!params.args?.genre:
-      endpoint = endpoint
-        .replace('/movie', `/movie?api_key=${apiKey}`)
-        .replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[params.args.genre as Type_MovieGenre_Keys]}`);
+      endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`).replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[params.args.genre]}`);
       break;
     case !!params.args?.querie:
       endpoint = endpoint + `?query=${params.args.querie}&include_adult=false&language=en-US&page=1`;
@@ -174,7 +172,7 @@ type Type_Tmdb_UseTmdbFetcher_Params_Obj = {
   key: Type_TmdbEndpoint_Keys_Union;
   args?: Partial<{
     movie_id: number;
-    genre: string;
+    genre: Type_MovieGenre_Keys;
     querie: string;
   }>;
 };
