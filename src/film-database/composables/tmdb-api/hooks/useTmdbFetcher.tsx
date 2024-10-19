@@ -30,32 +30,34 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
  */
 
 /** Response types */
+type Type_Tmdb_Prefabs = keyof typeof tmdbEndpoints.prefabs;
+
 export type Type_Tmdb_Prefabs_Response = {
-  now_playing: {
+  [K in Type_Tmdb_Prefabs]: {
     dates: {
       maximum: string;
       minimum: string;
     };
+    page: number;
+    results: Array<{
+      adult: boolean;
+      backdrop_path: string;
+      genre_ids: number[];
+      id: number;
+      original_language: string;
+      original_title: string;
+      overview: string;
+      popularity: number;
+      poster_path: string;
+      release_date: string;
+      title: string;
+      video: boolean;
+      vote_average: number;
+      vote_count: number;
+    }>;
+    total_pages: number;
+    total_results: number;
   };
-  page: number;
-  results: {
-    adult: boolean;
-    backdrop_path: string | null;
-    genre_ids: number[];
-    id: number;
-    original_language: string;
-    original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string | null;
-    release_date: string;
-    title: string;
-    video: boolean;
-    vote_average: number;
-    vote_count: number;
-  }[];
-  total_pages: number;
-  total_results: number;
 };
 
 export type Type_Tmdb_Details_Response = {
