@@ -215,7 +215,7 @@ export type Type_Tmdb_Response_Union =
 
 /** Fetch util */
 const fetchTmdbData = async (keyValuePair: { key: Type_TmdbEndpoint_Keys_Union; endpoint: string }): Promise<unknown | undefined> => {
-  const abortController = new AbortController();
+  const abortController: AbortController = new AbortController();
 
   const options: RequestInit = {
     method: 'GET',
@@ -256,7 +256,7 @@ const processFetch = async (keyValuePair: { key: Type_TmdbEndpoint_Keys_Union; e
   if (!data) throw new Error('Http response failure.');
 
   // Cache data
-  sessionStorage.setItem([keyValuePair.key] as unknown as string, JSON.stringify(data));
+  if (keyValuePair.key !== 'discover') sessionStorage.setItem([keyValuePair.key] as unknown as string, JSON.stringify(data));
 
   // Return
   return { [keyValuePair.key]: data };
@@ -315,16 +315,16 @@ const buildEndpoint = (params: Type_Tmdb_UseTmdbFetcher_Params_Obj): Type_Tmdb_I
   // Mutate arg endpoint
   switch (true) {
     case !!params.args?.movie_id:
-      endpoint = endpoint.replace('{movie_id}', `${params.args.movie_id}`);
+      endpoint = endpoint.replace('{movie_id}', `${params.args.movie_id}`) + `?api_key=${apiKey}`;
       break;
     case !!params.args?.genre:
-      endpoint = endpoint.replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[params.args.genre]}`);
+      endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`).replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[params.args.genre]}`);
       break;
     case !!params.args?.querie:
       endpoint = endpoint + `?query=${params.args.querie}&include_adult=false&language=en-US&page=1`;
       break;
     default:
-      endpoint = endpoint;
+      endpoint = endpoint + `?api_key=${apiKey}`;
       break;
   }
 
