@@ -1,19 +1,14 @@
 // Deps
 import { Dispatch, RefObject, SetStateAction, useCallback, useRef } from 'react';
-// Composable types
-import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
+// Composables
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbGenres';
 // Assets
-import {
-  MaterialSymbolsHome,
-  MaterialSymbolsAnimatedImagesSharp,
-  IcOutlinePowerSettingsNew,
-  MaterialSymbolsChatInfoSharp,
-} from '../../assets/google-material-symbols/menuSymbols';
-// Components
+import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, MaterialSymbolsChatInfoSharp } from '../../assets/google-material-symbols/menuSymbols';
+// Features
 import FDMenuToolbar from './FDMenuToolbar';
 import FDMenuGenres from './FDMenuGenres';
 import FDPropertyModal from './FDMenuProperty';
+import { Type_Tmdb_Response_Union } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 
 const FDMenu = ({
   isMenuOpen,
@@ -24,11 +19,8 @@ const FDMenu = ({
   isMenuOpen: boolean;
   setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
   setRoute: Dispatch<SetStateAction<Type_MovieGenre_Keys | 'home'>>;
-  heroData: Type_Tmdb_Api_Union | null;
+  heroData: Type_Tmdb_Response_Union | undefined;
 }) => {
-  const menuRef = useRef<HTMLElement>(null);
-
-  /** Toggle menus */
   const menuGenresRef = useRef<HTMLElement>(null),
     menuPropertyRef = useRef<HTMLElement>(null);
 
@@ -39,8 +31,6 @@ const FDMenu = ({
   ];
 
   const toggleMenus = useCallback((refParam: RefObject<HTMLElement> | undefined) => {
-    if (!menuRef.current) return;
-
     if (refParam !== undefined) {
       setIsMenuOpen(true);
       toolbarObjArr.forEach((obj) => {
@@ -53,7 +43,7 @@ const FDMenu = ({
   }, []);
 
   return (
-    <section className='fdMenu' ref={menuRef} data-modal={isMenuOpen ? 'open' : 'closed'}>
+    <section className='fdMenu' data-modal={isMenuOpen ? 'open' : 'closed'}>
       <section className='fdMenu__toolbar'>
         <FDMenuToolbar setRoute={setRoute} toolbarObjArr={toolbarObjArr} toggleMenus={toggleMenus} />
       </section>
