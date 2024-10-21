@@ -315,16 +315,16 @@ const buildEndpoint = (params: Type_Tmdb_UseTmdbFetcher_Params_Obj): Type_Tmdb_I
   // Mutate arg endpoint
   switch (true) {
     case !!params.args?.movie_id:
-      endpoint = endpoint.replace('{movie_id}', `${params.args.movie_id}`) + `?api_key=${apiKey}`;
+      endpoint = endpoint.replace('{movie_id}', `${params.args.movie_id}`);
       break;
     case !!params.args?.genre:
-      endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`).replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[params.args.genre]}`);
+      endpoint = endpoint.replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[params.args.genre]}`);
       break;
     case !!params.args?.querie:
       endpoint = endpoint + `?query=${params.args.querie}&include_adult=false&language=en-US&page=1`;
       break;
     default:
-      endpoint = endpoint + `?api_key=${apiKey}`;
+      endpoint = endpoint;
       break;
   }
 
