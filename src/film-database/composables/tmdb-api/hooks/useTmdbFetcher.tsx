@@ -135,13 +135,13 @@ export type Type_Tmdb_Videos_Response = {
   type: string;
 };
 
-export type WatchProvidersProvider = {
+type WatchProvidersProvider = {
   logo_path?: string;
   provider_id: number;
   provider_name: string;
   display_priority?: number;
 };
-type Type_Tmdb_WatchProviders_Response = {
+export type Type_Tmdb_WatchProviders_Response = {
   id: number;
   results: {
     [locale: string]: {
