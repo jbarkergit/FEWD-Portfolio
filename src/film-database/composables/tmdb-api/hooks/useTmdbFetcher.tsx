@@ -51,10 +51,9 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
  */
 
 export namespace Namespace_Tmdb {
-  type PrefabKeys = keyof typeof tmdbEndpoints.prefabs;
-
+  type PrefabKeys_Provider = keyof typeof tmdbEndpoints.prefabs;
   export type Prefabs_Obj = {
-    [K in PrefabKeys]: {
+    [K in PrefabKeys_Provider]: {
       dates: {
         maximum: string;
         minimum: string;
@@ -248,10 +247,10 @@ const processFetch = async (keyValuePair: { key: Type_TmdbEndpoint_Keys_Union; e
 };
 
 /** Handle callbacks and errors */
-type Type_Tmdb_InitFetch_Param_Obj = { key: Type_TmdbEndpoint_Keys_Union; endpoint: string };
-type Type_Tmdb_InitFetch_Params = Type_Tmdb_InitFetch_Param_Obj | Type_Tmdb_InitFetch_Param_Obj[];
+type Type_Tmdb_InitFetch_Obj = { key: Type_TmdbEndpoint_Keys_Union; endpoint: string };
+type Type_Tmdb_InitFetch_asFuncParams = Type_Tmdb_InitFetch_Obj | Type_Tmdb_InitFetch_Obj[];
 
-const initializeFetch = async (keyValuePairs: Type_Tmdb_InitFetch_Params) => {
+const initializeFetch = async (keyValuePairs: Type_Tmdb_InitFetch_asFuncParams) => {
   if (Array.isArray(keyValuePairs)) {
     try {
       const responses = await Promise.allSettled(keyValuePairs.map(async (keyValuePair) => processFetch(keyValuePair)));
@@ -275,7 +274,7 @@ const initializeFetch = async (keyValuePairs: Type_Tmdb_InitFetch_Params) => {
 };
 
 /** Endpoint builder */
-const buildEndpoint = (params: Type_Tmdb_UseTmdbFetcher_Params_Obj): Type_Tmdb_InitFetch_Param_Obj | undefined => {
+const buildEndpoint = (params: Type_Tmdb_useTmdbFetcher_asFuncParams): Type_Tmdb_InitFetch_Obj | undefined => {
   // Import API Key
   const apiKey: string = import.meta.env.VITE_TMDB_API_KEY;
   if (!apiKey) return undefined;
@@ -318,7 +317,7 @@ const buildEndpoint = (params: Type_Tmdb_UseTmdbFetcher_Params_Obj): Type_Tmdb_I
 };
 
 /** Initialize build of endpoints then initialize callback chain to fetch data with said endpoints */
-type Type_Tmdb_UseTmdbFetcher_Params_Obj = {
+type Type_Tmdb_useTmdbFetcher_asFuncParams = {
   key: Type_TmdbEndpoint_Keys_Union;
   args?: Partial<{
     movie_id: number;
@@ -327,15 +326,15 @@ type Type_Tmdb_UseTmdbFetcher_Params_Obj = {
   }>;
 };
 
-export const useTmdbFetcher = async (params: Type_Tmdb_UseTmdbFetcher_Params_Obj | Type_Tmdb_UseTmdbFetcher_Params_Obj[]) => {
+export const useTmdbFetcher = async (params: Type_Tmdb_useTmdbFetcher_asFuncParams | Type_Tmdb_useTmdbFetcher_asFuncParams[]) => {
   // Generate endpoints
-  const endpoints: Type_Tmdb_InitFetch_Param_Obj | (Type_Tmdb_InitFetch_Param_Obj | undefined)[] | undefined = Array.isArray(params)
+  const endpoints: Type_Tmdb_InitFetch_Obj | (Type_Tmdb_InitFetch_Obj | undefined)[] | undefined = Array.isArray(params)
     ? params.map((arg) => buildEndpoint(arg))
     : buildEndpoint(params);
 
   // Invoke initialize fetch callback chain
   if (Array.isArray(endpoints)) {
-    const filteredEndpoints: Type_Tmdb_InitFetch_Param_Obj[] = endpoints.filter((obj) => obj !== undefined);
+    const filteredEndpoints: Type_Tmdb_InitFetch_Obj[] = endpoints.filter((obj) => obj !== undefined);
     return await initializeFetch(filteredEndpoints);
   } else {
     if (!endpoints) return undefined;
