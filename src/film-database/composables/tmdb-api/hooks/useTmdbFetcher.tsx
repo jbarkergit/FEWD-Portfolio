@@ -1,4 +1,4 @@
-import { tmdbEndpoints, Type_TmdbEndpoint_Keys_Union } from '../data/tmdbEndPoints';
+import { Namespace_TmdbEndpointsKeys, tmdbEndpoints } from '../data/tmdbEndPoints';
 import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
 
 /** Custom Type Naming Convention Reference
@@ -207,7 +207,7 @@ export namespace Namespace_Tmdb {
 }
 
 /** Fetch util */
-const fetchTmdbData = async (keyValuePair: { key: Type_TmdbEndpoint_Keys_Union; endpoint: string }): Promise<unknown | undefined> => {
+const fetchTmdbData = async (keyValuePair: { key: Namespace_TmdbEndpointsKeys.Keys_Union; endpoint: string }): Promise<unknown | undefined> => {
   const abortController: AbortController = new AbortController();
 
   const options: RequestInit = {
@@ -235,7 +235,7 @@ const fetchTmdbData = async (keyValuePair: { key: Type_TmdbEndpoint_Keys_Union; 
 };
 
 /** Handle fetch queue, reduce http requests by utilizing sessionStorage */
-const processFetch = async (keyValuePair: { key: Type_TmdbEndpoint_Keys_Union; endpoint: string }) => {
+const processFetch = async (keyValuePair: { key: Namespace_TmdbEndpointsKeys.Keys_Union; endpoint: string }) => {
   // Prevent http requests if data exists in sessionStorage
   const cachedData: string | null = sessionStorage.getItem(keyValuePair.key);
 
@@ -256,7 +256,7 @@ const processFetch = async (keyValuePair: { key: Type_TmdbEndpoint_Keys_Union; e
 };
 
 /** Handle callbacks and errors */
-type Type_Tmdb_InitFetch_Obj = { key: Type_TmdbEndpoint_Keys_Union; endpoint: string };
+type Type_Tmdb_InitFetch_Obj = { key: Namespace_TmdbEndpointsKeys.Keys_Union; endpoint: string };
 type Type_Tmdb_InitFetch_asFuncParams = Type_Tmdb_InitFetch_Obj | Type_Tmdb_InitFetch_Obj[];
 
 const initializeFetch = async (keyValuePairs: Type_Tmdb_InitFetch_asFuncParams) => {
@@ -327,7 +327,7 @@ const buildEndpoint = (params: Type_Tmdb_useTmdbFetcher_asFuncParams): Type_Tmdb
 
 /** Initialize build of endpoints then initialize callback chain to fetch data with said endpoints */
 type Type_Tmdb_useTmdbFetcher_asFuncParams = {
-  key: Type_TmdbEndpoint_Keys_Union;
+  key: Namespace_TmdbEndpointsKeys.Keys_Union;
   args?: Partial<{
     movie_id: number;
     genre: Type_MovieGenre_Keys;
