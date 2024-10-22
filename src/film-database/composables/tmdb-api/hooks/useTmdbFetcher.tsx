@@ -13,47 +13,60 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
  * Use location-oriented and concise names that relate to the type or grouping, aligning with native thought processes.
  * Examples: Type_Tmdb_
  *
+ * BREAK: If namespace, type names start here
+ *
  * #3. Unique Identifier: Identify properties
  * Assign a name that strongly implies the use case of the type's properties.
- * Examples: Type_Tmdb_MovieList_
+ * Examples: MovieList_
  *
  * #4. Structure Identifier: Identify data structure or use case
  * Assign a data structure type to improve legibility and use of types.
- * Examples: Type_Tmdb_MovieList_Obj
+ * Examples:
+ * - MovieList_Obj
+ * - MovieList_Union
  *
- * #5. (Optional) Function Use Case: Inclusions
+ * #5. (Optional) Extensions, Providers
+ * Define if the type's sole purpose is to supply or unionize
+ * * Mandatory Notice: Use the "is" preface; omit if not required.
+ * Examples:
+ * - MovieList_Union_isProvider
+ * - MovieList_Union_isExtension
+ *
+ * END OF ROAD: if extension or provider, do not inherit the following rules.
+ *
+ * #6. (Optional) Function Use Case
  * Use this to indicate when a type is being utilized as a function parameter or return type.
- * Mandatory Notice: Use the "as" preface; omit if not required.
+ * * Mandatory Notice: Use the "as" preface; omit if not required.
  * Examples:
- * - Type_Tmdb_MovieList_Obj_asFuncParameters
- * - Type_Tmdb_MovieList_Obj_asFuncReturn
+ * - MovieList_Obj_asFuncParameters
+ * - MovieList_Obj_asFuncReturn
  *
- * #6. (Optional, Chainable) Potentially Missing: Identify if data properties are optional, unknown, could be awaited, a promise, undefined, or void.
- * Mandatory Notice: Use the "is" preface; omit if not required.
+ * #7. (Optional, Chainable) Potentially Missing: Identify if data properties are optional, unknown, could be awaited, a promise, undefined, or void.
+ * * Mandatory Notice: Use the "is" preface; omit if not required.
  * Examples:
- * - Type_Tmdb_MovieList_Obj_isUndefined
- * - Type_Tmdb_MovieList_Obj_asFuncReturn_isVoid
+ * - MovieList_Obj_isUndefined
+ * - MovieList_Obj_asFuncReturn_isVoid
  * Chain Examples:
- * - Type_Tmdb_MovieList_Obj_isPromise_isUndefined
- * - Type_Tmdb_MovieList_Obj_asFuncReturn_isPromise_isUndefined
+ * - MovieList_Obj_asFuncReturn_isPromise_isUndefined
  */
 
-export namespace Type_Tmdb {
-  type Type_Tmdb_Prefabs = keyof typeof tmdbEndpoints.prefabs;
-  export type Type_Tmdb_Prefabs_Response = {
-    [K in Type_Tmdb_Prefabs]: {
+export namespace Namespace_Tmdb {
+  type PrefabKeys = keyof typeof tmdbEndpoints.prefabs;
+
+  export type Prefabs_Obj = {
+    [K in PrefabKeys]: {
       dates: {
         maximum: string;
         minimum: string;
       };
       page: number;
-      results: Array<Type_Tmdb_Discover_Response>;
+      results: Array<Discover_Obj>;
       total_pages: number;
       total_results: number;
     };
   };
 
-  export type Type_Tmdb_Details_Response = {
+  export type Details_Obj = {
     adult: boolean;
     backdrop_path: string | null;
     belongs_to_collection: {
@@ -102,7 +115,7 @@ export namespace Type_Tmdb {
     vote_count: number;
   };
 
-  export type Type_Tmdb_Credits_Response = {
+  export type Credits_Obj = {
     adult: boolean;
     credit_id: string;
     department: string;
@@ -115,7 +128,7 @@ export namespace Type_Tmdb {
     profile_path: string | null;
   };
 
-  export type Type_Tmdb_Videos_Response = {
+  export type Videos_Obj = {
     id: string;
     iso_639_1: string;
     iso_3166_1: string;
@@ -128,25 +141,25 @@ export namespace Type_Tmdb {
     type: string;
   };
 
-  type WatchProvidersProvider = {
+  type WatchProviders_Provider = {
     logo_path?: string;
     provider_id: number;
     provider_name: string;
     display_priority?: number;
   };
-  export type Type_Tmdb_WatchProviders_Response = {
+  export type WatchProviders_Obj = {
     id: number;
     results: {
       [locale: string]: {
         link: string;
-        buy: Array<WatchProvidersProvider>;
-        rent: Array<WatchProvidersProvider>;
-        flatrate?: Array<WatchProvidersProvider>;
+        buy: Array<WatchProviders_Provider>;
+        rent: Array<WatchProviders_Provider>;
+        flatrate?: Array<WatchProviders_Provider>;
       };
     };
   };
 
-  export type Type_Tmdb_Reviews_Response = {
+  export type Reviews_Obj = {
     id: string;
     author: string;
     authorDetails: {
@@ -161,11 +174,11 @@ export namespace Type_Tmdb {
     url: string;
   };
 
-  export interface Type_Tmdb_Recommendations_Response extends Type_Tmdb_Discover_Response {
+  export interface Recommendations_Obj extends Discover_Obj {
     mediaType: 'movie';
   }
 
-  export interface Type_Tmdb_Discover_Response {
+  export interface Discover_Obj {
     adult: boolean;
     backdropPath: string | null;
     genreIds: number[];
@@ -182,15 +195,7 @@ export namespace Type_Tmdb {
     voteCount: number;
   }
 
-  export type Type_Tmdb_Response_Union =
-    | Type_Tmdb_Prefabs_Response
-    | Type_Tmdb_Details_Response
-    | Type_Tmdb_Credits_Response
-    | Type_Tmdb_Videos_Response
-    | Type_Tmdb_WatchProviders_Response
-    | Type_Tmdb_Reviews_Response
-    | Type_Tmdb_Recommendations_Response
-    | Type_Tmdb_Discover_Response;
+  export type Response_Union = Prefabs_Obj | Details_Obj | Credits_Obj | Videos_Obj | WatchProviders_Obj | Reviews_Obj | Recommendations_Obj | Discover_Obj;
 }
 
 /** Fetch util */
@@ -227,7 +232,7 @@ const processFetch = async (keyValuePair: { key: Type_TmdbEndpoint_Keys_Union; e
   const cachedData: string | null = sessionStorage.getItem(keyValuePair.key);
 
   if (cachedData) {
-    const parsedData: Type_Tmdb_Response_Union[] | undefined = JSON.parse(cachedData);
+    const parsedData: Namespace_Tmdb.Response_Union[] | undefined = JSON.parse(cachedData);
     if (parsedData !== undefined) return { [keyValuePair.key]: parsedData };
   }
 
