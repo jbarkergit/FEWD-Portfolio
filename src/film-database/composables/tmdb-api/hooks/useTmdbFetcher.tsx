@@ -51,7 +51,7 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
  */
 
 export namespace Namespace_Tmdb {
-  export type PrefabsResult_Provider = {
+  type PrefabsResult_Provider = {
     [K in keyof typeof tmdbEndpoints.prefabs]: {
       dates: {
         maximum: string;
