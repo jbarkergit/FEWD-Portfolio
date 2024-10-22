@@ -2,186 +2,196 @@ import { tmdbEndpoints, Type_TmdbEndpoint_Keys_Union } from '../data/tmdbEndPoin
 import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
 
 /** Custom Type Naming Convention Reference
- * TMDB Api Documentation does not provide call types; therefore, manual conversion is required to build respective data structures
+ * TMDB API documentation does not provide call types; therefore, manual conversion is required to build the respective data structures.
+ * Note: Use of underscores (_) is to offer clarity when utilizing type autocompletion.
  *
- * Note: Use of underscores (_) is to offer clarity when utilizing type autocompletion
+ * #1. Preface: Interface_, Type_, and Namespace_
+ * This allows for separation of concerns during importation, narrowing imports solely to types.
+ * Examples: Namespace_
  *
- * #1. Type_ Preface
- *      e.g. Type_#2_#3_#4?_#5?
+ * #2. Group Name: Identify the type origin
+ * Use location-oriented and concise names that relate to the type or grouping, aligning with native thought processes.
+ * Examples: Type_Tmdb_
  *
- * #2. Identify where the type originates
- * Note: This must be location oriented and concise
- *      e.g. Type_Tmdb_#3_#4?_#5?
+ * #3. Unique Identifier: Identify properties
+ * Assign a name that strongly implies the use case of the type's properties.
+ * Examples: Type_Tmdb_MovieList_
  *
- * #3. Assign unique identifier
- *      e.g. Type_Tmdb_Movie_#4_#5?
+ * #4. Structure Identifier: Identify data structure or use case
+ * Assign a data structure type to improve legibility and use of types.
+ * Examples: Type_Tmdb_MovieList_Obj
  *
- * #4. OPTIONAL: Define data structure if of types: Arr | Obj | Union OR identify use-case e.g. Response, Params
- *      e.g. Type_Tmdb_Movie_Union_#5?
+ * #5. (Optional) Function Use Case: Inclusions
+ * Use this to indicate when a type is being utilized as a function parameter or return type.
+ * Mandatory Notice: Use the "as" preface; omit if not required.
+ * Examples:
+ * - Type_Tmdb_MovieList_Obj_asFuncParameters
+ * - Type_Tmdb_MovieList_Obj_asFuncReturn
  *
- * #5. OPTIONAL: Determine if desired input/output is potentially OPTIONAL | UNKNOWN | UNDEFINED | NULL, else OMIT
- * Note: Apply to types which may be undefined: VOID union types without an undefined return
- * Note: "is" preface, in lowercase, mandatory
- *  Could be Optional => isOpt
- *  Could be Unknown -> isUnknown
- *  Could be Undefined -> isUndefined
- *  Could be Null -> isNullable
- *      e.g. Type_Tmdb_Movie_Map_isUndefined
+ * #6. (Optional, Chainable) Potentially Missing: Identify if data properties are optional, unknown, could be awaited, a promise, undefined, or void.
+ * Mandatory Notice: Use the "is" preface; omit if not required.
+ * Examples:
+ * - Type_Tmdb_MovieList_Obj_isUndefined
+ * - Type_Tmdb_MovieList_Obj_asFuncReturn_isVoid
+ * Chain Examples:
+ * - Type_Tmdb_MovieList_Obj_isPromise_isUndefined
+ * - Type_Tmdb_MovieList_Obj_asFuncReturn_isPromise_isUndefined
  */
 
-/** Response types */
-type Type_Tmdb_Prefabs = keyof typeof tmdbEndpoints.prefabs;
-export type Type_Tmdb_Prefabs_Response = {
-  [K in Type_Tmdb_Prefabs]: {
-    dates: {
-      maximum: string;
-      minimum: string;
+export namespace Type_Tmdb {
+  type Type_Tmdb_Prefabs = keyof typeof tmdbEndpoints.prefabs;
+  export type Type_Tmdb_Prefabs_Response = {
+    [K in Type_Tmdb_Prefabs]: {
+      dates: {
+        maximum: string;
+        minimum: string;
+      };
+      page: number;
+      results: Array<Type_Tmdb_Discover_Response>;
+      total_pages: number;
+      total_results: number;
     };
-    page: number;
-    results: Array<Type_Tmdb_Discover_Response>;
-    total_pages: number;
-    total_results: number;
   };
-};
 
-export type Type_Tmdb_Details_Response = {
-  adult: boolean;
-  backdrop_path: string | null;
-  belongs_to_collection: {
+  export type Type_Tmdb_Details_Response = {
+    adult: boolean;
     backdrop_path: string | null;
+    belongs_to_collection: {
+      backdrop_path: string | null;
+      id: number;
+      name: string;
+      poster_path: string | null;
+    } | null;
+    budget: number;
+    genres: {
+      id: number;
+      name: string;
+    }[];
+    homepage: string | null;
     id: number;
-    name: string;
+    imdb_id: string;
+    origin_country: string[];
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
     poster_path: string | null;
-  } | null;
-  budget: number;
-  genres: {
+    production_companies: {
+      id: number;
+      logo_path: string | null;
+      name: string;
+      origin_country: string;
+    }[];
+    production_countries: {
+      iso_3166_1: string;
+      name: string;
+    }[];
+    release_date: string;
+    revenue: number;
+    runtime: number;
+    spoken_languages: {
+      english_name: string;
+      iso_639_1: string;
+      name: string;
+    }[];
+    status: string;
+    tagline: string;
+    title: string;
+    video: boolean;
+    vote_average: number;
+    vote_count: number;
+  };
+
+  export type Type_Tmdb_Credits_Response = {
+    adult: boolean;
+    credit_id: string;
+    department: string;
+    gender: 1 | 2 | 0;
     id: number;
-    name: string;
-  }[];
-  homepage: string | null;
-  id: number;
-  imdb_id: string;
-  origin_country: string[];
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string | null;
-  production_companies: {
-    id: number;
-    logo_path: string | null;
-    name: string;
-    origin_country: string;
-  }[];
-  production_countries: {
-    iso_3166_1: string;
-    name: string;
-  }[];
-  release_date: string;
-  revenue: number;
-  runtime: number;
-  spoken_languages: {
-    english_name: string;
+    job: string;
+    known_for_department: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string | null;
+  };
+
+  export type Type_Tmdb_Videos_Response = {
+    id: string;
     iso_639_1: string;
+    iso_3166_1: string;
+    key: string;
     name: string;
-  }[];
-  status: string;
-  tagline: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-};
+    official: boolean;
+    published_at: string;
+    site: string;
+    size: number;
+    type: string;
+  };
 
-export type Type_Tmdb_Credits_Response = {
-  adult: boolean;
-  credit_id: string;
-  department: string;
-  gender: 1 | 2 | 0;
-  id: number;
-  job: string;
-  known_for_department: string;
-  original_name: string;
-  popularity: number;
-  profile_path: string | null;
-};
-
-export type Type_Tmdb_Videos_Response = {
-  id: string;
-  iso_639_1: string;
-  iso_3166_1: string;
-  key: string;
-  name: string;
-  official: boolean;
-  published_at: string;
-  site: string;
-  size: number;
-  type: string;
-};
-
-type WatchProvidersProvider = {
-  logo_path?: string;
-  provider_id: number;
-  provider_name: string;
-  display_priority?: number;
-};
-export type Type_Tmdb_WatchProviders_Response = {
-  id: number;
-  results: {
-    [locale: string]: {
-      link: string;
-      buy: Array<WatchProvidersProvider>;
-      rent: Array<WatchProvidersProvider>;
-      flatrate?: Array<WatchProvidersProvider>;
+  type WatchProvidersProvider = {
+    logo_path?: string;
+    provider_id: number;
+    provider_name: string;
+    display_priority?: number;
+  };
+  export type Type_Tmdb_WatchProviders_Response = {
+    id: number;
+    results: {
+      [locale: string]: {
+        link: string;
+        buy: Array<WatchProvidersProvider>;
+        rent: Array<WatchProvidersProvider>;
+        flatrate?: Array<WatchProvidersProvider>;
+      };
     };
   };
-};
 
-export type Type_Tmdb_Reviews_Response = {
-  id: string;
-  author: string;
-  authorDetails: {
-    avatarPath: string | null;
-    name: string;
-    rating: number;
-    username: string;
+  export type Type_Tmdb_Reviews_Response = {
+    id: string;
+    author: string;
+    authorDetails: {
+      avatarPath: string | null;
+      name: string;
+      rating: number;
+      username: string;
+    };
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    url: string;
   };
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  url: string;
-};
 
-export interface Type_Tmdb_Recommendations_Response extends Type_Tmdb_Discover_Response {
-  mediaType: 'movie';
+  export interface Type_Tmdb_Recommendations_Response extends Type_Tmdb_Discover_Response {
+    mediaType: 'movie';
+  }
+
+  export interface Type_Tmdb_Discover_Response {
+    adult: boolean;
+    backdropPath: string | null;
+    genreIds: number[];
+    id: number;
+    originalLanguage: string;
+    originalTitle: string;
+    overview: string;
+    popularity: number;
+    posterPath: string | null;
+    releaseDate: string;
+    title: string;
+    video: boolean;
+    voteAverage: number;
+    voteCount: number;
+  }
+
+  export type Type_Tmdb_Response_Union =
+    | Type_Tmdb_Prefabs_Response
+    | Type_Tmdb_Details_Response
+    | Type_Tmdb_Credits_Response
+    | Type_Tmdb_Videos_Response
+    | Type_Tmdb_WatchProviders_Response
+    | Type_Tmdb_Reviews_Response
+    | Type_Tmdb_Recommendations_Response
+    | Type_Tmdb_Discover_Response;
 }
-
-export interface Type_Tmdb_Discover_Response {
-  adult: boolean;
-  backdropPath: string | null;
-  genreIds: number[];
-  id: number;
-  originalLanguage: string;
-  originalTitle: string;
-  overview: string;
-  popularity: number;
-  posterPath: string | null;
-  releaseDate: string;
-  title: string;
-  video: boolean;
-  voteAverage: number;
-  voteCount: number;
-}
-
-export type Type_Tmdb_Response_Union =
-  | Type_Tmdb_Prefabs_Response
-  | Type_Tmdb_Details_Response
-  | Type_Tmdb_Credits_Response
-  | Type_Tmdb_Videos_Response
-  | Type_Tmdb_WatchProviders_Response
-  | Type_Tmdb_Reviews_Response
-  | Type_Tmdb_Recommendations_Response
-  | Type_Tmdb_Discover_Response;
 
 /** Fetch util */
 const fetchTmdbData = async (keyValuePair: { key: Type_TmdbEndpoint_Keys_Union; endpoint: string }): Promise<unknown | undefined> => {
