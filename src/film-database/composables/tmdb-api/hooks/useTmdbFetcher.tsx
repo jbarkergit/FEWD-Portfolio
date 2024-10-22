@@ -31,7 +31,6 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
 
 /** Response types */
 type Type_Tmdb_Prefabs = keyof typeof tmdbEndpoints.prefabs;
-
 export type Type_Tmdb_Prefabs_Response = {
   [K in Type_Tmdb_Prefabs]: {
     dates: {
@@ -39,22 +38,7 @@ export type Type_Tmdb_Prefabs_Response = {
       minimum: string;
     };
     page: number;
-    results: Array<{
-      adult: boolean;
-      backdrop_path: string;
-      genre_ids: number[];
-      id: number;
-      original_language: string;
-      original_title: string;
-      overview: string;
-      popularity: number;
-      poster_path: string;
-      release_date: string;
-      title: string;
-      video: boolean;
-      vote_average: number;
-      vote_count: number;
-    }>;
+    results: Array<Type_Tmdb_Discover_Response>;
     total_pages: number;
     total_results: number;
   };
@@ -168,25 +152,11 @@ export type Type_Tmdb_Reviews_Response = {
   url: string;
 };
 
-export type Type_Tmdb_Recommendations_Response = {
-  adult: boolean;
-  backdropPath: string | null;
-  genreIds: number[];
-  id: number;
+export interface Type_Tmdb_Recommendations_Response extends Type_Tmdb_Discover_Response {
   mediaType: 'movie';
-  originalLanguage: string;
-  originalTitle: string;
-  overview: string;
-  popularity: number;
-  posterPath: string | null;
-  releaseDate: string;
-  title: string;
-  video: boolean;
-  voteAverage: number;
-  voteCount: number;
-};
+}
 
-export type Type_Tmdb_Discover_Response = {
+export interface Type_Tmdb_Discover_Response {
   adult: boolean;
   backdropPath: string | null;
   genreIds: number[];
@@ -201,7 +171,7 @@ export type Type_Tmdb_Discover_Response = {
   video: boolean;
   voteAverage: number;
   voteCount: number;
-};
+}
 
 export type Type_Tmdb_Response_Union =
   | Type_Tmdb_Prefabs_Response
