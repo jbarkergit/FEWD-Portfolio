@@ -51,9 +51,8 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
  */
 
 export namespace Namespace_Tmdb {
-  type PrefabKeys_Provider = keyof typeof tmdbEndpoints.prefabs;
-  export type Prefabs_Obj = {
-    [K in PrefabKeys_Provider]: {
+  export type PrefabsResult_Provider = {
+    [K in keyof typeof tmdbEndpoints.prefabs]: {
       dates: {
         maximum: string;
         minimum: string;
@@ -64,8 +63,12 @@ export namespace Namespace_Tmdb {
       total_results: number;
     };
   };
+  export type Prefabs_Obj = {
+    type_discriminate: 'Prefabs_Obj';
+  } & PrefabsResult_Provider;
 
   export type Details_Obj = {
+    type_discriminate: 'Details_Obj';
     adult: boolean;
     backdrop_path: string | null;
     belongs_to_collection: {
@@ -115,6 +118,7 @@ export namespace Namespace_Tmdb {
   };
 
   export type Credits_Obj = {
+    type_discriminate: 'Credits_Obj';
     adult: boolean;
     credit_id: string;
     department: string;
@@ -128,6 +132,7 @@ export namespace Namespace_Tmdb {
   };
 
   export type Videos_Obj = {
+    type_discriminate: 'Videos_Obj';
     id: string;
     iso_639_1: string;
     iso_3166_1: string;
@@ -147,6 +152,7 @@ export namespace Namespace_Tmdb {
     display_priority?: number;
   };
   export type WatchProviders_Obj = {
+    type_discriminate: 'WatchProviders_Obj';
     id: number;
     results: {
       [locale: string]: {
@@ -159,6 +165,7 @@ export namespace Namespace_Tmdb {
   };
 
   export type Reviews_Obj = {
+    type_discriminate: 'Reviews_Obj';
     id: string;
     author: string;
     authorDetails: {
@@ -173,11 +180,13 @@ export namespace Namespace_Tmdb {
     url: string;
   };
 
-  export interface Recommendations_Obj extends Discover_Obj {
+  export interface Recommendations_Obj extends Omit<Discover_Obj, 'type_discriminate'> {
+    type_discriminate: 'Recommendations_Obj';
     mediaType: 'movie';
   }
 
   export interface Discover_Obj {
+    type_discriminate: 'Discover_Obj';
     adult: boolean;
     backdropPath: string | null;
     genreIds: number[];
