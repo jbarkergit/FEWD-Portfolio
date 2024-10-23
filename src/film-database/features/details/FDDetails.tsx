@@ -1,17 +1,16 @@
 // Deps
 import { Link } from 'react-router-dom';
 // Composable Hook Types
-import { Type_Tmdb_Api_Union, Type_Tmdb_ApiMovieList_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
+import { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Assets
 import { TheMovieDatabaseLogo } from '../../assets/google-material-symbols/tmdbSymbols';
 
 type Type_PropDrill = {
-  heroData: Type_Tmdb_Api_Union | null;
+  heroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
 };
 
 const FDDetails = ({ heroData }: Type_PropDrill) => {
   if (!heroData) return;
-  const props = heroData as Type_Tmdb_ApiMovieList_Obj;
 
   return (
     <section className='fdDetails'>
@@ -22,14 +21,14 @@ const FDDetails = ({ heroData }: Type_PropDrill) => {
       </div>
       <article className='fdDetails__article'>
         <header className='fdDetails__article__header'>
-          <h2>{props?.title}</h2>
+          <h2>{heroData.title}</h2>
         </header>
         <div className='fdDetails__article__info'>
-          <p>{props?.overview}</p>
+          <p>{heroData.overview}</p>
         </div>
       </article>
       <div className='fdDetails__moreInfo'>
-        <Link to={`/film-database/${props?.id}`} aria-label={`More details about ${props?.title}`}>
+        <Link to={`/film-database/${heroData.id}`} aria-label={`More details about ${heroData.title}`}>
           More details
         </Link>
       </div>
