@@ -4,15 +4,19 @@ import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../.
 import { MaterialSymbolsPlayArrow } from '../../../assets/google-material-symbols/iFrameSymbols';
 import { v4 as uuidv4 } from 'uuid';
 
-type Type_FilmDatabase_Props = {
+const FDCarousel = ({
+  mapIndex,
+  dataKey,
+  mapValue,
+  maxVisibleCarouselNodes,
+  setHeroData,
+}: {
   mapIndex: number;
   dataKey: string;
-  mapValue: Namespace_Tmdb.Response_Union[][];
+  mapValue: Namespace_Tmdb.BaseMedia_Provider[][];
   maxVisibleCarouselNodes: number;
-  setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.Response_Union | undefined>>;
-};
-
-const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }: Type_FilmDatabase_Props) => {
+  setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
+}) => {
   /** Track carousel navigation index */
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
@@ -21,8 +25,8 @@ const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setH
   };
 
   /** Render paginated sets on navigation */
-  const [articles, setArticles] = useState<Namespace_Tmdb.Response_Union[][]>([mapValue[0]]);
-  const articlesFlatMap: Namespace_Tmdb.Response_Union[] = articles.flatMap((innerArray) => innerArray);
+  const [articles, setArticles] = useState<Namespace_Tmdb.BaseMedia_Provider[][]>([mapValue[0]]);
+  const articlesFlatMap: Namespace_Tmdb.BaseMedia_Provider[] = articles.flatMap((innerArray) => innerArray);
 
   const renderPaginatedDataSet = (): void => {
     const isIndexInArticles: boolean = articles.some((_, index) => index === carouselIndex);
@@ -92,11 +96,10 @@ const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setH
       <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' ref={carouselRef}>
           {articles.flat().map((article) => {
-            const props = article as unknown as Namespace_Tmdb.Details_Obj;
             return (
               <li className='fdMedia__carousel__wrapper__ul__li' key={uuidv4()} onClick={() => setHeroData(article)}>
                 <picture className='fdMedia__carousel__wrapper__ul__li__article'>
-                  <img src={`https://image.tmdb.org/t/p/w780/${props?.poster_path}`} alt={`${props?.title}`} fetchPriority={mapIndex === 0 ? 'high' : 'low'} />
+                  <img src={`https://image.tmdb.org/t/p/w780/${article?.poster_path}`} alt={`${article?.title}`} fetchPriority={mapIndex === 0 ? 'high' : 'low'} />
                 </picture>
                 <div className='fdMedia__carousel__wrapper__ul__li__overlay'>
                   <button className='fdMedia__carousel__wrapper__ul__li__overlay--play' aria-label='Play trailer'>
