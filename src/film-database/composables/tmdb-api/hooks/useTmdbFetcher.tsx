@@ -338,7 +338,6 @@ const buildEndpoint = (params: Type_Tmdb_useTmdbFetcher_asFuncParams): Type_Tmdb
       break;
     case !!params.args?.search:
       endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`).replace('{search_term}', params.args.search);
-      console.log(endpoint);
       break;
     default:
       break;
