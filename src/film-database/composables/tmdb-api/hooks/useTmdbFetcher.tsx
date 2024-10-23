@@ -209,7 +209,7 @@ export namespace Namespace_Tmdb {
   }
 
   export interface Query_Obj {
-    genreQuery: {
+    query: {
       page: number;
       results: Discover_Obj[];
       total_pages: number;
