@@ -208,17 +208,13 @@ export namespace Namespace_Tmdb {
     };
   }
 
-  export interface Query_Obj {
-    query: {
+  export interface Search_Obj {
+    search: {
       page: number;
       results: Discover_Obj[];
       total_pages: number;
       total_results: number;
     };
-  }
-
-  export interface Search_Obj {
-    search: {};
   }
 
   export type Response_Union =
@@ -230,7 +226,7 @@ export namespace Namespace_Tmdb {
     | Reviews_Obj
     | Recommendations_Obj
     | Discover_Obj
-    | Query_Obj;
+    | Search_Obj;
 }
 
 /** Fetch util */
