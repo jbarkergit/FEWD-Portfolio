@@ -51,7 +51,7 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
  */
 
 export namespace Namespace_Tmdb {
-  type PrefabsResult_Provider = {
+  type Prefabs_Obj = {
     [K in keyof typeof tmdbEndpoints.prefabs]: {
       dates: {
         maximum: string;
@@ -63,86 +63,86 @@ export namespace Namespace_Tmdb {
       total_results: number;
     };
   };
-  export type Prefabs_Obj = {
-    type_discriminate: 'Prefabs_Obj';
-  } & PrefabsResult_Provider;
 
   export type Details_Obj = {
-    type_discriminate: 'Details_Obj';
-    adult: boolean;
-    backdrop_path: string | null;
-    belongs_to_collection: {
+    details: {
+      adult: boolean;
       backdrop_path: string | null;
+      belongs_to_collection: {
+        backdrop_path: string | null;
+        id: number;
+        name: string;
+        poster_path: string | null;
+      } | null;
+      budget: number;
+      genres: {
+        id: number;
+        name: string;
+      }[];
+      homepage: string | null;
       id: number;
-      name: string;
+      imdb_id: string;
+      origin_country: string[];
+      original_language: string;
+      original_title: string;
+      overview: string;
+      popularity: number;
       poster_path: string | null;
-    } | null;
-    budget: number;
-    genres: {
-      id: number;
-      name: string;
-    }[];
-    homepage: string | null;
-    id: number;
-    imdb_id: string;
-    origin_country: string[];
-    original_language: string;
-    original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string | null;
-    production_companies: {
-      id: number;
-      logo_path: string | null;
-      name: string;
-      origin_country: string;
-    }[];
-    production_countries: {
-      iso_3166_1: string;
-      name: string;
-    }[];
-    release_date: string;
-    revenue: number;
-    runtime: number;
-    spoken_languages: {
-      english_name: string;
-      iso_639_1: string;
-      name: string;
-    }[];
-    status: string;
-    tagline: string;
-    title: string;
-    video: boolean;
-    vote_average: number;
-    vote_count: number;
+      production_companies: {
+        id: number;
+        logo_path: string | null;
+        name: string;
+        origin_country: string;
+      }[];
+      production_countries: {
+        iso_3166_1: string;
+        name: string;
+      }[];
+      release_date: string;
+      revenue: number;
+      runtime: number;
+      spoken_languages: {
+        english_name: string;
+        iso_639_1: string;
+        name: string;
+      }[];
+      status: string;
+      tagline: string;
+      title: string;
+      video: boolean;
+      vote_average: number;
+      vote_count: number;
+    };
   };
 
   export type Credits_Obj = {
-    type_discriminate: 'Credits_Obj';
-    adult: boolean;
-    credit_id: string;
-    department: string;
-    gender: 1 | 2 | 0;
-    id: number;
-    job: string;
-    known_for_department: string;
-    original_name: string;
-    popularity: number;
-    profile_path: string | null;
+    credits: {
+      adult: boolean;
+      credit_id: string;
+      department: string;
+      gender: 1 | 2 | 0;
+      id: number;
+      job: string;
+      known_for_department: string;
+      original_name: string;
+      popularity: number;
+      profile_path: string | null;
+    };
   };
 
   export type Videos_Obj = {
-    type_discriminate: 'Videos_Obj';
-    id: string;
-    iso_639_1: string;
-    iso_3166_1: string;
-    key: string;
-    name: string;
-    official: boolean;
-    published_at: string;
-    site: string;
-    size: number;
-    type: string;
+    videos: {
+      id: string;
+      iso_639_1: string;
+      iso_3166_1: string;
+      key: string;
+      name: string;
+      official: boolean;
+      published_at: string;
+      site: string;
+      size: number;
+      type: string;
+    };
   };
 
   type WatchProviders_Provider = {
@@ -152,58 +152,81 @@ export namespace Namespace_Tmdb {
     display_priority?: number;
   };
   export type WatchProviders_Obj = {
-    type_discriminate: 'WatchProviders_Obj';
-    id: number;
-    results: {
-      [locale: string]: {
-        link: string;
-        buy: Array<WatchProviders_Provider>;
-        rent: Array<WatchProviders_Provider>;
-        flatrate?: Array<WatchProviders_Provider>;
+    watchProviders: {
+      id: number;
+      results: {
+        [locale: string]: {
+          link: string;
+          buy: WatchProviders_Provider[];
+          rent: WatchProviders_Provider[];
+          flatrate?: WatchProviders_Provider[];
+        };
       };
     };
   };
 
   export type Reviews_Obj = {
-    type_discriminate: 'Reviews_Obj';
-    id: string;
-    author: string;
-    authorDetails: {
-      avatarPath: string | null;
-      name: string;
-      rating: number;
-      username: string;
+    reviews: {
+      id: string;
+      author: string;
+      authorDetails: {
+        avatarPath: string | null;
+        name: string;
+        rating: number;
+        username: string;
+      };
+      content: string;
+      createdAt: string;
+      updatedAt: string;
+      url: string;
     };
-    content: string;
-    createdAt: string;
-    updatedAt: string;
-    url: string;
   };
 
-  export interface Recommendations_Obj extends Omit<Discover_Obj, 'type_discriminate'> {
-    type_discriminate: 'Recommendations_Obj';
+  interface Recommendations_Provider extends Discover_Obj {
     mediaType: 'movie';
+  }
+  export interface Recommendations_Obj {
+    recommendations: Recommendations_Provider;
   }
 
   export interface Discover_Obj {
-    type_discriminate: 'Discover_Obj';
-    adult: boolean;
-    backdropPath: string | null;
-    genreIds: number[];
-    id: number;
-    originalLanguage: string;
-    originalTitle: string;
-    overview: string;
-    popularity: number;
-    posterPath: string | null;
-    releaseDate: string;
-    title: string;
-    video: boolean;
-    voteAverage: number;
-    voteCount: number;
+    discover: {
+      adult: boolean;
+      backdropPath: string | null;
+      genreIds: number[];
+      id: number;
+      originalLanguage: string;
+      originalTitle: string;
+      overview: string;
+      popularity: number;
+      posterPath: string | null;
+      releaseDate: string;
+      title: string;
+      video: boolean;
+      voteAverage: number;
+      voteCount: number;
+    };
   }
 
-  export type Response_Union = Prefabs_Obj | Details_Obj | Credits_Obj | Videos_Obj | WatchProviders_Obj | Reviews_Obj | Recommendations_Obj | Discover_Obj;
+  export interface Query_Obj {
+    genreQuerie: {
+      page: number;
+      results: Discover_Obj[];
+      total_pages: number;
+      total_results: number;
+    };
+  }
+
+  export type Response_Union =
+    | Prefabs_Obj
+    | Details_Obj
+    | Credits_Obj
+    | Videos_Obj
+    | WatchProviders_Obj
+    | Reviews_Obj
+    | Recommendations_Obj
+    | Discover_Obj
+    | Query_Obj;
 }
 
 /** Fetch util */
