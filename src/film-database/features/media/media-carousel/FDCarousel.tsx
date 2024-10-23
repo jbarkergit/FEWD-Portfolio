@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../../assets/google-material-symbols/carouselSymbols';
 import { MaterialSymbolsPlayArrow } from '../../../assets/google-material-symbols/iFrameSymbols';
+import { v4 as uuidv4 } from 'uuid';
 
 type Type_FilmDatabase_Props = {
   mapIndex: number;
@@ -90,10 +91,10 @@ const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setH
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' ref={carouselRef}>
-          {articles.flat().map((article, index) => {
+          {articles.flat().map((article) => {
             const props = article as unknown as Namespace_Tmdb.Details_Obj;
             return (
-              <li className='fdMedia__carousel__wrapper__ul__li' key={`carousel-${index}-item-${props.id}`} onClick={() => setHeroData(article)}>
+              <li className='fdMedia__carousel__wrapper__ul__li' key={uuidv4()} onClick={() => setHeroData(article)}>
                 <picture className='fdMedia__carousel__wrapper__ul__li__article'>
                   <img src={`https://image.tmdb.org/t/p/w780/${props?.poster_path}`} alt={`${props?.title}`} fetchPriority={mapIndex === 0 ? 'high' : 'low'} />
                 </picture>
