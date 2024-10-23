@@ -9,14 +9,16 @@ import { Namespace_TmdbEndpointsKeys } from '../../composables/tmdb-api/data/tmd
 import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 import FDCarousel from './media-carousel/FDCarousel';
 
-type Type_PropDrill = {
+const FDMedia = ({
+  route,
+  isMenuOpen,
+  setHeroData,
+}: {
   route: Type_MovieGenre_Keys | 'home';
   isMenuOpen: boolean;
-  setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.Response_Union | undefined>>;
-};
-
-const FDMedia = ({ route, isMenuOpen, setHeroData }: Type_PropDrill) => {
-  const [paginatedData, setPaginatedData] = useState<Map<string, Namespace_Tmdb.Response_Union[][]> | undefined>(undefined);
+  setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
+}) => {
+  const [paginatedData, setPaginatedData] = useState<Map<string, Namespace_Tmdb.BaseMedia_Provider[][]> | undefined>(undefined);
 
   /** Fetch data when user requests a route, pass to processDataPagination() */
   type Prefabs_Obj_isUndefined = Namespace_Tmdb.Prefabs_Obj | undefined;
@@ -26,7 +28,7 @@ const FDMedia = ({ route, isMenuOpen, setHeroData }: Type_PropDrill) => {
       | Namespace_Tmdb.Prefabs_Obj[]
       | Prefabs_Obj_isUndefined[];
 
-    const routeData = (await useTmdbFetcher({ key: 'discover', args: { genre: 'comedy' as Type_MovieGenre_Keys } })) as Namespace_Tmdb.Discover_Obj | undefined;
+    const routeData = (await useTmdbFetcher({ key: 'discover', args: { discover: 'comedy' as Type_MovieGenre_Keys } })) as Namespace_Tmdb.Discover_Obj | undefined;
 
     if (route === 'home') {
       const filteredHomeData = homeData.filter((obj) => obj !== undefined) as Namespace_Tmdb.Prefabs_Obj[];
@@ -45,16 +47,16 @@ const FDMedia = ({ route, isMenuOpen, setHeroData }: Type_PropDrill) => {
     if (!rawData) return;
 
     // Init mutatable map in outter scope to reduce state updates when paginating data
-    let dataMap: Map<string, Namespace_Tmdb.Response_Union[][]> = new Map([]);
+    let dataMap: Map<string, Namespace_Tmdb.BaseMedia_Provider[][]> = new Map([]);
 
     // Paginate data
-    const setData = (targetKey: Namespace_TmdbEndpointsKeys.Prefabs_Keys, data: Namespace_Tmdb.Discover_Obj[]): void => {
+    const setData = (targetKey: Namespace_TmdbEndpointsKeys.Prefabs_Keys, data: Namespace_Tmdb.BaseMedia_Provider[]): void => {
       // Hard-coded value, requires attention asap for removal
       const maxVisibleCarouselNodes: number = 7;
       // Pagination iteration dependency calculation
       const maxIteratorIndex: number = Math.ceil((data.length - 1) / maxVisibleCarouselNodes);
       // Get map by key
-      const targetMapArr: Namespace_Tmdb.Response_Union[][] | undefined = dataMap.get(targetKey);
+      const targetMapArr: Namespace_Tmdb.BaseMedia_Provider[][] | undefined = dataMap.get(targetKey);
       // If key doesn't exist in map, create new entry
       if (!targetMapArr) dataMap.set(targetKey, []);
 
@@ -62,7 +64,7 @@ const FDMedia = ({ route, isMenuOpen, setHeroData }: Type_PropDrill) => {
       for (let iteratorCounter = 0; iteratorCounter < maxIteratorIndex; iteratorCounter++) {
         const startingSliceIndex: number = maxVisibleCarouselNodes * iteratorCounter + iteratorCounter;
         const endingSliceIndex: number = maxVisibleCarouselNodes * (iteratorCounter + 1) + 1;
-        const paginatedData: Namespace_Tmdb.Response_Union[] = data.slice(startingSliceIndex, endingSliceIndex);
+        const paginatedData: Namespace_Tmdb.BaseMedia_Provider[] = data.slice(startingSliceIndex, endingSliceIndex);
         dataMap.get(targetKey)?.push(paginatedData); // Push data into dataMap
       }
     };
@@ -71,19 +73,21 @@ const FDMedia = ({ route, isMenuOpen, setHeroData }: Type_PropDrill) => {
     if (Array.isArray(rawData)) {
       (rawData as Namespace_Tmdb.Prefabs_Obj[]).forEach((item) => {
         const itemKey = Object.keys(item)[0] as Namespace_TmdbEndpointsKeys.Prefabs_Keys;
-        const results: Namespace_Tmdb.Discover_Obj[] = item[itemKey].results;
+        const results: Namespace_Tmdb.BaseMedia_Provider[] = item[itemKey].results;
         setData(itemKey, results);
       });
     } else {
       const itemKey = Object.keys(rawData)[0] as Namespace_TmdbEndpointsKeys.Prefabs_Keys;
-      setData(itemKey, [rawData]);
+      const results = rawData.discover.results;
+      setData(itemKey, results);
     }
 
     // Set state
     setPaginatedData(dataMap);
 
     // Create hero data
-    setHeroData(dataMap.entries().next().value?.[1][0][0]);
+    const firstMapValue: Namespace_Tmdb.BaseMedia_Provider | undefined = dataMap.entries().next().value?.[1][0][0];
+    if (firstMapValue) setHeroData(firstMapValue);
   };
 
   /** Carousel DeltaY scroll logic */
