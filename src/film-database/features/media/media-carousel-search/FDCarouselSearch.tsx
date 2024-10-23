@@ -7,7 +7,7 @@ import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/ho
 import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../assets/google-material-symbols/iFrameSymbols';
 import { MaterialSymbolsSearch } from '../../../assets/google-material-symbols/menuSymbols';
 
-const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.Response_Union | null>> }) => {
+const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>> }) => {
   /** User is searching */
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isTyping, setIsTyping] = useState<boolean>(false);
@@ -17,14 +17,17 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
   const labelRef = useRef<HTMLLabelElement>(null);
 
   /** Invoke fetch with timeout */
-  const [searchResults, setSearchResults] = useState<Namespace_Tmdb.Query_Obj['genreQuerie']['results'] | undefined>(undefined);
+  const [searchResults, setSearchResults] = useState<Namespace_Tmdb.Search_Obj['search']['results'] | undefined>(undefined);
+
+  useEffect(() => {
+    console.log(searchResults);
+  }, [searchResults]);
 
   const invokeFetch = async (): Promise<void> => {
     if (searchTerm.length > 0) {
       setIsTyping(false);
-      const data = (await useTmdbFetcher({ key: 'genreQuerie', args: { querie: searchTerm } })) as unknown as Namespace_Tmdb.Query_Obj;
-      console.log(data.genreQuerie.results);
-      if (data) setSearchResults(data.genreQuerie.results);
+      const data = (await useTmdbFetcher({ key: 'search', args: { search: searchTerm } })) as unknown as Namespace_Tmdb.Search_Obj;
+      if (data) setSearchResults(data.search.results);
     }
   };
 
@@ -81,19 +84,20 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
       <section className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
           {searchResults && !isTyping
-            ? searchResults?.splice(0, 7).map((props) => {
-                return (
-                  <li className='fdSearchBar__results__ul__li' key={uuidv4()}>
-                    <picture className='fdSearchBar__results__ul__li__article'>
-                      <img src={`https://image.tmdb.org/t/p/w780${props?.posterPath}`} alt={`${props.title}`} />
-                    </picture>
-                    <div className='fdSearchBar__results__ul__li__overlay' onClick={() => setHeroData(props)}>
-                      <button className='fdSearchBar__results__ul__li__overlay--play' aria-label='Play trailer'>
-                        <MaterialSymbolsPlayArrow />
-                      </button>
-                    </div>
-                  </li>
-                );
+            ? searchResults.splice(0, 7).map((props) => {
+                if (props.poster_path)
+                  return (
+                    <li className='fdSearchBar__results__ul__li' key={uuidv4()}>
+                      <picture className='fdSearchBar__results__ul__li__article'>
+                        <img src={`https://image.tmdb.org/t/p/w780${props.poster_path}`} alt={`${props.title}`} />
+                      </picture>
+                      <div className='fdSearchBar__results__ul__li__overlay' onClick={() => setHeroData(props)}>
+                        <button className='fdSearchBar__results__ul__li__overlay--play' aria-label='Play trailer'>
+                          <MaterialSymbolsPlayArrow />
+                        </button>
+                      </div>
+                    </li>
+                  );
               })
             : null}
         </ul>
