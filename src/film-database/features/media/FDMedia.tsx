@@ -124,7 +124,7 @@ const FDMedia = ({ route, isMenuOpen, setHeroData }: Type_PropDrill) => {
         Array.from(paginatedData.entries()).map(([key, value], index) => (
           <FDCarousel mapIndex={index} key={key} dataKey={key} mapValue={value} maxVisibleCarouselNodes={7} setHeroData={setHeroData} />
         ))}
-      {/* <FDCarouselSearch setHeroData={setHeroData} /> */}
+      <FDCarouselSearch setHeroData={setHeroData} />
     </main>
   );
 };
