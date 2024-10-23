@@ -2,13 +2,13 @@
 import { Dispatch, RefObject, SetStateAction, useCallback, useRef } from 'react';
 // Composables
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbGenres';
+import { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Assets
 import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp, MaterialSymbolsChatInfoSharp } from '../../assets/google-material-symbols/menuSymbols';
 // Features
 import FDMenuToolbar from './FDMenuToolbar';
 import FDMenuGenres from './FDMenuGenres';
-import FDPropertyModal from './FDMenuProperty';
-import { Type_Tmdb_Response_Union } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
+import FDMenuProperty from './FDMenuProperty';
 
 const FDMenu = ({
   isMenuOpen,
@@ -19,7 +19,7 @@ const FDMenu = ({
   isMenuOpen: boolean;
   setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
   setRoute: Dispatch<SetStateAction<Type_MovieGenre_Keys | 'home'>>;
-  heroData: Type_Tmdb_Response_Union | undefined;
+  heroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
 }) => {
   const menuGenresRef = useRef<HTMLElement>(null),
     menuPropertyRef = useRef<HTMLElement>(null);
@@ -49,7 +49,7 @@ const FDMenu = ({
       </section>
       <div className='fdMenu__menu'>
         <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
-        <FDPropertyModal heroData={heroData} ref={menuPropertyRef} />
+        <FDMenuProperty heroData={heroData} ref={menuPropertyRef} />
       </div>
     </section>
   );
