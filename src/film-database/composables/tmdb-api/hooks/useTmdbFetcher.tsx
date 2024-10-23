@@ -182,14 +182,28 @@ export namespace Namespace_Tmdb {
     };
   };
 
-  interface Recommendations_Provider extends Discover_Obj {
+  type Recommendations_Provider = {
+    adult: boolean;
+    backdropPath: string | null;
+    genreIds: number[];
+    id: number;
+    originalLanguage: string;
+    originalTitle: string;
+    overview: string;
+    popularity: number;
+    posterPath: string | null;
+    releaseDate: string;
+    title: string;
+    video: boolean;
+    voteAverage: number;
+    voteCount: number;
     mediaType: 'movie';
-  }
-  export interface Recommendations_Obj {
+  };
+  export type Recommendations_Obj = {
     recommendations: Recommendations_Provider;
-  }
+  };
 
-  export interface Discover_Obj {
+  export type Discover_Obj = {
     discover: {
       adult: boolean;
       backdropPath: string | null;
@@ -206,16 +220,31 @@ export namespace Namespace_Tmdb {
       voteAverage: number;
       voteCount: number;
     };
-  }
+  };
 
-  export interface Search_Obj {
+  export type Search_Obj = {
     search: {
       page: number;
-      results: Discover_Obj[];
+      results: {
+        adult: boolean;
+        backdropPath: string | null;
+        genreIds: number[];
+        id: number;
+        originalLanguage: string;
+        originalTitle: string;
+        overview: string;
+        popularity: number;
+        posterPath: string | null;
+        releaseDate: string;
+        title: string;
+        video: boolean;
+        voteAverage: number;
+        voteCount: number;
+      }[];
       total_pages: number;
       total_results: number;
     };
-  }
+  };
 
   export type Response_Union =
     | Prefabs_Obj
