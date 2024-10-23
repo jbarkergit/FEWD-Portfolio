@@ -1,14 +1,91 @@
-import { Dispatch, SetStateAction, useEffect, useMemo, useRef } from 'react';
-import { Type_Tmdb_Api_Union } from '../../composables/tmdb-api/types/TmdbDataTypes';
+// Deps
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+// Composables
+import { Namespace_Tmdb, useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
+import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbGenres';
+// Data
+import { Namespace_TmdbEndpointsKeys } from '../../composables/tmdb-api/data/tmdbEndPoints';
+// Features
 import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
+import FDCarousel from './media-carousel/FDCarousel';
 
 type Type_PropDrill = {
-  carouselComponents: JSX.Element[];
+  route: Type_MovieGenre_Keys | 'home';
   isMenuOpen: boolean;
-  setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>>;
+  setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.Response_Union | undefined>>;
 };
 
-const FDMedia = ({ carouselComponents, isMenuOpen, setHeroData }: Type_PropDrill) => {
+const FDMedia = ({ route, isMenuOpen, setHeroData }: Type_PropDrill) => {
+  const [paginatedData, setPaginatedData] = useState<Map<string, Namespace_Tmdb.Response_Union[][]> | undefined>(undefined);
+
+  /** Fetch data when user requests a route, pass to processDataPagination() */
+  type Prefabs_Obj_isUndefined = Namespace_Tmdb.Prefabs_Obj | undefined;
+
+  const fetchDataByRoute = async (): Promise<void> => {
+    const homeData = (await useTmdbFetcher([{ key: 'now_playing' }, { key: 'upcoming' }, { key: 'trending_today' }, { key: 'trending_this_week' }])) as
+      | Namespace_Tmdb.Prefabs_Obj[]
+      | Prefabs_Obj_isUndefined[];
+
+    const routeData = (await useTmdbFetcher({ key: 'discover', args: { genre: 'comedy' as Type_MovieGenre_Keys } })) as Namespace_Tmdb.Discover_Obj | undefined;
+
+    if (route === 'home') {
+      const filteredHomeData = homeData.filter((obj) => obj !== undefined) as Namespace_Tmdb.Prefabs_Obj[];
+      processDataPagination(filteredHomeData);
+    } else {
+      if (routeData) processDataPagination(routeData);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataByRoute();
+  }, [route]);
+
+  /** Pagination && carousel, hero data creation */
+  const processDataPagination = (rawData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj | undefined) => {
+    if (!rawData) return;
+
+    // Init mutatable map in outter scope to reduce state updates when paginating data
+    let dataMap: Map<string, Namespace_Tmdb.Response_Union[][]> = new Map([]);
+
+    // Paginate data
+    const setData = (targetKey: Namespace_TmdbEndpointsKeys.Prefabs_Keys, data: Namespace_Tmdb.Discover_Obj[]): void => {
+      // Hard-coded value, requires attention asap for removal
+      const maxVisibleCarouselNodes: number = 7;
+      // Pagination iteration dependency calculation
+      const maxIteratorIndex: number = Math.ceil((data.length - 1) / maxVisibleCarouselNodes);
+      // Get map by key
+      const targetMapArr: Namespace_Tmdb.Response_Union[][] | undefined = dataMap.get(targetKey);
+      // If key doesn't exist in map, create new entry
+      if (!targetMapArr) dataMap.set(targetKey, []);
+
+      // Paginate data
+      for (let iteratorCounter = 0; iteratorCounter < maxIteratorIndex; iteratorCounter++) {
+        const startingSliceIndex: number = maxVisibleCarouselNodes * iteratorCounter + iteratorCounter;
+        const endingSliceIndex: number = maxVisibleCarouselNodes * (iteratorCounter + 1) + 1;
+        const paginatedData: Namespace_Tmdb.Response_Union[] = data.slice(startingSliceIndex, endingSliceIndex);
+        dataMap.get(targetKey)?.push(paginatedData); // Push data into dataMap
+      }
+    };
+
+    // Prep data for pagination
+    if (Array.isArray(rawData)) {
+      (rawData as Namespace_Tmdb.Prefabs_Obj[]).forEach((item) => {
+        const itemKey = Object.keys(item)[0] as Namespace_TmdbEndpointsKeys.Prefabs_Keys;
+        const results: Namespace_Tmdb.Discover_Obj[] = item[itemKey].results;
+        setData(itemKey, results);
+      });
+    } else {
+      const itemKey = Object.keys(rawData)[0] as Namespace_TmdbEndpointsKeys.Prefabs_Keys;
+      setData(itemKey, [rawData]);
+    }
+
+    // Set state
+    setPaginatedData(dataMap);
+
+    // Create hero data
+    setHeroData(dataMap.entries().next().value?.[1][0][0]);
+  };
+
   /** Carousel DeltaY scroll logic */
   const fdMediaRef = useRef<HTMLElement>(null);
 
@@ -43,8 +120,12 @@ const FDMedia = ({ carouselComponents, isMenuOpen, setHeroData }: Type_PropDrill
   /** Component */
   return (
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
-      {...carouselComponents}
-      <FDCarouselSearch setHeroData={setHeroData} />
+      {paginatedData
+        ?.entries()
+        .map(([key, value], index) => (
+          <FDCarousel mapIndex={index} key={key} dataKey={key} mapValue={value} maxVisibleCarouselNodes={7} setHeroData={setHeroData} />
+        ))}
+      {/* <FDCarouselSearch setHeroData={setHeroData} /> */}
     </main>
   );
 };
