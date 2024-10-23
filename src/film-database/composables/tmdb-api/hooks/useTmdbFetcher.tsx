@@ -49,59 +49,32 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
  * Chain Examples:
  * - MovieList_Obj_asFuncReturn_isPromise_isUndefined
  */
-type Video = {
-  id: string;
-  iso_639_1: string;
-  iso_3166_1: string;
-  key: string;
-  name: string;
-  official: boolean;
-  published_at: string;
-  site: string;
-  size: number;
-  type: string;
-};
-
-type BaseMedia = {
-  adult: boolean;
-  backdrop_path: string | null;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string | null;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-};
-
-type Provider = {
-  display_priority: number;
-  logo_path: string;
-  provider_id: number;
-  provider_name: string;
-};
-
-type WatchOptions = {
-  flatrate?: Provider[];
-  rent?: Provider[];
-  buy?: Provider[];
-  ads?: Provider[];
-  link: string;
-};
-
-type RecommendationsPage<T> = {
-  page: number;
-  results: T[];
-  total_pages: number;
-  total_results: number;
-};
 
 export namespace Namespace_Tmdb {
+  export type BaseMedia_Provider = {
+    adult: boolean;
+    backdrop_path: string | null;
+    genre_ids: number[];
+    id: number;
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
+    poster_path: string | null;
+    release_date: string;
+    title: string;
+    video: boolean;
+    vote_average: number;
+    vote_count: number;
+  };
+
+  export type Recommendations_Provider<T> = {
+    page: number;
+    results: T[];
+    total_pages: number;
+    total_results: number;
+  };
+
   export type Prefabs_Obj = {
     [K in keyof typeof tmdbEndpoints.prefabs]: {
       dates: {
@@ -109,14 +82,14 @@ export namespace Namespace_Tmdb {
         minimum: string; // e.g., "2024-09-18"
       };
       page: number;
-      results: BaseMedia[];
+      results: BaseMedia_Provider[];
       total_pages: number;
       total_results: number;
     };
   };
 
   export type Details_Obj = {
-    details: BaseMedia & {
+    details: BaseMedia_Provider & {
       belongs_to_collection: null | object;
       budget: number;
       homepage: string;
@@ -182,29 +155,52 @@ export namespace Namespace_Tmdb {
   export type Videos_Obj = {
     videos: {
       id: number;
-      results: Video[];
+      results: Array<{
+        id: string;
+        iso_639_1: string;
+        iso_3166_1: string;
+        key: string;
+        name: string;
+        official: boolean;
+        published_at: string;
+        site: string;
+        size: number;
+        type: string;
+      }>;
     };
   };
 
+  type WatchProviders_Provider = {
+    display_priority: number;
+    logo_path: string;
+    provider_id: number;
+    provider_name: string;
+  };
   export type WatchProviders_Obj = {
     watchProviders: {
       id: number;
       results: {
-        [countryCode: string]: WatchOptions;
+        [countryCode: string]: {
+          flatrate?: WatchProviders_Provider[];
+          rent?: WatchProviders_Provider[];
+          buy?: WatchProviders_Provider[];
+          ads?: WatchProviders_Provider[];
+          link: string;
+        };
       };
     };
   };
 
   export type Recommendations_Obj = {
-    recommendations: RecommendationsPage<BaseMedia>;
+    recommendations: Recommendations_Provider<BaseMedia_Provider>;
   };
 
   export type Discover_Obj = {
-    discover: RecommendationsPage<BaseMedia>;
+    discover: Recommendations_Provider<BaseMedia_Provider>;
   };
 
   export type Search_Obj = {
-    search: RecommendationsPage<BaseMedia>;
+    search: Recommendations_Provider<BaseMedia_Provider>;
   };
 
   export type Response_Union = Prefabs_Obj | Details_Obj | Credits_Obj | Videos_Obj | WatchProviders_Obj | Recommendations_Obj | Discover_Obj | Search_Obj;
