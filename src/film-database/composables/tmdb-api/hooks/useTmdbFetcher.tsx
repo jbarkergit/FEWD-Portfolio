@@ -209,7 +209,7 @@ export namespace Namespace_Tmdb {
   }
 
   export interface Query_Obj {
-    genreQuerie: {
+    genreQuery: {
       page: number;
       results: Discover_Obj[];
       total_pages: number;
@@ -336,8 +336,8 @@ const buildEndpoint = (params: Type_Tmdb_useTmdbFetcher_asFuncParams): Type_Tmdb
     case !!params.args?.genre:
       endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`).replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[params.args.genre]}`);
       break;
-    case !!params.args?.querie:
-      endpoint = endpoint + `?query=${params.args.querie}&include_adult=false&language=en-US&page=1`;
+    case !!params.args?.query:
+      endpoint = endpoint + `?query=${params.args.query}&include_adult=false&language=en-US&page=1`;
       break;
     default:
       endpoint = endpoint + `?api_key=${apiKey}`;
@@ -354,7 +354,7 @@ type Type_Tmdb_useTmdbFetcher_asFuncParams = {
   args?: Partial<{
     movie_id: number;
     genre: Type_MovieGenre_Keys;
-    querie: string;
+    query: string;
   }>;
 };
 
