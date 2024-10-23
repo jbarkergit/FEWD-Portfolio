@@ -217,6 +217,10 @@ export namespace Namespace_Tmdb {
     };
   }
 
+  export interface Search_Obj {
+    search: {};
+  }
+
   export type Response_Union =
     | Prefabs_Obj
     | Details_Obj
@@ -336,8 +340,11 @@ const buildEndpoint = (params: Type_Tmdb_useTmdbFetcher_asFuncParams): Type_Tmdb
     case !!params.args?.genre:
       endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`).replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[params.args.genre]}`);
       break;
-    case !!params.args?.query:
-      endpoint = endpoint + `?query=${params.args.query}&include_adult=false&language=en-US&page=1`;
+    case !!params.args?.discover:
+      endpoint = endpoint + `&with_genres=${params.args.discover}?api_key=${apiKey}`;
+      break;
+    case !!params.args?.search:
+      endpoint = endpoint.replace('{search_term}', params.args.search) + `?api_key=${apiKey}`;
       break;
     default:
       endpoint = endpoint + `?api_key=${apiKey}`;
@@ -354,7 +361,8 @@ type Type_Tmdb_useTmdbFetcher_asFuncParams = {
   args?: Partial<{
     movie_id: number;
     genre: Type_MovieGenre_Keys;
-    query: string;
+    discover: string;
+    search: string;
   }>;
 };
 
