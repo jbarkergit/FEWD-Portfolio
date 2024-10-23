@@ -1,15 +1,14 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../../assets/google-material-symbols/carouselSymbols';
 import { MaterialSymbolsPlayArrow } from '../../../assets/google-material-symbols/iFrameSymbols';
-import { Type_Tmdb_Api_Union, Type_Tmdb_ApiMovieList_Obj } from '../../../composables/tmdb-api/types/TmdbDataTypes';
 
 type Type_FilmDatabase_Props = {
   mapIndex: number;
   dataKey: string;
-  mapValue: Type_Tmdb_Api_Union[][];
+  mapValue: Namespace_Tmdb.Response_Union[][];
   maxVisibleCarouselNodes: number;
-  setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>>;
+  setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.Response_Union | undefined>>;
 };
 
 const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setHeroData }: Type_FilmDatabase_Props) => {
@@ -21,8 +20,8 @@ const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setH
   };
 
   /** Render paginated sets on navigation */
-  const [articles, setArticles] = useState<Type_Tmdb_Api_Union[][]>([mapValue[0]]);
-  const articlesFlatMap: Type_Tmdb_Api_Union[] = articles.flatMap((innerArray) => innerArray);
+  const [articles, setArticles] = useState<Namespace_Tmdb.Response_Union[][]>([mapValue[0]]);
+  const articlesFlatMap: Namespace_Tmdb.Response_Union[] = articles.flatMap((innerArray) => innerArray);
 
   const renderPaginatedDataSet = (): void => {
     const isIndexInArticles: boolean = articles.some((_, index) => index === carouselIndex);
@@ -91,10 +90,10 @@ const FDCarousel = ({ mapIndex, dataKey, mapValue, maxVisibleCarouselNodes, setH
       <h2 className='fdMedia__carousel__header'>{formattedDataKey}</h2>
       <div className='fdMedia__carousel__wrapper'>
         <ul className='fdMedia__carousel__wrapper__ul' ref={carouselRef}>
-          {articles.flat().map((article) => {
-            const props = article as Type_Tmdb_ApiMovieList_Obj;
+          {articles.flat().map((article, index) => {
+            const props = article as unknown as Namespace_Tmdb.Details_Obj;
             return (
-              <li className='fdMedia__carousel__wrapper__ul__li' key={uuidv4()} onClick={() => setHeroData(article)}>
+              <li className='fdMedia__carousel__wrapper__ul__li' key={`carousel-${index}-item-${props.id}`} onClick={() => setHeroData(article)}>
                 <picture className='fdMedia__carousel__wrapper__ul__li__article'>
                   <img src={`https://image.tmdb.org/t/p/w780/${props?.poster_path}`} alt={`${props?.title}`} fetchPriority={mapIndex === 0 ? 'high' : 'low'} />
                 </picture>
