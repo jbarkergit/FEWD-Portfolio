@@ -333,17 +333,14 @@ const buildEndpoint = (params: Type_Tmdb_useTmdbFetcher_asFuncParams): Type_Tmdb
     case !!params.args?.movie_id:
       endpoint = endpoint.replace('{movie_id}', `${params.args.movie_id}`) + `?api_key=${apiKey}`;
       break;
-    case !!params.args?.genre:
-      endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`).replace('{genre_ids}', `&with_genres=${tmdbMovieGenres[params.args.genre]}`);
-      break;
     case !!params.args?.discover:
-      endpoint = endpoint + `&with_genres=${params.args.discover}?api_key=${apiKey}`;
+      endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`) + `${tmdbMovieGenres[params.args.discover]}`;
       break;
     case !!params.args?.search:
-      endpoint = endpoint.replace('{search_term}', params.args.search) + `?api_key=${apiKey}`;
+      endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`).replace('{search_term}', params.args.search);
+      console.log(endpoint);
       break;
     default:
-      endpoint = endpoint + `?api_key=${apiKey}`;
       break;
   }
 
@@ -356,8 +353,7 @@ type Type_Tmdb_useTmdbFetcher_asFuncParams = {
   key: Namespace_TmdbEndpointsKeys.Keys_Union;
   args?: Partial<{
     movie_id: number;
-    genre: Type_MovieGenre_Keys;
-    discover: string;
+    discover: Type_MovieGenre_Keys;
     search: string;
   }>;
 };

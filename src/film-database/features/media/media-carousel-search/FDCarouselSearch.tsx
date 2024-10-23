@@ -1,12 +1,13 @@
+// Deps
 import { useState, useEffect, useRef, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+// Composables
+import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
+// Assets
 import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../assets/google-material-symbols/iFrameSymbols';
 import { MaterialSymbolsSearch } from '../../../assets/google-material-symbols/menuSymbols';
-import { useFetchTmdbResponse } from '../../../composables/tmdb-api/hooks/useFetchTmdbResponse';
-import { useTmdbUrlBuilder } from '../../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
-import { Type_Tmdb_Api_Union, Type_Tmdb_QuerieMovie_Obj } from '../../../composables/tmdb-api/types/TmdbDataTypes';
 
-const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateAction<Type_Tmdb_Api_Union | null>> }) => {
+const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.Response_Union | null>> }) => {
   /** User is searching */
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isTyping, setIsTyping] = useState<boolean>(false);
@@ -15,26 +16,15 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
   /** Handle label */
   const labelRef = useRef<HTMLLabelElement>(null);
 
-  /** Fetch */
-  const [searchResults, setSearchResults] = useState<Type_Tmdb_QuerieMovie_Obj[] | undefined>(undefined);
-
-  const fetchResults = async (): Promise<void> => {
-    const fetchUrl = useTmdbUrlBuilder('querieMovie', [{ querie: searchTerm }]);
-    const getResults = useFetchTmdbResponse([{ key: fetchUrl.key, endpoint: fetchUrl.endpoint }]);
-
-    getResults.then((data) => {
-      if (data) {
-        const dataResults = data.flatMap((obj) => obj.endpoint) as Type_Tmdb_QuerieMovie_Obj[];
-        setSearchResults(dataResults);
-      }
-    });
-  };
-
   /** Invoke fetch with timeout */
-  const invokeFetch = (): void => {
+  const [searchResults, setSearchResults] = useState<Namespace_Tmdb.Query_Obj['genreQuerie']['results'] | undefined>(undefined);
+
+  const invokeFetch = async (): Promise<void> => {
     if (searchTerm.length > 0) {
       setIsTyping(false);
-      fetchResults();
+      const data = (await useTmdbFetcher({ key: 'genreQuerie', args: { querie: searchTerm } })) as unknown as Namespace_Tmdb.Query_Obj;
+      console.log(data.genreQuerie.results);
+      if (data) setSearchResults(data.genreQuerie.results);
     }
   };
 
@@ -91,18 +81,20 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
       <section className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
           {searchResults && !isTyping
-            ? searchResults?.splice(0, 7).map((props) => (
-                <li className='fdSearchBar__results__ul__li' key={uuidv4()}>
-                  <picture className='fdSearchBar__results__ul__li__article'>
-                    <img src={`https://image.tmdb.org/t/p/w780/${props?.poster_path}`} alt={`${props.title}`} />
-                  </picture>
-                  <div className='fdSearchBar__results__ul__li__overlay' onClick={() => setHeroData(props as Type_Tmdb_Api_Union)}>
-                    <button className='fdSearchBar__results__ul__li__overlay--play' aria-label='Play trailer'>
-                      <MaterialSymbolsPlayArrow />
-                    </button>
-                  </div>
-                </li>
-              ))
+            ? searchResults?.splice(0, 7).map((props) => {
+                return (
+                  <li className='fdSearchBar__results__ul__li' key={uuidv4()}>
+                    <picture className='fdSearchBar__results__ul__li__article'>
+                      <img src={`https://image.tmdb.org/t/p/w780${props?.posterPath}`} alt={`${props.title}`} />
+                    </picture>
+                    <div className='fdSearchBar__results__ul__li__overlay' onClick={() => setHeroData(props)}>
+                      <button className='fdSearchBar__results__ul__li__overlay--play' aria-label='Play trailer'>
+                        <MaterialSymbolsPlayArrow />
+                      </button>
+                    </div>
+                  </li>
+                );
+              })
             : null}
         </ul>
       </section>

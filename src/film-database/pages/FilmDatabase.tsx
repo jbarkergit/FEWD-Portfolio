@@ -89,7 +89,8 @@ const FilmDatabase = () => {
   /** Component */
   return (
     <div className='filmDatabase' data-layout-carousel={layoutAttr} ref={rootRef}>
-      {!authorizedUser.user && !authorizedUser.verified ? <FDUserAccount rootRef={rootRef} /> : <FDCatalog />}
+      {/* {!authorizedUser.user && !authorizedUser.verified ? <FDUserAccount rootRef={rootRef} /> : <FDCatalog />} */}
+      <FDCatalog />
     </div>
   );
 };
