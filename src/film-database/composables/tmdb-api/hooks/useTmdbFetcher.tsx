@@ -49,213 +49,165 @@ import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
  * Chain Examples:
  * - MovieList_Obj_asFuncReturn_isPromise_isUndefined
  */
+type Video = {
+  id: string;
+  iso_639_1: string;
+  iso_3166_1: string;
+  key: string;
+  name: string;
+  official: boolean;
+  published_at: string;
+  site: string;
+  size: number;
+  type: string;
+};
+
+type BaseMedia = {
+  adult: boolean;
+  backdrop_path: string | null;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string | null;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
+
+type Provider = {
+  display_priority: number;
+  logo_path: string;
+  provider_id: number;
+  provider_name: string;
+};
+
+type WatchOptions = {
+  flatrate?: Provider[];
+  rent?: Provider[];
+  buy?: Provider[];
+  ads?: Provider[];
+  link: string;
+};
+
+type RecommendationsPage<T> = {
+  page: number;
+  results: T[];
+  total_pages: number;
+  total_results: number;
+};
 
 export namespace Namespace_Tmdb {
   export type Prefabs_Obj = {
     [K in keyof typeof tmdbEndpoints.prefabs]: {
       dates: {
-        maximum: string;
-        minimum: string;
+        maximum: string; // e.g., "2024-10-30"
+        minimum: string; // e.g., "2024-09-18"
       };
       page: number;
-      results: Array<Discover_Obj>;
+      results: BaseMedia[];
       total_pages: number;
       total_results: number;
     };
   };
 
   export type Details_Obj = {
-    details: {
-      adult: boolean;
-      backdrop_path: string | null;
-      belongs_to_collection: {
-        backdrop_path: string | null;
-        id: number;
-        name: string;
-        poster_path: string | null;
-      } | null;
+    details: BaseMedia & {
+      belongs_to_collection: null | object;
       budget: number;
-      genres: {
-        id: number;
-        name: string;
-      }[];
-      homepage: string | null;
-      id: number;
+      homepage: string;
       imdb_id: string;
       origin_country: string[];
-      original_language: string;
-      original_title: string;
-      overview: string;
-      popularity: number;
-      poster_path: string | null;
-      production_companies: {
+      production_companies: Array<{
         id: number;
         logo_path: string | null;
         name: string;
         origin_country: string;
-      }[];
-      production_countries: {
+      }>;
+      production_countries: Array<{
         iso_3166_1: string;
         name: string;
-      }[];
-      release_date: string;
+      }>;
       revenue: number;
       runtime: number;
-      spoken_languages: {
+      spoken_languages: Array<{
         english_name: string;
         iso_639_1: string;
         name: string;
-      }[];
+      }>;
       status: string;
       tagline: string;
-      title: string;
-      video: boolean;
-      vote_average: number;
-      vote_count: number;
+      genres: Array<{
+        id: number;
+        name: string;
+      }>;
     };
   };
 
   export type Credits_Obj = {
     credits: {
-      adult: boolean;
-      credit_id: string;
-      department: string;
-      gender: 1 | 2 | 0;
+      cast: Array<{
+        adult: boolean;
+        cast_id: number;
+        character: string;
+        credit_id: string;
+        gender: number;
+        known_for_department: string;
+        name: string;
+        order: number;
+        original_name: string;
+        popularity: number;
+        profile_path: string | null;
+      }>;
+      crew: Array<{
+        adult: boolean;
+        credit_id: string;
+        department: string;
+        gender: number;
+        job: string;
+        known_for_department: string;
+        name: string;
+        original_name: string;
+        popularity: number;
+        profile_path: string | null;
+      }>;
       id: number;
-      job: string;
-      known_for_department: string;
-      original_name: string;
-      popularity: number;
-      profile_path: string | null;
     };
   };
 
   export type Videos_Obj = {
     videos: {
-      id: string;
-      iso_639_1: string;
-      iso_3166_1: string;
-      key: string;
-      name: string;
-      official: boolean;
-      published_at: string;
-      site: string;
-      size: number;
-      type: string;
+      id: number;
+      results: Video[];
     };
   };
 
-  type WatchProviders_Provider = {
-    logo_path?: string;
-    provider_id: number;
-    provider_name: string;
-    display_priority?: number;
-  };
   export type WatchProviders_Obj = {
     watchProviders: {
       id: number;
       results: {
-        [locale: string]: {
-          link: string;
-          buy: WatchProviders_Provider[];
-          rent: WatchProviders_Provider[];
-          flatrate?: WatchProviders_Provider[];
-        };
+        [countryCode: string]: WatchOptions;
       };
     };
   };
 
-  export type Reviews_Obj = {
-    reviews: {
-      id: string;
-      author: string;
-      authorDetails: {
-        avatarPath: string | null;
-        name: string;
-        rating: number;
-        username: string;
-      };
-      content: string;
-      createdAt: string;
-      updatedAt: string;
-      url: string;
-    };
-  };
-
-  type Recommendations_Provider = {
-    adult: boolean;
-    backdropPath: string | null;
-    genreIds: number[];
-    id: number;
-    originalLanguage: string;
-    originalTitle: string;
-    overview: string;
-    popularity: number;
-    posterPath: string | null;
-    releaseDate: string;
-    title: string;
-    video: boolean;
-    voteAverage: number;
-    voteCount: number;
-    mediaType: 'movie';
-  };
   export type Recommendations_Obj = {
-    recommendations: Recommendations_Provider;
+    recommendations: RecommendationsPage<BaseMedia>;
   };
 
   export type Discover_Obj = {
-    discover: {
-      adult: boolean;
-      backdropPath: string | null;
-      genreIds: number[];
-      id: number;
-      originalLanguage: string;
-      originalTitle: string;
-      overview: string;
-      popularity: number;
-      posterPath: string | null;
-      releaseDate: string;
-      title: string;
-      video: boolean;
-      voteAverage: number;
-      voteCount: number;
-    };
+    discover: RecommendationsPage<BaseMedia>;
   };
 
   export type Search_Obj = {
-    search: {
-      page: number;
-      results: {
-        adult: boolean;
-        backdropPath: string | null;
-        genreIds: number[];
-        id: number;
-        originalLanguage: string;
-        originalTitle: string;
-        overview: string;
-        popularity: number;
-        posterPath: string | null;
-        releaseDate: string;
-        title: string;
-        video: boolean;
-        voteAverage: number;
-        voteCount: number;
-      }[];
-      total_pages: number;
-      total_results: number;
-    };
+    search: RecommendationsPage<BaseMedia>;
   };
 
-  export type Response_Union =
-    | Prefabs_Obj
-    | Details_Obj
-    | Credits_Obj
-    | Videos_Obj
-    | WatchProviders_Obj
-    | Reviews_Obj
-    | Recommendations_Obj
-    | Discover_Obj
-    | Search_Obj;
+  export type Response_Union = Prefabs_Obj | Details_Obj | Credits_Obj | Videos_Obj | WatchProviders_Obj | Recommendations_Obj | Discover_Obj | Search_Obj;
 }
 
 /** Fetch util */
@@ -301,7 +253,7 @@ const processFetch = async (keyValuePair: { key: Namespace_TmdbEndpointsKeys.Key
   if (!data) throw new Error('Http response failure.');
 
   // Cache data
-  if (keyValuePair.key !== 'discover') sessionStorage.setItem([keyValuePair.key] as unknown as string, JSON.stringify(data));
+  if (!['discover', 'search'].includes(keyValuePair.key)) sessionStorage.setItem([keyValuePair.key] as unknown as string, JSON.stringify(data));
 
   // Return
   return { [keyValuePair.key]: data };
