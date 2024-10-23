@@ -32,6 +32,6 @@ export const tmdbEndpoints: Namespace_TmdbEndpointsKeys.Endpoint_Obj = {
   },
   miscellaneous: {
     discover: 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc&with_genres=',
-    search: 'https://api.themoviedb.org/3/search/movie?query={search_term}&include_adult=false&language=en-US',
+    search: 'https://api.themoviedb.org/3/search/movie&query={search_term}&include_adult=false&language=en-US',
   },
 };
