@@ -3,7 +3,7 @@
 export namespace Namespace_TmdbEndpointsKeys {
   export type Prefabs_Keys = 'now_playing' | 'upcoming' | 'popular' | 'top_rated' | 'trending_today' | 'trending_this_week';
   export type MovieId_Keys = 'details' | 'credits' | 'videos' | 'watchProviders' | 'reviews' | 'recommendations';
-  export type Miscellaneous_Keys = 'discover' | 'genreQuerie';
+  export type Miscellaneous_Keys = 'discover' | 'query';
   export type Keys_Union = Prefabs_Keys | MovieId_Keys | Miscellaneous_Keys;
   export type Endpoint_Obj = {
     prefabs: Record<Prefabs_Keys, string>;
@@ -32,6 +32,6 @@ export const tmdbEndpoints: Namespace_TmdbEndpointsKeys.Endpoint_Obj = {
   },
   miscellaneous: {
     discover: 'https://api.themoviedb.org/3/discover/movie{genre_ids}',
-    genreQuerie: 'https://api.themoviedb.org/3/search/movie',
+    query: 'https://api.themoviedb.org/3/search/movie',
   },
 };
