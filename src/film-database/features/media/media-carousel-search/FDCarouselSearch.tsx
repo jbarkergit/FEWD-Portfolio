@@ -26,7 +26,7 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
   const invokeFetch = async (): Promise<void> => {
     if (searchTerm.length > 0) {
       setIsTyping(false);
-      const data = (await useTmdbFetcher({ key: 'search', args: { search: searchTerm } })) as unknown as Namespace_Tmdb.Search_Obj;
+      const data = (await useTmdbFetcher({ search: searchTerm })) as Namespace_Tmdb.Search_Obj;
       if (data) setSearchResults(data.search.results);
     }
   };
