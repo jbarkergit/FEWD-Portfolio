@@ -19,10 +19,6 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
   /** Invoke fetch with timeout */
   const [searchResults, setSearchResults] = useState<Namespace_Tmdb.Search_Obj['search']['results'] | undefined>(undefined);
 
-  useEffect(() => {
-    console.log(searchResults);
-  }, [searchResults]);
-
   const invokeFetch = async (): Promise<void> => {
     if (searchTerm.length > 0) {
       setIsTyping(false);
