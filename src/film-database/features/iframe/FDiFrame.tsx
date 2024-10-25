@@ -1,12 +1,9 @@
+// Deps
 import { useEffect, useRef, useState } from 'react';
-
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
-
-import { Type_Tmdb_Api_Union, Type_Tmdb_ApiMovieList_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
-
-import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
-import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
-
+// Composables
+import { Namespace_Tmdb, useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
+// Features
 import IFrameController from './iframe-controller/IFrameController';
 
 /** This component utilizes YouTube Player API
@@ -14,38 +11,13 @@ import IFrameController from './iframe-controller/IFrameController';
  * via third party library https://github.com/tjallingt/react-youtube
  */
 
-type Type_PropDrill = {
-  heroData: Type_Tmdb_Api_Union | null;
-};
+const FDiFrame = ({ heroData }: { heroData: Namespace_Tmdb.BaseMedia_Provider | undefined }) => {
+  const [trailers, setTrailers] = useState<Namespace_Tmdb.Videos_Obj['videos']['results'] | undefined>(undefined);
 
-type Type_Tmdb_Trailer_Obj = {
-  id: string;
-  iso_3166_1: string;
-  iso_639_1: string;
-  key: string;
-  name: string;
-  official: boolean;
-  published_at: string;
-  site: string;
-  size: number;
-  type: string;
-};
-
-const FDiFrame = ({ heroData }: Type_PropDrill) => {
-  const [trailers, setTrailers] = useState<Type_Tmdb_Trailer_Obj[] | undefined>(undefined);
-  const props = heroData as Type_Tmdb_ApiMovieList_Obj;
-
-  const fetchTrailer = (): void => {
-    (async () => {
-      await useFetchTmdbResponse([useTmdbUrlBuilder('videos', [{ movie_id: props?.id }])]).then((response) => {
-        if (!response) return;
-
-        const entries = response.flatMap((result) => result.endpoint) as Type_Tmdb_Trailer_Obj[];
-        const filteredEntries = entries.filter((obj) => obj.name.includes('Trailer'));
-
-        setTrailers(filteredEntries);
-      });
-    })();
+  const fetchTrailer = async (): Promise<void> => {
+    const data = (await useTmdbFetcher({ videos: heroData?.id })) as Namespace_Tmdb.Videos_Obj;
+    const filteredEntries = data.videos.results.filter((obj) => obj.name.includes('Trailer'));
+    setTrailers(filteredEntries);
   };
 
   useEffect(() => {
@@ -196,9 +168,9 @@ const FDiFrame = ({ heroData }: Type_PropDrill) => {
       <section className='fdiFrame'>
         <figure className='fdiFrame__backdrop'>
           <picture>
-            <img src={`https://image.tmdb.org/t/p/original/${props?.backdrop_path}`} alt={props?.title} />
+            <img src={`https://image.tmdb.org/t/p/original/${heroData?.backdrop_path}`} alt={heroData?.title} />
           </picture>
-          <figcaption>{props?.title}</figcaption>
+          <figcaption>{heroData?.title}</figcaption>
         </figure>
       </section>
     );
