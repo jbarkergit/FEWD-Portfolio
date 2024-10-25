@@ -20,7 +20,7 @@ const FDCatalog = () => {
   /** Component */
   return (
     <div className='fdCatalog'>
-      <FDMenu setRoute={setRoute} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} heroData={heroData} />
+      <FDMenu setRoute={setRoute} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       <FDDetails heroData={heroData} />
       <FDiFrame heroData={heroData} />
       <FDMedia route={route} isMenuOpen={isMenuOpen} setHeroData={setHeroData} />
