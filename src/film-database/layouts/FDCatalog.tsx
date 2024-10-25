@@ -1,8 +1,8 @@
 // Deps
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // Composables
-import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbGenres';
-import { Namespace_Tmdb, useTmdbFetcher } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+import { Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbGenres';
+import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 // Features
 import FDDetails from '../features/details/FDDetails';
 import FDiFrame from '../features/iframe/FDiFrame';
@@ -15,24 +15,15 @@ const FDCatalog = () => {
   // Menu
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   // Details, trailer data
-  const [heroData, setHeroData] = useState<Namespace_Tmdb.Response_Union | undefined>(undefined);
-
-  async function test() {
-    const data = await useTmdbFetcher({ key: 'search', args: { search: 'deadpool' } });
-    console.log(data);
-  }
-
-  useEffect(() => {
-    test();
-  }, []);
+  const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(undefined);
 
   /** Component */
   return (
     <div className='fdCatalog'>
-      {/* <FDMenu setRoute={setRoute} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} heroData={heroData} /> */}
-      {/* <FDDetails heroData={heroData} /> */}
-      {/* <FDiFrame heroData={heroData} /> */}
-      {/* <FDMedia route={route} isMenuOpen={isMenuOpen} setHeroData={setHeroData} /> */}
+      <FDMenu setRoute={setRoute} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} heroData={heroData} />
+      <FDDetails heroData={heroData} />
+      <FDiFrame heroData={heroData} />
+      <FDMedia route={route} isMenuOpen={isMenuOpen} setHeroData={setHeroData} />
     </div>
   );
 };
