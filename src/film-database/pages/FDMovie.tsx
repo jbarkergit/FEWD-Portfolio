@@ -1,62 +1,62 @@
-// import { useEffect, useState } from 'react';
-// import { useLocation } from 'react-router-dom';
-// import { useTmdbUrlBuilder } from '../composables/tmdb-api/hooks/useTmdbUrlBuilder';
-// import { useTmdbFetcher } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+import { useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Namespace_Tmdb, useTmdbFetcher } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+import { Namespace_TmdbEndpointsKeys } from '../composables/tmdb-api/data/tmdbEndPoints';
+import FDMovieCast from '../features/movie/FDMovieCast';
+import FDMovieBackdrop from '../features/movie/FDMovieBackdrop';
+import FDMovieInfo from '../features/movie/FDMovieInfo';
+import FDMovieTrailers from '../features/movie/FDMovieTrailers';
 
-// const FDMovie = () => {
-//   const [movieStore, setMovieStore] = useState<[]>([]);
+const FDMovie = () => {
+  const [movieStore, setMovieStore] = useState<
+    Array<
+      Namespace_Tmdb.Details_Obj | Namespace_Tmdb.WatchProviders_Obj | Namespace_Tmdb.Videos_Obj | Namespace_Tmdb.Credits_Obj | Namespace_Tmdb.Recommendations_Obj
+    >
+  >([]);
+  const propertyId = parseInt(useLocation().pathname.slice('/film-database/'.length));
 
-//   const propertyId = parseInt(useLocation().pathname.slice('/film-database/'.length));
+  /** Fetch */
+  const fetchStores = async () => {
+    const data = (await useTmdbFetcher([
+      { details: propertyId },
+      { watchProviders: propertyId },
+      { videos: propertyId },
+      { credits: propertyId },
+      { recommendations: propertyId },
+    ])) as typeof movieStore;
+    setMovieStore(data);
+  };
 
-//   const fetchStores = async () => {
-//     const providers = useTmdbUrlBuilder('watchProviders', { movie_id: propertyId })!;
-//     const cast = useTmdbUrlBuilder('credits', { movie_id: propertyId })!;
-//     const data = await useTmdbFetcher([providers, cast]);
-//     // useTmdbFetcher(providers);
-//     // console.log(data);
-//   };
+  useEffect(() => {
+    fetchStores();
+  }, []);
 
-//   useEffect(() => {
-//     fetchStores();
-//   }, []);
+  /** Create references to store data */
+  const getProp = (key: Namespace_TmdbEndpointsKeys.Keys_Union) => {
+    return movieStore.find((obj) => Object.keys(obj)[0] === key);
+  };
 
-//   // const movieProviders = useMemo(() => {
-//   //   const buy = movieStore[0][0].endpoint.US.buy;
-//   //   const rent = movieStore[0][0].endpoint.US.rent;
-//   //   return { buy, rent };
-//   // }, [movieStore]);
+  const props = useMemo(() => {
+    const details = getProp('details') as Namespace_Tmdb.Details_Obj;
+    const watchProviders = getProp('watchProviders') as Namespace_Tmdb.WatchProviders_Obj;
+    const videos = getProp('videos') as Namespace_Tmdb.Videos_Obj;
+    const credits = getProp('credits') as Namespace_Tmdb.Credits_Obj;
+    const recommendations = getProp('recommendations') as Namespace_Tmdb.Recommendations_Obj;
+    return { details, watchProviders, videos, credits, recommendations };
+  }, [movieStore]);
 
-//   return (
-//     <div className='fdMovie'>
-//       <div className='fdMovie__container'>
-//         <div className='fdMovie__container__backdrop'>
-//           <picture>{/* <img src={} alt={} /> */}</picture>
-//         </div>
-//         <main className='fdMovie__container__info'>
-//           <article className='fdMovie__container__info__article'>
-//             <header>
-//               <hgroup className='fdMovie__container__info__article__hgroup'>
-//                 <h1>Movie Name</h1>
-//                 <h2>Release Date</h2>
-//               </hgroup>
-//             </header>
-//             <p>
-//               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos necessitatibus alias, perferendis temporibus eos asperiores similique, libero ab dolorem
-//               nisi odit eveniet fuga. Nam, et!
-//             </p>
-//           </article>
-//           <nav className='fdMovie__container__info__cta'>
-//             <button aria-label=''>Continue Browsing</button>
-//             <button aria-label=''>Watch the Trailer</button>
-//           </nav>
-//         </main>
-//         <div className='fdMovie__container__sidebar'>
-//           <aside className='fdMovie__container__sidebar__credits'></aside>
-//         </div>
-//       </div>
-//       <div className='fdMovie__container'></div>
-//     </div>
-//   );
-// };
+  /** Component */
+  if (movieStore && movieStore.length > 0 && props)
+    return (
+      <div className='fdMovie'>
+        <div className='fdMovie__container'>
+          <FDMovieBackdrop details={props.details.details} />
+          <FDMovieInfo details={props.details.details} />
+          <FDMovieTrailers videos={props.videos.videos.results} />
+          <FDMovieCast details={props.details.details} credits={props.credits.credits} />
+        </div>
+      </div>
+    );
+};
 
-// export default FDMovie;
+export default FDMovie;
