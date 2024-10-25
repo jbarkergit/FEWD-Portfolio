@@ -24,11 +24,14 @@ const FDMedia = ({
   type Prefabs_Obj_isUndefined = Namespace_Tmdb.Prefabs_Obj | undefined;
 
   const fetchDataByRoute = async (): Promise<void> => {
-    const homeData = (await useTmdbFetcher([{ key: 'now_playing' }, { key: 'upcoming' }, { key: 'trending_today' }, { key: 'trending_this_week' }])) as
-      | Namespace_Tmdb.Prefabs_Obj[]
-      | Prefabs_Obj_isUndefined[];
+    const homeData = (await useTmdbFetcher([
+      { now_playing: undefined },
+      { upcoming: undefined },
+      { trending_today: undefined },
+      { trending_this_week: undefined },
+    ])) as Namespace_Tmdb.Prefabs_Obj[] | Prefabs_Obj_isUndefined[];
 
-    const routeData = (await useTmdbFetcher({ key: 'discover', args: { discover: 'comedy' as Type_MovieGenre_Keys } })) as Namespace_Tmdb.Discover_Obj | undefined;
+    const routeData = (await useTmdbFetcher({ discover: 'comedy' })) as Namespace_Tmdb.Discover_Obj | undefined;
 
     if (route === 'home') {
       const filteredHomeData = homeData.filter((obj) => obj !== undefined) as Namespace_Tmdb.Prefabs_Obj[];
