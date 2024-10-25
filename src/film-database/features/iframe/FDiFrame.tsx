@@ -1,6 +1,5 @@
 // Deps
-import { useEffect, useRef, useState } from 'react';
-import YouTube, { YouTubeProps } from 'react-youtube';
+import { useEffect, useState } from 'react';
 // Composables
 import { Namespace_Tmdb, useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Features
