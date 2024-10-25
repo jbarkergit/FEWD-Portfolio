@@ -1,59 +1,24 @@
+// Deps
 import { useState, useEffect, useMemo, RefObject, forwardRef } from 'react';
-import { useFetchTmdbResponse } from '../../composables/tmdb-api/hooks/useFetchTmdbResponse';
-import { useTmdbUrlBuilder } from '../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
-import { Type_Tmdb_Api_Union, Type_Tmdb_ApiMovieList_Obj } from '../../composables/tmdb-api/types/TmdbDataTypes';
+// Composables
+import { Namespace_Tmdb, useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 
 type Type_PropDrill = {
-  heroData: Type_Tmdb_Api_Union | null;
-};
-
-type Type_Tmdb_Provider_Arr = {
-  US: {
-    buy: [
-      {
-        logo_path: string;
-        provider_id: number;
-        provider_name: string;
-        display_priority: number;
-      },
-    ];
-    link: string;
-    rent: [
-      {
-        logo_path: string;
-        provider_id: number;
-        provider_name: string;
-        display_priority: number;
-      },
-    ];
-  };
+  heroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
 };
 
 const FDMenuProperty = forwardRef<HTMLElement, Type_PropDrill>(({ heroData }, menuPropertyRef) => {
-  const [movieStore, setMovieStore] = useState<any[]>([]);
-
-  const props = useMemo(() => {
-    if (heroData) return heroData as Type_Tmdb_ApiMovieList_Obj;
-  }, [heroData]);
+  const [movieStore, setMovieStore] = useState<Array<Namespace_Tmdb.WatchProviders_Obj | Namespace_Tmdb.Credits_Obj>>([]);
 
   /** Fetch stores */
   const fetchStores = async (): Promise<void> => {
-    const providers = useTmdbUrlBuilder('watchProviders', [{ provider: props?.id }]);
-    const cast = useTmdbUrlBuilder('credits', [{ movie_id: props?.id }]);
-
-    const requests = [providers, cast].map((request) => {
-      return useFetchTmdbResponse([{ key: request.key, endpoint: request.endpoint }]);
-    });
-
-    try {
-      const results = await Promise.all(requests);
-      const processedData = results.flatMap((data) => data?.flatMap((obj) => obj.endpoint));
-      console.log(processedData);
-      setMovieStore(processedData);
-    } catch (error) {
-      console.error('Error fetching stores:', error);
-    }
+    const requests = (await useTmdbFetcher([{ watchProviders: props?.id }, { credits: props?.id }])) as typeof movieStore;
+    setMovieStore(requests);
   };
+
+  const props = useMemo(() => {
+    if (heroData) return heroData;
+  }, [heroData]);
 
   useEffect(() => {
     if (props) fetchStores();
