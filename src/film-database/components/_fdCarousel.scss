@@ -16,6 +16,11 @@
   &__wrapper {
     position: relative;
     width: 100%;
+    // navigation overlay on track hover
+    &:hover &__navigation {
+      opacity: 1;
+      transition: opacity 0.22s ease-in-out;
+    }
     &__ul {
       display: flex;
       gap: var(--fd-gap);
@@ -31,18 +36,12 @@
         border-radius: var(--fd-borderRadius);
         overflow: clip;
         scroll-snap-align: center;
-        &__article {
+        & picture {
           position: relative;
-          /* Width matching (required for dynamic logic) */
           display: block;
           width: inherit;
           height: inherit;
           cursor: pointer;
-          & img {
-            display: block;
-            width: 100%;
-            height: 100%;
-          }
         }
         &__overlay {
           position: absolute;
@@ -58,7 +57,7 @@
           &:hover {
             opacity: 1;
             cursor: pointer;
-            .fdMedia__carousel__wrapper__ul__li__overlay--play svg {
+            .fdCarousel__wrapper__ul__li__overlay--play svg {
               transform: scale(1.3) rotate(0deg);
             }
           }
@@ -89,7 +88,7 @@
       @media (width <= 1410px) {
         display: none;
       }
-      &--button {
+      &__button {
         position: absolute;
         z-index: 10;
         height: 50%;
@@ -101,22 +100,16 @@
           color: white;
         }
       }
-      &--button:nth-of-type(1) {
+      &__button:nth-of-type(1) {
         left: 0;
         border-top-right-radius: var(--fd-borderRadius);
         border-bottom-right-radius: var(--fd-borderRadius);
       }
-      &--button:nth-of-type(2) {
+      &__button:nth-of-type(2) {
         right: 0;
         border-top-left-radius: var(--fd-borderRadius);
         border-bottom-left-radius: var(--fd-borderRadius);
       }
     }
   }
-}
-
-// navigation overlay on track hover
-.fdMedia__carousel__wrapper:hover .fdMedia__carousel__wrapper__navigation {
-  opacity: 1;
-  transition: ease-in-out 0.22s opacity;
 }
