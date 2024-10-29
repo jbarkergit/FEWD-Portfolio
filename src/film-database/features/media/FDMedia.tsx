@@ -7,7 +7,7 @@ import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbGenres
 import { Namespace_TmdbEndpointsKeys } from '../../composables/tmdb-api/data/tmdbEndPoints';
 // Features
 import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
-import FDCarousel from './media-carousel/FDCarousel';
+import FDCarousels from '../../components/FDCarousels';
 
 const FDMedia = ({
   route,
@@ -129,7 +129,15 @@ const FDMedia = ({
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
       {paginatedData &&
         Array.from(paginatedData.entries()).map(([key, value], index) => (
-          <FDCarousel mapIndex={index} key={key} dataKey={key} mapValue={value} maxVisibleCarouselNodes={7} setHeroData={setHeroData} />
+          <FDCarousels
+            variant={{
+              type: 'movies',
+              mapIndex: index,
+              heading: key,
+              data: value,
+              setHeroData: setHeroData,
+            }}
+          />
         ))}
       <FDCarouselSearch setHeroData={setHeroData} />
     </main>
