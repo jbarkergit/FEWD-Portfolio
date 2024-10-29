@@ -9,9 +9,12 @@
     pointer-events: none;
   }
   &__header {
+    width: fit-content;
     padding: 0 var(--fd-padding-generic) var(--fd-gap) var(--fd-padding-generic);
-    @include m.fdFontXL;
     text-transform: capitalize;
+    &--h2 {
+      @include m.fdFontXL;
+    }
   }
   &__wrapper {
     position: relative;
