@@ -85,7 +85,7 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
 
       <div className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
-          {searchResults && !isTyping
+          {maxVisibleCarouselNodes && searchResults && !isTyping
             ? searchResults.splice(0, maxVisibleCarouselNodes).map((props) => {
                 if (props.poster_path)
                   return (
