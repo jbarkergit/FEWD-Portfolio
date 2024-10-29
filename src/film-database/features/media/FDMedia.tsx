@@ -8,6 +8,7 @@ import { Namespace_TmdbEndpointsKeys } from '../../composables/tmdb-api/data/tmd
 // Features
 import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 import FDCarousels from '../../components/FDCarousels';
+import usePostersPerPage from '../../hooks/usePostersPerPage';
 
 const FDMedia = ({
   route,
@@ -53,9 +54,11 @@ const FDMedia = ({
     let dataMap: Map<string, Namespace_Tmdb.BaseMedia_Provider[][]> = new Map([]);
 
     // Paginate data
+    const maxVisibleCarouselNodes: number | undefined = usePostersPerPage();
+
     const setData = (targetKey: Namespace_TmdbEndpointsKeys.Prefabs_Keys, data: Namespace_Tmdb.BaseMedia_Provider[]): void => {
-      // Hard-coded value, requires attention asap for removal
-      const maxVisibleCarouselNodes: number = 7;
+      if (!maxVisibleCarouselNodes) return;
+
       // Pagination iteration dependency calculation
       const maxIteratorIndex: number = Math.ceil((data.length - 1) / maxVisibleCarouselNodes);
       // Get map by key
