@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+import usePostersPerPage from '../hooks/usePostersPerPage';
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../assets/google-material-symbols/carouselSymbols';
 import { MaterialSymbolsPlayArrow } from '../assets/google-material-symbols/iFrameSymbols';
 
@@ -59,10 +60,12 @@ const FDCarousels = ({ variant }: Variant) => {
   }, []);
 
   /** Horizontal Navigation */
+  const postersPerPage: number | undefined = usePostersPerPage();
+
   const navigate = (): void => {
-    if (!carouselRef.current || !carouselRef.current.children) return;
+    if (!postersPerPage || !carouselRef.current || !carouselRef.current.children) return;
     // Target indexes and elements
-    const targetIndex: number = carouselIndex * 7;
+    const targetIndex: number = carouselIndex * postersPerPage;
     const targetElement = carouselRef.current.children[targetIndex] as HTMLLIElement;
     const articlesFlatMap: Namespace_Tmdb.BaseMedia_Provider[] = articles.flatMap((innerArray) => innerArray);
     const lastElement = carouselRef.current.children[articlesFlatMap.findLastIndex((obj) => obj)] as HTMLLIElement;
@@ -81,7 +84,9 @@ const FDCarousels = ({ variant }: Variant) => {
   /** JSX */
   return (
     <section className='fdCarousel' data-anim={mapIndex === 0 ? 'active' : 'disabled'}>
-      <h2 className='fdCarousel__header'>{heading.replaceAll('_', ' ')}</h2>
+      <div className='fdCarousel__header'>
+        <h2 className='fdCarousel__header--h2'>{heading.replaceAll('_', ' ')}</h2>
+      </div>
       <div className='fdCarousel__wrapper'>
         <ul className='fdCarousel__wrapper__ul' ref={carouselRef}>
           {articles.flat().map((article) => {
