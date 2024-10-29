@@ -10,6 +10,8 @@ import { MaterialSymbolsSearch } from '../../../assets/google-material-symbols/m
 const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>> }) => {
   /** User is searching */
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const isSearchTerm: boolean = searchTerm.length === 0;
+
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -28,7 +30,7 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
   };
 
   useEffect(() => {
-    if (searchTerm.length === 0) setSearchResults([]);
+    if (isSearchTerm) setSearchResults([]);
     if (searchTerm.length > 0) setIsTyping(true);
 
     if (timerRef.current) window.clearTimeout(timerRef.current);
@@ -44,7 +46,7 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
 
   return (
     <section className='fdSearchBar'>
-      <section className='fdSearchBar__header'>
+      <div className='fdSearchBar__header'>
         <fieldset className='fdSearchBar__header__fieldset'>
           <label
             className='fdSearchBar__header__fieldset__label'
@@ -52,7 +54,7 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
             data-opacity={searchTerm.length > 0 ? 'hidden' : 'barelyVisible'}
             ref={labelRef}>
             <MaterialSymbolsSearch />
-            Find the movies you're interested in
+            <h2>Find the movies you're interested in</h2>
           </label>
           <input
             className='fdSearchBar__header__fieldset__input'
@@ -60,24 +62,24 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
             pattern='search'
             autoFocus={true}
             onPointerOver={() => {
-              if (searchTerm.length === 0) labelRef.current?.setAttribute('data-opacity', 'visible');
+              if (isSearchTerm) labelRef.current?.setAttribute('data-opacity', 'visible');
             }}
             onPointerLeave={() => {
-              if (searchTerm.length === 0) labelRef.current?.setAttribute('data-opacity', 'barelyVisible');
+              if (isSearchTerm) labelRef.current?.setAttribute('data-opacity', 'barelyVisible');
             }}
             onFocus={() => {
-              if (searchTerm.length === 0) labelRef.current?.setAttribute('data-opacity', 'visible');
+              if (isSearchTerm) labelRef.current?.setAttribute('data-opacity', 'visible');
             }}
             onBlur={() => {
-              if (searchTerm.length === 0) labelRef.current?.setAttribute('data-opacity', 'barelyVisible');
+              if (isSearchTerm) labelRef.current?.setAttribute('data-opacity', 'barelyVisible');
             }}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e?.target.value.replace(' ', '-').toLowerCase())}
           />
           {isTyping ? <SvgSpinnersRingResize /> : null}
         </fieldset>
-      </section>
+      </div>
 
-      <section className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
+      <div className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
           {searchResults && !isTyping
             ? searchResults.splice(0, 7).map((props) => {
@@ -97,7 +99,7 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
               })
             : null}
         </ul>
-      </section>
+      </div>
     </section>
   );
 };
