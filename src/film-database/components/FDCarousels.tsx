@@ -1,26 +1,28 @@
+// Deps
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
+// Composables
 import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+// Hooks
 import { usePostersPerPage } from '../hooks/usePostersPerPage';
-
+// Assets
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../assets/google-material-symbols/carouselSymbols';
 import { MaterialSymbolsPlayArrow } from '../assets/google-material-symbols/iFrameSymbols';
 
-type Variant_Provider = {
-  type: 'movies' | 'people';
-  mapIndex: number;
-  heading: string;
-  data: Namespace_Tmdb.BaseMedia_Provider[][];
-  setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
-};
-
 type Variant = {
-  variant: Variant_Provider;
+  variant: {
+    type: 'movies' | 'people';
+    mapIndex: number;
+    heading: string;
+    data: Namespace_Tmdb.BaseMedia_Provider[][];
+    setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
+  };
 };
 
 const FDCarousels = ({ variant }: Variant) => {
   const { type, mapIndex, heading, data, setHeroData } = variant;
+
+  /** State */
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
   const [articles, setArticles] = useState<Namespace_Tmdb.BaseMedia_Provider[][]>([data[0]]);
 
@@ -40,13 +42,12 @@ const FDCarousels = ({ variant }: Variant) => {
   useEffect(() => renderPaginatedDataSet(), [carouselIndex]);
 
   /** Pagination on pointer drag */
-  const carouselRef = useRef<HTMLUListElement>(null);
-
   useEffect(() => {
-    if (window.innerWidth >= 1410) return;
+    if (window.innerWidth >= 1410 || !carouselRef.current) return;
 
-    if (!carouselRef.current || !carouselRef.current.children) return;
     const lastCarouselNode = carouselRef.current.children[carouselRef.current.children.length - 1];
+    console.log(lastCarouselNode);
+    if (!lastCarouselNode) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -62,6 +63,7 @@ const FDCarousels = ({ variant }: Variant) => {
   }, []);
 
   /** Horizontal Navigation */
+  const carouselRef = useRef<HTMLUListElement>(null);
   const postersPerPage: number | undefined = usePostersPerPage();
 
   const navigate = (): void => {
@@ -69,19 +71,14 @@ const FDCarousels = ({ variant }: Variant) => {
     // Target indexes and elements
     const targetIndex: number = carouselIndex * postersPerPage;
     const targetElement = carouselRef.current.children[targetIndex] as HTMLLIElement;
-    const articlesFlatMap: Namespace_Tmdb.BaseMedia_Provider[] = articles.flatMap((innerArray) => innerArray);
-    const lastElement = carouselRef.current.children[articlesFlatMap.findLastIndex((obj) => obj)] as HTMLLIElement;
-    // Element boundaries
-    let targetElementPosition: number;
-    !targetElement ? (targetElementPosition = lastElement.offsetLeft) : (targetElementPosition = targetElement.offsetLeft);
     // Positions
     const carouselPosition: number = carouselRef.current.offsetLeft;
-    const scrollPosition: number = targetElementPosition - carouselPosition;
+    const scrollPosition: number = targetElement.offsetLeft - carouselPosition;
     // Scroll
     carouselRef.current.scrollTo({ left: scrollPosition, behavior: 'smooth' });
   };
 
-  useEffect(() => navigate(), [carouselIndex]);
+  useEffect(() => navigate(), [articles, carouselIndex]);
 
   /** JSX */
   return (
