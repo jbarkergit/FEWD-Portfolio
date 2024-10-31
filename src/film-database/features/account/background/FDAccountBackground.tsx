@@ -1,14 +1,11 @@
 // Deps
-import { Dispatch, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // Types
 import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 
-type Type_PropDrill = {
-  responseSets: Namespace_Tmdb.BaseMedia_Provider[][];
-  setResponseSets: Dispatch<React.SetStateAction<Namespace_Tmdb.BaseMedia_Provider[][]>>;
-};
+const FDAccountBackground = (): JSX.Element => {
+  const [responseSets, setResponseSets] = useState<Namespace_Tmdb.BaseMedia_Provider[][]>([]);
 
-const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill): JSX.Element => {
   /** Reference dependencies */
   const backdropRef = useRef<HTMLDivElement>(null);
   const ulRefs = useRef<HTMLUListElement[]>([]);
