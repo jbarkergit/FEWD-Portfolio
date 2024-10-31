@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+
 import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
-import usePostersPerPage from '../hooks/usePostersPerPage';
+import { usePostersPerPage } from '../hooks/usePostersPerPage';
+
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../assets/google-material-symbols/carouselSymbols';
 import { MaterialSymbolsPlayArrow } from '../assets/google-material-symbols/iFrameSymbols';
 
