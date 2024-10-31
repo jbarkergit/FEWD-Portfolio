@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode, FC } from 'react';
+import { createContext, useEffect, useState, ReactNode, FC } from 'react';
 
 const LayoutContext = createContext<{ layoutAttr: string } | undefined>(undefined);
 
