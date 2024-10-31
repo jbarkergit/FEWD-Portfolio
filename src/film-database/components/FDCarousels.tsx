@@ -81,7 +81,7 @@ const FDCarousels = ({ variant }: Variant) => {
     carouselRef.current.scrollTo({ left: scrollPosition, behavior: 'smooth' });
   };
 
-  useEffect(() => navigate(), [articles, carouselIndex]);
+  useEffect(() => navigate(), [carouselIndex]);
 
   /** JSX */
   return (
