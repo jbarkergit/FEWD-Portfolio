@@ -1,11 +1,12 @@
+// Deps
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-
+// Provider
 import { LayoutProvider } from '../context/LayoutProvider';
-
+// Composables
 import { Namespace_Tmdb, useTmdbFetcher } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import { Namespace_TmdbEndpointsKeys } from '../composables/tmdb-api/data/tmdbEndPoints';
-
+// Features
 import FDMovieCast from '../features/movie/FDMovieCast';
 import FDMovieBackdrop from '../features/movie/FDMovieBackdrop';
 import FDMovieInfo from '../features/movie/FDMovieInfo';
