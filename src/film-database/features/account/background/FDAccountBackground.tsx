@@ -1,13 +1,13 @@
+// Deps
 import { Dispatch, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useFetchTmdbResponse } from '../../../composables/tmdb-api/hooks/useFetchTmdbResponse';
-import { useTmdbUrlBuilder } from '../../../composables/tmdb-api/hooks/useTmdbUrlBuilder';
-import { Type_Tmdb_Api_Union, Type_Tmdb_ApiMovieList_Obj } from '../../../composables/tmdb-api/types/TmdbDataTypes';
-import { useFilmDatabaseWebStorage } from '../../../composables/web-storage-api/useFilmDatabaseWebStorage';
+// Types
+import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
+// Composables
 
 type Type_PropDrill = {
-  responseSets: Type_Tmdb_Api_Union[][];
-  setResponseSets: Dispatch<React.SetStateAction<Type_Tmdb_Api_Union[][]>>;
+  responseSets: Namespace_Tmdb.BaseMedia_Provider[][];
+  setResponseSets: Dispatch<React.SetStateAction<Namespace_Tmdb.BaseMedia_Provider[][]>>;
 };
 
 const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill): JSX.Element => {
@@ -21,34 +21,19 @@ const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill):
     if (ref && !ulRefs.current.includes(ref)) ulRefs.current.push(ref);
   };
 
-  /** Fetch data */
-  const fetchData = async (): Promise<void> => {
-    try {
-      const sessionSafeKeyEndpointPairArr = [useTmdbUrlBuilder('now_playing')].map((entry) => {
-        const cachedData = useFilmDatabaseWebStorage(pathname).getData(entry.key);
-        return cachedData && cachedData.length > 0 ? { key: entry.key, endpoint: cachedData } : entry;
-      });
+  /** Fetch && create sets from response data */
+  const createResponseSets = async (): Promise<void> => {
+    const data = (await useTmdbFetcher({ now_playing: undefined })) as Namespace_Tmdb.Prefabs_Obj;
+    const results = data.now_playing.results;
 
-      const data: { key: string; endpoint: Type_Tmdb_Api_Union[] }[] | undefined = await useFetchTmdbResponse(sessionSafeKeyEndpointPairArr);
-      if (!data) throw new Error('An error occured while fetching data.');
-      createResponseSets(data);
-      data.forEach((entry) => useFilmDatabaseWebStorage(pathname).setData(entry.key, entry.endpoint));
-    } catch (Error) {
-      console.error(Error);
-    }
+    let responseSetArr: Array<typeof results> = [];
+    for (let i = 0; i < Math.ceil(results.length / 4); i++) responseSetArr.push(results.slice(i * 4, i * 4 + 4));
+    setResponseSets(responseSetArr);
   };
 
   useEffect(() => {
-    fetchData();
+    createResponseSets();
   }, []);
-
-  /** Create sets from response data */
-  const createResponseSets = (data: { key: string; endpoint: Type_Tmdb_Api_Union[] }[]): void => {
-    const responseArr = data.flatMap((obj) => obj.endpoint);
-    let responseSetArr: Type_Tmdb_Api_Union[][] = [];
-    for (let i = 0; i < Math.ceil(responseArr.length / 4); i++) responseSetArr.push(responseArr.slice(i * 4, i * 4 + 4));
-    setResponseSets(responseSetArr);
-  };
 
   /** Mount animations */
   const animator = (): void => {
@@ -61,11 +46,10 @@ const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill):
   return (
     <div className='fdAccountBackground'>
       <div className='fdAccountBackground__backdrop' ref={backdropRef} data-anim='false'>
-        {responseSets.map((set: Type_Tmdb_Api_Union[], setIndex: number) => {
+        {responseSets.map((set: Namespace_Tmdb.BaseMedia_Provider[], setIndex: number) => {
           return (
             <ul className='fdAccountBackground__backdrop__set' key={`backdropset${setIndex}`} ref={ulRef} data-anim='false'>
-              {set.map((article: Type_Tmdb_Api_Union, liIndex: number) => {
-                const props = article as Type_Tmdb_ApiMovieList_Obj;
+              {set.map((article: Namespace_Tmdb.BaseMedia_Provider, liIndex: number) => {
                 const isCenteredListItem: boolean = setIndex === 2 && liIndex === 1;
                 const isLastListItem: boolean = setIndex === responseSets.length - 1 && liIndex === 3;
                 return (
@@ -73,8 +57,8 @@ const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill):
                     <div className='fdAccountBackground__backdrop__set__li__container'>
                       <img
                         className='fdAccountBackground__backdrop__set__li__container--img'
-                        src={`https://image.tmdb.org/t/p/${isCenteredListItem ? `original` : `w780`}/${props?.backdrop_path}`}
-                        alt={`${props?.title}`}
+                        src={`https://image.tmdb.org/t/p/${isCenteredListItem ? `original` : `w780`}/${article?.backdrop_path}`}
+                        alt={`${article?.title}`}
                         onLoad={() => (isLastListItem ? animator() : null)}
                       />
                     </div>
