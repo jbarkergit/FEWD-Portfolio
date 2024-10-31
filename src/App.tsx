@@ -1,10 +1,13 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { Suspense, lazy, startTransition, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 // 404
 const ProtocolErrorHandler = lazy(() => import('./app/features/ProtocolErrorHandler'));
 // Routes data
 import { useAppRoutes } from './app/hooks/useAppRoutes';
 import { useSuspense } from './app/hooks/useSuspense';
+// Firebase
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { firebaseAuth } from './app/config/firebaseConfig';
 
 function App() {
   const appRoutes = useAppRoutes();
@@ -79,6 +82,26 @@ function App() {
     return routeComponents.find((route) => route.path === path)?.component;
   };
 
+  /** Firebase Authentication */
+  const [authorizedUser, setAuthorizedUser] = useState<{
+    user: undefined | User;
+    verified: boolean;
+  }>({
+    user: undefined,
+    verified: false,
+  });
+
+  useEffect(() => {
+    const authListener = onAuthStateChanged(firebaseAuth, (user) => {
+      startTransition(() => {
+        if (!user) setAuthorizedUser({ user: undefined, verified: false });
+        else setAuthorizedUser({ user: user, verified: user.emailVerified });
+      });
+    });
+
+    return () => authListener();
+  }, []);
+
   /** Application */
   return (
     <Suspense fallback={useSuspense(appRoutes, userLocationPathname)}>
@@ -95,8 +118,14 @@ function App() {
         {appRoutes.ecommercePaths.map((path) => (
           <Route path={path} element={getElementByPath('/ecommerce/products')} key={path} />
         ))}
-        <Route path='/film-database' element={getElementByPath('/film-database')} />
-        <Route path='/film-database/:paramId' element={getElementByPath('/film-database/:paramId')} />
+        {!authorizedUser.user && !authorizedUser.verified ? (
+          <Route path='/film-database' element={getElementByPath('/film-database')} />
+        ) : (
+          <>
+            <Route path='/film-database/browse' element={getElementByPath('/film-database/browse')} />
+            <Route path='/film-database/:paramId' element={getElementByPath('/film-database/:paramId')} />
+          </>
+        )}
       </Routes>
     </Suspense>
   );
