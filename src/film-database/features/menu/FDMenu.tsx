@@ -1,22 +1,16 @@
 // Deps
-import { Dispatch, RefObject, SetStateAction, useCallback, useRef } from 'react';
-// Composables
-import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbGenres';
+import { RefObject, useCallback, useRef } from 'react';
+// Context
+import { useCatalogProvider } from '../../context/CatalogContext';
 // Assets
 import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp } from '../../assets/google-material-symbols/menuSymbols';
 // Features
 import FDMenuToolbar from './FDMenuToolbar';
 import FDMenuGenres from './FDMenuGenres';
 
-const FDMenu = ({
-  isMenuOpen,
-  setIsMenuOpen,
-  setRoute,
-}: {
-  isMenuOpen: boolean;
-  setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
-  setRoute: Dispatch<SetStateAction<Type_MovieGenre_Keys | 'home'>>;
-}) => {
+const FDMenu = () => {
+  const { isMenuOpen, setIsMenuOpen, setRoute } = useCatalogProvider();
+
   const menuGenresRef = useRef<HTMLElement>(null),
     menuPropertyRef = useRef<HTMLElement>(null);
 

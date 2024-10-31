@@ -1,8 +1,9 @@
 // Deps
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+// Context
+import { useCatalogProvider } from '../../context/CatalogContext';
 // Composables
 import { Namespace_Tmdb, useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
-import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbGenres';
 // Hooks
 import { usePostersPerPage } from '../../hooks/usePostersPerPage';
 // Data
@@ -11,15 +12,8 @@ import { Namespace_TmdbEndpointsKeys } from '../../composables/tmdb-api/data/tmd
 import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 import FDCarousels from '../../components/FDCarousels';
 
-const FDMedia = ({
-  route,
-  isMenuOpen,
-  setHeroData,
-}: {
-  route: Type_MovieGenre_Keys | 'home';
-  isMenuOpen: boolean;
-  setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
-}) => {
+const FDMedia = () => {
+  const { route, isMenuOpen, setHeroData } = useCatalogProvider();
   const [paginatedData, setPaginatedData] = useState<Map<string, Namespace_Tmdb.BaseMedia_Provider[][]> | undefined>(undefined);
 
   /** Fetch data when user requests a route, pass to processDataPagination() */

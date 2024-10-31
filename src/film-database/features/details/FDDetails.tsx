@@ -1,15 +1,12 @@
 // Deps
 import { Link } from 'react-router-dom';
-// Composable Hook Types
-import { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
+// Context
+import { useCatalogProvider } from '../../context/CatalogContext';
 // Assets
 import { TheMovieDatabaseLogo } from '../../assets/google-material-symbols/tmdbSymbols';
 
-type Type_PropDrill = {
-  heroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
-};
-
-const FDDetails = ({ heroData }: Type_PropDrill) => {
+const FDDetails = () => {
+  const { heroData } = useCatalogProvider();
   if (!heroData) return;
 
   return (

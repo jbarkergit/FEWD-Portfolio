@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react';
 import { Namespace_Tmdb, useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Features
 import FDiFramePlayer from './player/FDiFramePlayer';
+import { useCatalogProvider } from '../../context/CatalogContext';
 
 /** This component utilizes YouTube Player API
  * https://developers.google.com/youtube/iframe_api_reference
  * via third party library https://github.com/tjallingt/react-youtube
  */
 
-const FDiFrame = ({ heroData }: { heroData: Namespace_Tmdb.BaseMedia_Provider | undefined }) => {
+const FDiFrame = () => {
+  const { heroData } = useCatalogProvider();
   const [trailers, setTrailers] = useState<Namespace_Tmdb.Videos_Obj['videos']['results'] | undefined>(undefined);
 
   const fetchTrailer = async (): Promise<void> => {
