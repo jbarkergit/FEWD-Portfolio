@@ -22,8 +22,9 @@ export const useAppRoutes = () => {
       { path: '/ecommerce/product/:paramId', dir: '/src/ecommerce/pages/ProductDetailPage.tsx' },
     ],
     filmDatabase: [
-      { path: '/film-database', dir: '/src/film-database/pages/FilmDatabase.tsx' },
-      { path: '/film-database/:paramId', dir: '/src/film-database/pages/FDMovie.tsx' },
+      { path: '/film-database', dir: '/src/film-database/pages/FDUserAccount.tsx' },
+      { path: '/film-database/browse', dir: '/src/film-database/pages/FDCatalog.tsx' },
+      { path: '/film-database/:paramId', dir: '/src/film-database/pages/FDMoviePage.tsx' },
     ],
   };
 
