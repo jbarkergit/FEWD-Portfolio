@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 // Composables
 import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Hooks
-import usePostersPerPage from '../../../hooks/usePostersPerPage';
+import { usePostersPerPage } from '../../../hooks/usePostersPerPage';
 // Assets
 import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../assets/google-material-symbols/iFrameSymbols';
 import { MaterialSymbolsSearch } from '../../../assets/google-material-symbols/menuSymbols';
