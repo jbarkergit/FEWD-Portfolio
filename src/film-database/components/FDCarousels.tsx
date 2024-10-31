@@ -33,10 +33,13 @@ const FDCarousels = ({ variant }: Variant) => {
   const renderPaginatedDataSet = (): void => {
     const isIndexInArticles: boolean = articles.some((_, index) => index === carouselIndex);
 
-    if (!isIndexInArticles)
+    if (!isIndexInArticles) {
       setArticles((prevState) => {
         return [...prevState, data[carouselIndex]];
       });
+    } else {
+      navigate();
+    }
   };
 
   useEffect(() => renderPaginatedDataSet(), [carouselIndex]);
@@ -78,7 +81,7 @@ const FDCarousels = ({ variant }: Variant) => {
     carouselRef.current.scrollTo({ left: scrollPosition, behavior: 'smooth' });
   };
 
-  useEffect(() => navigate(), [articles, carouselIndex]);
+  useEffect(() => navigate(), [articles]);
 
   /** JSX */
   return (
