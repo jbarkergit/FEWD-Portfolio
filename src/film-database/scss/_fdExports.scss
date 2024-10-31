@@ -4,9 +4,7 @@
 
 // Pages
 @forward '/src/film-database/pages/filmDatabase';
-
-// Layouts
-@forward '/src/film-database/layouts/fdCatalog';
+@forward '/src/film-database/pages/fdCatalog';
 
 // Features
 @forward '/src/film-database/features/account/background/fdAccountBackground';
