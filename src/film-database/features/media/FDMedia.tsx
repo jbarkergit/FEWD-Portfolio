@@ -3,12 +3,13 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 // Composables
 import { Namespace_Tmdb, useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbGenres';
+// Hooks
+import { usePostersPerPage } from '../../hooks/usePostersPerPage';
 // Data
 import { Namespace_TmdbEndpointsKeys } from '../../composables/tmdb-api/data/tmdbEndPoints';
 // Features
 import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 import FDCarousels from '../../components/FDCarousels';
-import usePostersPerPage from '../../hooks/usePostersPerPage';
 
 const FDMedia = ({
   route,
@@ -25,20 +26,19 @@ const FDMedia = ({
   type Prefabs_Obj_isUndefined = Namespace_Tmdb.Prefabs_Obj | undefined;
 
   const fetchDataByRoute = async (): Promise<void> => {
-    const homeData = (await useTmdbFetcher([
-      { now_playing: undefined },
-      { upcoming: undefined },
-      { trending_today: undefined },
-      { trending_this_week: undefined },
-    ])) as Namespace_Tmdb.Prefabs_Obj[] | Prefabs_Obj_isUndefined[];
-
-    const routeData = (await useTmdbFetcher({ discover: 'comedy' })) as Namespace_Tmdb.Discover_Obj | undefined;
-
     if (route === 'home') {
-      const filteredHomeData = homeData.filter((obj) => obj !== undefined) as Namespace_Tmdb.Prefabs_Obj[];
+      const routeData = (await useTmdbFetcher([
+        { now_playing: undefined },
+        { upcoming: undefined },
+        { trending_today: undefined },
+        { trending_this_week: undefined },
+      ])) as Namespace_Tmdb.Prefabs_Obj[] | Prefabs_Obj_isUndefined[];
+
+      const filteredHomeData = routeData.filter((obj) => obj !== undefined) as Namespace_Tmdb.Prefabs_Obj[];
       processDataPagination(filteredHomeData);
     } else {
-      if (routeData) processDataPagination(routeData);
+      const routeData = (await useTmdbFetcher({ discover: 'comedy' })) as Namespace_Tmdb.Discover_Obj;
+      processDataPagination(routeData);
     }
   };
 
@@ -47,18 +47,16 @@ const FDMedia = ({
   }, [route]);
 
   /** Pagination && carousel, hero data creation */
+  const maxVisibleCarouselNodes: number | undefined = usePostersPerPage();
+
   const processDataPagination = (rawData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj | undefined) => {
-    if (!rawData) return;
+    if (!rawData || !maxVisibleCarouselNodes) return;
 
     // Init mutatable map in outter scope to reduce state updates when paginating data
     let dataMap: Map<string, Namespace_Tmdb.BaseMedia_Provider[][]> = new Map([]);
 
     // Paginate data
-    const maxVisibleCarouselNodes: number | undefined = usePostersPerPage();
-
     const setData = (targetKey: Namespace_TmdbEndpointsKeys.Prefabs_Keys, data: Namespace_Tmdb.BaseMedia_Provider[]): void => {
-      if (!maxVisibleCarouselNodes) return;
-
       // Pagination iteration dependency calculation
       const maxIteratorIndex: number = Math.ceil((data.length - 1) / maxVisibleCarouselNodes);
       // Get map by key
