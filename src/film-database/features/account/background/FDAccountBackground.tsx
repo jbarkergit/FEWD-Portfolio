@@ -1,9 +1,7 @@
 // Deps
 import { Dispatch, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
 // Types
 import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
-// Composables
 
 type Type_PropDrill = {
   responseSets: Namespace_Tmdb.BaseMedia_Provider[][];
@@ -11,8 +9,6 @@ type Type_PropDrill = {
 };
 
 const FDAccountBackground = ({ responseSets, setResponseSets }: Type_PropDrill): JSX.Element => {
-  const pathname: string = useLocation().pathname;
-
   /** Reference dependencies */
   const backdropRef = useRef<HTMLDivElement>(null);
   const ulRefs = useRef<HTMLUListElement[]>([]);
