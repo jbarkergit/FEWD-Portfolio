@@ -31,7 +31,8 @@
     position: relative;
     z-index: 8;
     display: flex;
-    padding: var(--fd-padding-generic) calc((var(--fd-padding-generic) / 3.5)) var(--fd-padding-generic) calc((var(--fd-padding-generic) / 3.5));
+    padding: var(--fd-padding-generic) calc((var(--fd-padding-generic) / 3.5)) calc(var(--fd-padding-generic) + var(--fd-padding-generic) / 2)
+      calc((var(--fd-padding-generic) / 3.5));
     &__ul {
       display: flex;
       flex-direction: column;
