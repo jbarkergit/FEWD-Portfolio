@@ -4,6 +4,7 @@
 .fdDetails {
   position: relative;
   z-index: 3;
+  height: inherit;
   padding: var(--fd-padding-generic) var(--fd-padding-generic) calc(var(--fd-padding-generic) / 2) var(--fd-padding-generic);
   &__article {
     display: table;
@@ -36,6 +37,9 @@
       &__release {
         display: flex;
         gap: f.rem(12);
+        & span {
+        }
+        @include m.fdFontM;
       }
       &__cta {
         & a {
@@ -46,8 +50,7 @@
           width: fit-content;
           border-radius: calc(var(--fd-borderRadius) / 2);
           @include m.fdFontM;
-          color: white;
-          opacity: 0.3;
+          opacity: 0.4;
           transition: opacity ease-in-out 250ms;
           &:hover {
             opacity: 1;
