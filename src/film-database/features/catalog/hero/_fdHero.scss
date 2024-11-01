@@ -2,6 +2,7 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdHero {
+  position: relative;
   display: block;
   height: 50svh;
 }
