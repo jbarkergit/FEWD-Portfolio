@@ -31,7 +31,7 @@ const FDDetails = () => {
     ),
   };
 
-  const renderStars = () => {
+  const renderStars = (): JSX.Element[] => {
     // 0 to 10 with floating point value
     const voteAverage: number = heroData.vote_average;
 
