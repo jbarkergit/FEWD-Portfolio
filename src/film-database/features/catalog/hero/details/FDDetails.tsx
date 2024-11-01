@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useCatalogProvider } from '../../../../context/CatalogContext';
 // Assets
 import { TheMovieDatabaseLogo } from '../../../../assets/google-material-symbols/tmdbSymbols';
+import { useMemo } from 'react';
 
 const FDDetails = () => {
   const { heroData } = useCatalogProvider();
@@ -31,7 +32,7 @@ const FDDetails = () => {
     ),
   };
 
-  const renderStars = (): JSX.Element[] => {
+  const renderStars: JSX.Element[] = useMemo(() => {
     // 0 to 10 with floating point value
     const voteAverage: number = heroData.vote_average;
 
@@ -52,7 +53,31 @@ const FDDetails = () => {
     for (let i = 0; i < emptyStars; i++) stars.push(voteSymbols.empty);
 
     return stars;
-  };
+  }, [heroData]);
+
+  const renderDate: string = useMemo(() => {
+    // Get current date
+    const date: Date = new Date();
+    const currentDate: Record<'month' | 'day' | 'year', number> = { month: date.getMonth() + 1, day: date.getDay(), year: date.getFullYear() };
+
+    // Get movie release date
+    const dataReleaseDate: string = heroData.release_date.replaceAll('-', '');
+    const releaseDate: typeof currentDate = {
+      month: parseInt(dataReleaseDate.slice(4, 6)),
+      day: parseInt(dataReleaseDate.slice(6, 8)),
+      year: parseInt(dataReleaseDate.slice(0, 4)),
+    };
+
+    // Compare dates
+    const isMovieReleased: boolean =
+      releaseDate.year > currentDate.year ||
+      (releaseDate.year === currentDate.year && releaseDate.month > currentDate.month) ||
+      (releaseDate.year === currentDate.year && releaseDate.month === currentDate.month && releaseDate.day > currentDate.day);
+
+    // Return formatted date or 'Providers'
+    if (isMovieReleased) return `${releaseDate.month}/${releaseDate.day}/${releaseDate.year}`;
+    return 'Now Available';
+  }, [heroData]);
 
   return (
     <section className='fdDetails'>
@@ -67,8 +92,8 @@ const FDDetails = () => {
         </header>
         <div className='fdDetails__article__details'>
           <div className='fdDetails__article__details__release'>
-            <span>{renderStars()}</span>
-            <span>{heroData.release_date}</span>
+            <span>{renderStars}</span>
+            <span data-status={renderDate === 'Now Available' ? 'green' : ''}>{renderDate}</span>
           </div>
           <nav className='fdDetails__article__details__cta'>
             <Link to={`/film-database/${heroData.id}`} aria-label={`More details about ${heroData.title}`}>
