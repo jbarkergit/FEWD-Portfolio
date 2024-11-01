@@ -43,6 +43,11 @@
         & span {
           display: flex;
           align-items: center;
+          &[data-status='green'] {
+            color: #54c470;
+            text-transform: uppercase;
+            font-weight: 700;
+          }
           & svg {
             width: 1.2em;
             height: 1.2em;
