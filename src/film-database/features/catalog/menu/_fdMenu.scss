@@ -35,6 +35,7 @@
     &__ul {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       gap: var(--fd-gap);
       height: 50%;
       &__li {

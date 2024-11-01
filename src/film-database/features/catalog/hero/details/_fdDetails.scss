@@ -4,6 +4,8 @@
 .fdDetails {
   position: relative;
   z-index: 3;
+  display: flex;
+  align-items: center;
   width: 50%;
   height: inherit;
   padding: var(--fd-padding-generic) var(--fd-padding-generic) calc(var(--fd-padding-generic) / 2) var(--fd-padding-generic);
