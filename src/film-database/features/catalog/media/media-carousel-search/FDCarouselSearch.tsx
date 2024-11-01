@@ -2,12 +2,12 @@
 import { useState, useEffect, useRef, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // Composables
-import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
+import { Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Hooks
-import { usePostersPerPage } from '../../../hooks/usePostersPerPage';
+import { usePostersPerPage } from '../../../../hooks/usePostersPerPage';
 // Assets
-import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../assets/google-material-symbols/iFrameSymbols';
-import { MaterialSymbolsSearch } from '../../../assets/google-material-symbols/menuSymbols';
+import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../assets/google-material-symbols/iFrameSymbols';
+import { MaterialSymbolsSearch } from '../../../../assets/google-material-symbols/menuSymbols';
 
 const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>> }) => {
   const maxVisibleCarouselNodes: number | undefined = usePostersPerPage();

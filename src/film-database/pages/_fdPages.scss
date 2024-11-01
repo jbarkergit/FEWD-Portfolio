@@ -41,3 +41,20 @@
     }
   }
 }
+
+.fdCatalog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 1);
+  @include m.fdFontM;
+  @media (min-width: 1750px) {
+    height: 100svh;
+    overflow: clip;
+  }
+  @media (max-width: 1749px) {
+    height: auto;
+    overflow-y: scroll;
+    overflow-x: clip;
+  }
+}

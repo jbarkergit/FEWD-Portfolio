@@ -1,10 +1,9 @@
 // Context
 import { CatalogProvider } from '../context/CatalogContext';
 // Features
-import FDDetails from '../features/details/FDDetails';
-import FDiFrame from '../features/iframe/FDiFrame';
-import FDMenu from '../features/menu/FDMenu';
-import FDMedia from '../features/media/FDMedia';
+import FDMenu from '../features/catalog/menu/FDMenu';
+import FDHero from '../features/catalog/hero/FDHero';
+import FDMedia from '../features/catalog/media/FDMedia';
 
 const FDCatalog = () => {
   return (
@@ -12,8 +11,7 @@ const FDCatalog = () => {
       <div className='fdCatalog'>
         <CatalogProvider>
           <FDMenu />
-          <FDDetails />
-          <FDiFrame />
+          <FDHero />
           <FDMedia />
         </CatalogProvider>
       </div>

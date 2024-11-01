@@ -1,9 +1,9 @@
 // Deps
 import { RefObject, useCallback, useRef } from 'react';
 // Context
-import { useCatalogProvider } from '../../context/CatalogContext';
+import { useCatalogProvider } from '../../../context/CatalogContext';
 // Assets
-import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp } from '../../assets/google-material-symbols/menuSymbols';
+import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp } from '../../../assets/google-material-symbols/menuSymbols';
 // Features
 import FDMenuToolbar from './FDMenuToolbar';
 import FDMenuGenres from './FDMenuGenres';

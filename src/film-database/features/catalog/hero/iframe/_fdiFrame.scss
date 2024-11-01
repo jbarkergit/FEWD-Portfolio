@@ -2,12 +2,10 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdiFrame {
-  grid-area: 1 / 2 / 2 / 3;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  height: 50svh;
   &--h2 {
     display: none;
   }

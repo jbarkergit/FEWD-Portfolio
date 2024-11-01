@@ -1,16 +1,16 @@
 // Deps
 import { useEffect, useRef, useState } from 'react';
 // Context
-import { useCatalogProvider } from '../../context/CatalogContext';
+import { useCatalogProvider } from '../../../context/CatalogContext';
 // Composables
-import { Namespace_Tmdb, useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
+import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Hooks
-import { usePostersPerPage } from '../../hooks/usePostersPerPage';
+import { usePostersPerPage } from '../../../hooks/usePostersPerPage';
 // Data
-import { Namespace_TmdbEndpointsKeys } from '../../composables/tmdb-api/data/tmdbEndPoints';
+import { Namespace_TmdbEndpointsKeys } from '../../../composables/tmdb-api/data/tmdbEndPoints';
 // Features
 import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
-import FDCarousels from '../../components/FDCarousels';
+import FDCarousels from '../../../components/FDCarousels';
 
 const FDMedia = () => {
   const { route, isMenuOpen, setHeroData } = useCatalogProvider();

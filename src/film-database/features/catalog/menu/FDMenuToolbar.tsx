@@ -1,9 +1,9 @@
 import { Dispatch, RefObject, SetStateAction } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Type_MovieGenre_Keys } from '../../composables/tmdb-api/data/tmdbGenres';
+import { Type_MovieGenre_Keys } from '../../../composables/tmdb-api/data/tmdbGenres';
 import { signOut } from 'firebase/auth';
-import { firebaseAuth } from '../../../app/config/firebaseConfig';
-import { IcOutlinePowerSettingsNew } from '../../assets/google-material-symbols/menuSymbols';
+import { firebaseAuth } from '../../../../app/config/firebaseConfig';
+import { IcOutlinePowerSettingsNew } from '../../../assets/google-material-symbols/menuSymbols';
 
 const FDMenuToolbar = ({
   setRoute,
