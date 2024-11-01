@@ -28,7 +28,6 @@
     }
   }
   &__toolbar {
-    grid-area: 1 / 1 / 2 / 2;
     position: relative;
     z-index: 8;
     display: flex;
@@ -36,7 +35,6 @@
     &__ul {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       gap: var(--fd-gap);
       height: 50%;
       &__li {
