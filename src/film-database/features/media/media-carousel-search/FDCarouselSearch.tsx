@@ -22,6 +22,12 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
   /** Handle label */
   const labelRef = useRef<HTMLLabelElement>(null);
 
+  const handleLabel = (prop: 'visible' | 'barelyVisible'): void | undefined => {
+    if (!labelRef.current) return undefined;
+    if (isSearchTerm) return labelRef.current?.setAttribute('data-opacity', prop);
+    return undefined;
+  };
+
   /** Invoke fetch with timeout */
   const [searchResults, setSearchResults] = useState<Namespace_Tmdb.Search_Obj['search']['results'] | undefined>(undefined);
 
@@ -65,18 +71,10 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
             type='search'
             pattern='search'
             autoFocus={true}
-            onPointerOver={() => {
-              if (isSearchTerm) labelRef.current?.setAttribute('data-opacity', 'visible');
-            }}
-            onPointerLeave={() => {
-              if (isSearchTerm) labelRef.current?.setAttribute('data-opacity', 'barelyVisible');
-            }}
-            onFocus={() => {
-              if (isSearchTerm) labelRef.current?.setAttribute('data-opacity', 'visible');
-            }}
-            onBlur={() => {
-              if (isSearchTerm) labelRef.current?.setAttribute('data-opacity', 'barelyVisible');
-            }}
+            onPointerOver={() => handleLabel('visible')}
+            onPointerLeave={() => handleLabel('barelyVisible')}
+            onFocus={() => handleLabel('visible')}
+            onBlur={() => handleLabel('barelyVisible')}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e?.target.value.replace(' ', '-').toLowerCase())}
           />
           {isTyping ? <SvgSpinnersRingResize /> : null}
