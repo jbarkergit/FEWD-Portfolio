@@ -4,23 +4,16 @@
 .fdDetails {
   position: relative;
   z-index: 3;
-  display: flex;
-  flex-direction: column;
-  gap: var(--fd-gap);
-  padding: calc(var(--fd-padding-generic) * 1.5) 0 0 var(--fd-padding-generic);
-  pointer-events: none;
+  padding: var(--fd-padding-generic) var(--fd-padding-generic) calc(var(--fd-padding-generic) / 2) var(--fd-padding-generic);
   &__article {
-    & > * {
-      pointer-events: all;
-      user-select: text;
-      cursor: text;
+    display: table;
+    & > * > * {
+      width: fit-content;
     }
     &__footer {
       & a {
-        pointer-events: all;
-        padding-bottom: calc(var(--fd-gap) * 1.5);
         & svg {
-          width: 135px;
+          width: f.rem(135);
         }
       }
     }
@@ -35,6 +28,33 @@
         text-transform: uppercase;
       }
     }
+    &__details {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: f.rem(12);
+      padding-bottom: var(--fd-gap);
+      &__release {
+        display: flex;
+        gap: f.rem(12);
+      }
+      &__cta {
+        & a {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 0.65ch;
+          width: fit-content;
+          border-radius: calc(var(--fd-borderRadius) / 2);
+          @include m.fdFontM;
+          color: white;
+          opacity: 0.3;
+          transition: opacity ease-in-out 250ms;
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
     &__description {
       & p {
         display: -webkit-box;
@@ -44,24 +64,6 @@
         max-width: 57ch;
         @include m.fdFontM;
         text-shadow: var(--fd-font-shadow);
-      }
-    }
-    &__cta {
-      & {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.65ch;
-        width: fit-content;
-        border-radius: calc(var(--fd-borderRadius) / 2);
-        @include m.fdFontM;
-        color: white;
-        opacity: 0.3;
-        transition: opacity ease-in-out 250ms;
-        pointer-events: all;
-        &:hover {
-          opacity: 1;
-        }
       }
     }
   }
