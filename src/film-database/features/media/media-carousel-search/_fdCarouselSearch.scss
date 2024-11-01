@@ -11,13 +11,14 @@
 .fdSearchBar__header {
   display: flex;
   padding: 0 var(--fd-padding-generic) var(--fd-gap) var(--fd-padding-generic);
+  height: fit-content;
   &__fieldset {
     position: relative;
     display: flex;
     width: 40%;
-    & > * {
-      width: 100%;
-    }
+    @include m.fdFontXL;
+    text-transform: capitalize;
+    white-space: nowrap;
     &__label {
       position: absolute;
       left: 0;
@@ -41,6 +42,7 @@
       }
     }
     &__input {
+      width: 100%;
       cursor: text;
     }
   }
