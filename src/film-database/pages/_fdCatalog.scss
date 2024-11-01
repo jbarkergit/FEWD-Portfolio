@@ -3,11 +3,20 @@
 
 .fdCatalog {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  height: 100svh;
   background-color: rgba(0, 0, 0, 1);
-  overflow: clip;
   @include m.fdFontM;
+  @media (min-width: 1750px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    height: 100svh;
+    overflow: clip;
+  }
+  @media (max-width: 1749px) {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    overflow-y: scroll;
+    overflow-x: clip;
+  }
 }
