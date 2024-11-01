@@ -11,8 +11,6 @@
 .fdSearchBar__header {
   display: flex;
   padding: 0 var(--fd-padding-generic) var(--fd-gap) var(--fd-padding-generic);
-  @include m.fdFontXL;
-  text-transform: capitalize;
   &__fieldset {
     position: relative;
     display: flex;
@@ -26,7 +24,6 @@
       display: flex;
       align-items: center;
       gap: f.rem(6);
-      white-space: nowrap;
       pointer-events: none;
       &[data-opacity='visible'] {
         opacity: 1;
@@ -36,6 +33,11 @@
       }
       &[data-opacity='hidden'] {
         opacity: 0;
+      }
+      & h2 {
+        @include m.fdFontXL;
+        text-transform: capitalize;
+        white-space: nowrap;
       }
     }
     &__input {
