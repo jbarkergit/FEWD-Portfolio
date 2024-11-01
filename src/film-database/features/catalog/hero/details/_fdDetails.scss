@@ -41,6 +41,12 @@
         display: flex;
         gap: f.rem(12);
         & span {
+          display: flex;
+          align-items: center;
+          & svg {
+            width: 1.2em;
+            height: 1.2em;
+          }
         }
         @include m.fdFontM;
       }
