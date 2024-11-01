@@ -32,7 +32,7 @@ const FDiFrame = () => {
       {trailers && trailers.length > 0 ? (
         <FDiFramePlayer trailers={trailers} setTrailers={setTrailers} />
       ) : (
-        <picture>
+        <picture className='fdiFrame__player'>
           <img src={`https://image.tmdb.org/t/p/original/${heroData?.backdrop_path}`} alt={heroData?.title} />
         </picture>
       )}
