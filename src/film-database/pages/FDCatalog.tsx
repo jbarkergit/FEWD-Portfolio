@@ -1,7 +1,5 @@
 // Context
 import { CatalogProvider } from '../context/CatalogContext';
-// Provider
-import { LayoutProvider } from '../context/LayoutProvider';
 // Features
 import FDDetails from '../features/details/FDDetails';
 import FDiFrame from '../features/iframe/FDiFrame';
@@ -10,7 +8,7 @@ import FDMedia from '../features/media/FDMedia';
 
 const FDCatalog = () => {
   return (
-    <LayoutProvider>
+    <div className='filmDatabase' data-layout-carousel>
       <div className='fdCatalog'>
         <CatalogProvider>
           <FDMenu />
@@ -19,7 +17,7 @@ const FDCatalog = () => {
           <FDMedia />
         </CatalogProvider>
       </div>
-    </LayoutProvider>
+    </div>
   );
 };
 

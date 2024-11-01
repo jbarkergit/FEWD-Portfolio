@@ -1,8 +1,6 @@
 // Deps
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-// Provider
-import { LayoutProvider } from '../context/LayoutProvider';
 // Composables
 import { Namespace_Tmdb, useTmdbFetcher } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import { Namespace_TmdbEndpointsKeys } from '../composables/tmdb-api/data/tmdbEndPoints';
@@ -53,7 +51,7 @@ const FDMoviePage = () => {
   /** Component */
   if (movieStore && movieStore.length > 0 && props)
     return (
-      <LayoutProvider>
+      <div className='filmDatabase' data-layout-carousel>
         <div className='fdMovie'>
           <div className='fdMovie__container'>
             <FDMovieBackdrop details={props.details.details} />
@@ -62,7 +60,7 @@ const FDMoviePage = () => {
             <FDMovieCast details={props.details.details} credits={props.credits.credits} />
           </div>
         </div>
-      </LayoutProvider>
+      </div>
     );
 };
 
