@@ -38,7 +38,7 @@ const IFrameControllerPlayback = ({
   const unmountEventListeners = () => window.removeEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
 
   return (
-    <div className='iFrameController__controls__playback'>
+    <div className='fdiFrame__controller__controls__playback'>
       <button
         className='iFrameController__controls__playback__cog'
         ref={playbackCogRef}

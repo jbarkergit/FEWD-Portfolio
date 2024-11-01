@@ -58,7 +58,7 @@ const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer }) => {
 
   return (
     <button
-      className='iFrameController__seeker'
+      className='fdiFrame__controller__seeker'
       aria-label='Video time seeker'
       ref={seekerRef}
       onPointerDown={() => setIsDragging(true)}
@@ -68,8 +68,8 @@ const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer }) => {
       }}
       onPointerLeave={() => setIsDragging(false)}
       onPointerMove={(e: React.PointerEvent<HTMLButtonElement>) => useSlider(e)}>
-      <span className='iFrameController__seeker--range' />
-      <span className='iFrameController__seeker--slider' ref={sliderRef} style={{ width: `${dragPos}px` }} />
+      <span className='fdiFrame__controller__seeker--range' />
+      <span className='fdiFrame__controller__seeker--slider' ref={sliderRef} style={{ width: `${dragPos}px` }} />
     </button>
   );
 };

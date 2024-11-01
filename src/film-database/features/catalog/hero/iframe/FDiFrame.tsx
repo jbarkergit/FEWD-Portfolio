@@ -26,19 +26,18 @@ const FDiFrame = () => {
   }, [heroData]);
 
   /** Component */
-  if (trailers && trailers.length > 0) {
-    return <FDiFramePlayer trailers={trailers} setTrailers={setTrailers} />;
-  } else {
-    return (
-      <section className='fdiFrame'>
-        <figure className='fdiFrame__backdrop'>
-          <picture>
-            <img src={`https://image.tmdb.org/t/p/original/${heroData?.backdrop_path}`} alt={heroData?.title} />
-          </picture>
-          <figcaption>{heroData?.title}</figcaption>
-        </figure>
-      </section>
-    );
-  }
+
+  return (
+    <section className='fdiFrame'>
+      {trailers && trailers.length > 0 ? (
+        <FDiFramePlayer trailers={trailers} setTrailers={setTrailers} />
+      ) : (
+        <picture>
+          <img src={`https://image.tmdb.org/t/p/original/${heroData?.backdrop_path}`} alt={heroData?.title} />
+        </picture>
+      )}
+    </section>
+  );
 };
+
 export default FDiFrame;

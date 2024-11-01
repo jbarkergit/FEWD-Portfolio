@@ -20,15 +20,15 @@ const IFrameControllerVolumeSlider = ({ setPlayerVolume }: { setPlayerVolume: Di
 
   return (
     <button
-      className='iFrameController__controls__slider'
+      className='fdiFrame__controller__controls__slider'
       aria-label='Volume adjustment slider'
       ref={sliderRef}
       onPointerDown={() => setIsDragging(true)}
       onPointerUp={() => setIsDragging(false)}
       onPointerLeave={() => setIsDragging(false)}
       onPointerMove={(e: PointerEvent<HTMLButtonElement>) => moveHandle(e)}>
-      <span className='iFrameController__controls__slider--range' />
-      <span className='iFrameController__controls__slider--handle' aria-label='Volume adjustment knob' ref={handleRef} style={{ left: '0%' }} />
+      <span className='fdiFrame__controller__controls__slider--range' />
+      <span className='fdiFrame__controller__controls__slider--handle' aria-label='Volume adjustment knob' ref={handleRef} style={{ left: '0%' }} />
     </button>
   );
 };

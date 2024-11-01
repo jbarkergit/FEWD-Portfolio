@@ -113,15 +113,14 @@ const FDiFramePlayer = ({
   };
 
   return (
-    <section className='fdiFrame'>
-      <h2 className='fdiFrame--h2'>{trailers[0].name}</h2>
+    <>
       {playerRef.current && playerRef.current.internalPlayer ? <IFrameController player={playerRef.current.internalPlayer} playState={playState} /> : null}
       <YouTube
         ref={playerRef}
         videoId={`${trailers[0].key}`}
         opts={opts}
         className='fdiFrame__player'
-        iframeClassName='fdiFrame__player--iframe'
+        iframeClassName='fdiFrame__player__iframe'
         title={`YouTube video player: ${trailers[0].name}`}
         style={undefined}
         loading={'eager'}
@@ -130,7 +129,7 @@ const FDiFramePlayer = ({
         onEnd={(event: YouTubeEvent) => destroyPlayer(event.target)}
         onError={(event: YouTubeEvent) => destroyPlayer(event.target)}
       />
-    </section>
+    </>
   );
 };
 

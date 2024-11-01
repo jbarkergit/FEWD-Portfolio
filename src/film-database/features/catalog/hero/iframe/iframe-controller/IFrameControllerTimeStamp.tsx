@@ -31,12 +31,12 @@ const IFrameControllerTimeStamp = ({
   }, [player]);
 
   return (
-    <div className='iFrameController__controls__timestamp' aria-label='Video timestamp information'>
-      <div className='iFrameController__controls__timestamp--current' aria-label={`Current playback time ${timeStamp.current}`}>
+    <div className='fdiFrame__controller__controls__timestamp' aria-label='Video timestamp information'>
+      <div className='fdiFrame__controller__controls__timestamp--current' aria-label={`Current playback time ${timeStamp.current}`}>
         {timeStamp.current}
       </div>
-      <div className='iFrameController__controls__timestamp--separator'> / </div>
-      <div className='iFrameController__controls__timestamp--duration' aria-label={`Video duration ${timeStamp.duration}`}>
+      <div className='fdiFrame__controller__controls__timestamp--separator'> / </div>
+      <div className='fdiFrame__controller__controls__timestamp--duration' aria-label={`Video duration ${timeStamp.duration}`}>
         {timeStamp.duration}
       </div>
     </div>

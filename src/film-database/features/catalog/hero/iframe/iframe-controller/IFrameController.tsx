@@ -24,9 +24,9 @@ const IFrameController = ({
   }, [playerVolume]);
 
   return (
-    <div className='iFrameController'>
+    <div className='fdiFrame__controller'>
       <IFrameControllerSeeker player={player} />
-      <div className='iFrameController__controls'>
+      <div className='fdiFrame__controller__controls'>
         <IFrameControllerPlayPause player={player} playState={playState} />
         <IFrameControllerVolumeIndicator player={player} playerVolume={playerVolume} />
         <IFrameControllerVolumeSlider setPlayerVolume={setPlayerVolume} />
