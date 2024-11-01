@@ -1,5 +1,5 @@
 import { Suspense, lazy, startTransition, useEffect, useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 // 404
 const ProtocolErrorHandler = lazy(() => import('./app/features/ProtocolErrorHandler'));
 // Routes data
@@ -118,14 +118,18 @@ function App() {
         {appRoutes.ecommercePaths.map((path) => (
           <Route path={path} element={getElementByPath('/ecommerce/products')} key={path} />
         ))}
-        {!authorizedUser.user && !authorizedUser.verified ? (
-          <Route path='/film-database' element={getElementByPath('/film-database')} />
-        ) : (
-          <>
-            <Route path='/film-database/browse' element={getElementByPath('/film-database/browse')} />
-            <Route path='/film-database/:paramId' element={getElementByPath('/film-database/:paramId')} />
-          </>
-        )}
+        <Route
+          path='/film-database'
+          element={!authorizedUser.user || !authorizedUser.verified ? getElementByPath('/film-database') : <Navigate to='/film-database/browse' />}
+        />
+        <Route
+          path='/film-database/browse'
+          element={authorizedUser.user && authorizedUser.verified ? getElementByPath('/film-database/browse') : <Navigate to='/film-database' />}
+        />
+        <Route
+          path='/film-database/:paramId'
+          element={authorizedUser.user && authorizedUser.verified ? getElementByPath('/film-database/:paramId') : <Navigate to='/film-database' />}
+        />
       </Routes>
     </Suspense>
   );
