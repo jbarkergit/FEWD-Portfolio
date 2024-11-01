@@ -85,7 +85,7 @@ const FDCarousels = ({ variant }: Variant) => {
 
   /** JSX */
   return (
-    <section className='fdCarousel' data-anim={mapIndex === 0 ? 'active' : 'disabled'}>
+    <section className='fdCarousel' data-anim='active'>
       <div className='fdCarousel__header'>
         <h2 className='fdCarousel__header--h2'>{heading.replaceAll('_', ' ')}</h2>
       </div>
