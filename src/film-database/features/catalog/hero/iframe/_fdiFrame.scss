@@ -10,4 +10,7 @@
   align-items: flex-end;
   width: 50%;
   height: inherit;
+  &:hover .fdiFrame__controller {
+    opacity: 1;
+  }
 }
