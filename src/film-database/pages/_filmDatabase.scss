@@ -18,52 +18,29 @@
     opacity: 0.04;
     pointer-events: none;
   }
-}
 
-.filmDatabase[data-layout-carousel='xxl'] {
-  --fd-carousel-items-per-page: 7;
-  --fd-carousel-node-width: calc(
-    (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
-  );
-  --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
-}
-
-.filmDatabase[data-layout-carousel='xl'] {
-  --fd-carousel-items-per-page: 6;
-  --fd-carousel-node-width: calc(
-    (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
-  );
-  --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
-}
-
-.filmDatabase[data-layout-carousel='l'] {
-  --fd-carousel-items-per-page: 5;
-  --fd-carousel-node-width: calc(
-    (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
-  );
-  --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
-}
-
-.filmDatabase[data-layout-carousel='m'] {
-  --fd-carousel-items-per-page: 4;
-  --fd-carousel-node-width: calc(
-    (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
-  );
-  --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
-}
-
-.filmDatabase[data-layout-carousel='s'] {
-  --fd-carousel-items-per-page: 3;
-  --fd-carousel-node-width: calc(
-    (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
-  );
-  --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
-}
-
-.filmDatabase[data-layout-carousel='xs'] {
-  --fd-carousel-items-per-page: 2;
-  --fd-carousel-node-width: calc(
-    (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
-  );
-  --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
+  &[data-layout-carousel] {
+    --fd-carousel-node-width: calc(
+      (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
+    );
+    --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
+    @media (width > 1410px) {
+      --fd-carousel-items-per-page: 7;
+    }
+    @media (width < 1410px) {
+      --fd-carousel-items-per-page: 6;
+    }
+    @media (width < 1032px) {
+      --fd-carousel-items-per-page: 5;
+    }
+    @media (width < 836px) {
+      --fd-carousel-items-per-page: 4;
+    }
+    @media (width < 632px) {
+      --fd-carousel-items-per-page: 3;
+    }
+    @media (width < 390px) {
+      --fd-carousel-items-per-page: 2;
+    }
+  }
 }
