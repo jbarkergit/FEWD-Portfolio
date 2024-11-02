@@ -21,22 +21,22 @@
       (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
     );
     --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
-    @media (width > 1410px) {
+    @media (min-width: 1411px) {
       --fd-carousel-items-per-page: 7;
     }
-    @media (width < 1410px) {
+    @media (max-width: 1410px) {
       --fd-carousel-items-per-page: 6;
     }
-    @media (width < 1032px) {
+    @media (max-width: 1031px) {
       --fd-carousel-items-per-page: 5;
     }
-    @media (width < 836px) {
+    @media (max-width: 835px) {
       --fd-carousel-items-per-page: 4;
     }
-    @media (width < 632px) {
+    @media (max-width: 631px) {
       --fd-carousel-items-per-page: 3;
     }
-    @media (width < 390px) {
+    @media (max-width: 389px) {
       --fd-carousel-items-per-page: 2;
     }
   }
