@@ -21,6 +21,7 @@ type Variant = {
 
 const FDCarousels = ({ variant }: Variant) => {
   const { type, mapIndex, heading, data, setHeroData } = variant;
+  const carouselRef = useRef<HTMLUListElement>(null);
 
   /** State */
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
@@ -45,28 +46,36 @@ const FDCarousels = ({ variant }: Variant) => {
   useEffect(() => renderPaginatedDataSet(), [carouselIndex]);
 
   /** Pagination on pointer drag */
-  useEffect(() => {
-    if (window.innerWidth >= 1410 || !carouselRef.current) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[entries.length - 1].isIntersecting) setCarouselIndex(Math.max(0, Math.min(carouselIndex + 1, data.length - 1)));
+    },
+    { threshold: 1.0 }
+  );
 
-    const lastCarouselNode = carouselRef.current.children[carouselRef.current.children.length - 1];
-    console.log(lastCarouselNode);
+  useEffect(() => {
+    const lastCarouselNode = carouselRef.current?.children[carouselRef.current.children.length - 1];
     if (!lastCarouselNode) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[entries.length - 1].isIntersecting) {
-          setCarouselIndex(Math.max(0, Math.min(carouselIndex + 1, data.length - 1)));
-        }
-      },
-      { threshold: 1.0 }
-    );
+    const observe = (): void => {
+      if (window.innerWidth <= 1000) {
+        observer.observe(lastCarouselNode);
+      } else {
+        observer.unobserve(lastCarouselNode);
+      }
+    };
 
-    observer.observe(lastCarouselNode);
-    return () => observer.unobserve(lastCarouselNode);
-  }, []);
+    observe();
+    window.addEventListener('resize', observe);
+
+    return () => {
+      window.removeEventListener('resize', observe);
+      observer.unobserve(lastCarouselNode);
+      observer.disconnect();
+    };
+  }, [carouselRef.current]);
 
   /** Horizontal Navigation */
-  const carouselRef = useRef<HTMLUListElement>(null);
   const postersPerPage: number | undefined = usePostersPerPage();
 
   const navigate = (): void => {
