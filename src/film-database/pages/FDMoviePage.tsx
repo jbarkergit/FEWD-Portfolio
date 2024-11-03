@@ -1,6 +1,6 @@
 // Deps
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 // Composables
 import { Namespace_Tmdb, useTmdbFetcher } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import { Namespace_TmdbEndpointsKeys } from '../composables/tmdb-api/data/tmdbEndPoints';
@@ -53,10 +53,46 @@ const FDMoviePage = () => {
     return (
       <div className='filmDatabase' data-layout-carousel>
         <div className='fdMovie'>
-          <div className='fdMovie__container'>
-            <FDMovieBackdrop details={props.details.details} />
-            <FDMovieInfo details={props.details.details} />
-            <FDMovieTrailers videos={props.videos.videos.results} />
+          <div className='fdMovie__backdrop'>
+            <picture>
+              <img src={`https://image.tmdb.org/t/p/original/${props.details.details.backdrop_path}`} alt={`${props.details.details.title}`} fetchPriority='high' />
+            </picture>
+          </div>
+
+          <section className='fdMovie__main'>
+            <nav className='fdMovie__main__toolbar'>
+              <div className='fdMovie__main__toolbar__title'>
+                <Link to='/film-database/browse'>Film Database</Link>
+              </div>
+              <div className='fdMovie__main__toolbar__nav' aria-label='Website Navigation'>
+                <button>
+                  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+                    <path fill='currentColor' d='M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z'></path>
+                  </svg>
+                </button>
+              </div>
+            </nav>
+
+            <main className='fdMovie__main__general'>
+              <article className='fdMovie__main__general__container'>
+                <header className='fdMovie__main__general__container__header'>
+                  <span className='fdMovie__main__general__container__header--release'>{props.details.details.release_date}</span>
+                  <span className='fdMovie__main__general__container__header--title'>{props.details.details.title}</span>
+                </header>
+                <footer className='fdMovie__main__general__container__footer'>
+                  <button aria-label='Watch Trailer'>Watch Trailer</button>
+                  <button aria-label='Providers'>Providers</button>
+                  <button aria-label='Crew'>Crew</button>
+                </footer>
+              </article>
+            </main>
+
+            <aside className='fdMovie__main__trailers'>
+              <FDMovieTrailers videos={props.videos.videos.results} />
+            </aside>
+          </section>
+
+          <div className='fdMovie__aside'>
             <FDMovieCast details={props.details.details} credits={props.credits.credits} />
           </div>
         </div>

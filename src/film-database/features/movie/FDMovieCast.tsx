@@ -6,17 +6,17 @@ const FDMovieCast = ({ credits, details }: { details: Namespace_Tmdb.Details_Obj
   type CrewMember = Namespace_Tmdb.Credits_Obj['credits']['crew'][number];
 
   return (
-    <section className='fdMovie__container__credits'>
+    <>
       {[
         { heading: 'Cast', data: credits.cast },
         { heading: 'Crew', data: credits.crew },
       ].map((objArr) => (
-        <section className='fdMovie__container__credits__cast'>
+        <section className='fdMovie__aside__credits__cast'>
           <h2>{objArr.heading}</h2>
-          <ul className='fdMovie__container__credits__cast__ul'>
+          <ul className='fdMovie__aside__credits__cast__ul'>
             {objArr.data.map((dataObj) => (
-              <li className='fdMovie__container__credits__cast__ul__individual'>
-                <picture className='fdMovie__container__credits__cast__ul__individual__icon'>
+              <li className='fdMovie__aside__credits__cast__ul__individual'>
+                <picture className='fdMovie__aside__credits__cast__ul__individual__icon'>
                   <img
                     src={
                       dataObj.profile_path
@@ -27,9 +27,9 @@ const FDMovieCast = ({ credits, details }: { details: Namespace_Tmdb.Details_Obj
                     fetchPriority='high'
                   />
                 </picture>
-                <div className='fdMovie__container__credits__cast__ul__individual__info'>
-                  <span className='fdMovie__container__credits__cast__ul__individual__info--name'>{dataObj.name}</span>
-                  <span className='fdMovie__container__credits__cast__ul__individual__info--character'>
+                <div className='fdMovie__aside__credits__cast__ul__individual__info'>
+                  <span className='fdMovie__aside__credits__cast__ul__individual__info--name'>{dataObj.name}</span>
+                  <span className='fdMovie__aside__credits__cast__ul__individual__info--character'>
                     {objArr.heading === 'Cast' ? (dataObj as CastMember).character : (dataObj as CrewMember).department}
                   </span>
                 </div>
@@ -38,15 +38,15 @@ const FDMovieCast = ({ credits, details }: { details: Namespace_Tmdb.Details_Obj
           </ul>
         </section>
       ))}
-      <nav className='fdMovie__container__credits__nav'>
-        <button className='fdMovie__container__credits__nav--btn' aria-label='View Previous' onClick={() => {}}>
+      <nav className='fdMovie__aside__credits__nav'>
+        <button className='fdMovie__aside__credits__nav--btn' aria-label='View Previous' onClick={() => {}}>
           <MaterialSymbolsChevronLeft />
         </button>
-        <button className='fdMovie__container__credits__nav--btn' aria-label='View More' onClick={() => {}}>
+        <button className='fdMovie__aside__credits__nav--btn' aria-label='View More' onClick={() => {}}>
           <MaterialSymbolsChevronRight />
         </button>
       </nav>
-    </section>
+    </>
   );
 };
 
