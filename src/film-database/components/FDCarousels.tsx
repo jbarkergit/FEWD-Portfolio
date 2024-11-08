@@ -1,8 +1,10 @@
 // Deps
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // Composables
 import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+// Context
+import { useCatalogProvider } from '../context/CatalogContext';
 // Hooks
 import { usePostersPerPage } from '../hooks/usePostersPerPage';
 // Assets
@@ -15,12 +17,12 @@ type Variant = {
     mapIndex: number;
     heading: string;
     data: Namespace_Tmdb.BaseMedia_Provider[][];
-    setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
   };
 };
 
 const FDCarousels = ({ variant }: Variant) => {
-  const { type, mapIndex, heading, data, setHeroData } = variant;
+  const { type, mapIndex, heading, data } = variant;
+  const { setHeroData } = useCatalogProvider();
   const carouselRef = useRef<HTMLUListElement>(null);
 
   /** State */
@@ -104,12 +106,7 @@ const FDCarousels = ({ variant }: Variant) => {
             return (
               <li className='fdCarousel__wrapper__ul__li' key={uuidv4()} onClick={() => setHeroData(article)}>
                 <picture className='fdCarousel__wrapper__ul__li__picture'>
-                  <img
-                    className='fdCarousel__wrapper__ul__li__picture--img'
-                    src={`https://image.tmdb.org/t/p/w780/${article?.poster_path}`}
-                    alt={`${article?.title}`}
-                    fetchPriority={mapIndex === 0 ? 'high' : 'low'}
-                  />
+                  <img className='fdCarousel__wrapper__ul__li__picture--img' src={`https://image.tmdb.org/t/p/w780/${article?.poster_path}`} alt={`${article?.title}`} fetchPriority={mapIndex === 0 ? 'high' : 'low'} />
                 </picture>
                 <div className='fdCarousel__wrapper__ul__li__overlay'>
                   <button className='fdCarousel__wrapper__ul__li__overlay--play' aria-label='Play trailer'>
