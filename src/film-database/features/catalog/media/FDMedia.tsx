@@ -4,11 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useCatalogProvider } from '../../../context/CatalogContext';
 // Composables
 import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
-// Features
-import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
-import FDCarousels from '../../../components/FDCarousels';
+// Hooks
 import { usePaginateData } from '../../../hooks/usePaginateData';
 import { usePostersPerPage } from '../../../hooks/usePostersPerPage';
+// Features
+import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
+import FDCarousel from '../../../components/FDCarousel';
 
 const FDMedia = () => {
   const maxCarouselNodes = usePostersPerPage();
@@ -77,7 +78,7 @@ const FDMedia = () => {
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
       {paginatedData &&
         Array.from(paginatedData.entries()).map(([key, value], index) => (
-          <FDCarousels type={'movies'} mapIndex={index} heading={key === 'discover' ? route : key} data={value} key={key === 'discover' ? route : key} />
+          <FDCarousel type={'movies'} mapIndex={index} heading={key === 'discover' ? route : key} data={value} key={key === 'discover' ? route : key} />
         ))}
       <FDCarouselSearch setHeroData={setHeroData} />
     </main>
