@@ -11,17 +11,14 @@ import { usePostersPerPage } from '../hooks/usePostersPerPage';
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../assets/google-material-symbols/carouselSymbols';
 import { MaterialSymbolsPlayArrow } from '../assets/google-material-symbols/iFrameSymbols';
 
-type Variant = {
-  variant: {
-    type: 'movies' | 'people';
-    mapIndex: number;
-    heading: string;
-    data: Namespace_Tmdb.BaseMedia_Provider[][];
-  };
+type Parameters = {
+  type: 'movies' | 'people';
+  mapIndex: number;
+  heading: string;
+  data: Namespace_Tmdb.BaseMedia_Provider[][];
 };
 
-const FDCarousels = ({ variant }: Variant) => {
-  const { type, mapIndex, heading, data } = variant;
+const FDCarousels = ({ type, mapIndex, heading, data }: Parameters) => {
   const { setHeroData } = useCatalogProvider();
   const carouselRef = useRef<HTMLUListElement>(null);
 
@@ -106,7 +103,12 @@ const FDCarousels = ({ variant }: Variant) => {
             return (
               <li className='fdCarousel__wrapper__ul__li' key={uuidv4()} onClick={() => setHeroData(article)}>
                 <picture className='fdCarousel__wrapper__ul__li__picture'>
-                  <img className='fdCarousel__wrapper__ul__li__picture--img' src={`https://image.tmdb.org/t/p/w780/${article?.poster_path}`} alt={`${article?.title}`} fetchPriority={mapIndex === 0 ? 'high' : 'low'} />
+                  <img
+                    className='fdCarousel__wrapper__ul__li__picture--img'
+                    src={`https://image.tmdb.org/t/p/w780/${article?.poster_path}`}
+                    alt={`${article?.title}`}
+                    fetchPriority={mapIndex === 0 ? 'high' : 'low'}
+                  />
                 </picture>
                 <div className='fdCarousel__wrapper__ul__li__overlay'>
                   <button className='fdCarousel__wrapper__ul__li__overlay--play' aria-label='Play trailer'>
