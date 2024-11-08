@@ -21,7 +21,12 @@ const FDMedia = () => {
 
   const fetchDataByRoute = async (): Promise<void> => {
     if (route === 'home') {
-      const routeData = (await useTmdbFetcher([{ now_playing: undefined }, { upcoming: undefined }, { trending_today: undefined }, { trending_this_week: undefined }])) as Namespace_Tmdb.Prefabs_Obj[] | Prefabs_Obj_isUndefined[];
+      const routeData = (await useTmdbFetcher([
+        { now_playing: undefined },
+        { upcoming: undefined },
+        { trending_today: undefined },
+        { trending_this_week: undefined },
+      ])) as Namespace_Tmdb.Prefabs_Obj[] | Prefabs_Obj_isUndefined[];
 
       const filteredHomeData = routeData.filter((obj) => obj !== undefined) as Namespace_Tmdb.Prefabs_Obj[];
       processDataPagination(filteredHomeData);
@@ -123,10 +128,10 @@ const FDMedia = () => {
             variant={{
               type: 'movies',
               mapIndex: index,
-              heading: key,
+              heading: key === 'discover' ? route : key,
               data: value,
             }}
-            key={key}
+            key={key === 'discover' ? route : key}
           />
         ))}
       <FDCarouselSearch setHeroData={setHeroData} />
