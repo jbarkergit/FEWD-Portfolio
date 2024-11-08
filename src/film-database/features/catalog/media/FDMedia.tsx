@@ -31,7 +31,7 @@ const FDMedia = () => {
       const filteredHomeData = routeData.filter((obj) => obj !== undefined) as Namespace_Tmdb.Prefabs_Obj[];
       processDataPagination(filteredHomeData);
     } else {
-      const routeData = (await useTmdbFetcher({ discover: 'comedy' })) as Namespace_Tmdb.Discover_Obj;
+      const routeData = (await useTmdbFetcher({ discover: route })) as Namespace_Tmdb.Discover_Obj;
       processDataPagination(routeData);
     }
   };
