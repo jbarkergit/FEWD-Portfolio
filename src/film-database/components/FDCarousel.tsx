@@ -18,7 +18,7 @@ type Parameters = {
   data: Namespace_Tmdb.BaseMedia_Provider[][];
 };
 
-const FDCarousels = ({ type, mapIndex, heading, data }: Parameters) => {
+const FDCarousel = ({ type, mapIndex, heading, data }: Parameters) => {
   const { setHeroData } = useCatalogProvider();
   const carouselRef = useRef<HTMLUListElement>(null);
 
@@ -132,5 +132,4 @@ const FDCarousels = ({ type, mapIndex, heading, data }: Parameters) => {
   );
 };
 
-export default FDCarousels;
-0;
+export default FDCarousel;
