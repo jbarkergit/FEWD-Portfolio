@@ -40,6 +40,9 @@
       &__release {
         display: flex;
         gap: f.rem(12);
+        & div {
+          display: flex;
+        }
         & span {
           display: flex;
           align-items: center;
