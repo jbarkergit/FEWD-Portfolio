@@ -9,10 +9,9 @@ import FDMenuToolbar from './FDMenuToolbar';
 import FDMenuGenres from './FDMenuGenres';
 
 const FDMenu = () => {
-  const { isMenuOpen, setIsMenuOpen, setRoute } = useCatalogProvider();
+  const { isMenuOpen, setIsMenuOpen } = useCatalogProvider();
 
-  const menuGenresRef = useRef<HTMLElement>(null),
-    menuPropertyRef = useRef<HTMLElement>(null);
+  const menuGenresRef = useRef<HTMLElement>(null);
 
   const toolbarObjArr = [
     { key: 'Home', icon: <MaterialSymbolsHome />, ref: undefined },
@@ -34,10 +33,10 @@ const FDMenu = () => {
   return (
     <section className='fdMenu' data-modal={isMenuOpen ? 'open' : 'closed'}>
       <section className='fdMenu__toolbar'>
-        <FDMenuToolbar setRoute={setRoute} toolbarObjArr={toolbarObjArr} toggleMenus={toggleMenus} />
+        <FDMenuToolbar toolbarObjArr={toolbarObjArr} toggleMenus={toggleMenus} />
       </section>
       <div className='fdMenu__menu'>
-        <FDMenuGenres toggleMenus={toggleMenus} setRoute={setRoute} ref={menuGenresRef} />
+        <FDMenuGenres toggleMenus={toggleMenus} ref={menuGenresRef} />
       </div>
     </section>
   );

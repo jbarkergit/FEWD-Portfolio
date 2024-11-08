@@ -1,16 +1,14 @@
-import { Dispatch, RefObject, SetStateAction } from 'react';
+import { RefObject } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Type_MovieGenre_Keys } from '../../../composables/tmdb-api/data/tmdbGenres';
 import { signOut } from 'firebase/auth';
 import { firebaseAuth } from '../../../../app/config/firebaseConfig';
 import { IcOutlinePowerSettingsNew } from '../../../assets/google-material-symbols/menuSymbols';
+import { useCatalogProvider } from '../../../context/CatalogContext';
 
 const FDMenuToolbar = ({
-  setRoute,
   toolbarObjArr,
   toggleMenus,
 }: {
-  setRoute: Dispatch<SetStateAction<Type_MovieGenre_Keys | 'home'>>;
   toolbarObjArr: (
     | {
         key: string;
@@ -25,6 +23,8 @@ const FDMenuToolbar = ({
   )[];
   toggleMenus: (refParam: RefObject<HTMLElement> | undefined) => void;
 }) => {
+  const { setRoute } = useCatalogProvider();
+
   return (
     <ul className='fdMenu__toolbar__ul'>
       {toolbarObjArr.map((obj) => (

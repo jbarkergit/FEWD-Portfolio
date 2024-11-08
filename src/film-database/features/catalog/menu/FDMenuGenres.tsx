@@ -1,13 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
 import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../../../composables/tmdb-api/data/tmdbGenres';
-import { Dispatch, forwardRef, RefObject, SetStateAction, useMemo } from 'react';
+import { forwardRef, RefObject, useMemo } from 'react';
+import { useCatalogProvider } from '../../../context/CatalogContext';
 
 type Type_PropDrill = {
   toggleMenus: (refParam: RefObject<HTMLElement> | undefined) => void;
-  setRoute: Dispatch<SetStateAction<Type_MovieGenre_Keys | 'home'>>;
 };
 
-const FDMenuGenres = forwardRef<HTMLElement, Type_PropDrill>(({ toggleMenus, setRoute }, menuGenresRef) => {
+const FDMenuGenres = forwardRef<HTMLElement, Type_PropDrill>(({ toggleMenus }, menuGenresRef) => {
+  const { setRoute } = useCatalogProvider();
+
   const sortedGenreKeys = useMemo((): string[] => {
     return Object.keys(tmdbMovieGenres)
       .sort()
