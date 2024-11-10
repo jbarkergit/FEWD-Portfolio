@@ -12,10 +12,13 @@ import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../asse
 import { MaterialSymbolsPlayArrow } from '../assets/google-material-symbols/iFrameSymbols';
 
 type Parameters = {
-  type: 'movies' | 'people';
+  type: 'movies' | 'cast' | 'crew';
   mapIndex: number;
   heading: string;
-  data: Namespace_Tmdb.BaseMedia_Provider[][];
+  data:
+    | Array<Array<Namespace_Tmdb.BaseMedia_Provider>>
+    | Array<Array<Namespace_Tmdb.Credits_Obj['credits']['cast']>>
+    | Array<Array<Namespace_Tmdb.Credits_Obj['credits']['crew']>>;
 };
 
 const FDCarousel = ({ type, mapIndex, heading, data }: Parameters) => {
@@ -24,7 +27,15 @@ const FDCarousel = ({ type, mapIndex, heading, data }: Parameters) => {
 
   /** State */
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
-  const [articles, setArticles] = useState<Namespace_Tmdb.BaseMedia_Provider[][]>([data[0]]);
+  const [articles, setArticles] = useState<typeof data>(
+    type === 'movies'
+      ? [(data as Array<Array<Namespace_Tmdb.BaseMedia_Provider>>)[0]]
+      : type === 'cast'
+        ? [(data as Array<Array<Namespace_Tmdb.Credits_Obj['credits']['cast']>>)[0]]
+        : [(data as Array<Array<Namespace_Tmdb.Credits_Obj['credits']['crew']>>)[0]]
+  );
+
+  useEffect(() => console.log(articles), [articles]);
 
   /** Track carousel navigation index */
   const updateCarouselIndex = (delta: number): void => setCarouselIndex(Math.max(0, Math.min(carouselIndex + delta, data.length - 1)));
@@ -35,7 +46,25 @@ const FDCarousel = ({ type, mapIndex, heading, data }: Parameters) => {
 
     if (!isIndexInArticles) {
       setArticles((prevState) => {
-        return [...prevState, data[carouselIndex]];
+        switch (type) {
+          case 'movies':
+            const prevMovies = prevState as Namespace_Tmdb.BaseMedia_Provider[][];
+            const newMovies = data[carouselIndex] as Namespace_Tmdb.BaseMedia_Provider[];
+            return [...prevMovies, newMovies] as Array<Array<Namespace_Tmdb.BaseMedia_Provider>>;
+
+          case 'cast':
+            const prevCast = prevState as Namespace_Tmdb.Credits_Obj['credits']['cast'][][];
+            const newCast = data[carouselIndex] as Namespace_Tmdb.Credits_Obj['credits']['cast'][];
+            return [...prevCast, newCast] as Array<Array<Namespace_Tmdb.Credits_Obj['credits']['cast']>>;
+
+          case 'crew':
+            const prevCrew = prevState as Namespace_Tmdb.Credits_Obj['credits']['crew'][][];
+            const newCrew = data[carouselIndex] as Namespace_Tmdb.Credits_Obj['credits']['crew'][];
+            return [...prevCrew, newCrew] as Array<Array<Namespace_Tmdb.Credits_Obj['credits']['crew']>>;
+
+          default:
+            return prevState;
+        }
       });
     } else {
       navigate();
@@ -99,25 +128,48 @@ const FDCarousel = ({ type, mapIndex, heading, data }: Parameters) => {
       </div>
       <div className='fdCarousel__wrapper'>
         <ul className='fdCarousel__wrapper__ul' ref={carouselRef}>
-          {articles.flat().map((article) => {
-            return (
-              <li className='fdCarousel__wrapper__ul__li' key={uuidv4()} onClick={() => setHeroData(article)}>
-                <picture className='fdCarousel__wrapper__ul__li__picture'>
-                  <img
-                    className='fdCarousel__wrapper__ul__li__picture--img'
-                    src={`https://image.tmdb.org/t/p/w780/${article?.poster_path}`}
-                    alt={`${article?.title}`}
-                    fetchPriority={mapIndex === 0 ? 'high' : 'low'}
-                  />
-                </picture>
-                <div className='fdCarousel__wrapper__ul__li__overlay'>
-                  <button className='fdCarousel__wrapper__ul__li__overlay--play' aria-label='Play trailer'>
-                    <MaterialSymbolsPlayArrow />
-                  </button>
-                </div>
-              </li>
-            );
-          })}
+          {articles.length > 0
+            ? articles.flat().map((article) => {
+                return (
+                  <li
+                    className='fdCarousel__wrapper__ul__li'
+                    key={uuidv4()}
+                    onClick={() => {
+                      if (type === 'movies') setHeroData(article as Namespace_Tmdb.BaseMedia_Provider);
+                    }}>
+                    <picture className='fdCarousel__wrapper__ul__li__picture'>
+                      <img
+                        className='fdCarousel__wrapper__ul__li__picture--img'
+                        src={`https://image.tmdb.org/t/p/w780/${
+                          type === 'movies'
+                            ? (article as Namespace_Tmdb.BaseMedia_Provider)?.poster_path
+                            : type === 'cast'
+                              ? Object.values(article as Namespace_Tmdb.Credits_Obj['credits']['cast'])[0].profile_path
+                              : type === 'crew'
+                                ? Object.values(article as Namespace_Tmdb.Credits_Obj['credits']['crew'])[0]?.profile_path
+                                : null
+                        }`}
+                        alt={`${
+                          type === 'movies'
+                            ? (article as Namespace_Tmdb.BaseMedia_Provider)?.title
+                            : type === 'cast'
+                              ? Object.values(article as Namespace_Tmdb.Credits_Obj['credits']['cast'])[0].name
+                              : type === 'crew'
+                                ? Object.values(article as Namespace_Tmdb.Credits_Obj['credits']['crew'])[0]?.name
+                                : null
+                        }`}
+                        fetchPriority={mapIndex === 0 ? 'high' : 'low'}
+                      />
+                    </picture>
+                    <div className='fdCarousel__wrapper__ul__li__overlay'>
+                      <button className='fdCarousel__wrapper__ul__li__overlay--play' aria-label='Play trailer'>
+                        <MaterialSymbolsPlayArrow />
+                      </button>
+                    </div>
+                  </li>
+                );
+              })
+            : null}
         </ul>
         <nav className='fdCarousel__wrapper__navigation'>
           <button className='fdCarousel__wrapper__navigation__button' aria-label={'Show Previous'} onClick={() => updateCarouselIndex(-1)}>
