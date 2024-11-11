@@ -35,8 +35,6 @@ const FDCarousel = ({ type, mapIndex, heading, data }: Parameters) => {
         : [(data as Array<Array<Namespace_Tmdb.Credits_Obj['credits']['crew']>>)[0]]
   );
 
-  useEffect(() => console.log(articles), [articles]);
-
   /** Track carousel navigation index */
   const updateCarouselIndex = (delta: number): void => setCarouselIndex(Math.max(0, Math.min(carouselIndex + delta, data.length - 1)));
 
