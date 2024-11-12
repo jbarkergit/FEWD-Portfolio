@@ -2,7 +2,6 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdMedia {
-  grid-area: 2 / 1 / 3 / 3;
   position: relative;
   z-index: 1;
   height: 100%;
