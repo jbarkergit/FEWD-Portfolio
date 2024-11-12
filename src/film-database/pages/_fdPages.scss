@@ -21,7 +21,10 @@
       (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
     );
     --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
-    @media (min-width: 1411px) {
+    @media (min-width: 2050px) {
+      --fd-carousel-items-per-page: 8;
+    }
+    @media (max-width: 2050px) {
       --fd-carousel-items-per-page: 7;
     }
     @media (max-width: 1410px) {
