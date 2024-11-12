@@ -9,9 +9,6 @@
   width: 50%;
   height: inherit;
   padding: var(--fd-padding-generic) var(--fd-padding-generic) calc(var(--fd-padding-generic) / 2) var(--fd-padding-generic);
-  @media (max-width: 1102px) {
-    display: none;
-  }
   &__article {
     display: table;
     & > * > * {
