@@ -8,9 +8,17 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  width: 50%;
   height: inherit;
   &:hover .fdiFrame__controller {
     opacity: 1;
+  }
+  @media (min-width: 1801px) {
+    width: 50%;
+  }
+  @media (max-width: 1800px) {
+    width: 100svw;
+  }
+  @media (max-width: 1102px) {
+    display: none;
   }
 }
