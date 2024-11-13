@@ -6,15 +6,13 @@ import { useCatalogProvider } from '../../../context/CatalogContext';
 import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Hooks
 import { usePaginateData } from '../../../hooks/usePaginateData';
-import { usePostersPerPage } from '../../../hooks/usePostersPerPage';
 // Features
 import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 // Components
 import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
-  const maxCarouselNodes = usePostersPerPage();
-  const { route, isMenuOpen, setHeroData } = useCatalogProvider();
+  const { route, isMenuOpen, itemsPerPage, setHeroData } = useCatalogProvider();
   const [paginatedData, setPaginatedData] = useState<Map<string, Namespace_Tmdb.BaseMedia_Provider[][]> | undefined>(undefined);
 
   /** Fetch data when user requests a route, pass to usePaginateData() hook */
@@ -30,11 +28,11 @@ const FDMedia = () => {
       ])) as Namespace_Tmdb.Prefabs_Obj[] | Prefabs_Obj_isUndefined[];
 
       const filteredHomeData = routeData.filter((obj) => obj !== undefined) as Namespace_Tmdb.Prefabs_Obj[];
-      const data = usePaginateData(filteredHomeData, maxCarouselNodes, setHeroData);
+      const data = usePaginateData(filteredHomeData, itemsPerPage, setHeroData);
       setPaginatedData(data);
     } else {
       const routeData = (await useTmdbFetcher({ discover: route })) as Namespace_Tmdb.Discover_Obj;
-      const data = usePaginateData(routeData, maxCarouselNodes, setHeroData);
+      const data = usePaginateData(routeData, itemsPerPage, setHeroData);
       setPaginatedData(data);
     }
   };

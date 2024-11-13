@@ -1,16 +1,16 @@
 // Deps
 import { useState, useEffect, useRef, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+// Context
+import { useCatalogProvider } from '../../../../context/CatalogContext';
 // Composables
 import { Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmdb-api/hooks/useTmdbFetcher';
-// Hooks
-import { usePostersPerPage } from '../../../../hooks/usePostersPerPage';
 // Assets
 import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../assets/google-material-symbols/iFrameSymbols';
 import { MaterialSymbolsSearch } from '../../../../assets/google-material-symbols/menuSymbols';
 
 const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>> }) => {
-  const maxVisibleCarouselNodes: number | undefined = usePostersPerPage();
+  const { itemsPerPage } = useCatalogProvider();
 
   /** User is searching */
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -83,8 +83,8 @@ const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateActio
 
       <div className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
-          {maxVisibleCarouselNodes && searchResults && !isTyping
-            ? searchResults.splice(0, maxVisibleCarouselNodes).map((props) => {
+          {itemsPerPage && searchResults && !isTyping
+            ? searchResults.splice(0, itemsPerPage).map((props) => {
                 if (props.poster_path)
                   return (
                     <li className='fdSearchBar__results__ul__li' key={uuidv4()}>

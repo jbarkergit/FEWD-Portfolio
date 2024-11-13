@@ -5,8 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Context
 import { useCatalogProvider } from '../../context/CatalogContext';
-// Hooks
-import { usePostersPerPage } from '../../hooks/usePostersPerPage';
 // Assets
 import { MaterialSymbolsPlayArrow } from '../../assets/google-material-symbols/iFrameSymbols';
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/google-material-symbols/carouselSymbols';
@@ -22,7 +20,7 @@ type Parameters = {
 };
 
 const FDCarousel = ({ type, mapIndex, heading, data }: Parameters) => {
-  const { setHeroData } = useCatalogProvider();
+  const { itemsPerPage, setHeroData } = useCatalogProvider();
   const carouselRef = useRef<HTMLUListElement>(null);
 
   /** State */
@@ -102,12 +100,10 @@ const FDCarousel = ({ type, mapIndex, heading, data }: Parameters) => {
   }, [carouselRef.current]);
 
   /** Horizontal Navigation */
-  const postersPerPage: number | undefined = usePostersPerPage();
-
   const navigate = (): void => {
-    if (!postersPerPage || !carouselRef.current || !carouselRef.current.children) return;
+    if (!itemsPerPage || !carouselRef.current || !carouselRef.current.children) return;
     // Target indexes and elements
-    const targetIndex: number = carouselIndex * postersPerPage;
+    const targetIndex: number = carouselIndex * itemsPerPage;
     const targetElement = carouselRef.current.children[targetIndex] as HTMLLIElement;
     // Positions
     const carouselPosition: number = carouselRef.current.offsetLeft;
