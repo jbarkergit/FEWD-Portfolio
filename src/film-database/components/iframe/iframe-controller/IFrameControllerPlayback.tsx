@@ -1,7 +1,10 @@
+// Deps
 import { useEffect, useRef, useState } from 'react';
-import { YouTubePlayer } from 'react-youtube';
 import { v4 as uuidv4 } from 'uuid';
-import { MaterialSymbolsSettings } from '../../../../../assets/google-material-symbols/iFrameSymbols';
+// Lib
+import { YouTubePlayer } from 'react-youtube';
+// Assets
+import { MaterialSymbolsSettings } from '../../../assets/google-material-symbols/iFrameSymbols';
 
 const IFrameControllerPlayback = ({
   player,

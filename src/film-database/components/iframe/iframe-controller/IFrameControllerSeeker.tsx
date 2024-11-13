@@ -1,4 +1,6 @@
+// Deps
 import { useEffect, useRef, useState } from 'react';
+// Lib
 import { YouTubePlayer } from 'react-youtube';
 
 const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer }) => {

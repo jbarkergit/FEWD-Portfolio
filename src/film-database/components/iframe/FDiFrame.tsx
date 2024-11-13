@@ -1,10 +1,11 @@
 // Deps
 import { useEffect, useState } from 'react';
 // Composables
-import { Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmdb-api/hooks/useTmdbFetcher';
-// Features
+import { Namespace_Tmdb, useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
+// Context
+import { useCatalogProvider } from '../../context/CatalogContext';
+// Components
 import FDiFramePlayer from './player/FDiFramePlayer';
-import { useCatalogProvider } from '../../../../context/CatalogContext';
 
 /** This component utilizes YouTube Player API
  * https://developers.google.com/youtube/iframe_api_reference

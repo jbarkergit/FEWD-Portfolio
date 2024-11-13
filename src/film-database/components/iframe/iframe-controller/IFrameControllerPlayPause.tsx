@@ -1,8 +1,9 @@
+// Deps
 import { useEffect, useState } from 'react';
-
+// Lib
 import { YouTubePlayer } from 'react-youtube';
-
-import { MaterialSymbolsPlayArrow, MaterialSymbolsPause, SvgSpinnersRingResize } from '../../../../../assets/google-material-symbols/iFrameSymbols';
+// Assets
+import { MaterialSymbolsPause, MaterialSymbolsPlayArrow, SvgSpinnersRingResize } from '../../../assets/google-material-symbols/iFrameSymbols';
 
 const IFrameControllerPlayPause = ({
   player,

@@ -1,6 +1,9 @@
-import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
-import IFrameController from '../iframe-controller/IFrameController';
+// Deps
 import { useRef, useState } from 'react';
+// Lib
+import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
+// Components
+import IFrameController from '../iframe-controller/IFrameController';
 
 const FDiFramePlayer = ({
   trailers,
