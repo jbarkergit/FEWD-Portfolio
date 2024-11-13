@@ -9,7 +9,8 @@ import { usePaginateData } from '../../../hooks/usePaginateData';
 import { usePostersPerPage } from '../../../hooks/usePostersPerPage';
 // Features
 import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
-import FDCarousel from '../../../components/FDCarousel';
+// Components
+import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
   const maxCarouselNodes = usePostersPerPage();
