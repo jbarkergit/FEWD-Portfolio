@@ -12,12 +12,12 @@ import FDiFramePlayer from './player/FDiFramePlayer';
  * via third party library https://github.com/tjallingt/react-youtube
  */
 
-const FDiFrame = () => {
+const FDiFrame = ({ trailerId }: { trailerId?: number }) => {
   const { heroData } = useCatalogProvider();
   const [trailers, setTrailers] = useState<Namespace_Tmdb.Videos_Obj['videos']['results'] | undefined>(undefined);
 
   const fetchTrailer = async (): Promise<void> => {
-    const data = (await useTmdbFetcher({ videos: heroData?.id })) as Namespace_Tmdb.Videos_Obj;
+    const data = (await useTmdbFetcher({ videos: trailerId ? trailerId : heroData?.id })) as Namespace_Tmdb.Videos_Obj;
     const filteredEntries = data.videos.results.filter((obj) => obj.name.includes('Trailer'));
     setTrailers(filteredEntries);
   };
