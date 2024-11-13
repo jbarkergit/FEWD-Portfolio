@@ -12,9 +12,6 @@
 // Catalog Page Features
 @forward '/src/film-database/features/catalog/hero/fdHero';
 @forward '/src/film-database/features/catalog/hero/details/fdDetails';
-@forward '/src/film-database/features/catalog/hero/iframe/fdiFrame';
-@forward '/src/film-database/features/catalog/hero/iframe/iframe-controller/iFrameController';
-@forward '/src/film-database/features/catalog/hero/iframe/player/fdiFramePlayer';
 
 @forward '/src/film-database/features/catalog/media/fdMedia';
 @forward '/src/film-database/features/catalog/media/media-carousel-search/fdCarouselSearch';
@@ -25,4 +22,8 @@
 @forward '/src/film-database/features/movie/fdMovie';
 
 // Components
-@forward '/src/film-database/components/fdCarousel';
+@forward '/src/film-database/components/carousel/fdCarousel';
+
+@forward '/src/film-database/components/iframe/fdiFrame';
+@forward '/src/film-database/components/iframe/iframe-controller/iFrameController';
+@forward '/src/film-database/components/iframe/player/fdiFramePlayer';
