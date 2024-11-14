@@ -1,23 +1,6 @@
 @use '/src/sass/functions' as f;
 @use '/src/film-database/scss/fdMixins' as m;
 
-.filmDatabase {
-  position: relative;
-  display: block;
-  width: 100%;
-  &::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 11;
-    background-image: url(/src/film-database/assets/giphy/noise_giphy.gif);
-    background-size: 480px;
-    background-attachment: fixed;
-    opacity: 0.04;
-    pointer-events: none;
-  }
-}
-
 .fdCatalog {
   position: relative;
   display: flex;
