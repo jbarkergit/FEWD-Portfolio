@@ -9,22 +9,26 @@ import { useCatalogProvider } from '../../context/CatalogContext';
 import { MaterialSymbolsPlayArrow } from '../../assets/google-material-symbols/iFrameSymbols';
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/google-material-symbols/carouselSymbols';
 
-type Parameters = {
+type Type_Data =
+  | Array<Array<Namespace_Tmdb.BaseMedia_Provider>>
+  | Array<Array<Namespace_Tmdb.Credits_Obj['credits']['cast']>>
+  | Array<Array<Namespace_Tmdb.Credits_Obj['credits']['crew']>>;
+
+type Type_Parameters = {
   type: 'movies' | 'cast' | 'crew';
   mapIndex: number;
   heading: string;
-  data:
-    | Array<Array<Namespace_Tmdb.BaseMedia_Provider>>
-    | Array<Array<Namespace_Tmdb.Credits_Obj['credits']['cast']>>
-    | Array<Array<Namespace_Tmdb.Credits_Obj['credits']['crew']>>;
+  data: Type_Data;
 };
 
-const FDCarousel = ({ type, mapIndex, heading, data }: Parameters) => {
+const FDCarousel = ({ type, mapIndex, heading, data }: Type_Parameters) => {
+  // Context
   const { itemsPerPage, setHeroData } = useCatalogProvider();
+  // References
   const carouselRef = useRef<HTMLUListElement>(null);
-
-  /** State */
+  // State
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
+
   const [articles, setArticles] = useState<typeof data>(
     type === 'movies'
       ? [(data as Array<Array<Namespace_Tmdb.BaseMedia_Provider>>)[0]]
