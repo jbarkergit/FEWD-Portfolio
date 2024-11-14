@@ -1,6 +1,15 @@
 @use '/src/sass/functions' as f;
 @use '/src/film-database/scss/fdMixins' as m;
 
+.fdAccount,
+.fdCatalog,
+.fdMovie {
+  @include m.grainPsuedo;
+}
+
+.fdAccount {
+}
+
 .fdCatalog {
   position: relative;
   display: flex;
@@ -16,4 +25,7 @@
     overflow-y: scroll;
     overflow-x: clip;
   }
+}
+
+.fdMovie {
 }
