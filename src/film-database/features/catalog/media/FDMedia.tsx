@@ -16,8 +16,6 @@ const FDMedia = () => {
   const [paginatedData, setPaginatedData] = useState<Map<string, Namespace_Tmdb.BaseMedia_Provider[][]> | undefined>(undefined);
 
   /** Fetch data when user requests a route, pass to usePaginateData() hook */
-  type Prefabs_Obj_isUndefined = Namespace_Tmdb.Prefabs_Obj | undefined;
-
   const fetchDataByRoute = async (): Promise<void> => {
     if (route === 'home') {
       const routeData = (await useTmdbFetcher([
@@ -25,7 +23,7 @@ const FDMedia = () => {
         { upcoming: undefined },
         { trending_today: undefined },
         { trending_this_week: undefined },
-      ])) as Namespace_Tmdb.Prefabs_Obj[] | Prefabs_Obj_isUndefined[];
+      ])) as Namespace_Tmdb.Prefabs_Obj[] | Array<Namespace_Tmdb.Prefabs_Obj | undefined>;
 
       const filteredHomeData = routeData.filter((obj) => obj !== undefined) as Namespace_Tmdb.Prefabs_Obj[];
       const data = usePaginateData(filteredHomeData, itemsPerPage, setHeroData);
@@ -46,7 +44,7 @@ const FDMedia = () => {
 
   // Update previously active and newly active carousel node's data-attr, navigate
   const deltaScrollCarousels = (delta: 1 | -1): void => {
-    if (!fdMediaRef.current) return;
+    if (window.innerWidth < 1050 || !fdMediaRef.current) return;
     const carouselNodesArr: Element[] = [...fdMediaRef.current?.children];
 
     // Gather indexes
