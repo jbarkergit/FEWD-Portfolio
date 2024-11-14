@@ -19,12 +19,14 @@ const FDMenu = () => {
   ];
 
   const toggleMenus = useCallback((refParam: RefObject<HTMLElement> | undefined) => {
-    if (refParam !== undefined) {
+    if (refParam) {
       setIsMenuOpen(true);
-      toolbarObjArr.forEach((obj) => {
-        if (!refParam || !refParam.current || !obj.ref || !obj.ref.current) return;
-        obj.ref.current !== refParam.current ? obj.ref.current.setAttribute('data-menu', 'closed') : obj.ref.current.setAttribute('data-menu', 'open');
-      });
+
+      for (const obj of toolbarObjArr) {
+        const isCurrentRef = obj.ref?.current === refParam.current;
+        const menuState = isCurrentRef ? 'open' : 'closed';
+        obj.ref?.current?.setAttribute('data-menu', menuState);
+      }
     } else {
       setIsMenuOpen(false);
     }
