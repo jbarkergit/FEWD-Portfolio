@@ -16,31 +16,6 @@
     opacity: 0.04;
     pointer-events: none;
   }
-  &[data-layout-carousel] {
-    --fd-carousel-node-width: calc(
-      (100svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
-    );
-    --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
-
-    @media (min-width: 1800px) {
-      --fd-carousel-items-per-page: 7;
-    }
-    @media (max-width: 1800px) {
-      --fd-carousel-items-per-page: 6;
-    }
-    @media (max-width: 1566px) {
-      --fd-carousel-items-per-page: 5;
-    }
-    @media (max-width: 1309px) {
-      --fd-carousel-items-per-page: 4;
-    }
-    @media (max-width: 1051px) {
-      --fd-carousel-items-per-page: 3;
-    }
-    @media (max-width: 793px) {
-      --fd-carousel-items-per-page: 2;
-    }
-  }
 }
 
 .fdCatalog {
