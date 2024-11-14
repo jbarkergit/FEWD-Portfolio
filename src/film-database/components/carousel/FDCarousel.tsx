@@ -14,14 +14,7 @@ type Type_Data =
   | Array<Array<Namespace_Tmdb.Credits_Obj['credits']['cast']>>
   | Array<Array<Namespace_Tmdb.Credits_Obj['credits']['crew']>>;
 
-type Type_Parameters = {
-  type: 'movies' | 'cast' | 'crew';
-  mapIndex: number;
-  heading: string;
-  data: Type_Data;
-};
-
-const FDCarousel = ({ type, mapIndex, heading, data }: Type_Parameters) => {
+const FDCarousel = ({ type, mapIndex, heading, data }: { type: 'movies' | 'cast' | 'crew'; mapIndex: number; heading: string; data: Type_Data }) => {
   // Context
   const { itemsPerPage, setHeroData } = useCatalogProvider();
   // References
