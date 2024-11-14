@@ -1,4 +1,3 @@
-/* Typography */
 @mixin fdFont($size, $weight) {
   font-family: 'Satoshi', 'PT Sans', sans-serif;
   font-size: var(--fd-font-size-#{$size});
@@ -20,7 +19,6 @@
   @include fdFont('s', 800);
 }
 
-/* Scroll Snapping */
 @mixin scrollSnappingXAxis {
   overflow-x: scroll;
   scrollbar-width: none;

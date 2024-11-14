@@ -1,6 +1,5 @@
-// Global
-@forward '/src/film-database/scss/fdFonts';
-@forward '/src/film-database/scss/fdRoot';
+// Styles
+@forward './fdStyles';
 
 // Pages
 @forward '/src/film-database/pages/fdPages.scss';
