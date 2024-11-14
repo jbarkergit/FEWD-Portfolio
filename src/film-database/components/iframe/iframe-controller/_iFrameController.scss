@@ -12,7 +12,7 @@
   min-height: 48px;
   padding: f.rem(6) f.rem(26) f.rem(12) f.rem(26);
   // iFrame height * 16/9 to decimal point * transform: scale(1.3) / 4
-  margin-right: calc(((62svh * 1.7778) * 1.3) / 4);
+  // margin-right: calc(((62svh * 1.7778) * 1.3) / 4);
   border-radius: 8px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
   opacity: 0;
