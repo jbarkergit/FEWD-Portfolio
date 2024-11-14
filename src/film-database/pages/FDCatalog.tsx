@@ -7,14 +7,12 @@ import FDMedia from '../features/catalog/media/FDMedia';
 
 const FDCatalog = () => {
   return (
-    <div className='filmDatabase' data-layout-carousel>
-      <div className='fdCatalog'>
-        <CatalogProvider>
-          <FDMenu />
-          <FDHero />
-          <FDMedia />
-        </CatalogProvider>
-      </div>
+    <div className='fdCatalog' data-layout-carousel>
+      <CatalogProvider>
+        <FDMenu />
+        <FDHero />
+        <FDMedia />
+      </CatalogProvider>
     </div>
   );
 };
