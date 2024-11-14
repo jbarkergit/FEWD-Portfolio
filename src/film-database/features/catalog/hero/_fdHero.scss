@@ -3,7 +3,8 @@
 
 .fdHero {
   position: relative;
-  display: block;
+  display: flex;
+  width: 100svw;
   height: 50svh;
   @media (max-width: 1102px) {
     display: none;

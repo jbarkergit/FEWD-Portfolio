@@ -2,9 +2,8 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdiFrame {
-  position: absolute;
-  top: 0;
-  right: 0;
+  position: relative;
+  flex: 1;
   display: flex;
   align-items: flex-end;
   height: inherit;
@@ -13,11 +12,9 @@
   }
   @media (min-width: 1440px) {
     justify-content: center;
-    width: 50%;
   }
   @media (max-width: 1439px) {
     justify-content: flex-end;
-    width: 100svw;
     padding-right: 10%;
   }
 }
