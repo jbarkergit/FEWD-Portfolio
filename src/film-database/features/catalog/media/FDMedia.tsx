@@ -13,25 +13,30 @@ import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
   const { route, isMenuOpen, itemsPerPage, setHeroData } = useCatalogProvider();
-  const [paginatedData, setPaginatedData] = useState<Map<string, Namespace_Tmdb.BaseMedia_Provider[][]> | undefined>(undefined);
+  const [paginatedData, setPaginatedData] = useState<[string, Namespace_Tmdb.BaseMedia_Provider[][]][] | undefined>(undefined);
 
   /** Fetch data when user requests a route, pass to usePaginateData() hook */
   const fetchDataByRoute = async (): Promise<void> => {
+    let processedData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj = [];
+
     if (route === 'home') {
-      const routeData = (await useTmdbFetcher([
+      processedData = (await useTmdbFetcher([
         { now_playing: undefined },
         { upcoming: undefined },
         { trending_today: undefined },
         { trending_this_week: undefined },
-      ])) as Namespace_Tmdb.Prefabs_Obj[] | Array<Namespace_Tmdb.Prefabs_Obj | undefined>;
-
-      const filteredHomeData = routeData.filter((obj) => obj !== undefined) as Namespace_Tmdb.Prefabs_Obj[];
-      const data = usePaginateData(filteredHomeData, itemsPerPage, setHeroData);
-      setPaginatedData(data);
+      ])) as Namespace_Tmdb.Prefabs_Obj[];
     } else {
-      const routeData = (await useTmdbFetcher({ discover: route })) as Namespace_Tmdb.Discover_Obj;
-      const data = usePaginateData(routeData, itemsPerPage, setHeroData);
-      setPaginatedData(data);
+      processedData = (await useTmdbFetcher({ discover: route })) as Namespace_Tmdb.Discover_Obj;
+    }
+
+    if (processedData) {
+      const data = usePaginateData(processedData, itemsPerPage, setHeroData);
+
+      if (data) {
+        const dataEntries: [string, Namespace_Tmdb.BaseMedia_Provider[][]][] = Array.from(data.entries());
+        setPaginatedData(dataEntries);
+      }
     }
   };
 
@@ -74,7 +79,7 @@ const FDMedia = () => {
   return (
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
       {paginatedData &&
-        Array.from(paginatedData.entries()).map(([key, value], index) => (
+        paginatedData.map(([key, value], index) => (
           <FDCarousel type={'movies'} mapIndex={index} heading={key === 'discover' ? route : key} data={value} key={key === 'discover' ? route : key} />
         ))}
       <FDCarouselSearch setHeroData={setHeroData} />
