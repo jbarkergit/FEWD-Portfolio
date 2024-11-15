@@ -64,7 +64,7 @@ const FDMedia = () => {
 
     // Scroll
     const nextActiveNodeOffsetTop: number = (carouselNodesArr[nextActiveNodeIndex] as HTMLElement).offsetTop;
-    fdMediaRef.current.style.top = `${nextActiveNodeOffsetTop * -1}px`;
+    if (nextActiveNodeOffsetTop) fdMediaRef.current.style.top = `${nextActiveNodeOffsetTop * -1}px`;
   };
 
   const handleWheel = (event: WheelEvent) => deltaScrollCarousels(event.deltaY > 0 ? 1 : -1);
