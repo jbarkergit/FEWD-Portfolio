@@ -26,7 +26,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [itemsPerPage, setItemsPerPage] = useState<number>(7);
 
   useEffect(() => {
-    const root = document.body.querySelector('.filmDatabase') as HTMLElement;
+    const root = document.body.querySelector('.fdCatalog') as HTMLElement;
 
     const getItemsPerPage = (): void => {
       const styles: CSSStyleDeclaration = getComputedStyle(root);
