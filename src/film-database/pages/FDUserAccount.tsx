@@ -10,7 +10,7 @@ type Type_PropDrill = {
 
 const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
   return (
-    <div>
+    <div className='fdUserAccount'>
       <FDAccountBackground />
       <FDAccount rootRef={rootRef} />
     </div>
