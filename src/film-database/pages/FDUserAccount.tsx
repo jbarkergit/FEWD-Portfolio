@@ -10,7 +10,7 @@ type Type_PropDrill = {
 
 const FDUserAccount = ({ rootRef }: Type_PropDrill) => {
   return (
-    <div className='filmDatabase' data-layout-carousel>
+    <div data-layout-carousel>
       <FDAccountBackground />
       <FDAccount rootRef={rootRef} />
     </div>
