@@ -5,8 +5,6 @@ import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 type Type_CatalogContext_State_Obj = {
   route: 'home' | Type_MovieGenre_Keys;
   setRoute: React.Dispatch<React.SetStateAction<'home' | Type_MovieGenre_Keys>>;
-  isMenuOpen: boolean;
-  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
   itemsPerPage: number;
   setItemsPerPage: React.Dispatch<React.SetStateAction<number>>;
   heroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
@@ -18,9 +16,6 @@ const CatalogContext = createContext<Type_CatalogContext_State_Obj | undefined>(
 export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   /** Routing system, lends to menu navigation */
   const [route, setRoute] = useState<'home' | Type_MovieGenre_Keys>('home');
-
-  /** Menu toggle boolean */
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   /** Maximum posters per page */
   const [itemsPerPage, setItemsPerPage] = useState<number>(7);
@@ -49,11 +44,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(undefined);
 
   /** Provider */
-  return (
-    <CatalogContext.Provider value={{ route, setRoute, isMenuOpen, setIsMenuOpen, itemsPerPage, setItemsPerPage, heroData, setHeroData }}>
-      {children}
-    </CatalogContext.Provider>
-  );
+  return <CatalogContext.Provider value={{ route, setRoute, itemsPerPage, setItemsPerPage, heroData, setHeroData }}>{children}</CatalogContext.Provider>;
 };
 
 export const useCatalogProvider = () => {
