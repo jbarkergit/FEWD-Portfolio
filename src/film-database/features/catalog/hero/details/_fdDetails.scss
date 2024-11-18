@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   height: inherit;
-  padding: var(--fd-padding-generic) 0 calc(var(--fd-padding-generic) / 2) var(--fd-padding-generic);
+  padding: var(--fd-padding-generic) 0 calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 4);
   &__article {
     display: table;
     & > * > * {
