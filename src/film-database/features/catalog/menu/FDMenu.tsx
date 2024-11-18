@@ -1,7 +1,5 @@
 // Deps
-import { RefObject, useCallback, useRef } from 'react';
-// Context
-import { useCatalogProvider } from '../../../context/CatalogContext';
+import { RefObject, useCallback, useRef, useState } from 'react';
 // Assets
 import { MaterialSymbolsHome, MaterialSymbolsAnimatedImagesSharp } from '../../../assets/google-material-symbols/menuSymbols';
 // Features
@@ -9,8 +7,7 @@ import FDMenuToolbar from './FDMenuToolbar';
 import FDMenuGenres from './FDMenuGenres';
 
 const FDMenu = () => {
-  const { isMenuOpen, setIsMenuOpen } = useCatalogProvider();
-
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuGenresRef = useRef<HTMLElement>(null);
 
   const toolbarObjArr = [
