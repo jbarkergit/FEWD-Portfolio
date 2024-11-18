@@ -9,11 +9,11 @@ const FDCatalog = () => {
   return (
     <div className='filmDatabase'>
       <CatalogProvider>
+        <FDMenu />
         <div className='fdCatalog' data-layout-carousel>
           <FDHero />
           <FDMedia />
         </div>
-        <FDMenu />
       </CatalogProvider>
     </div>
   );
