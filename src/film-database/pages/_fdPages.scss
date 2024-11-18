@@ -1,6 +1,13 @@
 @use '/src/sass/functions' as f;
 @use '/src/film-database/scss/fdMixins' as m;
 
+.filmDatabase {
+  position: relative;
+  display: flex;
+  height: 100svh;
+  overflow: clip;
+}
+
 .fdUserAccount,
 .fdCatalog,
 .fdMovie {
