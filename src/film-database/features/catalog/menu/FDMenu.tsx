@@ -7,7 +7,6 @@ import FDMenuToolbar from './FDMenuToolbar';
 import FDMenuGenres from './FDMenuGenres';
 
 const FDMenu = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuGenresRef = useRef<HTMLElement>(null);
 
   const toolbarObjArr = [
@@ -17,7 +16,6 @@ const FDMenu = () => {
 
   const toggleMenus = useCallback((refParam: RefObject<HTMLElement> | undefined) => {
     const menuState = refParam ? 'open' : 'closed';
-    setIsMenuOpen(!!refParam);
 
     toolbarObjArr.forEach((obj) => {
       const isCurrentRef = obj.ref?.current === refParam?.current;
@@ -26,7 +24,7 @@ const FDMenu = () => {
   }, []);
 
   return (
-    <div className='fdMenu' data-modal={isMenuOpen ? 'open' : 'closed'}>
+    <div className='fdMenu'>
       <section className='fdMenu__toolbar'>
         <FDMenuToolbar toolbarObjArr={toolbarObjArr} toggleMenus={toggleMenus} />
       </section>
