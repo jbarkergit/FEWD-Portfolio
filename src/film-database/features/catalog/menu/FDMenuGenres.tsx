@@ -17,28 +17,23 @@ const FDMenuGenres = forwardRef<HTMLElement, Type_PropDrill>(({ toggleMenus }, m
   }, [tmdbMovieGenres]);
 
   return (
-    <section className='fdMenuGenres' ref={menuGenresRef} data-menu='closed'>
-      <div className='fdMenuGenres__container'>
-        <h2 className='fdMenuGenres__container--heading'>Select genre menu</h2>
-        <nav className='fdMenuGenres__container__nav'>
-          <ul className='fdMenuGenres__container__nav__ul'>
-            {sortedGenreKeys?.map((genre: string) => (
-              <li className='fdMenuGenres__container__nav__ul__li' key={uuidv4()} data-activity-tracker='disabled'>
-                <button
-                  className='fdMenuGenres__container__nav__ul__li--button'
-                  aria-label={`Select genre ${genre}`}
-                  onClick={() => {
-                    toggleMenus(undefined);
-                    setRoute(genre.replace(' ', '_') as Type_MovieGenre_Keys);
-                  }}>
-                  {genre}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-    </section>
+    <nav className='fdMenuGenres' ref={menuGenresRef} data-menu='closed'>
+      <ul className='fdMenuGenres__ul'>
+        {sortedGenreKeys?.map((genre: string) => (
+          <li className='fdMenuGenres__ul__li' key={uuidv4()}>
+            <button
+              className='fdMenuGenres__ul__li--button'
+              aria-label={`Select genre ${genre}`}
+              onClick={() => {
+                toggleMenus(undefined);
+                setRoute(genre.replace(' ', '_') as Type_MovieGenre_Keys);
+              }}>
+              {genre}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 });
 
