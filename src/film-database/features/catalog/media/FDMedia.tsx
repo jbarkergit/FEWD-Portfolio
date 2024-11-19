@@ -12,7 +12,7 @@ import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
-  const { route, isMenuOpen, itemsPerPage, setHeroData } = useCatalogProvider();
+  const { route, itemsPerPage, setHeroData } = useCatalogProvider();
   const [paginatedData, setPaginatedData] = useState<[string, Namespace_Tmdb.BaseMedia_Provider[][]][] | undefined>(undefined);
 
   /** Fetch data when user requests a route, pass to usePaginateData() hook */
@@ -70,10 +70,9 @@ const FDMedia = () => {
   const handleWheel = (event: WheelEvent) => deltaScrollCarousels(event.deltaY > 0 ? 1 : -1);
 
   useEffect(() => {
-    if (isMenuOpen) window.removeEventListener('wheel', handleWheel);
-    else window.addEventListener('wheel', handleWheel);
+    window.addEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [fdMediaRef.current, isMenuOpen]);
+  }, [fdMediaRef.current]);
 
   /** Component */
   return (
