@@ -16,28 +16,22 @@ const FDMenu = () => {
   ];
 
   const toggleMenus = useCallback((refParam: RefObject<HTMLElement> | undefined) => {
-    if (refParam) {
-      setIsMenuOpen(true);
+    const menuState = refParam ? 'open' : 'closed';
+    setIsMenuOpen(!!refParam);
 
-      for (const obj of toolbarObjArr) {
-        const isCurrentRef = obj.ref?.current === refParam.current;
-        const menuState = isCurrentRef ? 'open' : 'closed';
-        obj.ref?.current?.setAttribute('data-menu', menuState);
-      }
-    } else {
-      setIsMenuOpen(false);
-    }
+    toolbarObjArr.forEach((obj) => {
+      const isCurrentRef = obj.ref?.current === refParam?.current;
+      obj.ref?.current?.setAttribute('data-menu', isCurrentRef ? 'open' : menuState);
+    });
   }, []);
 
   return (
-    <section className='fdMenu' data-modal={isMenuOpen ? 'open' : 'closed'}>
+    <div className='fdMenu' data-modal={isMenuOpen ? 'open' : 'closed'}>
       <section className='fdMenu__toolbar'>
         <FDMenuToolbar toolbarObjArr={toolbarObjArr} toggleMenus={toggleMenus} />
       </section>
-      <div className='fdMenu__menu'>
-        <FDMenuGenres toggleMenus={toggleMenus} ref={menuGenresRef} />
-      </div>
-    </section>
+      <FDMenuGenres toggleMenus={toggleMenus} ref={menuGenresRef} />
+    </div>
   );
 };
 
