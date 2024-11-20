@@ -2,13 +2,19 @@ import { createContext, FC, ReactNode, useContext, useEffect, useState } from 'r
 import { Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbGenres';
 import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 
+export type Type_heroData =
+  | Namespace_Tmdb.BaseMedia_Provider
+  | Namespace_Tmdb.Credits_Obj['credits']['cast'][0]
+  | Namespace_Tmdb.Credits_Obj['credits']['crew'][0]
+  | undefined;
+
 type Type_CatalogContext_State_Obj = {
   route: 'home' | Type_MovieGenre_Keys;
   setRoute: React.Dispatch<React.SetStateAction<'home' | Type_MovieGenre_Keys>>;
   itemsPerPage: number;
   setItemsPerPage: React.Dispatch<React.SetStateAction<number>>;
-  heroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
-  setHeroData: React.Dispatch<React.SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
+  heroData: Type_heroData;
+  setHeroData: React.Dispatch<React.SetStateAction<Type_heroData>>;
 };
 
 const CatalogContext = createContext<Type_CatalogContext_State_Obj | undefined>(undefined);
@@ -41,7 +47,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, []);
 
   /** Details, trailer data */
-  const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(undefined);
+  const [heroData, setHeroData] = useState<Type_heroData>(undefined);
 
   /** Provider */
   return <CatalogContext.Provider value={{ route, setRoute, itemsPerPage, setItemsPerPage, heroData, setHeroData }}>{children}</CatalogContext.Provider>;
