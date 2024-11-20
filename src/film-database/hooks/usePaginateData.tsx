@@ -1,10 +1,11 @@
 import { Namespace_TmdbEndpointsKeys } from '../composables/tmdb-api/data/tmdbEndPoints';
 import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+import { Type_heroData } from '../context/CatalogContext';
 
 export const usePaginateData = (
   rawData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj | Namespace_Tmdb.Credits_Obj | undefined,
   maxCarouselNodes: number | undefined,
-  setHeroData: React.Dispatch<React.SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>
+  setHeroData: React.Dispatch<React.SetStateAction<Type_heroData>>
 ) => {
   if (!rawData || !maxCarouselNodes || !setHeroData) return;
 
@@ -56,7 +57,18 @@ export const usePaginateData = (
 
   // Create hero data
   const firstEntry = dataMap.entries().next().value?.[1]?.[1]?.[1];
-  setHeroData(firstEntry);
+
+  if (firstEntry) {
+    if ('cast_id' in firstEntry) {
+      setHeroData(firstEntry as Namespace_Tmdb.Credits_Obj['credits']['cast'][0]);
+    } else if ('job' in firstEntry) {
+      setHeroData(firstEntry as Namespace_Tmdb.Credits_Obj['credits']['crew'][0]);
+    } else {
+      setHeroData(firstEntry as Namespace_Tmdb.BaseMedia_Provider);
+    }
+
+    setHeroData(firstEntry);
+  }
 
   // Return
   return dataMap;
