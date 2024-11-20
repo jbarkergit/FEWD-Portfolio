@@ -55,17 +55,10 @@ export const usePaginateData = (
   }
 
   // Create hero data
-  const firstEntry = dataMap.entries().next().value;
+  const firstEntry = dataMap.entries().next().value?.[1]?.[1]?.[1];
+  console.log(firstEntry);
+  setHeroData(firstEntry);
 
-  if (firstEntry) {
-    // Destructure first array value
-    const [, value] = firstEntry;
-    console.log(firstEntry);
-    // First value (or entry)
-    const firstValue = value?.[0]?.[0];
-    // Set state
-    if (firstValue) setHeroData(firstValue);
-  }
   // Return
   return dataMap;
 };
