@@ -2,29 +2,36 @@ import { Namespace_TmdbEndpointsKeys } from '../composables/tmdb-api/data/tmdbEn
 import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 
 export const usePaginateData = (
-  rawData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj | undefined,
+  rawData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj | Namespace_Tmdb.Credits_Obj | undefined,
   maxCarouselNodes: number | undefined,
   setHeroData: React.Dispatch<React.SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>
 ) => {
   if (!rawData || !maxCarouselNodes || !setHeroData) return;
 
   // Init mutatable map in outter scope to reduce state updates when paginating data
-  let dataMap: Map<string, Namespace_Tmdb.BaseMedia_Provider[][]> = new Map([]);
+  let dataMap: Map<string, (Namespace_Tmdb.BaseMedia_Provider[] | Namespace_Tmdb.Credits_Obj['credits']['cast'] | Namespace_Tmdb.Credits_Obj['credits']['crew'])[]> =
+    new Map([]);
 
   // Paginate data
-  const setData = (targetKey: Namespace_TmdbEndpointsKeys.Prefabs_Keys, data: Namespace_Tmdb.BaseMedia_Provider[]): void => {
+  const setData = (
+    targetKey: Namespace_TmdbEndpointsKeys.Prefabs_Keys | 'Cast' | 'Crew',
+    data: Array<Namespace_Tmdb.BaseMedia_Provider> | Namespace_Tmdb.Credits_Obj['credits']['cast'] | Namespace_Tmdb.Credits_Obj['credits']['crew']
+  ): void => {
     // Pagination iteration dependency calculation
     const maxIteratorIndex: number = Math.ceil((data.length - 1) / maxCarouselNodes);
     // Get map by key
-    const targetMapArr: Namespace_Tmdb.BaseMedia_Provider[][] | undefined = dataMap.get(targetKey);
+    const targetMapArr = dataMap.get(targetKey);
     // If key doesn't exist in map, create new entry
     if (!targetMapArr) dataMap.set(targetKey, []);
 
     // Paginate data
     for (let iteratorCounter = 0; iteratorCounter < maxIteratorIndex; iteratorCounter++) {
-      const startingSliceIndex: number = maxCarouselNodes * iteratorCounter + iteratorCounter;
-      const endingSliceIndex: number = maxCarouselNodes * (iteratorCounter + 1) + 1;
-      const paginatedData: Namespace_Tmdb.BaseMedia_Provider[] = data.slice(startingSliceIndex, endingSliceIndex);
+      const startingSliceIndex: number = maxCarouselNodes * iteratorCounter;
+      const endingSliceIndex: number = maxCarouselNodes * (iteratorCounter + 1);
+      const paginatedData = data.slice(startingSliceIndex, endingSliceIndex) as
+        | Namespace_Tmdb.BaseMedia_Provider[]
+        | Namespace_Tmdb.Credits_Obj['credits']['cast']
+        | Namespace_Tmdb.Credits_Obj['credits']['crew'];
       dataMap.get(targetKey)?.push(paginatedData); // Push data into dataMap
     }
   };
@@ -36,16 +43,29 @@ export const usePaginateData = (
       const results: Namespace_Tmdb.BaseMedia_Provider[] = item[itemKey].results;
       setData(itemKey, results);
     });
+  } else if ('credits' in rawData) {
+    const cast: Namespace_Tmdb.Credits_Obj['credits']['cast'] = rawData.credits.cast;
+    const crew: Namespace_Tmdb.Credits_Obj['credits']['crew'] = rawData.credits.crew;
+    setData('Cast', cast);
+    setData('Crew', crew);
   } else {
     const itemKey = Object.keys(rawData)[0] as Namespace_TmdbEndpointsKeys.Prefabs_Keys;
-    const results = rawData.discover.results;
+    const results: Namespace_Tmdb.BaseMedia_Provider[] = rawData.discover.results;
     setData(itemKey, results);
   }
 
   // Create hero data
-  const firstMapValue: Namespace_Tmdb.BaseMedia_Provider | undefined = dataMap.entries().next().value?.[1][0][0];
-  if (firstMapValue) setHeroData(firstMapValue);
+  const firstEntry = dataMap.entries().next().value;
 
+  if (firstEntry) {
+    // Destructure first array value
+    const [, value] = firstEntry;
+    console.log(firstEntry);
+    // First value (or entry)
+    const firstValue = value?.[0]?.[0];
+    // Set state
+    if (firstValue) setHeroData(firstValue);
+  }
   // Return
   return dataMap;
 };
