@@ -56,7 +56,6 @@ export const usePaginateData = (
 
   // Create hero data
   const firstEntry = dataMap.entries().next().value?.[1]?.[1]?.[1];
-  console.log(firstEntry);
   setHeroData(firstEntry);
 
   // Return
