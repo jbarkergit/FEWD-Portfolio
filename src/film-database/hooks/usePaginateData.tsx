@@ -61,8 +61,6 @@ export const usePaginateData = (
     } else {
       setHeroData(firstEntry as Namespace_Tmdb.BaseMedia_Provider);
     }
-
-    setHeroData(firstEntry);
   }
 
   // Return
