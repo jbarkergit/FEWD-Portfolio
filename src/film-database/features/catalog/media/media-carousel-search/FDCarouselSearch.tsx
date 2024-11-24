@@ -9,8 +9,8 @@ import { Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmdb-api
 import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../assets/google-material-symbols/iFrameSymbols';
 import { MaterialSymbolsSearch } from '../../../../assets/google-material-symbols/menuSymbols';
 
-const FDCarouselSearch = ({ setHeroData }: { setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>> }) => {
-  const { itemsPerPage } = useCatalogProvider();
+const FDCarouselSearch = () => {
+  const { itemsPerPage, setHeroData } = useCatalogProvider();
 
   /** User is searching */
   const [searchTerm, setSearchTerm] = useState<string>('');
