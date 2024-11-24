@@ -64,5 +64,5 @@ export const usePaginateData = (
   }
 
   // Return
-  return Array.from(Object.entries(dataMap));
+  return Array.from(dataMap);
 };
