@@ -2,7 +2,12 @@ import { Namespace_TmdbEndpointsKeys } from '../composables/tmdb-api/data/tmdbEn
 import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import { Type_heroData } from '../context/CatalogContext';
 
-type Type_dataMap_Provider = Namespace_Tmdb.BaseMedia_Provider[] | Namespace_Tmdb.Credits_Obj['credits']['cast'] | Namespace_Tmdb.Credits_Obj['credits']['crew'];
+type Type_usePaginateData_Provider =
+  | Namespace_Tmdb.BaseMedia_Provider[]
+  | Namespace_Tmdb.Credits_Obj['credits']['cast']
+  | Namespace_Tmdb.Credits_Obj['credits']['crew'];
+
+type Type_usePaginateData_TargetKey_Provider = Namespace_TmdbEndpointsKeys.Keys_Union | 'Cast' | 'Crew';
 
 export const usePaginateData = (
   rawData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj | Namespace_Tmdb.Credits_Obj | undefined,
@@ -12,10 +17,10 @@ export const usePaginateData = (
   if (!rawData || !maxCarouselNodes || !setHeroData) return;
 
   // Init mutatable map in outter scope to reduce state updates when paginating data
-  let dataMap: Map<string, Array<Type_dataMap_Provider>> = new Map();
+  let dataMap: Map<Type_usePaginateData_TargetKey_Provider, Array<Type_usePaginateData_Provider>> = new Map();
 
   // Paginate data
-  const setData = (targetKey: Namespace_TmdbEndpointsKeys.Prefabs_Keys | 'Cast' | 'Crew', data: Type_dataMap_Provider): void => {
+  const setData = (targetKey: Type_usePaginateData_TargetKey_Provider, data: Type_usePaginateData_Provider): void => {
     // Get map by key
     const isKeyMapped: boolean = dataMap.has(targetKey);
     // If key doesn't exist in map, create new entry
@@ -60,10 +65,6 @@ export const usePaginateData = (
     setHeroData(firstEntry);
   }
 
-  // Data structure conversion - React's state does not check for deeply nested data changes; therefore, we cannot setCastCrew with a map.
-  const paginatedEntries = Array.from(dataMap.entries());
-  console.log(paginatedEntries);
-
   // Return
-  return paginatedEntries;
+  return dataMap;
 };
