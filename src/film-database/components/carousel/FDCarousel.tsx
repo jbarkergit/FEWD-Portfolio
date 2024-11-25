@@ -5,30 +5,31 @@ import { v4 as uuidv4 } from 'uuid';
 import { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Context
 import { useCatalogProvider } from '../../context/CatalogContext';
+// Hooks
+import { Type_usePaginateData_Provider } from '../../hooks/usePaginateData';
 // Assets
 import { MaterialSymbolsPlayArrow } from '../../assets/google-material-symbols/iFrameSymbols';
 import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/google-material-symbols/carouselSymbols';
 
-type Type_Data =
-  | Array<Array<Namespace_Tmdb.BaseMedia_Provider>>
-  | Array<Array<Namespace_Tmdb.Credits_Obj['credits']['cast']>>
-  | Array<Array<Namespace_Tmdb.Credits_Obj['credits']['crew']>>;
-
-const FDCarousel = ({ type, mapIndex, heading, data }: { type: 'movies' | 'cast' | 'crew'; mapIndex: number; heading: string; data: Type_Data }) => {
+const FDCarousel = ({
+  type,
+  mapIndex,
+  heading,
+  data,
+}: {
+  type: 'movies' | 'cast' | 'crew';
+  mapIndex: number;
+  heading: string;
+  data: Array<Type_usePaginateData_Provider>;
+}) => {
+  if (!data) return;
   // Context
   const { itemsPerPage, setHeroData } = useCatalogProvider();
   // References
   const carouselRef = useRef<HTMLUListElement>(null);
   // State
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
-
-  const [articles, setArticles] = useState<typeof data>(
-    type === 'movies'
-      ? [(data as Array<Array<Namespace_Tmdb.BaseMedia_Provider>>)[0]]
-      : type === 'cast'
-        ? [(data as Array<Array<Namespace_Tmdb.Credits_Obj['credits']['cast']>>)[0]]
-        : [(data as Array<Array<Namespace_Tmdb.Credits_Obj['credits']['crew']>>)[0]]
-  );
+  const [articles, setArticles] = useState<typeof data>([data[0]]);
 
   /** Track carousel navigation index */
   const updateCarouselIndex = (delta: number): void => setCarouselIndex(Math.max(0, Math.min(carouselIndex + delta, data.length - 1)));
@@ -43,17 +44,17 @@ const FDCarousel = ({ type, mapIndex, heading, data }: { type: 'movies' | 'cast'
           case 'movies':
             const prevMovies = prevState as Namespace_Tmdb.BaseMedia_Provider[][];
             const newMovies = data[carouselIndex] as Namespace_Tmdb.BaseMedia_Provider[];
-            return [...prevMovies, newMovies] as Array<Array<Namespace_Tmdb.BaseMedia_Provider>>;
+            return [...prevMovies, newMovies];
 
           case 'cast':
-            const prevCast = prevState as Namespace_Tmdb.Credits_Obj['credits']['cast'][][];
-            const newCast = data[carouselIndex] as Namespace_Tmdb.Credits_Obj['credits']['cast'][];
-            return [...prevCast, newCast] as Array<Array<Namespace_Tmdb.Credits_Obj['credits']['cast']>>;
+            const prevCast = prevState as Namespace_Tmdb.Credits_Obj['credits']['cast'][];
+            const newCast = data[carouselIndex] as Namespace_Tmdb.Credits_Obj['credits']['cast'];
+            return [...prevCast, newCast];
 
           case 'crew':
-            const prevCrew = prevState as Namespace_Tmdb.Credits_Obj['credits']['crew'][][];
-            const newCrew = data[carouselIndex] as Namespace_Tmdb.Credits_Obj['credits']['crew'][];
-            return [...prevCrew, newCrew] as Array<Array<Namespace_Tmdb.Credits_Obj['credits']['crew']>>;
+            const prevCrew = prevState as Namespace_Tmdb.Credits_Obj['credits']['crew'][];
+            const newCrew = data[carouselIndex] as Namespace_Tmdb.Credits_Obj['credits']['crew'];
+            return [...prevCrew, newCrew];
 
           default:
             return prevState;
@@ -135,18 +136,18 @@ const FDCarousel = ({ type, mapIndex, heading, data }: { type: 'movies' | 'cast'
                           type === 'movies'
                             ? (article as Namespace_Tmdb.BaseMedia_Provider)?.poster_path
                             : type === 'cast'
-                              ? Object.values(article as Namespace_Tmdb.Credits_Obj['credits']['cast'])[0].profile_path
+                              ? Object.values(article as unknown as Namespace_Tmdb.Credits_Obj['credits']['cast'])[0].profile_path
                               : type === 'crew'
-                                ? Object.values(article as Namespace_Tmdb.Credits_Obj['credits']['crew'])[0]?.profile_path
+                                ? Object.values(article as unknown as Namespace_Tmdb.Credits_Obj['credits']['crew'])[0]?.profile_path
                                 : null
                         }`}
                         alt={`${
                           type === 'movies'
                             ? (article as Namespace_Tmdb.BaseMedia_Provider)?.title
                             : type === 'cast'
-                              ? Object.values(article as Namespace_Tmdb.Credits_Obj['credits']['cast'])[0].name
+                              ? Object.values(article as unknown as Namespace_Tmdb.Credits_Obj['credits']['cast'])[0].name
                               : type === 'crew'
-                                ? Object.values(article as Namespace_Tmdb.Credits_Obj['credits']['crew'])[0]?.name
+                                ? Object.values(article as unknown as Namespace_Tmdb.Credits_Obj['credits']['crew'])[0]?.name
                                 : null
                         }`}
                         fetchPriority={mapIndex === 0 ? 'high' : 'low'}
