@@ -13,7 +13,7 @@ import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
   const { route, itemsPerPage, setHeroData } = useCatalogProvider();
-  const [paginatedData, setPaginatedData] = useState<[string, Namespace_Tmdb.BaseMedia_Provider[][]][] | undefined>(undefined);
+  const [paginatedData, setPaginatedData] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
   /** Fetch data when user requests a route, pass to usePaginateData() hook */
   const fetchDataByRoute = async (): Promise<void> => {
@@ -30,14 +30,9 @@ const FDMedia = () => {
       processedData = (await useTmdbFetcher({ discover: route })) as Namespace_Tmdb.Discover_Obj;
     }
 
-    if (processedData) {
-      const data = usePaginateData(processedData, itemsPerPage, setHeroData);
-
-      if (data) {
-        const dataEntries: [string, Namespace_Tmdb.BaseMedia_Provider[][]][] = Array.from(data.entries());
-        setPaginatedData(dataEntries);
-      }
-    }
+    if (!processedData) return;
+    const data = usePaginateData(processedData, itemsPerPage, setHeroData);
+    if (data) setPaginatedData(data);
   };
 
   useEffect(() => {
@@ -77,11 +72,10 @@ const FDMedia = () => {
   /** Component */
   return (
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
-      {paginatedData &&
-        paginatedData.map(([key, value], index) => (
-          <FDCarousel type={'movies'} mapIndex={index} heading={key === 'discover' ? route : key} data={value} key={key === 'discover' ? route : key} />
-        ))}
-      <FDCarouselSearch setHeroData={setHeroData} />
+      {paginatedData?.map(([key, value], index) => (
+        <FDCarousel type={'movies'} mapIndex={index} heading={key === 'discover' ? route : key} data={value} key={key === 'discover' ? route : key} />
+      ))}
+      {/* <FDCarouselSearch setHeroData={setHeroData} /> */}
     </main>
   );
 };
