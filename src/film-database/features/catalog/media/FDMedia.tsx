@@ -75,7 +75,7 @@ const FDMedia = () => {
       {paginatedData?.map(([key, value], index) => (
         <FDCarousel type={'movies'} mapIndex={index} heading={key === 'discover' ? route : key} data={value} key={key === 'discover' ? route : key} />
       ))}
-      {/* <FDCarouselSearch setHeroData={setHeroData} /> */}
+      <FDCarouselSearch />
     </main>
   );
 };
