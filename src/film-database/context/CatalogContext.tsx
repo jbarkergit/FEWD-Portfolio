@@ -25,26 +25,26 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   /** Maximum posters per page */
   const [itemsPerPage, setItemsPerPage] = useState<number>(7);
+  const root = document.querySelector('[data-carousel-layout]');
 
   useEffect(() => {
-    const root = document.body.querySelector('.fdCatalog') as HTMLElement;
+    if (!root) return;
 
     const getItemsPerPage = (): void => {
-      const styles: CSSStyleDeclaration = getComputedStyle(root);
-      const value: number = parseInt(styles.getPropertyValue('--fd-carousel-items-per-page'));
-      setItemsPerPage(value);
+      const value = parseInt(getComputedStyle(root).getPropertyValue('--fd-carousel-items-per-page'));
+      if (!isNaN(value)) setItemsPerPage(value);
     };
 
-    // Init fetch
+    // Initialize fetch
     getItemsPerPage();
 
-    // Observe changes to data-attribute
+    // Observe changes to the `data-carousel-layout` element's attributes
     const observer = new MutationObserver(() => getItemsPerPage());
     observer.observe(root, { attributes: true });
 
-    // Cleanup
+    // Cleanup the observer on component unmount
     return () => observer.disconnect();
-  }, []);
+  }, [root]);
 
   /** Details, trailer data */
   const [heroData, setHeroData] = useState<Type_heroData>(undefined);
