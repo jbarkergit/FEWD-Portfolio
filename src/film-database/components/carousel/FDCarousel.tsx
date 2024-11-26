@@ -25,7 +25,7 @@ const FDCarousel = ({
   console.log(data);
   if (!data) return;
   // Context
-  const { itemsPerPage, setHeroData } = useCatalogProvider();
+  const { itemsPerPage, setHeroData, setMovieModalId } = useCatalogProvider();
   // References
   const carouselRef = useRef<HTMLUListElement>(null);
   // State
@@ -149,7 +149,7 @@ const FDCarousel = ({
                           className='fdCarousel__wrapper__ul__li__overlay--play'
                           aria-label='Play trailer'
                           onClick={() => {
-                            if (type === 'movies') setHeroData(article as Namespace_Tmdb.BaseMedia_Provider);
+                            setHeroData(article as Namespace_Tmdb.BaseMedia_Provider);
                           }}>
                           <MaterialSymbolsPlayArrow />
                         </button>
