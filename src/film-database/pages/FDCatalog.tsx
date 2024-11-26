@@ -4,6 +4,7 @@ import { CatalogProvider } from '../context/CatalogContext';
 import FDMenu from '../features/catalog/menu/FDMenu';
 import FDHero from '../features/catalog/hero/FDHero';
 import FDMedia from '../features/catalog/media/FDMedia';
+import FDMovieModal from '../features/catalog/modals/FDMovieModal';
 
 const FDCatalog = () => {
   return (
@@ -13,6 +14,7 @@ const FDCatalog = () => {
         <div className='fdCatalog' data-layout-carousel>
           <FDHero />
           <FDMedia />
+          <FDMovieModal />
         </div>
       </CatalogProvider>
     </div>
