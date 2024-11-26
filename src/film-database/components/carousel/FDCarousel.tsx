@@ -25,7 +25,7 @@ const FDCarousel = ({
   console.log(data);
   if (!data) return;
   // Context
-  const { itemsPerPage, setHeroData, setMovieModalId } = useCatalogProvider();
+  const { itemsPerPage, setHeroData } = useCatalogProvider();
   // References
   const carouselRef = useRef<HTMLUListElement>(null);
   // State
