@@ -12,7 +12,7 @@ import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
-  const { route, itemsPerPage } = useCatalogProvider();
+  const { route, itemsPerPage, setHeroData } = useCatalogProvider();
   const [paginatedData, setPaginatedData] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
   /** Fetch data when user requests a route, pass to usePaginateData() hook */
@@ -32,7 +32,10 @@ const FDMedia = () => {
 
     if (!processedData) return;
     const data = usePaginateData(processedData, itemsPerPage);
-    if (data) setPaginatedData(data);
+    if (data) {
+      setPaginatedData(data);
+      setHeroData(data[0][1][0][0]);
+    }
   };
 
   useEffect(() => {
