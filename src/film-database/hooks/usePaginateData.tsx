@@ -1,6 +1,5 @@
 import { Namespace_TmdbEndpointsKeys } from '../composables/tmdb-api/data/tmdbEndPoints';
 import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
-import { Type_heroData } from '../context/CatalogContext';
 
 export type Type_usePaginateData_Provider =
   | Namespace_Tmdb.BaseMedia_Provider[]
@@ -11,10 +10,9 @@ type Type_usePaginateData_TargetKey_Provider = Namespace_TmdbEndpointsKeys.Keys_
 
 export const usePaginateData = (
   rawData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj | Namespace_Tmdb.Credits_Obj | undefined,
-  maxCarouselNodes: number | undefined,
-  setHeroData: React.Dispatch<React.SetStateAction<Type_heroData>>
+  maxCarouselNodes: number | undefined
 ) => {
-  if (!rawData || !maxCarouselNodes || !setHeroData) return;
+  if (!rawData || !maxCarouselNodes) return;
 
   // Init mutatable map in outter scope to reduce state updates when paginating data
   let dataMap: Map<Type_usePaginateData_TargetKey_Provider, Array<Type_usePaginateData_Provider>> = new Map();
@@ -48,19 +46,6 @@ export const usePaginateData = (
     const itemKey = Object.keys(rawData)[0] as Namespace_TmdbEndpointsKeys.Prefabs_Keys;
     const results: Namespace_Tmdb.BaseMedia_Provider[] = rawData.discover.results;
     setData(itemKey, results);
-  }
-
-  // Create hero data
-  const firstEntry = dataMap.entries().next().value?.[1]?.[1]?.[1];
-
-  if (firstEntry) {
-    if ('cast_id' in firstEntry) {
-      setHeroData(firstEntry as Namespace_Tmdb.Credits_Obj['credits']['cast'][0]);
-    } else if ('job' in firstEntry) {
-      setHeroData(firstEntry as Namespace_Tmdb.Credits_Obj['credits']['crew'][0]);
-    } else {
-      setHeroData(firstEntry as Namespace_Tmdb.BaseMedia_Provider);
-    }
   }
 
   // Return
