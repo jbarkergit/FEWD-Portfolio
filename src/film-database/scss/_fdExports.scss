@@ -17,8 +17,7 @@
 
 @forward '/src/film-database/features/catalog/menu/fdMenu';
 
-// Movie Page Features
-@forward '/src/film-database/features/movie/fdMovie';
+@forward '/src/film-database/features/catalog/modals/fdMovieModal';
 
 // Components
 @forward '/src/film-database/components/carousel/fdCarousel';
