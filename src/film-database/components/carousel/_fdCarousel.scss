@@ -42,6 +42,11 @@
           width: inherit;
           height: inherit;
           cursor: pointer;
+          & img {
+            width: inherit;
+            height: inherit;
+            object-fit: contain;
+          }
         }
         &__overlay {
           position: absolute;
