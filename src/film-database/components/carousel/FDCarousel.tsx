@@ -22,7 +22,6 @@ const FDCarousel = ({
   heading: string;
   data: Array<Type_usePaginateData_Provider>;
 }) => {
-  console.log(data);
   if (!data) return;
   // Context
   const { itemsPerPage, setHeroData } = useCatalogProvider();
