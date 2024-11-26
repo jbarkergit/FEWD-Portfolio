@@ -22,6 +22,7 @@ const FDCarousel = ({
   heading: string;
   data: Array<Type_usePaginateData_Provider>;
 }) => {
+  console.log(data);
   if (!data) return;
   // Context
   const { itemsPerPage, setHeroData } = useCatalogProvider();
@@ -122,42 +123,38 @@ const FDCarousel = ({
         <ul className='fdCarousel__wrapper__ul' ref={carouselRef}>
           {articles.length > 0
             ? articles.flat().map((article) => {
+                let props: { src: string | null; alt: string } = { src: '', alt: '' };
+
+                if (type === 'movies') {
+                  const prop = article as Namespace_Tmdb.BaseMedia_Provider;
+                  props = { src: prop.poster_path, alt: prop.title };
+                } else if (type === 'cast' || type === 'crew') {
+                  const prop = article as Namespace_Tmdb.Credits_Obj['credits']['cast'][0];
+                  props = { src: prop.profile_path, alt: prop.name };
+                }
+
                 return (
-                  <li
-                    className='fdCarousel__wrapper__ul__li'
-                    key={uuidv4()}
-                    onClick={() => {
-                      if (type === 'movies') setHeroData(article as Namespace_Tmdb.BaseMedia_Provider);
-                    }}>
+                  <li className='fdCarousel__wrapper__ul__li' key={uuidv4()}>
                     <picture className='fdCarousel__wrapper__ul__li__picture'>
                       <img
                         className='fdCarousel__wrapper__ul__li__picture--img'
-                        src={`https://image.tmdb.org/t/p/w780/${
-                          type === 'movies'
-                            ? (article as Namespace_Tmdb.BaseMedia_Provider)?.poster_path
-                            : type === 'cast'
-                              ? Object.values(article as unknown as Namespace_Tmdb.Credits_Obj['credits']['cast'])[0].profile_path
-                              : type === 'crew'
-                                ? Object.values(article as unknown as Namespace_Tmdb.Credits_Obj['credits']['crew'])[0]?.profile_path
-                                : null
-                        }`}
-                        alt={`${
-                          type === 'movies'
-                            ? (article as Namespace_Tmdb.BaseMedia_Provider)?.title
-                            : type === 'cast'
-                              ? Object.values(article as unknown as Namespace_Tmdb.Credits_Obj['credits']['cast'])[0].name
-                              : type === 'crew'
-                                ? Object.values(article as unknown as Namespace_Tmdb.Credits_Obj['credits']['crew'])[0]?.name
-                                : null
-                        }`}
+                        src={`${type === 'movies' ? `https://image.tmdb.org/t/p/w780/${props.src}` : props.src ? `https://image.tmdb.org/t/p/w780/${props.src}` : `https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg`}`}
+                        alt={`${props.alt}`}
                         fetchPriority={mapIndex === 0 ? 'high' : 'low'}
                       />
                     </picture>
-                    <div className='fdCarousel__wrapper__ul__li__overlay'>
-                      <button className='fdCarousel__wrapper__ul__li__overlay--play' aria-label='Play trailer'>
-                        <MaterialSymbolsPlayArrow />
-                      </button>
-                    </div>
+                    {type === 'movies' && (
+                      <div className='fdCarousel__wrapper__ul__li__overlay'>
+                        <button
+                          className='fdCarousel__wrapper__ul__li__overlay--play'
+                          aria-label='Play trailer'
+                          onClick={() => {
+                            if (type === 'movies') setHeroData(article as Namespace_Tmdb.BaseMedia_Provider);
+                          }}>
+                          <MaterialSymbolsPlayArrow />
+                        </button>
+                      </div>
+                    )}
                   </li>
                 );
               })
