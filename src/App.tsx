@@ -126,10 +126,6 @@ function App() {
           path='/film-database/browse'
           element={authorizedUser.user && authorizedUser.verified ? getElementByPath('/film-database/browse') : <Navigate to='/film-database' />}
         />
-        <Route
-          path='/film-database/:paramId'
-          element={authorizedUser.user && authorizedUser.verified ? getElementByPath('/film-database/:paramId') : <Navigate to='/film-database' />}
-        />
       </Routes>
     </Suspense>
   );
