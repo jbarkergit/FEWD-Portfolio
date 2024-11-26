@@ -5,26 +5,28 @@ import { useCatalogProvider } from '../../../context/CatalogContext';
 import { usePaginateData } from '../../../hooks/usePaginateData';
 
 const FDMovieModal = () => {
-  const { itemsPerPage, setHeroData, movieModalId } = useCatalogProvider();
+  const { itemsPerPage, heroData } = useCatalogProvider();
   const [castCrew, setCastCrew] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
   const fetch = async () => {
-    const data = (await useTmdbFetcher({ credits: Number(movieModalId) })) as Namespace_Tmdb.Credits_Obj;
-    const paginatedData = usePaginateData(data, itemsPerPage, setHeroData);
+    const data = (await useTmdbFetcher({ credits: (heroData as Namespace_Tmdb.BaseMedia_Provider).id })) as Namespace_Tmdb.Credits_Obj;
+    const paginatedData = usePaginateData(data, itemsPerPage);
     setCastCrew(paginatedData);
   };
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [heroData]);
 
   if (castCrew)
     return (
-      <section className='fdMovieModal__container'>
-        {castCrew.map(([key, value], index) => {
-          return <FDCarousel type={key === 'cast' ? 'cast' : 'crew'} mapIndex={index} heading={key} data={value} key={`${key}-${index}`} />;
-        })}
-      </section>
+      <div className='fdMovieModal'>
+        <section className='fdMovieModal__container'>
+          {castCrew.map(([key, value], index) => {
+            return <FDCarousel type={key === 'cast' ? 'cast' : 'crew'} mapIndex={index} heading={key} data={value} key={`${key}-${index}`} />;
+          })}
+        </section>
+      </div>
     );
 };
 
