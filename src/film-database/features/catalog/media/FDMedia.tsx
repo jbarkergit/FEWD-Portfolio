@@ -1,7 +1,7 @@
 // Deps
 import { useEffect, useRef, useState } from 'react';
 // Context
-import { useCatalogProvider } from '../../../context/CatalogContext';
+import { Type_heroData, useCatalogProvider } from '../../../context/CatalogContext';
 // Composables
 import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Hooks
@@ -34,7 +34,7 @@ const FDMedia = () => {
     const data = usePaginateData(processedData, itemsPerPage);
     if (data) {
       setPaginatedData(data);
-      setHeroData(data[0][1][0][0]);
+      setHeroData(data[0][1][0][0] as Type_heroData);
     }
   };
 
