@@ -2,11 +2,7 @@ import { createContext, FC, ReactNode, useContext, useEffect, useState } from 'r
 import { Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbGenres';
 import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 
-export type Type_heroData =
-  | Namespace_Tmdb.BaseMedia_Provider
-  | Namespace_Tmdb.Credits_Obj['credits']['cast'][0]
-  | Namespace_Tmdb.Credits_Obj['credits']['crew'][0]
-  | undefined;
+export type Type_heroData = Namespace_Tmdb.BaseMedia_Provider | undefined;
 
 type Type_CatalogContext_State_Obj = {
   route: 'home' | Type_MovieGenre_Keys;
