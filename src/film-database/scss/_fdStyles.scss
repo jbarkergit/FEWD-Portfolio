@@ -50,22 +50,25 @@
   );
   --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
 
-  @media (min-width: 1800px) {
+  @media (min-width: 3520px) {
+    --fd-carousel-items-per-page: 8;
+  }
+  @media (max-width: 3520px) {
     --fd-carousel-items-per-page: 7;
   }
-  @media (max-width: 1800px) {
+  @media (max-width: 2860px) {
     --fd-carousel-items-per-page: 6;
   }
-  @media (max-width: 1566px) {
+  @media (max-width: 2260px) {
     --fd-carousel-items-per-page: 5;
   }
-  @media (max-width: 1309px) {
+  @media (max-width: 1660px) {
     --fd-carousel-items-per-page: 4;
   }
-  @media (max-width: 1051px) {
+  @media (max-width: 1280px) {
     --fd-carousel-items-per-page: 3;
   }
-  @media (max-width: 793px) {
+  @media (max-width: 810px) {
     --fd-carousel-items-per-page: 2;
   }
 }
