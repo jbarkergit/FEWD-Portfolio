@@ -8,11 +8,11 @@ export type Type_usePaginateData_Provider =
 
 type Type_usePaginateData_TargetKey_Provider = Namespace_TmdbEndpointsKeys.Keys_Union | 'Cast' | 'Crew';
 
-export const usePaginateData = (
-  rawData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj | Namespace_Tmdb.Credits_Obj | undefined,
-  maxCarouselNodes: number | undefined
-) => {
-  if (!rawData || !maxCarouselNodes) return;
+export const usePaginateData = (rawData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj | Namespace_Tmdb.Credits_Obj | undefined) => {
+  // Get visible carousel nodes
+  const root: Element | null = document.querySelector('[data-layout-carousel]');
+  if (!rawData || !root) return;
+  const maxCarouselNodes: number = parseInt(getComputedStyle(root).getPropertyValue('--fd-carousel-items-per-page'));
 
   // Init mutatable map in outter scope to reduce state updates when paginating data
   let dataMap: Map<Type_usePaginateData_TargetKey_Provider, Array<Type_usePaginateData_Provider>> = new Map();
