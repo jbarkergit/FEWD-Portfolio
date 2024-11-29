@@ -10,7 +10,7 @@ const FDDetails = () => {
   const { heroData } = useCatalogProvider();
   if (!heroData) return;
 
-  const renderStars: JSX.Element[] = useMemo(() => {
+  const renderStars = (): JSX.Element[] => {
     const voteSymbols = {
       full: (
         <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
@@ -53,9 +53,9 @@ const FDDetails = () => {
     for (let i = 0; i < emptyStars; i++) stars.push(voteSymbols.empty);
 
     return stars;
-  }, [heroData]);
+  };
 
-  const renderDate: string = useMemo(() => {
+  const renderDate = (): string => {
     // Get current date
     const date: Date = new Date();
     const currentDate: Record<'month' | 'day' | 'year', number> = { month: date.getMonth() + 1, day: date.getDay(), year: date.getFullYear() };
@@ -77,7 +77,7 @@ const FDDetails = () => {
     // Return formatted date or 'Providers'
     if (isMovieReleased) return `${releaseDate.month}/${releaseDate.day}/${releaseDate.year}`;
     return 'Now Available';
-  }, [heroData]);
+  };
 
   return (
     <section className='fdDetails'>
@@ -92,8 +92,12 @@ const FDDetails = () => {
         </header>
         <div className='fdDetails__article__details'>
           <div className='fdDetails__article__details__release'>
-            <span>{renderStars}</span>
-            <span data-status={renderDate === 'Now Available' ? 'green' : ''}>{renderDate}</span>
+            <span>
+              {renderStars().map((Star, index) => {
+                return <span key={`rating-star-${index}`}>{Star}</span>;
+              })}
+            </span>
+            <span data-status={renderDate() === 'Now Available' ? 'green' : ''}>{renderDate()}</span>
           </div>
           <nav className='fdDetails__article__details__cta'>
             <Link to={`/film-database/${heroData.id}`} aria-label={`More details about ${heroData.title}`}>
