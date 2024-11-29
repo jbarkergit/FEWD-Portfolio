@@ -17,6 +17,7 @@ const FDMedia = () => {
 
   /** Fetch data when user requests a route, pass to usePaginateData() hook */
   const fetchDataByRoute = async (): Promise<void> => {
+    if (!itemsPerPage) return;
     let processedData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj = [];
 
     if (route === 'home') {
@@ -32,6 +33,7 @@ const FDMedia = () => {
 
     if (!processedData) return;
     const data = usePaginateData(processedData, itemsPerPage);
+
     if (data) {
       setPaginatedData(data);
       setHeroData(data[0][1][0][0] as Type_heroData);
@@ -40,7 +42,7 @@ const FDMedia = () => {
 
   useEffect(() => {
     fetchDataByRoute();
-  }, [route]);
+  }, [route, itemsPerPage]);
 
   /** Carousel DeltaY scroll logic */
   const fdMediaRef = useRef<HTMLElement>(null);
