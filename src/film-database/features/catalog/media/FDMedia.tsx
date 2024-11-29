@@ -1,5 +1,7 @@
 // Deps
 import { useEffect, useRef, useState } from 'react';
+// Libs
+import { v4 as uuidv4 } from 'uuid';
 // Context
 import { Type_heroData, useCatalogProvider } from '../../../context/CatalogContext';
 // Composables
@@ -17,7 +19,6 @@ const FDMedia = () => {
 
   /** Fetch data when user requests a route, pass to usePaginateData() hook */
   const fetchDataByRoute = async (): Promise<void> => {
-    if (!itemsPerPage) return;
     let processedData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj = [];
 
     if (route === 'home') {
@@ -78,7 +79,7 @@ const FDMedia = () => {
   return (
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
       {paginatedData?.map(([key, value], index) => (
-        <FDCarousel type={'movies'} mapIndex={index} heading={key === 'discover' ? route : key} data={value} key={key === 'discover' ? route : key} />
+        <FDCarousel type={'movies'} mapIndex={index} heading={key === 'discover' ? route : key} data={value} key={uuidv4()} />
       ))}
       <FDCarouselSearch />
     </main>
