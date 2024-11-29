@@ -24,7 +24,6 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     const root = document.querySelector('[data-layout-carousel]');
-    console.log(root);
     if (!root) return;
 
     const getItemsPerPage = (): void => {
