@@ -7,8 +7,8 @@ export type Type_heroData = Namespace_Tmdb.BaseMedia_Provider | undefined;
 type Type_CatalogContext_State_Obj = {
   route: 'home' | Type_MovieGenre_Keys;
   setRoute: React.Dispatch<React.SetStateAction<'home' | Type_MovieGenre_Keys>>;
-  itemsPerPage: number;
-  setItemsPerPage: React.Dispatch<React.SetStateAction<number>>;
+  itemsPerPage: number | undefined;
+  setItemsPerPage: React.Dispatch<React.SetStateAction<number | undefined>>;
   heroData: Type_heroData;
   setHeroData: React.Dispatch<React.SetStateAction<Type_heroData>>;
 };
@@ -20,7 +20,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [route, setRoute] = useState<'home' | Type_MovieGenre_Keys>('home');
 
   /** Maximum posters per page */
-  const [itemsPerPage, setItemsPerPage] = useState<number>(7);
+  const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     const root = document.querySelector('[data-layout-carousel]');
