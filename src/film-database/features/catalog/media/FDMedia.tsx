@@ -14,7 +14,7 @@ import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
-  const { route, itemsPerPage, setHeroData } = useCatalogProvider();
+  const { route, setHeroData } = useCatalogProvider();
   const [paginatedData, setPaginatedData] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
   /** Fetch data when user requests a route, pass to usePaginateData() hook */
@@ -33,7 +33,7 @@ const FDMedia = () => {
     }
 
     if (!processedData) return;
-    const data = usePaginateData(processedData, itemsPerPage);
+    const data = usePaginateData(processedData);
 
     if (data) {
       setPaginatedData(data);
@@ -43,7 +43,7 @@ const FDMedia = () => {
 
   useEffect(() => {
     fetchDataByRoute();
-  }, [route, itemsPerPage]);
+  }, [route]);
 
   /** Carousel DeltaY scroll logic */
   const fdMediaRef = useRef<HTMLElement>(null);
