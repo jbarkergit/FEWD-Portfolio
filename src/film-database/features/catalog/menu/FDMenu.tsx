@@ -15,12 +15,17 @@ const FDMenu = () => {
   ];
 
   const toggleMenus = useCallback((refParam: RefObject<HTMLElement> | undefined) => {
-    const menuState = refParam ? 'open' : 'closed';
+    for (const elem of toolbarObjArr) {
+      if (!elem.ref || !elem.ref.current) continue;
+      const element: HTMLElement = elem.ref.current;
 
-    toolbarObjArr.forEach((obj) => {
-      const isCurrentRef = obj.ref?.current === refParam?.current;
-      obj.ref?.current?.setAttribute('data-menu', isCurrentRef ? 'open' : menuState);
-    });
+      const isTargetElem: boolean = element === refParam?.current;
+      const targetStatus: string | null = element.getAttribute('data-menu');
+      const isTargetOpen: boolean = targetStatus === 'open';
+
+      // If iteration target is refParam, if the data attribute status is 'open' then close else open. If iteration target isn't refParam, close.
+      element.setAttribute('data-menu', isTargetElem ? (isTargetOpen ? 'closed' : 'open') : 'closed');
+    }
   }, []);
 
   return (
