@@ -8,48 +8,37 @@
   width: auto;
   height: 100%;
   overflow: clip;
+}
+
+.fdMenu__toolbar {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  padding: var(--fd-padding-generic) calc((var(--fd-padding-generic) / 3.5)) calc(var(--fd-padding-generic) + var(--fd-padding-generic) / 2)
+    calc((var(--fd-padding-generic) / 3.5));
   background-color: rgba(0, 0, 0, 1);
-  // &[data-modal='open'] {
-  // &::before {
-  //   content: '';
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   width: 100svw;
-  //   height: 100%;
-  //   background: linear-gradient(to right, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0.7) 100%);
-  // }
-  // }
-  & > * {
-    position: relative;
-  }
-  &__toolbar {
+  &__ul {
     display: flex;
-    padding: var(--fd-padding-generic) calc((var(--fd-padding-generic) / 3.5)) calc(var(--fd-padding-generic) + var(--fd-padding-generic) / 2)
-      calc((var(--fd-padding-generic) / 3.5));
-    &__ul {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: var(--fd-gap);
-      height: 50%;
-      &__li {
-        &--button {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          pointer-events: all;
-          &--icon {
-            & svg {
-              color: white;
-              width: 2em;
-              height: 2em;
-            }
-          }
-          &--key {
-            @include m.fdFontL;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--fd-gap);
+    height: 50%;
+    &__li {
+      &--button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: all;
+        &--icon {
+          & svg {
             color: white;
+            width: 2em;
+            height: 2em;
           }
+        }
+        &--key {
+          @include m.fdFontL;
+          color: white;
         }
       }
     }
@@ -57,21 +46,27 @@
 }
 
 .fdMenuGenres {
-  display: flex;
-  align-items: center;
+  position: relative;
+  display: grid;
+  place-items: center;
   gap: var(--fd-gap);
   height: 100svh;
   overflow-y: scroll;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  transition: transform 280ms ease-in-out;
-  transform-origin: left;
   &[data-menu='closed'] {
-    width: 0;
-    transform: scaleX(0);
+    display: none;
   }
   &[data-menu='open'] {
-    transform: scaleX(1);
+    &::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100svw;
+      height: 100%;
+      background: linear-gradient(to right, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0.7) 100%);
+    }
   }
   &__ul {
     position: relative;
