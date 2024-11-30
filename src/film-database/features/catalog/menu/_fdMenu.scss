@@ -2,7 +2,9 @@
 @use '/src/film-database/scss/fdMixins' as m;
 
 .fdMenu {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 6;
   display: flex;
   width: auto;
@@ -16,7 +18,6 @@
   display: flex;
   padding: var(--fd-padding-generic) calc((var(--fd-padding-generic) / 3.5)) calc(var(--fd-padding-generic) + var(--fd-padding-generic) / 2)
     calc((var(--fd-padding-generic) / 3.5));
-  background-color: rgba(0, 0, 0, 1);
   &__ul {
     display: flex;
     flex-direction: column;
