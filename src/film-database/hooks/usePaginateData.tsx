@@ -25,8 +25,8 @@ export const usePaginateData = (rawData: Namespace_Tmdb.Prefabs_Obj[] | Namespac
     if (!isKeyMapped) dataMap.set(targetKey, []);
 
     // Paginate data
-    for (let i = 0; i < data.length; i += maxCarouselNodes) {
-      dataMap.get(targetKey)?.push(data.slice(i, i + maxCarouselNodes));
+    for (let i = 0; i < data.length; i += maxCarouselNodes + 1) {
+      dataMap.get(targetKey)?.push(data.slice(i, i + maxCarouselNodes + 1));
     }
   };
 
