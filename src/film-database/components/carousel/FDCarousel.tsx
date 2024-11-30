@@ -24,7 +24,7 @@ const FDCarousel = ({
 }) => {
   if (!data) return;
   // Context
-  const { itemsPerPage, setHeroData } = useCatalogProvider();
+  const { setHeroData } = useCatalogProvider();
   // References
   const carouselRef = useRef<HTMLUListElement>(null);
   // State
@@ -99,9 +99,13 @@ const FDCarousel = ({
 
   /** Horizontal Navigation */
   const navigate = (): void => {
-    if (!itemsPerPage || !carouselRef.current || !carouselRef.current.children) return;
+    const root: Element | null = document.querySelector('[data-layout-carousel]');
+    if (!root) return;
+    const maxCarouselNodes: number = parseInt(getComputedStyle(root).getPropertyValue('--fd-carousel-items-per-page'));
+
+    if (!maxCarouselNodes || !carouselRef.current || !carouselRef.current.children) return;
     // Target indexes and elements
-    const targetIndex: number = carouselIndex * itemsPerPage;
+    const targetIndex: number = carouselIndex * maxCarouselNodes;
     const targetElement = carouselRef.current.children[targetIndex] as HTMLLIElement;
     // Positions
     const carouselPosition: number = carouselRef.current.offsetLeft;
