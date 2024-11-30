@@ -10,7 +10,7 @@
   }
   &__header {
     width: fit-content;
-    padding: 0 var(--fd-padding-generic) var(--fd-gap) calc(var(--fd-padding-generic) / 4);
+    padding: 0 calc(var(--fd-carousel-node-width) / 4) var(--fd-gap) calc(var(--fd-carousel-node-width) / 4);
     text-transform: capitalize;
     &--h2 {
       @include m.fdFontXL;
@@ -27,7 +27,7 @@
     &__ul {
       display: flex;
       gap: var(--fd-gap);
-      padding: 0 var(--fd-padding-generic) 0 calc(var(--fd-padding-generic) / 4);
+      padding: 0 calc(var(--fd-carousel-node-width) / 4);
       @include m.scrollSnappingXAxis;
       &__li {
         position: relative;
