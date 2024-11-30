@@ -96,7 +96,8 @@
       height: 100%;
       pointer-events: none;
       opacity: 0;
-      @media (width <= 1410px) {
+      // Greyzone/crosspath for desktop 1280x720 && tablet
+      @media (width <= 1152px) {
         display: none;
       }
       &__button {
