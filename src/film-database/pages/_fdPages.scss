@@ -19,10 +19,10 @@
   height: 100svh;
   background-color: rgba(0, 0, 0, 1);
   @include m.fdFontM;
-  @media (min-width: 1052px) {
+  @media (min-width: 1025px) {
     overflow-y: clip;
   }
-  @media (max-width: 1051px) {
+  @media (max-width: 1024px) {
     overflow-y: scroll;
     scrollbar-width: none;
   }
