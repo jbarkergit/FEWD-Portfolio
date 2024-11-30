@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   height: inherit;
-  padding: var(--fd-padding-generic) 0 calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 4);
+  padding: var(--fd-padding-generic) 0 calc(var(--fd-padding-generic) / 2) calc(var(--fd-carousel-node-width) / 4);
   &__article {
     display: table;
     & > * > * {
