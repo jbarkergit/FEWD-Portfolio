@@ -1,0 +1,37 @@
+@use '/src/sass/functions' as f;
+@use '/src/film-database/scss/fdMixins' as m;
+
+.fdHeader {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100svw;
+  height: auto;
+  padding: 30px calc(var(--fd-padding-generic) / 1.5);
+  pointer-events: none;
+  &__ul {
+    flex: 0 0 50%;
+    display: flex;
+    gap: var(--fd-gap);
+
+    &:nth-of-type(2) {
+      justify-content: flex-end;
+    }
+    &__li {
+      display: block;
+      pointer-events: all;
+      &__button {
+        display: grid;
+        place-items: center;
+        @include m.fdFontL;
+        color: white;
+        & svg {
+          width: 1.8rem;
+          aspect-ratio: 1/1;
+        }
+      }
+    }
+  }
+}
