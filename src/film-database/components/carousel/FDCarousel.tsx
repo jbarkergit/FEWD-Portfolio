@@ -22,88 +22,19 @@ const FDCarousel = ({
   heading: string;
   data: Array<Type_usePaginateData_Provider>;
 }) => {
-  if (!data) return;
   // Context
   const { setHeroData } = useCatalogProvider();
   // References
   const carouselRef = useRef<HTMLUListElement>(null);
-  // State
-  const [carouselIndex, setCarouselIndex] = useState<number>(0);
-  const [articles, setArticles] = useState<typeof data>([data[0]]);
+  // Max carousel nodes per page
+  const layoutAttr: Element | null = document.querySelector('[data-layout-carousel]');
+  const maxCarouselNodes: number = layoutAttr ? parseInt(getComputedStyle(layoutAttr).getPropertyValue('--fd-carousel-items-per-page')) : 8;
 
-  /** Track carousel navigation index */
-  const updateCarouselIndex = (delta: number): void => setCarouselIndex(Math.max(0, Math.min(carouselIndex + delta, data.length - 1)));
+  /** Desktop Horizontal Navigation */
+  let carouselIndex: number = 0;
 
-  /** Render paginated sets on navigation */
-  const renderPaginatedDataSet = (): void => {
-    const isIndexInArticles: boolean = articles.some((_, index) => index === carouselIndex);
-
-    if (!isIndexInArticles) {
-      setArticles((prevState) => {
-        switch (type) {
-          case 'movies':
-            const prevMovies = prevState as Namespace_Tmdb.BaseMedia_Provider[][];
-            const newMovies = data[carouselIndex] as Namespace_Tmdb.BaseMedia_Provider[];
-            return [...prevMovies, newMovies];
-
-          case 'cast':
-            const prevCast = prevState as Namespace_Tmdb.Credits_Obj['credits']['cast'][];
-            const newCast = data[carouselIndex] as Namespace_Tmdb.Credits_Obj['credits']['cast'];
-            return [...prevCast, newCast];
-
-          case 'crew':
-            const prevCrew = prevState as Namespace_Tmdb.Credits_Obj['credits']['crew'][];
-            const newCrew = data[carouselIndex] as Namespace_Tmdb.Credits_Obj['credits']['crew'];
-            return [...prevCrew, newCrew];
-
-          default:
-            return prevState;
-        }
-      });
-    } else {
-      navigate();
-    }
-  };
-
-  useEffect(() => renderPaginatedDataSet(), [carouselIndex]);
-
-  /** Pagination on pointer drag */
-  const observer = new IntersectionObserver(
-    (entries) => {
-      if (entries[entries.length - 1].isIntersecting) setCarouselIndex(Math.max(0, Math.min(carouselIndex + 1, data.length - 1)));
-    },
-    { threshold: 1.0 }
-  );
-
-  useEffect(() => {
-    const lastCarouselNode = carouselRef.current?.children[carouselRef.current.children.length - 1];
-    if (!lastCarouselNode) return;
-
-    const observe = (): void => {
-      if (window.innerWidth <= 1000) {
-        observer.observe(lastCarouselNode);
-      } else {
-        observer.unobserve(lastCarouselNode);
-      }
-    };
-
-    observe();
-    window.addEventListener('resize', observe);
-
-    return () => {
-      window.removeEventListener('resize', observe);
-      observer.unobserve(lastCarouselNode);
-      observer.disconnect();
-    };
-  }, [carouselRef.current]);
-
-  /** Horizontal Navigation */
   const navigate = (): void => {
-    const root: Element | null = document.querySelector('[data-layout-carousel]');
-    if (!root) return;
-    const maxCarouselNodes: number = parseInt(getComputedStyle(root).getPropertyValue('--fd-carousel-items-per-page'));
-
-    if (!maxCarouselNodes || !carouselRef.current || !carouselRef.current.children) return;
+    if (!carouselRef.current || !carouselRef.current.children) return;
     // Target indexes and elements
     const targetIndex: number = carouselIndex * maxCarouselNodes;
     const targetElement = carouselRef.current.children[targetIndex] as HTMLLIElement;
@@ -114,7 +45,30 @@ const FDCarousel = ({
     carouselRef.current.scrollTo({ left: scrollPosition, behavior: 'smooth' });
   };
 
-  useEffect(() => navigate(), [articles]);
+  const updateCarouselIndex = (delta: number): void => {
+    carouselIndex = Math.max(0, Math.min(carouselIndex + delta, data.length - 1));
+    navigate();
+  };
+
+  /** Virtual scroll */
+  const observer = new IntersectionObserver(
+    (entries) => {
+      // For each poster in carousel section
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          if (entry.target.getAttribute('data-hidden') === 'true') entry.target.setAttribute('data-hidden', 'false');
+          observer.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: 0 }
+  );
+
+  useEffect(() => {
+    // Observe each carousel section
+    if (carouselRef.current) for (let i = 0; i < carouselRef.current.children.length; i++) observer.observe(carouselRef.current.children[i]);
+    return () => observer.disconnect();
+  }, [carouselRef.current]);
 
   /** JSX */
   return (
@@ -124,8 +78,8 @@ const FDCarousel = ({
       </div>
       <div className='fdCarousel__wrapper'>
         <ul className='fdCarousel__wrapper__ul' ref={carouselRef}>
-          {articles.length > 0
-            ? articles.flat().map((article) => {
+          {data.length > 0
+            ? data.flat().map((article, index) => {
                 let props: { src: string | null; alt: string } = { src: '', alt: '' };
 
                 if (type === 'movies') {
@@ -137,7 +91,7 @@ const FDCarousel = ({
                 }
 
                 return (
-                  <li className='fdCarousel__wrapper__ul__li' key={uuidv4()}>
+                  <li className='fdCarousel__wrapper__ul__li' data-hidden={index < maxCarouselNodes + 1 ? 'false' : 'true'} key={uuidv4()}>
                     <picture className='fdCarousel__wrapper__ul__li__picture'>
                       <img
                         className='fdCarousel__wrapper__ul__li__picture--img'
@@ -151,9 +105,7 @@ const FDCarousel = ({
                         <button
                           className='fdCarousel__wrapper__ul__li__overlay--play'
                           aria-label='Play trailer'
-                          onClick={() => {
-                            setHeroData(article as Namespace_Tmdb.BaseMedia_Provider);
-                          }}>
+                          onClick={() => setHeroData(article as Namespace_Tmdb.BaseMedia_Provider)}>
                           <MaterialSymbolsPlayArrow />
                         </button>
                       </div>
