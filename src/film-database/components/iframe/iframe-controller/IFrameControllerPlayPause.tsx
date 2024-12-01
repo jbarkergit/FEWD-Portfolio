@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 // Lib
 import { YouTubePlayer } from 'react-youtube';
 // Assets
-import { MaterialSymbolsPause, MaterialSymbolsPlayArrow, SvgSpinnersRingResize } from '../../../assets/google-material-symbols/iFrameSymbols';
+import { MaterialSymbolsPause, MaterialSymbolsPlayArrow, SvgSpinnersRingResize } from '../../../assets/google-material-symbols/GoogleMaterialIcons';
 
 const IFrameControllerPlayPause = ({
   player,

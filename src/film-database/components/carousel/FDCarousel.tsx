@@ -1,5 +1,5 @@
 // Deps
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // Composables
 import { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
@@ -8,8 +8,7 @@ import { useCatalogProvider } from '../../context/CatalogContext';
 // Hooks
 import { Type_usePaginateData_Provider } from '../../hooks/usePaginateData';
 // Assets
-import { MaterialSymbolsPlayArrow } from '../../assets/google-material-symbols/iFrameSymbols';
-import { MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight } from '../../assets/google-material-symbols/carouselSymbols';
+import { MaterialSymbolsPlayArrow } from '../../assets/google-material-symbols/GoogleMaterialIcons';
 
 const FDCarousel = ({
   type,
@@ -117,10 +116,14 @@ const FDCarousel = ({
         </ul>
         <nav className='fdCarousel__wrapper__navigation'>
           <button className='fdCarousel__wrapper__navigation__button' aria-label={'Show Previous'} onClick={() => updateCarouselIndex(-1)}>
-            <MaterialSymbolsChevronLeft />
+            <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+              <path fill='currentColor' d='M15.41 7.41L14 6l-6 6l6 6l1.41-1.41L10.83 12z'></path>
+            </svg>
           </button>
           <button className='fdCarousel__wrapper__navigation__button' aria-label={'Show More'} onClick={() => updateCarouselIndex(1)}>
-            <MaterialSymbolsChevronRight />
+            <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+              <path fill='currentColor' d='M10 6L8.59 7.41L13.17 12l-4.58 4.59L10 18l6-6z'></path>
+            </svg>
           </button>
         </nav>
       </div>

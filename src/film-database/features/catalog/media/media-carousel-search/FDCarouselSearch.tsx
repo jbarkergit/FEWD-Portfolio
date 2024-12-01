@@ -1,12 +1,12 @@
 // Deps
-import { useState, useEffect, useRef, ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect, useRef, ChangeEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // Context
 import { useCatalogProvider } from '../../../../context/CatalogContext';
 // Composables
 import { Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Assets
-import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../assets/google-material-symbols/iFrameSymbols';
+import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../assets/google-material-symbols/GoogleMaterialIcons';
 
 const FDCarouselSearch = () => {
   const { setHeroData } = useCatalogProvider();

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 // Lib
 import { YouTubePlayer } from 'react-youtube';
 // Assets
-import { MaterialSymbolsVolumeOff, MaterialSymbolsVolumeDown, MaterialSymbolsVolumeUp } from '../../../assets/google-material-symbols/iFrameSymbols';
+import { MaterialSymbolsVolumeOff, MaterialSymbolsVolumeDown, MaterialSymbolsVolumeUp } from '../../../assets/google-material-symbols/GoogleMaterialIcons';
 
 const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: YouTubePlayer; playerVolume: number }) => {
   const [symbolComponent, setSymbolComponent] = useState<JSX.Element>(<MaterialSymbolsVolumeOff />);

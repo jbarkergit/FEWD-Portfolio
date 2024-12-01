@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 // Lib
 import { YouTubePlayer } from 'react-youtube';
 // Assets
-import { MaterialSymbolsSettings } from '../../../assets/google-material-symbols/iFrameSymbols';
+import { MaterialSymbolsSettings } from '../../../assets/google-material-symbols/GoogleMaterialIcons';
 
 const IFrameControllerPlayback = ({
   player,
