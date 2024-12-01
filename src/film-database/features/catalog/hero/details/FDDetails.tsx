@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 // Context
 import { useCatalogProvider } from '../../../../context/CatalogContext';
 // Assets
-import { TheMovieDatabaseLogo } from '../../../../assets/google-material-symbols/tmdbSymbols';
-import { useMemo } from 'react';
+import { TheMovieDatabaseLogo } from '../../../../assets/google-material-symbols/GoogleMaterialIcons';
 
 const FDDetails = () => {
   const { heroData } = useCatalogProvider();
