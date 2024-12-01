@@ -7,10 +7,12 @@ import { useCatalogProvider } from '../../../../context/CatalogContext';
 import { Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Assets
 import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../assets/google-material-symbols/iFrameSymbols';
-import { MaterialSymbolsSearch } from '../../../../assets/google-material-symbols/menuSymbols';
 
 const FDCarouselSearch = () => {
-  const { itemsPerPage, setHeroData } = useCatalogProvider();
+  const { setHeroData } = useCatalogProvider();
+  // Max carousel nodes per page
+  const layoutAttr: Element | null = document.querySelector('[data-layout-carousel]');
+  const maxCarouselNodes: number = layoutAttr ? parseInt(getComputedStyle(layoutAttr).getPropertyValue('--fd-carousel-items-per-page')) : 8;
 
   /** User is searching */
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -63,7 +65,11 @@ const FDCarouselSearch = () => {
             htmlFor='fdSearchBar__fieldset__input'
             data-opacity={searchTerm.length > 0 ? 'hidden' : 'barelyVisible'}
             ref={labelRef}>
-            <MaterialSymbolsSearch />
+            <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
+              <path
+                fill='currentColor'
+                d='M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5A6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14'></path>
+            </svg>
             <h2>Find the movies you're interested in</h2>
           </label>
           <input
@@ -83,8 +89,8 @@ const FDCarouselSearch = () => {
 
       <div className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
-          {itemsPerPage && searchResults && !isTyping
-            ? searchResults.splice(0, itemsPerPage).map((props) => {
+          {maxCarouselNodes && searchResults && !isTyping
+            ? searchResults.splice(0, maxCarouselNodes).map((props) => {
                 if (props.poster_path)
                   return (
                     <li className='fdSearchBar__results__ul__li' key={uuidv4()}>
