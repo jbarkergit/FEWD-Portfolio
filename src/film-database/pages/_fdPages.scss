@@ -3,7 +3,10 @@
 
 .filmDatabase {
   position: relative;
+  display: flex;
+  flex-direction: column;
   height: 100svh;
+  background-color: rgba(0, 0, 0, 1);
   overflow: clip;
 }
 
