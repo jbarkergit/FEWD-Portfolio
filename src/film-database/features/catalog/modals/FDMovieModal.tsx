@@ -5,12 +5,12 @@ import { useCatalogProvider } from '../../../context/CatalogContext';
 import { usePaginateData } from '../../../hooks/usePaginateData';
 
 const FDMovieModal = () => {
-  const { itemsPerPage, heroData } = useCatalogProvider();
+  const { heroData } = useCatalogProvider();
   const [castCrew, setCastCrew] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
   const fetch = async () => {
     const data = (await useTmdbFetcher({ credits: (heroData as Namespace_Tmdb.BaseMedia_Provider).id })) as Namespace_Tmdb.Credits_Obj;
-    const paginatedData = usePaginateData(data, itemsPerPage);
+    const paginatedData = usePaginateData(data);
     setCastCrew(paginatedData);
   };
 
