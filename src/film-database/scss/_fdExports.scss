@@ -9,13 +9,13 @@
 @forward '/src/film-database/features/account/modal/fdAccount';
 
 // Catalog Page Features
+@forward '/src/film-database/features/catalog/header/fdHeader';
+
 @forward '/src/film-database/features/catalog/hero/fdHero';
 @forward '/src/film-database/features/catalog/hero/details/fdDetails';
 
 @forward '/src/film-database/features/catalog/media/fdMedia';
 @forward '/src/film-database/features/catalog/media/media-carousel-search/fdCarouselSearch';
-
-@forward '/src/film-database/features/catalog/menu/fdMenu';
 
 @forward '/src/film-database/features/catalog/modals/fdMovieModal';
 
