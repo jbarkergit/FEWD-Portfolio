@@ -6,7 +6,7 @@ import { useCatalogProvider } from '../../../../context/CatalogContext';
 import { TheMovieDatabaseLogo } from '../../../../assets/google-material-symbols/GoogleMaterialIcons';
 
 const FDDetails = () => {
-  const { heroData } = useCatalogProvider();
+  const { heroData, setIsModalOpen } = useCatalogProvider();
   if (!heroData) return;
 
   const renderStars = (): JSX.Element[] => {
@@ -99,9 +99,9 @@ const FDDetails = () => {
             <span data-status={renderDate() === 'Now Available' ? 'green' : ''}>{renderDate()}</span>
           </div>
           <nav className='fdDetails__article__details__cta'>
-            <Link to={`/film-database/${heroData.id}`} aria-label={`More details about ${heroData.title}`}>
+            <button aria-label={`More details about ${heroData.title}`} onClick={() => setIsModalOpen(true)}>
               View more details
-            </Link>
+            </button>
           </nav>
         </div>
         <div className='fdDetails__article__description'>
