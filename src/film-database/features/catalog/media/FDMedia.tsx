@@ -17,25 +17,43 @@ const FDMedia = () => {
   const { route, setHeroData } = useCatalogProvider();
   const [paginatedData, setPaginatedData] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
-  /** Fetch data when user requests a route, pass to usePaginateData() hook */
   const fetchDataByRoute = async (): Promise<void> => {
-    let processedData: Namespace_Tmdb.Prefabs_Obj[] | Namespace_Tmdb.Discover_Obj = [];
+    let fetchedData: Namespace_Tmdb.Response_Union | Namespace_Tmdb.Response_Union[];
 
     if (route === 'home') {
-      processedData = (await useTmdbFetcher([
+      const data = (await useTmdbFetcher([
         { now_playing: undefined },
-        { upcoming: undefined },
-        { trending_today: undefined },
-        { trending_this_week: undefined },
-      ])) as Namespace_Tmdb.Prefabs_Obj[];
+        // { upcoming: undefined },
+        // { trending_today: undefined },
+        // { trending_this_week: undefined },
+        { discover: 'action' },
+        // { discover: 'adventure' },
+        // { discover: 'animation' },
+        // { discover: 'comedy' },
+        // { discover: 'crime' },
+        // { discover: 'documentary' },
+        // { discover: 'drama' },
+        // { discover: 'family' },
+        // { discover: 'fantasy' },
+        // { discover: 'history' },
+        // { discover: 'horror' },
+        // { discover: 'music' },
+        // { discover: 'mystery' },
+        // { discover: 'romance' },
+        // { discover: 'science_fiction' },
+        // { discover: 'thriller' },
+        // { discover: 'tv_movie' },
+        // { discover: 'war' },
+        // { discover: 'western' },
+      ])) as Namespace_Tmdb.Response_Union[];
+      fetchedData = data;
     } else {
-      processedData = (await useTmdbFetcher({ discover: route })) as Namespace_Tmdb.Discover_Obj;
+      const data = (await useTmdbFetcher({ discover: route })) as Namespace_Tmdb.Response_Union;
+      fetchedData = data;
     }
 
-    if (!processedData) return;
-    const data = usePaginateData(processedData);
-
-    if (data) {
+    if (fetchedData) {
+      const data = usePaginateData(fetchedData);
       setPaginatedData(data);
       setHeroData(data[0][1][0][0] as Type_heroData);
     }
