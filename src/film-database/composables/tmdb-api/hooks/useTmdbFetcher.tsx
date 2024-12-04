@@ -300,27 +300,27 @@ const buildEndpoint = (params: Type_Tmdb_useTmdbFetcher_asFuncParams): Type_Tmdb
   }
 
   // Destructure requested data
-  let [_, endpoint] = Object.entries(requestedData)[0];
+  let [key, endpoint] = Object.entries(requestedData)[0];
 
   // Mutate arg endpoint
-  const paramKey = Object.keys(params)[0];
   const endpointPrefabKeys: string[] = Object.keys(tmdbEndpoints.prefabs);
   const endpointMovieIdKeys: string[] = Object.keys(tmdbEndpoints.movieId);
 
   switch (true) {
-    case endpointPrefabKeys.includes(paramKey):
+    case endpointPrefabKeys.includes(key):
       endpoint = endpoint + `?api_key=${apiKey}`;
       break;
 
-    case endpointMovieIdKeys.includes(paramKey):
+    case endpointMovieIdKeys.includes(key):
       endpoint = endpoint.replace('{movie_id}', `${Object.values(params)[0]}`) + `?api_key=${apiKey}`;
       break;
 
-    case paramKey === 'discover':
+    case key === 'discover':
+      key = Object.entries(params)[0][1];
       endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`) + `${tmdbMovieGenres[Object.values(params)[0] as unknown as Type_MovieGenre_Keys]}`;
       break;
 
-    case paramKey === 'search':
+    case key === 'search':
       endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`).replace('{search_term}', params as unknown as string);
       break;
 
@@ -329,7 +329,7 @@ const buildEndpoint = (params: Type_Tmdb_useTmdbFetcher_asFuncParams): Type_Tmdb
   }
 
   // Return
-  return { key: paramKey as Namespace_TmdbEndpointsKeys.Keys_Union, endpoint: endpoint };
+  return { key: key as Namespace_TmdbEndpointsKeys.Keys_Union, endpoint: endpoint };
 };
 
 /** Initialize build of endpoints then initialize callback chain to fetch data with said endpoints */
