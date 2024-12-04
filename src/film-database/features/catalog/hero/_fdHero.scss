@@ -41,6 +41,9 @@
         @include m.fdFontXXL;
         text-shadow: var(--fd-font-shadow);
         text-transform: uppercase;
+        @media (max-width: 1024px) {
+          @include m.fdFontXL;
+        }
       }
     }
     &__details {
@@ -50,12 +53,13 @@
       padding-bottom: var(--fd-gap);
       @media (max-width: 1024px) {
         flex-direction: column;
+        padding-top: var(--fd-gap);
       }
       &__release {
         display: flex;
         gap: f.rem(12);
         @media (max-width: 1024px) {
-          flex-direction: column;
+          display: none;
         }
         & div {
           display: flex;
