@@ -9,6 +9,8 @@ type Type_CatalogContext_State_Obj = {
   setRoute: React.Dispatch<React.SetStateAction<'home' | Type_MovieGenre_Keys>>;
   heroData: Type_heroData;
   setHeroData: React.Dispatch<React.SetStateAction<Type_heroData>>;
+  isModalOpen: boolean;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CatalogContext = createContext<Type_CatalogContext_State_Obj | undefined>(undefined);
@@ -20,8 +22,11 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   /** Details, trailer data */
   const [heroData, setHeroData] = useState<Type_heroData>(undefined);
 
+  /** Movie movie */
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   /** Provider */
-  return <CatalogContext.Provider value={{ route, setRoute, heroData, setHeroData }}>{children}</CatalogContext.Provider>;
+  return <CatalogContext.Provider value={{ route, setRoute, heroData, setHeroData, isModalOpen, setIsModalOpen }}>{children}</CatalogContext.Provider>;
 };
 
 export const useCatalogProvider = () => {
