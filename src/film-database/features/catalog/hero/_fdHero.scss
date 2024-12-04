@@ -80,7 +80,7 @@
         @include m.fdFontM;
       }
       &__cta {
-        & a {
+        & button {
           display: flex;
           justify-content: center;
           align-items: center;
