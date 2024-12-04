@@ -27,7 +27,6 @@
     &__ul {
       display: flex;
       gap: var(--fd-gap);
-      padding: 0 calc(var(--fd-padding-generic) / 1.5);
       // @include m.scrollSnappingXAxis;
       overflow-x: scroll;
       scrollbar-width: none;
@@ -39,6 +38,12 @@
         border-radius: var(--fd-borderRadius);
         overflow: clip;
         // scroll-snap-align: center;
+        &:first-of-type {
+          margin-left: calc(var(--fd-padding-generic) / 1.5);
+        }
+        &:last-of-type {
+          margin-right: calc(var(--fd-padding-generic) / 1.5);
+        }
         &[data-hidden='true'] {
           & picture img {
             display: none;
