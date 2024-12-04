@@ -44,9 +44,15 @@
       flex-wrap: nowrap;
       gap: f.rem(12);
       padding-bottom: var(--fd-gap);
+      @media (max-width: 1024px) {
+        flex-direction: column;
+      }
       &__release {
         display: flex;
         gap: f.rem(12);
+        @media (max-width: 1024px) {
+          flex-direction: column;
+        }
         & div {
           display: flex;
         }
@@ -83,6 +89,9 @@
       }
     }
     &__description {
+      @media (max-width: 1024px) {
+        display: none;
+      }
       & p {
         display: -webkit-box;
         -webkit-line-clamp: 4;
