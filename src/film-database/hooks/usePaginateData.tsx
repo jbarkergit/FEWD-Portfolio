@@ -1,16 +1,15 @@
 import { Namespace_TmdbEndpointsKeys, tmdbEndpoints } from '../composables/tmdb-api/data/tmdbEndPoints';
 import { tmdbMovieGenres } from '../composables/tmdb-api/data/tmdbGenres';
-import { Namespace_Tmdb, useTmdbFetcher } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 
 type Type_usePaginateData_Data_Provider = Array<
   Namespace_Tmdb.BaseMedia_Provider | Namespace_Tmdb.Credits_Obj['credits']['cast'][0] | Namespace_Tmdb.Credits_Obj['credits']['crew'][0]
 >;
 
-export const usePaginateData = (rawData: ReturnType<typeof useTmdbFetcher>) => {
+export const usePaginateData = (rawData: Namespace_Tmdb.Response_Union[] | Namespace_Tmdb.Response_Union) => {
   // Initialize mutatable map
   type Type_usePaginateData_TargetKeys = Namespace_TmdbEndpointsKeys.Keys_Union & 'Cast' & 'Crew';
   let store: Map<Type_usePaginateData_TargetKeys, Type_usePaginateData_Data_Provider[]> | undefined = new Map(undefined);
-  console.log(store);
 
   // Paginate data callback
   const paginateData = (targetKey: Type_usePaginateData_TargetKeys, data: Type_usePaginateData_Data_Provider) => {
@@ -31,7 +30,7 @@ export const usePaginateData = (rawData: ReturnType<typeof useTmdbFetcher>) => {
   };
 
   // Envoke pagination
-  const process = (obj: ReturnType<typeof useTmdbFetcher>) => {
+  const process = (obj: typeof rawData) => {
     const key = Object.keys(obj)[0] as Type_usePaginateData_TargetKeys;
     const data = obj[key] as unknown;
 
