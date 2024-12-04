@@ -15,7 +15,6 @@
     flex: 0 0 50%;
     display: flex;
     gap: var(--fd-gap);
-
     &:nth-of-type(2) {
       justify-content: flex-end;
     }
@@ -30,6 +29,7 @@
         & svg {
           width: 1.8rem;
           aspect-ratio: 1/1;
+          filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.4));
         }
       }
     }
