@@ -14,7 +14,7 @@ const FDCatalog = () => {
         <div className='fdCatalog' data-layout-carousel>
           <FDHero />
           <FDMedia />
-          {/* <FDMovieModal /> */}
+          <FDMovieModal />
         </div>
       </CatalogProvider>
     </div>
