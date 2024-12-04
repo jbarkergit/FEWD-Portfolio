@@ -2,7 +2,7 @@ import { Namespace_TmdbEndpointsKeys, tmdbEndpoints } from '../composables/tmdb-
 import { tmdbMovieGenres } from '../composables/tmdb-api/data/tmdbGenres';
 import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 
-type Type_usePaginateData_Data_Provider = Array<
+export type Type_usePaginateData_Data_Provider = Array<
   Namespace_Tmdb.BaseMedia_Provider | Namespace_Tmdb.Credits_Obj['credits']['cast'][0] | Namespace_Tmdb.Credits_Obj['credits']['crew'][0]
 >;
 
