@@ -6,7 +6,7 @@ import { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher'
 // Context
 import { useCatalogProvider } from '../../context/CatalogContext';
 // Hooks
-import { Type_usePaginateData_Provider } from '../../hooks/usePaginateData';
+import { Type_usePaginateData_Data_Provider } from '../../hooks/usePaginateData';
 // Assets
 import { MaterialSymbolsPlayArrow } from '../../assets/google-material-symbols/GoogleMaterialIcons';
 
@@ -19,7 +19,7 @@ const FDCarousel = ({
   type: 'movies' | 'cast' | 'crew';
   mapIndex: number;
   heading: string;
-  data: Array<Type_usePaginateData_Provider>;
+  data: Type_usePaginateData_Data_Provider[];
 }) => {
   // Context
   const { setHeroData } = useCatalogProvider();
@@ -40,8 +40,10 @@ const FDCarousel = ({
     // Positions
     const carouselPosition: number = carouselRef.current.offsetLeft;
     const scrollPosition: number = targetElement.offsetLeft - carouselPosition;
+    // First target's margin-left
+    const marginLeft: number = parseInt((carouselRef.current.children[0] as HTMLLIElement).style.marginLeft);
     // Scroll
-    carouselRef.current.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+    carouselRef.current.scrollTo({ left: targetIndex === 0 ? scrollPosition - marginLeft : scrollPosition, behavior: 'smooth' });
   };
 
   const updateCarouselIndex = (delta: number): void => {
