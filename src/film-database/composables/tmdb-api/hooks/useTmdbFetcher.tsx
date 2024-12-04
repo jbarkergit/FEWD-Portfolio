@@ -246,7 +246,8 @@ const processFetch = async (keyValuePair: { key: Namespace_TmdbEndpointsKeys.Key
   if (!data) throw new Error('Http response failure.');
 
   // Cache data
-  if (Object.keys(tmdbEndpoints.prefabs).includes(keyValuePair.key)) sessionStorage.setItem([keyValuePair.key] as unknown as string, JSON.stringify(data));
+  if ([...Object.keys(tmdbEndpoints.prefabs), ...Object.keys(tmdbMovieGenres)].includes(keyValuePair.key))
+    sessionStorage.setItem([keyValuePair.key] as unknown as string, JSON.stringify(data));
 
   // Return
   return { [keyValuePair.key]: data };
