@@ -18,3 +18,173 @@
     padding-right: 10%;
   }
 }
+
+.fdiFrame__player {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  height: 63svh;
+  aspect-ratio: 16/9;
+  overflow: clip;
+  transform: scale(1.3);
+  transform-origin: left center;
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    z-index: 1;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, rgb(0, 0, 1) 50%, rgba(0, 0, 0, 0.5) 80%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 0;
+    width: 15%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 1) 100%);
+    pointer-events: none;
+  }
+  & picture img,
+  & iframe {
+    position: absolute;
+    top: -10px;
+    right: 0;
+  }
+  & iframe {
+    aspect-ratio: inherit;
+    pointer-events: none;
+    width: inherit;
+    height: inherit;
+    // YouTube IFrame Player API Requirements (16/9)
+    min-width: 480px;
+    min-height: 270px;
+  }
+}
+
+.fdiFrame__controller {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  min-height: 48px;
+  padding: f.rem(6) f.rem(26) f.rem(12) f.rem(26);
+  // iFrame height * 16/9 to decimal point * transform: scale(1.3) / 4
+  // margin-right: calc(((62svh * 1.7778) * 1.3) / 4);
+  border-radius: 8px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.25s cubic-bezier(0, 0, 0.2, 1);
+  @media (max-width: 1024px) {
+    display: none;
+  }
+  &__seeker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 400px;
+    height: 20px;
+    overflow: clip;
+    &:hover .fdiFrame__controller__seeker--range {
+      height: 10px;
+    }
+    &:hover .fdiFrame__controller__seeker--slider {
+      height: 10px;
+      background-color: rgb(255, 255, 255, 0.8);
+    }
+    &--range,
+    &--slider {
+      position: absolute;
+      width: 100%;
+      height: 5px;
+      border-radius: 2px;
+      transition: height 0.1s ease-in-out;
+    }
+    &--range {
+      z-index: 1;
+      background-color: rgb(255, 255, 255, 0.2);
+      box-shadow:
+        4px 3px 6px rgba(0, 0, 0, 0.25),
+        -4px 3px 6px rgba(0, 0, 0, 0.25);
+    }
+    &--slider {
+      z-index: 2;
+      width: 0px;
+      background-color: rgb(255, 255, 255, 0.4);
+    }
+  }
+  &__controls {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: f.rem(10);
+    & > * {
+      margin: 0 2px;
+      opacity: 0.9;
+      transition: opacity 0.1s cubic-bezier(0.4, 0, 1, 1);
+    }
+    &__button {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      max-width: calc(24px * 2);
+      height: 100%;
+      & svg {
+        width: 1.8em;
+        height: 1.8em;
+        color: white;
+      }
+    }
+    &__slider {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 125px;
+      height: 100%;
+      margin-left: 6px;
+      margin-right: 2px;
+      &--range {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 2px;
+        border-radius: 2px;
+        background-color: white;
+      }
+      &--handle {
+        position: absolute;
+        top: 50%;
+        left: 0%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: white;
+        box-shadow:
+          4px 3px 6px rgba(0, 0, 0, 0.25),
+          -4px 3px 6px rgba(0, 0, 0, 0.25);
+      }
+    }
+    &__timestamp {
+      display: flex;
+      gap: 4px;
+      margin-left: 12px;
+      margin-right: 4px;
+      & > * {
+        @include m.fdFontM;
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}
