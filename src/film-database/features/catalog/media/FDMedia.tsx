@@ -64,6 +64,7 @@ const FDMedia = () => {
   }, [route]);
 
   /** Carousel DeltaY scroll logic */
+  const { isModalOpen } = useCatalogProvider();
   const fdMediaRef = useRef<HTMLElement>(null);
 
   // Update previously active and newly active carousel node's data-attr, navigate
@@ -89,9 +90,10 @@ const FDMedia = () => {
   const handleWheel = (event: WheelEvent) => deltaScrollCarousels(event.deltaY > 0 ? 1 : -1);
 
   useEffect(() => {
-    window.addEventListener('wheel', handleWheel);
+    if (!isModalOpen) window.addEventListener('wheel', handleWheel);
+    else window.removeEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [fdMediaRef.current]);
+  }, [fdMediaRef.current, isModalOpen]);
 
   /** Component */
   return (
