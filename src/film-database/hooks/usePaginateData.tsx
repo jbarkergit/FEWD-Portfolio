@@ -8,11 +8,10 @@ export type Type_usePaginateData_Data_Provider = Array<
 
 export const usePaginateData = (rawData: Namespace_Tmdb.Response_Union[] | Namespace_Tmdb.Response_Union) => {
   // Initialize mutatable map
-  type Type_usePaginateData_TargetKeys = Namespace_TmdbEndpointsKeys.Keys_Union & 'Cast' & 'Crew';
-  let store: Map<Type_usePaginateData_TargetKeys, Type_usePaginateData_Data_Provider[]> | undefined = new Map(undefined);
+  let store: Map<Namespace_TmdbEndpointsKeys.Keys_Union, Type_usePaginateData_Data_Provider[]> | undefined = new Map(undefined);
 
   // Paginate data callback
-  const paginateData = (targetKey: Type_usePaginateData_TargetKeys, data: Type_usePaginateData_Data_Provider) => {
+  const paginateData = (targetKey: Namespace_TmdbEndpointsKeys.Keys_Union, data: Type_usePaginateData_Data_Provider) => {
     // Get map by key
     const isKeyMapped: boolean = store.has(targetKey);
 
@@ -31,13 +30,19 @@ export const usePaginateData = (rawData: Namespace_Tmdb.Response_Union[] | Names
 
   // Envoke pagination
   const process = (obj: typeof rawData) => {
-    const key = Object.keys(obj)[0] as Type_usePaginateData_TargetKeys;
-    const data = obj[key] as unknown;
+    const key = Object.keys(obj)[0] as Namespace_TmdbEndpointsKeys.Keys_Union;
 
     if (key in tmdbEndpoints.prefabs || key in tmdbMovieGenres) {
-      const i = (data as Namespace_Tmdb.Recommendations_Provider<Namespace_Tmdb.BaseMedia_Provider>).results;
+      //@ts-ignore
+      const i = (obj[key] as Namespace_Tmdb.Recommendations_Provider<Namespace_Tmdb.BaseMedia_Provider>).results;
       paginateData(key, i);
-    } else if (key === 'cast' || key === 'crew') {
+    } else if (key === 'credits') {
+      const {
+        credits: { id, cast, crew },
+      } = obj as Namespace_Tmdb.Credits_Obj;
+
+      paginateData('cast', cast);
+      paginateData('crew', crew);
     } else {
       return undefined;
     }
