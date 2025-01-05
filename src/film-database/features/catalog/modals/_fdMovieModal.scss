@@ -1,6 +1,101 @@
 @use '/src/sass/functions' as f;
 @use '/src/film-database/scss/fdMixins' as m;
 
-.fdMoviePage {
-  //   padding: var(--fd-padding-generic);
+.fdMovieModal {
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 100svw;
+  height: 100svh;
+  padding: var(--fd-padding-generic) var(--fd-padding-generic) 0 var(--fd-padding-generic);
+  background-color: rgba(0, 0, 0, 0.7);
+  &__container {
+    position: relative;
+    display: block;
+    width: 50%;
+    height: 100%;
+    padding-bottom: 2em;
+    border-top-right-radius: var(--fd-borderRadius);
+    border-top-left-radius: var(--fd-borderRadius);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #181818;
+    box-shadow: rgba(0, 0, 0, 1) 0px 3px 10px;
+    scrollbar-width: none;
+  }
+}
+
+.fdMovieModal__container__player {
+  display: block;
+  height: auto;
+  & .fdiFrame {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: inherit;
+    padding-right: 0;
+    &__controller {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &__player {
+      position: relative;
+      width: inherit;
+      height: auto;
+      aspect-ratio: 16/9;
+      transform: scale(1);
+      overflow: clip;
+      &::before {
+        display: none;
+      }
+      &::after {
+        display: none;
+      }
+      &__iframe {
+        top: 0;
+      }
+    }
+  }
+}
+
+.fdMovieModal__container__info {
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--fd-padding-generic) / 2);
+  & div {
+    display: flex;
+    gap: 6px;
+    & span {
+      &:first-child {
+        padding-bottom: f.rem(12);
+      }
+      &:not(:first-child) {
+        text-transform: capitalize;
+      }
+    }
+  }
+  & header {
+    & h2 {
+      max-width: 29ch;
+      white-space: nowrap;
+      overflow: clip;
+      text-overflow: ellipsis;
+      @include m.fdFontXXL;
+      text-shadow: var(--fd-font-shadow);
+      text-transform: uppercase;
+      @media (max-width: 1024px) {
+        @include m.fdFontXL;
+      }
+    }
+  }
+  & p {
+    width: clamp(45ch, 100%, 75ch);
+    @include m.fdFontM;
+    text-shadow: var(--fd-font-shadow);
+  }
 }
