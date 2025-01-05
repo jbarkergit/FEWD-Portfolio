@@ -4,10 +4,10 @@ export namespace Namespace_TmdbEndpointsKeys {
   export type Prefabs_Keys = 'now_playing' | 'upcoming' | 'popular' | 'top_rated' | 'trending_today' | 'trending_this_week';
   export type MovieId_Keys = 'details' | 'credits' | 'videos' | 'watchProviders' | 'reviews' | 'recommendations';
   export type Miscellaneous_Keys = 'discover' | 'search';
-
-  export type Keys_Credits = 'cast' | 'crew';
+  export type Keys_Credits = 'credits' | 'cast' | 'crew';
 
   export type Keys_Union = Prefabs_Keys | MovieId_Keys | Miscellaneous_Keys | Keys_Credits;
+
   export type Endpoint_Obj = {
     prefabs: Record<Prefabs_Keys, string>;
     movieId: Record<MovieId_Keys, string>;
