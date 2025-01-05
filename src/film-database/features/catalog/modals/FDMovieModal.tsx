@@ -2,19 +2,22 @@ import { useEffect, useRef, useState } from 'react';
 import FDCarousel from '../../../components/carousel/FDCarousel';
 import { useTmdbFetcher, Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '../../../context/CatalogContext';
-import { usePaginateData } from '../../../hooks/usePaginateData';
 import FDiFrame from '../../../components/iframe/FDiFrame';
-import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../../../composables/tmdb-api/data/tmdbGenres';
+import { tmdbMovieGenres } from '../../../composables/tmdb-api/data/tmdbGenres';
+import { usePaginateData } from '../../../hooks/usePaginateData';
 
 const FDMovieModal = () => {
   const { heroData, isModalOpen, setIsModalOpen } = useCatalogProvider();
   const [castCrew, setCastCrew] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
   const fdMovieModal = useRef<HTMLDivElement>(null);
 
+  // Fetch
   const fetch = async (): Promise<void> => {
+    // Fetch data
     const data = (await useTmdbFetcher({ credits: (heroData as Namespace_Tmdb.BaseMedia_Provider).id })) as Namespace_Tmdb.Credits_Obj;
-    const paginatedData = usePaginateData(data);
-    setCastCrew(paginatedData);
+    const store = usePaginateData(data);
+    // Set state
+    setCastCrew(store);
   };
 
   useEffect(() => {
@@ -52,9 +55,9 @@ const FDMovieModal = () => {
             <p>{heroData?.overview}</p>
           </article>
           <div className='fdMovieModal__container__castCrew'>
-            {castCrew.map(([key, value], index) => {
-              return <FDCarousel type={key === 'cast' ? 'cast' : 'crew'} mapIndex={index} heading={key} data={value} key={`${key}-${index}`} />;
-            })}
+            {castCrew.map(([key, value], index) => (
+              <FDCarousel type={key === 'cast' ? 'cast' : 'crew'} mapIndex={index} heading={key} data={value} key={`${key}-${index}`} />
+            ))}
           </div>
         </div>
       </div>
