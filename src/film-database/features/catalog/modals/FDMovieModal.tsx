@@ -43,7 +43,7 @@ const FDMovieModal = () => {
           </div>
           <article className='fdMovieModal__container__info'>
             <div>
-              {heroData?.release_date}
+              <span>{heroData?.release_date}</span>
               {heroData?.genre_ids.map((genreId) => <span>{Object.keys(tmdbMovieGenres)[genreId]}</span>)}
             </div>
             <header>
