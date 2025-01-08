@@ -15,7 +15,7 @@
   &__container {
     position: relative;
     display: block;
-    width: 50%;
+    width: 50svw;
     height: 100%;
     padding-bottom: 2em;
     border-top-right-radius: var(--fd-borderRadius);
@@ -97,5 +97,20 @@
     width: clamp(45ch, 100%, 75ch);
     @include m.fdFontM;
     text-shadow: var(--fd-font-shadow);
+  }
+}
+
+.fdMovieModal__container__castCrew .fdCarousel__wrapper {
+  &__ul__li {
+    --fd-carousel-node-width: calc(
+      (50svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
+    );
+    --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
+    :hover {
+      cursor: auto;
+    }
+  }
+  &__navigation {
+    width: 50svw;
   }
 }
