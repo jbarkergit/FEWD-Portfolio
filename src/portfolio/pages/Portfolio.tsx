@@ -3,6 +3,7 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import PortMobileMenu from '../components/mobile-menu/PortMobileMenu';
 import ProjectInsights from '../features/ProjectInsights';
 import ProjectHub from '../features/ProjectHub';
+import Contact from '../features/Contact';
 
 /** Component */
 const Portfolio = (): JSX.Element => {
@@ -97,6 +98,7 @@ const Portfolio = (): JSX.Element => {
         featureState={featureState}
         setFeatureState={setFeatureState}
       />
+      <Contact />
       <PortMobileMenu
         setProjectSlideIndex={setProjectSlideIndex}
         featureState={featureState}
