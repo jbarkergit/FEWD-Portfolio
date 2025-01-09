@@ -33,10 +33,11 @@
       scroll-behavior: smooth;
       &__li {
         position: relative;
-        width: var(--fd-carousel-node-width);
-        height: var(--fd-carousel-node-height);
-        border-radius: var(--fd-borderRadius);
-        overflow: clip;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: auto;
+        height: auto;
         // scroll-snap-align: center;
         &:first-of-type {
           margin-left: calc(var(--fd-padding-generic) / 1.5);
@@ -52,14 +53,20 @@
         & picture {
           position: relative;
           display: block;
-          width: inherit;
-          height: inherit;
+          width: var(--fd-carousel-node-width);
+          height: var(--fd-carousel-node-height);
+          border-radius: var(--fd-borderRadius);
+          overflow: clip;
           cursor: pointer;
           & img {
             width: inherit;
             height: inherit;
             object-fit: contain;
           }
+        }
+        &__member {
+          display: flex;
+          flex-direction: column;
         }
         &__overlay {
           position: absolute;
