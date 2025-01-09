@@ -61,8 +61,18 @@
   display: flex;
   gap: calc(s.$portfolio-gap * 4);
   height: 100%;
-  padding: 8rem s.$box-model-viewport-x 0 s.$box-model-viewport-x;
+  padding: 16rem s.$box-model-viewport-x 8rem s.$box-model-viewport-x;
   overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #141414;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #f3f3f1;
+  }
   @media (width <= 1480px) {
     flex-direction: column;
     gap: s.$portfolio-gap;
@@ -71,9 +81,14 @@
   @media (width <= 460px) {
     padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x calc(s.$box-model-viewport-x * 2) s.$box-model-viewport-x;
   }
+  & > * {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: max-content;
+  }
   &__technology {
     position: relative;
-    display: table;
     flex: 0 1 45%;
     @media (width <= 1480px) {
       order: 2;

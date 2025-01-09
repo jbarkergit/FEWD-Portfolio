@@ -53,11 +53,11 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
       </section>
 
       <article className='projectDetails__insights'>
-        <section className='projectDetails__insights__technology'>
-          <div className='projectDetails__insights__technology__container'>
+        <aside className='projectDetails__insights__technology'>
+          <ul className='projectDetails__insights__technology__container'>
             <h2>Technology</h2>
             {Object.entries(projectData[projectSlideIndex].technologies).map(([category, techArray]) => (
-              <section className='projectDetails__insights__technology__container__tech' key={category}>
+              <li className='projectDetails__insights__technology__container__tech' key={category}>
                 <h3 className='projectDetails__insights__technology__container__tech--key'>{category.replace('_', ' ')}</h3>
                 <ul className='projectDetails__insights__technology__container__tech__values'>
                   {techArray.map((technology: string) => (
@@ -68,13 +68,13 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
                     </li>
                   ))}
                 </ul>
-              </section>
+              </li>
             ))}
-          </div>
-        </section>
+          </ul>
+        </aside>
 
         <section className='projectDetails__insights__project'>
-          <article className='projectDetails__insights__project__article'>{projectData[projectSlideIndex].insights}</article>
+          <div className='projectDetails__insights__project__article'>{projectData[projectSlideIndex].insights}</div>
         </section>
       </article>
     </section>
