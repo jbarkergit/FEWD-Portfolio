@@ -1,5 +1,6 @@
 import { Dispatch, ForwardedRef, MutableRefObject, SetStateAction, forwardRef } from 'react';
 import { projectData } from '../../data/projectData';
+import { Link } from 'react-router-dom';
 
 type PropDrillType = {
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
@@ -50,6 +51,14 @@ const PortMobileMenu = forwardRef<HTMLElement, PropDrillType>(
             <div className='portMobileMenu__nav__footer__block'>
               <span>Front End Developer</span>
             </div>
+            <nav className='portMobileMenu__nav__footer__block'>
+              <Link to='https://github.com/jbarkergit' id='external-links' target='_blank' aria-label='Visit GitHub Profile'>
+                GitHub
+              </Link>
+              <Link to='https://leetcode.com/u/jbarkerlc/' id='external-links' target='_blank' aria-label='Visit LeetCode Profile'>
+                LeetCode
+              </Link>
+            </nav>
           </section>
         </nav>
       </section>

@@ -111,10 +111,13 @@ const PortHeader = ({
           animatorLineArray.current?.forEach((line: HTMLSpanElement) => line.removeAttribute('data-status'));
         }}>
         <div className='carouselNav__section__right' ref={carouselNavSectionRight}>
-          <h2>GitHub Link</h2>
+          <h2>External Links</h2>
           <nav className='carouselNav__section__right__nav carouselNavHeaderRight' aria-labelledby='external-links' ref={carouselNavSectionRightNav}>
             <Link to='https://github.com/jbarkergit' id='external-links' target='_blank' aria-label='Visit GitHub Profile'>
               GitHub
+            </Link>
+            <Link to='https://leetcode.com/u/jbarkerlc/' id='external-links' target='_blank' aria-label='Visit LeetCode Profile'>
+              LeetCode
             </Link>
           </nav>
           <div className='carouselNav__section__right__animator' ref={carouselNavSectionRightAnimator}>
