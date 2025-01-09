@@ -82,7 +82,8 @@ export const projectData = [
         <p>
           To simulate the core functionality of an eCommerce site, I implemented user registration and authentication using localStorage, solely for practice, with
           Regular Expressions for field validation. The final step was adding shopping cart functionality, which provided the highly sought-after honor and absolute
-          pleasure of writing useReducer boilerplate. Stripe integration is currently omitted, with plans to revisit it later.
+          pleasure of writing useReducer boilerplate. Stripe integration is currently omitted. This application remains imperfect as it was my first from scratch
+          full-fledged site, so you can imagine it would require a lot of love to be production worthy.
         </p>
       </>
     ),
