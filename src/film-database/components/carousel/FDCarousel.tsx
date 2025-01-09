@@ -81,14 +81,14 @@ const FDCarousel = ({
         <ul className='fdCarousel__wrapper__ul' ref={carouselRef}>
           {data.length > 0
             ? data.flat().map((article, index) => {
-                let props: { src: string | null; alt: string } = { src: '', alt: '' };
+                let props: { src: string | null; alt: string; member?: string | undefined; knownFor?: string | undefined } = { src: '', alt: '' };
 
                 if (type === 'movies') {
                   const prop = article as Namespace_Tmdb.BaseMedia_Provider;
                   props = { src: prop.poster_path, alt: prop.title };
                 } else if (type === 'cast' || type === 'crew') {
                   const prop = article as Namespace_Tmdb.Credits_Obj['credits']['cast'][0];
-                  props = { src: prop.profile_path, alt: prop.name };
+                  props = { src: prop.profile_path, alt: prop.name, member: prop.name, knownFor: prop.known_for_department };
                 }
 
                 return (
@@ -109,6 +109,12 @@ const FDCarousel = ({
                           onClick={() => setHeroData(article as Namespace_Tmdb.BaseMedia_Provider)}>
                           <MaterialSymbolsPlayArrow />
                         </button>
+                      </div>
+                    )}
+                    {type !== 'movies' && (
+                      <div className='fdCarousel__wrapper__ul__li__member'>
+                        <span>{props.member}</span>
+                        <span>{props.knownFor !== 'Acting' ? props.knownFor : null}</span>
                       </div>
                     )}
                   </li>
