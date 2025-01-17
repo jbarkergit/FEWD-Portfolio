@@ -12,6 +12,7 @@
     "commit": "cz"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
     "dotenv": "^16.4.7",
     "firebase": "^11.1.0",
     "firebase-tools": "^13.29.1",
