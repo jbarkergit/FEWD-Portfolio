@@ -1,0 +1,37 @@
+@use '/src/portfolio/scss/portfolioStyles' as s;
+
+.contact {
+  position: relative;
+  display: block;
+  width: 100svw;
+  height: 100svh;
+  & form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: inherit;
+    & h2 {
+      display: none;
+    }
+    & ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: s.$portfolio-gap;
+      width: fit-content;
+      & li {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        & label {
+        }
+        & input {
+        }
+        & textarea {
+        }
+      }
+    }
+  }
+}
