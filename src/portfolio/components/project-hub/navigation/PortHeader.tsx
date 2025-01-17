@@ -119,6 +119,15 @@ const PortHeader = ({
             <Link to='https://leetcode.com/u/jbarkerlc/' id='external-links' target='_blank' aria-label='Visit LeetCode Profile'>
               LeetCode
             </Link>
+            <button
+              aria-label='Contact'
+              onClick={() =>
+                featureState.contactFormActive
+                  ? setFeatureState({ ...featureState, contactFormActive: false })
+                  : setFeatureState({ ...featureState, contactFormActive: true })
+              }>
+              Contact
+            </button>
           </nav>
           <div className='carouselNav__section__right__animator' ref={carouselNavSectionRightAnimator}>
             <span className='carouselNav__section__right__animator--line' ref={animatorLine} />
