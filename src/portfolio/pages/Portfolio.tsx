@@ -15,6 +15,7 @@ const Portfolio = (): JSX.Element => {
   /** Active grid position tracker */
   const [featureState, setFeatureState] = useState<Record<string, boolean>>({
     projectDetailsActive: false,
+    contactFormActive: false,
   });
 
   /** Grid position transitions && animators */
@@ -35,6 +36,10 @@ const Portfolio = (): JSX.Element => {
     switch (true) {
       case featureState.projectDetailsActive:
         useFeatureScroll(1, scrollBehavior);
+        break;
+
+      case featureState.contactFormActive:
+        useFeatureScroll(2, scrollBehavior);
         break;
 
       default:
