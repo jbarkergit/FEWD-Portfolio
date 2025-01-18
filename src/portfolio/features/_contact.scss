@@ -5,6 +5,11 @@
   display: block;
   width: 100svw;
   height: 100svh;
+  padding: 16rem s.$box-model-viewport-x 8rem s.$box-model-viewport-x;
+  @media (width <= 1480px) {
+    height: auto;
+    padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x s.$box-model-viewport-x s.$box-model-viewport-x;
+  }
   & form {
     display: flex;
     flex-direction: column;
