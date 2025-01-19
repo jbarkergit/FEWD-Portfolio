@@ -9,25 +9,11 @@
   height: 100svh;
   background-color: s.$background-color-primary;
   overflow: hidden;
-  color: s.$font-color-primary;
-  font:
-    normal normal 500 1.1rem / 1.25em 'Helvetica',
-    'PT Sans',
-    sans-serif;
-  letter-spacing: 0.04rem;
   @media (width <= 1480px) {
     display: flex;
     flex-direction: column;
     gap: s.$portfolio-gap;
     height: auto;
-  }
-  & button,
-  & a,
-  & span,
-  & h2 {
-    color: inherit;
-    font: inherit;
-    letter-spacing: inherit;
   }
   & > * {
     position: relative;
