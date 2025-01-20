@@ -7,7 +7,7 @@ export const projectData = [
     technologies: {
       sdk: ['firebase', 'firebase-tools'],
       api: ['tmdb'],
-      libraries: ['uuid', 'react-youtube'],
+      libraries: ['react-youtube'],
       core_libraries: ['vite', 'react', 'react router dom', 'sass'],
       web_technologies: ['html', 'css', 'javascript', 'typescript'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
@@ -49,7 +49,6 @@ export const projectData = [
     key: 'ecommerce',
     url: 'http://localhost:5173/ecommerce',
     technologies: {
-      libraries: ['uuid'],
       core_libraries: ['vite', 'react', 'react router dom', 'sass'],
       web_technologies: ['html', 'css', 'javascript', 'typescript'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
@@ -96,7 +95,7 @@ export const projectData = [
     technologies: {
       api: ['Web3Forms'],
       data: ['Custom JSON Store'],
-      libraries: ['Zod', 'React Hook Form', 'uuid'],
+      libraries: ['Zod', 'React Hook Form'],
       core_libraries: ['vite', 'react', 'react router dom', 'sass'],
       web_technologies: ['html', 'css', 'javascript', 'typescript'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
