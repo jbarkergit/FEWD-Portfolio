@@ -69,7 +69,7 @@
             transform: translateY(-150%);
           }
           &:has(textarea) {
-            padding-top: calc(s.$portfolio-gap / 2);
+            padding-top: calc(s.$portfolio-gap / 8);
             label {
               position: relative;
             }
@@ -89,7 +89,7 @@
             width: 100%;
             border-bottom: 1px solid #868686;
             border-bottom-right-radius: 3px;
-            border-bottom-left-radius: 3px;
+            // border-bottom-left-radius: 3px;
             white-space: nowrap;
           }
           & input:not([type='textarea']) {
