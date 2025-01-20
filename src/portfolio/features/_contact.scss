@@ -2,39 +2,108 @@
 
 .contact {
   position: relative;
-  display: block;
+  display: grid;
+  place-items: center;
   width: 100svw;
   height: 100svh;
-  padding: 16rem s.$box-model-viewport-x 8rem s.$box-model-viewport-x;
   @media (width <= 1480px) {
     height: auto;
-    padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x s.$box-model-viewport-x s.$box-model-viewport-x;
   }
-  & form {
+  &__container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: auto;
-    height: inherit;
-    & h2 {
-      display: none;
+    width: 65%;
+    padding: 8rem s.$box-model-viewport-x 8rem s.$box-model-viewport-x;
+    @media (width <= 1480px) {
+      padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x s.$box-model-viewport-x s.$box-model-viewport-x;
     }
-    & ul {
+    & article {
+      width: clamp(20ch, 100%, 65ch);
+      padding-bottom: calc(s.$portfolio-gap * 3);
+      & h2,
+      p {
+        width: clamp(20ch, 100%, 65ch);
+      }
+      & h2 {
+        font-weight: 600;
+        white-space: nowrap;
+      }
+    }
+    & form {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: s.$portfolio-gap;
-      width: fit-content;
-      & li {
+      gap: calc(s.$portfolio-gap * 2);
+      height: 100%;
+      & h2 {
+        pointer-events: none;
+        font-size: clamp(1.125rem, 2vw, 1.5rem);
+        font-weight: 500;
+        text-align: center;
+      }
+      & ul {
         display: flex;
-        flex-direction: column;
-        width: fit-content;
-        & label {
+        flex-wrap: wrap;
+        row-gap: 2.6rem;
+        column-gap: 5rem;
+        width: 100%;
+        @media (width <= 660px) {
+          flex-direction: column;
         }
-        & input {
-        }
-        & textarea {
+        & li {
+          flex: 1 1 calc(50% - 5rem);
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          // max-width: 46ch;
+          // &:has(input:not(:placeholder-shown)) label {
+          //   transform: translateY(-20px);
+          //   transition: transform 60ms ease-in-out;
+          // }
+          &:has(input:focus) label {
+            transform: translateY(-150%);
+            transition: transform ease-in-out 65ms;
+          }
+          &:has(input:not(:focus):not(:placeholder-shown)) label {
+            transform: translateY(-150%);
+          }
+          &:has(textarea) {
+            padding-top: calc(s.$portfolio-gap / 2);
+            label {
+              position: relative;
+            }
+          }
+          & label {
+            position: absolute;
+            top: -6px;
+            left: 6px;
+            transform: translateY(0px);
+            pointer-events: none;
+          }
+          & input,
+          & textarea {
+            padding: 0 0 6px 4px;
+          }
+          & input {
+            width: 100%;
+            border-bottom: 1px solid #868686;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            white-space: nowrap;
+          }
+          & input:not([type='textarea']) {
+            // Matches font-size + padding
+            height: calc(1.125rem + 6px);
+          }
+          & textarea {
+            width: 100%;
+            min-height: 2.25rem;
+            border: 1px solid #868686;
+            border-radius: 3px;
+            background-color: transparent;
+            white-space: wrap;
+          }
         }
       }
     }
