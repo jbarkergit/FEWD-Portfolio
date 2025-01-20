@@ -94,8 +94,9 @@ export const projectData = [
     key: '2024 portfolio',
     url: '',
     technologies: {
+      api: ['Web3Forms'],
       data: ['Custom JSON Store'],
-      libraries: ['uuid'],
+      libraries: ['Zod', 'React Hook Form', 'uuid'],
       core_libraries: ['vite', 'react', 'react router dom', 'sass'],
       web_technologies: ['html', 'css', 'javascript', 'typescript'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
