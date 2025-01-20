@@ -18,15 +18,19 @@
       padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x s.$box-model-viewport-x s.$box-model-viewport-x;
     }
     & article {
-      width: clamp(20ch, 100%, 65ch);
       padding-bottom: calc(s.$portfolio-gap * 3);
       & h2,
       p {
         width: clamp(20ch, 100%, 65ch);
       }
       & h2 {
+        font-size: clamp(1.5rem, 2.5vw, 1.875rem);
         font-weight: 600;
         white-space: nowrap;
+      }
+      & p {
+        font-size: clamp(1.125rem, 2vw, 1.5rem);
+        line-height: 125%;
       }
     }
     & form {
@@ -68,11 +72,8 @@
           &:has(input:not(:focus):not(:placeholder-shown)) label {
             transform: translateY(-150%);
           }
-          &:has(textarea) {
-            padding-top: calc(s.$portfolio-gap / 8);
-            label {
-              position: relative;
-            }
+          &:has(textarea) label {
+            position: relative;
           }
           & label {
             position: absolute;
@@ -105,6 +106,13 @@
             white-space: wrap;
           }
         }
+      }
+      & button {
+        width: fit-content;
+        padding: 0.5rem 0rem;
+        margin-left: 0.65rem;
+        font-weight: 600;
+        text-transform: capitalize;
       }
     }
   }
