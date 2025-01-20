@@ -45,31 +45,36 @@ const uniqueDataProps = useProductDatabase.reduce(
   }
 );
 
+/** Sort func */
+const sort = (data: Set<string>) => {
+  return Array.from(data).sort((a, b) => (a > b ? 1 : -1));
+};
+
 /** Converts sets to arrays & sorts data in descending order */
 // IMPORTANT NOTE: Application routes depend on this data
 export const useUniqueData = () => {
   const useUniqueCompanies = useMemo(() => {
-    return Array.from(uniqueDataProps.uniqueCompanySet).sort((a, b) => (a > b ? 1 : -1));
+    return sort(uniqueDataProps.uniqueCompanySet);
   }, [uniqueDataProps.uniqueCompanySet]);
 
   const useUniquePolarPatterns = useMemo(() => {
-    return Array.from(uniqueDataProps.uniquePolarPatternSet).sort((a, b) => (a > b ? 1 : -1));
+    return sort(uniqueDataProps.uniquePolarPatternSet);
   }, [uniqueDataProps.uniquePolarPatternSet]);
 
   const useUniqueWearStyles = useMemo(() => {
-    return Array.from(uniqueDataProps.uniqueWearStyleSet).sort((a, b) => (a > b ? 1 : -1));
+    return sort(uniqueDataProps.uniqueWearStyleSet);
   }, [uniqueDataProps.uniqueWearStyleSet]);
 
   const useUniqueHeadphoneCompanies = useMemo(() => {
-    return Array.from(uniqueDataProps.uniqueHeadphoneCompanies).sort((a, b) => (a > b ? 1 : -1));
+    return sort(uniqueDataProps.uniqueHeadphoneCompanies);
   }, [uniqueDataProps.uniqueHeadphoneCompanies]);
 
   const useUniqueMicrophoneCompanies = useMemo(() => {
-    return Array.from(uniqueDataProps.uniqueMicrophoneCompanies).sort((a, b) => (a > b ? 1 : -1));
+    return sort(uniqueDataProps.uniqueMicrophoneCompanies);
   }, [uniqueDataProps.uniqueMicrophoneCompanies]);
 
   const useUniqueCategories = useMemo(() => {
-    return Array.from(uniqueDataProps.uniqueCategories).sort((a, b) => (a > b ? 1 : -1));
+    return sort(uniqueDataProps.uniqueCategories);
   }, [uniqueDataProps.uniqueCategories]);
 
   return { useUniqueCompanies, useUniquePolarPatterns, useUniqueWearStyles, useUniqueHeadphoneCompanies, useUniqueMicrophoneCompanies, useUniqueCategories };
