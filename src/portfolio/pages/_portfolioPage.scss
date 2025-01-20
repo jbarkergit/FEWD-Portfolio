@@ -9,6 +9,7 @@
   height: 100svh;
   background-color: s.$background-color-primary;
   overflow: hidden;
+  letter-spacing: 0.04em;
   @media (width <= 1480px) {
     display: flex;
     flex-direction: column;
