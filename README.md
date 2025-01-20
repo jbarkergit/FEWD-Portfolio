@@ -29,10 +29,13 @@
 ## Utility Libraries
 
 - **[dotenv](https://www.npmjs.com/package/dotenv)**: Loads environment variables from a `.env` file into `process.env`.
+- **[zod](https://www.npmjs.com/package/zod)**: TypeScript-first schema validation with static type inference.
+- **[web3forms](https://web3forms.com/)**: A service that handles contact form submissions without a backend.
 
 ## Component Libraries
 
 - **[react-youtube](https://www.npmjs.com/package/react-youtube)**: A simple component for embedding YouTube videos in a React application.
+- **[react-hook-form](https://react-hook-form.com/)**: Performant, flexible and extensible forms with easy-to-use validation.
 
 ### Associated TypeScript Definitions
 
