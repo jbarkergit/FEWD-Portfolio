@@ -54,138 +54,142 @@ const Contact = () => {
 
   return (
     <section className='contact'>
-      <form
-        id='user-form'
-        className='contact__form'
-        onSubmit={handleSubmit(onSubmit)} // Use handleSubmit for form submission
-        aria-labelledby='form-title'>
-        <h2 id='form-title' className='sr-only'>
-          User Information Form
-        </h2>
+      <div className='contact__container'>
+        <article className='contact__container__article'>
+          <h2 id='form-title'>Let's Work Together</h2>
+          <p>
+            A response will be provided as promptly as possible. Rest assured, every effort will be made to address your inquiry in a timely manner. Your matter is
+            important, and any additional details you wish to provide will help ensure a more efficient response.
+          </p>
+        </article>
+        <form
+          id='user-form'
+          className='contact__container__form'
+          onSubmit={handleSubmit(onSubmit)} // Use handleSubmit for form submission
+          aria-labelledby='form-title'>
+          <ul className='contact__container__form__ul'>
+            {/* First Name */}
+            <li className='contact__container__form__ul__li'>
+              <label htmlFor='first-name' className='contact__container__form__ul__li__label'>
+                First Name
+              </label>
+              <input
+                type='text'
+                id='first-name'
+                className='contact__container__form__ul__li__input'
+                {...register('first')} // Register input with react-hook-form
+                placeholder=' '
+                aria-invalid={errors.first ? 'true' : 'false'}
+              />
+              {errors.first && (
+                <span className='form-message' role='alert'>
+                  {errors.first.message} {/* Display error message */}
+                </span>
+              )}
+            </li>
 
-        <ul className='contact__form__ul'>
-          {/* First Name */}
-          <li className='contact__form__ul__li'>
-            <label htmlFor='first-name' className='contact__form__ul__li__label'>
-              First Name
-            </label>
-            <input
-              type='text'
-              id='first-name'
-              className='contact__form__ul__li__input'
-              {...register('first')} // Register input with react-hook-form
-              placeholder='Enter your first name'
-              aria-invalid={errors.first ? 'true' : 'false'}
-            />
-            {errors.first && (
-              <span className='form-message' role='alert'>
-                {errors.first.message} {/* Display error message */}
-              </span>
-            )}
-          </li>
+            {/* Last Name */}
+            <li className='contact__container__form__ul__li'>
+              <label htmlFor='last-name' className='contact__container__form__ul__li__label'>
+                Last Name
+              </label>
+              <input
+                type='text'
+                id='last-name'
+                className='contact__container__form__ul__li__input'
+                {...register('last')}
+                placeholder=' '
+                aria-invalid={errors.last ? 'true' : 'false'}
+              />
+              {errors.last && (
+                <span className='form-message' role='alert'>
+                  {errors.last.message}
+                </span>
+              )}
+            </li>
 
-          {/* Last Name */}
-          <li className='contact__form__ul__li'>
-            <label htmlFor='last-name' className='contact__form__ul__li__label'>
-              Last Name
-            </label>
-            <input
-              type='text'
-              id='last-name'
-              className='contact__form__ul__li__input'
-              {...register('last')}
-              placeholder='Enter your last name'
-              aria-invalid={errors.last ? 'true' : 'false'}
-            />
-            {errors.last && (
-              <span className='form-message' role='alert'>
-                {errors.last.message}
-              </span>
-            )}
-          </li>
+            {/* Email */}
+            <li className='contact__container__form__ul__li'>
+              <label htmlFor='email' className='contact__container__form__ul__li__label'>
+                Email
+              </label>
+              <input
+                type='email'
+                id='email'
+                className='contact__container__form__ul__li__input'
+                {...register('email')}
+                placeholder=' '
+                aria-invalid={errors.email ? 'true' : 'false'}
+              />
+              {errors.email && (
+                <span className='form-message' role='alert'>
+                  {errors.email.message}
+                </span>
+              )}
+            </li>
 
-          {/* Email */}
-          <li className='contact__form__ul__li'>
-            <label htmlFor='email' className='contact__form__ul__li__label'>
-              Email
-            </label>
-            <input
-              type='email'
-              id='email'
-              className='contact__form__ul__li__input'
-              {...register('email')}
-              placeholder='Enter your email'
-              aria-invalid={errors.email ? 'true' : 'false'}
-            />
-            {errors.email && (
-              <span className='form-message' role='alert'>
-                {errors.email.message}
-              </span>
-            )}
-          </li>
+            {/* Phone */}
+            <li className='contact__container__form__ul__li'>
+              <label htmlFor='phone' className='contact__container__form__ul__li__label'>
+                Phone
+              </label>
+              <input
+                type='tel'
+                id='phone'
+                className='contact__container__form__ul__li__input'
+                {...register('phone')}
+                placeholder=' '
+                aria-invalid={errors.phone ? 'true' : 'false'}
+              />
+              {errors.phone && (
+                <span className='form-message' role='alert'>
+                  {errors.phone.message}
+                </span>
+              )}
+            </li>
 
-          {/* Phone */}
-          <li className='contact__form__ul__li'>
-            <label htmlFor='phone' className='contact__form__ul__li__label'>
-              Phone
-            </label>
-            <input
-              type='tel'
-              id='phone'
-              className='contact__form__ul__li__input'
-              {...register('phone')}
-              placeholder='Enter your phone number'
-              aria-invalid={errors.phone ? 'true' : 'false'}
-            />
-            {errors.phone && (
-              <span className='form-message' role='alert'>
-                {errors.phone.message}
-              </span>
-            )}
-          </li>
+            {/* Agency */}
+            <li className='contact__container__form__ul__li'>
+              <label htmlFor='agency' className='contact__container__form__ul__li__label'>
+                Agency (Optional)
+              </label>
+              <input type='text' id='agency' className='contact__container__form__ul__li__input' {...register('agency')} placeholder=' ' />
+            </li>
 
-          {/* Agency */}
-          <li className='contact__form__ul__li'>
-            <label htmlFor='agency' className='contact__form__ul__li__label'>
-              Agency
-            </label>
-            <input type='text' id='agency' className='contact__form__ul__li__input' {...register('agency')} placeholder='Enter your agency name' />
-          </li>
+            {/* Role */}
+            <li className='contact__container__form__ul__li'>
+              <label htmlFor='role' className='contact__container__form__ul__li__label'>
+                Role (Optional)
+              </label>
+              <input type='text' id='role' className='contact__container__form__ul__li__input' {...register('role')} placeholder=' ' />
+            </li>
 
-          {/* Role */}
-          <li className='contact__form__ul__li'>
-            <label htmlFor='role' className='contact__form__ul__li__label'>
-              Role
-            </label>
-            <input type='text' id='role' className='contact__form__ul__li__input' {...register('role')} placeholder='Enter your job role' />
-          </li>
+            {/* Message */}
+            <li className='contact__container__form__ul__li'>
+              <label htmlFor='message' className='contact__container__form__ul__li__label'>
+                Message
+              </label>
+              <textarea
+                id='message'
+                className='contact__container__form__ul__li__textarea'
+                {...register('message')}
+                placeholder=' '
+                aria-invalid={errors.message ? 'true' : 'false'}
+              />
+              {errors.message && (
+                <span className='form-message' role='alert'>
+                  {errors.message.message}
+                </span>
+              )}
+            </li>
+          </ul>
 
-          {/* Message */}
-          <li className='contact__form__ul__li'>
-            <label htmlFor='message' className='contact__form__ul__li__label'>
-              Message
-            </label>
-            <textarea
-              id='message'
-              className='contact__form__ul__li__textarea'
-              {...register('message')}
-              placeholder='Enter your message'
-              className='contact__form__ul__li__input'
-              aria-invalid={errors.message ? 'true' : 'false'}
-            />
-            {errors.message && (
-              <span className='form-message' role='alert'>
-                {errors.message.message}
-              </span>
-            )}
-          </li>
-        </ul>
-
-        {/* Submit Button */}
-        <button type='submit' className='contact__form--btn'>
-          Submit
-        </button>
-      </form>
+          {/* Submit Button */}
+          <button type='submit' className='contact__container__form--btn'>
+            Submit
+          </button>
+        </form>
+      </div>
     </section>
   );
 };
