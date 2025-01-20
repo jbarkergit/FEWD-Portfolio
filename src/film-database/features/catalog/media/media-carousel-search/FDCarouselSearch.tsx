@@ -1,6 +1,5 @@
 // Deps
-import { useState, useEffect, useRef, ChangeEvent } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useState, useEffect, useRef, ChangeEvent, useId } from 'react';
 // Context
 import { useCatalogProvider } from '../../../../context/CatalogContext';
 // Composables
@@ -93,7 +92,7 @@ const FDCarouselSearch = () => {
             ? searchResults.splice(0, maxCarouselNodes).map((props) => {
                 if (props.poster_path)
                   return (
-                    <li className='fdSearchBar__results__ul__li' key={uuidv4()}>
+                    <li className='fdSearchBar__results__ul__li' key={useId()}>
                       <picture className='fdSearchBar__results__ul__li__article'>
                         <img src={`https://image.tmdb.org/t/p/w780${props.poster_path}`} alt={`${props.title}`} />
                       </picture>

@@ -1,11 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { usePaginatedProductSets } from '../../../hooks/usePaginatedProductSets';
 import ProductProp from './ProductProp';
 import { ProductType } from '../../../context/CartContext';
-import { v4 as uuidv4 } from 'uuid';
 
 /* usePaginatedSets utilizes useProductFilter, which uses window.location.pathname to render appropriate product arrays */
-
 const ProductProvider = (): JSX.Element => {
   //** Filtered & paginated products */
   const paginatedProducts: ProductType[][] = usePaginatedProductSets();
@@ -78,13 +76,13 @@ const ProductProvider = (): JSX.Element => {
       {visibleProducts.map((product: ProductType, index: number) => {
         if (visibleProducts && index === visibleProducts.length - 1) {
           return (
-            <li key={uuidv4()} ref={lastProductRef}>
+            <li key={useId()} ref={lastProductRef}>
               <ProductProp product={product} />
             </li>
           );
         } else {
           return (
-            <li key={uuidv4()}>
+            <li key={useId()}>
               <ProductProp product={product} />
             </li>
           );

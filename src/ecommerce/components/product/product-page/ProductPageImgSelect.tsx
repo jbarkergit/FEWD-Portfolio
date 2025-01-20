@@ -1,5 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { Dispatch, SetStateAction, useId } from 'react';
 import { ProductType } from '../../../context/CartContext';
 
 type PropType = {
@@ -13,7 +12,7 @@ const ProductPageImgSelect = ({ findProduct, setActiveDisplay }: PropType) => {
   return (
     <aside className='skuPage__grid__imgSelection'>
       {images?.small.map((image, index) => (
-        <picture key={uuidv4()}>
+        <picture key={useId()}>
           <img src={image} alt={company + unit} decoding='async' fetchPriority='high' onClick={() => setActiveDisplay(index)} tabIndex={0} />
         </picture>
       ))}

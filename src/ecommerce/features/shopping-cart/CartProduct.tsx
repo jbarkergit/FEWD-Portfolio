@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { useId } from 'react';
 import { CartProductType } from '../../context/CartContext';
 import { useCart } from '../../hooks/useCart';
 import { useProductDatabase } from '../../hooks/useProductDatabase';
@@ -13,7 +13,7 @@ const CartProducts = (): JSX.Element[] => {
     const maximumStockMet = shoppingCartProductQuantity === databaseProductStock;
 
     return (
-      <li key={uuidv4()}>
+      <li key={useId()}>
         <article className='shoppingCart__products__lineItem'>
           <picture>{product.images ? <img src={product.images.small[0]} alt={product.unit} loading='lazy' decoding='sync' fetchPriority='low' /> : null}</picture>
 

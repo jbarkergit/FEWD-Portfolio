@@ -1,6 +1,5 @@
 // Deps
-import { useEffect, useRef } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useId, useRef } from 'react';
 // Composables
 import { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Context
@@ -92,7 +91,7 @@ const FDCarousel = ({
                 }
 
                 return (
-                  <li className='fdCarousel__wrapper__ul__li' data-hidden={index < maxCarouselNodes + 1 ? 'false' : 'true'} key={uuidv4()}>
+                  <li className='fdCarousel__wrapper__ul__li' data-hidden={index < maxCarouselNodes + 1 ? 'false' : 'true'} key={useId()}>
                     <picture className='fdCarousel__wrapper__ul__li__picture'>
                       <img
                         className='fdCarousel__wrapper__ul__li__picture--img'

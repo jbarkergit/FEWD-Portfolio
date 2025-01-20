@@ -1,6 +1,5 @@
 // Deps
-import { useEffect, useRef, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useId, useRef, useState } from 'react';
 // Lib
 import { YouTubePlayer } from 'react-youtube';
 // Assets
@@ -54,7 +53,7 @@ const IFrameControllerPlayback = ({
       </button>
       <ul className='iFrameController__controls__playback__menu' ref={menuRef} data-modal='closed'>
         {qualityState?.map((rate, index) => (
-          <li key={uuidv4()}>
+          <li key={useId()}>
             <button
               aria-label={`Set video quality to ${rate.resolution}`}
               onClick={() => {

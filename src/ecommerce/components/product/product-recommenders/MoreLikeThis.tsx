@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useId } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import { useProductDatabase } from '../../../hooks/useProductDatabase';
 import { ProductType } from '../../../context/CartContext';
 
@@ -33,7 +32,7 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
       </h2>
       <ul className='recommenders__unorderedList'>
         {filteredRecommenders.splice(0, 8).map((product) => (
-          <li key={uuidv4()} className='recommenders__unorderedList__item'>
+          <li key={useId()} className='recommenders__unorderedList__item'>
             <Link to={`/ecommerce/product/${product.sku}`}>
               <article>
                 <picture>

@@ -1,6 +1,5 @@
-import { RefObject, useEffect, useReducer, useRef } from 'react';
+import { RefObject, useEffect, useId, useReducer, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 
 type initSliderStateType = {
   pointerDown: boolean;
@@ -146,7 +145,7 @@ const Carousel = (): JSX.Element => {
       </div>
       <ul className='carousel__track' ref={targetElementRef} style={state.style}>
         {carouselUlArr.map((li) => (
-          <li key={uuidv4()}>
+          <li key={useId()}>
             <picture>
               <img src={li.carouselImg} alt={li.carouselAlt} draggable='false' loading='lazy' decoding='async' fetchPriority='low' />
               <Link to={li.linkTo} tabIndex={li.tabIndex}>

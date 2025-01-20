@@ -1,6 +1,5 @@
-import { useRef, useState, useEffect, ChangeEvent } from 'react';
+import { useRef, useState, useEffect, ChangeEvent, useId } from 'react';
 import { useProductSearch } from '../../hooks/useProductSearch';
-import { v4 as uuidv4 } from 'uuid';
 
 const SearchBar = (): JSX.Element => {
   const searchBarRef = useRef<HTMLDivElement>(null!);
@@ -45,19 +44,19 @@ const SearchBar = (): JSX.Element => {
         <div className='searchBar__return'>
           <ul className='searchBar__return__ul' tabIndex={-1}>
             {useProductSearch(searchTerm).length <= 0 ? (
-              <li className='searchBar__return__ul__li' key={uuidv4()}>
+              <li className='searchBar__return__ul__li' key={useId()}>
                 <span className='searchBar__return__ul__li--noResult'>Sorry, no results.</span>
               </li>
             ) : (
               useProductSearch(searchTerm).map((product, index) =>
                 index === useProductSearch(searchTerm).length - 1 ? (
-                  <li className='searchBar__return__ul__li' key={uuidv4()}>
+                  <li className='searchBar__return__ul__li' key={useId()}>
                     <a href={`/ecommerce/product/${product.sku}`} onClick={() => setSearchTerm('')} onBlur={() => setSearchTerm('')}>
                       {product.company} {product.unit}
                     </a>
                   </li>
                 ) : (
-                  <li className='searchBar__return__ul__li' key={uuidv4()}>
+                  <li className='searchBar__return__ul__li' key={useId()}>
                     <a href={`/ecommerce/product/${product.sku}`} onClick={() => setSearchTerm('')}>
                       {product.company} {product.unit}
                     </a>

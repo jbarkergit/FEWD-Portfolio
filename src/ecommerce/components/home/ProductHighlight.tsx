@@ -1,6 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useId } from 'react';
 import { Link } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import { useProductDatabase } from '../../hooks/useProductDatabase';
 import { ProductType } from '../../context/CartContext';
 
@@ -28,7 +27,7 @@ const ProductHighlight = (): JSX.Element => {
         {useProductDatabase
           .filter((product: ProductType) => product.productshowcase === true)
           .map((product: ProductType) => (
-            <li key={uuidv4()}>
+            <li key={useId()}>
               <Link to={`/ecommerce/product/${product.sku}`} tabIndex={0}>
                 <article>
                   <picture
