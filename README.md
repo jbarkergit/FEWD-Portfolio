@@ -29,11 +29,6 @@
 ## Utility Libraries
 
 - **[dotenv](https://www.npmjs.com/package/dotenv)**: Loads environment variables from a `.env` file into `process.env`.
-- **[uuid](https://www.npmjs.com/package/uuid)**: Generates RFC compliant UUIDs.
-
-### Associated TypeScript Definitions
-
-- **[@types/uuid](https://www.npmjs.com/package/@types/uuid)**: TypeScript definitions for UUID.
 
 ## Component Libraries
 
