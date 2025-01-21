@@ -1,11 +1,12 @@
 import { useLocation } from 'react-router-dom';
-import EFooter from '../components/navigation/footer/EFooter';
+import EFooter from '../components/navigation/footer/eFooter';
 import ProductProvider from '../components/product/product-provider/ProductProvider';
 import { CartProvider } from '../context/CartContext';
 import ConditionallyRenderedProductFilters from '../features/product-filters/ConditionallyRenderedProductFilters';
 import ProductFilterConstructor from '../features/product-filters/ProductFilterConstructor';
 import { useUniqueData } from '../hooks/useUniqueData';
 import EcoHeader from '../components/navigation/header-desktop/EcoHeader';
+import { JSX } from 'react';
 
 const ProductCatalog = (): JSX.Element => {
   const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData().useUniqueCompanies);
