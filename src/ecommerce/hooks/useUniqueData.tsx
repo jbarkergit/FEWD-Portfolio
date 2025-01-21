@@ -81,7 +81,8 @@ export const useUniqueData = () => {
     const companyPaths: string[] = useUniqueCompanies.map((company) => `/ecommerce/${company}`);
     const wearStylePaths: string[] = useUniqueWearStyles.map((wearStyle) => `/ecommerce/${wearStyle}`);
     const polarPatternPaths: string[] = useUniquePolarPatterns.map((polarPattern) => `/ecommerce/${polarPattern}`);
-    return [...companyPaths, ...wearStylePaths, ...polarPatternPaths];
+    const categoryPaths: string[] = useUniqueCategories.map((category) => `/ecommerce/${category}`);
+    return [...companyPaths, ...wearStylePaths, ...polarPatternPaths, ...categoryPaths];
   }, []);
 
   return {
