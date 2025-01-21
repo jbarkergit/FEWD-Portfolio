@@ -77,5 +77,20 @@ export const useUniqueData = () => {
     return sort(uniqueDataProps.uniqueCategories);
   }, [uniqueDataProps.uniqueCategories]);
 
-  return { useUniqueCompanies, useUniquePolarPatterns, useUniqueWearStyles, useUniqueHeadphoneCompanies, useUniqueMicrophoneCompanies, useUniqueCategories };
+  const useEcommercePaths = useMemo(() => {
+    const companyPaths: string[] = useUniqueCompanies.map((company) => `/ecommerce/${company}`);
+    const wearStylePaths: string[] = useUniqueWearStyles.map((wearStyle) => `/ecommerce/${wearStyle}`);
+    const polarPatternPaths: string[] = useUniquePolarPatterns.map((polarPattern) => `/ecommerce/${polarPattern}`);
+    return [...companyPaths, ...wearStylePaths, ...polarPatternPaths];
+  }, []);
+
+  return {
+    useUniqueCompanies,
+    useUniquePolarPatterns,
+    useUniqueWearStyles,
+    useUniqueHeadphoneCompanies,
+    useUniqueMicrophoneCompanies,
+    useUniqueCategories,
+    useEcommercePaths,
+  };
 };
