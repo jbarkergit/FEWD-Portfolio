@@ -1,0 +1,10 @@
+.standardSuspenseFallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100svh;
+  & svg {
+    width: 6em;
+    height: 6em;
+  }
+}
