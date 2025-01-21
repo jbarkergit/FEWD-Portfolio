@@ -1,5 +1,6 @@
 // App
-@forward '/src/app/features/protocolErrorHandler';
+@forward '/src/app/components/protocolErrorHandler';
+@forward '/src/app/components/standardSuspense';
 
 // CSS Reset
 @forward '/src/sass/boilerplate';
