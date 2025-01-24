@@ -1,93 +1,103 @@
-import { useEffect, useId, useRef, useState } from 'react';
-import { usePaginatedProductSets } from '../../../hooks/usePaginatedProductSets';
+import { JSX, useEffect, useState, useRef } from 'react';
 import ProductProp from './ProductProp';
 import { ProductType } from '../../../context/CartContext';
+import { useProductDatabase } from '../../../hooks/useProductDatabase';
 
-/* usePaginatedSets utilizes useProductFilter, which uses window.location.pathname to render appropriate product arrays */
-const ProductProvider = (): JSX.Element => {
-  //** Filtered & paginated products */
-  const paginatedProducts: ProductType[][] = usePaginatedProductSets();
+// Custom hook to filter products based on the location (category or other attributes)
+const useProductFilter = (location: string): ProductType[] => {
+  const filteredData = useProductDatabase.reduce((result: ProductType[], product: ProductType) => {
+    if (product.category) {
+      switch (location) {
+        case 'products':
+          return useProductDatabase.sort((a, b) => a.company.localeCompare(b.company));
 
-  //** Holds current visible products to be mapped */
-  const [visibleProducts, setVisibleProducts] = useState<ProductType[]>([
-    { sku: '', stock: 0, company: '', unit: '', price: 0 },
-    { sku: '', stock: 0, company: '', unit: '', price: 0 },
-    { sku: '', stock: 0, company: '', unit: '', price: 0 },
-    { sku: '', stock: 0, company: '', unit: '', price: 0 },
-    { sku: '', stock: 0, company: '', unit: '', price: 0 },
-    { sku: '', stock: 0, company: '', unit: '', price: 0 },
-    { sku: '', stock: 0, company: '', unit: '', price: 0 },
-  ]);
+        case 'headphones':
+        case 'microphones':
+        case 'interfaces':
+          if (Array.isArray(product.category) && product.category.includes(location)) result.push(product);
+          else if (typeof product.category === 'string' && product.category.includes(location)) result.push(product);
+          break;
 
-  //** Tracks current visible array index */
-  const [visibleArrayIndex, setVisibleArrayIndex] = useState<number>(0);
+        case 'amps-dacs':
+          if (Array.isArray(product.category) && product.category.some((cat) => ['amps', 'dacs', 'amps-dacs'].includes(cat))) result.push(product);
+          else if (typeof product.category === 'string' && ['amps', 'dacs', 'amps-dacs'].includes(product.category)) result.push(product);
+          break;
 
-  //** Last visible product reference for observer */
-  const lastProductRef = useRef<HTMLLIElement>(null);
-
-  /** Remove temporary values when paginatedProducts is available */
-  useEffect(() => setVisibleProducts([]), [paginatedProducts]);
-
-  //** Push first set of products to dom when paginatedProducts is updated and during navigation to prevent non-renders on initial page load */
-  useEffect(() => {
-    if (paginatedProducts.length > 0) {
-      setVisibleProducts(paginatedProducts[0]);
-
-      //** Forgetting to reset the index will result in partial product array rendering */
-      setVisibleArrayIndex(0);
-    }
-  }, [window.location.pathname, paginatedProducts]);
-
-  //** Push new array of products when the last visible product is in the viewport */
-  const intersectionCallback = (entry: IntersectionObserverEntry) => {
-    if (entry.isIntersecting) {
-      // Ensure the dom does not receive empty objects to map into the FC (dangerous)
-      if (visibleArrayIndex + 1 < paginatedProducts.length) {
-        // Push new array of products
-        setVisibleProducts((prevVisibleProducts) => [...prevVisibleProducts, ...paginatedProducts[visibleArrayIndex + 1]]);
-        // Keep track of current index
-        setVisibleArrayIndex((prevVisibleArrayIndex) => prevVisibleArrayIndex + 1);
+        default:
+          if (product.company?.includes(location)) result.push(product);
+          else if (product.wearStyle?.includes(location)) result.push(product);
+          else if (product.polarPattern?.includes(location)) result.push(product);
+          else console.error('Failure at ProductProvider: Location unavailable or property are unavailable in default case.');
       }
+    }
+    return result;
+  }, []);
+
+  return filteredData.sort((a, b) => a.company.localeCompare(b.company));
+};
+
+/** Product Display */
+const ProductProvider = (): JSX.Element => {
+  // State for paginated products
+  const [paginatedProducts, setPaginatedProducts] = useState<ProductType[][]>([]);
+  // State for currently visible products
+  const [visibleProducts, setVisibleProducts] = useState<ProductType[]>([]);
+  // Ref to track the index of the currently visible product set
+  const visibleArrayIndex = useRef(0);
+  // Ref for the last product, used for IntersectionObserver
+  const lastProductRef = useRef<HTMLLIElement>(null);
+  // Get current location for filtering
+  const [location, setLocation] = useState<string>(window.location.pathname.replace('/ecommerce/', ''));
+  useEffect(() => setLocation(window.location.pathname.replace('/ecommerce/', '')), [window.location.pathname]);
+
+  /**
+   * Paginate filtered data: chunks of 7 products
+   * Fetch filtered and paginated products when location changes
+   */
+
+  const getPaginatedProducts = (filteredData: ProductType[]) => {
+    const newPaginatedData = [];
+    for (let i = 0; i < filteredData.length; i += 7) newPaginatedData.push(filteredData.slice(i, i + 7));
+    setPaginatedProducts(newPaginatedData);
+  };
+
+  useEffect(() => {
+    const filteredData = useProductFilter(location);
+    getPaginatedProducts(filteredData);
+  }, [location]);
+
+  // Set the first set of paginated products when the paginated products state is updated
+  useEffect(() => {
+    if (paginatedProducts.length) setVisibleProducts(paginatedProducts[0]);
+  }, [paginatedProducts]);
+
+  /** Observer: Handle new products when the last product comes into view */
+  const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+    const entry = entries[0];
+
+    // If the last product is in view and more products are available
+    if (entry.isIntersecting && visibleArrayIndex.current + 1 < paginatedProducts.length) {
+      visibleArrayIndex.current += 1;
+      setVisibleProducts((prev) => [...prev, ...paginatedProducts[visibleArrayIndex.current]]); // Append new products to visibleProducts
     }
   };
 
-  //** Observer logic */
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        intersectionCallback(entry);
-      },
-      {
-        root: null,
-        threshold: 1.0,
-      }
-    );
-
+    const observer = new IntersectionObserver(handleIntersection, { root: null, threshold: 0.1 });
     if (lastProductRef.current) observer.observe(lastProductRef.current);
-
     return () => {
-      if (lastProductRef.current) observer.unobserve(lastProductRef.current);
-      observer.disconnect();
+      if (lastProductRef.current) observer.unobserve(lastProductRef.current!);
     };
-  }, [visibleProducts]);
+  }, [paginatedProducts]);
 
+  /** JSX */
   return (
     <ul className='productGrid'>
-      {visibleProducts.map((product: ProductType, index: number) => {
-        if (visibleProducts && index === visibleProducts.length - 1) {
-          return (
-            <li key={useId()} ref={lastProductRef}>
-              <ProductProp product={product} />
-            </li>
-          );
-        } else {
-          return (
-            <li key={useId()}>
-              <ProductProp product={product} />
-            </li>
-          );
-        }
-      })}
+      {visibleProducts.map((product, index) => (
+        <li key={product.sku} ref={index === visibleProducts.length - 1 ? lastProductRef : null}>
+          <ProductProp product={product} />
+        </li>
+      ))}
     </ul>
   );
 };
