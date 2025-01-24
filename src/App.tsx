@@ -58,7 +58,7 @@ function useSuspense(routeDir: ReturnType<typeof useRouteDirectory>, pathname: s
 }
 
 /** Application */
-const Napp = () => {
+const App = () => {
   /** Firebase Authentication */
   const [authorizedUser, setAuthorizedUser] = useState<{
     user: undefined | User;
@@ -152,4 +152,4 @@ const Napp = () => {
   );
 };
 
-export default Napp;
+export default App;
