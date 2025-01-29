@@ -1,5 +1,5 @@
 import { Dispatch, MutableRefObject, SetStateAction, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { projectData } from '../../../data/projectData';
 
 //Prop drill from Portfolio page

@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect, useId } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router';
 
 const ProductFilterConstructor = (initFilterName: string, filterData: string[] | Set<string>): JSX.Element => {
-  //** react-router-dom hooks (must be stored in variable) */
+  //** react-router hooks (must be stored in variable) */
   const location: string = useLocation().pathname.replace('/ecommerce/', '');
 
   /** Modal References */

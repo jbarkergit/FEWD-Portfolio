@@ -1,6 +1,6 @@
 /** Deps */
 import { JSX, startTransition, Suspense, useEffect, useMemo, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router';
 /** Firebase */
 import { firebaseAuth } from './app/config/firebaseConfig';
 import { onAuthStateChanged, User } from 'firebase/auth';

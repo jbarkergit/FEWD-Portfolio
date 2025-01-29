@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useProductDatabase } from '../../hooks/useProductDatabase';
 import { ProductType } from '../../context/CartContext';
 

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import EFooter from '../components/navigation/footer/eFooter';
 import ProductProvider from '../components/product/product-provider/ProductProvider';
 import { CartProvider } from '../context/CartContext';

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useReducer, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useCarouselSlideAnimator } from '../hooks/useCarouselSlideAnimator';
 import { projectData } from '../../../data/projectData';
 

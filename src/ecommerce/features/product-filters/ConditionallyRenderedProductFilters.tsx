@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { useUniqueData } from '../../hooks/useUniqueData';
 import ProductFilterConstructor from './ProductFilterConstructor';
 

@@ -1,6 +1,6 @@
 import { Dispatch, ForwardedRef, MutableRefObject, SetStateAction, forwardRef } from 'react';
 import { projectData } from '../../data/projectData';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 type PropDrillType = {
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;

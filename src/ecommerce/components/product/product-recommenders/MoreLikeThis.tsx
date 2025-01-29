@@ -1,5 +1,5 @@
 import { useEffect, useId } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router';
 import { useProductDatabase } from '../../../hooks/useProductDatabase';
 import { ProductType } from '../../../context/CartContext';
 

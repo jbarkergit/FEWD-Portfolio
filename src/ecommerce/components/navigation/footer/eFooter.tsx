@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import ENewsletter from './ENewsletter';
 import SocialMedia from './SocialMedia';

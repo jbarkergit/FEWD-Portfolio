@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import EcoNavigationLinks from '../navigation-links/EcoNavigationLinks';
 import ModalFeatures from '../../../features/ModalFeatures';
 import SearchBar from '../../../features/search-bar/SearchBar';

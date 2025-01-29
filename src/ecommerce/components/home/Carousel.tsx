@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useId, useReducer, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 type initSliderStateType = {
   pointerDown: boolean;

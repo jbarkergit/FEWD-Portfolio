@@ -1,5 +1,5 @@
 // Deps
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 // Context
 import { useCatalogProvider } from '../../../../context/CatalogContext';
 // Assets
