@@ -11,7 +11,8 @@
 - **[vite](https://www.npmjs.com/package/vite)**: A fast, modern build tool for frontend development.
 - **[@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react)**: Enables React support in Vite.
 - **[react](https://www.npmjs.com/package/react)**: A JavaScript library for building user interfaces.
-- **[react-router-dom](https://www.npmjs.com/package/react-router-dom)**: Provides DOM bindings for React Router.
+- **[react-router](https://reactrouter.com/home)**: Multi-strategy router with server-side rendering, code splitting and file-based routing.
+<!-- - **[react-router-dom](https://www.npmjs.com/package/react-router-dom)**: Provides DOM bindings for React Router. -->
 - **[sass](https://www.npmjs.com/package/sass)**: JavaScript-based Sass compiler.
 
 ### Associated TypeScript Definitions
