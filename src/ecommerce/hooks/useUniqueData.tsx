@@ -77,14 +77,6 @@ export const useUniqueData = () => {
     return sort(uniqueDataProps.uniqueCategories);
   }, [uniqueDataProps.uniqueCategories]);
 
-  const useEcommercePaths = useMemo(() => {
-    const companyPaths: string[] = useUniqueCompanies.map((company) => `/ecommerce/${company}`);
-    const wearStylePaths: string[] = useUniqueWearStyles.map((wearStyle) => `/ecommerce/${wearStyle}`);
-    const polarPatternPaths: string[] = useUniquePolarPatterns.map((polarPattern) => `/ecommerce/${polarPattern}`);
-    const categoryPaths: string[] = useUniqueCategories.map((category) => `/ecommerce/${category}`);
-    return [...companyPaths, ...wearStylePaths, ...polarPatternPaths, ...categoryPaths];
-  }, []);
-
   return {
     useUniqueCompanies,
     useUniquePolarPatterns,
@@ -92,6 +84,5 @@ export const useUniqueData = () => {
     useUniqueHeadphoneCompanies,
     useUniqueMicrophoneCompanies,
     useUniqueCategories,
-    useEcommercePaths,
   };
 };
