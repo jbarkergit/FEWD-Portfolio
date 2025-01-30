@@ -6,13 +6,17 @@
 [![ARIA Compliant](https://img.shields.io/badge/ARIA-Compliant-green.svg)](https://www.w3.org/TR/wai-aria/)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-## Core Libraries
+## Development Tools & Libraries
 
 - **[vite](https://www.npmjs.com/package/vite)**: A fast, modern build tool for frontend development.
 - **[@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react)**: Enables React support in Vite.
 - **[react](https://www.npmjs.com/package/react)**: A JavaScript library for building user interfaces.
+- **[react-dom](https://www.npmjs.com/package/react-dom)**: Provides DOM and server renderers for React.
 - **[react-router](https://reactrouter.com/home)**: Multi-strategy router with server-side rendering, code splitting and file-based routing.
-<!-- - **[react-router-dom](https://www.npmjs.com/package/react-router-dom)**: Provides DOM bindings for React Router. -->
+- **[@react-router/dev](https://www.npmjs.com/package/@react-router/dev)**: Development tools for React Router, supporting server rendering, HMR, and more.
+- **[react-router-devtools](https://www.npmjs.com/package/react-router-devtools)**: A tool for inspecting and debugging React Router v7+ projects with features like route monitoring and network tracking.
+- **[@react-router/node](https://www.npmjs.com/package/@react-router/node)**: Node.js platform abstractions for React Router.
+- **[@react-router/serve](https://www.npmjs.com/package/@react-router/serve)**: Node.js server for React Router.
 - **[sass](https://www.npmjs.com/package/sass)**: JavaScript-based Sass compiler.
 
 ### Associated TypeScript Definitions
@@ -22,21 +26,22 @@
 - **[@types/react-dom](https://www.npmjs.com/package/@types/react-dom)**: TypeScript definitions for ReactDOM.
 - **[@total-typescript/ts-reset](https://www.npmjs.com/package/@total-typescript/ts-reset)**: A tool for resetting TypeScript configurations.
 
-## Software Development Kits
+## Backend Software Development Kits
 
 - **[firebase](https://www.npmjs.com/package/firebase)**: Google Firebase offers backend services like databases, authentication, and integrations.
 - **[firebase-tools](https://www.npmjs.com/package/firebase-tools)**: Utilize Firebase tooling for deploying code, running local web servers, managing database interactions, and importing/exporting users.
 
-## Utility Libraries
+## Utilities & Services
 
 - **[dotenv](https://www.npmjs.com/package/dotenv)**: Loads environment variables from a `.env` file into `process.env`.
 - **[zod](https://www.npmjs.com/package/zod)**: TypeScript-first schema validation with static type inference.
 - **[web3forms](https://web3forms.com/)**: A service that handles contact form submissions without a backend.
 
-## Component Libraries
+## UI Component Libraries
 
 - **[react-youtube](https://www.npmjs.com/package/react-youtube)**: A simple component for embedding YouTube videos in a React application.
 - **[react-hook-form](https://react-hook-form.com/)**: Performant, flexible and extensible forms with easy-to-use validation.
+- **[@hookform/resolvers](https://react-hook-form.com/)**: Integrates form validation libraries with React Hook Form.
 
 ### Associated TypeScript Definitions
 
@@ -54,13 +59,13 @@
 - **[@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser)**: Parser for TypeScript with ESLint integration.
 - **[@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin)**: TypeScript-specific linting rules for ESLint.
 
-### Style Guides
+### Linting Configurations
 
 - **[eslint-config-airbnb](https://www.npmjs.com/package/eslint-config-airbnb)**: Airbnb's ESLint configuration for JavaScript.
 - **[eslint-config-airbnb-typescript](https://www.npmjs.com/package/eslint-config-airbnb-typescript)**: Airbnb's ESLint configuration for TypeScript.
 - **[eslint-config-prettier](https://www.npmjs.com/package/eslint-config-prettier)**: Deactivates ESLint rules conflicting with Prettier.
 
-### Plugins
+### Linting Plugins
 
 - **[eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react)**: React-specific linting rules for ESLint.
 - **[eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)**: Rules for React hooks linting.
