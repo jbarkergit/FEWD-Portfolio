@@ -2,23 +2,23 @@
 @forward './fdStyles';
 
 // Pages
-@forward '/src/film-database/pages/fdPages.scss';
+@forward '/app/film-database/pages/fdPages.scss';
 
 // Account Page Features
-@forward '/src/film-database/features/account/background/fdAccountBackground';
-@forward '/src/film-database/features/account/modal/fdAccount';
+@forward '/app/film-database/features/account/background/fdAccountBackground';
+@forward '/app/film-database/features/account/modal/fdAccount';
 
 // Catalog Page Features
-@forward '/src/film-database/features/catalog/header/fdHeader';
+@forward '/app/film-database/features/catalog/header/fdHeader';
 
-@forward '/src/film-database/features/catalog/hero/fdHero';
+@forward '/app/film-database/features/catalog/hero/fdHero';
 
-@forward '/src/film-database/features/catalog/media/fdMedia';
-@forward '/src/film-database/features/catalog/media/media-carousel-search/fdCarouselSearch';
+@forward '/app/film-database/features/catalog/media/fdMedia';
+@forward '/app/film-database/features/catalog/media/media-carousel-search/fdCarouselSearch';
 
-@forward '/src/film-database/features/catalog/modals/fdMovieModal';
+@forward '/app/film-database/features/catalog/modals/fdMovieModal';
 
 // Components
-@forward '/src/film-database/components/carousel/fdCarousel';
+@forward '/app/film-database/components/carousel/fdCarousel';
 
-@forward '/src/film-database/components/iframe/fdiFrame';
+@forward '/app/film-database/components/iframe/fdiFrame';

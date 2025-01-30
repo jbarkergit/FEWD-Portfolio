@@ -1,5 +1,5 @@
-@use '/src/sass/functions' as f;
-@use '/src/film-database/scss/fdMixins' as m;
+@use '/app/base/sass/functions' as f;
+@use '/app/film-database/scss/fdMixins' as m;
 
 .filmDatabase {
   position: relative;
