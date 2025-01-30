@@ -1,5 +1,5 @@
 @use '/src/ecommerce/scss/ecommerceStyles' as m;
-@use '/src/sass/functions' as f;
+@use '/app/base/sass/functions' as f;
 
 .ecoModalCart {
   display: flex !important;
