@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import EcoNavigationLinks from '../../components/navigation/navigation-links/EcoNavigationLinks';
 
 type EmptyCartType = {

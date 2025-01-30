@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction, useId } from 'react';
-import { ProductType } from '../../../context/CartContext';
+import { useId } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import type { ProductType } from '../../../context/CartContext';
 
 type PropType = {
   findProduct: ProductType;

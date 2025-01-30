@@ -1,4 +1,5 @@
-import { ReactElement, ReactNode, createContext, useMemo, useReducer } from 'react';
+import { createContext, useMemo, useReducer } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { useProductDatabase } from '../hooks/useProductDatabase';
 
 // Product type

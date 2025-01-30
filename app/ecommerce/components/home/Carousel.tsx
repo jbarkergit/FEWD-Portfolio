@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useId, useReducer, useRef } from 'react';
+import { useEffect, useId, useReducer, useRef } from 'react';
 import { Link } from 'react-router';
 
 type initSliderStateType = {
@@ -25,7 +25,7 @@ type actionType =
   | { type: 'POINTER_LEAVE'; pointerDown: boolean; previousTrackPos: number }
   | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number };
 
-const Carousel = (): JSX.Element => {
+const Carousel = () => {
   const targetElementRef = useRef<HTMLUListElement>(null),
     targetElement: HTMLElement | null = targetElementRef.current as HTMLElement,
     targetElementWidth: number = targetElement?.scrollWidth as number;

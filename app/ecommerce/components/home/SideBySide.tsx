@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-const SideBySide = (): JSX.Element => {
+const SideBySide = () => {
   return (
     <section>
       <article className='sideBySide'>

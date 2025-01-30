@@ -15,7 +15,7 @@ const FooterSplitter = (sectionHeading: string) => {
   );
 };
 
-const EFooter = (): JSX.Element => {
+const EFooter = () => {
   const support: string[] = ['My Account', 'Dynamic Rewards', 'Teacher Discount', 'FAQ', 'Shipping', 'International', 'Returns', 'Find a Store'];
   const services: string[] = ['Data Privacy', 'Ethics', 'EULA', 'General Conditions', 'Payment Processing', 'Terms and Conditions'];
 

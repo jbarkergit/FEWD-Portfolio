@@ -1,6 +1,6 @@
-import { JSX, useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ProductProp from './ProductProp';
-import { ProductType } from '../../../context/CartContext';
+import type { ProductType } from '../../../context/CartContext';
 import { useProductDatabase } from '../../../hooks/useProductDatabase';
 
 // Custom hook to filter products based on the location (category or other attributes)
@@ -19,7 +19,7 @@ const useProductFilter = (location: string): ProductType[] => {
           break;
 
         case 'amps-dacs':
-          if (Array.isArray(product.category) && product.category.some((cat) => ['amps', 'dacs', 'amps-dacs'].includes(cat))) result.push(product);
+          if (Array.isArray(product.category) && (product.category as string[]).some((cat) => ['amps', 'dacs', 'amps-dacs'].includes(cat))) result.push(product);
           else if (typeof product.category === 'string' && ['amps', 'dacs', 'amps-dacs'].includes(product.category)) result.push(product);
           break;
 
@@ -37,7 +37,7 @@ const useProductFilter = (location: string): ProductType[] => {
 };
 
 /** Product Display */
-const ProductProvider = (): JSX.Element => {
+const ProductProvider = () => {
   // State for paginated products
   const [paginatedProducts, setPaginatedProducts] = useState<ProductType[][]>([]);
   // State for currently visible products

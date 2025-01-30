@@ -1,4 +1,4 @@
-const ENewsletter = (): JSX.Element => {
+const ENewsletter = () => {
   return (
     <form className='newsletter'>
       <h2>Let's stay in touch</h2>

@@ -1,4 +1,5 @@
-import { Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { Dispatch, FormEvent, SetStateAction } from 'react';
 import { userEmailAddressRegex, userPasswordRegex } from '../../data/regex-patterns/ecoRegexPatterns';
 import { Google, LinkedIn, Apple } from '../../assets/production-images/user-account-svg/PasskeySvgs';
 
@@ -7,7 +8,7 @@ type PropType = {
   setUiModal: Dispatch<SetStateAction<string>>;
 };
 
-const UserAccountRegistry = ({ setUiModal }: PropType): JSX.Element => {
+const UserAccountRegistry = ({ setUiModal }: PropType) => {
   const emailAddressInputFieldRef = useRef<HTMLInputElement>(null); //Email Address Input Field Reference
   const passwordInputFieldRef = useRef<HTMLInputElement>(null); //Password Input Field Reference
 

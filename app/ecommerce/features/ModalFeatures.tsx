@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import MobileMenu from '../components/navigation/header-mobile/MobileMenu';
 import ShoppingCart from './shopping-cart/ShoppingCart';
 import UserAccountActive from './user-account/UserAccountActive';

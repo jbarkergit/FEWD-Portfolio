@@ -1,13 +1,13 @@
 import { useEffect, useId } from 'react';
 import { Link, useParams } from 'react-router';
 import { useProductDatabase } from '../../../hooks/useProductDatabase';
-import { ProductType } from '../../../context/CartContext';
+import type { ProductType } from '../../../context/CartContext';
 
 type MoreLikeThisType = {
   findProduct: ProductType;
 };
 
-const MoreLikeThis = ({ findProduct }: MoreLikeThisType): JSX.Element => {
+const MoreLikeThis = ({ findProduct }: MoreLikeThisType) => {
   const filteredRecommenders = useProductDatabase.filter((product) => product.sku !== findProduct.sku && product.category === findProduct.category);
 
   //Force page refresh upon component change

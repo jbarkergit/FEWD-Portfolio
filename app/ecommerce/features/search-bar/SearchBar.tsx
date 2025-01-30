@@ -1,7 +1,8 @@
-import { useRef, useState, useEffect, ChangeEvent, useId } from 'react';
+import { useRef, useState, useEffect, useId } from 'react';
+import type { ChangeEvent } from 'react';
 import { useProductSearch } from '../../hooks/useProductSearch';
 
-const SearchBar = (): JSX.Element => {
+const SearchBar = () => {
   const searchBarRef = useRef<HTMLDivElement>(null!);
   const [searchTerm, setSearchTerm] = useState<string>('');
 

@@ -4,7 +4,7 @@ import EcoNavigationLinks from '../navigation-links/EcoNavigationLinks';
 import ModalFeatures from '../../../features/ModalFeatures';
 import SearchBar from '../../../features/search-bar/SearchBar';
 
-const EcoHeader = (): JSX.Element => {
+const EcoHeader = () => {
   const [uiModal, setUiModal] = useState<string>('');
 
   const checkLoginState = (): void =>

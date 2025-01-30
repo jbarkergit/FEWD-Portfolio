@@ -8,8 +8,8 @@ const ConditionallyRenderedProductFilters = () => {
   const uniquePolarPatterns: string[] = useUniqueData().useUniquePolarPatterns;
 
   // Filter Components built with ProductFilterConstructor: takes initial filter name and custom hook that returns data
-  const WearStyleFilter = (): JSX.Element => ProductFilterConstructor('Filter by Wear Style', uniqueWearStyles);
-  const PolarPatternFilter = (): JSX.Element => ProductFilterConstructor('Filter by Polar Pattern', uniquePolarPatterns);
+  const WearStyleFilter = () => ProductFilterConstructor('Filter by Wear Style', uniqueWearStyles);
+  const PolarPatternFilter = () => ProductFilterConstructor('Filter by Polar Pattern', uniquePolarPatterns);
 
   // Memoized conditional data dependencies for conditional rendering
   const uniqueHeadphoneCompanies: string[] = useUniqueData().useUniqueHeadphoneCompanies;

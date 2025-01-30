@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router';
 import EcoNavigationLinks from '../navigation-links/EcoNavigationLinks';
 
@@ -6,7 +6,7 @@ type MobileMenuType = {
   setUnmount: Dispatch<SetStateAction<boolean>>;
 };
 
-const MobileMenu = ({ setUnmount }: MobileMenuType): JSX.Element => {
+const MobileMenu = ({ setUnmount }: MobileMenuType) => {
   return (
     <aside className='ecoModalCart'>
       <div className='ecoModal__simpleHeading'>

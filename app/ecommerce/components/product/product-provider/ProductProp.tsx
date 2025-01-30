@@ -1,12 +1,12 @@
 import { Link } from 'react-router';
 import { useCart } from '../../../hooks/useCart';
-import { ProductType } from '../../../context/CartContext';
+import type { ProductType } from '../../../context/CartContext';
 
 type ProductPropType = {
   product: ProductType;
 };
 
-const ProductProp = ({ product }: ProductPropType): JSX.Element => {
+const ProductProp = ({ product }: ProductPropType) => {
   const { sku, company, unit, description, price, images } = product;
   const { dispatch, REDUCER_ACTIONS } = useCart();
 

@@ -1,9 +1,9 @@
 import { useId } from 'react';
-import { CartProductType } from '../../context/CartContext';
+import type { CartProductType } from '../../context/CartContext';
 import { useCart } from '../../hooks/useCart';
 import { useProductDatabase } from '../../hooks/useProductDatabase';
 
-const CartProducts = (): JSX.Element[] => {
+const CartProducts = () => {
   const { dispatch, REDUCER_ACTIONS, shoppingCart } = useCart();
 
   return shoppingCart.map((product: CartProductType) => {

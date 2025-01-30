@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useEffect } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { useCart } from '../../hooks/useCart';
 import CartProduct from './CartProduct';
 import EmptyCart from './EmptyCart';
@@ -7,7 +8,7 @@ type PropType = {
   setUnmount: Dispatch<SetStateAction<boolean>>;
 };
 
-const ShoppingCart = ({ setUnmount }: PropType): JSX.Element => {
+const ShoppingCart = ({ setUnmount }: PropType) => {
   /** Ecommerce Shopping Cart localStorage setter */
   const { dispatch, REDUCER_ACTIONS, shoppingCart, cartProductSubtotal, cartProductQuantity } = useCart();
   useEffect(() => localStorage.setItem('shoppingCartState', JSON.stringify(shoppingCart)), [cartProductQuantity]);
