@@ -96,7 +96,6 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
         <h1 className='protocolError__article--h1'>{err.message}</h1>
         <h2 className='protocolError__article--h2'>{err.details}</h2>
         <nav className='protocolError__article--nav'>
-          {err.details}
           Please return to the{' '}
           <Link to='/' className='protocolError__article--a' aria-label='Return to landing page'>
             landing page
