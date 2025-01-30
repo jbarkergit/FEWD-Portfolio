@@ -1,29 +1,28 @@
 {
+  "include": ["**/*", "**/.server/**/*", "**/.client/**/*", ".react-router/types/**/*", "vite.config.ts", ".eslintrc.cjs", "src"],
   "compilerOptions": {
-    "types": ["node", "vite/client"],
-    "target": "ESNext",
-    "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "vite/client"],
+    "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
     "jsx": "react-jsx",
     "rootDirs": [".", "./.react-router/types"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"]
     },
-    "verbatimModuleSyntax": true
-  },
-  "include": ["**/*", "**/.server/**/*", "**/.client/**/*", ".react-router/types/**/*", "vite.config.ts", ".eslintrc.cjs", "src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+    "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "useDefineForClassFields": true,
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true
+  }
 }
