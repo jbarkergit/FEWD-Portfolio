@@ -33,6 +33,7 @@
 
 ## Utilities & Services
 
+- **[vite-tsconfig-paths](https://www.npmjs.com/package/vite-tsconfig-paths)**: Give vite the ability to resolve imports using TypeScript's path mapping.
 - **[dotenv](https://www.npmjs.com/package/dotenv)**: Loads environment variables from a `.env` file into `process.env`.
 - **[zod](https://www.npmjs.com/package/zod)**: TypeScript-first schema validation with static type inference.
 - **[web3forms](https://web3forms.com/)**: A service that handles contact form submissions without a backend.
