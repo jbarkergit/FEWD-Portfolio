@@ -1,12 +1,12 @@
 // App
-@forward '/src/app/components/protocolErrorHandler';
-@forward '/src/app/components/standardSuspense';
+@forward '/app/base/components/protocolErrorHandler';
+@forward '/app/base/components/standardSuspense';
 
 // CSS Reset
-@forward '/src/sass/boilerplate';
-@forward '/src/sass/preflight';
+@forward '/app/base/sass/boilerplate';
+@forward '/app/base/sass/preflight';
 
 // Projects
-@forward '/src/portfolio/scss/portfolioExports';
-@forward '/src/ecommerce/scss/ecommerceExports';
-@forward '/src/film-database/scss/fdExports';
+@forward '/app/portfolio/scss/portfolioExports';
+@forward '/app/ecommerce/scss/ecommerceExports';
+@forward '/app/film-database/scss/fdExports';
