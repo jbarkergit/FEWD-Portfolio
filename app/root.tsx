@@ -1,9 +1,9 @@
 import React, { startTransition, useEffect, useState } from 'react';
-import { isRouteErrorResponse, Links, Meta, Outlet, RouterProvider, Scripts, ScrollRestoration } from 'react-router';
+import { isRouteErrorResponse, Link, Links, Meta, Outlet, RouterProvider, Scripts, ScrollRestoration } from 'react-router';
 import './sass/stylesheets.scss';
 import type { Route } from './+types/root';
 import { type User, onAuthStateChanged } from 'firebase/auth';
-import { firebaseAuth } from './app/config/firebaseConfig';
+import { firebaseAuth } from './base/config/firebaseConfig';
 
 export const links: Route.LinksFunction = () => [
   // Preconnect external resources
@@ -74,28 +74,36 @@ export default function App() {
   return <Outlet />;
 }
 
+export type ErrorBoundaryErr = { message: string; details: string; stack: string | undefined };
+
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = 'Oops!';
-  let details = 'An unexpected error occurred.';
-  let stack: string | undefined;
+  const err: ErrorBoundaryErr = { message: 'Oops!', details: 'An unexpected error occurred.', stack: undefined };
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? '404' : 'Error';
-    details = error.status === 404 ? 'The requested page could not be found.' : error.statusText || details;
+    err.message = error.status === 404 ? '404' : 'Error';
+    err.details =
+      error.status === 404
+        ? 'The browser was able to communicate with the server; however, the requested page could not be found.'
+        : error.statusText || err.details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
+    err.details = error.message;
+    err.stack = error.stack;
   }
 
   return (
-    <main className='pt-16 p-4 container mx-auto'>
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className='w-full p-4 overflow-x-auto'>
-          <code>{stack}</code>
-        </pre>
-      )}
+    <main className='protocolError'>
+      <article className='protocolError__article'>
+        <h1 className='protocolError__article--h1'>{err.message}</h1>
+        <h2 className='protocolError__article--h2'>{err.details}</h2>
+        <nav className='protocolError__article--nav'>
+          {err.details}
+          Please return to the{' '}
+          <Link to='/' className='protocolError__article--a' aria-label='Return to landing page'>
+            landing page
+          </Link>
+          &nbsp;to continue browsing.
+        </nav>
+      </article>
     </main>
   );
 }
