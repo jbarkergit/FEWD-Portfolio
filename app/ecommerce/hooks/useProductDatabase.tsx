@@ -2,7 +2,7 @@ import type { ProductType } from '../context/CartContext';
 
 const fetchProductDatabase = async (): Promise<ProductType[]> => {
   try {
-    const productDatabase = await fetch('/src/ecommerce/data/database/productDatabase.json');
+    const productDatabase = await fetch('/app/ecommerce/data/database/productDatabase.json');
     return (await productDatabase.json()) as ProductType[];
   } catch (error) {
     console.error('Error fetching product database JSON data', error);
