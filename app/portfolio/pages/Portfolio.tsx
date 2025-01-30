@@ -1,12 +1,12 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
-
+import { useEffect, useRef, useState } from 'react';
+import type { MutableRefObject } from 'react';
 import PortMobileMenu from '../components/mobile-menu/PortMobileMenu';
 import ProjectInsights from '../features/ProjectInsights';
 import ProjectHub from '../features/ProjectHub';
 import Contact from '../features/Contact';
 
 /** Component */
-const Portfolio = (): JSX.Element => {
+const Portfolio = () => {
   const portfolioRef = useRef<HTMLDivElement>(null);
 
   /** Active Project Slide Index Tracker */

@@ -1,4 +1,5 @@
-import { Dispatch, MutableRefObject, SetStateAction, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import type { Dispatch, MutableRefObject, SetStateAction } from 'react';
 import { Link } from 'react-router';
 import { projectData } from '../../../data/projectData';
 
@@ -24,7 +25,7 @@ const PortHeader = ({
   setPortMobileMenu,
   portMobileMenuRef,
   usePortMobileMenu,
-}: PropDrillType): JSX.Element => {
+}: PropDrillType) => {
   //** Arrow position references & logic */
   const unorderedListRef = useRef<HTMLUListElement | null>(null);
   const unorderedListChildrenArray = Array.from(unorderedListRef.current?.children ?? []) as HTMLLIElement[];

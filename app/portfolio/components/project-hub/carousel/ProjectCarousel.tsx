@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useEffect, useReducer, useRef } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router';
 import { useCarouselSlideAnimator } from '../hooks/useCarouselSlideAnimator';
 import { projectData } from '../../../data/projectData';
@@ -49,7 +50,7 @@ const carouselState: StateType = {
 };
 
 /** Component */
-const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PropDrillType): JSX.Element => {
+const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PropDrillType) => {
   /** References */
   const mainRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);

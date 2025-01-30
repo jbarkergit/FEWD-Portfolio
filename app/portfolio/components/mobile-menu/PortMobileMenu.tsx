@@ -1,4 +1,5 @@
-import { Dispatch, ForwardedRef, MutableRefObject, SetStateAction, forwardRef } from 'react';
+import { forwardRef } from 'react';
+import type { Dispatch, ForwardedRef, MutableRefObject, SetStateAction } from 'react';
 import { projectData } from '../../data/projectData';
 import { Link } from 'react-router';
 
