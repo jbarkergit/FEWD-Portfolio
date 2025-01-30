@@ -1,11 +1,11 @@
 // Deps
 import { useEffect, useId, useRef } from 'react';
 // Composables
-import { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
+import type { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Context
 import { useCatalogProvider } from '../../context/CatalogContext';
 // Hooks
-import { Type_usePaginateData_Data_Provider } from '../../hooks/usePaginateData';
+import type { Type_usePaginateData_Data_Provider } from '../../hooks/usePaginateData';
 // Assets
 import { MaterialSymbolsPlayArrow } from '../../assets/google-material-symbols/GoogleMaterialIcons';
 

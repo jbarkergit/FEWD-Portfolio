@@ -1,7 +1,7 @@
 // Deps
 import { useState, useEffect } from 'react';
 // Lib
-import { YouTubePlayer } from 'react-youtube';
+import type { YouTubePlayer } from 'react-youtube';
 
 const IFrameControllerTimeStamp = ({
   player,

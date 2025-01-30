@@ -1,5 +1,7 @@
-import { Namespace_TmdbEndpointsKeys, tmdbEndpoints } from '../data/tmdbEndPoints';
-import { tmdbMovieGenres, Type_MovieGenre_Keys } from '../data/tmdbGenres';
+import { tmdbEndpoints } from '../data/tmdbEndPoints';
+import type { Namespace_TmdbEndpointsKeys } from '../data/tmdbEndPoints';
+import { tmdbMovieGenres } from '../data/tmdbGenres';
+import type { Type_MovieGenre_Keys } from '../data/tmdbGenres';
 
 /** Custom Type Naming Convention Reference
  * TMDB API documentation does not provide call types; therefore, manual conversion is required to build the respective data structures.
@@ -237,7 +239,7 @@ const processFetch = async (keyValuePair: { key: Namespace_TmdbEndpointsKeys.Key
   const cachedData: string | null = sessionStorage.getItem(keyValuePair.key);
 
   if (cachedData) {
-    const parsedData: Namespace_Tmdb.Response_Union[] | undefined = JSON.parse(cachedData);
+    const parsedData = JSON.parse(cachedData) as Namespace_Tmdb.Response_Union[] | undefined;
     if (parsedData !== undefined) return { [keyValuePair.key]: parsedData };
   }
 

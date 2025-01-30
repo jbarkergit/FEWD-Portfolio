@@ -1,6 +1,7 @@
-import { ChangeEvent, forwardRef, useState } from 'react';
+import { forwardRef, useState } from 'react';
+import type { ChangeEvent } from 'react';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { firebaseAuth, googleProvider } from '../../../../../app/config/firebaseConfig';
+import { firebaseAuth, googleProvider } from '~/base/config/firebaseConfig';
 
 type Type_PropDrill = {
   toggleComponent: (modal: 'registry' | 'signin') => void;

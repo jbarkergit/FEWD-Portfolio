@@ -1,6 +1,7 @@
-import { Namespace_TmdbEndpointsKeys, tmdbEndpoints } from '../composables/tmdb-api/data/tmdbEndPoints';
+import { tmdbEndpoints } from '../composables/tmdb-api/data/tmdbEndPoints';
+import type { Namespace_TmdbEndpointsKeys } from '../composables/tmdb-api/data/tmdbEndPoints';
 import { tmdbMovieGenres } from '../composables/tmdb-api/data/tmdbGenres';
-import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+import type { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 
 export type Type_usePaginateData_Data_Provider = Array<
   Namespace_Tmdb.BaseMedia_Provider | Namespace_Tmdb.Credits_Obj['credits']['cast'][0] | Namespace_Tmdb.Credits_Obj['credits']['crew'][0]

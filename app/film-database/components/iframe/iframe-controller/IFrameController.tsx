@@ -1,7 +1,7 @@
 // Deps
 import { useEffect, useState } from 'react';
 // Lib
-import { YouTubePlayer } from 'react-youtube';
+import type { YouTubePlayer } from 'react-youtube';
 // Components
 import IFrameControllerPlayPause from './IFrameControllerPlayPause';
 import IFrameControllerVolumeIndicator from './IFrameControllerVolumeIndicator';

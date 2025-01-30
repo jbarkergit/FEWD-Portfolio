@@ -1,7 +1,8 @@
 // Deps
 import { useRef, useState } from 'react';
 // Lib
-import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
+import YouTube from 'react-youtube';
+import type { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
 // Components
 import IFrameController from '../iframe-controller/IFrameController';
 

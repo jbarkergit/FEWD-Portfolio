@@ -1,6 +1,6 @@
 // Deps
-import { useRef, useState, PointerEvent, Dispatch, SetStateAction } from 'react';
-
+import { useRef, useState } from 'react';
+import type { PointerEvent, Dispatch, SetStateAction } from 'react';
 const IFrameControllerVolumeSlider = ({ setPlayerVolume }: { setPlayerVolume: Dispatch<SetStateAction<number>> }) => {
   const sliderRef = useRef<HTMLButtonElement>(null);
   const handleRef = useRef<HTMLSpanElement>(null);

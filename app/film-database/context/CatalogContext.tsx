@@ -1,6 +1,7 @@
-import { createContext, FC, ReactNode, useContext, useEffect, useState } from 'react';
-import { Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbGenres';
-import { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+import { createContext, useContext, useState } from 'react';
+import type { FC, ReactNode } from 'react';
+import type { Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbGenres';
+import type { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 
 export type Type_heroData = Namespace_Tmdb.BaseMedia_Provider | undefined;
 

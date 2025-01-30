@@ -1,9 +1,10 @@
 // Deps
 import { useEffect, useRef, useState } from 'react';
 // Types
-import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
+import { useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
+import type { Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 
-const FDAccountBackground = (): JSX.Element => {
+const FDAccountBackground = () => {
   const [responseSets, setResponseSets] = useState<Namespace_Tmdb.BaseMedia_Provider[][]>([]);
 
   /** Reference dependencies */

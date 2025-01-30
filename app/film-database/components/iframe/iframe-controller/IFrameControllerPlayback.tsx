@@ -1,7 +1,7 @@
 // Deps
 import { useEffect, useId, useRef, useState } from 'react';
 // Lib
-import { YouTubePlayer } from 'react-youtube';
+import type { YouTubePlayer } from 'react-youtube';
 // Assets
 import { MaterialSymbolsSettings } from '../../../assets/google-material-symbols/GoogleMaterialIcons';
 

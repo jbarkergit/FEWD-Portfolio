@@ -1,5 +1,5 @@
 // Deps
-import { RefObject } from 'react';
+import type { RefObject } from 'react';
 // Features
 import FDAccountBackground from '../features/account/background/FDAccountBackground';
 import FDAccount from '../features/account/modal/FDAccount';

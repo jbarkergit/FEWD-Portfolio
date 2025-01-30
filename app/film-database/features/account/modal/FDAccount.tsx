@@ -1,4 +1,5 @@
-import { useRef, useCallback, RefObject, useEffect, useState } from 'react';
+import { useRef, useCallback, useEffect, useState } from 'react';
+import type { RefObject } from 'react';
 // Features
 import FDAccountGuide from './guide/FDAccountGuide';
 import FDAccountRegistry from './fieldsets/FDAccountRegistry';

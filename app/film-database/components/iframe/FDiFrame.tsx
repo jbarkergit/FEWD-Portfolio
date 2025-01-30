@@ -1,7 +1,8 @@
 // Deps
 import { useEffect, useState } from 'react';
 // Composables
-import { Namespace_Tmdb, useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
+import { useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
+import type { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Context
 import { useCatalogProvider } from '../../context/CatalogContext';
 // Components
