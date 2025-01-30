@@ -1,23 +1,26 @@
 import { type RouteConfig, route, index, layout, prefix } from '@react-router/dev/routes';
-import { useMemo } from 'react';
 import { useUniqueData } from './ecommerce/hooks/useUniqueData';
 
-const useEcommercePaths = useMemo(() => {
+function useEcommercePaths() {
   const { useUniqueCompanies, useUniqueWearStyles, useUniquePolarPatterns, useUniqueCategories } = useUniqueData();
-  const companyPaths: string[] = useUniqueCompanies.map((company) => `/ecommerce/${company}`);
-  const wearStylePaths: string[] = useUniqueWearStyles.map((wearStyle) => `/ecommerce/${wearStyle}`);
-  const polarPatternPaths: string[] = useUniquePolarPatterns.map((polarPattern) => `/ecommerce/${polarPattern}`);
-  const categoryPaths: string[] = useUniqueCategories.map((category) => `/ecommerce/${category}`);
+  const companyPaths: string[] = useUniqueCompanies.map((company) => `${company}`);
+  const wearStylePaths: string[] = useUniqueWearStyles.map((wearStyle) => `${wearStyle}`);
+  const polarPatternPaths: string[] = useUniquePolarPatterns.map((polarPattern) => `${polarPattern}`);
+  const categoryPaths: string[] = useUniqueCategories.map((category) => `${category}`);
   return [...companyPaths, ...wearStylePaths, ...polarPatternPaths, ...categoryPaths];
-}, []);
+}
 
-export default [index('./portfolio.tsx')];
-
-// export default [
-//   index('./home.tsx'),
-//   route('about', './about.tsx'),
-
-//   layout('./auth/layout.tsx', [route('login', './auth/login.tsx'), route('register', './auth/register.tsx')]),
-
-//   ...prefix('concerts', [index('./concerts/home.tsx'), route(':city', './concerts/city.tsx'), route('trending', './concerts/trending.tsx')]),
-// ] satisfies RouteConfig;
+export default [
+  index('./portfolio/pages/Portfolio.tsx'),
+  route('/ecommerce', './ecommerce/pages/Home.tsx'),
+  route('/ecommerce/products', './ecommerce/pages/ProductCatalog.tsx'),
+  route('/ecommerce/products/:paramId', './ecommerce/pages/ProductDetailPage.tsx'),
+  ...useEcommercePaths().map((path) => {
+    return {
+      path: `/ecommerce/products/filter/${path}`,
+      file: './ecommerce/pages/ProductCatalog.tsx',
+    };
+  }),
+  route('/film-database', './film-database/pages/FDUserAccount.tsx'),
+  route('/film-database/browse', './film-database/pages/FDCatalog.tsx'),
+] satisfies RouteConfig;
