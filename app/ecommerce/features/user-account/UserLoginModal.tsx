@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import type { Dispatch, SetStateAction, FormEvent } from 'react';
 import { Google, LinkedIn, Apple } from '../../assets/production-images/user-account-svg/PasskeySvgs';
-import { userEmailAddressRegex, userPasswordRegex } from '../../data/regex-patterns/ecoRegexPatterns';
+import { userEmailAddressRegex, userPasswordRegex } from '../../data/ecoRegexPatterns';
 
 //Prop drill from UserAccountModal
 type PropType = {
