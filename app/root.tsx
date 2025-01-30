@@ -51,7 +51,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+export async function clientLoader() {
   const [authorizedUser, setAuthorizedUser] = useState<{
     user: undefined | User;
     verified: boolean;
@@ -71,6 +71,11 @@ export default function App() {
     return () => authListener();
   }, []);
 
+  return { authorizedUser };
+}
+
+export default function App({ loaderData }: Route.ComponentProps) {
+  const { authorizedUser } = loaderData;
   return <Outlet />;
 }
 
