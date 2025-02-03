@@ -74,8 +74,7 @@ export async function clientLoader() {
   return { authorizedUser };
 }
 
-export default function App({ loaderData }: Route.ComponentProps) {
-  const { authorizedUser } = loaderData;
+export default function App() {
   return <Outlet />;
 }
 
@@ -125,8 +124,8 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
+// ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+//   <React.StrictMode>
+//     <RouterProvider router={router} />
+//   </React.StrictMode>
+// );
