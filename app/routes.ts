@@ -12,15 +12,19 @@ function useEcommercePaths() {
 
 export default [
   index('./portfolio/pages/Portfolio.tsx'),
-  route('/ecommerce', './ecommerce/pages/Home.tsx'),
-  route('/ecommerce/products', './ecommerce/pages/ProductCatalog.tsx'),
-  route('/ecommerce/products/:paramId', './ecommerce/pages/ProductDetailPage.tsx'),
-  ...useEcommercePaths().map((path) => {
-    return {
-      path: `/ecommerce/products/filter/${path}`,
-      file: './ecommerce/pages/ProductCatalog.tsx',
-    };
-  }),
-  route('/film-database', './film-database/pages/FDUserAccount.tsx'),
-  route('/film-database/browse', './film-database/pages/FDCatalog.tsx'),
+
+  route('ecommerce', './ecommerce/pages/Home.tsx', [
+    ...prefix('products', [
+      index('./ecommerce/pages/ProductCatalog.tsx'),
+      route(':paramId', './ecommerce/pages/ProductDetailPage.tsx'),
+      ...useEcommercePaths().map((path) => {
+        return {
+          path: `filter/${path}`,
+          file: '.ProductCatalog.tsx',
+        };
+      }),
+    ]),
+  ]),
+
+  route('film-database', './film-database/pages/FDUserAccount.tsx', [route('browse', './film-database/pages/FDCatalog.tsx')]),
 ] satisfies RouteConfig;
