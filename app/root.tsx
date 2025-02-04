@@ -79,6 +79,8 @@ export async function clientLoader() {
   return { authorizedUser };
 }
 
+clientLoader.hydrate = true as const;
+
 export default function App() {
   return <Outlet />;
 }
