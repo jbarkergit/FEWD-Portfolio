@@ -1,7 +1,6 @@
 import { useId } from 'react';
 import { Link } from 'react-router';
 import type { ProductType } from '../../context/CartContext';
-import type { Route } from '.react-router/types/app/routes/+types/home';
 import { useProductDatabase } from '~/ecommerce/hooks/useProductDatabase';
 
 const ProductHighlight = () => {
