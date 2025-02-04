@@ -19,8 +19,8 @@ export default [
       route(':paramId', './ecommerce/pages/ProductDetailPage.tsx'),
       ...useEcommercePaths().map((path) => {
         return {
-          path: `filter/${path}`,
-          file: '.ProductCatalog.tsx',
+          path: `${path}`,
+          file: './ecommerce/pages/ProductCatalog.tsx',
         };
       }),
     ]),
