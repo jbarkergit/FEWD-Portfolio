@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest",
+    "typecheck": "react-router typegen && tsc",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "sass-watch": "sass --no-source-map --style=compressed --watch src/sass/index.scss dist/index.css",
