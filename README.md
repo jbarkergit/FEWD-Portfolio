@@ -9,7 +9,6 @@
 ## Development Tools & Libraries
 
 - **[vite](https://www.npmjs.com/package/vite)**: A fast, modern build tool for frontend development.
-- **[@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react)**: Enables React support in Vite.
 - **[react](https://www.npmjs.com/package/react)**: A JavaScript library for building user interfaces.
 - **[react-dom](https://www.npmjs.com/package/react-dom)**: Provides DOM and server renderers for React.
 - **[react-router](https://reactrouter.com/home)**: Multi-strategy router with server-side rendering, code splitting and file-based routing.
