@@ -1,9 +1,10 @@
 import { useId } from 'react';
 import { Link } from 'react-router';
-import { useProductDatabase } from '../../hooks/useProductDatabase';
 import type { ProductType } from '../../context/CartContext';
+import type { Route } from '.react-router/types/app/routes/+types/home';
+import { useProductDatabase } from '~/ecommerce/hooks/useProductDatabase';
 
-const ProductHighlight = () => {
+const ProductHighlight = ({ loaderData }: Route.ComponentProps) => {
   //Play video on user pointer hover
   const playPauseVideo = (e: React.PointerEvent<HTMLElement>, play: boolean): void => {
     const videoTarget = (e.currentTarget as HTMLPictureElement).parentNode?.children[1].children[0] as HTMLVideoElement;
