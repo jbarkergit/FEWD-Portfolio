@@ -1,5 +1,5 @@
 import React, { startTransition, useEffect, useState } from 'react';
-import { isRouteErrorResponse, Link, Links, Meta, Outlet, RouterProvider, Scripts, ScrollRestoration } from 'react-router';
+import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import './sass/stylesheets.scss';
 import type { Route } from './+types/root';
 import { type User, onAuthStateChanged } from 'firebase/auth';
@@ -96,10 +96,8 @@ export function HydrateFallback() {
   );
 }
 
-export type ErrorBoundaryErr = { message: string; details: string; stack: string | undefined };
-
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  const err: ErrorBoundaryErr = { message: 'Oops!', details: 'An unexpected error occurred.', stack: undefined };
+  const err: { message: string; details: string; stack: string | undefined } = { message: 'Oops!', details: 'An unexpected error occurred.', stack: undefined };
 
   if (isRouteErrorResponse(error)) {
     err.message = error.status === 404 ? '404' : 'Error';
