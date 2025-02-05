@@ -53,29 +53,29 @@ const sort = (data: Set<string>) => {
 /** Converts sets to arrays & sorts data in descending order */
 // IMPORTANT NOTE: Application routes depend on this data
 export const useUniqueData = () => {
-  const useUniqueCompanies = useMemo(() => {
+  const useUniqueCompanies = () => {
     return sort(uniqueDataProps.uniqueCompanySet);
-  }, [uniqueDataProps.uniqueCompanySet]);
+  };
 
-  const useUniquePolarPatterns = useMemo(() => {
+  const useUniquePolarPatterns = () => {
     return sort(uniqueDataProps.uniquePolarPatternSet);
-  }, [uniqueDataProps.uniquePolarPatternSet]);
+  };
 
-  const useUniqueWearStyles = useMemo(() => {
+  const useUniqueWearStyles = () => {
     return sort(uniqueDataProps.uniqueWearStyleSet);
-  }, [uniqueDataProps.uniqueWearStyleSet]);
+  };
 
-  const useUniqueHeadphoneCompanies = useMemo(() => {
+  const useUniqueHeadphoneCompanies = () => {
     return sort(uniqueDataProps.uniqueHeadphoneCompanies);
-  }, [uniqueDataProps.uniqueHeadphoneCompanies]);
+  };
 
-  const useUniqueMicrophoneCompanies = useMemo(() => {
+  const useUniqueMicrophoneCompanies = () => {
     return sort(uniqueDataProps.uniqueMicrophoneCompanies);
-  }, [uniqueDataProps.uniqueMicrophoneCompanies]);
+  };
 
-  const useUniqueCategories = useMemo(() => {
+  const useUniqueCategories = () => {
     return sort(uniqueDataProps.uniqueCategories);
-  }, [uniqueDataProps.uniqueCategories]);
+  };
 
   return {
     useUniqueCompanies,
