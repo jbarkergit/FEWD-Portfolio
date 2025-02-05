@@ -1,9 +1,9 @@
 // Deps
-import { useState, useEffect, useRef, ChangeEvent, useId } from 'react';
+import { useState, useEffect, useRef, type ChangeEvent, useId } from 'react';
 // Context
 import { useCatalogProvider } from '../../../../context/CatalogContext';
 // Composables
-import { Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmdb-api/hooks/useTmdbFetcher';
+import { type Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Assets
 import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../assets/google-material-symbols/GoogleMaterialIcons';
 
