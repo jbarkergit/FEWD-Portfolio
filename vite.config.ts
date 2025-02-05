@@ -9,7 +9,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./src/setupTests.ts'],
+    setupFiles: ['./app/setupTests.ts'],
   },
   build: { copyPublicDir: false, cssMinify: true, ssr: false },
   define: { 'process.env': process.env },

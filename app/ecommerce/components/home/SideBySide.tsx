@@ -22,7 +22,7 @@ const SideBySide = () => {
         </div>
         <aside className='sideBySide__video'>
           <video preload='none' playsInline autoPlay loop muted aria-label='Video of joyful people wearing headphones listening to music' tabIndex={-1}>
-            <source src='/src/ecommerce/assets/production-videos/stock-footage-splice-688x860.webm' type='video/webm' />
+            <source src='/app/ecommerce/assets/production-videos/stock-footage-splice-688x860.webm' type='video/webm' />
           </video>
         </aside>
       </article>
