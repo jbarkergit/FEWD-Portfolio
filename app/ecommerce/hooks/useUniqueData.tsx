@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import type { ProductType } from '../context/CartContext';
 import { ecommerceProducts } from '../data/ecommerceProducts';
 
@@ -50,39 +49,21 @@ const sort = (data: Set<string>) => {
   return Array.from(data).sort((a, b) => (a > b ? 1 : -1));
 };
 
-/** Converts sets to arrays & sorts data in descending order */
-// IMPORTANT NOTE: Application routes depend on this data
-export const useUniqueData = () => {
-  const useUniqueCompanies = () => {
-    return sort(uniqueDataProps.uniqueCompanySet);
-  };
+/** Convert sets to arrays & sorts data in descending order
+ * IMPORTANT NOTE: Application routing depend on this data
+ */
+const useUniqueCompanies = () => sort(uniqueDataProps.uniqueCompanySet);
+const useUniquePolarPatterns = () => sort(uniqueDataProps.uniquePolarPatternSet);
+const useUniqueWearStyles = () => sort(uniqueDataProps.uniqueWearStyleSet);
+const useUniqueHeadphoneCompanies = () => sort(uniqueDataProps.uniqueHeadphoneCompanies);
+const useUniqueMicrophoneCompanies = () => sort(uniqueDataProps.uniqueMicrophoneCompanies);
+const useUniqueCategories = () => sort(uniqueDataProps.uniqueCategories);
 
-  const useUniquePolarPatterns = () => {
-    return sort(uniqueDataProps.uniquePolarPatternSet);
-  };
-
-  const useUniqueWearStyles = () => {
-    return sort(uniqueDataProps.uniqueWearStyleSet);
-  };
-
-  const useUniqueHeadphoneCompanies = () => {
-    return sort(uniqueDataProps.uniqueHeadphoneCompanies);
-  };
-
-  const useUniqueMicrophoneCompanies = () => {
-    return sort(uniqueDataProps.uniqueMicrophoneCompanies);
-  };
-
-  const useUniqueCategories = () => {
-    return sort(uniqueDataProps.uniqueCategories);
-  };
-
-  return {
-    useUniqueCompanies,
-    useUniquePolarPatterns,
-    useUniqueWearStyles,
-    useUniqueHeadphoneCompanies,
-    useUniqueMicrophoneCompanies,
-    useUniqueCategories,
-  };
+export const useUniqueData = {
+  useUniqueCompanies,
+  useUniquePolarPatterns,
+  useUniqueWearStyles,
+  useUniqueHeadphoneCompanies,
+  useUniqueMicrophoneCompanies,
+  useUniqueCategories,
 };
