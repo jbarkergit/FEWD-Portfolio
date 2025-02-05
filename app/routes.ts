@@ -3,10 +3,10 @@ import { useUniqueData } from './ecommerce/hooks/useUniqueData';
 
 function useEcommercePaths() {
   const { useUniqueCompanies, useUniqueWearStyles, useUniquePolarPatterns, useUniqueCategories } = useUniqueData();
-  const companyPaths: string[] = useUniqueCompanies.map((company) => `${company}`);
-  const wearStylePaths: string[] = useUniqueWearStyles.map((wearStyle) => `${wearStyle}`);
-  const polarPatternPaths: string[] = useUniquePolarPatterns.map((polarPattern) => `${polarPattern}`);
-  const categoryPaths: string[] = useUniqueCategories.map((category) => `${category}`);
+  const companyPaths: string[] = useUniqueCompanies().map((company) => `${company}`);
+  const wearStylePaths: string[] = useUniqueWearStyles().map((wearStyle) => `${wearStyle}`);
+  const polarPatternPaths: string[] = useUniquePolarPatterns().map((polarPattern) => `${polarPattern}`);
+  const categoryPaths: string[] = useUniqueCategories().map((category) => `${category}`);
   return [...companyPaths, ...wearStylePaths, ...polarPatternPaths, ...categoryPaths];
 }
 
