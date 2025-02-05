@@ -57,26 +57,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export async function clientLoader() {
-  const [authorizedUser, setAuthorizedUser] = useState<{
-    user: undefined | User;
-    verified: boolean;
-  }>({
-    user: undefined,
-    verified: false,
-  });
-
-  useEffect(() => {
+  return new Promise<{ user: undefined | User; verified: boolean }>((resolve) => {
     const authListener = onAuthStateChanged(firebaseAuth, (user) => {
-      startTransition(() => {
-        if (!user) setAuthorizedUser({ user: undefined, verified: false });
-        else setAuthorizedUser({ user: user, verified: user.emailVerified });
-      });
+      if (!user) {
+        resolve({ user: undefined, verified: false });
+      } else {
+        resolve({ user: user, verified: user.emailVerified });
+      }
     });
-
     return () => authListener();
-  }, []);
-
-  return { authorizedUser };
+  });
 }
 
 clientLoader.hydrate = true as const;
