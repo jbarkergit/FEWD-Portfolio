@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { Link } from 'react-router';
 
 const InfographicSectionOne = () => {
@@ -20,7 +21,7 @@ const InfographicSectionOne = () => {
         <picture>
           <img
             tabIndex={0}
-            src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-1.jpg'
+            src='/app/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-1.jpg'
             alt='Model wearing Marshal headphones'
             decoding='async'
             fetchPriority='high'
@@ -37,7 +38,7 @@ const InfographicSectionTwo = () => {
     <figure className='infographic__supporting'>
       <picture>
         <img
-          src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-2.jpg'
+          src='/app/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-2.jpg'
           alt='Man listening to notes he is playing'
           decoding='async'
           fetchPriority='high'
@@ -66,7 +67,7 @@ const InfographicSectionThree = () => {
       <figure className='infographic__cta__graphic'>
         <picture>
           <img
-            src='src/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-3.jpg'
+            src='/app/ecommerce/assets/production-images/compressed-home-page/infographic/infographic-3.jpg'
             alt='Model singing into Shure SM58'
             decoding='async'
             fetchPriority='high'

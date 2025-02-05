@@ -101,33 +101,33 @@ const Carousel = () => {
   // Carousel items
   const carouselUlArr = [
     {
-      carouselImg: 'src/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg',
+      carouselImg: '/app/ecommerce/assets/production-images/compressed-home-page/carousel/brian-tromp-rWMAni9akN8-unsplash.jpg',
       carouselAlt: 'Slide A',
       navCat: 'All Products',
       linkTo: 'products',
     },
     {
-      carouselImg: 'src/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg',
+      carouselImg: '/app/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg',
       carouselAlt: 'Slide B',
       navCat: 'Headphones',
       linkTo: 'headphones',
     },
     {
-      carouselImg: 'src/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg',
+      carouselImg: '/app/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg',
       carouselAlt: 'Slide C',
       navCat: 'Amps & Dacs',
       linkTo: 'amps-dacs',
       tabIndex: -1,
     },
     {
-      carouselImg: 'src/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg',
+      carouselImg: '/app/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg',
       carouselAlt: 'Slide D',
       navCat: 'Microphones',
       linkTo: 'microphones',
       tabIndex: -1,
     },
     {
-      carouselImg: 'src/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg',
+      carouselImg: '/app/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg',
       carouselAlt: 'Slide E',
       navCat: 'Interfaces',
       linkTo: 'interfaces',
