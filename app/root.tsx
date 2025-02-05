@@ -1,6 +1,6 @@
 import React, { startTransition, useEffect, useState } from 'react';
 import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
-import './sass/stylesheets.scss';
+import '/app/base/sass/stylesheets.scss';
 import type { Route } from './+types/root';
 import { type User, onAuthStateChanged } from 'firebase/auth';
 import { firebaseAuth } from './base/config/firebaseConfig';
