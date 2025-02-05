@@ -1,5 +1,5 @@
 // Deps
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type JSX } from 'react';
 // Lib
 import type { YouTubePlayer } from 'react-youtube';
 // Assets
