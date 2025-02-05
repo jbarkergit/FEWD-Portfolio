@@ -7,7 +7,7 @@ const EcoNavigationLinks = () => {
       <li>
         <Link to='/ecommerce/products'>All Products</Link>
       </li>
-      {useUniqueData().useUniqueCategories.map((category) => {
+      {useUniqueData.useUniqueCategories().map((category) => {
         if (category === 'amps-dacs') {
           return (
             <li key={category}>
