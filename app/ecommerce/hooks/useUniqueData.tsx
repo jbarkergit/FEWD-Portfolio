@@ -16,21 +16,25 @@ const uniqueDataProps = ecommerceProducts.reduce(
   ) => {
     // uniqueCompanies
     result.uniqueCompanySet.add(product.company as string);
+
     // uniquePolarPatterns
     if (Array.isArray(product.polarPattern)) {
-      product.polarPattern.forEach((pattern: string) => {
+      for (const pattern of product.polarPattern) {
         if (pattern) result.uniquePolarPatternSet.add(pattern);
-      });
+      }
     } else if (product.polarPattern) result.uniquePolarPatternSet.add(product.polarPattern as string);
 
     // uniqueWearStyles
     if (product.wearStyle !== undefined) result.uniqueWearStyleSet.add(product.wearStyle as string);
     // uniqueHeadphoneCompanies
-    if (product.category === 'headphones') result.uniqueHeadphoneCompanies.add(product.company as string);
+    else if (product.category === 'headphones') result.uniqueHeadphoneCompanies.add(product.company as string);
     // uniqueMicrophoneCompanies
-    if (product.category === 'microphones') result.uniqueMicrophoneCompanies.add(product.company as string);
+    else if (product.category === 'microphones') result.uniqueMicrophoneCompanies.add(product.company as string);
     // uniqueCategories
-    if (product.category) result.uniqueCategories.add(product.category as string);
+    else if (product.category) result.uniqueCategories.add(product.category as string);
+    // error handling
+    else console.error('Product category not found:', product);
+
     // Return accumulator (stores filtered data)
     return result;
   },
