@@ -10,6 +10,8 @@ function useEcommercePaths() {
   return [...companyPaths, ...wearStylePaths, ...polarPatternPaths, ...categoryPaths];
 }
 
+console.log(useEcommercePaths());
+
 export default [
   index('./portfolio/pages/Portfolio.tsx'),
 
@@ -17,12 +19,12 @@ export default [
     ...prefix('products', [
       index('./ecommerce/pages/ProductCatalog.tsx'),
       route(':paramId', './ecommerce/pages/ProductDetailPage.tsx'),
-      ...useEcommercePaths().map((path) => {
-        return {
-          path: `${path}`,
-          file: './ecommerce/pages/ProductCatalog.tsx',
-        };
-      }),
+      // ...useEcommercePaths().map((path) => {
+      //   return {
+      //     path: `${path}`,
+      //     file: './ecommerce/pages/ProductCatalog.tsx',
+      //   };
+      // }),
     ]),
   ]),
 
