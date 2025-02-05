@@ -1,6 +1,6 @@
 import { signOut } from 'firebase/auth';
-import { firebaseAuth } from '../../../../app/config/firebaseConfig';
 import { useCatalogProvider } from '../../../context/CatalogContext';
+import { firebaseAuth } from '~/base/config/firebaseConfig';
 
 type CTAButton = {
   key: string;
