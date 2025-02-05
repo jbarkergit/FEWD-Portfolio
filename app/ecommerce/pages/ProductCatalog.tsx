@@ -9,7 +9,7 @@ import EcoHeader from '../components/navigation/header-desktop/EcoHeader';
 import type { JSX } from 'react';
 
 const ProductCatalog = (): JSX.Element => {
-  const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData().useUniqueCompanies);
+  const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData().useUniqueCompanies());
   const breadcrumb: string = useLocation().pathname.replace(/(ecommerce|\W)+/g, ' ');
   return (
     <CartProvider>
