@@ -41,10 +41,15 @@ type CartStateType = {
 };
 
 //grab Shopping Cart array from local Storage
-const shoppingCartState = JSON.parse(localStorage.getItem('shoppingCartState') || '[]') as CartProductType[];
+const getShoppingCartState = (): CartProductType[] => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    return JSON.parse(localStorage.getItem('shoppingCartState') || '[]') as CartProductType[];
+  }
+  return [];
+};
 
 //initialize cart with local Storage Shopping Cart array
-const initCartState: CartStateType = { shoppingCart: shoppingCartState };
+const initCartState: CartStateType = { shoppingCart: getShoppingCartState() };
 
 //define reducer action type
 const CART_REDUCER_ACTION_TYPE = {
