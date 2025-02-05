@@ -10,7 +10,6 @@
 
 - **[vite](https://www.npmjs.com/package/vite)**: A fast, modern build tool for frontend development.
 - **[react](https://www.npmjs.com/package/react)**: A JavaScript library for building user interfaces.
-- **[react-dom](https://www.npmjs.com/package/react-dom)**: Provides DOM and server renderers for React.
 - **[react-router](https://reactrouter.com/home)**: Multi-strategy router with server-side rendering, code splitting and file-based routing.
 - **[@react-router/dev](https://www.npmjs.com/package/@react-router/dev)**: Development tools for React Router, supporting server rendering, HMR, and more.
 - **[react-router-devtools](https://www.npmjs.com/package/react-router-devtools)**: A tool for inspecting and debugging React Router v7+ projects with features like route monitoring and network tracking.
