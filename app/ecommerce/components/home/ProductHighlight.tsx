@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import { Link } from 'react-router';
 import type { ProductType } from '../../context/CartContext';
-import { useProductDatabase } from '~/ecommerce/hooks/useProductDatabase';
+import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
 
 const ProductHighlight = () => {
   //Play video on user pointer hover
@@ -24,7 +24,7 @@ const ProductHighlight = () => {
         </span>
       </h2>
       <ul>
-        {useProductDatabase
+        {ecommerceProducts
           .filter((product: ProductType) => product.productshowcase === true)
           .map((product: ProductType) => (
             <li key={useId()}>

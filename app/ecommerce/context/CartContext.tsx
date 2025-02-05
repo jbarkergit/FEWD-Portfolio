@@ -1,6 +1,6 @@
 import { createContext, useMemo, useReducer } from 'react';
 import type { ReactElement, ReactNode } from 'react';
-import { useProductDatabase } from '../hooks/useProductDatabase';
+import { ecommerceProducts } from '../data/ecommerceProducts';
 
 // Product type
 export type ProductType = {
@@ -81,7 +81,7 @@ const cartReducer = (state: CartStateType, action: CartReducerAction): CartState
       if (!action.payload) throw new Error('Action Payload may be void or undefined for Reducer Action Type ADD');
       const { quantity, sku, company, unit, price, images } = action.payload; //grab necessary data from CartProductType to send to our shopping cart
       const productExists: CartProductType | undefined = state.shoppingCart.find((product) => product.sku === sku); //identifies products in cart to update (if in cart)
-      const databaseProductStock: number | undefined = useProductDatabase.find((product) => product.sku === sku)?.stock; //checks for product stock in database
+      const databaseProductStock: number | undefined = ecommerceProducts.find((product) => product.sku === sku)?.stock; //checks for product stock in database
 
       if (productExists === undefined && databaseProductStock && databaseProductStock > 0) {
         const newItem = { quantity, sku, company, unit, price, images }; //destructure action.payload into new variable

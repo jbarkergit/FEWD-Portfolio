@@ -9,15 +9,15 @@ import type { ProductType } from '../context/CartContext';
 // Components
 import Header from '../components/navigation/header-desktop/EcoHeader';
 import EFooter from '../components/navigation/footer/eFooter';
-import { useProductDatabase } from '../hooks/useProductDatabase';
 import ProductPageDetails from '../components/product/product-page/ProductPageDetails';
 import ProductPageImgDisplay from '../components/product/product-page/ProductPageImgDisplay';
 import ProductPageImgSelect from '../components/product/product-page/ProductPageImgSelect';
 import MoreLikeThis from '../components/product/product-recommenders/MoreLikeThis';
+import { ecommerceProducts } from '../data/ecommerceProducts';
 
 const ProductDetailPage = () => {
   const { paramId } = useParams() as { paramId: string };
-  const findProduct = useProductDatabase.find((product: ProductType) => product.sku === paramId)!;
+  const findProduct = ecommerceProducts.find((product: ProductType) => product.sku === paramId)!;
   const [activeDisplay, setActiveDisplay] = useState<number>(0);
 
   return (

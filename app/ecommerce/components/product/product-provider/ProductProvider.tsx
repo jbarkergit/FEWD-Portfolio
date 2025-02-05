@@ -1,15 +1,15 @@
 import { useEffect, useState, useRef } from 'react';
 import ProductProp from './ProductProp';
 import type { ProductType } from '../../../context/CartContext';
-import { useProductDatabase } from '../../../hooks/useProductDatabase';
+import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
 
 // Custom hook to filter products based on the location (category or other attributes)
 const useProductFilter = (location: string): ProductType[] => {
-  const filteredData = useProductDatabase.reduce((result: ProductType[], product: ProductType) => {
+  const filteredData = ecommerceProducts.reduce((result: ProductType[], product: ProductType) => {
     if (product.category) {
       switch (location) {
         case 'products':
-          return useProductDatabase.sort((a, b) => a.company.localeCompare(b.company));
+          return ecommerceProducts.sort((a, b) => a.company.localeCompare(b.company));
 
         case 'headphones':
         case 'microphones':

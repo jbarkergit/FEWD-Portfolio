@@ -1,11 +1,11 @@
 import type { ProductType } from '../context/CartContext';
-import { useProductDatabase } from './useProductDatabase';
+import { ecommerceProducts } from '../data/ecommerceProducts';
 
 export const useProductSearch = (searchTerm: string) => {
   let productSearchResults: ProductType[] = [];
   let count = 0;
 
-  for (const product of useProductDatabase) {
+  for (const product of ecommerceProducts) {
     if (product.sku.toLowerCase().includes(searchTerm.toLowerCase())) {
       productSearchResults.push(product);
       count++;

@@ -1,14 +1,14 @@
 import { useEffect, useId } from 'react';
 import { Link, useParams } from 'react-router';
-import { useProductDatabase } from '../../../hooks/useProductDatabase';
 import type { ProductType } from '../../../context/CartContext';
+import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
 
 type MoreLikeThisType = {
   findProduct: ProductType;
 };
 
 const MoreLikeThis = ({ findProduct }: MoreLikeThisType) => {
-  const filteredRecommenders = useProductDatabase.filter((product) => product.sku !== findProduct.sku && product.category === findProduct.category);
+  const filteredRecommenders = ecommerceProducts.filter((product) => product.sku !== findProduct.sku && product.category === findProduct.category);
 
   //Force page refresh upon component change
   const { paramId } = useParams() as { paramId: string };
