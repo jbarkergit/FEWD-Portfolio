@@ -15,6 +15,7 @@
 - **[react-router-devtools](https://www.npmjs.com/package/react-router-devtools)**: A tool for inspecting and debugging React Router v7+ projects with features like route monitoring and network tracking.
 - **[@react-router/node](https://www.npmjs.com/package/@react-router/node)**: Node.js platform abstractions for React Router.
 - **[@react-router/serve](https://www.npmjs.com/package/@react-router/serve)**: Node.js server for React Router.
+- **[isbot](https://www.npmjs.com/package/isbot)**: Identify bots, crawlers, and spiders using the user agent string.
 - **[sass](https://www.npmjs.com/package/sass)**: JavaScript-based Sass compiler.
 
 ### Associated TypeScript Definitions
