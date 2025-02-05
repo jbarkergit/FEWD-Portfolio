@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { useCatalogProvider } from '../../../../context/CatalogContext';
 // Assets
 import { TheMovieDatabaseLogo } from '../../../../assets/google-material-symbols/GoogleMaterialIcons';
+import type { JSX } from 'react';
 
 const FDDetails = () => {
   const { heroData, setIsModalOpen } = useCatalogProvider();
