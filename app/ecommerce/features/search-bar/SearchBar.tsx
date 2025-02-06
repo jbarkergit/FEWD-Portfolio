@@ -1,6 +1,10 @@
 import { useRef, useState, useEffect, useId } from 'react';
 import type { ChangeEvent } from 'react';
-import { useProductSearch } from '../../hooks/useProductSearch';
+import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
+
+function useProductSearch(searchTerm: string) {
+  return ecommerceProducts.filter((product) => product.sku.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 9);
+}
 
 const SearchBar = () => {
   const searchBarRef = useRef<HTMLDivElement>(null!);
@@ -20,6 +24,8 @@ const SearchBar = () => {
       document.body.removeEventListener('pointerup', exteriorClickHandler);
     };
   }, []);
+
+  const searchResults = useProductSearch(searchTerm);
 
   return (
     <div className='searchBar' ref={searchBarRef}>
@@ -44,26 +50,18 @@ const SearchBar = () => {
       {searchTerm.length > 0 && (
         <div className='searchBar__return'>
           <ul className='searchBar__return__ul' tabIndex={-1}>
-            {useProductSearch(searchTerm).length <= 0 ? (
+            {searchResults.length <= 0 ? (
               <li className='searchBar__return__ul__li' key={useId()}>
                 <span className='searchBar__return__ul__li--noResult'>Sorry, no results.</span>
               </li>
             ) : (
-              useProductSearch(searchTerm).map((product, index) =>
-                index === useProductSearch(searchTerm).length - 1 ? (
-                  <li className='searchBar__return__ul__li' key={useId()}>
-                    <a href={`/ecommerce/products/${product.sku}`} onClick={() => setSearchTerm('')} onBlur={() => setSearchTerm('')}>
-                      {product.company} {product.unit}
-                    </a>
-                  </li>
-                ) : (
-                  <li className='searchBar__return__ul__li' key={useId()}>
-                    <a href={`/ecommerce/products/${product.sku}`} onClick={() => setSearchTerm('')}>
-                      {product.company} {product.unit}
-                    </a>
-                  </li>
-                )
-              )
+              searchResults.map((product) => (
+                <li className='searchBar__return__ul__li' key={product.sku}>
+                  <a href={`/ecommerce/products/${product.sku}`} onClick={() => setSearchTerm('')}>
+                    {product.company} {product.unit}
+                  </a>
+                </li>
+              ))
             )}
           </ul>
         </div>
