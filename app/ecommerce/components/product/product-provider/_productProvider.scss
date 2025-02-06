@@ -16,6 +16,7 @@
   gap: var(--ec-gap);
   justify-content: center;
   // max-width: f.rem(1600);
+  padding: 0 var(--ec-gap);
   margin-bottom: f.rem(50);
   @media (width <= 1690px) {
     grid-template-columns: repeat(auto-fit, 100%);
