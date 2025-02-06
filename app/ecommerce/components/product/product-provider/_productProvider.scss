@@ -15,7 +15,7 @@
   grid-auto-rows: 1fr;
   gap: var(--ec-gap);
   justify-content: center;
-  max-width: f.rem(1600);
+  // max-width: f.rem(1600);
   margin-bottom: f.rem(50);
   @media (width <= 1690px) {
     grid-template-columns: repeat(auto-fit, 100%);
