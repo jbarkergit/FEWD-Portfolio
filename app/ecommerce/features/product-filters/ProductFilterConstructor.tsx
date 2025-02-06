@@ -63,7 +63,7 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
               {data}
             </label>
             <Link
-              to={`/ecommerce/${data}`}
+              to={`/ecommerce/products/${data}`}
               className='productFilter__accordion__listItem--option'
               aria-label={`Filter by ${data}`}
               id={data}
