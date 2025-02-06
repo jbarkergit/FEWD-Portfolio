@@ -55,7 +55,7 @@ export const projectData = [
     },
     insights: (
       <>
-        <h2>A dynamic eCommerce application with monochromatic and neumorphic styling.</h2>
+        <h2>A Dynamic eCommerce Application with Monochromatic and Neumorphic Styling</h2>
         <p>
           This audio shop was built with a focus on maintainability and performance. To streamline potential complexities, site-wide conditions were defined before
           building components. This introduced the challenge of acquiring a database with diverse key-value pairs. Issues such as routing, data persistence, and
@@ -104,30 +104,25 @@ export const projectData = [
       <>
         <h2>An Application Hub with Seamless Transitions</h2>
         <p>
-          The primary goal of this portfolio was to create an intuitive environment tailored for skill assessment. However, achieving this simplicity posed
-          challenges, particularly in navigating routing complexities and optimizing Web Core Vital metrics. What initially seemed like an unassuming design evolved
-          into a time-consuming process.
+          This portfolio was designed to serve as an intuitive environment for skill assessment, housing multiple applications under one domain to enhance the user
+          experience. While working with React Router v6, I encountered challenges related to routing complexities and optimizing Web Core Vitals such as Largest
+          Contentful Paint (LCP) and Time to Interactive (TTI).
         </p>
         <p>
-          My first strategy focused on prioritizing each project's landing page and implementing lazy loading for corresponding pages to optimize the largest
-          contentful paint and time to interact. While this standard approach appeared promising, it prompted a reconsideration of the routing strategy, especially
-          in light of the application's future scalability. Utilizing the Network developer tool became essential for visualizing file sizes, transfer times, and the
-          import queue.
+          Initially, I focused on lazy-loading project landing pages and improving performance metrics. Using the Network Developer Tool, I analyzed file sizes and
+          transfer times, dynamically generating routes and managing them in the state to create a module loading queue. However, I faced issues with the 404 error
+          handler loading prematurely, which required a workaround involving network observers and prop drilling to pass error states to the Suspense loader.
         </p>
         <p>
-          To create a module loading queue, I dynamically generated routes and spread them in the state. However, challenges emerged, particularly with the 404 error
-          handler loading before the requested page. My attempts to resolve this led to a somewhat hacky solution: dismissing the handler, mounting an Observer on
-          the Network, and prop drilling data to the Suspense loader to inform the user that the requested page couldn't be found.
+          After experimenting with custom solutions, I realized the need for a more scalable and flexible approach. I decided to implement a simpler, manually routed
+          system with dynamic imports. This change significantly reduced complexity, improved performance, and provided a more maintainable structure. The focus was
+          on optimizing both routing and the overall user experience, resulting in a smoother and more efficient application hub.
         </p>
         <p>
-          Diving into custom Router development raised questions about the necessity of such complexities. After careful consideration, I realized I hadn’t fully
-          explored all available solutions. Manually routing paths and dynamically loading only the necessary modules would address the protocol handler issues
-          without adding unnecessary complexity. This approach would also provide flexibility as the application scales.
-        </p>
-        <p>
-          Following this evaluation and implementation, I streamlined the logic and minimized variable memory caching to enhance Web Core Vital metrics. Accepting a
-          slight performance impact on the initial load, the trade-off resulted in a synchronous background queue and seamless page transitions. While I plan to
-          revisit a more custom solution in the future, the current implementation is satisfactory.
+          Upon the release of React Router V7, the application no longer required a manual routing solution. I thoroughly reviewed the new documentation, scaffolded
+          a new Vite project with React and React Router V7, and successfully migrated my application to the latest version. This migration significantly improved
+          performance metrics, reduced the boilerplate code associated with manual routing, and enabled efficient prerendering, ultimately enhancing the
+          application's overall performance and maintainability.
         </p>
       </>
     ),
