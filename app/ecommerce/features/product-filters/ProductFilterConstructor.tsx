@@ -27,7 +27,7 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
     const locationName = useFilterData().find((data) => data === location);
     if (locationName) setFilterName(locationName);
     else setFilterName(initFilterName);
-  }, [window.location.pathname]);
+  }, [location]);
 
   //** Modal data-attr toggle && external click handler */
   useEffect(() => {
