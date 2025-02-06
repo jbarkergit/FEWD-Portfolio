@@ -64,8 +64,9 @@ export const projectData = [
         <p>
           Instead of using an API, I opted to partially scrape images and data, which involved image touch-ups, aspect ratio matching, and large batch exports to
           meet Web Core Vitals for three device breakpoints. Initially, the database was written in TSX format but was later converted to JSON post-completion—a
-          clear example of why planning ahead is essential. I built custom hooks to filter and return alphabetized, unique data from the database; enabling dynamic
-          route mapping, product search functionality, filters, and categories—effectively resolving most pending issues.
+          clear example of why planning ahead is essential. This was eventually reformatted once more during React Router V7 migration. I built custom hooks to
+          filter and return alphabetized, unique data from the database; enabling dynamic route mapping, product search functionality, filters, and
+          categories—effectively resolving most pending issues.
         </p>
         <p>
           The app utilizes reusable, type-safe functional components, incorporating best practices like lazy loading and the Intersection Observer API to reduce
@@ -81,8 +82,8 @@ export const projectData = [
         <p>
           To simulate the core functionality of an eCommerce site, I implemented user registration and authentication using localStorage, solely for practice, with
           Regular Expressions for field validation. The final step was adding shopping cart functionality, which provided the highly sought-after honor and absolute
-          pleasure of writing useReducer boilerplate. Stripe integration is currently omitted. This application remains imperfect as it was my first from scratch
-          full-fledged site, so you can imagine it would require a lot of love to be production worthy.
+          pleasure of writing useReducer boilerplate. Firebase and Stripe integration was omitted. This project remains imperfect and will only be maintained to
+          properly render as it was my first from scratch full-fledged site, so you can imagine it would require a lot of love to be production worthy.
         </p>
       </>
     ),
