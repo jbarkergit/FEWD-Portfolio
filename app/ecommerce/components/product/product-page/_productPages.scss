@@ -3,6 +3,9 @@
 
 .skuPage {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 0 10.335% f.rem(50) 10.335%;
   margin-bottom: f.rem(104);
   @media (width <= 500px) {
