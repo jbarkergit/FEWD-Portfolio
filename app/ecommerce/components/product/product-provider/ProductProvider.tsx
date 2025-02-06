@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import ProductProp from './ProductProp';
 import type { ProductType } from '../../../context/CartContext';
 import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
+import { useLocation } from 'react-router';
 
 // Custom hook to filter products based on the location (category or other attributes)
 const useProductFilter = (location: string): ProductType[] => {
@@ -47,8 +48,7 @@ const ProductProvider = () => {
   // Ref for the last product, used for IntersectionObserver
   const lastProductRef = useRef<HTMLLIElement>(null);
   // Get current location for filtering
-  const [location, setLocation] = useState<string>(window.location.pathname.replace('/ecommerce/', ''));
-  useEffect(() => setLocation(window.location.pathname.replace('/ecommerce/', '')), [window.location.pathname]);
+  const location = useLocation().pathname.split('/').pop() || 'products';
 
   /**
    * Paginate filtered data: chunks of 7 products
