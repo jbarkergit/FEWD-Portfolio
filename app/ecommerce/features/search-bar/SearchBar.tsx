@@ -52,13 +52,13 @@ const SearchBar = () => {
               useProductSearch(searchTerm).map((product, index) =>
                 index === useProductSearch(searchTerm).length - 1 ? (
                   <li className='searchBar__return__ul__li' key={useId()}>
-                    <a href={`/ecommerce/product/${product.sku}`} onClick={() => setSearchTerm('')} onBlur={() => setSearchTerm('')}>
+                    <a href={`/ecommerce/products/${product.sku}`} onClick={() => setSearchTerm('')} onBlur={() => setSearchTerm('')}>
                       {product.company} {product.unit}
                     </a>
                   </li>
                 ) : (
                   <li className='searchBar__return__ul__li' key={useId()}>
-                    <a href={`/ecommerce/product/${product.sku}`} onClick={() => setSearchTerm('')}>
+                    <a href={`/ecommerce/products/${product.sku}`} onClick={() => setSearchTerm('')}>
                       {product.company} {product.unit}
                     </a>
                   </li>

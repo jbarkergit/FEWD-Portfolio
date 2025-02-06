@@ -12,13 +12,13 @@ const ProductProp = ({ product }: ProductPropType) => {
 
   return (
     <article className='productGrid__product' key={product.sku}>
-      <Link to={`/ecommerce/product/${sku}`} className='productGrid__product__pictureLink' aria-label={`Open ${product.company} ${product.unit} product page`}>
+      <Link to={`/ecommerce/products/${sku}`} className='productGrid__product__pictureLink' aria-label={`Open ${product.company} ${product.unit} product page`}>
         <div className='productGrid__product--containedHover'>
           <picture>{images ? <img src={images.medium[0]} alt={unit} decoding='async' fetchPriority='high' /> : null}</picture>
         </div>
       </Link>
       <div className='productGrid__product__information'>
-        <Link to={`/ecommerce/product/${sku}`}>
+        <Link to={`/ecommerce/products/${sku}`}>
           <h2>
             {company} {unit}
           </h2>

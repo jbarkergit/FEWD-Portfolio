@@ -33,7 +33,7 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType) => {
       <ul className='recommenders__unorderedList'>
         {filteredRecommenders.splice(0, 8).map((product) => (
           <li key={useId()} className='recommenders__unorderedList__item'>
-            <Link to={`/ecommerce/product/${product.sku}`}>
+            <Link to={`/ecommerce/products/${product.sku}`}>
               <article>
                 <picture>
                   <img src={product.images?.small[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchPriority='low' />

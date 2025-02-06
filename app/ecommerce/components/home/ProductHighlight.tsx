@@ -28,7 +28,7 @@ const ProductHighlight = () => {
           .filter((product: ProductType) => product.productshowcase === true)
           .map((product: ProductType) => (
             <li key={useId()}>
-              <Link to={`/ecommerce/product/${product.sku}`} tabIndex={0}>
+              <Link to={`/ecommerce/products/${product.sku}`} tabIndex={0}>
                 <article>
                   <picture
                     onPointerOver={(e: React.PointerEvent<HTMLPictureElement>) => playPauseVideo(e, true)}
