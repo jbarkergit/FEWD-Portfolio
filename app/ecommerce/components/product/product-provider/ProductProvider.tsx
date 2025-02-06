@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
-import ProductProp from './ProductProp';
-import type { ProductType } from '../../../context/CartContext';
-import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
+import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router';
+import type { ProductType } from '~/ecommerce/context/CartContext';
+import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
+import ProductProp from './ProductProp';
 
 // Custom hook to filter products based on the location (category or other attributes)
 const useProductFilter = (location: string): ProductType[] => {
@@ -68,7 +68,11 @@ const ProductProvider = () => {
 
   // Set the first set of paginated products when the paginated products state is updated
   useEffect(() => {
-    if (paginatedProducts.length) setVisibleProducts(paginatedProducts[0]);
+    if (paginatedProducts.length) {
+      setVisibleProducts(paginatedProducts[0]);
+      // Reset the index when paginated products change
+      visibleArrayIndex.current = 0;
+    }
   }, [paginatedProducts]);
 
   /** Observer: Handle new products when the last product comes into view */
@@ -78,7 +82,8 @@ const ProductProvider = () => {
     // If the last product is in view and more products are available
     if (entry.isIntersecting && visibleArrayIndex.current + 1 < paginatedProducts.length) {
       visibleArrayIndex.current += 1;
-      setVisibleProducts((prev) => [...prev, ...paginatedProducts[visibleArrayIndex.current]]); // Append new products to visibleProducts
+      // Append new products to visibleProducts
+      setVisibleProducts((prev) => [...prev, ...paginatedProducts[visibleArrayIndex.current]]);
     }
   };
 
@@ -88,7 +93,7 @@ const ProductProvider = () => {
     return () => {
       if (lastProductRef.current) observer.unobserve(lastProductRef.current!);
     };
-  }, [paginatedProducts]);
+  }, [visibleProducts]);
 
   /** JSX */
   return (
