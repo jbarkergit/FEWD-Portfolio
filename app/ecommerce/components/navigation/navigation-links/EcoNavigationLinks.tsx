@@ -2,27 +2,20 @@ import { Link } from 'react-router';
 import { useUniqueData } from '../../../hooks/useUniqueData';
 
 const EcoNavigationLinks = () => {
+  const categories: string[] = useUniqueData.useUniqueCategories();
+
   return (
     <>
       <li>
         <Link to='/ecommerce/products'>All Products</Link>
       </li>
-      {useUniqueData.useUniqueCategories().map((category) => {
-        if (category === 'amps-dacs') {
-          return (
-            <li key={category}>
-              <Link to={`/ecommerce/${category}`}>Amps & Dacs</Link>
-            </li>
-          );
-        } else {
-          return (
-            <li key={category}>
-              <Link to={`/ecommerce/${category}`}>{category}</Link>
-            </li>
-          );
-        }
-      })}
+      {categories.map((category) => (
+        <li key={category}>
+          <Link to={`/ecommerce/${category}`}>{category === 'amps-dacs' ? 'Amps & Dacs' : category}</Link>
+        </li>
+      ))}
     </>
   );
 };
+
 export default EcoNavigationLinks;
