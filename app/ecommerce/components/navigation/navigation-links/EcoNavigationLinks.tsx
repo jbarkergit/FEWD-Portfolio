@@ -11,7 +11,7 @@ const EcoNavigationLinks = () => {
       </li>
       {categories.map((category) => (
         <li key={category}>
-          <Link to={`/ecommerce/${category}`}>{category === 'amps-dacs' ? 'Amps & Dacs' : category}</Link>
+          <Link to={`/ecommerce/products/${category}`}>{category === 'amps-dacs' ? 'Amps & Dacs' : category}</Link>
         </li>
       ))}
     </>
