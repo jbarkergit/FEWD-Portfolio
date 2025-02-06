@@ -10,7 +10,10 @@ import type { JSX } from 'react';
 
 const ProductCatalog = (): JSX.Element => {
   const CompanyFilter = (): JSX.Element => ProductFilterConstructor('Filter by Company', useUniqueData.useUniqueCompanies());
-  const breadcrumb: string = useLocation().pathname.replace(/(ecommerce|\W)+/g, ' ');
+  let breadcrumb: string = useLocation().pathname.replace(/(ecommerce|\W)+/g, ' ');
+
+  if (breadcrumb.includes('products ')) breadcrumb = breadcrumb.split('products ')[1];
+
   return (
     <CartProvider>
       <div id='ecommerce'>
