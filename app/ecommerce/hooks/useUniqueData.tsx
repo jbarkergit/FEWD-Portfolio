@@ -27,13 +27,11 @@ const uniqueDataProps = ecommerceProducts.reduce(
     // uniqueWearStyles
     if (product.wearStyle !== undefined) result.uniqueWearStyleSet.add(product.wearStyle as string);
     // uniqueHeadphoneCompanies
-    else if (product.category === 'headphones') result.uniqueHeadphoneCompanies.add(product.company as string);
+    if (product.category === 'headphones') result.uniqueHeadphoneCompanies.add(product.company as string);
     // uniqueMicrophoneCompanies
-    else if (product.category === 'microphones') result.uniqueMicrophoneCompanies.add(product.company as string);
+    if (product.category === 'microphones') result.uniqueMicrophoneCompanies.add(product.company as string);
     // uniqueCategories
-    else if (product.category) result.uniqueCategories.add(product.category as string);
-    // error handling
-    else console.error('Product category not found:', product);
+    if (product.category) result.uniqueCategories.add(product.category as string);
 
     // Return accumulator (stores filtered data)
     return result;
