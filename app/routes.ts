@@ -9,15 +9,22 @@ function useEcommercePaths() {
 export default [
   index('./portfolio/pages/Portfolio.tsx'),
 
-  route('ecommerce', './ecommerce/pages/Home.tsx', [
-    ...prefix('products', [
-      index('./ecommerce/pages/ProductCatalog.tsx'),
-      route(':paramId', './ecommerce/pages/ProductDetailPage.tsx'),
-      ...useEcommercePaths().map((path) => {
-        return route(`${path}`, './ecommerce/pages/ProductCatalog.tsx', { id: `filter-${path}` });
-      }),
-    ]),
-  ]),
+  // route('ecommerce', './ecommerce/pages/Home.tsx', [
+  //   ...prefix('products', [
+  //     index('./ecommerce/pages/ProductCatalog.tsx'),
+  //     route(':paramId', './ecommerce/pages/ProductDetailPage.tsx'),
+  //     ...useEcommercePaths().map((path) => {
+  //       return route(`${path}`, './ecommerce/pages/ProductCatalog.tsx', { id: `filter-${path}` });
+  //     }),
+  //   ]),
+  // ]),
+
+  route('ecommerce', './ecommerce/pages/Home.tsx'),
+  route('ecommerce/products', './ecommerce/pages/ProductCatalog.tsx'),
+  route('ecommerce/products/:paramId', './ecommerce/pages/ProductDetailPage.tsx'),
+  ...useEcommercePaths().map((path) => {
+    return route(`ecommerce/products/${path}`, './ecommerce/pages/ProductCatalog.tsx', { id: `filter-${path}` });
+  }),
 
   route('film-database', './film-database/pages/FDUserAccount.tsx', [route('browse', './film-database/pages/FDCatalog.tsx')]),
 ] satisfies RouteConfig;
