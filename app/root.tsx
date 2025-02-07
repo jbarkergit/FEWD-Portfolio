@@ -1,4 +1,3 @@
-import React, { startTransition, useEffect, useState } from 'react';
 import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import '/app/base/sass/stylesheets.scss';
 import type { Route } from './+types/root';
