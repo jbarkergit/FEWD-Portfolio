@@ -16,6 +16,6 @@ export default [
     return route(`ecommerce/products/${path}`, './ecommerce/pages/ProductCatalog.tsx', { id: `filter-${path}` });
   }),
 
-  route('film-database', './film-database/pages/FDUserAccount.tsx'),
+  route('film-database', './film-database/pages/FDAccount.tsx'),
   route('film-database/browse', './film-database/pages/FDCatalog.tsx'),
 ] satisfies RouteConfig;
