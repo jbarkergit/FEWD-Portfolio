@@ -1,4 +1,4 @@
-import { type RouteConfig, route, index, layout, prefix } from '@react-router/dev/routes';
+import { type RouteConfig, route, index, layout } from '@react-router/dev/routes';
 import { useUniqueData } from './ecommerce/hooks/useUniqueData';
 
 function useEcommercePaths() {
@@ -9,16 +9,6 @@ function useEcommercePaths() {
 export default [
   index('./portfolio/pages/Portfolio.tsx'),
 
-  // route('ecommerce', './ecommerce/pages/Home.tsx', [
-  //   ...prefix('products', [
-  //     index('./ecommerce/pages/ProductCatalog.tsx'),
-  //     route(':paramId', './ecommerce/pages/ProductDetailPage.tsx'),
-  //     ...useEcommercePaths().map((path) => {
-  //       return route(`${path}`, './ecommerce/pages/ProductCatalog.tsx', { id: `filter-${path}` });
-  //     }),
-  //   ]),
-  // ]),
-
   route('ecommerce', './ecommerce/pages/Home.tsx'),
   route('ecommerce/products', './ecommerce/pages/ProductCatalog.tsx'),
   route('ecommerce/products/:paramId', './ecommerce/pages/ProductDetailPage.tsx'),
@@ -26,5 +16,6 @@ export default [
     return route(`ecommerce/products/${path}`, './ecommerce/pages/ProductCatalog.tsx', { id: `filter-${path}` });
   }),
 
-  route('film-database', './film-database/pages/FDUserAccount.tsx', [route('browse', './film-database/pages/FDCatalog.tsx')]),
+  route('film-database', './film-database/pages/FDUserAccount.tsx'),
+  route('film-database/browse', './film-database/pages/FDCatalog.tsx'),
 ] satisfies RouteConfig;
