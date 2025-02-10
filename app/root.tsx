@@ -1,8 +1,8 @@
 import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import { StrictMode } from 'react';
 import '/app/base/sass/stylesheets.scss';
 import type { Route } from './+types/root';
-import { type User, onAuthStateChanged } from 'firebase/auth';
-import { firebaseAuth } from './base/config/firebaseConfig';
+import AuthProvider from './base/context/authProvider';
 
 export function meta() {
   return [
@@ -55,23 +55,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export async function clientLoader() {
-  return new Promise<{ user: undefined | User; verified: boolean }>((resolve) => {
-    const authListener = onAuthStateChanged(firebaseAuth, (user) => {
-      if (!user) {
-        resolve({ user: undefined, verified: false });
-      } else {
-        resolve({ user: user, verified: user.emailVerified });
-      }
-    });
-    return () => authListener();
-  });
-}
-
-clientLoader.hydrate = true as const;
-
 export default function App() {
-  return <Outlet />;
+  return (
+    <StrictMode>
+      <AuthProvider>
+        <Outlet />
+      </AuthProvider>
+    </StrictMode>
+  );
 }
 
 export function HydrateFallback() {
@@ -117,9 +108,3 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     </main>
   );
 }
-
-// ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-//   <React.StrictMode>
-//     <RouterProvider router={router} />
-//   </React.StrictMode>
-// );
