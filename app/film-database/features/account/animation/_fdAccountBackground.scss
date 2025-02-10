@@ -1,0 +1,152 @@
+@use '/app/base/sass/functions' as f;
+@use '/app/film-database/scss/fdMixins' as m;
+
+// Inspired by camillemormal, wrote from scratch in scss
+.fdAccountBackground {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  &::before,
+  &::after {
+    content: '';
+    position: fixed;
+    z-index: 6;
+    left: 0;
+    width: 100%;
+    height: calc(100svh / 16);
+    background-color: hsl(0, 0%, 8%);
+  }
+  &::before {
+    top: 0;
+  }
+  &::after {
+    bottom: 0;
+  }
+  &__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    gap: calc(var(--fd-gap) * 2);
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
+    will-change: scale;
+    &[data-anim='false'] {
+      transform: scale(0.9);
+    }
+    &[data-anim='mount'] {
+      // Transition duration mimics &__set&[data-anim='mount']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(4)
+      // Transition delay mimics &__set&[data-anim='mount']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(1)
+      transition: transform 1.8s cubic-bezier(1, 0, 0.62, 1) 1.4s;
+      transform: scale(5.3);
+    }
+    &__set {
+      flex: 0 0 calc((100% - 4 * (var(--fd-gap) * 2)) / 5);
+      position: relative;
+      pointer-events: none;
+      &[data-anim='false'] {
+        &:nth-of-type(odd) .fdAccountBackground__backdrop__set__li {
+          transform: translateY(100svh);
+        }
+        &:nth-of-type(even) .fdAccountBackground__backdrop__set__li {
+          // Mimics height of list items
+          transform: translateY(calc(0svh - (25svh - var(--fd-gap) * 2)));
+        }
+      }
+      &[data-anim='mount'] {
+        .fdAccountBackground__backdrop__set__li {
+          // :1: lags behind :2, arrives fast, fast to destination
+          // :2: lags behind :3, arrives fast, slow to destination
+          // :3: launches at the slow bezier ascention of :4 to create visual lag, arrives fast, slow to arrive to transform destination
+          // :4: entry slow, fast ascent, slow to arrive to transform destination
+          // duration starts at 1.8, subtracting 0.35, then 0.35 / 2 (0.175) to completion
+          // delay starts at 0, adding 0.35 * 2, then + 0.35 to completion
+          &:nth-of-type(1) {
+            transition: transform 1.1s cubic-bezier(0.3, 0, 0.1, 1) 1.4s;
+          }
+          &:nth-of-type(2) {
+            transition: transform 1.275s cubic-bezier(0.3, 0, 0.2, 1) 1.05s;
+          }
+          &:nth-of-type(3) {
+            transition: transform 1.45s cubic-bezier(0.3, 0, 0.3, 1) 0.7s;
+          }
+          &:nth-of-type(4) {
+            transition: transform 1.8s cubic-bezier(0.3, 0, 0.2, 1) 0s;
+          }
+        }
+        &:nth-of-type(odd) {
+          .fdAccountBackground__backdrop__set__li {
+            &:nth-of-type(1) {
+              transform: translateY(calc(75svh - ((25svh - var(--fd-gap) * 2) / 2)));
+            }
+            &:nth-of-type(2) {
+              transform: translateY(calc(50svh - ((25svh - var(--fd-gap) * 2) / 2)));
+            }
+            &:nth-of-type(3) {
+              transform: translateY(calc(25svh - ((25svh - var(--fd-gap) * 2) / 2)));
+            }
+            &:nth-of-type(4) {
+              transform: translateY(calc(0svh - ((25svh - var(--fd-gap) * 2) / 2)));
+            }
+          }
+        }
+        &:nth-of-type(even) {
+          .fdAccountBackground__backdrop__set__li {
+            &:nth-of-type(1) {
+              transform: translateY(calc(0svh));
+            }
+            &:nth-of-type(2) {
+              transform: translateY(calc(25svh));
+            }
+            &:nth-of-type(3) {
+              transform: translateY(calc(50svh));
+            }
+            &:nth-of-type(4) {
+              transform: translateY(calc(75svh));
+            }
+          }
+        }
+        &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) div img {
+          // NOTE: transform doesn't play nice with nested tags post psuedo; therefore, we've opted for a single animation (which hurts performance)
+          // Animation mimics transition properties from &__set&[data-anim='mount'] .fdAccountBackground__backdrop__set__li
+          // Duration mimics :nth-of-type(4)
+          // Delay mimics :nth-of-type(1)
+          // Bezier mimics &__set[data-anim='mount']
+          filter: opacity(1);
+          transform: scale(1.25);
+          animation: imgScale 1.8s cubic-bezier(1, 0, 0.62, 1) 1.4s forwards;
+          will-change: scale;
+        }
+      }
+      &__li {
+        position: absolute;
+        width: 100%;
+        // Gap won't work with abs pos; therefore, we add the gaps to height
+        height: calc(25% - var(--fd-gap) * 2);
+        overflow: clip;
+        will-change: transform;
+        &__container {
+          position: relative;
+          height: 100%;
+          &--img {
+            width: inherit;
+            height: inherit;
+            image-rendering: crisp-edges;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes imgScale {
+  from {
+    transform: scale(1.25);
+    filter: opacity(1);
+  }
+  to {
+    transform: scale(1);
+    filter: opacity(0);
+  }
+}
