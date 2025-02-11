@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect, useId } from 'react';
 import type { ChangeEvent } from 'react';
+import { Link } from 'react-router';
 import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
 
 function useProductSearch(searchTerm: string) {
@@ -57,9 +58,9 @@ const SearchBar = () => {
             ) : (
               searchResults.map((product) => (
                 <li className='searchBar__return__ul__li' key={product.sku}>
-                  <a href={`/ecommerce/products/${product.sku}`} onClick={() => setSearchTerm('')}>
+                  <Link to={`/ecommerce/products/${product.sku}`} onClick={() => setSearchTerm('')}>
                     {product.company} {product.unit}
-                  </a>
+                  </Link>
                 </li>
               ))
             )}
