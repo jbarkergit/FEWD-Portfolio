@@ -59,7 +59,10 @@ const InfographicSectionThree = () => {
           <span className='highlight'>Beyerdynamic</span>
         </h2>
         <p tabIndex={0}>Thanks to our friends over at Beyerdynamic, we're proud to introduce a new line of headphones sporting all new Tesla technology.</p>
-        <Link to='http://localhost:5173/ecommerce/Beyerdynamic' className='infographic__section__news__textBlock--cta' aria-label='Shop Tesla enhanced Headphones'>
+        <Link
+          to='http://localhost:5173/ecommerce/products/Beyerdynamic'
+          className='infographic__section__news__textBlock--cta'
+          aria-label='Shop Tesla enhanced Headphones'>
           Shop Tesla enhanced Headphones
         </Link>
       </section>
