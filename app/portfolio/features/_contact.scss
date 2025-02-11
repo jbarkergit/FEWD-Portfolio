@@ -40,12 +40,6 @@
       justify-content: center;
       gap: calc(s.$portfolio-gap * 2);
       height: 100%;
-      & h2 {
-        pointer-events: none;
-        font-size: clamp(1.125rem, 2vw, 1.5rem);
-        font-weight: 500;
-        text-align: center;
-      }
       & ul {
         display: flex;
         flex-wrap: wrap;
@@ -61,17 +55,11 @@
           display: flex;
           flex-direction: column;
           width: 100%;
-          // max-width: 46ch;
-          // &:has(input:not(:placeholder-shown)) label {
-          //   transform: translateY(-20px);
-          //   transition: transform 60ms ease-in-out;
-          // }
-          &:has(input:focus) label {
-            transform: translateY(-150%);
-            transition: transform ease-in-out 65ms;
-          }
+          &:has(input:focus) label,
           &:has(input:not(:focus):not(:placeholder-shown)) label {
-            transform: translateY(-150%);
+            // reflects height of input: height (font-size) + padding-bottom + border-bottom
+            transform: translateY(calc((1.125rem + 6px + 6px + 1px) * -1));
+            transition: transform ease-in-out 65ms;
           }
           &:has(textarea) label {
             position: relative;
