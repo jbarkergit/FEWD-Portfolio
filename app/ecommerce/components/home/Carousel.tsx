@@ -110,7 +110,7 @@ const Carousel = () => {
       carouselImg: '/app/ecommerce/assets/production-images/compressed-home-page/carousel/techivation-vVRmYWSWy7A-unsplash.jpg',
       carouselAlt: 'Slide B',
       navCat: 'Headphones',
-      linkTo: 'headphones',
+      linkTo: 'products/headphones',
     },
     {
       carouselImg: '/app/ecommerce/assets/production-images/compressed-home-page/carousel/katrina-beachy-c_egiHy2x4Y-unsplash.jpg',
@@ -123,14 +123,14 @@ const Carousel = () => {
       carouselImg: '/app/ecommerce/assets/production-images/compressed-home-page/carousel/soundtrap-uCNrr-3i2oI-unsplash.jpg',
       carouselAlt: 'Slide D',
       navCat: 'Microphones',
-      linkTo: 'microphones',
+      linkTo: 'products/microphones',
       tabIndex: -1,
     },
     {
       carouselImg: '/app/ecommerce/assets/production-images/compressed-home-page/carousel/rekkr-insitu-black.jpg',
       carouselAlt: 'Slide E',
       navCat: 'Interfaces',
-      linkTo: 'interfaces',
+      linkTo: 'products/interfaces',
       tabIndex: -1,
     },
   ];
