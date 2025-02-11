@@ -8,7 +8,7 @@ import FDHero from '../features/catalog/hero/FDHero';
 import FDMedia from '../features/catalog/media/FDMedia';
 import FDMovieModal from '../features/catalog/modals/FDMovieModal';
 
-const FDCatalog = () => {
+const FDCatalog = ({ isLogged }: { isLogged: boolean }) => {
   return (
     <div className='filmDatabase'>
       <CatalogProvider>
