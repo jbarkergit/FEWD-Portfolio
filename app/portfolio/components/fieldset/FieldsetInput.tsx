@@ -12,7 +12,7 @@ type FieldsetInputProps = {
 const FieldsetInput = ({ htmlFor, label, inputType, inputReg, register, errors }: FieldsetInputProps) => (
   <li>
     <label htmlFor={htmlFor}>{label}</label>
-    <input type={inputType} id={htmlFor} {...register(inputReg)} />
+    <input type={inputType} id={htmlFor} placeholder=' ' {...register(inputReg)} />
     {errors[inputReg] && <span>{String(errors[inputReg]?.message)}</span>}
   </li>
 );

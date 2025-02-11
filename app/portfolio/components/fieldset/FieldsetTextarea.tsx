@@ -8,7 +8,7 @@ type FieldsetTextareaProps = {
 const FieldsetTextarea = ({ register, errors }: FieldsetTextareaProps) => (
   <li>
     <label htmlFor='message'>Message</label>
-    <textarea id='message' {...register('message')} />
+    <textarea id='message' placeholder=' ' {...register('message')} />
     {errors.message && <span>{String(errors.message?.message)}</span>}
   </li>
 );
