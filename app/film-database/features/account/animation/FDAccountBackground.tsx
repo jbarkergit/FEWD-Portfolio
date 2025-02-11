@@ -1,51 +1,39 @@
 // Deps
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 // Types
-import { useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 import type { Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 
-const FDAccountBackground = () => {
-  const [responseSets, setResponseSets] = useState<Namespace_Tmdb.BaseMedia_Provider[][]>([]);
-
+const FDAccountBackground = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.BaseMedia_Provider[][] }) => {
   /** Reference dependencies */
-  const backdropRef = useRef<HTMLDivElement>(null);
-  const ulRefs = useRef<HTMLUListElement[]>([]);
+  const backdropRef = useRef<HTMLDivElement>(null),
+    ulRefs = useRef<HTMLUListElement[]>([]);
 
   const ulRef = (ref: HTMLUListElement): void => {
     if (ref && !ulRefs.current.includes(ref)) ulRefs.current.push(ref);
   };
 
-  /** Fetch && create sets from response data */
-  const createResponseSets = async (): Promise<void> => {
-    const data = (await useTmdbFetcher({ now_playing: undefined })) as Namespace_Tmdb.Prefabs_Obj;
-    const results = data.now_playing.results;
-
-    let responseSetArr: Array<typeof results> = [];
-    for (let i = 0; i < Math.ceil(results.length / 4); i++) responseSetArr.push(results.slice(i * 4, i * 4 + 4));
-    setResponseSets(responseSetArr);
-  };
-
-  useEffect(() => {
-    createResponseSets();
-  }, []);
-
   /** Mount animations */
   const animator = (): void => {
     if (!backdropRef.current || !ulRefs.current) return;
-    backdropRef.current.setAttribute('data-anim', 'mount');
-    ulRefs.current.forEach((ul) => ul.setAttribute('data-anim', 'mount'));
+    backdropRef.current.setAttribute('data-visible', 'mount');
+    ulRefs.current.forEach((ul) => ul.setAttribute('data-visible', 'mount'));
   };
+
+  /** Post mount visibility */
+  useEffect(() => {
+    setTimeout(() => backdropRef.current?.setAttribute('data-visible', 'false'), 3200);
+  }, []);
 
   /** Component */
   return (
     <div className='fdAccountBackground'>
-      <div className='fdAccountBackground__backdrop' ref={backdropRef} data-anim='false'>
-        {responseSets.map((set: Namespace_Tmdb.BaseMedia_Provider[], setIndex: number) => {
+      <div className='fdAccountBackground__backdrop' ref={backdropRef} data-visible='false'>
+        {responseSetArr.map((set: Namespace_Tmdb.BaseMedia_Provider[], setIndex: number) => {
           return (
-            <ul className='fdAccountBackground__backdrop__set' key={`backdropset${setIndex}`} ref={ulRef} data-anim='false'>
+            <ul className='fdAccountBackground__backdrop__set' key={`backdropset${setIndex}`} ref={ulRef} data-visible='false'>
               {set.map((article: Namespace_Tmdb.BaseMedia_Provider, liIndex: number) => {
                 const isCenteredListItem: boolean = setIndex === 2 && liIndex === 1;
-                const isLastListItem: boolean = setIndex === responseSets.length - 1 && liIndex === 3;
+                const isLastListItem: boolean = setIndex === responseSetArr.length - 1 && liIndex === 3;
                 return (
                   <li className='fdAccountBackground__backdrop__set__li' key={article.id}>
                     <div className='fdAccountBackground__backdrop__set__li__container'>
