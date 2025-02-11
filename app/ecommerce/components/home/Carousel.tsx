@@ -1,4 +1,4 @@
-import { useEffect, useId, useReducer, useRef } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { Link } from 'react-router';
 
 type initSliderStateType = {
@@ -145,7 +145,7 @@ const Carousel = () => {
       </div>
       <ul className='carousel__track' ref={targetElementRef} style={state.style}>
         {carouselUlArr.map((li) => (
-          <li key={useId()}>
+          <li key={`carousel-category-${li.navCat}`}>
             <picture>
               <img src={li.carouselImg} alt={li.carouselAlt} draggable='false' loading='lazy' decoding='async' fetchPriority='low' />
               <Link to={li.linkTo} tabIndex={li.tabIndex}>

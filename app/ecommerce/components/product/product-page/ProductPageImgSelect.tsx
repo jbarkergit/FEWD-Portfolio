@@ -1,4 +1,3 @@
-import { useId } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import type { ProductType } from '../../../context/CartContext';
 
@@ -13,7 +12,7 @@ const ProductPageImgSelect = ({ findProduct, setActiveDisplay }: PropType) => {
   return (
     <aside className='skuPage__grid__imgSelection'>
       {images?.small.map((image, index) => (
-        <picture key={useId()}>
+        <picture key={`product-image-select-${index}`}>
           <img src={image} alt={company + unit} decoding='async' fetchPriority='high' onClick={() => setActiveDisplay(index)} tabIndex={0} />
         </picture>
       ))}
