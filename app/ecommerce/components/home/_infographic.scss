@@ -37,6 +37,7 @@
     }
   }
   & figure {
+    height: 100%;
     border-radius: var(--ec-border-radius);
     overflow: clip;
     & picture,
