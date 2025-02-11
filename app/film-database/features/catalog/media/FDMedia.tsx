@@ -1,5 +1,5 @@
 // Deps
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // Context
 import { type Type_heroData, useCatalogProvider } from '../../../context/CatalogContext';
 // Composables
@@ -97,7 +97,7 @@ const FDMedia = () => {
   return (
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
       {paginatedData?.map(([key, value], index) => (
-        <FDCarousel type={'movies'} mapIndex={index} heading={key === 'discover' ? route : key} data={value} key={useId()} />
+        <FDCarousel type={'movies'} mapIndex={index} heading={key === 'discover' ? route : key} data={value} key={`carousel-key-${key}-${value}`} />
       ))}
       <FDCarouselSearch />
     </main>
