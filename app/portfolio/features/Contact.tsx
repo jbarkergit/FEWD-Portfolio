@@ -1,12 +1,16 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { schema } from '../data/schema';
-import FieldsetInput from '../components/fieldset/FieldsetInput';
 import FieldsetTextarea from '../components/fieldset/FieldsetTextarea';
-import FieldsetSubmit from '../components/fieldset/FieldsetSubmit';
+import FieldsetInput from '../components/fieldset/FieldsetInput';
 
 const Contact = () => {
-  const { handleSubmit, reset } = useForm({
+  const {
+    handleSubmit,
+    reset,
+    register,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(schema),
   });
 
@@ -15,13 +19,7 @@ const Contact = () => {
     // Prep form data to send via Web3Forms API
     const formData = new FormData();
     formData.append('access_key', import.meta.env.VITE_WEB_FORMS_KEY!);
-    formData.append('first', data.first);
-    formData.append('last', data.last);
-    formData.append('phone', data.phone);
-    formData.append('email', data.email);
-    formData.append('agency', data.agency || '');
-    formData.append('role', data.role || '');
-    formData.append('message', data.message);
+    for (const key in data) formData.append(key, data[key]);
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
@@ -55,22 +53,22 @@ const Contact = () => {
           aria-labelledby='form-title'>
           <ul className='contact__container__form__ul'>
             {/* First Name */}
-            <FieldsetInput htmlFor={'first-name'} label={'First Name'} inputType={'text'} inputId={'first-name'} inputReg={'first'} />
+            <FieldsetInput htmlFor={'first-name'} label={'First Name'} inputType={'text'} inputReg={'first'} register={register} errors={errors} />
             {/* Last Name */}
-            <FieldsetInput htmlFor={'last-name'} label={'Last Name'} inputType={'text'} inputId={'last-name'} inputReg={'last'} />
+            <FieldsetInput htmlFor={'last-name'} label={'Last Name'} inputType={'text'} inputReg={'last'} register={register} errors={errors} />
             {/* Email */}
-            <FieldsetInput htmlFor={'email'} label={'Email'} inputType={'email'} inputId={'email'} inputReg={'email'} />
+            <FieldsetInput htmlFor={'email'} label={'Email'} inputType={'email'} inputReg={'email'} register={register} errors={errors} />
             {/* Phone */}
-            <FieldsetInput htmlFor={'phone'} label={'Phone'} inputType={'tel'} inputId={'phone'} inputReg={'phone'} />
+            <FieldsetInput htmlFor={'phone'} label={'Phone'} inputType={'tel'} inputReg={'phone'} register={register} errors={errors} />
             {/* Agency */}
-            <FieldsetInput htmlFor={'agency'} label={'Agency (Optional)'} inputType={'text'} inputId={'agency'} inputReg={'agency'} />
+            <FieldsetInput htmlFor={'agency'} label={'Agency (Optional)'} inputType={'text'} inputReg={'agency'} register={register} errors={errors} />
             {/* Role */}
-            <FieldsetInput htmlFor={'role'} label={'Role (Optional)'} inputType={'text'} inputId={'role'} inputReg={'role'} />
+            <FieldsetInput htmlFor={'role'} label={'Role (Optional)'} inputType={'text'} inputReg={'role'} register={register} errors={errors} />
             {/* Message */}
-            <FieldsetTextarea />
+            <FieldsetTextarea register={register} errors={errors} />
           </ul>
           {/* Submit Button */}
-          <FieldsetSubmit />
+          <button type='submit'>Submit</button>
         </form>
       </div>
     </section>

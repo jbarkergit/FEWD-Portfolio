@@ -1,33 +1,20 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { schema } from '~/portfolio/data/schema';
+import { type FieldErrors, type UseFormRegister } from 'react-hook-form';
 
-const FieldsetLI = ({ htmlFor, label, inputType, inputId, inputReg }: { htmlFor: string; label: string; inputType: string; inputId: string; inputReg: string }) => {
-  const {
-    register,
-    formState: { errors },
-  } = useForm({ resolver: zodResolver(schema) });
-
-  return (
-    <li className='contact__container__form__ul__li'>
-      <label htmlFor={htmlFor} className='contact__container__form__ul__li__label'>
-        {label}
-      </label>
-      <input
-        type={inputType}
-        id={inputId}
-        className='contact__container__form__ul__li__input'
-        {...register(inputReg)} // Register input with react-hook-form
-        placeholder=' '
-        aria-invalid={errors.first ? 'true' : 'false'}
-      />
-      {errors.first && (
-        <span className='form-message' role='alert'>
-          {errors.first.message} {/* Display error message */}
-        </span>
-      )}
-    </li>
-  );
+type FieldsetInputProps = {
+  htmlFor: string;
+  label: string;
+  inputType: string;
+  inputReg: string;
+  register: UseFormRegister<any>;
+  errors: FieldErrors;
 };
 
-export default FieldsetLI;
+const FieldsetInput = ({ htmlFor, label, inputType, inputReg, register, errors }: FieldsetInputProps) => (
+  <li>
+    <label htmlFor={htmlFor}>{label}</label>
+    <input type={inputType} id={htmlFor} {...register(inputReg)} />
+    {errors[inputReg] && <span>{String(errors[inputReg]?.message)}</span>}
+  </li>
+);
+
+export default FieldsetInput;
