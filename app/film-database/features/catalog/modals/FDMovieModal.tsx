@@ -13,6 +13,7 @@ const FDMovieModal = () => {
 
   // Fetch
   const fetch = async (): Promise<void> => {
+    if (!heroData) return;
     // Fetch data
     const data = (await useTmdbFetcher({ credits: (heroData as Namespace_Tmdb.BaseMedia_Provider).id })) as Namespace_Tmdb.Credits_Obj;
     const store = usePaginateData(data);
@@ -21,7 +22,7 @@ const FDMovieModal = () => {
   };
 
   useEffect(() => {
-    fetch();
+    if (heroData) fetch();
   }, [heroData]);
 
   const handleExteriorClicks = (event: PointerEvent) => {
@@ -37,7 +38,8 @@ const FDMovieModal = () => {
     return () => unmount();
   }, [isModalOpen]);
 
-  if (isModalOpen && castCrew)
+  if (!isModalOpen || !castCrew) return null;
+  else
     return (
       <div className='fdMovieModal'>
         <div className='fdMovieModal__container' ref={fdMovieModal}>
@@ -47,7 +49,7 @@ const FDMovieModal = () => {
           <article className='fdMovieModal__container__info'>
             <div>
               <span>{heroData?.release_date}</span>
-              {heroData?.genre_ids.map((genreId) => <span>{Object.keys(tmdbMovieGenres)[genreId]}</span>)}
+              {heroData?.genre_ids.map((genreId) => <span key={`genreId-${genreId}`}>{Object.keys(tmdbMovieGenres)[genreId]}</span>)}
             </div>
             <header>
               <h2>{heroData?.title}</h2>
