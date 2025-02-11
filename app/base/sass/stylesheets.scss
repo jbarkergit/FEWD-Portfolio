@@ -1,10 +1,10 @@
 // App
-@forward '/app/base/sass/protocolErrorHandler';
-@forward '/app/base/sass/standardSuspense';
+@forward '/app/base/sass/ui-handlers/protocolErrorHandler';
+@forward '/app/base/sass/ui-handlers/hydrateFallback';
 
 // CSS Reset
-@forward '/app/base/sass/boilerplate';
-@forward '/app/base/sass/preflight';
+@forward '/app/base/sass/reset/preflight';
+@forward '/app/base/sass/reset/boilerplate';
 
 // Font Faces
 @forward '/app/base/fonts/fonts';
