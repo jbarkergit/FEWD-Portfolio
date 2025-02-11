@@ -2,8 +2,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { schema } from '../data/schema';
 import FieldsetInput from '../components/fieldset/FieldsetInput';
-import FieldsetSubmit from '../components/fieldset/FieldsetSubmit';
 import FieldsetTextarea from '../components/fieldset/FieldsetTextarea';
+import FieldsetSubmit from '../components/fieldset/FieldsetSubmit';
 
 const Contact = () => {
   const { handleSubmit, reset } = useForm({
