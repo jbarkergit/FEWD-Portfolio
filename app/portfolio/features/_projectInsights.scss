@@ -172,11 +172,6 @@
           font-size: clamp(f.rem(20), f.rem(22) + 1vw, f.rem(28));
         }
       }
-      & p {
-        width: clamp(20ch, 100%, 75ch);
-        word-wrap: break-word;
-        white-space: normal;
-      }
     }
   }
 }
