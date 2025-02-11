@@ -2,8 +2,9 @@ import { useState, useRef, useEffect } from 'react';
 import FDAccountRegistry from './fieldsets/FDAccountRegistry';
 import FDAccountSignIn from './fieldsets/FDAccountSignIn';
 import FDAccountArticle from './article/FDAccountArticle';
+import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
-const FDAccountModal = () => {
+const FDAccountModal = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.BaseMedia_Provider[][] }) => {
   const [modal, setModal] = useState<'signin' | 'registry'>('signin');
 
   const accountRef = useRef<HTMLDivElement>(null),
@@ -38,7 +39,7 @@ const FDAccountModal = () => {
 
   return (
     <main className='fdAccountModal' ref={accountRef} data-visible='false'>
-      <FDAccountArticle />
+      <FDAccountArticle responseSetArr={responseSetArr} />
       <form className='fdAccountModal__form'>
         <fieldset className='fdAccountModal__form__fieldset'>
           {modal === 'signin' ? (
