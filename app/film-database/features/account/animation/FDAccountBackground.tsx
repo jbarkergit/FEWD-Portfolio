@@ -27,7 +27,7 @@ const FDAccountBackground = ({ responseSetArr }: { responseSetArr: Namespace_Tmd
   /** Component */
   return (
     <div className='fdAccountBackground'>
-      <div className='fdAccountBackground__backdrop' ref={backdropRef} data-visible='false'>
+      <div className='fdAccountBackground__backdrop' ref={backdropRef} data-visible='init'>
         {responseSetArr.map((set: Namespace_Tmdb.BaseMedia_Provider[], setIndex: number) => {
           return (
             <ul className='fdAccountBackground__backdrop__set' key={`backdropset${setIndex}`} ref={ulRef} data-visible='false'>
