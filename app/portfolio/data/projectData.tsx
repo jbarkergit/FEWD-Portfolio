@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 export const projectData = [
   {
     key: 'film database',
-    url: 'http://localhost:5173/film-database',
+    url: 'film-database',
     technologies: {
       sdk: ['firebase', 'firebase-tools'],
       api: ['tmdb'],
@@ -47,7 +47,7 @@ export const projectData = [
   },
   {
     key: 'ecommerce',
-    url: 'http://localhost:5173/ecommerce',
+    url: 'ecommerce',
     technologies: {
       core_libraries: ['vite', 'react', 'react router dom', 'sass'],
       web_technologies: ['html', 'css', 'javascript', 'typescript'],
