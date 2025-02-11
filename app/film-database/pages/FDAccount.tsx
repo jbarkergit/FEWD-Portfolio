@@ -19,7 +19,7 @@ const FDUserAccount = ({ loaderData }: Route.ComponentProps) => {
   return (
     <div className='fdAccount'>
       <FDAccountBackground responseSetArr={responseSetArr} />
-      <FDAccountModal />
+      <FDAccountModal responseSetArr={responseSetArr} />
     </div>
   );
 };
