@@ -1,26 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-
-// Zod validation schema
-const schema = z.object({
-  first: z.string().trim().min(1, { message: 'First name is required.' }),
-  last: z.string().trim().min(1, { message: 'Last name is required.' }),
-  phone: z.string().min(10, { message: 'Invalid phone number.' }),
-  email: z.string().trim().email({ message: 'Invalid email address.' }),
-  agency: z.string().trim().optional(),
-  role: z.string().trim().optional(),
-  message: z.string().trim().min(1, { message: 'Please type your inquiry.' }),
-});
+import { schema } from '../data/schema';
+import FieldsetInput from '../components/fieldset/FieldsetInput';
+import FieldsetSubmit from '../components/fieldset/FieldsetSubmit';
+import FieldsetTextarea from '../components/fieldset/FieldsetTextarea';
 
 const Contact = () => {
-  // Initialize react-hook-form, connect Zod schema via zodResolver
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
+  const { handleSubmit, reset } = useForm({
     resolver: zodResolver(schema),
   });
 
@@ -43,10 +29,10 @@ const Contact = () => {
         body: formData,
       });
 
-      const result = await response.json();
+      const result = (await response.json()) as { success: boolean };
 
       if (result.success) reset();
-      else throw new Error(result);
+      else throw new Error(JSON.stringify(result));
     } catch (error) {
       console.error('Submission error:', error);
     }
@@ -69,125 +55,22 @@ const Contact = () => {
           aria-labelledby='form-title'>
           <ul className='contact__container__form__ul'>
             {/* First Name */}
-            <li className='contact__container__form__ul__li'>
-              <label htmlFor='first-name' className='contact__container__form__ul__li__label'>
-                First Name
-              </label>
-              <input
-                type='text'
-                id='first-name'
-                className='contact__container__form__ul__li__input'
-                {...register('first')} // Register input with react-hook-form
-                placeholder=' '
-                aria-invalid={errors.first ? 'true' : 'false'}
-              />
-              {errors.first && (
-                <span className='form-message' role='alert'>
-                  {errors.first.message} {/* Display error message */}
-                </span>
-              )}
-            </li>
-
+            <FieldsetInput htmlFor={'first-name'} label={'First Name'} inputType={'text'} inputId={'first-name'} inputReg={'first'} />
             {/* Last Name */}
-            <li className='contact__container__form__ul__li'>
-              <label htmlFor='last-name' className='contact__container__form__ul__li__label'>
-                Last Name
-              </label>
-              <input
-                type='text'
-                id='last-name'
-                className='contact__container__form__ul__li__input'
-                {...register('last')}
-                placeholder=' '
-                aria-invalid={errors.last ? 'true' : 'false'}
-              />
-              {errors.last && (
-                <span className='form-message' role='alert'>
-                  {errors.last.message}
-                </span>
-              )}
-            </li>
-
+            <FieldsetInput htmlFor={'last-name'} label={'Last Name'} inputType={'text'} inputId={'last-name'} inputReg={'last'} />
             {/* Email */}
-            <li className='contact__container__form__ul__li'>
-              <label htmlFor='email' className='contact__container__form__ul__li__label'>
-                Email
-              </label>
-              <input
-                type='email'
-                id='email'
-                className='contact__container__form__ul__li__input'
-                {...register('email')}
-                placeholder=' '
-                aria-invalid={errors.email ? 'true' : 'false'}
-              />
-              {errors.email && (
-                <span className='form-message' role='alert'>
-                  {errors.email.message}
-                </span>
-              )}
-            </li>
-
+            <FieldsetInput htmlFor={'email'} label={'Email'} inputType={'email'} inputId={'email'} inputReg={'email'} />
             {/* Phone */}
-            <li className='contact__container__form__ul__li'>
-              <label htmlFor='phone' className='contact__container__form__ul__li__label'>
-                Phone
-              </label>
-              <input
-                type='tel'
-                id='phone'
-                className='contact__container__form__ul__li__input'
-                {...register('phone')}
-                placeholder=' '
-                aria-invalid={errors.phone ? 'true' : 'false'}
-              />
-              {errors.phone && (
-                <span className='form-message' role='alert'>
-                  {errors.phone.message}
-                </span>
-              )}
-            </li>
-
+            <FieldsetInput htmlFor={'phone'} label={'Phone'} inputType={'tel'} inputId={'phone'} inputReg={'phone'} />
             {/* Agency */}
-            <li className='contact__container__form__ul__li'>
-              <label htmlFor='agency' className='contact__container__form__ul__li__label'>
-                Agency (Optional)
-              </label>
-              <input type='text' id='agency' className='contact__container__form__ul__li__input' {...register('agency')} placeholder=' ' />
-            </li>
-
+            <FieldsetInput htmlFor={'agency'} label={'Agency (Optional)'} inputType={'text'} inputId={'agency'} inputReg={'agency'} />
             {/* Role */}
-            <li className='contact__container__form__ul__li'>
-              <label htmlFor='role' className='contact__container__form__ul__li__label'>
-                Role (Optional)
-              </label>
-              <input type='text' id='role' className='contact__container__form__ul__li__input' {...register('role')} placeholder=' ' />
-            </li>
-
+            <FieldsetInput htmlFor={'role'} label={'Role (Optional)'} inputType={'text'} inputId={'role'} inputReg={'role'} />
             {/* Message */}
-            <li className='contact__container__form__ul__li'>
-              <label htmlFor='message' className='contact__container__form__ul__li__label'>
-                Message
-              </label>
-              <textarea
-                id='message'
-                className='contact__container__form__ul__li__textarea'
-                {...register('message')}
-                placeholder=' '
-                aria-invalid={errors.message ? 'true' : 'false'}
-              />
-              {errors.message && (
-                <span className='form-message' role='alert'>
-                  {errors.message.message}
-                </span>
-              )}
-            </li>
+            <FieldsetTextarea />
           </ul>
-
           {/* Submit Button */}
-          <button type='submit' className='contact__container__form--btn'>
-            Submit
-          </button>
+          <FieldsetSubmit />
         </form>
       </div>
     </section>
