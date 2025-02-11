@@ -13,31 +13,7 @@ export function meta() {
   ];
 }
 
-export const links: Route.LinksFunction = () => [
-  { rel: 'shortcut icon', href: '#' },
-  // Preconnect external resources
-  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-  {
-    rel: 'preconnect',
-    href: 'https://fonts.gstatic.com',
-    crossOrigin: 'anonymous',
-  },
-  // Preload fontshare fonts for ecommerce project
-  {
-    rel: 'preload',
-    href: 'https://cdn.fontshare.com/wf/U2HFRBAHB5SL53RHFEF22BIJZSJRHR2Y/LFPV5QZIFT7V5OMDNHDQPJYOQAHFUE4W/CLVUG765RK3TA3ESG2NBCJJGWFQVIBTA.woff2',
-    as: 'font',
-    type: 'font/woff2',
-    crossOrigin: 'anonymous',
-  },
-  {
-    rel: 'preload',
-    href: 'https://cdn.fontshare.com/wf/QZRCKFY3YNTSI7ZJRBICCIGOZTP4A7XJ/N5R3WNWTF5UMZX6H7KNBVR5N5PJZCKKX/TJFEEESODHVFXP2MHRXMD2MGSHGGFUZG.woff2',
-    as: 'font',
-    type: 'font/woff2',
-    crossOrigin: 'anonymous',
-  },
-];
+export const links: Route.LinksFunction = () => [{ rel: 'shortcut icon', href: '#' }];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
