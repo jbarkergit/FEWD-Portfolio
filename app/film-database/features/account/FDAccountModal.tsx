@@ -33,9 +33,7 @@ const FDAccountModal = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.Bas
 
   useEffect(() => toggleComponent(), [modal]);
 
-  useEffect(() => {
-    setTimeout(() => accountRef.current?.setAttribute('data-visible', 'true'), 3200);
-  }, []);
+  setTimeout(() => accountRef.current?.setAttribute('data-visible', 'true'), 3200);
 
   return (
     <main className='fdAccountModal' ref={accountRef} data-visible='false'>
