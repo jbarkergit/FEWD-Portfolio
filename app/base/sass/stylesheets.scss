@@ -6,6 +6,9 @@
 @forward '/app/base/sass/boilerplate';
 @forward '/app/base/sass/preflight';
 
+// Font Faces
+@forward '/app/base/sass/fonts';
+
 // Projects
 @forward '/app/portfolio/scss/portfolioExports';
 @forward '/app/ecommerce/scss/ecommerceExports';
