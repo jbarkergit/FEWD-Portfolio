@@ -1,9 +1,9 @@
 // Deps
 import { useEffect, useId, useRef, useState } from 'react';
 // Context
-import { Type_heroData, useCatalogProvider } from '../../../context/CatalogContext';
+import { type Type_heroData, useCatalogProvider } from '../../../context/CatalogContext';
 // Composables
-import { Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
+import { type Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Hooks
 import { usePaginateData } from '../../../hooks/usePaginateData';
 // Features
