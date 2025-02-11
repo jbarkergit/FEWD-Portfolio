@@ -4,10 +4,10 @@ import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { firebaseAuth, googleProvider } from '~/base/config/firebaseConfig';
 
 type Type_PropDrill = {
-  toggleComponent: (modal: 'registry' | 'signin') => void;
+  setModal: React.Dispatch<React.SetStateAction<'signin' | 'registry'>>;
 };
 
-const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggleComponent }, signInRefReceiver) => {
+const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal }, signInRefReceiver) => {
   /** Value setter */
   const [values, setValues] = useState({
     emailAddress: { value: '', valid: false },
@@ -38,8 +38,8 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggleCo
   };
 
   return (
-    <ul className='fdAccountModal__fieldset__ul' ref={signInRefReceiver} data-status='visible'>
-      <li className='fdAccountModal__fieldset__ul__li'>
+    <ul className='fdAccountModal__form__fieldset__ul' ref={signInRefReceiver} data-visible='true'>
+      <li className='fdAccountModal__form__fieldset__ul__li'>
         <label id='emailAddress' htmlFor='fdUserAccountSignInEmailAddress'>
           Email address
         </label>
@@ -62,12 +62,12 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggleCo
           onClick={() => focus()}
           onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
         />
-        <button className='fdAccountModal__fieldset__ul__li__forgot' aria-label='Forgot email'>
+        <button className='fdAccountModal__form__fieldset__ul__li__forgot' aria-label='Forgot email'>
           I forgot my email.
         </button>
       </li>
 
-      <li className='fdAccountModal__fieldset__ul__li'>
+      <li className='fdAccountModal__form__fieldset__ul__li'>
         <label id='password' htmlFor='fdUserAccountSignInPassword'>
           Password
         </label>
@@ -90,11 +90,11 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggleCo
           onClick={() => focus()}
           onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
         />
-        <button className='fdAccountModal__fieldset__ul__li__forgot' aria-label='Forgot password'>
+        <button className='fdAccountModal__form__fieldset__ul__li__forgot' aria-label='Forgot password'>
           I forgot my password.
         </button>
       </li>
-      <li className='fdAccountModal__fieldset__ul__cta'>
+      <li className='fdAccountModal__form__fieldset__ul__cta'>
         <button id='fdUserAccountSubmitForm' aria-label='Sign in with your credentials' onClick={() => authorizeSignIn()}>
           Sign in
         </button>
@@ -115,8 +115,8 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ toggleCo
           </svg>
         </button>
       </li>
-      <li className='fdAccountModal__fieldset__ul__signup'>
-        <button aria-label='Create a new account' onClick={() => toggleComponent('registry')}>
+      <li className='fdAccountModal__form__fieldset__ul__signup'>
+        <button aria-label='Create a new account' onClick={() => setModal('registry')}>
           Not a member? Create a new account.
         </button>
       </li>
