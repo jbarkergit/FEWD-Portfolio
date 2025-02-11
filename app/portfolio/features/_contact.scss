@@ -57,8 +57,8 @@
           width: 100%;
           &:has(input:focus) label,
           &:has(input:not(:focus):not(:placeholder-shown)) label {
-            // reflects height of input: height (font-size) + padding-bottom + border-bottom
-            transform: translateY(calc((1.125rem + 6px + 6px + 1px) * -1));
+            // reflects height of input: height (font-size) + padding-bottom
+            transform: translateY(calc((1.125rem + 6px + 6px) * -1));
             transition: transform ease-in-out 65ms;
           }
           &:has(textarea) label {
