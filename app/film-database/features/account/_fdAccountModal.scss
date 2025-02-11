@@ -13,12 +13,14 @@
 }
 
 .fdAccountModal {
+  position: relative;
+  z-index: 1;
   display: flex;
   width: 65%;
   height: 100%;
   border-radius: var(--fd-borderRadius);
   overflow: clip;
-  opacity: 0;
+  opacity: 1;
   transition: opacity ease-in 1.1s;
   &[data-visible='true'] {
     opacity: 1;
