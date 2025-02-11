@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import FDCarousel from '../../../components/carousel/FDCarousel';
-import { useTmdbFetcher, Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
+import { useTmdbFetcher, type Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '../../../context/CatalogContext';
 import FDiFrame from '../../../components/iframe/FDiFrame';
 import { tmdbMovieGenres } from '../../../composables/tmdb-api/data/tmdbGenres';
