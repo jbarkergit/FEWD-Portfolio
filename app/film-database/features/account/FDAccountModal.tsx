@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import FDAccountRegistry from './fieldsets/FDAccountRegistry';
 import FDAccountSignIn from './fieldsets/FDAccountSignIn';
 import FDAccountArticle from './article/FDAccountArticle';
@@ -6,17 +6,18 @@ import FDAccountArticle from './article/FDAccountArticle';
 const FDAccountModal = () => {
   const [modal, setModal] = useState<'signin' | 'registry'>('signin');
 
-  const containerRef = useRef<HTMLElement>(null),
+  const accountRef = useRef<HTMLDivElement>(null),
     registryRefReceiver = useRef<HTMLUListElement>(null),
     signInRefReceiver = useRef<HTMLUListElement>(null);
 
-  const toggleComponent = useCallback((modal: 'signin' | 'registry') => {
-    const attribute: string = 'data-activity';
+  function toggleComponent() {
+    const attribute: string = 'data-visible';
 
     for (const ref of [registryRefReceiver, signInRefReceiver]) {
       if (ref.current) {
-        const activity: string | null = ref.current.getAttribute(attribute);
-        ref.current.setAttribute(attribute, activity === 'active' || activity === 'mount' ? 'disabled' : 'active');
+        const visibility: string | null = ref.current.getAttribute(attribute);
+        const isVisible: boolean = visibility === 'true' || visibility === 'mount';
+        ref.current.setAttribute(attribute, isVisible ? 'false' : 'true');
       }
     }
 
@@ -26,23 +27,27 @@ const FDAccountModal = () => {
     compRef = isModalSignin ? signInRefReceiver : registryRefReceiver;
     setModal(isModalSignin ? 'signin' : 'registry');
 
-    if (compRef.current) compRef.current.setAttribute('data-activity', 'active');
-  }, []);
+    if (compRef.current) compRef.current.setAttribute(attribute, 'true');
+  }
+
+  useEffect(() => toggleComponent(), [modal]);
 
   useEffect(() => {
-    setTimeout(() => containerRef.current?.setAttribute('data-visibility', 'active'), 3200);
+    setTimeout(() => accountRef.current?.setAttribute('data-visible', 'true'), 3200);
   }, []);
 
   return (
-    <main className='fdAccountModal' ref={containerRef}>
+    <main className='fdAccountModal' ref={accountRef} data-visible='false'>
       <FDAccountArticle />
-      <fieldset className='fdAccountModal__fieldset'>
-        {modal === 'signin' ? (
-          <FDAccountSignIn toggleComponent={toggleComponent} ref={signInRefReceiver} />
-        ) : (
-          <FDAccountRegistry toggleComponent={toggleComponent} ref={registryRefReceiver} />
-        )}
-      </fieldset>
+      <form className='fdAccountModal__form'>
+        <fieldset className='fdAccountModal__form__fieldset'>
+          {modal === 'signin' ? (
+            <FDAccountSignIn setModal={setModal} ref={signInRefReceiver} />
+          ) : (
+            <FDAccountRegistry setModal={setModal} ref={registryRefReceiver} />
+          )}
+        </fieldset>
+      </form>
     </main>
   );
 };
