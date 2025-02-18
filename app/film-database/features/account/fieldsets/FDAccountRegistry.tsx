@@ -262,7 +262,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
         <button id='fdUserAccountSubmitForm' aria-label='Submit registration form' onClick={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
           Complete sign up
         </button>
-        <button aria-label='Sign in with Google' onClick={() => authorizeUser()}>
+        <button aria-label='Sign in with Google' onClick={() => authorizeUser().google()}>
           <svg xmlns='http://www.w3.org/2000/svg' width='0.98em' height='1em' viewBox='0 0 256 262'>
             <path
               fill='#4285F4'
