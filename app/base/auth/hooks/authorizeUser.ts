@@ -19,6 +19,7 @@ export function authorizeUser() {
     if (isFieldsValid) {
       try {
         await signInWithEmailAndPassword(firebaseAuth, fields.emailAddress.value, fields.password.value);
+        window.location.reload();
       } catch (err) {
         console.error('Error thrown during Email and Password authorization: ', err);
       }
@@ -29,6 +30,7 @@ export function authorizeUser() {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(firebaseAuth, provider);
+      window.location.reload();
     } catch (err) {
       console.error('Error thrown during Google authorization: ', err);
     }
@@ -38,6 +40,7 @@ export function authorizeUser() {
     try {
       const provider = new GithubAuthProvider();
       await signInWithPopup(firebaseAuth, provider);
+      window.location.reload();
     } catch (err) {
       console.error('Error thrown during Github authorization: ', err);
     }

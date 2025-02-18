@@ -81,10 +81,21 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
         </button>
       </li>
       <li className='fdAccountModal__form__fieldset__ul__cta'>
-        <button id='fdUserAccountSubmitForm' aria-label='Sign in with your credentials' onClick={() => authorizeUser().emailAndPassword(values)}>
+        <button
+          id='fdUserAccountSubmitForm'
+          aria-label='Sign in with your credentials'
+          onClick={(e) => {
+            e.preventDefault();
+            authorizeUser().emailAndPassword(values);
+          }}>
           Sign in
         </button>
-        <button aria-label='Sign in with Google' onClick={() => authorizeUser().google()}>
+        <button
+          aria-label='Sign in with Google'
+          onClick={(e) => {
+            e.preventDefault();
+            authorizeUser().google();
+          }}>
           <svg xmlns='http://www.w3.org/2000/svg' width='0.98em' height='1em' viewBox='0 0 256 262'>
             <path
               fill='#4285F4'
