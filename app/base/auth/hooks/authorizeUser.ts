@@ -14,9 +14,9 @@ type emailAndPassword = {
 
 export function authorizeUser() {
   async function emailAndPassword(fields: emailAndPassword) {
-    const isValuesValid: boolean = !Object.values(fields).some((field) => field.valid === false);
+    const isFieldsValid: boolean = !Object.values(fields).some((field) => field.valid === false);
 
-    if (isValuesValid) {
+    if (isFieldsValid) {
       try {
         await signInWithEmailAndPassword(firebaseAuth, fields.emailAddress.value, fields.password.value);
       } catch (err) {
