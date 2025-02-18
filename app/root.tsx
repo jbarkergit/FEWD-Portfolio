@@ -2,7 +2,7 @@ import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestora
 import { StrictMode } from 'react';
 import '/app/base/sass/stylesheets.scss';
 import type { Route } from './+types/root';
-import AuthProvider from './base/context/authProvider';
+import AuthProvider from './base/auth/context/authProvider';
 
 export function meta() {
   return [

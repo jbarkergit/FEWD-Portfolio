@@ -43,12 +43,3 @@ export const useAuth = () => {
   }
   return context;
 };
-
-export const isAuth = (): Promise<boolean> => {
-  return new Promise((resolve) => {
-    const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
-      unsubscribe();
-      resolve(!!user);
-    });
-  });
-};
