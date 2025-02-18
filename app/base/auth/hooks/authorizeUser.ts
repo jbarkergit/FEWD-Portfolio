@@ -1,7 +1,30 @@
-import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GithubAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { firebaseAuth } from '~/base/config/firebaseConfig';
 
+type emailAndPassword = {
+  emailAddress: {
+    value: string;
+    valid: boolean;
+  };
+  password: {
+    value: string;
+    valid: boolean;
+  };
+};
+
 export function authorizeUser() {
+  async function emailAndPassword(fields: emailAndPassword) {
+    const isValuesValid: boolean = !Object.values(fields).some((field) => field.valid === false);
+
+    if (isValuesValid) {
+      try {
+        await signInWithEmailAndPassword(firebaseAuth, fields.emailAddress.value, fields.password.value);
+      } catch (err) {
+        console.error('Error thrown during Email and Password authorization: ', err);
+      }
+    }
+  }
+
   async function google() {
     try {
       const provider = new GoogleAuthProvider();
@@ -20,5 +43,5 @@ export function authorizeUser() {
     }
   }
 
-  return { google, github };
+  return { emailAndPassword, google, github };
 }
