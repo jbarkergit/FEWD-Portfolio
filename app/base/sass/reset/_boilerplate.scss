@@ -55,8 +55,12 @@ img {
 /** Typography */
 body {
   // font: (optional: style variant weight) size line-height "family", "fallback-font", fallback-font-type
+  // Accessibility
+  // Use a minimum value of 1.5 for line-height for main paragraph content.
+  // This will help people experiencing low vision conditions, as well as people with cognitive concerns such as Dyslexia.
+  // If the page is zoomed to increase the text size, using a unitless value ensures that the line height will scale proportionately.
   font:
-    normal normal 500 1.1rem / 1.25em 'Helvetica',
+    normal normal 500 1.2rem / 1.5em 'Helvetica',
     'PT Sans',
     sans-serif;
 }
