@@ -2,6 +2,7 @@ import { forwardRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { firebaseAuth, googleProvider } from '~/base/config/firebaseConfig';
+import { authorizeUser } from '~/base/auth/hooks/authorizeUser';
 
 type Type_PropDrill = {
   setModal: React.Dispatch<React.SetStateAction<'signin' | 'registry'>>;
@@ -261,7 +262,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
         <button id='fdUserAccountSubmitForm' aria-label='Submit registration form' onClick={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
           Complete sign up
         </button>
-        <button aria-label='Sign in with Google' onClick={() => signInWithPopup(firebaseAuth, googleProvider)}>
+        <button aria-label='Sign in with Google' onClick={() => authorizeUser()}>
           <svg xmlns='http://www.w3.org/2000/svg' width='0.98em' height='1em' viewBox='0 0 256 262'>
             <path
               fill='#4285F4'
