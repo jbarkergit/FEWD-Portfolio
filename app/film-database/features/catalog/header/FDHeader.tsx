@@ -1,6 +1,5 @@
-import { signOut } from 'firebase/auth';
+import { deauthorizeUser } from '~/base/auth/hooks/deauthorizeUser';
 import { useCatalogProvider } from '../../../context/CatalogContext';
-import { firebaseAuth } from '~/base/config/firebaseConfig';
 
 type CTAButton = {
   key: string;
@@ -22,7 +21,7 @@ const FDHeader = () => {
           </svg>
         ),
         func: (): void => {
-          signOut(firebaseAuth);
+          deauthorizeUser();
         },
       },
     ],
