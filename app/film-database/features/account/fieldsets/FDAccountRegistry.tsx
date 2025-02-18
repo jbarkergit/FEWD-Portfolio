@@ -1,7 +1,7 @@
 import { forwardRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
-import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { firebaseAuth, googleProvider } from '~/base/config/firebaseConfig';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { firebaseAuth } from '~/base/config/firebaseConfig';
 import { authorizeUser } from '~/base/auth/hooks/authorizeUser';
 
 type Type_PropDrill = {
