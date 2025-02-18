@@ -1,18 +1,10 @@
-import { useNavigate } from 'react-router';
-import { useAuth } from '../context/authProvider';
 import { firebaseAuth } from '~/base/config/firebaseConfig';
+import { signOut } from 'firebase/auth';
 
-export async function deauthorizeUser() {
-  const navigate = useNavigate();
-  const { user, setUser } = useAuth();
-
-  if (!user) return;
-
+export async function signOutUser() {
   try {
-    await firebaseAuth.signOut();
-    setUser(null);
-    navigate('/');
-  } catch (error) {
-    console.error('Error logging out:', error);
+    await signOut(firebaseAuth);
+  } catch (err) {
+    console.error('Error thrown during deauthorization: ', err);
   }
 }
