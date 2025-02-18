@@ -1,7 +1,5 @@
 import { forwardRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { firebaseAuth, googleProvider } from '~/base/config/firebaseConfig';
 import { authorizeUser } from '~/base/auth/hooks/authorizeUser';
 
 type Type_PropDrill = {
@@ -23,19 +21,6 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
     setValues((prevValues) => {
       return { ...prevValues, [key]: { ...prevValues[key], value: e.target.value } };
     });
-  };
-
-  /** Auth */
-  const authorizeSignIn = async (): Promise<void> => {
-    const isValuesValid: boolean = !Object.values(values).some((value) => value.valid === false);
-
-    if (isValuesValid) {
-      try {
-        await signInWithEmailAndPassword(firebaseAuth, values.emailAddress.value, values.password.value);
-      } catch (error) {
-        console.error(error);
-      }
-    }
   };
 
   return (
@@ -96,7 +81,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
         </button>
       </li>
       <li className='fdAccountModal__form__fieldset__ul__cta'>
-        <button id='fdUserAccountSubmitForm' aria-label='Sign in with your credentials' onClick={() => authorizeSignIn()}>
+        <button id='fdUserAccountSubmitForm' aria-label='Sign in with your credentials' onClick={() => authorizeUser().emailAndPassword(values)}>
           Sign in
         </button>
         <button aria-label='Sign in with Google' onClick={() => authorizeUser().google()}>
