@@ -36,6 +36,24 @@
   }
 }
 
+@keyframes mainAnimatorRight {
+  0% {
+    trasform: scale(0);
+  }
+  33% {
+    transform: scale(0.8);
+    transform: translateX(0) scale(0.8);
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-100%) scale(0.8);
+    opacity: 0;
+  }
+}
+
 .projectHub {
   display: flex;
   flex-direction: column;
@@ -61,6 +79,9 @@
   }
   &[data-status='active'] {
     animation: mainAnimatorIn 1s forwards;
+  }
+  &[data-status='contact'] {
+    animation: mainAnimatorRight 1s forwards;
   }
   @media (width <= 1480px) {
     height: max-content;

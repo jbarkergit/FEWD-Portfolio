@@ -254,7 +254,9 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
 
     if (Object.values(featureState).some((value) => value === true)) {
       // Grid transition out animator
-      mainRef.current?.setAttribute('data-status', 'disabled');
+      const entryWithTrue = Object.entries(featureState).find(([key, value]) => value === true);
+      const trueKey = entryWithTrue ? entryWithTrue[0] : null;
+      mainRef.current?.setAttribute('data-status', trueKey === 'projectDetailsActive' ? 'disabled' : 'contact');
     } else if (!initialRender) {
       // Grid transition in animator
       setTimeout(() => mainRef.current?.setAttribute('data-status', 'active'), 1000);
