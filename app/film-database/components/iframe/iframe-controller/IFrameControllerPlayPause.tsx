@@ -4,6 +4,7 @@ import { useEffect, useState, type JSX } from 'react';
 import type { YouTubePlayer } from 'react-youtube';
 // Assets
 import { MaterialSymbolsPause, MaterialSymbolsPlayArrow, SvgSpinnersRingResize } from '../../../assets/google-material-symbols/GoogleMaterialIcons';
+import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
 const IFrameControllerPlayPause = ({
   player,
@@ -44,6 +45,13 @@ const IFrameControllerPlayPause = ({
   useEffect(() => {
     reflectPlayerState();
   }, [playState]);
+
+  // Pause video when modal opens
+  const { isModalOpen } = useCatalogProvider();
+
+  useEffect(() => {
+    player.pauseVideo();
+  }, [isModalOpen]);
 
   return (
     <button className='fdiFrame__controller__controls__button' aria-label={playState === 'playing' ? 'Pause video' : 'Play video'} onClick={() => alterPlayState()}>
