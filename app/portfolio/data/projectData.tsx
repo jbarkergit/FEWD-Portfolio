@@ -91,7 +91,7 @@ export const projectData = [
     imgAlt: 'Ecommerce Web Development Project',
   },
   {
-    key: '2024 portfolio',
+    key: '2025 portfolio',
     url: '',
     technologies: {
       api: ['Web3Forms'],
