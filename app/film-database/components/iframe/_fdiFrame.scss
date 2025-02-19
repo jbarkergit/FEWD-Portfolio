@@ -28,7 +28,10 @@
   aspect-ratio: 16/9;
   overflow: clip;
   transform: scale(1.3);
-  transform-origin: left center;
+  transform-origin: right center;
+  @media (max-width: 1200px) {
+    transform-origin: left center;
+  }
   &::before {
     content: '';
     position: absolute;
