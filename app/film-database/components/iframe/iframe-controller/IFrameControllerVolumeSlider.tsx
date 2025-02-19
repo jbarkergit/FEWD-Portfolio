@@ -1,14 +1,16 @@
 // Deps
 import { useRef, useState } from 'react';
 import type { PointerEvent, Dispatch, SetStateAction } from 'react';
+
 const IFrameControllerVolumeSlider = ({ setPlayerVolume }: { setPlayerVolume: Dispatch<SetStateAction<number>> }) => {
   const sliderRef = useRef<HTMLButtonElement>(null);
   const handleRef = useRef<HTMLSpanElement>(null);
 
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [dragTimeout, setDragTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const moveHandle = (e: PointerEvent<HTMLButtonElement>) => {
-    if (sliderRef.current && handleRef.current && isDragging) {
+    if (sliderRef.current && handleRef.current && dragTimeout) {
       const sliderRect: DOMRect = sliderRef.current.getBoundingClientRect();
       const xOffset: number = e.clientX - sliderRect.left;
       const position: number = (xOffset / sliderRect.width) * 100;
@@ -19,14 +21,28 @@ const IFrameControllerVolumeSlider = ({ setPlayerVolume }: { setPlayerVolume: Di
     }
   };
 
+  const handlePointerDown = () => {
+    const timeout = setTimeout(() => setIsDragging(true), 60);
+    setDragTimeout(timeout);
+  };
+
+  const handlePointerUp = (e: PointerEvent<HTMLButtonElement>) => {
+    if (dragTimeout) {
+      clearTimeout(dragTimeout);
+      setDragTimeout(null);
+    }
+    if (!isDragging) moveHandle(e);
+    setIsDragging(false);
+  };
+
   return (
     <button
       className='fdiFrame__controller__controls__slider'
       aria-label='Volume adjustment slider'
       ref={sliderRef}
-      onPointerDown={() => setIsDragging(true)}
-      onPointerUp={() => setIsDragging(false)}
-      onPointerLeave={() => setIsDragging(false)}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerUp}
       onPointerMove={(e: PointerEvent<HTMLButtonElement>) => moveHandle(e)}>
       <span className='fdiFrame__controller__controls__slider--range' />
       <span className='fdiFrame__controller__controls__slider--handle' aria-label='Volume adjustment knob' ref={handleRef} style={{ left: '0%' }} />
