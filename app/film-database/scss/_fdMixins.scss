@@ -2,6 +2,7 @@
   font-family: 'Satoshi', 'PT Sans', sans-serif;
   font-size: var(--fd-font-size-#{$size});
   font-weight: $weight;
+  line-height: 150%;
 }
 @mixin fdFontXXL {
   @include fdFont('xxl', 800);
