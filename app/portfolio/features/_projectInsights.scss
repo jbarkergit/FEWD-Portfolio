@@ -165,8 +165,9 @@
       text-align: start;
       & h2 {
         width: clamp(27ch, 100%, 40ch);
-        padding-bottom: calc(s.$portfolio-gap * 2);
+        // padding-bottom: calc(s.$portfolio-gap * 2);
         font-size: clamp(f.rem(24), f.rem(30) + 1vw, f.rem(36));
+        line-height: 125%;
         @media (width <= 620px) {
           width: auto;
           font-size: clamp(f.rem(20), f.rem(22) + 1vw, f.rem(28));
