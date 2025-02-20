@@ -20,7 +20,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <html lang='en'>
       <head>
         <Meta />
-        {/* <Links /> */}
+        <Links />
       </head>
       <body>
         {children}
