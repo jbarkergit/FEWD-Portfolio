@@ -122,11 +122,8 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
         <button
           aria-label='Reset password'
           onPointerUp={(e) => {
-            if (values.emailAddress.value && values.emailAddress.valid) {
-              resetUserPassword(values.emailAddress.value);
-            } else {
-              e.preventDefault();
-            }
+            e.preventDefault();
+            if (values.emailAddress.value && values.emailAddress.valid) resetUserPassword(values.emailAddress.value);
           }}>
           Reset password
         </button>
