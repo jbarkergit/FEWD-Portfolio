@@ -46,7 +46,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
           aria-invalid={values.emailAddress.valid}
           autoCapitalize='off'
           placeholder='johndoe@gmail.com'
-          onPointerDown={() => focus()}
+          onPointerUp={() => focus()}
           onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
         />
         <button className='fdAccountModal__form__fieldset__ul__li__forgot' aria-label='Forgot email'>
@@ -74,7 +74,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
           aria-invalid={values.password.valid}
           autoCapitalize='off'
           placeholder='••••••••'
-          onPointerDown={() => focus()}
+          onPointerUp={() => focus()}
           onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
         />
         <button className='fdAccountModal__form__fieldset__ul__li__forgot' aria-label='Forgot password'>
@@ -85,7 +85,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
         <button
           id='fdUserAccountSubmitForm'
           aria-label='Sign in with your credentials'
-          onPointerDown={(e) => {
+          onPointerUp={(e) => {
             e.preventDefault();
             authorizeUser().emailAndPassword(values);
           }}>
@@ -93,7 +93,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
         </button>
         <button
           aria-label='Sign in with Google'
-          onPointerDown={(e) => {
+          onPointerUp={(e) => {
             e.preventDefault();
             authorizeUser().google();
           }}>
@@ -114,14 +114,14 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
         </button>
       </li>
       <li className='fdAccountModal__form__fieldset__ul__signup'>
-        <button aria-label='Create a new account' onPointerDown={() => setModal('registry')}>
+        <button aria-label='Create a new account' onPointerUp={() => setModal('registry')}>
           Not a member? Create a new account.
         </button>
       </li>
       <li className='fdAccountModal__form__fieldset__ul__signup'>
         <button
           aria-label='Reset password'
-          onPointerDown={(e) => {
+          onPointerUp={(e) => {
             if (values.emailAddress.value && values.emailAddress.valid) {
               resetUserPassword(values.emailAddress.value);
             } else {

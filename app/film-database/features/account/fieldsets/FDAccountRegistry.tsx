@@ -117,7 +117,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
               aria-invalid={values.firstName.valid}
               autoCapitalize='words'
               placeholder={field.placeholder}
-              onClick={() => focus()}
+              onPointerUp={() => focus()}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
           </li>
@@ -205,7 +205,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
           aria-invalid={values.emailAddress.valid}
           autoCapitalize='off'
           placeholder='johndoe@gmail.com'
-          onClick={() => focus()}
+          onPointerUp={() => focus()}
           onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
         />
       </li>
@@ -230,7 +230,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
             aria-invalid={values.password.valid}
             autoCapitalize='off'
             placeholder='••••••••'
-            onClick={() => focus()}
+            onPointerUp={() => focus()}
             onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
           />
         </li>
@@ -254,18 +254,18 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
             aria-invalid={values.passwordConfirmation.valid}
             autoCapitalize='off'
             placeholder='••••••••'
-            onClick={() => focus()}
+            onPointerUp={() => focus()}
             onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
           />
         </li>
       </div>
       <li className='fdAccountModal__form__fieldset__ul__cta'>
-        <button id='fdUserAccountSubmitForm' aria-label='Submit registration form' onClick={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
+        <button id='fdUserAccountSubmitForm' aria-label='Submit registration form' onPointerUp={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
           Complete sign up
         </button>
         <button
           aria-label='Sign in with Google'
-          onClick={(e) => {
+          onPointerUp={(e) => {
             e.preventDefault();
             authorizeUser().google();
           }}>
@@ -286,7 +286,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
         </button>
       </li>
       <li className='fdAccountModal__form__fieldset__ul__signup'>
-        <button aria-label='Sign in' onClick={() => setModal('signin')}>
+        <button aria-label='Sign in' onPointerUp={() => setModal('signin')}>
           Already a member? Sign in.
         </button>
       </li>
