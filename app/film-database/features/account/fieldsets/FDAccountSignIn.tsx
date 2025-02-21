@@ -52,7 +52,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
             onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
           />
         </li>
-        <button className='fdAccountModal__form__fieldset__ul__li__forgot' aria-label='Forgot email'>
+        <button className='fdAccountModal__form__fieldset__ul__btn' aria-label='Forgot email'>
           I forgot my email.
         </button>
 
@@ -81,7 +81,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
           />
         </li>
         <button
-          className='fdAccountModal__form__fieldset__ul__li__forgot'
+          className='fdAccountModal__form__fieldset__ul__btn'
           aria-label='Forgot password'
           onPointerUp={(e) => {
             e.preventDefault();
