@@ -1,23 +1,27 @@
 import { forwardRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
+import { z } from 'zod';
 import { authorizeUser } from '~/base/auth/hooks/authorizeUser';
 import { resetUserPassword } from '~/base/auth/hooks/resetUserPassword';
+import { zodSchema } from '~/base/schema/zodSchema';
 
 type Type_PropDrill = {
   setModal: React.Dispatch<React.SetStateAction<'signin' | 'registry' | 'reset'>>;
 };
 
+const schema = z.object({ emailAddress: zodSchema.contact.shape.emailAddress, password: zodSchema.account.shape.password });
+
 const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal }, signInRefReceiver) => {
   const [values, setValues] = useState({
-    emailAddress: { value: '', valid: false },
-    password: { value: '', valid: false },
+    emailAddress: '',
+    password: '',
   });
 
   const valueSetter = (e: ChangeEvent<HTMLInputElement>): void => {
     const key = e.target.name as keyof typeof values;
 
     setValues((prevValues) => {
-      return { ...prevValues, [key]: { ...prevValues[key], value: e.target.value } };
+      return { ...prevValues, [key]: e.target.value };
     });
   };
 
@@ -40,7 +44,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
           size={12}
           required={true}
           aria-required='true'
-          aria-invalid={values.emailAddress.valid}
+          aria-invalid={schema.safeParse(values.emailAddress).success}
           autoCapitalize='off'
           placeholder='johndoe@gmail.com'
           onPointerUp={() => focus()}
@@ -68,7 +72,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
           size={12}
           required={true}
           aria-required='true'
-          aria-invalid={values.password.valid}
+          aria-invalid={schema.safeParse(values.password).success}
           autoCapitalize='off'
           placeholder='••••••••'
           onPointerUp={() => focus()}
@@ -120,7 +124,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
           aria-label='Reset password'
           onPointerUp={(e) => {
             e.preventDefault();
-            if (values.emailAddress.value && values.emailAddress.valid) resetUserPassword(values.emailAddress.value);
+            if (schema.safeParse(values)) resetUserPassword(values.emailAddress);
           }}>
           Reset password
         </button>
