@@ -16,6 +16,7 @@
 - **[@react-router/node](https://www.npmjs.com/package/@react-router/node)**: Node.js platform abstractions for React Router.
 - **[@react-router/serve](https://www.npmjs.com/package/@react-router/serve)**: Node.js server for React Router.
 - **[isbot](https://www.npmjs.com/package/isbot)**: Identify bots, crawlers, and spiders using the user agent string.
+- **[typescript](https://www.npmjs.com/package/typescript)**: Adds optional types to JavaScript for large-scale applications across platforms.
 - **[sass](https://www.npmjs.com/package/sass)**: JavaScript-based Sass compiler.
 
 ### Associated TypeScript Definitions
