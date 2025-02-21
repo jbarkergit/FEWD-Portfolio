@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const formSchema = z.object({
+export const contactFormSchema = z.object({
   first: z.string().trim().min(1, { message: 'First name is required.' }),
   last: z.string().trim().min(1, { message: 'Last name is required.' }),
   phone: z.string().min(10, { message: 'Invalid phone number.' }),
