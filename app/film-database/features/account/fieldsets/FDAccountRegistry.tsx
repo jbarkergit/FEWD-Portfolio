@@ -1,98 +1,67 @@
 import { forwardRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { firebaseAuth } from '~/base/config/firebaseConfig';
+import { z } from 'zod';
 import { authorizeUser } from '~/base/auth/hooks/authorizeUser';
+import { createUser } from '~/base/auth/hooks/createUser';
+import { zodSchema } from '~/base/schema/zodSchema';
 
 type Type_PropDrill = {
-  setModal: React.Dispatch<React.SetStateAction<'signin' | 'registry'>>;
+  setModal: React.Dispatch<React.SetStateAction<'signin' | 'registry' | 'reset'>>;
 };
+
+const schema = z.object({
+  firstName: zodSchema.user.shape.firstName,
+  lastName: zodSchema.user.shape.lastName,
+  // dateOfBirth: zodSchema.user.shape.dateOfBirth,
+  emailAddress: zodSchema.contact.shape.emailAddress,
+  password: zodSchema.account.shape.password,
+});
 
 const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal }, registryRefReceiver) => {
   const [values, setValues] = useState({
-    firstName: { value: '', valid: false },
-    lastName: { value: '', valid: false },
-    dobMonth: { value: 'January', valid: false },
-    dobDay: { value: '01', valid: false },
-    dobYear: { value: `${new Date().getFullYear() - 18}`, valid: false },
-    emailAddress: { value: '', valid: false },
-    password: { value: '', valid: false },
-    passwordConfirmation: { value: '', valid: false },
+    firstName: '',
+    lastName: '',
+    // dobMonth: 'January',
+    // dobDay: '01',
+    // dobYear: `${new Date().getFullYear() - 18}`,
+    emailAddress: '',
+    password: '',
   });
 
-  type Type_ValuesKey = keyof typeof values;
-
-  const regex = {
-    /** First name, Last name
-     * [a-zA-Z-']{1,}$: Followed by one or more letters, hyphens, or apostrophes.
-     * Can include hyphens and apostrophes.
-     */
-    firstName: /[a-zA-Z-']{1,}$/,
-    lastName: /[a-zA-Z-']{1,}$/,
-    /** Email address
-     * RFC 5322
-     * (?i): Case-insensitive matching.
-     * (?=.{1,256}): Ensure total length is up to 256 characters.
-     * (?=.{1,64}@): Ensure the local part is up to 64 characters.
-     * [a-z0-9._%+-]+: Local part of the email address.
-     * @[a-z0-9.-]+: Domain part of the email address.
-     * \.[a-z]{2,}$: Top-level domain with at least two letters.
-     */
-    emailAddress: /^(?=.{1,256}$)(?=.{1,64}@)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i,
-    /** Password, Password confirmation
-     * (?=.*[A-Za-z]): At least one letter.
-     * (?=.*\d): At least one digit.
-     * (?=.*[@$!%*?&]): At least one special character.
-     * [A-Za-z\d@$!%*?&]{8,}$: At least 8 characters long.
-     */
-    password: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-    passwordConfirmation: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-  };
+  const parse = schema.safeParse(values);
 
   const valueSetter = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
-    const key = e.target.name as Type_ValuesKey;
+    const key = e.target.name as keyof typeof values;
     const value: string = e.target.value;
 
     setValues((prevValues) => {
-      return { ...prevValues, [key]: { ...prevValues[key], value: value } };
+      return { ...prevValues, [key]: value };
     });
-
-    validateField(key);
-  };
-
-  const validateField = (targetName: Type_ValuesKey): void => {
-    const pattern: [string, RegExp] | undefined = Object.entries(regex).find(([name]) => name === targetName);
-    if (pattern) {
-      setValues((prevValues) => {
-        const isValueValid: boolean = pattern[1].test(prevValues[targetName].value);
-        const isMatchingPassword: boolean = prevValues['passwordConfirmation'].value === prevValues['password'].value;
-        const propArg: boolean = targetName === 'passwordConfirmation' ? isMatchingPassword : isValueValid;
-        return { ...prevValues, [targetName]: { ...prevValues[targetName], valid: propArg } };
-      });
-    }
   };
 
   const submitForm = async (e: React.PointerEvent<HTMLButtonElement>): Promise<void> => {
-    if (Object.values(values).some((field) => field.valid === false)) {
-      e.preventDefault();
-    } else {
-      try {
-        e.preventDefault();
-        await createUserWithEmailAndPassword(firebaseAuth, values.emailAddress.value, values.password.value);
-      } catch (error) {
-        console.error(error);
+    e.preventDefault();
+
+    try {
+      if (parse.success) {
+        createUser(values.emailAddress, values.password);
+      } else {
+        const errorMessage = parse.error.errors.map((err) => `${err.path.join('.')} - ${err.message}`).join(', ');
+        throw new Error(`One or more form fields are not valid: ${errorMessage}`);
       }
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const getOptionalYears = (): number[] => {
-    const currentYear: number = new Date().getFullYear();
-    const initYear: number = currentYear - 110;
-    const ofAgeYear: number = currentYear - 18;
-    const optionalYears: number[] = Array.from({ length: 111 }, (_, index: number) => initYear + index);
-    const filteredYears: number[] = optionalYears.filter((year: number) => year <= ofAgeYear).reverse();
-    return filteredYears;
-  };
+  // const getOptionalYears = (): number[] => {
+  //   const currentYear: number = new Date().getFullYear();
+  //   const initYear: number = currentYear - 110;
+  //   const ofAgeYear: number = currentYear - 18;
+  //   const optionalYears: number[] = Array.from({ length: 111 }, (_, index: number) => initYear + index);
+  //   const filteredYears: number[] = optionalYears.filter((year: number) => year <= ofAgeYear).reverse();
+  //   return filteredYears;
+  // };
 
   return (
     <ul className='fdAccountModal__form__fieldset__ul' ref={registryRefReceiver} data-visible='false'>
@@ -114,7 +83,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
               size={12}
               required={field.isRequired}
               aria-required={field.isRequired ? 'true' : 'false'}
-              aria-invalid={values.firstName.valid}
+              aria-invalid={schema.safeParse(values.firstName).success}
               autoCapitalize='words'
               placeholder={field.placeholder}
               onPointerUp={() => focus()}
@@ -123,7 +92,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
           </li>
         ))}
       </div>
-      <div className='fdAccountModal__form__fieldset__ul__dob'>
+      {/* <div className='fdAccountModal__form__fieldset__ul__dob'>
         <li>
           <label id='dobMonth' htmlFor='fdUserAccountDobMonth'>
             Month
@@ -134,8 +103,8 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
             form='fdRegistery'
             required={true}
             aria-required='true'
-            aria-invalid={values.dobMonth.valid}
-            value={values.dobMonth.value}
+            aria-invalid={schema.safeParse(values.dobMonth).success}
+            value={values.dobMonth}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => valueSetter(e)}>
             {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((month: string) => (
               <option key={`dobMonth${month}`} value={month} aria-label={month}>
@@ -154,8 +123,8 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
             form='fdRegistery'
             required={true}
             aria-required='true'
-            aria-invalid={values.dobDay.valid}
-            value={values.dobDay.value}
+            aria-invalid={schema.safeParse(values.dobDay).success}
+            value={values.dobDay}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => valueSetter(e)}>
             {Array.from({ length: 31 }).map((_, index: number) => (
               <option key={`dobDay${index + 1}`} value={`${index + 1}`} aria-label={`${index + 1}`}>
@@ -174,8 +143,8 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
             form='fdRegistery'
             required={true}
             aria-required='true'
-            aria-invalid={values.dobYear.valid}
-            value={values.dobYear.value}
+            aria-invalid={schema.safeParse(values.dobYear).success}
+            value={values.dobYear}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => valueSetter(e)}>
             {getOptionalYears().map((year: number) => (
               <option key={`dobYear${year}`} value={year} aria-label={year.toString()}>
@@ -184,7 +153,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
             ))}
           </select>
         </li>
-      </div>
+      </div> */}
       <li className='fdAccountModal__form__fieldset__ul__emailAddress'>
         <label id='emailAddress' htmlFor='fdUserAccountEmailAddress'>
           Email address
@@ -202,7 +171,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
           size={12}
           required={true}
           aria-required='true'
-          aria-invalid={values.emailAddress.valid}
+          aria-invalid={schema.safeParse(values.emailAddress).success}
           autoCapitalize='off'
           placeholder='johndoe@gmail.com'
           onPointerUp={() => focus()}
@@ -227,7 +196,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
             size={12}
             required={true}
             aria-required='true'
-            aria-invalid={values.password.valid}
+            aria-invalid={schema.safeParse(values.password).success}
             autoCapitalize='off'
             placeholder='••••••••'
             onPointerUp={() => focus()}
@@ -251,7 +220,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setMod
             size={12}
             required={true}
             aria-required='true'
-            aria-invalid={values.passwordConfirmation.valid}
+            aria-invalid={schema.safeParse(values.password).success}
             autoCapitalize='off'
             placeholder='••••••••'
             onPointerUp={() => focus()}
