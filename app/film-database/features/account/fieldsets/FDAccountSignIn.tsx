@@ -26,65 +26,73 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
   };
 
   return (
-    <ul className='fdAccountModal__form__fieldset__ul' ref={signInRefReceiver} data-visible='true'>
-      <li className='fdAccountModal__form__fieldset__ul__li'>
-        <label id='emailAddress' htmlFor='fdUserAccountSignInEmailAddress'>
-          Email address
-        </label>
-        <input
-          form='fdRegistery'
-          id='fdUserAccountSignInEmailAddress'
-          name='emailAddress'
-          type='email'
-          inputMode='email'
-          // name, @, domain
-          minLength={3}
-          // RFC 2045
-          maxLength={76}
-          size={12}
-          required={true}
-          aria-required='true'
-          aria-invalid={schema.safeParse(values.emailAddress).success}
-          autoCapitalize='off'
-          placeholder='johndoe@gmail.com'
-          onPointerUp={() => focus()}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-        />
+    <>
+      <ul className='fdAccountModal__form__fieldset__ul' ref={signInRefReceiver} data-visible='true'>
+        <li className='fdAccountModal__form__fieldset__ul__li'>
+          <label id='emailAddress' htmlFor='fdUserAccountSignInEmailAddress'>
+            Email address
+          </label>
+          <input
+            form='fdRegistery'
+            id='fdUserAccountSignInEmailAddress'
+            name='emailAddress'
+            type='email'
+            inputMode='email'
+            // name, @, domain
+            minLength={3}
+            // RFC 2045
+            maxLength={76}
+            size={12}
+            required={true}
+            aria-required='true'
+            aria-invalid={schema.safeParse(values.emailAddress).success}
+            autoCapitalize='off'
+            placeholder='johndoe@gmail.com'
+            onPointerUp={() => focus()}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+          />
+        </li>
         <button className='fdAccountModal__form__fieldset__ul__li__forgot' aria-label='Forgot email'>
           I forgot my email.
         </button>
-      </li>
 
-      <li className='fdAccountModal__form__fieldset__ul__li'>
-        <label id='password' htmlFor='fdUserAccountSignInPassword'>
-          Password
-        </label>
-        <input
-          form='fdRegistery'
-          id='fdUserAccountSignInPassword'
-          name='password'
-          type='password'
-          inputMode='text'
-          // RFC 5310, NIST Special Publication 800-63B
-          minLength={8}
-          // RFC XOS
-          maxLength={32}
-          size={12}
-          required={true}
-          aria-required='true'
-          aria-invalid={schema.safeParse(values.password).success}
-          autoCapitalize='off'
-          placeholder='••••••••'
-          onPointerUp={() => focus()}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
-        />
-        <button className='fdAccountModal__form__fieldset__ul__li__forgot' aria-label='Forgot password' onPointerUp={() => setModal('reset')}>
+        <li className='fdAccountModal__form__fieldset__ul__li'>
+          <label id='password' htmlFor='fdUserAccountSignInPassword'>
+            Password
+          </label>
+          <input
+            form='fdRegistery'
+            id='fdUserAccountSignInPassword'
+            name='password'
+            type='password'
+            inputMode='text'
+            // RFC 5310, NIST Special Publication 800-63B
+            minLength={8}
+            // RFC XOS
+            maxLength={32}
+            size={12}
+            required={true}
+            aria-required='true'
+            aria-invalid={schema.safeParse(values.password).success}
+            autoCapitalize='off'
+            placeholder='••••••••'
+            onPointerUp={() => focus()}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+          />
+        </li>
+        <button
+          className='fdAccountModal__form__fieldset__ul__li__forgot'
+          aria-label='Forgot password'
+          onPointerUp={(e) => {
+            e.preventDefault();
+            if (schema.safeParse(values).success) resetUserPassword(values.emailAddress);
+          }}>
           I forgot my password.
         </button>
-      </li>
-      <li className='fdAccountModal__form__fieldset__ul__cta'>
+      </ul>
+
+      <div className='fdAccountModal__form__fieldset__btns'>
         <button
-          id='fdUserAccountSubmitForm'
           aria-label='Sign in with your credentials'
           onPointerUp={(e) => {
             e.preventDefault();
@@ -92,6 +100,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
           }}>
           Sign in
         </button>
+
         <button
           aria-label='Sign in with Google'
           onPointerUp={(e) => {
@@ -113,23 +122,12 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
               d='M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251'></path>
           </svg>
         </button>
-      </li>
-      <li className='fdAccountModal__form__fieldset__ul__signup'>
+
         <button aria-label='Create a new account' onPointerUp={() => setModal('registry')}>
           Not a member? Create a new account.
         </button>
-      </li>
-      <li className='fdAccountModal__form__fieldset__ul__signup'>
-        <button
-          aria-label='Reset password'
-          onPointerUp={(e) => {
-            e.preventDefault();
-            if (schema.safeParse(values).success) resetUserPassword(values.emailAddress);
-          }}>
-          Reset password
-        </button>
-      </li>
-    </ul>
+      </div>
+    </>
   );
 });
 
