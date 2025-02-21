@@ -44,8 +44,8 @@ const FDAccountModal = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.Bas
   // Modal components shared parents
   const ModalParent: FC<{ children: ReactNode }> = ({ children }) => {
     return (
-      <form className='fdAccountModal__form'>
-        <fieldset className='fdAccountModal__form__fieldset'>{children}</fieldset>
+      <form className='fdAccountModal__modals__form'>
+        <fieldset className='fdAccountModal__modals__form__fieldset'>{children}</fieldset>
       </form>
     );
   };

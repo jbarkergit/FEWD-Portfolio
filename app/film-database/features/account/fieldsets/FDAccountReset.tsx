@@ -8,7 +8,7 @@ type Type_PropDrill = {
 const FDAccountReset = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalParent, setModal }, resetRefReceiver) => {
   return (
     <ModalParent>
-      <ul className='fdAccountModal__form__fieldset__ul' ref={resetRefReceiver} data-visible='false'>
+      <ul className='fdAccountModal__modals__form__fieldset__ul' ref={resetRefReceiver} data-visible='false'>
         FDAccountReset
       </ul>
     </ModalParent>

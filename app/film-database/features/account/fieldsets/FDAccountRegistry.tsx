@@ -66,8 +66,8 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
 
   return (
     <ModalParent>
-      <ul className='fdAccountModal__form__fieldset__ul' ref={registryRefReceiver} data-visible='false'>
-        <div className='fdAccountModal__form__fieldset__ul__name'>
+      <ul className='fdAccountModal__modals__form__fieldset__ul' ref={registryRefReceiver} data-visible='false'>
+        <div className='fdAccountModal__modals__form__fieldset__ul__name'>
           {[
             { labelId: 'firstName', id: 'fdUserAccountFirstName', name: 'firstName', label: 'First name', isRequired: true, placeholder: 'John' },
             { labelId: 'lastName', id: 'fdUserAccountLastName', name: 'lastName', label: 'Last name', isRequired: false, placeholder: 'Doe' },
@@ -94,7 +94,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
             </li>
           ))}
         </div>
-        {/* <div className='fdAccountModal__form__fieldset__ul__dob'>
+        {/* <div className='fdAccountModal__modals__form__fieldset__ul__dob'>
         <li>
           <label id='dobMonth' htmlFor='fdUserAccountDobMonth'>
             Month
@@ -156,7 +156,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
           </select>
         </li>
       </div> */}
-        <li className='fdAccountModal__form__fieldset__ul__emailAddress'>
+        <li className='fdAccountModal__modals__form__fieldset__ul__emailAddress'>
           <label id='emailAddress' htmlFor='fdUserAccountEmailAddress'>
             Email address
           </label>
@@ -180,7 +180,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
             onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
           />
         </li>
-        <div className='fdAccountModal__form__fieldset__ul__password'>
+        <div className='fdAccountModal__modals__form__fieldset__ul__password'>
           <li>
             <label id='password' htmlFor='fdUserAccountPassword'>
               Password
@@ -230,7 +230,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
             />
           </li>
         </div>
-        <li className='fdAccountModal__form__fieldset__ul__cta'>
+        <li className='fdAccountModal__modals__form__fieldset__ul__cta'>
           <button id='fdUserAccountSubmitForm' aria-label='Submit registration form' onPointerUp={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
             Complete sign up
           </button>
@@ -256,7 +256,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
             </svg>
           </button>
         </li>
-        <li className='fdAccountModal__form__fieldset__ul__signup'>
+        <li className='fdAccountModal__modals__form__fieldset__ul__signup'>
           <button aria-label='Sign in' onPointerUp={() => setModal('signin')}>
             Already a member? Sign in.
           </button>
