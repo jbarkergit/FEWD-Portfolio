@@ -94,7 +94,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
         </ul>
       </ModalParent>
 
-      <div className='fdAccountModal__form__fieldset__btns'>
+      <div className='fdAccountModal__modals__btns'>
         <button
           aria-label='Sign in with your credentials'
           onPointerUp={(e) => {
