@@ -70,16 +70,17 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   return (
     <main className='protocolError'>
-      <article className='protocolError__article'>
-        <h1 className='protocolError__article--h1'>{err.message}</h1>
-        <h2 className='protocolError__article--h2'>{err.details}</h2>
-        <nav className='protocolError__article--nav'>
-          Please return to the{' '}
-          <Link to='/' className='protocolError__article--a' aria-label='Return to landing page'>
-            landing page
-          </Link>
+      <article>
+        <h1>{err.message}</h1>
+        <p>
+          {err.details} Please return to the&nbsp;
+          <nav>
+            <Link to='/' aria-label='Return to landing page'>
+              landing page
+            </Link>
+          </nav>
           &nbsp;to continue browsing.
-        </nav>
+        </p>
       </article>
     </main>
   );
