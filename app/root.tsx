@@ -1,6 +1,5 @@
 import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import { StrictMode } from 'react';
-import '/app/base/sass/stylesheets.scss';
 import type { Route } from './+types/root';
 import AuthProvider from './base/auth/context/authProvider';
 
@@ -13,7 +12,10 @@ export function meta() {
   ];
 }
 
-export const links: Route.LinksFunction = () => [{ rel: 'shortcut icon', href: '#' }];
+export const links: Route.LinksFunction = () => [
+  { rel: 'shortcut icon', href: '#' },
+  { rel: 'stylesheet', href: '/app/base/sass/stylesheets.scss' },
+];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
