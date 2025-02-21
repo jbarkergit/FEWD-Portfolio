@@ -22,7 +22,7 @@ const FDAccountModal = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.Bas
   function toggleModalVisibility() {
     const attribute: string = 'data-visible';
 
-    for (const ref of [registryRefReceiver, signInRefReceiver]) {
+    for (const ref of [registryRefReceiver, signInRefReceiver, resetRefReceiver]) {
       if (ref.current) {
         const visibility: string | null = ref.current.getAttribute(attribute);
         const isVisible: boolean = visibility === 'true' || visibility === 'mount';
