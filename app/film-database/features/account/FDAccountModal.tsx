@@ -3,15 +3,23 @@ import FDAccountRegistry from './fieldsets/FDAccountRegistry';
 import FDAccountSignIn from './fieldsets/FDAccountSignIn';
 import FDAccountArticle from './article/FDAccountArticle';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
+import FDAccountReset from './fieldsets/FDAccountReset';
 
 const FDAccountModal = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.BaseMedia_Provider[][] }) => {
-  const [modal, setModal] = useState<'signin' | 'registry'>('signin');
+  // Primary state forcing rerenders
+  const [modal, setModal] = useState<'signin' | 'registry' | 'reset'>('signin');
 
+  // References to modal's children components
   const accountRef = useRef<HTMLDivElement>(null),
     registryRefReceiver = useRef<HTMLUListElement>(null),
-    signInRefReceiver = useRef<HTMLUListElement>(null);
+    signInRefReceiver = useRef<HTMLUListElement>(null),
+    resetRefReceiver = useRef<HTMLDivElement>(null);
 
-  function toggleComponent() {
+  // Delay modal visibility on mount
+  setTimeout(() => accountRef.current?.setAttribute('data-visible', 'true'), 3200);
+
+  // Handle visibility of modal's components (sign in && registry)
+  function toggleModalVisibility() {
     const attribute: string = 'data-visible';
 
     for (const ref of [registryRefReceiver, signInRefReceiver]) {
@@ -31,20 +39,16 @@ const FDAccountModal = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.Bas
     if (compRef.current) compRef.current.setAttribute(attribute, 'true');
   }
 
-  useEffect(() => toggleComponent(), [modal]);
-
-  setTimeout(() => accountRef.current?.setAttribute('data-visible', 'true'), 3200);
+  useEffect(() => toggleModalVisibility(), [modal]);
 
   return (
     <main className='fdAccountModal' ref={accountRef} data-visible='false'>
       <FDAccountArticle responseSetArr={responseSetArr} />
       <form className='fdAccountModal__form'>
         <fieldset className='fdAccountModal__form__fieldset'>
-          {modal === 'signin' ? (
-            <FDAccountSignIn setModal={setModal} ref={signInRefReceiver} />
-          ) : (
-            <FDAccountRegistry setModal={setModal} ref={registryRefReceiver} />
-          )}
+          {modal === 'signin' && <FDAccountSignIn setModal={setModal} ref={signInRefReceiver} />}
+          {modal === 'registry' && <FDAccountRegistry setModal={setModal} ref={registryRefReceiver} />}
+          {modal === 'reset' && <FDAccountReset setModal={setModal} ref={resetRefReceiver} />}
         </fieldset>
       </form>
     </main>
