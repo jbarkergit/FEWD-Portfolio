@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { schema } from '../data/schema';
+import { contactFormSchema } from '~/base/schema/contactFormSchema';
 import FieldsetTextarea from '../components/fieldset/FieldsetTextarea';
 import FieldsetInput from '../components/fieldset/FieldsetInput';
 
@@ -11,7 +11,7 @@ const Contact = () => {
     register,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(contactFormSchema),
   });
 
   // Form submission handler
