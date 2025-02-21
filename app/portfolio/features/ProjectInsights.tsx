@@ -73,7 +73,7 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
         </aside>
 
         <section className='projectDetails__insights__project'>
-          <div className='projectDetails__insights__project__article'>{projectData[projectSlideIndex].insights}</div>
+          <article className='projectDetails__insights__project__article'>{projectData[projectSlideIndex].insights}</article>
         </section>
       </article>
     </section>
