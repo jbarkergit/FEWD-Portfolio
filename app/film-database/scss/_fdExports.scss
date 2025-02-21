@@ -1,8 +1,8 @@
 // Styles
 @forward './fdStyles';
 
-// Pages
-@forward '/app/film-database/pages/fdPages.scss';
+// Routes
+@forward '/app/film-database/routes/fdRoutes';
 
 // Account Page Features
 @forward '/app/film-database/features/account/fdAccountModal';

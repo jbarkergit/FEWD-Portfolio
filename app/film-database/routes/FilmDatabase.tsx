@@ -1,8 +1,13 @@
 import type { Route } from './+types/FilmDatabase';
-import FDUserAccount from '../pages/FDAccount';
-import FDCatalog from '../pages/FDCatalog';
 import { useTmdbFetcher, type Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import isUserAuthorized from '~/base/auth/hooks/isUserAuthorized';
+import { CatalogProvider } from '../context/CatalogContext';
+import FDAccountBackground from '../features/account/animation/FDAccountBackground';
+import FDAccountModal from '../features/account/FDAccountModal';
+import FDHeader from '../features/catalog/header/FDHeader';
+import FDHero from '../features/catalog/hero/FDHero';
+import FDMedia from '../features/catalog/media/FDMedia';
+import FDMovieModal from '../features/catalog/modals/FDMovieModal';
 
 export async function clientLoader() {
   const data = (await useTmdbFetcher({ now_playing: undefined })) as Namespace_Tmdb.Prefabs_Obj;
@@ -16,5 +21,21 @@ export async function clientLoader() {
 
 export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
   const { isAuth, responseSetArr } = loaderData;
-  return isAuth ? <FDCatalog /> : <FDUserAccount responseSetArr={responseSetArr} />;
+  return isAuth ? (
+    <CatalogProvider>
+      <div className='filmDatabase'>
+        <FDHeader />
+        <div className='fdCatalog' data-layout-carousel>
+          <FDHero />
+          <FDMedia />
+          <FDMovieModal />
+        </div>
+      </div>
+    </CatalogProvider>
+  ) : (
+    <div className='fdAccount'>
+      <FDAccountBackground responseSetArr={responseSetArr} />
+      <FDAccountModal responseSetArr={responseSetArr} />
+    </div>
+  );
 }
