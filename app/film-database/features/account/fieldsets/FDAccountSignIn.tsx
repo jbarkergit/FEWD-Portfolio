@@ -103,7 +103,9 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
           }}>
           Sign in
         </button>
-
+        <button aria-label='Create a new account' onPointerUp={() => setModal('registry')}>
+          Create a new account
+        </button>
         <div className='fdAccountModal__modals__btns__grouped'>
           <button
             aria-label='Sign in with Google'
@@ -111,7 +113,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
               e.preventDefault();
               authorizeUser().google();
             }}>
-            <svg xmlns='http://www.w3.org/2000/svg' width='0.98em' height='1em' viewBox='0 0 256 262'>
+            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 262'>
               <path
                 fill='#4285F4'
                 d='M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622l38.755 30.023l2.685.268c24.659-22.774 38.875-56.282 38.875-96.027'></path>
@@ -126,8 +128,25 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
                 d='M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251'></path>
             </svg>
           </button>
-          <button aria-label='Create a new account' onPointerUp={() => setModal('registry')}>
-            Not a member? Create a new account.
+          <button
+            aria-label='Sign in with Github'
+            onPointerUp={(e) => {
+              e.preventDefault();
+              authorizeUser().github();
+            }}>
+            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+              <g fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'>
+                <path
+                  stroke-dasharray='32'
+                  stroke-dashoffset='32'
+                  d='M12 4c1.67 0 2.61 0.4 3 0.5c0.53 -0.43 1.94 -1.5 3.5 -1.5c0.34 1 0.29 2.22 0 3c0.75 1 1 2 1 3.5c0 2.19 -0.48 3.58 -1.5 4.5c-1.02 0.92 -2.11 1.37 -3.5 1.5c0.65 0.54 0.5 1.87 0.5 2.5c0 0.73 0 3 0 3M12 4c-1.67 0 -2.61 0.4 -3 0.5c-0.53 -0.43 -1.94 -1.5 -3.5 -1.5c-0.34 1 -0.29 2.22 0 3c-0.75 1 -1 2 -1 3.5c0 2.19 0.48 3.58 1.5 4.5c1.02 0.92 2.11 1.37 3.5 1.5c-0.65 0.54 -0.5 1.87 -0.5 2.5c0 0.73 0 3 0 3'>
+                  <animate fill='freeze' attributeName='stroke-dashoffset' dur='0.7s' values='32;0'></animate>
+                </path>
+                <path stroke-dasharray='10' stroke-dashoffset='10' d='M9 19c-1.41 0 -2.84 -0.56 -3.69 -1.19c-0.84 -0.63 -1.09 -1.66 -2.31 -2.31'>
+                  <animate fill='freeze' attributeName='stroke-dashoffset' begin='0.8s' dur='0.2s' values='10;0'></animate>
+                </path>
+              </g>
+            </svg>
           </button>
         </div>
       </div>
