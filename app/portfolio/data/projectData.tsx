@@ -5,11 +5,11 @@ export const projectData = [
     key: 'film database',
     url: 'film-database',
     technologies: {
-      sdk: ['firebase', 'firebase-tools'],
-      api: ['tmdb'],
-      libraries: ['react-youtube'],
-      core_libraries: ['vite', 'react', 'react router dom', 'sass'],
-      web_technologies: ['html', 'css', 'javascript', 'typescript'],
+      application_programming_interface: ['tmdb'],
+      ui_component_libraries: ['react-youtube', 'react hook form'],
+      software_development_kits: ['firebase', 'firebase-tools'],
+      utilities_and_services: ['zod'],
+      tools_and_libraries: ['vite', 'react', 'react-router', 'typescript', 'sass'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
     },
     insights: (
@@ -49,8 +49,11 @@ export const projectData = [
     key: 'ecommerce',
     url: 'ecommerce',
     technologies: {
-      core_libraries: ['vite', 'react', 'react router dom', 'sass'],
-      web_technologies: ['html', 'css', 'javascript', 'typescript'],
+      application_programming_interface: ['N/A'],
+      ui_component_libraries: ['N/A'],
+      software_development_kits: ['N/A'],
+      utilities_and_services: ['N/A'],
+      tools_and_libraries: ['vite', 'react', 'react-router', 'typescript', 'sass'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
     },
     insights: (
@@ -94,11 +97,11 @@ export const projectData = [
     key: '2024 portfolio',
     url: '',
     technologies: {
-      api: ['Web3Forms'],
-      data: ['Custom JSON Store'],
-      libraries: ['Zod', 'React Hook Form'],
-      core_libraries: ['vite', 'react', 'react router dom', 'sass'],
-      web_technologies: ['html', 'css', 'javascript', 'typescript'],
+      application_programming_interface: ['N/A - Custom JSON Store'],
+      ui_component_libraries: ['React Hook Form'],
+      software_development_kits: ['N/A'],
+      utilities_and_services: ['Zod', 'Web3Forms'],
+      tools_and_libraries: ['vite', 'react', 'react-router', 'typescript', 'sass'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
     },
     insights: (
