@@ -74,7 +74,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal
           onPointerUp={() => focus()}
           onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
         />
-        <button className='fdAccountModal__form__fieldset__ul__li__forgot' aria-label='Forgot password'>
+        <button className='fdAccountModal__form__fieldset__ul__li__forgot' aria-label='Forgot password' onPointerUp={() => setModal('reset')}>
           I forgot my password.
         </button>
       </li>
