@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, type FC, type ReactNode } from 'react';
 import FDAccountRegistry from './fieldsets/FDAccountRegistry';
 import FDAccountSignIn from './fieldsets/FDAccountSignIn';
 import FDAccountArticle from './article/FDAccountArticle';
@@ -41,16 +41,24 @@ const FDAccountModal = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.Bas
 
   useEffect(() => toggleModalVisibility(), [modal]);
 
+  // Modal components shared parents
+  const ModalParent: FC<{ children: ReactNode }> = ({ children }) => {
+    return (
+      <form className='fdAccountModal__form'>
+        <fieldset className='fdAccountModal__form__fieldset'>{children}</fieldset>
+      </form>
+    );
+  };
+
+  // JSX
   return (
     <main className='fdAccountModal' ref={accountRef} data-visible='false'>
       <FDAccountArticle responseSetArr={responseSetArr} />
-      <form className='fdAccountModal__form'>
-        <fieldset className='fdAccountModal__form__fieldset'>
-          {modal === 'signin' && <FDAccountSignIn setModal={setModal} ref={signInRefReceiver} />}
-          {modal === 'registry' && <FDAccountRegistry setModal={setModal} ref={registryRefReceiver} />}
-          {modal === 'reset' && <FDAccountReset setModal={setModal} ref={resetRefReceiver} />}
-        </fieldset>
-      </form>
+      <div className='fdAccountModal__modals'>
+        {modal === 'signin' && <FDAccountSignIn ModalParent={ModalParent} setModal={setModal} ref={signInRefReceiver} />}
+        {modal === 'registry' && <FDAccountRegistry ModalParent={ModalParent} setModal={setModal} ref={registryRefReceiver} />}
+        {modal === 'reset' && <FDAccountReset ModalParent={ModalParent} setModal={setModal} ref={resetRefReceiver} />}
+      </div>
     </main>
   );
 };
