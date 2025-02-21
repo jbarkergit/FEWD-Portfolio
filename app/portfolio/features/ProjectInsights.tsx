@@ -1,15 +1,14 @@
 import type { Dispatch, SetStateAction } from 'react';
 import { projectData } from '../data/projectData';
 
-type PropDrillType = {
+type Type_PropDrill = {
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
   featureState: Record<string, boolean>;
   setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
 };
 
-const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PropDrillType) => {
-  /** JSX */
+const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: Type_PropDrill) => {
   return (
     <section className='projectDetails'>
       <section className='projectDetails__header'>
@@ -58,12 +57,12 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
             <h2>Technology</h2>
             {Object.entries(projectData[projectSlideIndex].technologies).map(([category, techArray]) => (
               <li className='projectDetails__insights__technology__container__tech' key={category}>
-                <h3 className='projectDetails__insights__technology__container__tech--key'>{category.replace('_', ' ')}</h3>
+                <h3 className='projectDetails__insights__technology__container__tech--key'>{category.replaceAll('_', ' ')}</h3>
                 <ul className='projectDetails__insights__technology__container__tech__values'>
                   {techArray.map((technology: string) => (
                     <li key={`${category}-${technology}`}>
                       <abbr className='projectDetails__insights__technology__container__tech__values--value' title={``}>
-                        {technology}{' '}
+                        {technology}
                       </abbr>
                     </li>
                   ))}
