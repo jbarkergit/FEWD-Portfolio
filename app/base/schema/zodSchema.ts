@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { regex } from '../regex/regex';
 
 export const zodSchema = {
   user: z.object({
@@ -6,6 +7,12 @@ export const zodSchema = {
     lastName: z.string().trim().min(1, { message: 'Last name is required.' }),
     dateOfBirth: z.date(),
     age: z.number().min(18, { message: 'You are not of age. Access permissions revoked.' }),
+  }),
+  account: z.object({
+    password: z
+      .string()
+      .trim()
+      .regex(regex.password, 'Password must contain at least one letter, one digit, one special character, and be at least 8 characters long.'),
   }),
   entity: z.object({
     business: z.string().trim().optional(),
