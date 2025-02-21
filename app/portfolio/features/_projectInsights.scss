@@ -94,14 +94,16 @@
     position: relative;
     width: 100%;
     flex: 0 1 45%;
+    pointer-events: none;
     @media (width <= 1480px) {
       order: 2;
       align-items: flex-start;
     }
     &__container {
-      position: sticky;
-      top: 10%;
+      position: fixed;
+      top: 16rem;
       left: 0;
+      padding: 0 0 8rem s.$box-model-viewport-x;
       & h2 {
         font-size: clamp(f.rem(24), f.rem(30) + 1vw, f.rem(36));
         padding-bottom: calc(s.$portfolio-gap * 2);
