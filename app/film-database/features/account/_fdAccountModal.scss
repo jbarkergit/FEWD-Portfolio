@@ -107,8 +107,7 @@
       padding-bottom: calc(var(--fd-gap) * 2);
       & label {
         padding: 0 0 2px 3px;
-        @include m.fdFontS;
-        font-weight: 700;
+        @include m.fdFontM;
       }
       & input,
       select {
