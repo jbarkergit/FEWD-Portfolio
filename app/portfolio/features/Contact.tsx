@@ -1,17 +1,28 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { contactFormSchema } from '~/base/schema/contactFormSchema';
 import FieldsetTextarea from '../components/fieldset/FieldsetTextarea';
 import FieldsetInput from '../components/fieldset/FieldsetInput';
+import { zodSchema } from '~/base/schema/zodSchema';
+import { z } from 'zod';
 
 const Contact = () => {
+  const schema = z.object({
+    firstName: zodSchema.user.shape.firstName,
+    lastName: zodSchema.user.shape.lastName,
+    phoneNumber: zodSchema.contact.shape.phoneNumber,
+    emailAddress: zodSchema.contact.shape.emailAddress,
+    business: zodSchema.entity.shape.business,
+    role: zodSchema.entity.shape.role,
+    message: zodSchema.fields.shape.message,
+  });
+
   const {
     handleSubmit,
     reset,
     register,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(contactFormSchema),
+    resolver: zodResolver(schema),
   });
 
   // Form submission handler
