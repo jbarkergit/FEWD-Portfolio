@@ -13,7 +13,7 @@ const FDAccountModal = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.Bas
   const accountRef = useRef<HTMLDivElement>(null),
     registryRefReceiver = useRef<HTMLUListElement>(null),
     signInRefReceiver = useRef<HTMLUListElement>(null),
-    resetRefReceiver = useRef<HTMLDivElement>(null);
+    resetRefReceiver = useRef<HTMLUListElement>(null);
 
   // Delay modal visibility on mount
   setTimeout(() => accountRef.current?.setAttribute('data-visible', 'true'), 3200);
