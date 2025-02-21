@@ -11,11 +11,14 @@ type Type_PropDrill = {
 const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: Type_PropDrill) => {
   return (
     <section className='projectDetails'>
-      <section className='projectDetails__header'>
+      <header className='projectDetails__header'>
         <h2>Project Insights Navigation Links</h2>
         <nav className='projectDetails__header__nav' aria-labelledby='insights-navigation'>
           <div className='projectDetails__header__nav__left'>
-            <button id='insights-navigation' aria-label='Return to Project Hub' onClick={() => setFeatureState({ ...featureState, projectDetailsActive: false })}>
+            <button
+              id='insights-navigation'
+              aria-label='Return to Project Hub'
+              onPointerUp={() => setFeatureState({ ...featureState, projectDetailsActive: false })}>
               <span>
                 <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
                   <path fill='#ffffff' d='m14 18l-6-6l6-6l1.4 1.4l-4.6 4.6l4.6 4.6z'></path>
@@ -28,7 +31,7 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
             <button
               id='insights-navigation'
               aria-label='View previous project insights'
-              onClick={() => setProjectSlideIndex((state) => (state === 0 ? projectData.length - 1 : state - 1))}>
+              onPointerUp={() => setProjectSlideIndex((state) => (state === 0 ? projectData.length - 1 : state - 1))}>
               <span>
                 <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
                   <path fill='#ffffff' d='m14 18l-6-6l6-6l1.4 1.4l-4.6 4.6l4.6 4.6z'></path>
@@ -39,7 +42,7 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
             <button
               id='insights-navigation'
               aria-label='View next project insights'
-              onClick={() => setProjectSlideIndex((state) => (state === projectData.length - 1 ? 0 : state + 1))}>
+              onPointerUp={() => setProjectSlideIndex((state) => (state === projectData.length - 1 ? 0 : state + 1))}>
               <span>
                 Next{' '}
                 <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
@@ -49,7 +52,7 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
             </button>
           </div>
         </nav>
-      </section>
+      </header>
 
       <div className='projectDetails__insights'>
         <aside className='projectDetails__insights__technology'>
@@ -60,21 +63,14 @@ const ProjectInsights = ({ projectSlideIndex, setProjectSlideIndex, featureState
                 <h3 className='projectDetails__insights__technology__container__tech--key'>{category.replaceAll('_', ' ')}</h3>
                 <ul className='projectDetails__insights__technology__container__tech__values'>
                   {techArray.map((technology: string) => (
-                    <li key={`${category}-${technology}`}>
-                      <abbr className='projectDetails__insights__technology__container__tech__values--value' title={``}>
-                        {technology}
-                      </abbr>
-                    </li>
+                    <li key={`${category}-${technology}`}>{technology}</li>
                   ))}
                 </ul>
               </li>
             ))}
           </ul>
         </aside>
-
-        <section className='projectDetails__insights__project'>
-          <article className='projectDetails__insights__project__article'>{projectData[projectSlideIndex].insights}</article>
-        </section>
+        <article className='projectDetails__insights__project'>{projectData[projectSlideIndex].insights}</article>
       </div>
     </section>
   );
