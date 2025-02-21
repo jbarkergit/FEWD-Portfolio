@@ -16,6 +16,7 @@
     width: 65%;
     padding: 8rem s.$box-model-viewport-x 8rem s.$box-model-viewport-x;
     @media (width <= 1480px) {
+      width: 100%;
       padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x s.$box-model-viewport-x s.$box-model-viewport-x;
     }
     & article {
