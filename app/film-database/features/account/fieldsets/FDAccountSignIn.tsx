@@ -4,20 +4,17 @@ import { authorizeUser } from '~/base/auth/hooks/authorizeUser';
 import { resetUserPassword } from '~/base/auth/hooks/resetUserPassword';
 
 type Type_PropDrill = {
-  setModal: React.Dispatch<React.SetStateAction<'signin' | 'registry'>>;
+  setModal: React.Dispatch<React.SetStateAction<'signin' | 'registry' | 'reset'>>;
 };
 
 const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal }, signInRefReceiver) => {
-  /** Value setter */
   const [values, setValues] = useState({
     emailAddress: { value: '', valid: false },
     password: { value: '', valid: false },
   });
 
-  type Type_ValuesKey = keyof typeof values;
-
   const valueSetter = (e: ChangeEvent<HTMLInputElement>): void => {
-    const key = e.target.name as Type_ValuesKey;
+    const key = e.target.name as keyof typeof values;
 
     setValues((prevValues) => {
       return { ...prevValues, [key]: { ...prevValues[key], value: e.target.value } };
