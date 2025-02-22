@@ -1,9 +1,12 @@
 // Deps
 import { useEffect, useRef } from 'react';
+import { useLoaderData } from 'react-router';
 // Types
 import type { Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 
-const FDAccountBackground = ({ accountData }: { accountData: Namespace_Tmdb.BaseMedia_Provider[][] }) => {
+const FDAccountBackground = () => {
+  const { accountData } = useLoaderData();
+
   /** Reference dependencies */
   const backdropRef = useRef<HTMLDivElement>(null),
     ulRefs = useRef<HTMLUListElement[]>([]);
