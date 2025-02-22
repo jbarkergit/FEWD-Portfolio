@@ -1,5 +1,6 @@
 // Deps
 import { useEffect, useState } from 'react';
+import { useLoaderData } from 'react-router';
 // Composables
 import { useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 import type { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
@@ -14,21 +15,25 @@ import FDiFramePlayer from './player/FDiFramePlayer';
  */
 
 const FDiFrame = ({ trailerId }: { trailerId?: number }) => {
-  const { heroData } = useCatalogProvider();
+  const { initialHeroData } = useLoaderData();
+  const { heroData, setHeroData } = useCatalogProvider();
   const [trailers, setTrailers] = useState<Namespace_Tmdb.Videos_Obj['videos']['results'] | undefined>(undefined);
 
-  const fetchTrailer = async (): Promise<void> => {
+  // Set trailers with initialHeroData from useLoaderData func
+  useEffect(() => setHeroData(initialHeroData), []);
+
+  // Fetch trailer user request
+  const fetchTrailerRequest = async (): Promise<void> => {
     const data = (await useTmdbFetcher({ videos: trailerId ? trailerId : heroData?.id })) as Namespace_Tmdb.Videos_Obj;
     const filteredEntries = data.videos.results.filter((obj) => obj.name.includes('Trailer'));
     setTrailers(filteredEntries);
   };
 
   useEffect(() => {
-    if (heroData) fetchTrailer();
+    if (heroData) fetchTrailerRequest();
   }, [heroData]);
 
-  /** Component */
-
+  // JSX
   return (
     <section className='fdiFrame'>
       {trailers && trailers.length > 0 ? (
