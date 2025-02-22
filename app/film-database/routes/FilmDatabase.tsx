@@ -21,7 +21,7 @@ export async function clientLoader() {
 
   // Application dependant data
   let primaryData: Namespace_Tmdb.Response_Union[];
-  let heroData: Type_heroData;
+  let initialHeroData: Type_heroData;
   let accountData: Namespace_Tmdb.BaseMedia_Provider[][];
 
   const data = (await useTmdbFetcher([
@@ -55,7 +55,7 @@ export async function clientLoader() {
   const nowPlayingObj = data[0] as unknown as Namespace_Tmdb.Prefabs_Obj;
   const nowPlayingResults = (nowPlayingObj.now_playing as Namespace_Tmdb.Prefabs_Obj['now_playing']).results as Namespace_Tmdb.Prefabs_Obj['now_playing']['results'];
   const nowPlayingFirstResult = nowPlayingResults[0] as Type_heroData;
-  heroData = nowPlayingFirstResult;
+  initialHeroData = nowPlayingFirstResult;
 
   // Account page's background animation data
   const nowPlayingData = (data[0] as Namespace_Tmdb.Prefabs_Obj)['now_playing'].results as Namespace_Tmdb.Prefabs_Obj['now_playing']['results'];
@@ -64,7 +64,7 @@ export async function clientLoader() {
   accountData = slicedAccountData;
 
   // Return
-  return { isAuth, primaryData, heroData, accountData };
+  return { isAuth, primaryData, initialHeroData, accountData };
 }
 
 export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
