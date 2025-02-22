@@ -4,7 +4,6 @@ import type { Route } from './+types/FilmDatabase';
 import isUserAuthorized from '~/base/auth/hooks/isUserAuthorized';
 // Fetch & utility
 import { useTmdbFetcher, type Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
-import { usePaginateData } from '../hooks/usePaginateData';
 // Context
 import { CatalogProvider, type Type_heroData } from '../context/CatalogContext';
 // Features: Account Page
