@@ -1,6 +1,5 @@
 // Router
 import type { Route } from './+types/FilmDatabase';
-import { redirect } from 'react-router';
 // Auth
 import isUserAuthorized from '~/base/auth/hooks/isUserAuthorized';
 // Fetch & utility
