@@ -85,7 +85,7 @@ export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
   ) : (
     <div className='fdAccount'>
       <FDAccountBackground />
-      <FDAccountModal accountData={accountData} />
+      <FDAccountModal />
     </div>
   );
 }

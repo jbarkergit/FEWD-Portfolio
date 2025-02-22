@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect, type FC, type ReactNode } from 'react';
 import FDAccountRegistry from './fieldsets/FDAccountRegistry';
 import FDAccountSignIn from './fieldsets/FDAccountSignIn';
-import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import FDAccountReset from './fieldsets/FDAccountReset';
 import { authorizeUser } from '~/base/auth/hooks/authorizeUser';
+import { useLoaderData } from 'react-router';
 
-const FDAccountModal = ({ accountData }: { accountData: Namespace_Tmdb.BaseMedia_Provider[][] }) => {
+const FDAccountModal = () => {
+  const { accountData } = useLoaderData();
+
   // Primary state forcing rerenders
   const [modal, setModal] = useState<'signin' | 'registry' | 'reset'>('signin');
 
