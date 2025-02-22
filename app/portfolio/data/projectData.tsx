@@ -25,8 +25,9 @@ export const projectData = [
         <p>
           Working with <Link to='https://www.themoviedb.org/'>TMDB</Link> presented several challenges, such as inconsistently formatted URLs and the lack of WEBP
           images. To address these issues, I implemented a type library of sorts and additional type-guarded fetch logic to ensure successful HTTP responses. Through
-          iterative refactoring and performance checks, I developed custom hooks to process data safely and efficiently. While the final solution is somewhat
-          verbose, it performs well, though there’s always room for further optimization.
+          iterative refactoring and performance checks, I developed custom hooks to process data safely and efficiently with the added benefit of preventing
+          unnecessary API calls through use of sessionStorage. While the final solution is somewhat verbose, it performs well, though there’s always room for further
+          optimization.
         </p>
         <p>
           The UI design was heavily inspired by Netflix and Prime Video. To create a consistent and visually appealing interface, I used{' '}
