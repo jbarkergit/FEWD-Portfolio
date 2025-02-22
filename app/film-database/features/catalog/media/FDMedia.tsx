@@ -1,9 +1,8 @@
 // Deps
 import { useEffect, useRef, useState } from 'react';
+import { useLoaderData } from 'react-router';
 // Context
-import { type Type_heroData, useCatalogProvider } from '../../../context/CatalogContext';
-// Composables
-import { type Namespace_Tmdb, useTmdbFetcher } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
+import { useCatalogProvider } from '../../../context/CatalogContext';
 // Hooks
 import { usePaginateData } from '../../../hooks/usePaginateData';
 // Features
@@ -12,54 +11,18 @@ import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
-  const { route, setHeroData } = useCatalogProvider();
+  const { primaryData } = useLoaderData();
+  const { route } = useCatalogProvider();
   const [paginatedData, setPaginatedData] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
-  const fetchDataByRoute = async (): Promise<void> => {
-    let fetchedData: Namespace_Tmdb.Response_Union | Namespace_Tmdb.Response_Union[];
-
-    if (route === 'home') {
-      const data = (await useTmdbFetcher([
-        { now_playing: undefined },
-        { upcoming: undefined },
-        { trending_today: undefined },
-        { trending_this_week: undefined },
-        { discover: 'action' },
-        { discover: 'adventure' },
-        { discover: 'animation' },
-        { discover: 'comedy' },
-        { discover: 'crime' },
-        { discover: 'documentary' },
-        { discover: 'drama' },
-        { discover: 'family' },
-        { discover: 'fantasy' },
-        { discover: 'history' },
-        { discover: 'horror' },
-        { discover: 'music' },
-        { discover: 'mystery' },
-        { discover: 'romance' },
-        { discover: 'science_fiction' },
-        { discover: 'thriller' },
-        { discover: 'tv_movie' },
-        { discover: 'war' },
-        { discover: 'western' },
-      ])) as Namespace_Tmdb.Response_Union[];
-      fetchedData = data;
-    } else {
-      const data = (await useTmdbFetcher({ discover: route })) as Namespace_Tmdb.Response_Union;
-      fetchedData = data;
+  function paginatePrimaryData() {
+    if (primaryData) {
+      const paginatedData = usePaginateData(primaryData);
+      setPaginatedData(paginatedData);
     }
+  }
 
-    if (fetchedData) {
-      const data = usePaginateData(fetchedData);
-      setPaginatedData(data);
-      setHeroData(data[0][1][0][0] as Type_heroData);
-    }
-  };
-
-  useEffect(() => {
-    fetchDataByRoute();
-  }, [route]);
+  useEffect(() => paginatePrimaryData(), []);
 
   /** Carousel DeltaY scroll logic */
   const { isModalOpen } = useCatalogProvider();

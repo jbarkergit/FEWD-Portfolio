@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect, type FC, type ReactNode } from 'react';
 import FDAccountRegistry from './fieldsets/FDAccountRegistry';
 import FDAccountSignIn from './fieldsets/FDAccountSignIn';
-import FDAccountArticle from './article/FDAccountArticle';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import FDAccountReset from './fieldsets/FDAccountReset';
 import { authorizeUser } from '~/base/auth/hooks/authorizeUser';
 
-const FDAccountModal = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.BaseMedia_Provider[][] }) => {
+const FDAccountModal = ({ accountData }: { accountData: Namespace_Tmdb.BaseMedia_Provider[][] }) => {
   // Primary state forcing rerenders
   const [modal, setModal] = useState<'signin' | 'registry' | 'reset'>('signin');
 
@@ -103,7 +102,15 @@ const FDAccountModal = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.Bas
   // JSX
   return (
     <main className='fdAccountModal' ref={accountRef} data-visible='false'>
-      <FDAccountArticle responseSetArr={responseSetArr} />
+      <article className='fdAccountModal__article'>
+        <img
+          className='fdAccountBackground__backdrop__set__li__container--img'
+          src={`https://image.tmdb.org/t/p/${`original`}/${accountData[0][0].backdrop_path}`}
+          alt={`${accountData[0][0]?.title}`}
+        />
+        <h2>Film Database</h2>
+        <p>Watch trailers, get cast details, save movies, create a watch queue and more. Free of charge now, free forever.</p>
+      </article>
       <div className='fdAccountModal__modals'>
         {modal === 'signin' && <FDAccountSignIn ModalParent={ModalParent} LoginWithGroup={LoginWithGroup} setModal={setModal} ref={signInRefReceiver} />}
         {modal === 'registry' && <FDAccountRegistry ModalParent={ModalParent} LoginWithGroup={LoginWithGroup} setModal={setModal} ref={registryRefReceiver} />}

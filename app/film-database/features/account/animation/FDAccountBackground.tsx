@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 // Types
 import type { Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 
-const FDAccountBackground = ({ responseSetArr }: { responseSetArr: Namespace_Tmdb.BaseMedia_Provider[][] }) => {
+const FDAccountBackground = ({ accountData }: { accountData: Namespace_Tmdb.BaseMedia_Provider[][] }) => {
   /** Reference dependencies */
   const backdropRef = useRef<HTMLDivElement>(null),
     ulRefs = useRef<HTMLUListElement[]>([]);
@@ -28,12 +28,12 @@ const FDAccountBackground = ({ responseSetArr }: { responseSetArr: Namespace_Tmd
   return (
     <div className='fdAccountBackground'>
       <div className='fdAccountBackground__backdrop' ref={backdropRef} data-visible='init'>
-        {responseSetArr.map((set: Namespace_Tmdb.BaseMedia_Provider[], setIndex: number) => {
+        {accountData.map((set: Namespace_Tmdb.BaseMedia_Provider[], setIndex: number) => {
           return (
             <ul className='fdAccountBackground__backdrop__set' key={`backdropset${setIndex}`} ref={ulRef} data-visible='false'>
               {set.map((article: Namespace_Tmdb.BaseMedia_Provider, liIndex: number) => {
                 const isCenteredListItem: boolean = setIndex === 2 && liIndex === 1;
-                const isLastListItem: boolean = setIndex === responseSetArr.length - 1 && liIndex === 3;
+                const isLastListItem: boolean = setIndex === accountData.length - 1 && liIndex === 3;
                 return (
                   <li className='fdAccountBackground__backdrop__set__li' key={article.id}>
                     <div className='fdAccountBackground__backdrop__set__li__container'>
