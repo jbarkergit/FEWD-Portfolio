@@ -69,7 +69,7 @@ export async function clientLoader() {
 }
 
 export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
-  const { isAuth, primaryData, heroData, accountData } = loaderData;
+  const { isAuth } = loaderData;
 
   return isAuth ? (
     <CatalogProvider>
