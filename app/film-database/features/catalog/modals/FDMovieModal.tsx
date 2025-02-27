@@ -38,7 +38,7 @@ const FDMovieModal = () => {
     return () => unmount();
   }, [isModalOpen]);
 
-  if (!isModalOpen || !castCrew) return null;
+  if (!isModalOpen || !castCrew || !heroData) return null;
   else
     return (
       <div className='fdMovieModal'>
@@ -48,8 +48,11 @@ const FDMovieModal = () => {
           </div>
           <article className='fdMovieModal__container__info'>
             <div>
-              <span>{heroData?.release_date}</span>
-              {heroData?.genre_ids.map((genreId) => <span key={`genreId-${genreId}`}>{Object.keys(tmdbMovieGenres)[genreId]}</span>)}
+              <span>{heroData.release_date}</span>
+              {heroData?.genre_ids.map((genreId) => {
+                const genreName = Object.keys(tmdbMovieGenres).find((key) => tmdbMovieGenres[key as keyof typeof tmdbMovieGenres] === genreId);
+                return genreName ? <span key={`genreId-${genreId}`}>{genreName.replaceAll('_', ' ')}</span> : null;
+              })}
             </div>
             <header>
               <h2>{heroData?.title}</h2>
