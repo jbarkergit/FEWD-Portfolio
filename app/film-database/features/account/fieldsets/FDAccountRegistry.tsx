@@ -25,6 +25,8 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
     password: '',
   });
 
+  const [showErrors, setShowErrors] = useState(false); // State to manage error visibility
+
   const parse = schema.safeParse(values);
 
   const valueSetter = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
@@ -38,6 +40,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
 
   const submitForm = async (e: React.PointerEvent<HTMLButtonElement>): Promise<void> => {
     e.preventDefault();
+    setShowErrors(true); // Show errors when form is submitted
 
     try {
       if (parse.success) {
@@ -73,13 +76,13 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
                   size={12}
                   required={field.isRequired}
                   aria-required={field.isRequired ? 'true' : 'false'}
-                  aria-invalid={schema.safeParse(values.firstName).success}
+                  aria-invalid={showErrors && !parse.success} // Only show invalid state after submission
                   autoCapitalize='words'
                   placeholder={field.placeholder}
                   onPointerUp={() => focus()}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
                 />
-                {parse.error?.errors.some((err) => err.path.includes(field.name)) && (
+                {showErrors && parse.error?.errors.some((err) => err.path.includes(field.name)) && (
                   <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes(field.name))[0].message}</span>
                 )}
               </li>
@@ -95,20 +98,18 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
               name='emailAddress'
               type='email'
               inputMode='email'
-              // name, @, domain
               minLength={3}
-              // RFC 2045
               maxLength={76}
               size={12}
               required={true}
               aria-required='true'
-              aria-invalid={schema.safeParse(values.emailAddress).success}
+              aria-invalid={showErrors && !parse.success}
               autoCapitalize='off'
               placeholder='johndoe@gmail.com'
               onPointerUp={() => focus()}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
-            {parse.error?.errors.some((err) => err.path.includes('emailAddress')) && (
+            {showErrors && parse.error?.errors.some((err) => err.path.includes('emailAddress')) && (
               <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('emailAddress'))[0].message}</span>
             )}
           </li>
@@ -122,20 +123,18 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
               name='password'
               type='password'
               inputMode='text'
-              // RFC 5310, NIST Special Publication 800-63B
               minLength={8}
-              // RFC XOS
               maxLength={32}
               size={12}
               required={true}
               aria-required='true'
-              aria-invalid={schema.safeParse(values.password).success}
+              aria-invalid={showErrors && !parse.success}
               autoCapitalize='off'
               placeholder='••••••••'
               onPointerUp={() => focus()}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
-            {parse.error?.errors.some((err) => err.path.includes('password')) && (
+            {showErrors && parse.error?.errors.some((err) => err.path.includes('password')) && (
               <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('password'))[0].message}</span>
             )}
           </li>
@@ -149,20 +148,18 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
               name='passwordConfirmation'
               type='password'
               inputMode='text'
-              // RFC 5310, NIST Special Publication 800-63B
               minLength={8}
-              // RFC XOS
               maxLength={32}
               size={12}
               required={true}
               aria-required='true'
-              aria-invalid={schema.safeParse(values.password).success}
+              aria-invalid={showErrors && !parse.success}
               autoCapitalize='off'
               placeholder='••••••••'
               onPointerUp={() => focus()}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
-            {parse.error?.errors.some((err) => err.path.includes('passwordConfirmation')) && (
+            {showErrors && parse.error?.errors.some((err) => err.path.includes('passwordConfirmation')) && (
               <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('passwordConfirmation'))[0].message}</span>
             )}
           </li>
