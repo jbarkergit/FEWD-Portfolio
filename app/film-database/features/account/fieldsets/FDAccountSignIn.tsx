@@ -19,12 +19,24 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
     password: '',
   });
 
+  const [submitted, setSubmitted] = useState(false); // Track whether the form has been submitted
+
+  const parse = schema.safeParse(values);
+
   const valueSetter = (e: ChangeEvent<HTMLInputElement>): void => {
     const key = e.target.name as keyof typeof values;
 
     setValues((prevValues) => {
       return { ...prevValues, [key]: e.target.value };
     });
+  };
+
+  const handleSubmit = (e: React.PointerEvent) => {
+    e.preventDefault();
+    setSubmitted(true); // Mark the form as submitted
+    if (schema.safeParse(values).success) {
+      authorizeUser().emailAndPassword(values);
+    }
   };
 
   return (
@@ -41,9 +53,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
               name='emailAddress'
               type='email'
               inputMode='email'
-              // name, @, domain
               minLength={3}
-              // RFC 2045
               maxLength={76}
               size={12}
               required={true}
@@ -54,6 +64,9 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
               onPointerUp={() => focus()}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
+            {submitted && parse.error?.errors.some((err) => err.path.includes('emailAddress')) && (
+              <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('emailAddress'))[0].message}</span>
+            )}
           </li>
           <button className='fdAccountModal__modals__form__fieldset__ul__btn' aria-label='Forgot email'>
             I forgot my email.
@@ -69,9 +82,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
               name='password'
               type='password'
               inputMode='text'
-              // RFC 5310, NIST Special Publication 800-63B
               minLength={8}
-              // RFC XOS
               maxLength={32}
               size={12}
               required={true}
@@ -82,6 +93,9 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
               onPointerUp={() => focus()}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
+            {submitted && parse.error?.errors.some((err) => err.path.includes('password')) && (
+              <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('password'))[0].message}</span>
+            )}
           </li>
           <button
             className='fdAccountModal__modals__form__fieldset__ul__btn'
@@ -96,12 +110,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
       </ModalParent>
 
       <div className='fdAccountModal__modals__btns'>
-        <button
-          aria-label='Sign in with your credentials'
-          onPointerUp={(e) => {
-            e.preventDefault();
-            authorizeUser().emailAndPassword(values);
-          }}>
+        <button aria-label='Sign in with your credentials' onPointerUp={handleSubmit}>
           Sign in
         </button>
         <button aria-label='Create a new account' onPointerUp={() => setModal('registry')}>
