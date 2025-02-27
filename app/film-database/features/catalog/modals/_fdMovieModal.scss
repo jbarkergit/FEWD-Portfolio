@@ -66,17 +66,13 @@
 .fdMovieModal__container__info {
   display: flex;
   flex-direction: column;
-  padding: calc(var(--fd-padding-generic) / 2);
+  padding: calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 1.5);
   & div {
     display: flex;
-    gap: 6px;
-    & span {
-      &:first-child {
-        padding-bottom: f.rem(12);
-      }
-      &:not(:first-child) {
-        text-transform: capitalize;
-      }
+    gap: var(--fd-gap);
+    padding-bottom: var(--fd-gap);
+    & span:not(:first-child) {
+      text-transform: capitalize;
     }
   }
   & header {
