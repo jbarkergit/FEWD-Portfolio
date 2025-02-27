@@ -1,7 +1,6 @@
 import { forwardRef, useState } from 'react';
 import type { ChangeEvent, FC, JSX, ReactNode } from 'react';
 import { z } from 'zod';
-import { authorizeUser } from '~/base/auth/hooks/authorizeUser';
 import { createUser } from '~/base/auth/hooks/createUser';
 import { zodSchema } from '~/base/schema/zodSchema';
 
@@ -14,7 +13,6 @@ type Type_PropDrill = {
 const schema = z.object({
   firstName: zodSchema.user.shape.firstName,
   lastName: zodSchema.user.shape.lastName,
-  // dateOfBirth: zodSchema.user.shape.dateOfBirth,
   emailAddress: zodSchema.contact.shape.emailAddress,
   password: zodSchema.account.shape.password,
 });
@@ -23,9 +21,6 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
   const [values, setValues] = useState({
     firstName: '',
     lastName: '',
-    // dobMonth: 'January',
-    // dobDay: '01',
-    // dobYear: `${new Date().getFullYear() - 18}`,
     emailAddress: '',
     password: '',
   });
@@ -56,15 +51,6 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
     }
   };
 
-  // const getOptionalYears = (): number[] => {
-  //   const currentYear: number = new Date().getFullYear();
-  //   const initYear: number = currentYear - 110;
-  //   const ofAgeYear: number = currentYear - 18;
-  //   const optionalYears: number[] = Array.from({ length: 111 }, (_, index: number) => initYear + index);
-  //   const filteredYears: number[] = optionalYears.filter((year: number) => year <= ofAgeYear).reverse();
-  //   return filteredYears;
-  // };
-
   return (
     <>
       <ModalParent>
@@ -93,71 +79,12 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
                   onPointerUp={() => focus()}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
                 />
+                {parse.error?.errors.some((err) => err.path.includes(field.name)) && (
+                  <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes(field.name))[0].message}</span>
+                )}
               </li>
             ))}
           </div>
-          {/* <div className='fdAccountModal__modals__form__fieldset__ul__dob'>
-        <li>
-          <label id='dobMonth' htmlFor='fdUserAccountDobMonth'>
-            Month
-          </label>
-          <select
-            id='fdUserAccountDobMonth'
-            name='dobMonth'
-            form='fdRegistery'
-            required={true}
-            aria-required='true'
-            aria-invalid={schema.safeParse(values.dobMonth).success}
-            value={values.dobMonth}
-            onChange={(e: ChangeEvent<HTMLSelectElement>) => valueSetter(e)}>
-            {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((month: string) => (
-              <option key={`dobMonth${month}`} value={month} aria-label={month}>
-                {month}
-              </option>
-            ))}
-          </select>
-        </li>
-        <li>
-          <label id='dobDay' htmlFor='fdUserAccountDobDay'>
-            Day
-          </label>
-          <select
-            id='fdUserAccountDobDay'
-            name='dobDay'
-            form='fdRegistery'
-            required={true}
-            aria-required='true'
-            aria-invalid={schema.safeParse(values.dobDay).success}
-            value={values.dobDay}
-            onChange={(e: ChangeEvent<HTMLSelectElement>) => valueSetter(e)}>
-            {Array.from({ length: 31 }).map((_, index: number) => (
-              <option key={`dobDay${index + 1}`} value={`${index + 1}`} aria-label={`${index + 1}`}>
-                {index + 1 < 10 ? `0${index + 1}` : index + 1}
-              </option>
-            ))}
-          </select>
-        </li>
-        <li>
-          <label id='dobYear' htmlFor='fdUserAccountDobYear'>
-            Year
-          </label>
-          <select
-            id='fdUserAccountDobYear'
-            name='dobYear'
-            form='fdRegistery'
-            required={true}
-            aria-required='true'
-            aria-invalid={schema.safeParse(values.dobYear).success}
-            value={values.dobYear}
-            onChange={(e: ChangeEvent<HTMLSelectElement>) => valueSetter(e)}>
-            {getOptionalYears().map((year: number) => (
-              <option key={`dobYear${year}`} value={year} aria-label={year.toString()}>
-                {year}
-              </option>
-            ))}
-          </select>
-        </li>
-      </div> */}
           <li className='fdAccountModal__modals__form__fieldset__ul__li'>
             <label id='emailAddress' htmlFor='fdUserAccountEmailAddress'>
               Email address
@@ -181,6 +108,9 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
               onPointerUp={() => focus()}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
+            {parse.error?.errors.some((err) => err.path.includes('emailAddress')) && (
+              <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('emailAddress'))[0].message}</span>
+            )}
           </li>
           <li className='fdAccountModal__modals__form__fieldset__ul__li'>
             <label id='password' htmlFor='fdUserAccountPassword'>
@@ -205,6 +135,9 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
               onPointerUp={() => focus()}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
+            {parse.error?.errors.some((err) => err.path.includes('password')) && (
+              <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('password'))[0].message}</span>
+            )}
           </li>
           <li className='fdAccountModal__modals__form__fieldset__ul__li'>
             <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation'>
@@ -229,6 +162,9 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
               onPointerUp={() => focus()}
               onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
             />
+            {parse.error?.errors.some((err) => err.path.includes('passwordConfirmation')) && (
+              <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('passwordConfirmation'))[0].message}</span>
+            )}
           </li>
         </ul>
       </ModalParent>

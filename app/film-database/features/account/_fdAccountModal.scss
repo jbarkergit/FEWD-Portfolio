@@ -109,6 +109,9 @@
         padding: 0 0 2px 3px;
         @include m.fdFontM;
       }
+      & .error-message {
+        padding: calc(var(--fd-gap) / 2) 0 0 f.rem(3);
+      }
       & input,
       select {
         padding: f.rem(3) 1ch;
