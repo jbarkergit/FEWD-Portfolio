@@ -70,7 +70,7 @@
   &__container {
     display: flex;
     flex-direction: column;
-    padding-bottom: var(--fd-gap);
+    padding-bottom: calc(var(--fd-padding-generic) / 4);
     &__wrapper {
       @include m.fdFontM;
       text-transform: capitalize;
