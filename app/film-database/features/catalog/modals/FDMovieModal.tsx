@@ -8,7 +8,7 @@ import { usePaginateData } from '../../../hooks/usePaginateData';
 
 type ModalData = {
   castCrew: ReturnType<typeof usePaginateData> | undefined;
-  watchProviders: Namespace_Tmdb.WatchProviders_Obj | undefined;
+  watchProviders: Namespace_Tmdb.WatchProviders_Obj['watchProviders']['results'] | undefined;
 };
 
 const FDMovieModal = () => {
@@ -22,12 +22,10 @@ const FDMovieModal = () => {
   // Fetch
   const fetch = async (): Promise<void> => {
     if (!heroData) return;
-    // Fetch data
     const castCrewResponse = (await useTmdbFetcher({ credits: (heroData as Namespace_Tmdb.BaseMedia_Provider).id })) as Namespace_Tmdb.Credits_Obj;
     const castCrew = usePaginateData(castCrewResponse);
-    const watchProviders = (await useTmdbFetcher({ watchProviders: heroData.id })) as Namespace_Tmdb.WatchProviders_Obj;
-    // Set state
-    setModalData({ castCrew: castCrew, watchProviders: watchProviders });
+    // const watchProviders = (await useTmdbFetcher({ watchProviders: heroData.id })) as Namespace_Tmdb.WatchProviders_Obj;
+    setModalData({ castCrew: castCrew, watchProviders: undefined });
   };
 
   useEffect(() => {
@@ -67,6 +65,7 @@ const FDMovieModal = () => {
                 return genreName ? <li key={`genreId-${genreId}`}>{genreName.replaceAll('_', ' ')}</li> : null;
               })}
             </ul>
+            {/* <ul className='fdMovieModal__article__container__wrapper'>{modalData.watchProviders}</ul> */}
           </div>
           <header>
             <h2>{heroData?.title}</h2>
