@@ -1,6 +1,5 @@
 // Deps
 import { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router';
 // Composables
 import { useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
 import type { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
@@ -15,12 +14,8 @@ import FDiFramePlayer from './player/FDiFramePlayer';
  */
 
 const FDiFrame = ({ trailerId }: { trailerId?: number }) => {
-  const { initialHeroData } = useLoaderData();
-  const { heroData, setHeroData } = useCatalogProvider();
+  const { heroData } = useCatalogProvider();
   const [trailers, setTrailers] = useState<Namespace_Tmdb.Videos_Obj['videos']['results'] | undefined>(undefined);
-
-  // Set trailers with initialHeroData from useLoaderData func
-  useEffect(() => setHeroData(initialHeroData), []);
 
   // Fetch trailer user request
   const fetchTrailerRequest = async (): Promise<void> => {

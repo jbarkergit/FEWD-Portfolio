@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from 'react';
 import type { FC, ReactNode } from 'react';
 import type { Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbGenres';
 import type { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+import { useLoaderData } from 'react-router';
 
 export type Type_heroData = Namespace_Tmdb.BaseMedia_Provider | undefined;
 
@@ -21,7 +22,8 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [route, setRoute] = useState<'home' | Type_MovieGenre_Keys>('home');
 
   /** Details, trailer data */
-  const [heroData, setHeroData] = useState<Type_heroData>(undefined);
+  const { initialHeroData } = useLoaderData();
+  const [heroData, setHeroData] = useState<Type_heroData>(initialHeroData);
 
   /** Movie movie */
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
