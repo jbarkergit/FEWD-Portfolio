@@ -63,16 +63,21 @@
   }
 }
 
-.fdMovieModal__container__info {
+.fdMovieModal__article {
   display: flex;
   flex-direction: column;
-  padding: calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 1.5);
-  & div {
+  padding: calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5);
+  &__container {
     display: flex;
-    gap: var(--fd-gap);
+    flex-direction: column;
     padding-bottom: var(--fd-gap);
-    & span:not(:first-child) {
+    &__wrapper {
+      @include m.fdFontM;
       text-transform: capitalize;
+    }
+    & ul {
+      display: flex;
+      gap: calc(var(--fd-gap) / 2);
     }
   }
   & header {
