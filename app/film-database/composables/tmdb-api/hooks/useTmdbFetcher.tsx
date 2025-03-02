@@ -175,8 +175,9 @@ export namespace Namespace_Tmdb {
     watchProviders: {
       id: number;
       results: {
-        [countryCode: string]: {
-          flatrate?: WatchProviders_Provider[];
+        // [countryCode: string]: {
+        US: {
+          flatrate: WatchProviders_Provider[];
           rent?: WatchProviders_Provider[];
           buy?: WatchProviders_Provider[];
           ads?: WatchProviders_Provider[];
