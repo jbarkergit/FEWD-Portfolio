@@ -63,44 +63,6 @@
   }
 }
 
-.fdMovieModal__article {
-  display: flex;
-  flex-direction: column;
-  padding: calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5);
-  &__container {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: calc(var(--fd-padding-generic) / 4);
-    &__wrapper {
-      @include m.fdFontM;
-      text-transform: capitalize;
-    }
-    & ul {
-      display: flex;
-      gap: calc(var(--fd-gap) / 2);
-    }
-  }
-  & header {
-    & h2 {
-      max-width: 29ch;
-      white-space: nowrap;
-      overflow: clip;
-      text-overflow: ellipsis;
-      @include m.fdFontXXL;
-      text-shadow: var(--fd-font-shadow);
-      text-transform: uppercase;
-      @media (max-width: 1024px) {
-        @include m.fdFontXL;
-      }
-    }
-  }
-  & p {
-    width: clamp(45ch, 100%, 75ch);
-    @include m.fdFontM;
-    text-shadow: var(--fd-font-shadow);
-  }
-}
-
 .fdMovieModal__container__castCrew .fdCarousel__wrapper {
   &__ul__li {
     --fd-carousel-node-width: calc(
