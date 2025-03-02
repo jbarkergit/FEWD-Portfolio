@@ -91,7 +91,7 @@ const FDDetails = (modal: { modal: boolean }) => {
         </header>
 
         <ul className='fdDetails__article__col'>
-          <li aria-label={`Vote Average ${Math.floor(heroData.vote_average / 2)} out of 5`}>
+          <li aria-label={`Vote Average ${heroData.vote_average / 2} out of 5`}>
             {renderStars().map((Star, index) => {
               return <span key={`vote-average-star-${index}`}>{Star}</span>;
             })}
