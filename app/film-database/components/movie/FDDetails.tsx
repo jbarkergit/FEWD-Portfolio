@@ -116,16 +116,18 @@ const FDDetails = (modal: { modal: boolean }) => {
           })}
         </ul>
 
-        <ul className='fdDetails__article__col' id='fdDetails--providers'>
-          Available on:{' '}
-          {watchProviders?.map((provider, index) => (
-            <li key={`provider-${provider}`}>
-              {provider.provider_name}
-              {index !== watchProviders.length - 1 ? ',' : null}
-              {/* <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} /> */}
-            </li>
-          ))}
-        </ul>
+        {watchProviders?.length && (
+          <ul className='fdDetails__article__col' id='fdDetails--providers'>
+            Available on:{' '}
+            {watchProviders?.map((provider, index) => (
+              <li key={`provider-${provider}`}>
+                {provider.provider_name}
+                {index !== watchProviders.length - 1 ? ',' : null}
+                {/* <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} /> */}
+              </li>
+            ))}
+          </ul>
+        )}
       </article>
     </section>
   );
