@@ -39,9 +39,7 @@ const FDMovieModal = () => {
           <section className='fdMovieModal__container__player'>
             <FDiFrame />
           </section>
-          <div className='fdMovieModal__container__article'>
-            <FDDetails modal={true} />
-          </div>
+          <FDDetails modal={true} />
           <section className='fdMovieModal__container__castCrew'>
             {castCrew.map(([key, value], index) => (
               <FDCarousel type={key === 'cast' ? 'cast' : 'crew'} mapIndex={index} heading={key} data={value} key={`${key}-${index}`} />
