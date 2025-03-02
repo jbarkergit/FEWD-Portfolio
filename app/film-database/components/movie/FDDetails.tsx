@@ -117,9 +117,12 @@ const FDDetails = (modal: { modal: boolean }) => {
         </ul>
 
         <ul className='fdDetails__article__col' id='fdDetails--providers'>
-          {watchProviders?.map((provider) => (
+          Available on:{' '}
+          {watchProviders?.map((provider, index) => (
             <li key={`provider-${provider}`}>
-              <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} />
+              {provider.provider_name}
+              {index !== watchProviders.length - 1 ? ',' : null}
+              {/* <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} /> */}
             </li>
           ))}
         </ul>
