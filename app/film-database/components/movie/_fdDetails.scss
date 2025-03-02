@@ -22,10 +22,23 @@
       display: none;
     }
   }
+
+  &__article--exit {
+    position: absolute;
+    z-index: 13;
+    top: calc(var(--fd-padding-generic) / 1.5);
+    right: calc(var(--fd-padding-generic) / 1.5);
+    & svg {
+      width: 1.6em;
+      aspect-ratio: 1/1;
+    }
+  }
+
   & article {
     display: flex;
     flex-direction: column;
-    & footer a svg {
+    & footer a {
+      display: block;
       width: calc(2.25rem * 4); // 4X Header font-size
     }
     & header h2 {
