@@ -54,6 +54,9 @@
       gap: calc(var(--fd-gap) / 1.75);
       &:nth-of-type(1) {
         gap: calc(var(--fd-gap) / 1.25);
+      }
+      &:nth-of-type(1),
+      &:nth-of-type(2) {
         padding-bottom: var(--fd-gap);
       }
       & li {
