@@ -1,10 +1,10 @@
 import FDiFrame from '../../../components/iframe/FDiFrame';
-import FDDetails from './details/FDDetails';
+import FDDetails from '../../../components/movie/FDDetails';
 
 const FDHero = () => {
   return (
     <div className='fdHero'>
-      <FDDetails />
+      <FDDetails modal={false} />
       <FDiFrame />
     </div>
   );
