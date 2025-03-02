@@ -75,7 +75,7 @@ const FDDetails = (modal: { modal: boolean }) => {
 
   /** @returns */
   return (
-    <section className='fdDetails' data-modal={`${modal}`}>
+    <section className='fdDetails' data-modal={String(modal.modal)}>
       <article className='fdDetails__article'>
         <footer className='fdDetails__article__footer'>
           <Link to='https://www.themoviedb.org/?language=en-US'>
