@@ -36,9 +36,8 @@ const FDMovieModal = () => {
     return (
       <div className='fdMovieModal'>
         <div className='fdMovieModal__container' ref={fdMovieModal}>
-          <section className='fdMovieModal__container__player'>
-            <FDiFrame />
-          </section>
+          <FDiFrame />
+
           <FDDetails modal={true} />
           <section className='fdMovieModal__container__castCrew'>
             {castCrew.map(([key, value], index) => (
