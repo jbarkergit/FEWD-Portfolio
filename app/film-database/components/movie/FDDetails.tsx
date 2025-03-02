@@ -77,7 +77,7 @@ const FDDetails = (modal: { modal: boolean }) => {
   return (
     <section className='fdDetails' data-modal={String(modal.modal)}>
       <article className='fdDetails__article'>
-        <button className='fdDetails__article--exit' aria-label='Close View More Modal' onPointerUp={() => setIsModalOpen(false)}>
+        <button className='fdDetails__article--exit' id='fdDetails--exit' aria-label='Close View More Modal' onPointerUp={() => setIsModalOpen(false)}>
           <Exit />
         </button>
 
