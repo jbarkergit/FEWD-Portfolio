@@ -10,7 +10,7 @@ import { tmdbMovieGenres } from '~/film-database/composables/tmdb-api/data/tmdbG
 import { EmptyStar, Exit, FullStar, HalfStar, SvgSpinnersRingResize, TheMovieDatabaseLogo } from '../../assets/google-material-symbols/GoogleMaterialIcons';
 
 const FDDetails = (modal: { modal: boolean }) => {
-  const { heroData, setIsModalOpen } = useCatalogProvider();
+  const { heroData, setIsMovieModal } = useCatalogProvider();
 
   if (!heroData)
     return (
@@ -77,7 +77,7 @@ const FDDetails = (modal: { modal: boolean }) => {
   return (
     <section className='fdDetails' data-modal={modal.modal}>
       <article className='fdDetails__article'>
-        <button className='fdDetails__article--exit' id='fdDetails--exit' aria-label='Close View More Modal' onPointerUp={() => setIsModalOpen(false)}>
+        <button className='fdDetails__article--exit' id='fdDetails--exit' aria-label='Close View More Modal' onPointerUp={() => setIsMovieModal(false)}>
           <Exit />
         </button>
 
@@ -99,7 +99,7 @@ const FDDetails = (modal: { modal: boolean }) => {
           <li data-status={renderDate() === 'Now Available' ? 'green' : ''}>{renderDate()}</li>
           <li>
             <nav id='fdDetails--nav'>
-              <button aria-label={`View more details about ${heroData.title}`} onClick={() => setIsModalOpen(true)}>
+              <button aria-label={`View more details about ${heroData.title}`} onClick={() => setIsMovieModal(true)}>
                 View more details
               </button>
             </nav>
