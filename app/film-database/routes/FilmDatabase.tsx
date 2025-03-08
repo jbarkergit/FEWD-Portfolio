@@ -78,14 +78,14 @@ export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
         <div className='fdCatalog' data-layout-carousel>
           <FDHero />
           <FDMedia />
-          <FDMovieModal />
+          <FDModal />
         </div>
       </div>
     </CatalogProvider>
   ) : (
     <div className='fdAccount'>
       <FDAccountBackground />
-      <FDModal />
+      <FDAccountModal />
     </div>
   );
 }
