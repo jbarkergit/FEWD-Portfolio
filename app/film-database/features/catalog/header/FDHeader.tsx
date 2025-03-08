@@ -1,20 +1,12 @@
 import { deauthorizeUser } from '~/base/auth/hooks/deauthorizeUser';
 import { useCatalogProvider } from '../../../context/CatalogContext';
-import type { SVGProps } from 'react';
+import { MaterialSymbolsMovieSharp } from '~/film-database/assets/google-material-symbols/GoogleMaterialIcons';
 
 type CTAButton = {
   key: string;
   icon: React.ReactNode | undefined;
   func: () => void;
 };
-
-function MaterialSymbolsMovieSharp(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
-      <path fill='currentColor' d='M2 20V4h2l2 4h3L7 4h2l2 4h3l-2-4h2l2 4h3l-2-4h5v16z'></path>
-    </svg>
-  );
-}
 
 const FDHeader = () => {
   const { setIsListModal } = useCatalogProvider();
