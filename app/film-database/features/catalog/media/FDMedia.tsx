@@ -11,11 +11,24 @@ import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
+  // Loader
   const { primaryData } = useLoaderData();
-  const { route } = useCatalogProvider();
+
+  // Context
+  const { route, isModalOpen } = useCatalogProvider();
+
+  // State
   const [paginatedData, setPaginatedData] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
-  function paginatePrimaryData() {
+  // References
+  const fdMediaRef = useRef<HTMLElement>(null);
+
+  /**
+   * @function paginatePrimaryData
+   * @returns void
+   * Paginates data
+   */
+  function paginatePrimaryData(): void {
     if (primaryData) {
       const paginatedData = usePaginateData(primaryData);
       setPaginatedData(paginatedData);
@@ -24,11 +37,12 @@ const FDMedia = () => {
 
   useEffect(() => paginatePrimaryData(), []);
 
-  /** Carousel DeltaY scroll logic */
-  const { isModalOpen } = useCatalogProvider();
-  const fdMediaRef = useRef<HTMLElement>(null);
-
-  // Update previously active and newly active carousel node's data-attr, navigate
+  /**
+   * @function deltaScrollCarousels
+   * @returns void
+   * Carousel deltaY scroll logic
+   * Update previously active and newly active carousel node's data-attr, navigate
+   */
   const deltaScrollCarousels = (delta: 1 | -1): void => {
     if (window.innerWidth < 1050 || !fdMediaRef.current) return;
     const carouselNodesArr: Element[] = [...fdMediaRef.current?.children];
@@ -50,13 +64,14 @@ const FDMedia = () => {
 
   const handleWheel = (event: WheelEvent) => deltaScrollCarousels(event.deltaY > 0 ? 1 : -1);
 
+  /** Event Listeners */
   useEffect(() => {
     if (!isModalOpen) window.addEventListener('wheel', handleWheel);
     else window.removeEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
   }, [fdMediaRef.current, isModalOpen]);
 
-  /** Component */
+  /** JSX */
   return (
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
       {paginatedData?.map(([key, value], index) => (
