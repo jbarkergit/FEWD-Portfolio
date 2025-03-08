@@ -31,36 +31,6 @@ export function Exit(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function FullStar(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
-      <path fill='currentColor' d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21z' />
-    </svg>
-  );
-}
-
-export function HalfStar(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
-      <path
-        fill='currentColor'
-        d='m22 9.24l-7.19-.62L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21L12 17.27L18.18 21l-1.63-7.03zM12 15.4V6.1l1.71 4.04l4.38.38l-3.32 2.88l1 4.28z'
-      />
-    </svg>
-  );
-}
-
-export function EmptyStar(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
-      <path
-        fill='currentColor'
-        d='m22 9.24l-7.19-.62L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21L12 17.27L18.18 21l-1.63-7.03zM12 15.4l-3.76 2.27l1-4.28l-3.32-2.88l4.38-.38L12 6.1l1.71 4.04l4.38.38l-3.32 2.88l1 4.28z'
-      />
-    </svg>
-  );
-}
-
 export function SvgSpinnersRingResize(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...props}>
@@ -89,6 +59,42 @@ export function SvgSpinnersRingResize(props: SVGProps<SVGSVGElement>): JSX.Eleme
   );
 }
 
+export function MaterialSymbolsMovieSharp(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
+      <path fill='currentColor' d='M2 20V4h2l2 4h3L7 4h2l2 4h3l-2-4h2l2 4h3l-2-4h5v16z'></path>
+    </svg>
+  );
+}
+
+export function FullStar(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
+      <path fill='currentColor' d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21z' />
+    </svg>
+  );
+}
+export function HalfStar(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
+      <path
+        fill='currentColor'
+        d='m22 9.24l-7.19-.62L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21L12 17.27L18.18 21l-1.63-7.03zM12 15.4V6.1l1.71 4.04l4.38.38l-3.32 2.88l1 4.28z'
+      />
+    </svg>
+  );
+}
+export function EmptyStar(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
+      <path
+        fill='currentColor'
+        d='m22 9.24l-7.19-.62L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21L12 17.27L18.18 21l-1.63-7.03zM12 15.4l-3.76 2.27l1-4.28l-3.32-2.88l4.38-.38L12 6.1l1.71 4.04l4.38.38l-3.32 2.88l1 4.28z'
+      />
+    </svg>
+  );
+}
+
 export function MaterialSymbolsPlayArrow(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...props}>
@@ -96,7 +102,6 @@ export function MaterialSymbolsPlayArrow(props: SVGProps<SVGSVGElement>): JSX.El
     </svg>
   );
 }
-
 export function MaterialSymbolsPause(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...props}>
@@ -104,7 +109,6 @@ export function MaterialSymbolsPause(props: SVGProps<SVGSVGElement>): JSX.Elemen
     </svg>
   );
 }
-
 export function MaterialSymbolsVolumeUp(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...props}>
@@ -115,7 +119,6 @@ export function MaterialSymbolsVolumeUp(props: SVGProps<SVGSVGElement>): JSX.Ele
     </svg>
   );
 }
-
 export function MaterialSymbolsVolumeDown(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...props}>
@@ -123,7 +126,6 @@ export function MaterialSymbolsVolumeDown(props: SVGProps<SVGSVGElement>): JSX.E
     </svg>
   );
 }
-
 export function MaterialSymbolsVolumeOff(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...props}>
@@ -134,7 +136,6 @@ export function MaterialSymbolsVolumeOff(props: SVGProps<SVGSVGElement>): JSX.El
     </svg>
   );
 }
-
 export function MaterialSymbolsSettings(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...props}>
