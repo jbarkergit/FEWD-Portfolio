@@ -14,6 +14,7 @@ import FDHeader from '../features/catalog/header/FDHeader';
 import FDHero from '../features/catalog/hero/FDHero';
 import FDMedia from '../features/catalog/media/FDMedia';
 import FDMovieModal from '../features/catalog/modals/FDMovieModal';
+import FDMovieList from '../features/catalog/modals/FDMovieList';
 
 export async function clientLoader() {
   // Auth
@@ -85,6 +86,7 @@ export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
     <div className='fdAccount'>
       <FDAccountBackground />
       <FDAccountModal />
+      <FDMovieList />
     </div>
   );
 }
