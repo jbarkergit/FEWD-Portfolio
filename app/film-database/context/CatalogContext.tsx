@@ -1,35 +1,32 @@
 import { createContext, useContext, useState } from 'react';
 import type { FC, ReactNode } from 'react';
-import type { Type_MovieGenre_Keys } from '../composables/tmdb-api/data/tmdbGenres';
 import type { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import { useLoaderData } from 'react-router';
 
 export type Type_heroData = Namespace_Tmdb.BaseMedia_Provider | undefined;
 
-type Type_CatalogContext_State_Obj = {
-  route: 'home' | Type_MovieGenre_Keys;
-  setRoute: React.Dispatch<React.SetStateAction<'home' | Type_MovieGenre_Keys>>;
+type Context = {
   heroData: Type_heroData;
   setHeroData: React.Dispatch<React.SetStateAction<Type_heroData>>;
-  isModalOpen: boolean;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isMovieModal: boolean;
+  setIsMovieModal: React.Dispatch<React.SetStateAction<boolean>>;
+  isListModal: boolean;
+  setIsListModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const CatalogContext = createContext<Type_CatalogContext_State_Obj | undefined>(undefined);
+const CatalogContext = createContext<Context | undefined>(undefined);
 
 export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  /** Routing system, lends to menu navigation */
-  const [route, setRoute] = useState<'home' | Type_MovieGenre_Keys>('home');
-
-  /** Details, trailer data */
+  // Details && Trailer data state
   const { initialHeroData } = useLoaderData();
   const [heroData, setHeroData] = useState<Type_heroData>(initialHeroData);
 
-  /** Movie movie */
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  // Modals state
+  const [isMovieModal, setIsMovieModal] = useState<boolean>(false);
+  const [isListModal, setIsListModal] = useState<boolean>(false);
 
   /** Provider */
-  return <CatalogContext.Provider value={{ route, setRoute, heroData, setHeroData, isModalOpen, setIsModalOpen }}>{children}</CatalogContext.Provider>;
+  return <CatalogContext.Provider value={{ heroData, setHeroData, isMovieModal, setIsMovieModal, isListModal, setIsListModal }}>{children}</CatalogContext.Provider>;
 };
 
 export const useCatalogProvider = () => {
