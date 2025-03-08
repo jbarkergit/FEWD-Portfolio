@@ -1,0 +1,99 @@
+@use '/app/base/sass/util/functions' as f;
+@use '/app/film-database/scss/fdMixins' as m;
+
+.fdMovieModal {
+  position: fixed;
+  z-index: 12;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 100svw;
+  height: 100svh;
+  padding: var(--fd-padding-generic) var(--fd-padding-generic) 0 var(--fd-padding-generic);
+  background-color: rgba(0, 0, 0, 0.7);
+  @media (max-width: 1580px) {
+    padding: 0;
+  }
+  &__container {
+    position: relative;
+    display: block;
+    width: 50svw;
+    height: 100%;
+    padding-bottom: 2em;
+    border-top-left-radius: var(--fd-borderRadius);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #181818;
+    box-shadow: rgba(0, 0, 0, 1) 0px 3px 10px;
+    @media (min-width: 1580px) {
+      &::-webkit-scrollbar {
+        width: 14px;
+        height: 14px;
+      }
+      &::-webkit-scrollbar-track {
+        background: #141414;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #f3f3f1;
+      }
+    }
+    @media (max-width: 1580px) {
+      width: 100svw;
+    }
+  }
+
+  .fdiFrame {
+    position: relative;
+    display: inline;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: clip;
+    &__controller {
+      position: absolute;
+      bottom: 5.5%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &__player {
+      position: relative;
+      width: inherit;
+      height: auto;
+      aspect-ratio: 16/9;
+      transform: scale(1);
+      &::before,
+      &::after {
+        display: none;
+      }
+      &__iframe {
+        top: 0;
+      }
+    }
+  }
+
+  .fdDetails {
+    height: auto;
+    padding: calc(var(--fd-padding-generic) - var(--fd-gap) * 2) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 2 - var(--fd-gap) * 2)
+      calc(var(--fd-padding-generic) / 1.5);
+    &__article {
+      width: 100%;
+      padding-bottom: calc(var(--fd-gap) * 2);
+      border-bottom: 1px solid #4d4545;
+    }
+  }
+}
+
+.fdMovieModal__container__castCrew .fdCarousel__wrapper {
+  &__ul__li {
+    --fd-carousel-node-width: calc(
+      (50svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
+    );
+    --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
+    :hover {
+      cursor: auto;
+    }
+  }
+  &__navigation {
+    width: 50svw;
+  }
+}
