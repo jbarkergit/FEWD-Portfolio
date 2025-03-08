@@ -1,5 +1,5 @@
 // Deps
-import { useState, useEffect, useRef, type ChangeEvent, useId } from 'react';
+import { useState, useEffect, useRef, type ChangeEvent, useCallback } from 'react';
 // Context
 import { useCatalogProvider } from '../../../../context/CatalogContext';
 // Composables
@@ -8,43 +8,56 @@ import { type Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmd
 import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../assets/google-material-symbols/GoogleMaterialIcons';
 
 const FDCarouselSearch = () => {
+  // Context
   const { setHeroData } = useCatalogProvider();
+
+  // State
+  const [isTyping, setIsTyping] = useState(false);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<Namespace_Tmdb.Search_Obj['search']['results'] | undefined>(undefined);
+
   // Max carousel nodes per page
   const layoutAttr: Element | null = document.querySelector('[data-layout-carousel]');
   const maxCarouselNodes: number = layoutAttr ? parseInt(getComputedStyle(layoutAttr).getPropertyValue('--fd-carousel-items-per-page')) : 8;
 
-  /** User is searching */
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const isSearchTerm: boolean = searchTerm.length === 0;
-
-  const [isTyping, setIsTyping] = useState<boolean>(false);
+  // Debounce
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  /** Handle label */
+  // References
   const labelRef = useRef<HTMLLabelElement>(null);
 
-  const handleLabel = (prop: 'visible' | 'barelyVisible'): void | undefined => {
-    if (!labelRef.current) return undefined;
-    if (isSearchTerm) return labelRef.current?.setAttribute('data-opacity', prop);
+  /**
+   * @function handleLabelVisibility
+   * @returns void undefined
+   * Alters visibility of the input label
+   */
+  const handleLabelVisibility = (prop: 'visible' | 'barelyVisible'): void | undefined => {
+    if (labelRef.current && searchTerm.length === 0) {
+      return labelRef.current?.setAttribute('data-opacity', prop);
+    }
     return undefined;
   };
 
-  /** Invoke fetch with timeout */
-  const [searchResults, setSearchResults] = useState<Namespace_Tmdb.Search_Obj['search']['results'] | undefined>(undefined);
-
-  const invokeFetch = async (): Promise<void> => {
+  /**
+   * @function invokeFetch
+   * @returns Promise<void>
+   * Invoke debounced fetch
+   */
+  const invokeFetch = useCallback(async () => {
     if (searchTerm.length > 0) {
       setIsTyping(false);
       const data = (await useTmdbFetcher({ search: searchTerm })) as Namespace_Tmdb.Search_Obj;
       if (data) setSearchResults(data.search.results);
     }
-  };
+  }, [searchTerm]);
 
   useEffect(() => {
-    if (isSearchTerm) setSearchResults([]);
+    if (searchTerm.length === 0) setSearchResults([]);
     if (searchTerm.length > 0) setIsTyping(true);
 
+    // Clear timer
     if (timerRef.current) window.clearTimeout(timerRef.current);
+    // Assign new timer
     timerRef.current = window.setTimeout(() => invokeFetch(), 850) as unknown as NodeJS.Timeout;
 
     return () => {
@@ -76,10 +89,10 @@ const FDCarouselSearch = () => {
             type='search'
             pattern='search'
             autoFocus={true}
-            onPointerOver={() => handleLabel('visible')}
-            onPointerLeave={() => handleLabel('barelyVisible')}
-            onFocus={() => handleLabel('visible')}
-            onBlur={() => handleLabel('barelyVisible')}
+            onPointerOver={() => handleLabelVisibility('visible')}
+            onPointerLeave={() => handleLabelVisibility('barelyVisible')}
+            onFocus={() => handleLabelVisibility('visible')}
+            onBlur={() => handleLabelVisibility('barelyVisible')}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e?.target.value.replace(' ', '-').toLowerCase())}
           />
           {isTyping ? <SvgSpinnersRingResize /> : null}
@@ -89,10 +102,10 @@ const FDCarouselSearch = () => {
       <div className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
           {maxCarouselNodes && searchResults && !isTyping
-            ? searchResults.splice(0, maxCarouselNodes).map((props) => {
+            ? searchResults.splice(0, maxCarouselNodes).map((props, index) => {
                 if (props.poster_path)
                   return (
-                    <li className='fdSearchBar__results__ul__li' key={useId()}>
+                    <li className='fdSearchBar__results__ul__li' key={`fd-search-result-${index}`}>
                       <picture className='fdSearchBar__results__ul__li__article'>
                         <img src={`https://image.tmdb.org/t/p/w780${props.poster_path}`} alt={`${props.title}`} />
                       </picture>
