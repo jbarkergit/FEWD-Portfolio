@@ -15,7 +15,7 @@ const FDMedia = () => {
   const { primaryData } = useLoaderData();
 
   // Context
-  const { route, isModalOpen } = useCatalogProvider();
+  const { isMovieModal } = useCatalogProvider();
 
   // State
   const [paginatedData, setPaginatedData] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
@@ -66,17 +66,15 @@ const FDMedia = () => {
 
   /** Event Listeners */
   useEffect(() => {
-    if (!isModalOpen) window.addEventListener('wheel', handleWheel);
+    if (!isMovieModal) window.addEventListener('wheel', handleWheel);
     else window.removeEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [fdMediaRef.current, isModalOpen]);
+  }, [fdMediaRef.current, isMovieModal]);
 
   /** JSX */
   return (
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
-      {paginatedData?.map(([key, value], index) => (
-        <FDCarousel type={'movies'} mapIndex={index} heading={key === 'discover' ? route : key} data={value} key={`carousel-key-${key}-${value}`} />
-      ))}
+      {paginatedData?.map(([key, value], index) => <FDCarousel type={'movies'} mapIndex={index} heading={key} data={value} key={`carousel-key-${key}-${value}`} />)}
       <FDCarouselSearch />
     </main>
   );
