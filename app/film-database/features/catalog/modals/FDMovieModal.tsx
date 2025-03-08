@@ -7,7 +7,7 @@ import { usePaginateData } from '../../../hooks/usePaginateData';
 import FDDetails from '../../../components/movie/FDDetails';
 
 const FDMovieModal = () => {
-  const { heroData, isModalOpen, setIsModalOpen } = useCatalogProvider();
+  const { heroData, isMovieModal, setIsMovieModal } = useCatalogProvider();
   const [castCrew, setCastCrew] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
   const fdMovieModal = useRef<HTMLDivElement>(null);
 
@@ -22,17 +22,17 @@ const FDMovieModal = () => {
   }, [heroData]);
 
   const handleExteriorClicks = (event: PointerEvent) => {
-    if (!fdMovieModal.current?.contains(event.target as Node)) setIsModalOpen(false);
+    if (!fdMovieModal.current?.contains(event.target as Node)) setIsMovieModal(false);
   };
 
   useEffect(() => {
     const unmount = () => document.body.removeEventListener('pointerdown', handleExteriorClicks);
-    if (isModalOpen && fdMovieModal.current) document.body.addEventListener('pointerdown', handleExteriorClicks);
+    if (isMovieModal && fdMovieModal.current) document.body.addEventListener('pointerdown', handleExteriorClicks);
     else unmount();
     return () => unmount();
-  }, [isModalOpen]);
+  }, [isMovieModal]);
 
-  if (isModalOpen && heroData && castCrew)
+  if (isMovieModal && heroData && castCrew)
     return (
       <div className='fdMovieModal'>
         <div className='fdMovieModal__container' ref={fdMovieModal}>
