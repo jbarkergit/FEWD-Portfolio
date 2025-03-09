@@ -2,8 +2,9 @@ import { useState, useRef, useEffect, type FC, type ReactNode } from 'react';
 import FDAccountRegistry from './fieldsets/FDAccountRegistry';
 import FDAccountSignIn from './fieldsets/FDAccountSignIn';
 import FDAccountReset from './fieldsets/FDAccountReset';
-import { authorizeUser } from '~/base/auth/hooks/authorizeUser';
+
 import { useLoaderData } from 'react-router';
+import { authorizeUser } from '~/base/firebase/authentication/hooks/authorizeUser';
 
 const FDAccountModal = () => {
   const { accountData } = useLoaderData();

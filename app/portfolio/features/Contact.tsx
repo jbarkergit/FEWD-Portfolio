@@ -2,8 +2,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FieldsetTextarea from '../components/fieldset/FieldsetTextarea';
 import FieldsetInput from '../components/fieldset/FieldsetInput';
-import { zodSchema } from '~/base/schema/zodSchema';
 import { z } from 'zod';
+import { zodSchema } from '~/base/validation/schema/zodSchema';
 
 const Contact = () => {
   const schema = z.object({

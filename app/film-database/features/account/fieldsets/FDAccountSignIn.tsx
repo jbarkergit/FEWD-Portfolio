@@ -1,9 +1,9 @@
 import { forwardRef, useState } from 'react';
 import type { ChangeEvent, FC, JSX, ReactNode } from 'react';
 import { z } from 'zod';
-import { authorizeUser } from '~/base/auth/hooks/authorizeUser';
-import { resetUserPassword } from '~/base/auth/hooks/resetUserPassword';
-import { zodSchema } from '~/base/schema/zodSchema';
+import { authorizeUser } from '~/base/firebase/authentication/hooks/authorizeUser';
+import { resetUserPassword } from '~/base/firebase/authentication/hooks/resetUserPassword';
+import { zodSchema } from '~/base/validation/schema/zodSchema';
 
 type Type_PropDrill = {
   ModalParent: FC<{ children: ReactNode }>;

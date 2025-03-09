@@ -1,7 +1,7 @@
 import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import { StrictMode } from 'react';
 import type { Route } from './+types/root';
-import AuthProvider from './base/auth/context/authProvider';
+import AuthProvider from './base/firebase/authentication/context/authProvider';
 
 export function meta() {
   return [

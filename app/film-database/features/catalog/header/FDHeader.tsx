@@ -1,4 +1,4 @@
-import { deauthorizeUser } from '~/base/auth/hooks/deauthorizeUser';
+import { deauthorizeUser } from '~/base/firebase/authentication/hooks/deauthorizeUser';
 import { useCatalogProvider } from '../../../context/CatalogContext';
 import { MaterialSymbolsMovieSharp } from '~/film-database/assets/google-material-symbols/GoogleMaterialIcons';
 
