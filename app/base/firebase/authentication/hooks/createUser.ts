@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { firebaseAuth } from '~/base/config/firebaseConfig';
+import { firebaseAuth } from '../../config/firebaseConfig';
 
 export async function createUser(emailAddress: string, password: string) {
   try {

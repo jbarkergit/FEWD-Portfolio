@@ -1,5 +1,5 @@
-import { firebaseAuth } from '~/base/config/firebaseConfig';
 import { signOut } from 'firebase/auth';
+import { firebaseAuth } from '../../config/firebaseConfig';
 
 export async function deauthorizeUser() {
   try {

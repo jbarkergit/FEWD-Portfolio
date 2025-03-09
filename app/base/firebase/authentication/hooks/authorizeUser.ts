@@ -1,5 +1,5 @@
 import { GithubAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { firebaseAuth } from '~/base/config/firebaseConfig';
+import { firebaseAuth } from '../../config/firebaseConfig';
 
 export function authorizeUser() {
   async function emailAndPassword(fields: { emailAddress: string; password: string }) {
