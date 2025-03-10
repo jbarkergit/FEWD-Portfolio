@@ -1,8 +1,8 @@
 import { forwardRef, useState } from 'react';
 import type { ChangeEvent, FC, JSX, ReactNode } from 'react';
 import { z } from 'zod';
-import { authorizeUser } from '~/base/firebase/authentication/hooks/authorizeUser';
-import { resetUserPassword } from '~/base/firebase/authentication/hooks/resetUserPassword';
+import { useAuthorizeUser } from '~/base/firebase/authentication/hooks/useAuthorizeUser';
+import { useResetUserPassword } from '~/base/firebase/authentication/hooks/useResetUserPassword';
 import { zodSchema } from '~/base/validation/schema/zodSchema';
 
 type Type_PropDrill = {
@@ -35,7 +35,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
     e.preventDefault();
     setSubmitted(true); // Mark the form as submitted
     if (schema.safeParse(values).success) {
-      authorizeUser().emailAndPassword(values);
+      useAuthorizeUser().emailAndPassword(values);
     }
   };
 
@@ -102,7 +102,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
             aria-label='Forgot password'
             onPointerUp={(e) => {
               e.preventDefault();
-              if (schema.safeParse(values).success) resetUserPassword(values.emailAddress);
+              if (schema.safeParse(values).success) useResetUserPassword(values.emailAddress);
             }}>
             I forgot my password.
           </button>

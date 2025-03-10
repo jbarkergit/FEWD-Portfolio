@@ -1,4 +1,4 @@
-import { deauthorizeUser } from '~/base/firebase/authentication/hooks/deauthorizeUser';
+import { useDeauthorizeUser } from '~/base/firebase/authentication/hooks/useDeauthorizeUser';
 import { useCatalogProvider } from '../../../context/CatalogContext';
 import { MaterialSymbolsMovieSharp } from '~/film-database/assets/google-material-symbols/GoogleMaterialIcons';
 
@@ -22,7 +22,7 @@ const FDHeader = () => {
           </svg>
         ),
         func: (): void => {
-          deauthorizeUser();
+          useDeauthorizeUser();
         },
       },
     ],

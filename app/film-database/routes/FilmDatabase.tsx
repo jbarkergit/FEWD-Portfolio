@@ -1,7 +1,7 @@
 // Router
 import type { Route } from './+types/FilmDatabase';
 // Auth
-import isUserAuthorized from '~/base/firebase/authentication/hooks/isUserAuthorized';
+import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAuthorized';
 // Fetch & utility
 import { useTmdbFetcher, type Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 // Context

@@ -2,9 +2,8 @@ import { useState, useRef, useEffect, type FC, type ReactNode } from 'react';
 import FDAccountRegistry from './fieldsets/FDAccountRegistry';
 import FDAccountSignIn from './fieldsets/FDAccountSignIn';
 import FDAccountReset from './fieldsets/FDAccountReset';
-
 import { useLoaderData } from 'react-router';
-import { authorizeUser } from '~/base/firebase/authentication/hooks/authorizeUser';
+import { useAuthorizeUser } from '~/base/firebase/authentication/hooks/useAuthorizeUser';
 
 const FDAccountModal = () => {
   const { accountData } = useLoaderData();
@@ -61,7 +60,7 @@ const FDAccountModal = () => {
           aria-label='Sign in with Google'
           onPointerUp={(e) => {
             e.preventDefault();
-            authorizeUser().google();
+            useAuthorizeUser().google();
           }}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 262'>
             <path
@@ -82,7 +81,7 @@ const FDAccountModal = () => {
           aria-label='Sign in with Github'
           onPointerUp={(e) => {
             e.preventDefault();
-            authorizeUser().github();
+            useAuthorizeUser().github();
           }}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
             <g fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'>

@@ -1,8 +1,8 @@
 import { getDocs, collection } from 'firebase/firestore';
-import { database, firebaseAuth } from '../../config/firebaseConfig';
-import isUserAuthorized from '../../authentication/hooks/isUserAuthorized';
+import { database } from '../../config/firebaseConfig';
+import isUserAuthorized from '../../authentication/utility/isUserAuthorized';
 
-export async function getFirestoreCollection(docs: string) {
+export async function useFirestoreCollection(docs: string) {
   if (!isUserAuthorized) return undefined;
 
   try {
@@ -15,5 +15,3 @@ export async function getFirestoreCollection(docs: string) {
     return undefined;
   }
 }
-
-export default getFirestoreCollection;

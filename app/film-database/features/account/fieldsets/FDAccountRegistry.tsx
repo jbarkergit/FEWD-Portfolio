@@ -1,8 +1,7 @@
 import { forwardRef, useState } from 'react';
 import type { ChangeEvent, FC, JSX, ReactNode } from 'react';
 import { z } from 'zod';
-import { createUser } from '~/base/firebase/authentication/hooks/createUser';
-
+import { useCreateUser } from '~/base/firebase/authentication/hooks/useCreateUser';
 import { zodSchema } from '~/base/validation/schema/zodSchema';
 
 type Type_PropDrill = {
@@ -45,7 +44,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
 
     try {
       if (parse.success) {
-        createUser(values.emailAddress, values.password);
+        useCreateUser(values.emailAddress, values.password);
       } else {
         const errorMessage = parse.error.errors.map((err) => `${err.path.join('.')} - ${err.message}`).join(', ');
         throw new Error(`One or more form fields are not valid: ${errorMessage}`);
