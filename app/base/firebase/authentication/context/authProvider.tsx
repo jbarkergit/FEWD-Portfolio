@@ -19,7 +19,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const [user, setUser] = useState<AuthUser | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(firebaseAuth, (user: User | null) => {
+    const authStateListener = onAuthStateChanged(firebaseAuth, (user: User | null) => {
       setUser(
         user
           ? {
@@ -30,7 +30,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
           : null
       );
     });
-    return () => unsubscribe();
+    return () => authStateListener();
   }, []);
 
   return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>;
