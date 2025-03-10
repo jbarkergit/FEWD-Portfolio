@@ -1,6 +1,6 @@
 import { collection, getDocs } from 'firebase/firestore';
 import { useState } from 'react';
-import { database } from '~/base/config/firebaseConfig';
+import { database } from '~/base/firebase/config/firebaseConfig';
 
 const FDMovieList = () => {
   const [users, setUsers] = useState<unknown>();
