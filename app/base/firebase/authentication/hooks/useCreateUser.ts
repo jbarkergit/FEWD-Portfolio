@@ -5,7 +5,7 @@ import { createFirestoreCollectionUser } from '../../firestore/utility/createFir
 export async function useCreateUser(emailAddress: string, password: string) {
   try {
     await createUserWithEmailAndPassword(firebaseAuth, emailAddress, password);
-    createFirestoreCollectionUser();
+    await createFirestoreCollectionUser();
   } catch (error) {
     console.error(error);
   }
