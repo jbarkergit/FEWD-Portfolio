@@ -2,8 +2,8 @@ import { firebaseAuth } from '../../config/firebaseConfig';
 
 export default function isUserAuthorized(): Promise<boolean> {
   return new Promise((resolve) => {
-    const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
-      unsubscribe();
+    const checkAuthState = firebaseAuth.onAuthStateChanged((user) => {
+      checkAuthState();
       resolve(!!user);
     });
   });
