@@ -1,4 +1,4 @@
-import { collection, CollectionReference, doc, DocumentReference, DocumentSnapshot, getDoc, setDoc, type DocumentData } from 'firebase/firestore';
+import { doc, DocumentReference, DocumentSnapshot, getDoc, setDoc, type DocumentData } from 'firebase/firestore';
 import { database, firebaseAuth } from '../../config/firebaseConfig';
 import type { User } from 'firebase/auth';
 
