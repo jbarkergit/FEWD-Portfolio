@@ -3,7 +3,8 @@ import { database } from '../../config/firebaseConfig';
 import isUserAuthorized from '../../authentication/utility/isUserAuthorized';
 
 export async function useFirestoreCollection(docs: string) {
-  if (!isUserAuthorized) return undefined;
+  const isUserAuth = await isUserAuthorized();
+  if (!isUserAuth) return undefined;
 
   try {
     const querySnapshot = await getDocs(collection(database, docs));
