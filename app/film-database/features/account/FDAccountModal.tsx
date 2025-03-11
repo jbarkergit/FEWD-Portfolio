@@ -3,8 +3,9 @@ import FDAccountRegistry from './fieldsets/FDAccountRegistry';
 import FDAccountSignIn from './fieldsets/FDAccountSignIn';
 import FDAccountReset from './fieldsets/FDAccountReset';
 import { useLoaderData } from 'react-router';
-import { useAuthorizeUser } from '~/base/firebase/authentication/hooks/useAuthorizeUser';
 import { DeviconGoogle, TablerBrandGithubFilled } from '~/film-database/assets/google-material-symbols/GoogleMaterialIcons';
+import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 
 const FDAccountModal = () => {
   const { accountData } = useLoaderData();
@@ -59,17 +60,21 @@ const FDAccountModal = () => {
       <div className='fdAccountModal__modals__btns__grouped'>
         <button
           aria-label='Sign in with Google'
-          onPointerUp={(e) => {
+          onPointerUp={async (e) => {
             e.preventDefault();
-            useAuthorizeUser().google();
+            const provider = new GoogleAuthProvider();
+            await signInWithPopup(firebaseAuth, provider);
+            window.location.reload();
           }}>
           <DeviconGoogle />
         </button>
         <button
           aria-label='Sign in with Github'
-          onPointerUp={(e) => {
+          onPointerUp={async (e) => {
             e.preventDefault();
-            useAuthorizeUser().github();
+            const provider = new GithubAuthProvider();
+            await signInWithPopup(firebaseAuth, provider);
+            window.location.reload();
           }}>
           <TablerBrandGithubFilled />
         </button>

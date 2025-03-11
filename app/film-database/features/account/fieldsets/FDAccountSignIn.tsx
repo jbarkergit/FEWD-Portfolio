@@ -1,8 +1,8 @@
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import { forwardRef, useState } from 'react';
 import type { ChangeEvent, FC, JSX, ReactNode } from 'react';
 import { z } from 'zod';
-import { useAuthorizeUser } from '~/base/firebase/authentication/hooks/useAuthorizeUser';
-import { useResetUserPassword } from '~/base/firebase/authentication/hooks/useResetUserPassword';
+import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { zodSchema } from '~/base/validation/schema/zodSchema';
 
 type Type_PropDrill = {
@@ -31,11 +31,12 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
     });
   };
 
-  const handleSubmit = (e: React.PointerEvent) => {
+  const handleSubmit = async (e: React.PointerEvent): Promise<void> => {
     e.preventDefault();
     setSubmitted(true); // Mark the form as submitted
     if (schema.safeParse(values).success) {
-      useAuthorizeUser().emailAndPassword(values);
+      await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
+      window.location.reload();
     }
   };
 
@@ -102,7 +103,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
             aria-label='Forgot password'
             onPointerUp={(e) => {
               e.preventDefault();
-              if (schema.safeParse(values).success) useResetUserPassword(values.emailAddress);
+              if (schema.safeParse(values).success) sendPasswordResetEmail(firebaseAuth, values.emailAddress);
             }}>
             I forgot my password.
           </button>
