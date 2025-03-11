@@ -1,12 +1,10 @@
 import { GithubAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { firebaseAuth } from '../../config/firebaseConfig';
-import { createFirestoreCollectionUser } from '../../firestore/utility/createFirestoreCollectionUser';
 
 export function useAuthorizeUser() {
   async function emailAndPassword(fields: { emailAddress: string; password: string }) {
     try {
       await signInWithEmailAndPassword(firebaseAuth, fields.emailAddress, fields.password);
-      await createFirestoreCollectionUser();
       window.location.reload();
     } catch (err) {
       console.error('Error thrown during Email and Password authorization: ', err);
@@ -17,7 +15,6 @@ export function useAuthorizeUser() {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(firebaseAuth, provider);
-      await createFirestoreCollectionUser();
       window.location.reload();
     } catch (err) {
       console.error('Error thrown during Google authorization: ', err);
@@ -28,7 +25,6 @@ export function useAuthorizeUser() {
     try {
       const provider = new GithubAuthProvider();
       await signInWithPopup(firebaseAuth, provider);
-      await createFirestoreCollectionUser();
       window.location.reload();
     } catch (err) {
       console.error('Error thrown during Github authorization: ', err);
