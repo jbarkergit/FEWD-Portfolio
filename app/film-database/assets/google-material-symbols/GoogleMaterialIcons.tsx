@@ -127,6 +127,27 @@ export function EmptyStar(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function MaterialSymbolsHeartPlus(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
+      <path
+        fill='currentColor'
+        d='M18 17v-3h-3v-2h3V9h2v3h3v2h-3v3zm-7 4l-3.175-2.85q-1.8-1.625-3.088-2.9t-2.125-2.4t-1.225-2.175T1 8.475q0-2.35 1.575-3.912T6.5 3q1.3 0 2.475.538T11 5.075q.85-1 2.025-1.537T15.5 3q2.125 0 3.563 1.288T20.85 7.3q-.45-.175-.9-.262t-.875-.088q-2.525 0-4.3 1.763T13 13q0 1.3.525 2.463T15 17.45q-.475.425-1.237 1.088T12.45 19.7z'
+      />
+    </svg>
+  );
+}
+export function MaterialSymbolsLightHeartMinusRounded(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
+      <path
+        fill='currentColor'
+        d='M15.23 13.5q-.213 0-.356-.143T14.731 13t.143-.357t.357-.143h6q.213 0 .356.143t.144.357t-.144.357t-.356.143zM11 19.267q-.196 0-.383-.057q-.186-.058-.346-.218q-2.119-1.942-3.687-3.448t-2.58-2.757t-1.509-2.35T2 8.224q0-1.908 1.296-3.201T6.5 3.731q1.32 0 2.475.672T11 6.363q.87-1.288 2.025-1.96q1.156-.672 2.475-.672q1.537 0 2.682.862t1.557 2.218q.102.322-.136.569t-.605.197q-.215-.039-.421-.058t-.421-.019q-2.202 0-3.814 1.597q-1.611 1.597-1.611 3.903q0 .858.26 1.651q.261.793.755 1.472q.179.242.16.565t-.24.54l-1.937 1.77q-.16.16-.346.214t-.383.055'
+      />
+    </svg>
+  );
+}
+
 export function MaterialSymbolsPlayArrow(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...props}>
