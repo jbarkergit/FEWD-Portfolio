@@ -7,7 +7,7 @@ export type Type_usePaginateData_Data_Provider = Array<
   Namespace_Tmdb.BaseMedia_Provider | Namespace_Tmdb.Credits_Obj['credits']['cast'][0] | Namespace_Tmdb.Credits_Obj['credits']['crew'][0]
 >;
 
-export const usePaginateData = (rawData: Namespace_Tmdb.Response_Union[] | Namespace_Tmdb.Response_Union) => {
+export const usePaginateData = (rawData: Namespace_Tmdb.Response_Union[] | Namespace_Tmdb.Response_Union, maxCarouselNodes: number) => {
   // Initialize mutatable map
   let store: Map<Namespace_TmdbEndpointsKeys.Keys_Union, Type_usePaginateData_Data_Provider[]> | undefined = new Map(undefined);
 
@@ -18,10 +18,6 @@ export const usePaginateData = (rawData: Namespace_Tmdb.Response_Union[] | Names
 
     // If key doesn't exist in map, create new entry
     if (!isKeyMapped) store.set(targetKey, []);
-
-    // Max carousel nodes
-    const root: Element | null = document.querySelector('[data-layout-carousel]');
-    const maxCarouselNodes: number = parseInt(getComputedStyle(root!).getPropertyValue('--fd-carousel-items-per-page'));
 
     // Paginate data
     for (let i = 0; i < data.length; i += maxCarouselNodes + 1) {

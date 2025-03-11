@@ -12,7 +12,7 @@ import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
   // Context
-  const { isMovieModal } = useCatalogProvider();
+  const { isMovieModal, maxCarouselNodes } = useCatalogProvider();
 
   // State
   const { primaryData } = useLoaderData();
@@ -27,7 +27,7 @@ const FDMedia = () => {
    * Paginates data
    */
   function paginatePrimaryData(): void {
-    const chunkedPrimaryData = usePaginateData(primaryData);
+    const chunkedPrimaryData = usePaginateData(primaryData, maxCarouselNodes);
     setPaginatedData(chunkedPrimaryData);
   }
 

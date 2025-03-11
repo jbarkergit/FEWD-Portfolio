@@ -9,16 +9,12 @@ import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../ass
 
 const FDCarouselSearch = () => {
   // Context
-  const { setHeroData } = useCatalogProvider();
+  const { setHeroData, maxCarouselNodes } = useCatalogProvider();
 
   // State
   const [isTyping, setIsTyping] = useState(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchResults, setSearchResults] = useState<Namespace_Tmdb.Search_Obj['search']['results'] | undefined>(undefined);
-
-  // Max carousel nodes per page
-  const layoutAttr: Element | null = document.querySelector('[data-layout-carousel]');
-  const maxCarouselNodes: number = layoutAttr ? parseInt(getComputedStyle(layoutAttr).getPropertyValue('--fd-carousel-items-per-page')) : 8;
 
   // Debounce
   const timerRef = useRef<NodeJS.Timeout | null>(null);

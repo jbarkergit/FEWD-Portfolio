@@ -7,12 +7,12 @@ import { usePaginateData } from '../../../../hooks/usePaginateData';
 import FDDetails from '../../../../components/movie/FDDetails';
 
 const FDMovieModal = () => {
-  const { heroData } = useCatalogProvider();
+  const { heroData, maxCarouselNodes } = useCatalogProvider();
   const [castCrew, setCastCrew] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
   const fetch = async (): Promise<void> => {
     const castCrewResponse = (await useTmdbFetcher({ credits: (heroData as Namespace_Tmdb.BaseMedia_Provider).id })) as Namespace_Tmdb.Credits_Obj;
-    const castCrew = usePaginateData(castCrewResponse);
+    const castCrew = usePaginateData(castCrewResponse, maxCarouselNodes);
     setCastCrew(castCrew);
   };
 

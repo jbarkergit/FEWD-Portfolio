@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import type { FC, ReactNode } from 'react';
 import type { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import { useLoaderData } from 'react-router';
@@ -8,6 +8,7 @@ export type Type_heroData = Namespace_Tmdb.BaseMedia_Provider | undefined;
 type Context = {
   heroData: Type_heroData;
   setHeroData: React.Dispatch<React.SetStateAction<Type_heroData>>;
+  maxCarouselNodes: number;
   isMovieModal: boolean;
   setIsMovieModal: React.Dispatch<React.SetStateAction<boolean>>;
   isListModal: boolean;
@@ -21,12 +22,38 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { initialHeroData } = useLoaderData();
   const [heroData, setHeroData] = useState<Type_heroData>(initialHeroData);
 
+  // Dynamic carousel integer
+  const [maxCarouselNodes, setMaxCarouselNodes] = useState<number>(getMaxCarouselNodes());
+
+  function getMaxCarouselNodes() {
+    const width: number = window.innerWidth;
+
+    if (width >= 2561) return 8;
+    if (width <= 2560 && width > 1920) return 7;
+    if (width <= 1920 && width > 1024) return 6;
+    if (width <= 1024 && width > 834) return 4;
+    if (width <= 834 && width > 601) return 3;
+    if (width <= 601) return 2;
+    return 8;
+  }
+
+  useEffect(() => {
+    const handleResize = () => setMaxCarouselNodes(getMaxCarouselNodes());
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Modals state
   const [isMovieModal, setIsMovieModal] = useState<boolean>(false);
   const [isListModal, setIsListModal] = useState<boolean>(false);
 
   /** Provider */
-  return <CatalogContext.Provider value={{ heroData, setHeroData, isMovieModal, setIsMovieModal, isListModal, setIsListModal }}>{children}</CatalogContext.Provider>;
+  return (
+    <CatalogContext.Provider value={{ heroData, setHeroData, maxCarouselNodes, isMovieModal, setIsMovieModal, isListModal, setIsListModal }}>
+      {children}
+    </CatalogContext.Provider>
+  );
 };
 
 export const useCatalogProvider = () => {

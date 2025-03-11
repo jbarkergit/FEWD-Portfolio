@@ -21,12 +21,9 @@ const FDCarousel = ({
   data: Type_usePaginateData_Data_Provider[];
 }) => {
   // Context
-  const { setHeroData } = useCatalogProvider();
+  const { setHeroData, maxCarouselNodes } = useCatalogProvider();
   // References
   const carouselRef = useRef<HTMLUListElement>(null);
-  // Max carousel nodes per page
-  const layoutAttr: Element | null = document.querySelector('[data-layout-carousel]');
-  const maxCarouselNodes: number = layoutAttr ? parseInt(getComputedStyle(layoutAttr).getPropertyValue('--fd-carousel-items-per-page')) : 8;
 
   /** Desktop Horizontal Navigation */
   let carouselIndex: number = 0;
