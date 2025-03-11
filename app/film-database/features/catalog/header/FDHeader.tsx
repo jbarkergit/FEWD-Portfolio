@@ -24,6 +24,7 @@ const FDHeader = () => {
         ),
         func: async (): Promise<void> => {
           await signOut(firebaseAuth);
+          window.location.reload();
         },
       },
     ],
