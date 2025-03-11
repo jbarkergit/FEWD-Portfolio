@@ -1,5 +1,5 @@
 // Deps
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLoaderData } from 'react-router';
 // Context
 import { useCatalogProvider } from '../../../context/CatalogContext';
