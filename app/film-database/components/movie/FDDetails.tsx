@@ -7,7 +7,16 @@ import { useTmdbFetcher, type Namespace_Tmdb } from '~/film-database/composables
 // Data
 import { tmdbMovieGenres } from '~/film-database/composables/tmdb-api/data/tmdbGenres';
 // Assets
-import { EmptyStar, Exit, FullStar, HalfStar, SvgSpinnersRingResize, TheMovieDatabaseLogo } from '../../assets/google-material-symbols/GoogleMaterialIcons';
+import {
+  EmptyStar,
+  Exit,
+  FullStar,
+  HalfStar,
+  MaterialSymbolsHeartPlus,
+  MaterialSymbolsLightHeartMinusRounded,
+  SvgSpinnersRingResize,
+  TheMovieDatabaseLogo,
+} from '../../assets/google-material-symbols/GoogleMaterialIcons';
 
 const FDDetails = (modal: { modal: boolean }) => {
   const { heroData, setIsMovieModal } = useCatalogProvider();
@@ -88,6 +97,15 @@ const FDDetails = (modal: { modal: boolean }) => {
         </footer>
         <header className='fdDetails__article__header'>
           <h2>{heroData.title}</h2>
+          {!!true ? (
+            <button aria-label='Add to your movie list' onPointerUp={() => {}}>
+              <MaterialSymbolsHeartPlus />
+            </button>
+          ) : (
+            <button aria-label='Remove from your movie list' onPointerUp={() => {}}>
+              <MaterialSymbolsLightHeartMinusRounded />
+            </button>
+          )}
         </header>
 
         <ul className='fdDetails__article__col'>
