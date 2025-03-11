@@ -16,22 +16,10 @@ const FDMedia = () => {
 
   // State
   const { primaryData } = useLoaderData();
-  const [paginatedData, setPaginatedData] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
+  const paginatedData: ReturnType<typeof usePaginateData> = usePaginateData(primaryData, maxCarouselNodes);
 
   // References
   const fdMediaRef = useRef<HTMLElement>(null);
-
-  /**
-   * @function paginatePrimaryData
-   * @returns void
-   * Paginates data
-   */
-  function paginatePrimaryData(): void {
-    const chunkedPrimaryData = usePaginateData(primaryData, maxCarouselNodes);
-    setPaginatedData(chunkedPrimaryData);
-  }
-
-  useEffect(() => paginatePrimaryData(), []);
 
   /**
    * @function deltaScrollCarousels
