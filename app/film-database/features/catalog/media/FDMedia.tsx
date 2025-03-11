@@ -11,13 +11,11 @@ import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
-  // Loader
-  const { primaryData } = useLoaderData();
-
   // Context
   const { isMovieModal } = useCatalogProvider();
 
   // State
+  const { primaryData } = useLoaderData();
   const [paginatedData, setPaginatedData] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
   // References
@@ -29,10 +27,8 @@ const FDMedia = () => {
    * Paginates data
    */
   function paginatePrimaryData(): void {
-    if (primaryData) {
-      const paginatedData = usePaginateData(primaryData);
-      setPaginatedData(paginatedData);
-    }
+    const chunkedPrimaryData = usePaginateData(primaryData);
+    setPaginatedData(chunkedPrimaryData);
   }
 
   useEffect(() => paginatePrimaryData(), []);
@@ -45,7 +41,7 @@ const FDMedia = () => {
    */
   const deltaScrollCarousels = (delta: 1 | -1): void => {
     if (window.innerWidth < 1050 || !fdMediaRef.current) return;
-    const carouselNodesArr: Element[] = [...fdMediaRef.current?.children];
+    const carouselNodesArr: Element[] = [...fdMediaRef.current.children];
 
     // Gather indexes
     const activeNodeIndex: number = carouselNodesArr.findIndex((node: Element) => node.getAttribute('data-anim') === 'active');
