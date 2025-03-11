@@ -42,14 +42,23 @@
       display: block;
       width: calc(2.25rem * 4); // 4X Header font-size
     }
-    & header h2 {
-      max-width: 28ch;
-      white-space: nowrap;
-      overflow: clip;
-      text-overflow: ellipsis;
-      @include m.fdFontXXL;
-      text-transform: uppercase;
-      text-shadow: var(--fd-font-shadow);
+    & header {
+      display: flex;
+      align-items: center;
+      gap: var(--fd-gap);
+      & h2 {
+        max-width: 28ch;
+        white-space: nowrap;
+        overflow: clip;
+        text-overflow: ellipsis;
+        @include m.fdFontXXL;
+        text-transform: uppercase;
+        text-shadow: var(--fd-font-shadow);
+      }
+      & button svg {
+        width: 1.6em;
+        aspect-ratio: 1/1;
+      }
     }
     & p {
       display: -webkit-box;
