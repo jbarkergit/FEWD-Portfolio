@@ -97,7 +97,7 @@ const FDCarouselSearch = () => {
 
       <div className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
-          {maxCarouselNodes && searchResults && !isTyping
+          {searchResults && !isTyping
             ? searchResults.splice(0, maxCarouselNodes).map((props, index) => {
                 if (props.poster_path)
                   return (
