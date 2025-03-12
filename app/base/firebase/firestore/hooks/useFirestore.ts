@@ -85,4 +85,4 @@ const updateDocumentMovies = async (collectionName: Firestore_CollectionNames, m
   await updateDoc(docRef, { ...userDoc, movies: movies });
 };
 
-export const firestoreUtility = { getUser, getDocument, updateDocumentMovies };
+export const useFirestore = { getUser, getDocument, updateDocumentMovies };
