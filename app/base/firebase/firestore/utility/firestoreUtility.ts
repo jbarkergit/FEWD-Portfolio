@@ -1,4 +1,4 @@
-import { doc, DocumentReference, DocumentSnapshot, getDoc, setDoc, type DocumentData } from 'firebase/firestore';
+import { doc, DocumentReference, DocumentSnapshot, getDoc, setDoc, updateDoc, type DocumentData } from 'firebase/firestore';
 import { database, firebaseAuth } from '../../config/firebaseConfig';
 import type { User } from 'firebase/auth';
 import isUserAuthorized from '../../authentication/utility/isUserAuthorized';
@@ -6,8 +6,8 @@ import type { Type_MovieGenre_Keys } from '~/film-database/composables/tmdb-api/
 
 type Firestore_CollectionNames = 'users';
 
-type Genre_MovieId_Array = Array<number>;
-export type Firestore_MovieList = Record<Type_MovieGenre_Keys, Genre_MovieId_Array> | {};
+type Firestore_Movies = Record<Type_MovieGenre_Keys, Array<number>>;
+export type Firestore_MovieList_Update = Record<Type_MovieGenre_Keys, Record<number, boolean>>;
 
 type Firestore_UserDocument = {
   credentials: {
@@ -21,7 +21,7 @@ type Firestore_UserDocument = {
     creationTime: User['metadata']['creationTime'];
     lastSignInTime: User['metadata']['lastSignInTime'];
   };
-  movies: Firestore_MovieList;
+  movies: Firestore_Movies | {};
 };
 
 const getUser = async (): Promise<User | undefined> => {
@@ -37,7 +37,9 @@ const getUser = async (): Promise<User | undefined> => {
   }
 };
 
-const getDocument = async (collectionName: Firestore_CollectionNames) => {
+/** @todo memoize with real time updates */
+const getDocument = async (collectionName: Firestore_CollectionNames): Promise<Firestore_UserDocument | undefined> => {
+  // Get user
   const user: User | undefined = await getUser();
 
   // If user is authorized && user exists, otherwise do nothing
@@ -46,29 +48,41 @@ const getDocument = async (collectionName: Firestore_CollectionNames) => {
     const docRef: DocumentReference<DocumentData, DocumentData> = doc(database, collectionName, user.uid);
     const docSnap: DocumentSnapshot<unknown, DocumentData> = await getDoc(docRef);
 
-    // If user's document exists, return it
-    if (docSnap.exists()) return docSnap.data();
+    // If the user's document does not exist, create it
+    if (!docSnap.exists()) {
+      const newDocument: Firestore_UserDocument = {
+        credentials: {
+          isAnonymous: user.isAnonymous,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          displayName: user.displayName,
+        },
+        metadata: {
+          uid: user.uid,
+          creationTime: user.metadata.creationTime,
+          lastSignInTime: user.metadata.lastSignInTime,
+        },
+        movies: {},
+      };
+      await setDoc(docRef, newDocument);
+    }
 
-    // If user does not have a document, create then return new document
-    const newDocument: Firestore_UserDocument = {
-      credentials: {
-        isAnonymous: user.isAnonymous,
-        email: user.email,
-        emailVerified: user.emailVerified,
-        displayName: user.displayName,
-      },
-      metadata: {
-        uid: user.uid,
-        creationTime: user.metadata.creationTime,
-        lastSignInTime: user.metadata.lastSignInTime,
-      },
-      movies: {},
-    };
-    await setDoc(docRef, newDocument);
-    return docSnap;
+    // Return user document
+    return docSnap.data() as Firestore_UserDocument;
   }
 };
 
-const addDocumentMovie = async () => {};
+const updateDocumentMovies = async (collectionName: Firestore_CollectionNames, movies: Firestore_MovieList_Update): Promise<void> => {
+  // If the user is authorized && user exists, create document if it doesn't exist. (We won't be using the return)
+  await getDocument(collectionName);
+  // getDocument will fire getUser, so we can safely assume it's available.
+  const user = (await getUser()) as User;
+  // Get document to spread values
+  const userDoc: Firestore_UserDocument | undefined = await getDocument(collectionName);
+  // Create new document reference
+  const docRef: DocumentReference<DocumentData, DocumentData> = doc(database, collectionName, user.uid);
+  // Overwrite existing document
+  await updateDoc(docRef, { ...userDoc, movies: movies });
+};
 
-export const firestoreUtility = { getUser, getDocument };
+export const firestoreUtility = { getUser, getDocument, updateDocumentMovies };
