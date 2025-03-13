@@ -1,23 +1,23 @@
-import { useEffect, useState, type JSX } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 // Context
 import { useCatalogProvider } from '../../context/CatalogContext';
+// Firebase
+import { useFirestore } from '~/base/firebase/firestore/hooks/useFirestore';
 // Hooks
 import { useTmdbFetcher, type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
+import useVoteAvgVisual from '~/film-database/hooks/useVoteAvgVisual';
 // Data
 import { tmdbMovieGenres } from '~/film-database/composables/tmdb-api/data/tmdbGenres';
 // Assets
 import {
-  EmptyStar,
   Exit,
-  FullStar,
-  HalfStar,
   MaterialSymbolsHeartPlus,
   MaterialSymbolsLightHeartMinusRounded,
   SvgSpinnersRingResize,
   TheMovieDatabaseLogo,
 } from '../../assets/google-material-symbols/GoogleMaterialIcons';
-import { useFirestore } from '~/base/firebase/firestore/hooks/useFirestore';
+import useFormattedDate from '~/film-database/hooks/useFormattedDate';
 
 const FDDetails = (modal: { modal: boolean }) => {
   const { heroData, setIsMovieModal } = useCatalogProvider();
@@ -41,53 +41,14 @@ const FDDetails = (modal: { modal: boolean }) => {
   })();
 
   /**
-   * @function renderStars
-   * @returns JSX.Element[] containing svgs to indicate vote average
+   * @function getMovieBtn
+   * @returns Promise<void>
+   * Stores boolean based on whether or not userDoc.movies contains heroData.id (if userDocs contains movie)
    */
-  const renderStars = (): JSX.Element[] => {
-    // 0-10 vote scale (contains floating point value)
-    const voteAverage: number = heroData.vote_average;
-    // Vote average floored and converted to 0-5 vote scale
-    const flooredVoteAverage: number = Math.floor(voteAverage / 2);
-
-    // Helpers
-    const hasFloatingValue: boolean = voteAverage % 2 >= 1;
-    const maxStars: number = 5;
-
-    const fullStars: number = flooredVoteAverage;
-    const halfStars: 1 | 0 = hasFloatingValue ? 1 : 0;
-    const emptyStars: number = maxStars - fullStars - halfStars;
-
-    return [...Array(fullStars).fill(<FullStar />), ...Array(halfStars).fill(<HalfStar />), ...Array(emptyStars).fill(<EmptyStar />)];
-  };
-
-  /**
-   * @function renderDate
-   * @returns Movie release date OR 'Now Available'
-   * Compares current date to movie release date to determine if the film has been released
-   */
-  const renderDate = (): string => {
-    const currentDate: string = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-    const releaseDate: string = heroData.release_date.replaceAll('-', '');
-    // Convert releaseDate to Date object
-    const releaseDateObj = new Date(`${releaseDate.slice(0, 4)}-${releaseDate.slice(4, 6)}-${releaseDate.slice(6, 8)}`);
-
-    if (releaseDate > currentDate) {
-      return `Available ${releaseDateObj.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })}`;
-    }
-
-    return 'Now Available';
-  };
-
-  /** @function */
   const [isMovieBtn, setIsMovieBtn] = useState<boolean | null>(null);
   useEffect(() => console.log(isMovieBtn), [isMovieBtn]);
 
-  const getMovieBtn = async () => {
+  const getMovieBtn = async (): Promise<void> => {
     const userDoc = await useFirestore.getDocument('users');
 
     setIsMovieBtn(() => {
@@ -138,12 +99,8 @@ const FDDetails = (modal: { modal: boolean }) => {
         </header>
 
         <ul className='fdDetails__article__col'>
-          <li aria-label={`Vote Average ${heroData.vote_average / 2} out of 5`}>
-            {renderStars().map((Star, index) => {
-              return <span key={`vote-average-star-${index}`}>{Star}</span>;
-            })}
-          </li>
-          <li data-status={renderDate() === 'Now Available' ? 'green' : ''}>{renderDate()}</li>
+          <li aria-label={`Vote Average ${heroData.vote_average / 2} out of 5`}>{useVoteAvgVisual()}</li>
+          {useFormattedDate()}
           <li>
             <nav id='fdDetails--nav'>
               <button aria-label={`View more details about ${heroData.title}`} onClick={() => setIsMovieModal(true)}>
