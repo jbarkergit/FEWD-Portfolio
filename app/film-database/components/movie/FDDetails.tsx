@@ -99,7 +99,7 @@ const FDDetails = (modal: { modal: boolean }) => {
         </header>
 
         <ul className='fdDetails__article__col'>
-          <li aria-label={`Vote Average ${heroData.vote_average / 2} out of 5`}>{useVoteAvgVisual(heroData.vote_average)}</li>
+          <li>{useVoteAvgVisual(heroData.vote_average)}</li>
           {useFormattedDate(heroData.release_date)}
           <li>
             <nav id='fdDetails--nav'>
