@@ -86,7 +86,10 @@ const updateDocumentMovies = async (collectionName: Firestore_CollectionNames, m
     const docRef: DocumentReference<DocumentData, DocumentData> = doc(database, collectionName, user.uid);
 
     // Create new movies object
-    const userMovies = movies.concat ? [...userDoc.movies, movies.movieId] : userDoc.movies.filter((id) => id !== movies.movieId);
+    const userMovies =
+      movies.concat && !userDoc.movies.some((movie) => movie === movies.movieId)
+        ? [...userDoc.movies, movies.movieId]
+        : userDoc.movies.filter((id) => id !== movies.movieId);
 
     // Overwrite existing document
     await updateDoc(docRef, { ...userDoc, movies: userMovies });
