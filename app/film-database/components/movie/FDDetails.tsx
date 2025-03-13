@@ -1,4 +1,4 @@
-import { useState, type JSX } from 'react';
+import { useEffect, useState, type JSX } from 'react';
 import { Link } from 'react-router';
 // Context
 import { useCatalogProvider } from '../../context/CatalogContext';
@@ -17,6 +17,7 @@ import {
   SvgSpinnersRingResize,
   TheMovieDatabaseLogo,
 } from '../../assets/google-material-symbols/GoogleMaterialIcons';
+import { useFirestore } from '~/base/firebase/firestore/hooks/useFirestore';
 
 const FDDetails = (modal: { modal: boolean }) => {
   const { heroData, setIsMovieModal } = useCatalogProvider();
@@ -82,6 +83,24 @@ const FDDetails = (modal: { modal: boolean }) => {
     return 'Now Available';
   };
 
+  /** @function */
+  const [isMovieBtn, setIsMovieBtn] = useState<boolean | null>(null);
+  useEffect(() => console.log(isMovieBtn), [isMovieBtn]);
+
+  const getMovieBtn = async () => {
+    const userDoc = await useFirestore.getDocument('users');
+
+    setIsMovieBtn(() => {
+      if (!userDoc) return null;
+      if (!userDoc.movies.some((num) => num === heroData.id)) return true;
+      return false;
+    });
+  };
+
+  useEffect(() => {
+    getMovieBtn();
+  }, []);
+
   /** @returns */
   return (
     <section className='fdDetails' data-modal={modal.modal}>
@@ -97,12 +116,22 @@ const FDDetails = (modal: { modal: boolean }) => {
         </footer>
         <header className='fdDetails__article__header'>
           <h2>{heroData.title}</h2>
-          {!!true ? (
-            <button aria-label='Add to your movie list' onPointerUp={() => {}}>
+          {isMovieBtn ? (
+            <button
+              aria-label='Add to your movie list'
+              onPointerUp={async () => {
+                await useFirestore.updateDocumentMovies('users', { movieId: heroData.id, concat: true });
+                await getMovieBtn();
+              }}>
               <MaterialSymbolsHeartPlus />
             </button>
           ) : (
-            <button aria-label='Remove from your movie list' onPointerUp={() => {}}>
+            <button
+              aria-label='Remove from your movie list'
+              onPointerUp={async () => {
+                await useFirestore.updateDocumentMovies('users', { movieId: heroData.id, concat: false });
+                await getMovieBtn();
+              }}>
               <MaterialSymbolsLightHeartMinusRounded />
             </button>
           )}
