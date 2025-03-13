@@ -12,7 +12,7 @@ import FDCarousel from '../../../components/carousel/FDCarousel';
 
 const FDMedia = () => {
   // Context
-  const { isMovieModal, maxCarouselNodes } = useCatalogProvider();
+  const { isMovieModal, isListModal, maxCarouselNodes } = useCatalogProvider();
 
   // State
   const { primaryData } = useLoaderData();
@@ -50,7 +50,7 @@ const FDMedia = () => {
 
   /** Event Listeners */
   useEffect(() => {
-    if (!isMovieModal) window.addEventListener('wheel', handleWheel);
+    if (!isMovieModal && !isListModal) window.addEventListener('wheel', handleWheel);
     else window.removeEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
   }, [fdMediaRef.current, isMovieModal]);
