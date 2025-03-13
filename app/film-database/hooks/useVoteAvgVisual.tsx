@@ -1,23 +1,16 @@
 import type { JSX } from 'react';
 import { EmptyStar, FullStar, HalfStar } from '../assets/google-material-symbols/GoogleMaterialIcons';
-import { useCatalogProvider } from '../context/CatalogContext';
 
 /**
  * @function useVoteAvgVisual
  * @returns Vote average in svg star visual reference
  */
-const useVoteAvgVisual = (): JSX.Element[] | undefined => {
-  const { heroData } = useCatalogProvider();
-  if (!heroData) return undefined;
-
-  // 0-10 vote scale (contains floating point value)
-  const voteAverage: number = heroData.vote_average;
-
-  // Vote average floored and converted to 0-5 vote scale
-  const flooredVoteAverage: number = Math.floor(voteAverage / 2);
+const useVoteAvgVisual = (voteAvg: number): JSX.Element[] | undefined => {
+  // 0-10 vote scale (contains floating point value) floored and converted to 0-5 vote scale
+  const flooredVoteAverage: number = Math.floor(voteAvg / 2);
 
   // Helpers
-  const hasFloatingValue: boolean = voteAverage % 2 >= 1;
+  const hasFloatingValue: boolean = voteAvg % 2 >= 1;
   const maxStars: number = 5;
 
   const fullStars: number = flooredVoteAverage;
