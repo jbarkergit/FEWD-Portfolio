@@ -99,7 +99,7 @@ const FDDetails = (modal: { modal: boolean }) => {
 
   useEffect(() => {
     getMovieBtn();
-  }, []);
+  }, [heroData]);
 
   /** @returns */
   return (
