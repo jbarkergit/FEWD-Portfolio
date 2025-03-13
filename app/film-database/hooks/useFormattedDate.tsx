@@ -16,15 +16,19 @@ const useFormattedDate = (release: string): JSX.Element => {
   // Return JSX.Element indicating release status
   if (releaseDate > currentDate) {
     return (
-      <li>{`Available ${releaseDateObj.toLocaleDateString('en-US', {
+      <div className='formattedReleaseDate'>{`Available ${releaseDateObj.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-      })}`}</li>
+      })}`}</div>
     );
   }
 
-  return <li data-status='green'>{'Now Available'}</li>;
+  return (
+    <div className='formattedReleaseDate' data-status='green'>
+      {'Now Available'}
+    </div>
+  );
 };
 
 export default useFormattedDate;
