@@ -2,12 +2,11 @@ import { doc, DocumentReference, DocumentSnapshot, getDoc, setDoc, updateDoc, ty
 import { database, firebaseAuth } from '../../config/firebaseConfig';
 import type { User } from 'firebase/auth';
 import isUserAuthorized from '../../authentication/utility/isUserAuthorized';
-import type { Type_MovieGenre_Keys } from '~/film-database/composables/tmdb-api/data/tmdbGenres';
 
 type Firestore_CollectionNames = 'users';
 
-type Firestore_Movies = Record<Type_MovieGenre_Keys, Array<number>>;
-export type Firestore_MovieList_Update = Record<Type_MovieGenre_Keys, Record<number, boolean>>;
+type Firestore_Movies = Array<number>;
+type Firestore_MovieList_Update = { movieId: number; concat: boolean };
 
 type Firestore_UserDocument = {
   credentials: {
@@ -21,7 +20,7 @@ type Firestore_UserDocument = {
     creationTime: User['metadata']['creationTime'];
     lastSignInTime: User['metadata']['lastSignInTime'];
   };
-  movies: Firestore_Movies | {};
+  movies: Firestore_Movies | [];
 };
 
 const getUser = async (): Promise<User | undefined> => {
@@ -62,7 +61,7 @@ const getDocument = async (collectionName: Firestore_CollectionNames): Promise<F
           creationTime: user.metadata.creationTime,
           lastSignInTime: user.metadata.lastSignInTime,
         },
-        movies: {},
+        movies: [],
       };
       await setDoc(docRef, newDocument);
     }
@@ -77,12 +76,23 @@ const updateDocumentMovies = async (collectionName: Firestore_CollectionNames, m
   await getDocument(collectionName);
   // getDocument will fire getUser, so we can safely assume it's available.
   const user = (await getUser()) as User;
-  // Get document to spread values
-  const userDoc: Firestore_UserDocument | undefined = await getDocument(collectionName);
-  // Create new document reference
-  const docRef: DocumentReference<DocumentData, DocumentData> = doc(database, collectionName, user.uid);
-  // Overwrite existing document
-  await updateDoc(docRef, { ...userDoc, movies: movies });
+
+  try {
+    // Get document to spread values
+    const userDoc: Firestore_UserDocument | undefined = await getDocument(collectionName);
+    if (!userDoc) throw new Error('user document could not be retrieved.');
+
+    // Create new document reference
+    const docRef: DocumentReference<DocumentData, DocumentData> = doc(database, collectionName, user.uid);
+
+    // Create new movies object
+    const userMovies = movies.concat ? [...userDoc.movies, movies.movieId] : userDoc.movies.filter((id) => id === movies.movieId);
+
+    // Overwrite existing document
+    await updateDoc(docRef, { ...userDoc, movies: userMovies });
+  } catch (error) {
+    console.error('Failed to update document movies: ' + error);
+  }
 };
 
 export const useFirestore = { getUser, getDocument, updateDocumentMovies };
