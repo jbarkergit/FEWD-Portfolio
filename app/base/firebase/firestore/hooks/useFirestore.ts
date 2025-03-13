@@ -8,7 +8,7 @@ type Firestore_CollectionNames = 'users';
 type Firestore_Movies = Array<number>;
 type Firestore_MovieList_Update = { movieId: number; concat: boolean };
 
-type Firestore_UserDocument = {
+export type Firestore_UserDocument = {
   credentials: {
     isAnonymous: User['isAnonymous'];
     email: User['email'];
