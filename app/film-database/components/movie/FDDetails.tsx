@@ -35,10 +35,14 @@ const FDDetails = (modal: { modal: boolean }) => {
    */
   const [watchProviders, setWatchProviders] = useState<Namespace_Tmdb.WatchProviders_Obj['watchProviders']['results']['US']['flatrate'] | undefined>(undefined);
 
-  (async () => {
+  const fetchWatchProviders = async () => {
     const data = (await useTmdbFetcher({ watchProviders: heroData?.id })) as Namespace_Tmdb.WatchProviders_Obj;
     setWatchProviders(data.watchProviders.results.US.flatrate);
-  })();
+  };
+
+  useEffect(() => {
+    fetchWatchProviders();
+  }, [heroData]);
 
   /**
    * @function getMovieBtn
