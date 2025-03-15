@@ -125,6 +125,10 @@
       &:last-of-type {
         margin-right: calc(var(--fd-padding-generic) / 1.5);
       }
+      // Hover event
+      &:hover:not([data-vis='true']) button picture img {
+        filter: brightness(80%) saturate(70%);
+      }
       // Noise texture on active element
       &[data-vis='true'] button picture {
         &::after {
