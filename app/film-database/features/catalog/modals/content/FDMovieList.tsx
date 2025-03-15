@@ -65,23 +65,25 @@ const FDMovieList = () => {
 
   /** @returns */
   return movies.length ? (
-    <div className='fdMovieModal__carousel'>
-      <ul ref={ulRef}>
-        {movies.map((movie, index) => (
-          <li key={`movie-list-key-${movie.id}`} data-vis={index === 0 ? 'true' : 'false'}>
-            <button onPointerUp={() => handleSelect(index)}>
-              <picture>
-                <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />
-              </picture>
-            </button>
-          </li>
-        ))}
-      </ul>
-      <article>
-        <header>{/* <h2>{movie.title}</h2> */}</header>
-        {/* {useFormattedDate(movie.release_date)} */}
-        {/* {useVoteAvgVisual(movie.vote_average)} */}
-      </article>
+    <div className='fdUserList'>
+      <section className='fdUserList__collections'></section>
+      <section className='fdUserList__carousel'>
+        <ul ref={ulRef} style={{ '--quantity': movies.length } as React.CSSProperties}>
+          {movies.map((movie, index) => (
+            <li key={`movie-list-key-${movie.id}`} data-vis={index === 0 ? 'true' : 'false'} style={{ '--position': `${index + 1}` } as React.CSSProperties}>
+              <button
+                onPointerUp={
+                  () => {}
+                  // handleSelect(index)
+                }>
+                <picture>
+                  <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />
+                </picture>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   ) : (
     <p>Whoops! It appears you haven't saved a movie yet!</p>

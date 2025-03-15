@@ -44,8 +44,8 @@ const FDModal = () => {
   /** JSX */
   if (isMovieModal || isListModal)
     return (
-      <div className='fdMovieModal'>
-        <div className='fdMovieModal__container' ref={modal}>
+      <div className='fdModal'>
+        <div className='fdModal__container' ref={modal}>
           {isMovieModal && <FDMovieModal />}
           {isListModal && <FDMovieList />}
         </div>

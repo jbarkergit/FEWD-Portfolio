@@ -22,15 +22,15 @@ const FDMovieModal = () => {
 
   if (heroData && castCrew)
     return (
-      <>
+      <div className='fdMovieModal'>
         <FDiFrame />
         <FDDetails modal={true} />
-        <section className='fdMovieModal__container__castCrew'>
+        <section className='fdMovieModal__castCrew'>
           {castCrew.map(([key, value], index) => (
             <FDCarousel type={key === 'cast' ? 'cast' : 'crew'} mapIndex={index} heading={key} data={value} key={`${key}-${index}`} />
           ))}
         </section>
-      </>
+      </div>
     );
 };
 
