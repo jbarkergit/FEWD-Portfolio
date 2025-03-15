@@ -1,7 +1,7 @@
 @use '/app/base/sass/util/functions' as f;
 @use '/app/film-database/scss/fdMixins' as m;
 
-.fdMovieModal {
+.fdModal {
   position: fixed;
   z-index: 11;
   top: 0;
@@ -21,28 +21,39 @@
     width: 50svw;
     height: 100%;
     padding-bottom: 2em;
+    border-top-right-radius: var(--fd-borderRadius);
     border-top-left-radius: var(--fd-borderRadius);
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: clip;
     background-color: #181818;
     box-shadow: rgba(0, 0, 0, 1) 0px 3px 10px;
-    @media (min-width: 1580px) {
-      &::-webkit-scrollbar {
-        width: 14px;
-        height: 14px;
-      }
-      &::-webkit-scrollbar-track {
-        background: #141414;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #f3f3f1;
+    &:has(.fdMovieModal) {
+      border-top-right-radius: 0;
+      overflow-x: clip;
+      overflow-y: scroll;
+      @media (min-width: 1580px) {
+        &::-webkit-scrollbar {
+          width: 14px;
+          height: 14px;
+        }
+        &::-webkit-scrollbar-track {
+          background: #141414;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #f3f3f1;
+        }
       }
     }
     @media (max-width: 1580px) {
       width: 100svw;
     }
   }
+}
 
+.fdMovieModal {
+  display: flex;
+  flex-direction: column;
+  width: inherit;
+  height: inherit;
   .fdiFrame {
     position: relative;
     display: inline;
@@ -81,89 +92,123 @@
       border-bottom: 1px solid #4d4545;
     }
   }
-}
 
-.fdMovieModal__container__castCrew .fdCarousel__wrapper {
-  &__ul__li {
-    --fd-carousel-node-width: calc(
-      (50svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
-    );
-    --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
-    :hover {
-      cursor: auto;
-    }
-  }
-  &__navigation {
-    width: 50svw;
-  }
-}
-
-.fdMovieModal__carousel {
-  & ul {
-    display: flex;
-    gap: var(--fd-gap);
-    // Allow room for box shadows
-    padding: 0 0 20px 0;
-    margin: calc(var(--fd-padding-generic) / 2) 0;
-    overflow-x: scroll;
-    scrollbar-width: none;
-    scroll-behavior: smooth;
-    & li {
-      display: block;
-      width: var(--fd-carousel-node-width);
-      height: var(--fd-carousel-node-height);
-      border: 2px solid transparent;
-      border-radius: var(--fd-borderRadius);
-      box-shadow:
-        0 8px 10px rgba(0, 0, 0, 0.6),
-        0 15px 15px rgba(0, 0, 0, 0.3);
-      overflow: clip;
-      // Handle margins for first and last child to remove padding from parent
-      &:first-of-type {
-        margin-left: calc(var(--fd-padding-generic) / 1.5);
-      }
-      &:last-of-type {
-        margin-right: calc(var(--fd-padding-generic) / 1.5);
-      }
-      // Hover event
-      &:hover:not([data-vis='true']) button picture img {
-        filter: brightness(80%) saturate(70%);
-      }
-      // Noise texture on active element
-      &[data-vis='true'] button picture {
-        &::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          z-index: 10;
-          background-image: url(/app/film-database/assets/giphy/vhs-noise.gif);
-          background-size: 480px;
-          background-attachment: fixed;
-          opacity: 0.02;
-          pointer-events: none;
+  &__castCrew {
+    .fdCarousel .fdCarousel__wrapper {
+      &__ul__li {
+        --fd-carousel-node-width: calc(
+          (50svw - (2 * var(--fd-padding-generic)) - ((var(--fd-carousel-items-per-page) - 1) * var(--fd-gap))) / var(--fd-carousel-items-per-page)
+        );
+        --fd-carousel-node-height: calc(var(--fd-carousel-node-width) / 0.66667);
+        :hover {
+          cursor: auto;
         }
       }
-      // Remove image filter for active poster
-      &[data-vis='true'] button picture img {
-        filter: none;
+      &__navigation {
+        width: 50svw;
       }
-      // Inactive img elements filter
-      &[data-vis='false'] button picture img {
-        filter: brightness(35%) saturate(50%);
-      }
-      & button {
-        width: inherit;
-        height: inherit;
-        & picture {
-          position: relative;
-          display: block;
-          width: inherit;
-          height: inherit;
-          & img {
-            transition: filter 85ms ease-in-out;
-          }
+    }
+  }
+}
+
+.fdUserList {
+  &__collections {
+  }
+  &__carousel {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    overflow: clip;
+    text-align: center;
+    & ul {
+      position: absolute;
+      top: 10%;
+      left: calc(50% - 100px);
+      width: 200px;
+      height: 250px;
+      transform-style: preserve-3d;
+      transform: perspective(1000px);
+      & li {
+        position: absolute;
+        inset: 0 0 0 0;
+        transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(550px);
+        & button,
+        picture,
+        picture img {
+          width: 100%;
+          height: 100%;
         }
       }
     }
   }
 }
+
+// &__carousel {
+//   & ul {
+//     display: flex;
+//     gap: var(--fd-gap);
+//     // Allow room for box shadows
+//     padding: 0 0 20px 0;
+//     margin: calc(var(--fd-padding-generic) / 2) 0;
+//     overflow-x: scroll;
+//     scrollbar-width: none;
+//     scroll-behavior: smooth;
+//     & li {
+//       display: block;
+//       width: var(--fd-carousel-node-width);
+//       height: var(--fd-carousel-node-height);
+//       border: 2px solid transparent;
+//       border-radius: var(--fd-borderRadius);
+//       box-shadow:
+//         0 8px 10px rgba(0, 0, 0, 0.6),
+//         0 15px 15px rgba(0, 0, 0, 0.3);
+//       overflow: clip;
+//       // Handle margins for first and last child to remove padding from parent
+//       &:first-of-type {
+//         margin-left: calc(var(--fd-padding-generic) / 1.5);
+//       }
+//       &:last-of-type {
+//         margin-right: calc(var(--fd-padding-generic) / 1.5);
+//       }
+//       // Hover event
+//       &:hover:not([data-vis='true']) button picture img {
+//         filter: brightness(80%) saturate(70%);
+//       }
+//       // Noise texture on active element
+//       &[data-vis='true'] button picture {
+//         &::after {
+//           content: '';
+//           position: absolute;
+//           inset: 0;
+//           z-index: 10;
+//           background-image: url(/app/film-database/assets/giphy/vhs-noise.gif);
+//           background-size: 480px;
+//           background-attachment: fixed;
+//           opacity: 0.02;
+//           pointer-events: none;
+//         }
+//       }
+//       // Remove image filter for active poster
+//       &[data-vis='true'] button picture img {
+//         filter: none;
+//       }
+//       // Inactive img elements filter
+//       &[data-vis='false'] button picture img {
+//         filter: brightness(35%) saturate(50%);
+//       }
+//       & button {
+//         width: inherit;
+//         height: inherit;
+//         & picture {
+//           position: relative;
+//           display: block;
+//           width: inherit;
+//           height: inherit;
+//           & img {
+//             transition: filter 85ms ease-in-out;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
