@@ -50,8 +50,10 @@ video,
 picture,
 img {
   user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
+}
+picture,
+img {
+  pointer-events: none;
 }
 
 /** Typography */
