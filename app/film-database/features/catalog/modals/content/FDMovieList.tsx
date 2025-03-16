@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { useFirestore, type Firestore_UserDocument } from '~/base/firebase/firestore/hooks/useFirestore';
 import { type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
@@ -63,27 +63,108 @@ const FDMovieList = () => {
     }
   };
 
+  /**
+   * @function reducer
+   * Handles carousel interactivity
+   */
+  const initState = {
+    isInteract: false,
+    isDragging: false,
+  };
+
+  type initState = typeof initState;
+
+  type action = { type: 'POINTER_DOWN' } | { type: 'POINTER_MOVE' } | { type: 'POINTER_LEAVE' } | { type: 'POINTER_UP' };
+
+  const reducer = (state: initState, action: action): initState => {
+    switch (action.type) {
+      case 'POINTER_DOWN':
+        return { ...state, isInteract: true };
+
+      case 'POINTER_MOVE':
+        return { ...state, isDragging: true };
+
+      case 'POINTER_LEAVE':
+        return { ...state, isInteract: false, isDragging: false };
+
+      case 'POINTER_UP':
+        // handleCarouselStyles();
+        return { ...state, isInteract: false, isDragging: false };
+
+      default:
+        throw new Error('Unknown action type.');
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, initState);
+  useEffect(() => console.log(state), [state]);
+
+  useEffect(() => {
+    const events = [
+      {
+        pointerdown: () =>
+          dispatch({
+            type: 'POINTER_DOWN',
+            // payload: {}
+          }),
+      },
+      {
+        pointermove: () =>
+          state.isInteract &&
+          dispatch({
+            type: 'POINTER_LEAVE',
+            // payload: {}
+          }),
+      },
+      {
+        pointerleave: () =>
+          state.isDragging &&
+          dispatch({
+            type: 'POINTER_MOVE',
+            // payload: {}
+          }),
+      },
+      {
+        pointerup: () =>
+          dispatch({
+            type: 'POINTER_UP',
+            // payload: {}
+          }),
+      },
+    ];
+
+    if (ulRef.current) {
+      for (const event of events) {
+        const [key, value] = Object.entries(event)[0];
+        ulRef.current.addEventListener(key, value);
+      }
+    }
+
+    return () => {
+      if (ulRef.current) {
+        for (const event of events) {
+          const [key, value] = Object.entries(event)[0];
+          ulRef.current.removeEventListener(key, value);
+        }
+      }
+    };
+  }, []);
+
   /** @returns */
   return movies.length ? (
     <div className='fdUserList'>
-      <section className='fdUserList__collections'></section>
-      <section className='fdUserList__carousel'>
+      {/* <section className='fdUserList__collections'></section> */}
+      <div className='fdUserList__collection'>
         <ul ref={ulRef} style={{ '--quantity': movies.length } as React.CSSProperties}>
           {movies.map((movie, index) => (
             <li key={`movie-list-key-${movie.id}`} data-vis={index === 0 ? 'true' : 'false'} style={{ '--position': `${index + 1}` } as React.CSSProperties}>
-              <button
-                onPointerUp={
-                  () => {}
-                  // handleSelect(index)
-                }>
-                <picture>
-                  <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />
-                </picture>
-              </button>
+              <picture>
+                <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />
+              </picture>
             </li>
           ))}
         </ul>
-      </section>
+      </div>
     </div>
   ) : (
     <p>Whoops! It appears you haven't saved a movie yet!</p>
