@@ -36,7 +36,7 @@ export const tmdbEndpoints: Namespace_TmdbEndpointsKeys.Endpoint_Obj = {
     recommendations: tmdb + 'movie/{movie_id}/recommendations',
   },
   miscellaneous: {
-    discover: tmdb + 'discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc&with_genres=',
-    search: tmdb + 'search/movie&query={search_term}&include_adult=false&language=en-US',
+    discover: tmdb + 'discover/movie',
+    search: tmdb + 'search/movie&query={search_term}',
   },
 };
