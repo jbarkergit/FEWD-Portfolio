@@ -20,7 +20,6 @@
     display: block;
     width: 50svw;
     height: 100%;
-    padding-bottom: 2em;
     border-top-right-radius: var(--fd-borderRadius);
     border-top-left-radius: var(--fd-borderRadius);
     overflow: clip;
@@ -112,35 +111,32 @@
 }
 
 .fdUserList {
+  display: flex;
+  flex-direction: column;
+  width: inherit;
+  height: inherit;
   &__collection {
-    position: relative;
-    width: 100%;
-    height: 100svh;
-    overflow: clip;
-    text-align: center;
     & ul {
-      position: absolute;
-      bottom: 250px;
-      left: calc(50% - 100px);
-      width: var(--fd-carousel-node-width);
-      height: var(--fd-carousel-node-height);
-      transform-style: preserve-3d;
-      transform: perspective(1000px);
-      &:hover {
-        cursor: grab;
-      }
-      &:active {
-        cursor: grabbing;
-      }
+      display: flex;
+      gap: var(--fd-gap);
+      overflow-y: clip;
+      overflow-x: scroll;
       & li {
-        position: absolute;
-        inset: 0 0 0 0;
-        transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(400px);
+        flex-shrink: 0;
+        position: relative;
+        width: var(--fd-carousel-node-width);
+        height: var(--fd-carousel-node-height);
         border-radius: var(--fd-borderRadius);
         box-shadow:
           0 8px 10px rgba(0, 0, 0, 0.6),
           0 15px 15px rgba(0, 0, 0, 0.3);
         overflow: clip;
+        &:hover {
+          cursor: pointer;
+        }
+        &:active {
+          cursor: grabbing;
+        }
         // Hover event
         &:hover:not([data-vis='true']) picture img {
           filter: brightness(80%) saturate(70%);
