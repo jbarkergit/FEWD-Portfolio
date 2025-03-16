@@ -112,9 +112,7 @@
 }
 
 .fdUserList {
-  &__collections {
-  }
-  &__carousel {
+  &__collection {
     position: relative;
     width: 100%;
     height: 100svh;
@@ -128,6 +126,12 @@
       height: var(--fd-carousel-node-height);
       transform-style: preserve-3d;
       transform: perspective(1000px);
+      &:hover {
+        cursor: grab;
+      }
+      &:active {
+        cursor: grabbing;
+      }
       & li {
         position: absolute;
         inset: 0 0 0 0;
@@ -138,11 +142,11 @@
           0 15px 15px rgba(0, 0, 0, 0.3);
         overflow: clip;
         // Hover event
-        &:hover:not([data-vis='true']) button picture img {
+        &:hover:not([data-vis='true']) picture img {
           filter: brightness(80%) saturate(70%);
         }
         // Noise texture on active element
-        &[data-vis='true'] button picture {
+        &[data-vis='true'] picture {
           &::after {
             content: '';
             position: absolute;
@@ -156,14 +160,13 @@
           }
         }
         // Remove image filter for active poster
-        &[data-vis='true'] button picture img {
+        &[data-vis='true'] picture img {
           filter: none;
         }
         // Inactive img elements filter
-        &[data-vis='false'] button picture img {
+        &[data-vis='false'] picture img {
           filter: brightness(35%) saturate(50%);
         }
-        & button,
         picture,
         picture img {
           width: 100%;
