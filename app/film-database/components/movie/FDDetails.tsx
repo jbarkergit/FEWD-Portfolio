@@ -50,7 +50,6 @@ const FDDetails = (modal: { modal: boolean }) => {
    * Stores boolean based on whether or not userDoc.movies contains heroData.id (if userDocs contains movie)
    */
   const [isMovieBtn, setIsMovieBtn] = useState<boolean | null>(null);
-  useEffect(() => console.log(isMovieBtn), [isMovieBtn]);
 
   const getMovieBtn = async (): Promise<void> => {
     const userDoc = await useFirestore.getDocument('users');
