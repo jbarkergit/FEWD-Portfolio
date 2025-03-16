@@ -4,7 +4,7 @@ import { tmdbMovieGenres } from '../data/tmdbGenres';
 import type { Type_MovieGenre_Keys } from '../data/tmdbGenres';
 
 /** Custom Type Naming Convention Reference
- * TMDB API documentation does not provide call types; therefore, manual conversion is required to build the respective data structures.
+ * This is solely for personal experience/growth and is not perfect.
  * Note: Use of underscores (_) is to offer clarity when utilizing type autocompletion.
  *
  * #1. Preface: Interface_, Type_, and Namespace_
@@ -209,12 +209,13 @@ export namespace Namespace_Tmdb {
 /** Fetch util */
 const fetchTmdbData = async (keyValuePair: { key: Namespace_TmdbEndpointsKeys.Keys_Union; endpoint: string }): Promise<unknown | undefined> => {
   const abortController: AbortController = new AbortController();
+  const bearerToken = import.meta.env.VITE_TMDB_AUTH_KEY;
 
   const options: RequestInit = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_AUTH_KEY}`,
+      Authorization: `Bearer ${bearerToken}`,
     },
     signal: abortController.signal,
   };
@@ -285,9 +286,9 @@ const initializeFetch = async (keyValuePairs: Type_Tmdb_InitFetch_asFuncParams) 
 
 /** Endpoint builder */
 const buildEndpoint = (params: Type_Tmdb_useTmdbFetcher_asFuncParams): Type_Tmdb_InitFetch_Obj | undefined => {
-  // Import API Key
-  const apiKey: string = import.meta.env.VITE_TMDB_API_KEY;
-  if (!apiKey) return undefined;
+  // Import API Key if desired
+  // const apiKey: string = import.meta.env.VITE_TMDB_API_KEY;
+  // if (!apiKey) return undefined;
 
   // Generate array of key-value pairs from tmdbEndpoints
   const tmdbKeyEndpointArr: { [key: string]: string }[] = Object.entries(tmdbEndpoints).flatMap(([category, endpoints]) =>
@@ -310,22 +311,27 @@ const buildEndpoint = (params: Type_Tmdb_useTmdbFetcher_asFuncParams): Type_Tmdb
   const endpointPrefabKeys: string[] = Object.keys(tmdbEndpoints.prefabs);
   const endpointMovieIdKeys: string[] = Object.keys(tmdbEndpoints.movieId);
 
+  // Simplify declarations
+  const queryParams: string = 'language=en-US&page=1&region=US';
+  const adultParam: string = '&include_adult=false';
+
+  // Build endpoint
   switch (true) {
     case endpointPrefabKeys.includes(key):
-      endpoint = endpoint + `?api_key=${apiKey}`;
+      endpoint = endpoint + '?' + queryParams;
       break;
 
     case endpointMovieIdKeys.includes(key):
-      endpoint = endpoint.replace('{movie_id}', `${Object.values(params)[0]}`) + `?api_key=${apiKey}`;
+      endpoint = endpoint.replace('{movie_id}', `${Object.values(params)[0]}`);
       break;
 
     case key === 'discover':
       key = Object.entries(params)[0][1];
-      endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`) + `${tmdbMovieGenres[Object.values(params)[0] as unknown as Type_MovieGenre_Keys]}`;
+      endpoint = endpoint + `${tmdbMovieGenres[Object.values(params)[0] as unknown as Type_MovieGenre_Keys]}`;
       break;
 
     case key === 'search':
-      endpoint = endpoint.replace('/movie', `/movie?api_key=${apiKey}`).replace('{search_term}', params as unknown as string);
+      endpoint = endpoint.replace('{search_term}', params.search!) + '&' + queryParams + adultParam;
       break;
 
     default:
