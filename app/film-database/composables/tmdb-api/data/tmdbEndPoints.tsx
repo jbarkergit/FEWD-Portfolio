@@ -37,6 +37,6 @@ export const tmdbEndpoints: Namespace_TmdbEndpointsKeys.Endpoint_Obj = {
   },
   miscellaneous: {
     discover: tmdb + 'discover/movie',
-    search: tmdb + 'search/movie&query={search_term}',
+    search: tmdb + 'search/movie?query={search_term}',
   },
 };
