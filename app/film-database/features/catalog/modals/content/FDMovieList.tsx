@@ -46,67 +46,67 @@ const FDMovieList = () => {
     if (isListModal) fetchMovies();
   }, [isListModal]);
 
-  /**
-   * @function reducer
-   * Handles carousel interactivity
+  /** Carousel interactivity
+   * @function pointerDown
+   *
+   * @function pointerMove
+   *
+   * @function pointerLeave
+   *
+   * @function pointerUp
+   *
    */
-  const initState = {
-    isInteract: false,
-    isDragging: false,
+  let isInteract: boolean = false;
+  let isDragging: boolean = false;
+
+  const pointerDown = () => {
+    isInteract = true;
   };
 
-  const reducer = (
-    state: typeof initState,
-    action: { type: 'POINTER_DOWN' } | { type: 'POINTER_MOVE' } | { type: 'POINTER_LEAVE' } | { type: 'POINTER_UP' }
-  ): typeof initState => {
-    switch (action.type) {
-      case 'POINTER_DOWN':
-        return { ...state, isInteract: true };
-      case 'POINTER_MOVE':
-        if (state.isInteract) return { ...state, isDragging: true };
-        return state;
-      case 'POINTER_LEAVE':
-        if (state.isDragging) return { ...state, isInteract: false, isDragging: false };
-        return state;
-      case 'POINTER_UP':
-        if (state.isDragging) return { ...state, isInteract: false, isDragging: false };
-        return state;
-      default:
-        throw new Error('Unknown action type.');
+  const pointerMove = () => {
+    if (isInteract) {
+      isDragging = true;
     }
   };
 
-  const [state, dispatch] = useReducer(reducer, initState);
-  // useEffect(() => console.log(state), [state]);
-
-  const pointerdown = () => {
-    dispatch({
-      type: 'POINTER_DOWN',
-    });
+  const pointerLeave = () => {
+    if (isDragging) {
+      isInteract = false;
+      isDragging = false;
+    }
   };
 
-  const pointermove = () => {
-    dispatch({
-      type: 'POINTER_MOVE',
-    });
+  const pointerUp = (event: PointerEvent) => {
+    if (!isDragging) animateListItems(event);
+
+    isInteract = false;
+    isDragging = false;
   };
 
-  const pointerleave = () => {
-    dispatch({
-      type: 'POINTER_LEAVE',
-    });
-  };
+  useEffect(() => {
+    ulRef.current?.addEventListener('pointerdown', pointerDown);
+    ulRef.current?.addEventListener('pointermove', pointerMove);
+    ulRef.current?.addEventListener('pointerleave', pointerLeave);
+    ulRef.current?.addEventListener('pointerup', pointerUp);
 
-  const pointerup = (event: PointerEvent) => {
-    /**
-     * @function
-     * Create an array of ulRef's children, iterate to enable/disable data-attr
-     */
-    if (!state.isDragging) {
+    return () => {
+      ulRef.current?.removeEventListener('pointerdown', pointerDown);
+      ulRef.current?.removeEventListener('pointermove', pointerMove);
+      ulRef.current?.removeEventListener('pointerleave', pointerLeave);
+      ulRef.current?.removeEventListener('pointerup', pointerUp);
+    };
+  }, []);
+
+  /**
+   * @function animateListItems
+   * Scales all list items and applies filters to their images
+   */
+  function animateListItems(event: PointerEvent) {
+    if (!isDragging) {
       const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
 
       if (listItems) {
-        const element: Node | null = !state.isDragging ? (event.target as Node) : null;
+        const element: Node | null = !isDragging ? (event.target as Node) : null;
         const elementIndex: number = listItems.findIndex((item) => item === element);
 
         if (element && elementIndex !== -1) {
@@ -117,26 +117,7 @@ const FDMovieList = () => {
         }
       }
     }
-
-    /** @returns */
-    dispatch({
-      type: 'POINTER_UP',
-    });
-  };
-
-  useEffect(() => {
-    ulRef.current?.addEventListener('pointerdown', pointerdown);
-    ulRef.current?.addEventListener('pointermove', pointermove);
-    ulRef.current?.addEventListener('pointerleave', pointerleave);
-    ulRef.current?.addEventListener('pointerup', pointerup);
-
-    return () => {
-      ulRef.current?.removeEventListener('pointerdown', pointerdown);
-      ulRef.current?.removeEventListener('pointermove', pointermove);
-      ulRef.current?.removeEventListener('pointerleave', pointerleave);
-      ulRef.current?.removeEventListener('pointerup', pointerup);
-    };
-  }, []);
+  }
 
   /** @returns */
   return (
