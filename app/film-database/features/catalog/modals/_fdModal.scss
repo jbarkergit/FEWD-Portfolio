@@ -25,21 +25,19 @@
     overflow: clip;
     background-color: #181818;
     box-shadow: rgba(0, 0, 0, 1) 0px 3px 10px;
-    &:has(.fdMovieModal) {
-      border-top-right-radius: 0;
-      overflow-x: clip;
-      overflow-y: scroll;
-      @media (min-width: 1580px) {
-        &::-webkit-scrollbar {
-          width: 14px;
-          height: 14px;
-        }
-        &::-webkit-scrollbar-track {
-          background: #141414;
-        }
-        &::-webkit-scrollbar-thumb {
-          background: #f3f3f1;
-        }
+    border-top-right-radius: 0;
+    overflow-x: clip;
+    overflow-y: scroll;
+    @media (min-width: 1580px) {
+      &::-webkit-scrollbar {
+        width: 14px;
+        height: 14px;
+      }
+      &::-webkit-scrollbar-track {
+        background: #141414;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #f3f3f1;
       }
     }
     @media (max-width: 1580px) {
@@ -116,48 +114,41 @@
   width: inherit;
   height: inherit;
   &__collection {
-    padding: calc(var(--fd-padding-generic) / 2) 0;
-    & header {
+    padding-top: calc(var(--fd-gap) * 2);
+    & header,
+    &--create {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--fd-gap) / 2);
       width: fit-content;
       padding: 0 calc(var(--fd-carousel-node-width) / 4) var(--fd-gap) calc(var(--fd-padding-generic) / 1.5);
-      text-transform: capitalize;
       & h2 {
         @include m.fdFontXL;
+        text-transform: capitalize;
+      }
+      & svg {
+        width: 1.6em;
+        aspect-ratio: 1/1;
       }
     }
-    & ul {
-      display: flex;
-      gap: var(--fd-gap);
-      // Allow room for shadows
-      padding-bottom: calc(15px + 3px);
-      overflow-y: clip;
-      overflow-x: scroll;
-      scrollbar-width: none;
-      // Pointer events
-      &:hover {
-        cursor: grab;
-      }
-      &:active,
-      &:active li:hover {
-        cursor: grabbing;
-      }
-      & li {
-        flex-shrink: 0;
-        position: relative;
-        width: var(--fd-carousel-node-width);
-        height: var(--fd-carousel-node-height);
-        border-radius: var(--fd-borderRadius);
-        box-shadow:
-          0 8px 10px rgba(0, 0, 0, 0.6),
-          0 15px 15px rgba(0, 0, 0, 0.3);
-        overflow: clip;
-        // Handle carousel padding
-        &:first-of-type {
-          margin-left: calc(var(--fd-padding-generic) / 1.5);
+    & header h2 {
+      cursor: default;
+    }
+    &--create h2 {
+      cursor: pointer;
+    }
+    &:not(:last-of-type) {
+      & ul {
+        // Pointer events
+        &:hover {
+          cursor: grab;
         }
-        &:last-of-type {
-          margin-right: calc(var(--fd-padding-generic) / 1.5);
+        &:active,
+        &:active li:hover {
+          cursor: grabbing;
         }
+      }
+      & ul li {
         // Hover events
         &:hover {
           cursor: pointer;
@@ -187,6 +178,43 @@
         &[data-vis='false'] picture img {
           filter: brightness(35%) saturate(50%);
         }
+      }
+    }
+    & ul {
+      // Allow room for shadows
+      padding-bottom: calc(15px + 3px);
+      &[data-layout='flex'] {
+        display: flex;
+        gap: var(--fd-gap);
+        overflow-y: clip;
+        overflow-x: scroll;
+        scrollbar-width: none;
+        & li:first-of-type {
+          margin-left: calc(var(--fd-padding-generic) / 1.5);
+        }
+        & li:last-of-type {
+          margin-right: calc(var(--fd-padding-generic) / 1.5);
+        }
+      }
+      &[data-layout='grid'] {
+        display: grid;
+        column-gap: var(--fd-gap);
+        // Add ul's padding-bottom for visual consistency
+        row-gap: calc(var(--fd-gap) + 15px + 3px);
+        grid-template-columns: repeat(auto-fill, minmax(var(--fd-carousel-node-width), auto));
+        padding: 0 calc(var(--fd-padding-generic) / 1.5);
+      }
+      & li {
+        flex-shrink: 0;
+        position: relative;
+        width: var(--fd-carousel-node-width);
+        height: var(--fd-carousel-node-height);
+        border-radius: var(--fd-borderRadius);
+        box-shadow:
+          0 8px 10px rgba(0, 0, 0, 0.6),
+          0 15px 15px rgba(0, 0, 0, 0.3);
+        background-color: black;
+        overflow: clip;
         picture,
         picture img {
           width: 100%;
