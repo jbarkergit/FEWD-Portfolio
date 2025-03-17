@@ -11,6 +11,7 @@ const FDMovieList = () => {
   let flattenedPrimaryData: Namespace_Tmdb.BaseMedia_Provider[] | undefined = undefined;
   const [movies, setMovies] = useState<Namespace_Tmdb.BaseMedia_Provider[]>([]);
   const { isListModal } = useCatalogProvider();
+  const ulRef = useRef<HTMLUListElement>(null);
 
   /**
    * @function fetchMovies
@@ -46,24 +47,6 @@ const FDMovieList = () => {
   }, [isListModal]);
 
   /**
-   * @function handleSelect
-   * @returns void
-   * Creates an array of ulRef's children, iterates to enable/disable data-attr
-   */
-  const ulRef = useRef<HTMLUListElement>(null);
-
-  const handleSelect = (index: number): void => {
-    // Get all unordered list elements
-    if (!ulRef.current) return;
-    const elements: Element[] = [...ulRef.current.children];
-
-    // Iterate elements to disable/enable data-attr
-    for (let i = 0; i < elements.length; i++) {
-      elements[i].setAttribute('data-vis', i === index ? 'true' : 'false');
-    }
-  };
-
-  /**
    * @function reducer
    * Handles carousel interactivity
    */
@@ -72,88 +55,94 @@ const FDMovieList = () => {
     isDragging: false,
   };
 
-  type initState = typeof initState;
-
-  type action = { type: 'POINTER_DOWN' } | { type: 'POINTER_MOVE' } | { type: 'POINTER_LEAVE' } | { type: 'POINTER_UP' };
-
-  const reducer = (state: initState, action: action): initState => {
+  const reducer = (
+    state: typeof initState,
+    action: { type: 'POINTER_DOWN' } | { type: 'POINTER_MOVE' } | { type: 'POINTER_LEAVE' } | { type: 'POINTER_UP' }
+  ): typeof initState => {
     switch (action.type) {
       case 'POINTER_DOWN':
         return { ...state, isInteract: true };
-
       case 'POINTER_MOVE':
-        return { ...state, isDragging: true };
-
+        if (state.isInteract) return { ...state, isDragging: true };
+        return state;
       case 'POINTER_LEAVE':
-        return { ...state, isInteract: false, isDragging: false };
-
+        if (state.isDragging) return { ...state, isInteract: false, isDragging: false };
+        return state;
       case 'POINTER_UP':
-        // handleCarouselStyles();
-        return { ...state, isInteract: false, isDragging: false };
-
+        if (state.isInteract || state.isDragging) return { ...state, isInteract: false, isDragging: false };
+        return state;
       default:
         throw new Error('Unknown action type.');
     }
   };
 
   const [state, dispatch] = useReducer(reducer, initState);
-  useEffect(() => console.log(state), [state]);
+  // useEffect(() => console.log(state), [state]);
 
-  useEffect(() => {
-    const events = [
-      {
-        pointerdown: () =>
-          dispatch({
-            type: 'POINTER_DOWN',
-            // payload: {}
-          }),
-      },
-      {
-        pointermove: () =>
-          state.isInteract &&
-          dispatch({
-            type: 'POINTER_LEAVE',
-            // payload: {}
-          }),
-      },
-      {
-        pointerleave: () =>
-          state.isDragging &&
-          dispatch({
-            type: 'POINTER_MOVE',
-            // payload: {}
-          }),
-      },
-      {
-        pointerup: () =>
-          dispatch({
-            type: 'POINTER_UP',
-            // payload: {}
-          }),
-      },
-    ];
+  const pointerdown = () => {
+    dispatch({
+      type: 'POINTER_DOWN',
+    });
+  };
 
-    if (ulRef.current) {
-      for (const event of events) {
-        const [key, value] = Object.entries(event)[0];
-        ulRef.current.addEventListener(key, value);
+  const pointermove = () => {
+    dispatch({
+      type: 'POINTER_MOVE',
+    });
+  };
+
+  const pointerleave = () => {
+    dispatch({
+      type: 'POINTER_LEAVE',
+    });
+  };
+
+  const pointerup = (event: PointerEvent) => {
+    /**
+     * @function
+     * Create an array of ulRef's children, iterate to enable/disable data-attr
+     */
+    const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
+
+    if (!state.isDragging && listItems) {
+      const element: Node | null = !state.isDragging ? (event.target as Node) : null;
+      const elementIndex: number = listItems.findIndex((item) => item === element);
+
+      if (element && elementIndex !== -1) {
+        // Iterate ulRef.current.children to disable/enable data-attr
+        for (let i = 0; i < listItems.length; i++) {
+          listItems[i].setAttribute('data-vis', i === elementIndex ? 'true' : 'false');
+        }
       }
     }
 
+    /** @returns */
+    dispatch({
+      type: 'POINTER_UP',
+    });
+  };
+
+  useEffect(() => {
+    ulRef.current?.addEventListener('pointerdown', pointerdown);
+    ulRef.current?.addEventListener('pointermove', pointermove);
+    ulRef.current?.addEventListener('pointerleave', pointerleave);
+    ulRef.current?.addEventListener('pointerup', pointerup);
+
     return () => {
-      if (ulRef.current) {
-        for (const event of events) {
-          const [key, value] = Object.entries(event)[0];
-          ulRef.current.removeEventListener(key, value);
-        }
-      }
+      ulRef.current?.removeEventListener('pointerdown', pointerdown);
+      ulRef.current?.removeEventListener('pointermove', pointermove);
+      ulRef.current?.removeEventListener('pointerleave', pointerleave);
+      ulRef.current?.removeEventListener('pointerup', pointerup);
     };
   }, []);
 
   /** @returns */
-  return movies.length ? (
+  return (
     <div className='fdUserList'>
       <section className='fdUserList__collection'>
+        <header>
+          <h2>Uncategorized Movies</h2>
+        </header>
         <ul ref={ulRef}>
           {movies.map((movie, index) => (
             <li key={`movie-list-key-${movie.id}`} data-vis={index === 0 ? 'true' : 'false'}>
@@ -165,8 +154,6 @@ const FDMovieList = () => {
         </ul>
       </section>
     </div>
-  ) : (
-    <p>Whoops! It appears you haven't saved a movie yet!</p>
   );
 };
 
