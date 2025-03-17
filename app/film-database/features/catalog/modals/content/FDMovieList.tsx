@@ -69,7 +69,7 @@ const FDMovieList = () => {
         if (state.isDragging) return { ...state, isInteract: false, isDragging: false };
         return state;
       case 'POINTER_UP':
-        if (state.isInteract || state.isDragging) return { ...state, isInteract: false, isDragging: false };
+        if (state.isDragging) return { ...state, isInteract: false, isDragging: false };
         return state;
       default:
         throw new Error('Unknown action type.');
@@ -102,16 +102,18 @@ const FDMovieList = () => {
      * @function
      * Create an array of ulRef's children, iterate to enable/disable data-attr
      */
-    const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
+    if (!state.isDragging) {
+      const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
 
-    if (!state.isDragging && listItems) {
-      const element: Node | null = !state.isDragging ? (event.target as Node) : null;
-      const elementIndex: number = listItems.findIndex((item) => item === element);
+      if (listItems) {
+        const element: Node | null = !state.isDragging ? (event.target as Node) : null;
+        const elementIndex: number = listItems.findIndex((item) => item === element);
 
-      if (element && elementIndex !== -1) {
-        // Iterate ulRef.current.children to disable/enable data-attr
-        for (let i = 0; i < listItems.length; i++) {
-          listItems[i].setAttribute('data-vis', i === elementIndex ? 'true' : 'false');
+        if (element && elementIndex !== -1) {
+          // Iterate ulRef.current.children to disable/enable data-attr
+          for (let i = 0; i < listItems.length; i++) {
+            listItems[i].setAttribute('data-vis', i === elementIndex ? 'true' : 'false');
+          }
         }
       }
     }
