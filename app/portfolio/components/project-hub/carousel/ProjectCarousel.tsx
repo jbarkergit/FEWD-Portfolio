@@ -4,53 +4,18 @@ import { Link } from 'react-router';
 import { useCarouselSlideAnimator } from '../hooks/useCarouselSlideAnimator';
 import { projectData } from '../../../data/projectData';
 
-type PropDrillType = {
+/** Component */
+const ProjectCarousel = ({
+  projectSlideIndex,
+  setProjectSlideIndex,
+  featureState,
+  setFeatureState,
+}: {
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
   featureState: Record<string, boolean>;
   setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
-};
-
-/** useReducer Types */
-type StateType = {
-  activeSlideIndex: number;
-  pointerDown: boolean;
-  wheelEventActive: boolean;
-  anchorEnabled: boolean;
-  initPageX: number;
-  pageX: number;
-  initPageY: number;
-  pageY: number;
-  trackPos: number;
-  previousTrackPos: number;
-  trackStyle: React.CSSProperties;
-};
-
-type ActionType =
-  | { type: 'POINTER_DOWN'; pointerDown: boolean; anchorEnabled: boolean; initPageX: number; pageX: number; initPageY: number; pageY: number }
-  | { type: 'POINTER_MOVE'; pointerDown: boolean; anchorEnabled: boolean; pageX: number; pageY: number }
-  | { type: 'POINTER_LEAVE'; pointerDown: boolean; anchorEnabled: boolean; previousTrackPos: number }
-  | { type: 'POINTER_UP'; pointerDown: boolean; previousTrackPos: number }
-  | { type: 'WHEEL_SCROLL'; deltaY: number; wheelEventActive: boolean }
-  | { type: 'EXTERNAL_NAVIGATION' };
-
-/** useReducer State */
-const carouselState: StateType = {
-  activeSlideIndex: 0,
-  pointerDown: false,
-  wheelEventActive: false,
-  anchorEnabled: true,
-  initPageX: 0,
-  pageX: 0,
-  initPageY: 0,
-  pageY: 0,
-  previousTrackPos: 0,
-  trackPos: 0,
-  trackStyle: { transform: `translateX(0px)` },
-};
-
-/** Component */
-const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState }: PropDrillType) => {
+}) => {
   /** References */
   const mainRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
@@ -60,7 +25,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
   };
 
   /** Scale && Filter Hook */
-  const useRemainderScaleAndFilter = (): void => {
+  const animateSlide = (): void => {
     articleArray.current?.forEach((article: HTMLElement, index: number) => {
       article.setAttribute('data-status', 'smooth');
 
@@ -72,7 +37,31 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
   };
 
   /** Reducer */
-  const reducer = (state: StateType, action: ActionType): StateType => {
+  const initState = {
+    activeSlideIndex: 0,
+    pointerDown: false,
+    wheelEventActive: false,
+    anchorEnabled: true,
+    initPageX: 0,
+    pageX: 0,
+    initPageY: 0,
+    pageY: 0,
+    previousTrackPos: 0,
+    trackPos: 0,
+    trackStyle: { transform: `translateX(0px)` },
+  };
+
+  type state = typeof initState;
+
+  type ActionType =
+    | { type: 'POINTER_DOWN'; payload: { anchorEnabled: boolean; initPageX: number; pageX: number; initPageY: number; pageY: number } }
+    | { type: 'POINTER_MOVE'; payload: { anchorEnabled: boolean; pageX: number; pageY: number } }
+    | { type: 'POINTER_LEAVE'; payload: { anchorEnabled: boolean; previousTrackPos: number } }
+    | { type: 'POINTER_UP'; payload: { previousTrackPos: number } }
+    | { type: 'WHEEL_SCROLL'; payload: { deltaY: number } }
+    | { type: 'EXTERNAL_NAVIGATION' };
+
+  const reducer = (state: state, action: ActionType): state => {
     const carouselLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLDivElement).paddingLeft);
     const arrayOfArticlePositions: number[] = articleArray.current.map((child: HTMLElement) => child.offsetLeft * -1);
     const activeSlidePosition: number = arrayOfArticlePositions[projectSlideIndex];
@@ -83,17 +72,17 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
         return {
           ...state,
           pointerDown: true,
-          anchorEnabled: action.anchorEnabled,
-          initPageX: action.initPageX,
-          pageX: action.pageX,
-          initPageY: action.initPageY,
-          pageY: action.pageY,
+          anchorEnabled: action.payload.anchorEnabled,
+          initPageX: action.payload.initPageX,
+          pageX: action.payload.pageX,
+          initPageY: action.payload.initPageY,
+          pageY: action.payload.pageY,
         };
 
       case 'POINTER_MOVE':
         if (state.pointerDown) {
           // Calculate track position
-          const pointerTravelDistance: number = action.pageX - state.initPageX;
+          const pointerTravelDistance: number = action.payload.pageX - state.initPageX;
           const newTrackPosition: number = state.previousTrackPos + pointerTravelDistance;
           const maxTravelDelta: number = (carouselRef.current?.scrollWidth as number) * -1 + (articleArray.current[0].offsetWidth + carouselLeftPadding * 2);
           const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, 0), maxTravelDelta);
@@ -115,7 +104,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
           // State
           return {
             ...state,
-            anchorEnabled: action.anchorEnabled,
+            anchorEnabled: action.payload.anchorEnabled,
             trackPos: clampedTrackPosition,
             trackStyle: { transform: `translateX(${clampedTrackPosition}px)` },
           };
@@ -132,7 +121,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
             if (slideDistanceIteration < activeSlideDistance) state.activeSlideIndex = i;
           }
 
-          useRemainderScaleAndFilter();
+          animateSlide();
 
           return {
             ...state,
@@ -151,7 +140,7 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
         setTimeout(() => (state.wheelEventActive = false), 360);
 
         if (!state.wheelEventActive && window.innerWidth > 1480) {
-          const scrollWheelDirection: number = Math.sign(action.deltaY);
+          const scrollWheelDirection: number = Math.sign(action.payload.deltaY);
           const scrollYDirection = { verticalUp: -1, veritcalDown: 1 };
 
           let nextClosestIndex: number = state.activeSlideIndex;
@@ -190,52 +179,66 @@ const ProjectCarousel = ({ projectSlideIndex, setProjectSlideIndex, featureState
     }
   };
 
-  const [state, dispatch] = useReducer(reducer, carouselState);
+  const [state, dispatch] = useReducer(reducer, initState);
 
   /** Dispatch Actions */
   useEffect(() => {
-    const userPointerDown = (e: PointerEvent) => {
+    const userPointerDownHandler = (e: PointerEvent): void => {
       dispatch({
         type: 'POINTER_DOWN',
-        anchorEnabled: true,
-        pointerDown: true,
-        initPageX: e.pageX as number,
-        pageX: e.pageX as number,
-        initPageY: e.pageY as number,
-        pageY: e.pageY as number,
+        payload: { anchorEnabled: true, initPageX: e.pageX as number, pageX: e.pageX as number, initPageY: e.pageY as number, pageY: e.pageY as number },
       });
     };
-    const userPointerMove = (e: PointerEvent) => {
-      dispatch({ type: 'POINTER_MOVE', anchorEnabled: false, pointerDown: state.pointerDown, pageX: e.pageX as number, pageY: e.pageY });
-    };
-    const userPointerLeave = () => {
-      dispatch({ type: 'POINTER_LEAVE', anchorEnabled: true, pointerDown: false, previousTrackPos: state.trackPos });
-    };
-    const userPointerUp = () => {
-      dispatch({ type: 'POINTER_UP', pointerDown: false, previousTrackPos: state.trackPos });
-    };
-    const userWheelEvent = (e: WheelEvent) => {
-      dispatch({ type: 'WHEEL_SCROLL', wheelEventActive: true, deltaY: e.deltaY });
+
+    const userPointerMoveHandler = (e: PointerEvent): void => {
+      dispatch({
+        type: 'POINTER_MOVE',
+        payload: { anchorEnabled: false, pageX: e.pageX as number, pageY: e.pageY },
+      });
     };
 
-    if (!Object.values(featureState).some((value: boolean) => value === true)) {
-      carouselRef.current?.addEventListener('pointerdown', userPointerDown);
-      carouselRef.current?.addEventListener('pointermove', userPointerMove);
-      carouselRef.current?.addEventListener('pointerleave', userPointerLeave);
-      carouselRef.current?.addEventListener('pointerup', userPointerUp);
-      carouselRef.current?.addEventListener('wheel', userWheelEvent);
+    const userPointerLeaveHandler = (): void => {
+      dispatch({
+        type: 'POINTER_LEAVE',
+        payload: { anchorEnabled: true, previousTrackPos: state.trackPos },
+      });
+    };
+
+    const userPointerUpHandler = (): void => {
+      dispatch({
+        type: 'POINTER_UP',
+        payload: { previousTrackPos: state.trackPos },
+      });
+    };
+
+    const userWheelEventHandler = (e: WheelEvent): void => {
+      dispatch({
+        type: 'WHEEL_SCROLL',
+        payload: { deltaY: e.deltaY },
+      });
+    };
+
+    if (carouselRef.current && !Object.values(featureState).some((value: boolean) => value === true)) {
+      carouselRef.current.addEventListener('pointerdown', userPointerDownHandler);
+      carouselRef.current.addEventListener('pointermove', userPointerMoveHandler);
+      carouselRef.current.addEventListener('pointerleave', userPointerLeaveHandler);
+      carouselRef.current.addEventListener('pointerup', userPointerUpHandler);
+      carouselRef.current.addEventListener('wheel', userWheelEventHandler);
     }
+
     return () => {
-      carouselRef.current?.removeEventListener('pointerdown', userPointerDown);
-      carouselRef.current?.removeEventListener('pointermove', userPointerMove);
-      carouselRef.current?.removeEventListener('pointerleave', userPointerLeave);
-      carouselRef.current?.removeEventListener('pointerup', userPointerUp);
-      carouselRef.current?.removeEventListener('wheel', userWheelEvent);
+      if (carouselRef.current) {
+        carouselRef.current.removeEventListener('pointerdown', userPointerDownHandler);
+        carouselRef.current.removeEventListener('pointermove', userPointerMoveHandler);
+        carouselRef.current.removeEventListener('pointerleave', userPointerLeaveHandler);
+        carouselRef.current.removeEventListener('pointerup', userPointerUpHandler);
+        carouselRef.current.removeEventListener('wheel', userWheelEventHandler);
+      }
     };
   }, [featureState]);
 
   /** Slide Animator */
-  useEffect(() => useRemainderScaleAndFilter(), [state.activeSlideIndex]);
+  useEffect(() => animateSlide(), [state.activeSlideIndex]);
 
   /** Sync global active project index tracker and useReducer state */
   useEffect(() => {
