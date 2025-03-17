@@ -116,11 +116,31 @@
   width: inherit;
   height: inherit;
   &__collection {
+    padding: calc(var(--fd-padding-generic) / 2) 0;
+    & header {
+      width: fit-content;
+      padding: 0 calc(var(--fd-carousel-node-width) / 4) var(--fd-gap) calc(var(--fd-padding-generic) / 1.5);
+      text-transform: capitalize;
+      & h2 {
+        @include m.fdFontXL;
+      }
+    }
     & ul {
       display: flex;
       gap: var(--fd-gap);
+      // Allow room for shadows
+      padding-bottom: calc(15px + 3px);
       overflow-y: clip;
       overflow-x: scroll;
+      scrollbar-width: none;
+      // Pointer events
+      &:hover {
+        cursor: grab;
+      }
+      &:active,
+      &:active li:hover {
+        cursor: grabbing;
+      }
       & li {
         flex-shrink: 0;
         position: relative;
@@ -131,13 +151,17 @@
           0 8px 10px rgba(0, 0, 0, 0.6),
           0 15px 15px rgba(0, 0, 0, 0.3);
         overflow: clip;
+        // Handle carousel padding
+        &:first-of-type {
+          margin-left: calc(var(--fd-padding-generic) / 1.5);
+        }
+        &:last-of-type {
+          margin-right: calc(var(--fd-padding-generic) / 1.5);
+        }
+        // Hover events
         &:hover {
           cursor: pointer;
         }
-        &:active {
-          cursor: grabbing;
-        }
-        // Hover event
         &:hover:not([data-vis='true']) picture img {
           filter: brightness(80%) saturate(70%);
         }
