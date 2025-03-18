@@ -34,10 +34,7 @@ const FDMovieList = () => {
     if (!collection) return;
 
     // Get, filter and set movies from clientLoader's primaryData to prevent api call
-    const movieSet: Set<number> = new Set(collection.movies);
-    const moviesArr: Namespace_Tmdb.BaseMedia_Provider[] = flattenedPrimaryData.filter(
-      (movie, index, self) => movieSet.has(movie.id) && self.findIndex((m) => m.id === movie.id) === index
-    );
+    const moviesArr: Namespace_Tmdb.BaseMedia_Provider[] = flattenedPrimaryData.filter((movie) => collection.movies.some((id) => id === movie.id));
     setMovies(moviesArr);
   };
 
