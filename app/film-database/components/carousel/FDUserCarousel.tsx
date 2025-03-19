@@ -1,8 +1,10 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, forwardRef } from 'react';
 import { TablerCategoryFilled, TablerCategoryPlus } from '~/film-database/assets/google-material-symbols/GoogleMaterialIcons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
-const FDUserCarousel = ({ header, data, display }: { header?: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined[]; display: 'flex' | 'grid' }) => {
+type Props = { header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined[]; display: 'flex' | 'grid' };
+
+const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display }, collectionRef) => {
   const ulRef = useRef<HTMLUListElement>(null);
 
   /** Carousel interactivity */
@@ -94,20 +96,12 @@ const FDUserCarousel = ({ header, data, display }: { header?: string; data: Name
 
   if (data.length > 0)
     return (
-      <section className='fdUserList__collection'>
-        {header ? (
-          <header>
-            <TablerCategoryFilled />
-            <h2>{header}</h2>
-          </header>
-        ) : (
-          <button className='fdUserList__collection--create' aria-label='Create new list'>
-            <TablerCategoryPlus />
-            <h2>Create new list</h2>
-          </button>
-        )}
-
-        <ul ref={ulRef} data-layout={layout}>
+      <section className='fdUserList__collections__wrapper' ref={collectionRef}>
+        <header>
+          <TablerCategoryFilled />
+          <h2>{header}</h2>
+        </header>
+        <ul ref={ulRef} data-layout={layout} data-edit='false'>
           {data.map((movie, index) => (
             <li key={`movie-list-key-${movie ? movie.id : index}`} data-vis={index === 0 ? 'true' : 'false'}>
               <picture>{movie && <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />}</picture>
@@ -116,6 +110,6 @@ const FDUserCarousel = ({ header, data, display }: { header?: string; data: Name
         </ul>
       </section>
     );
-};
+});
 
 export default FDUserCarousel;
