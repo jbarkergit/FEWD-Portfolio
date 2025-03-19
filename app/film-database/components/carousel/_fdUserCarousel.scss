@@ -1,0 +1,112 @@
+@use '/app/base/sass/util/functions' as f;
+@use '/app/film-database/scss/fdMixins' as m;
+
+.fdUserCarousel {
+  padding-top: calc(var(--fd-gap) * 2);
+  & header {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--fd-gap) / 2);
+    width: fit-content;
+    // Remove additional ul padding-top from header's padding bottom
+    padding: 0 calc(var(--fd-carousel-node-width) / 4) calc(var(--fd-gap) - calc((15px + 3px))) calc(var(--fd-padding-generic) / 1.5);
+    & h2 {
+      @include m.fdFontXL;
+      text-transform: capitalize;
+    }
+    & svg {
+      width: 1.6em;
+      aspect-ratio: 1/1;
+    }
+  }
+  & ul {
+    // Allow room for border and shadows
+    padding: calc(15px + 3px) 0;
+    // FLEX LAYOUT
+    &[data-layout='flex'] {
+      display: flex;
+      gap: var(--fd-gap);
+      overflow-y: clip;
+      overflow-x: scroll;
+      scrollbar-width: none;
+      // Carousel padding
+      & li:first-of-type {
+        margin-left: calc(var(--fd-padding-generic) / 1.5);
+      }
+      & li:last-of-type {
+        margin-right: calc(var(--fd-padding-generic) / 1.5);
+      }
+      // Pointer events
+      &:hover {
+        cursor: grab;
+      }
+      &:active,
+      &:active li:hover {
+        cursor: grabbing;
+      }
+    }
+    // GRID LAYOUT
+    &[data-layout='grid'] {
+      display: grid;
+      column-gap: var(--fd-gap);
+      // Add ul's padding-bottom for visual consistency
+      row-gap: calc(var(--fd-gap) + 15px + 3px);
+      grid-template-columns: repeat(auto-fill, minmax(var(--fd-carousel-node-width), auto));
+      padding: 0 calc(var(--fd-padding-generic) / 1.5);
+    }
+    // EDIT MODE
+    &[data-edit='true'] li:hover {
+      cursor: grab;
+    }
+    &[data-edit='false'] li {
+      // Noise texture on active element
+      &[data-vis='true'] picture {
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          z-index: 10;
+          border-radius: var(--fd-borderRadius);
+          background-image: url(/app/film-database/assets/gif/vhs-noise.gif);
+          background-size: 480px;
+          background-attachment: fixed;
+          opacity: 0.02;
+          pointer-events: none;
+        }
+      }
+      // Remove image filter for active poster
+      &[data-vis='true'] picture img {
+        filter: none;
+      }
+      // Inactive img elements filter
+      &[data-vis='false'] picture img {
+        filter: brightness(35%) saturate(50%);
+      }
+    }
+    & li {
+      flex-shrink: 0;
+      position: relative;
+      width: var(--fd-carousel-node-width);
+      height: var(--fd-carousel-node-height);
+      border-radius: var(--fd-borderRadius);
+      background-color: black;
+      box-shadow:
+        0 8px 10px rgba(0, 0, 0, 0.6),
+        0 15px 15px rgba(0, 0, 0, 0.3);
+      // Hover events
+      &:hover {
+        cursor: pointer;
+      }
+      &:hover:not([data-vis='true']) picture img {
+        filter: brightness(80%) saturate(70%);
+      }
+      & picture,
+      picture img {
+        border-radius: var(--fd-borderRadius);
+      }
+      & picture img {
+        transition: filter 85ms ease-in-out;
+      }
+    }
+  }
+}
