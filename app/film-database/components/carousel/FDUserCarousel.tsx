@@ -1,11 +1,12 @@
 import { useRef, useEffect, useState, forwardRef } from 'react';
-import { TablerCategoryFilled, TablerCategoryPlus } from '~/film-database/assets/svg/icons';
+import { TablerCategoryFilled } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
 type Props = { header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined[]; display: 'flex' | 'grid'; isEdit: boolean };
 
 const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, isEdit }, collectionRef) => {
   const ulRef = useRef<HTMLUListElement>(null);
+  const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
 
   /** Carousel interactivity */
   const [layout, setLayout] = useState<'flex' | 'grid'>(display);
@@ -23,12 +24,41 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, 
    * @function pointerMove
    */
   let timeoutId: NodeJS.Timeout;
+  let isActiveElement: boolean = false;
 
-  const pointerMove = (): void => {
-    if (isInteract) {
-      // Debounce isDragging to allow for minor mouse movement post click to allow for wiggle room
+  function attachListItem(event: PointerEvent): void {
+    const target = event.target as HTMLLIElement;
+    // startingPosition =
+    const elementWidth: number = target.offsetWidth / 2;
+    const elementHeight: number = target.offsetHeight / 2;
+    target.style.position = 'absolute';
+    target.style.transform = `translate(${event.clientX - elementWidth}px, ${event.clientY - elementHeight}px)`;
+  }
+
+  function detachListItem(event: PointerEvent): void {
+    // if (xyz) {
+    // } else {
+    //   // If element is not in valid parameters, reset position
+    //   // event.target.style.position = 'relative';
+    // }
+
+    // Remove event listeners
+    (event.target as HTMLLIElement).removeEventListener('pointermove', attachListItem);
+    (event.target as HTMLLIElement).removeEventListener('pointerup', detachListItem);
+    isActiveElement = false;
+  }
+
+  const pointerMove = (event: PointerEvent): void => {
+    if (isInteract && !isDragging) {
+      // Debounce isDragging to allow for minor mouse movement post click to allow for wiggle room for pointerUp
       if (timeoutId) clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => (isDragging = true), 50);
+      timeoutId = setTimeout(() => (isDragging = true), 20);
+    }
+    // Attach and detach list item from cursor for user movie categorization
+    if (isEdit && isDragging && !isActiveElement && event.target instanceof HTMLLIElement) {
+      event.target.addEventListener('pointermove', attachListItem);
+      event.target.addEventListener('pointerup', detachListItem);
+      isActiveElement = true;
     }
   };
 
@@ -36,20 +66,17 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, 
    * @function pointerLeave
    */
   const pointerLeave = (): void => {
-    if (isDragging) {
-      clearTimeout(timeoutId);
-      isInteract = false;
-      isDragging = false;
-    }
+    clearTimeout(timeoutId);
+    isInteract = false;
+    isDragging = false;
   };
 
   /**
    * @function pointerUp
    */
   const pointerUp = (event: PointerEvent): void => {
+    animateListItems(event);
     clearTimeout(timeoutId);
-    if (!isDragging && !isEdit) animateListItems(event);
-
     isInteract = false;
     isDragging = false;
   };
@@ -66,25 +93,20 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, 
       ulRef.current?.removeEventListener('pointerleave', pointerLeave);
       ulRef.current?.removeEventListener('pointerup', pointerUp);
     };
-  }, []);
+  }, [isEdit]);
 
   /**
    * @function animateListItems
    * Scales all list items and applies filters to their images
    */
   function animateListItems(event: PointerEvent): void {
-    if (!isDragging) {
-      const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
+    if (!isEdit && !isDragging && listItems) {
+      const elementIndex: number = listItems.findIndex((item) => item === event.target);
 
-      if (listItems) {
-        const element: Node | null = !isDragging ? (event.target as Node) : null;
-        const elementIndex: number = listItems.findIndex((item) => item === element);
-
-        if (element && elementIndex !== -1) {
-          // Iterate ulRef.current.children to disable/enable data-attr
-          for (let i = 0; i < listItems.length; i++) {
-            listItems[i].setAttribute('data-vis', i === elementIndex ? 'true' : 'false');
-          }
+      if (elementIndex !== -1) {
+        // Iterate ulRef.current.children to disable/enable data-attr
+        for (let i = 0; i < listItems.length; i++) {
+          listItems[i].setAttribute('data-vis', i === elementIndex ? 'true' : 'false');
         }
       }
     }
