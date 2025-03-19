@@ -10,13 +10,7 @@ import useVoteAvgVisual from '~/film-database/hooks/useVoteAvgVisual';
 // Data
 import { tmdbMovieGenres } from '~/film-database/composables/tmdb-api/data/tmdbGenres';
 // Assets
-import {
-  Exit,
-  MaterialSymbolsHeartPlus,
-  MaterialSymbolsLightHeartMinusRounded,
-  SvgSpinnersRingResize,
-  TheMovieDatabaseLogo,
-} from '../../assets/google-material-symbols/GoogleMaterialIcons';
+import { Exit, MaterialSymbolsHeartPlus, MaterialSymbolsLightHeartMinusRounded, SvgSpinnersRingResize, TheMovieDatabaseLogo } from '../../assets/svg/icons';
 import useFormattedDate from '~/film-database/hooks/useFormattedDate';
 
 const FDDetails = (modal: { modal: boolean }) => {

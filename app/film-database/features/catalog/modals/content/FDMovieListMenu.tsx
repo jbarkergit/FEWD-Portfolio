@@ -1,12 +1,5 @@
 import { useEffect, useRef, useState, type Dispatch, type PointerEvent } from 'react';
-import {
-  TablerCategoryPlus,
-  TablerEdit,
-  TablerLayoutListFilled,
-  TablerLayoutDashboardFilled,
-  TablerEye,
-  TablerEyeOff,
-} from '~/film-database/assets/google-material-symbols/GoogleMaterialIcons';
+import { TablerCategoryPlus, TablerEdit, TablerLayoutListFilled, TablerLayoutDashboardFilled, TablerEye, TablerEyeOff } from '~/film-database/assets/svg/icons';
 
 const FDMovieListMenu = ({
   collectionRefs,

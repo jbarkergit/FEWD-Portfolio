@@ -7,7 +7,7 @@ import { useCatalogProvider } from '../../context/CatalogContext';
 // Hooks
 import type { Type_usePaginateData_Data_Provider } from '../../hooks/usePaginateData';
 // Assets
-import { MaterialSymbolsPlayArrow } from '../../assets/google-material-symbols/GoogleMaterialIcons';
+import { MaterialSymbolsPlayArrow } from '../../assets/svg/icons';
 
 const FDCarousel = ({
   type,

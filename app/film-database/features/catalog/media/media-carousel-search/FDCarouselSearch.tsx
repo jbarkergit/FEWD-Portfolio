@@ -5,7 +5,7 @@ import { useCatalogProvider } from '../../../../context/CatalogContext';
 // Composables
 import { type Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Assets
-import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../assets/google-material-symbols/GoogleMaterialIcons';
+import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../assets/svg/icons';
 
 const FDCarouselSearch = () => {
   // Context

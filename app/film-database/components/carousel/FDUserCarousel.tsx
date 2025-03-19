@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, forwardRef } from 'react';
-import { TablerCategoryFilled, TablerCategoryPlus } from '~/film-database/assets/google-material-symbols/GoogleMaterialIcons';
+import { TablerCategoryFilled, TablerCategoryPlus } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
 type Props = { header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined[]; display: 'flex' | 'grid'; isEdit: boolean };

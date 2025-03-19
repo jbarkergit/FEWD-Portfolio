@@ -3,7 +3,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 // Lib
 import type { YouTubePlayer } from 'react-youtube';
 // Assets
-import { MaterialSymbolsSettings } from '../../../assets/google-material-symbols/GoogleMaterialIcons';
+import { MaterialSymbolsSettings } from '../../../assets/svg/icons';
 
 const IFrameControllerPlayback = ({
   player,

@@ -1,5 +1,5 @@
 import { useCatalogProvider } from '../../../context/CatalogContext';
-import { MaterialSymbolsMovieSharp } from '~/film-database/assets/google-material-symbols/GoogleMaterialIcons';
+import { MaterialSymbolsMovieSharp } from '~/film-database/assets/svg/icons';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { signOut } from 'firebase/auth';
 

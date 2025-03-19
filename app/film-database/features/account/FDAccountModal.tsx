@@ -3,7 +3,7 @@ import FDAccountRegistry from './fieldsets/FDAccountRegistry';
 import FDAccountSignIn from './fieldsets/FDAccountSignIn';
 import FDAccountReset from './fieldsets/FDAccountReset';
 import { useLoaderData } from 'react-router';
-import { DeviconGoogle, TablerBrandGithubFilled } from '~/film-database/assets/google-material-symbols/GoogleMaterialIcons';
+import { DeviconGoogle, TablerBrandGithubFilled } from '~/film-database/assets/svg/icons';
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 

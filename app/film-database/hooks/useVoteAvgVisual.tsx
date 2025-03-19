@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { EmptyStar, FullStar, HalfStar } from '../assets/google-material-symbols/GoogleMaterialIcons';
+import { EmptyStar, FullStar, HalfStar } from '../assets/svg/icons';
 
 /**
  * @function useVoteAvgVisual
