@@ -1,17 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { useFirestore, type Firestore_UserDocument } from '~/base/firebase/firestore/hooks/useFirestore';
 import FDUserCarousel from '~/film-database/components/carousel/FDUserCarousel';
 import { type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import FDMovieListMenu from './FDMovieListMenu';
 import useFormattedDate from '~/film-database/hooks/useFormattedDate';
 import useVoteAvgVisual from '~/film-database/hooks/useVoteAvgVisual';
 
 const FDMovieList = () => {
   const { primaryData } = useLoaderData();
-  let flattenedPrimaryData: Namespace_Tmdb.BaseMedia_Provider[] | undefined = undefined;
-  const [movies, setMovies] = useState<Namespace_Tmdb.BaseMedia_Provider[]>([]);
   const { isListModal, maxCarouselNodes } = useCatalogProvider();
+
+  const [movies, setMovies] = useState<Namespace_Tmdb.BaseMedia_Provider[]>([]);
+  let flattenedPrimaryData: Namespace_Tmdb.BaseMedia_Provider[] | undefined = undefined;
+
+  const collectionRefs = useRef<HTMLElement[]>([]);
+
+  const collectionRef = (reference: HTMLUListElement): void => {
+    if (reference && !collectionRefs.current.includes(reference)) {
+      collectionRefs.current.push(reference);
+    }
+  };
+
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   /**
    * @function fetchMovies
@@ -43,10 +55,18 @@ const FDMovieList = () => {
     if (isListModal) fetchMovies();
   }, [isListModal]);
 
+  /**
+   * @function addCollection
+   * Adds new collection
+   */
+  const addCollection = (): void => {};
+
   return (
     <div className='fdUserList'>
-      <FDUserCarousel header={'Uncategorized Movies'} data={movies} display='grid' />
-      <FDUserCarousel data={Array(maxCarouselNodes + 1).fill(undefined)} display='flex' />
+      <section className='fdUserList__collections'>
+        <FDUserCarousel header={'Uncategorized Movies'} data={movies} display='flex' ref={collectionRef} />
+      </section>
+      <FDMovieListMenu collectionRefs={collectionRefs} addCollection={addCollection} setIsEdit={setIsEdit} />
     </div>
   );
 };
