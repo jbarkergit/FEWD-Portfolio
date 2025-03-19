@@ -132,11 +132,11 @@
       // Edit Mode
       &:nth-of-type(2) {
         &[data-toggle='true'] {
-          color: #6dbe45;
+          color: white;
           transition: color 170ms ease-in-out;
         }
         &[data-toggle='false'] {
-          color: white;
+          color: #6dbe45;
           transition: color 170ms ease-in-out;
         }
       }
