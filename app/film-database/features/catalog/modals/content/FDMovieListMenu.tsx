@@ -17,13 +17,6 @@ const FDMovieListMenu = ({
   addCollection: () => void;
   setIsEdit: Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const buttonReferences = useRef<HTMLButtonElement[]>([]);
-  const buttonRef = (reference: HTMLButtonElement) => {
-    if (reference && !buttonReferences.current.includes(reference)) {
-      buttonReferences.current.push(reference);
-    }
-  };
-
   const [isOpacity, setIsOpacity] = useState<boolean>(false);
   const [isGrid, setIsGrid] = useState<boolean>(false);
 
