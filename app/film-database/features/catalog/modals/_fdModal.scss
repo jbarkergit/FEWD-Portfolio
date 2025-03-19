@@ -236,6 +236,9 @@
           padding: 0 calc(var(--fd-padding-generic) / 1.5);
         }
         // EDIT MODE
+        &[data-edit='true'] li:hover {
+          cursor: grab;
+        }
         &[data-edit='false'] li {
           // Noise texture on active element
           &[data-vis='true'] picture {
