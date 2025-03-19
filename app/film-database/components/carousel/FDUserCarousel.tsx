@@ -2,9 +2,15 @@ import { useRef, useEffect, useState, forwardRef } from 'react';
 import { TablerCategoryFilled } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
-type Props = { header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined[]; display: 'flex' | 'grid'; isEdit: boolean };
+type Props = {
+  header: string;
+  data: Namespace_Tmdb.BaseMedia_Provider[] | undefined[];
+  display: 'flex' | 'grid';
+  isEdit: boolean;
+  collectionRefs: React.RefObject<HTMLElement[]>;
+};
 
-const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, isEdit }, collectionRef) => {
+const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, isEdit, collectionRefs }, collectionRef) => {
   const ulRef = useRef<HTMLUListElement>(null);
   const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
 
@@ -36,6 +42,10 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, 
   }
 
   function detachListItem(event: PointerEvent): void {
+    // Create array containing all carousel's positions and dimensions
+    // for (const collection of collectionRefs) {
+    // }
+
     // if (xyz) {
     // } else {
     //   // If element is not in valid parameters, reset position
