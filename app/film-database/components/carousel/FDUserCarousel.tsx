@@ -91,7 +91,7 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, 
   }
 
   return (
-    <section className='fdUserList__collections__wrapper' ref={collectionRef}>
+    <section className='fdUserCarousel' ref={collectionRef}>
       <header>
         <TablerCategoryFilled />
         <h2>{header}</h2>
