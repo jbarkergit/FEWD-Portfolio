@@ -129,6 +129,17 @@
       position: relative;
       width: 2em;
       aspect-ratio: 1/1;
+      // Edit Mode
+      &:nth-of-type(2) {
+        &[data-toggle='true'] {
+          color: #6dbe45;
+          transition: color 170ms ease-in-out;
+        }
+        &[data-toggle='false'] {
+          color: white;
+          transition: color 170ms ease-in-out;
+        }
+      }
       // Visibility
       &:nth-of-type(3) {
         &[data-toggle='true'] svg:nth-of-type(2) {
