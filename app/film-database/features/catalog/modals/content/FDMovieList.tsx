@@ -66,7 +66,7 @@ const FDMovieList = () => {
       <section className='fdUserList__collections'>
         <FDUserCarousel header={'Uncategorized Movies'} data={movies} display='flex' ref={collectionRef} isEdit={isEdit} />
       </section>
-      <FDMovieListMenu collectionRefs={collectionRefs} addCollection={addCollection} setIsEdit={setIsEdit} />
+      <FDMovieListMenu collectionRefs={collectionRefs} addCollection={addCollection} setIsEdit={setIsEdit} isEdit={isEdit} />
     </div>
   );
 };

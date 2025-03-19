@@ -11,10 +11,12 @@ import {
 const FDMovieListMenu = ({
   collectionRefs,
   addCollection,
+  isEdit,
   setIsEdit,
 }: {
   collectionRefs: React.RefObject<HTMLElement[]>;
   addCollection: () => void;
+  isEdit: boolean;
   setIsEdit: Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [isOpacity, setIsOpacity] = useState<boolean>(false);
@@ -88,10 +90,12 @@ const FDMovieListMenu = ({
         aria-label={isGrid ? 'Collapse view all lists' : 'Expand view of all lists'}
         data-toggle='true'
         onPointerUp={(event: PointerEvent) => {
-          toggleButtonVisibility(event.currentTarget as HTMLButtonElement);
-          setIsGrid((state) => {
-            return !state;
-          });
+          if (!isEdit) {
+            toggleButtonVisibility(event.currentTarget as HTMLButtonElement);
+            setIsGrid((state) => {
+              return !state;
+            });
+          }
         }}>
         <TablerLayoutListFilled />
         <TablerLayoutDashboardFilled />
