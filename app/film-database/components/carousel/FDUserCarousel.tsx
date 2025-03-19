@@ -2,9 +2,9 @@ import { useRef, useEffect, useState, forwardRef } from 'react';
 import { TablerCategoryFilled, TablerCategoryPlus } from '~/film-database/assets/google-material-symbols/GoogleMaterialIcons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
-type Props = { header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined[]; display: 'flex' | 'grid' };
+type Props = { header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined[]; display: 'flex' | 'grid'; isEdit: boolean };
 
-const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display }, collectionRef) => {
+const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, isEdit }, collectionRef) => {
   const ulRef = useRef<HTMLUListElement>(null);
 
   /** Carousel interactivity */
@@ -48,27 +48,23 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display }
    */
   const pointerUp = (event: PointerEvent): void => {
     clearTimeout(timeoutId);
-    if (!isDragging) animateListItems(event);
+    if (!isDragging && !isEdit) animateListItems(event);
 
     isInteract = false;
     isDragging = false;
   };
 
   useEffect(() => {
-    if (header && ulRef.current) {
-      ulRef.current.addEventListener('pointerdown', pointerDown);
-      ulRef.current.addEventListener('pointermove', pointerMove);
-      ulRef.current.addEventListener('pointerleave', pointerLeave);
-      ulRef.current.addEventListener('pointerup', pointerUp);
-    }
+    ulRef.current?.addEventListener('pointerdown', pointerDown);
+    ulRef.current?.addEventListener('pointermove', pointerMove);
+    ulRef.current?.addEventListener('pointerleave', pointerLeave);
+    ulRef.current?.addEventListener('pointerup', pointerUp);
 
     return () => {
-      if (header && ulRef.current) {
-        ulRef.current.removeEventListener('pointerdown', pointerDown);
-        ulRef.current.removeEventListener('pointermove', pointerMove);
-        ulRef.current.removeEventListener('pointerleave', pointerLeave);
-        ulRef.current.removeEventListener('pointerup', pointerUp);
-      }
+      ulRef.current?.removeEventListener('pointerdown', pointerDown);
+      ulRef.current?.removeEventListener('pointermove', pointerMove);
+      ulRef.current?.removeEventListener('pointerleave', pointerLeave);
+      ulRef.current?.removeEventListener('pointerup', pointerUp);
     };
   }, []);
 
@@ -76,7 +72,7 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display }
    * @function animateListItems
    * Scales all list items and applies filters to their images
    */
-  function animateListItems(event: PointerEvent) {
+  function animateListItems(event: PointerEvent): void {
     if (!isDragging) {
       const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
 
@@ -94,22 +90,21 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display }
     }
   }
 
-  if (data.length > 0)
-    return (
-      <section className='fdUserList__collections__wrapper' ref={collectionRef}>
-        <header>
-          <TablerCategoryFilled />
-          <h2>{header}</h2>
-        </header>
-        <ul ref={ulRef} data-layout={layout} data-edit='false'>
-          {data.map((movie, index) => (
-            <li key={`movie-list-key-${movie ? movie.id : index}`} data-vis={index === 0 ? 'true' : 'false'}>
-              <picture>{movie && <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />}</picture>
-            </li>
-          ))}
-        </ul>
-      </section>
-    );
+  return (
+    <section className='fdUserList__collections__wrapper' ref={collectionRef}>
+      <header>
+        <TablerCategoryFilled />
+        <h2>{header}</h2>
+      </header>
+      <ul ref={ulRef} data-layout={layout} data-edit='false'>
+        {data.map((movie, index) => (
+          <li key={`movie-list-key-${movie ? movie.id : index}`} data-vis={index === 0 ? 'true' : 'false'}>
+            <picture>{movie && <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />}</picture>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 });
 
 export default FDUserCarousel;
