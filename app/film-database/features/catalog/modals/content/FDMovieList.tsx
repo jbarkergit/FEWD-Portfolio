@@ -5,18 +5,20 @@ import FDUserCarousel from '~/film-database/components/carousel/FDUserCarousel';
 import { type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import FDMovieListMenu from './FDMovieListMenu';
-import useFormattedDate from '~/film-database/hooks/useFormattedDate';
-import useVoteAvgVisual from '~/film-database/hooks/useVoteAvgVisual';
 
 const FDMovieList = () => {
   const { primaryData } = useLoaderData();
-  const { isListModal, maxCarouselNodes } = useCatalogProvider();
+  const { isListModal } = useCatalogProvider();
 
   const [movies, setMovies] = useState<Namespace_Tmdb.BaseMedia_Provider[]>([]);
-  let flattenedPrimaryData: Namespace_Tmdb.BaseMedia_Provider[] | undefined = undefined;
+
+  const [carousels, setCarousels] = useState<{ header: string; data: typeof movies | undefined; display: 'flex' | 'grid' }[]>([]);
+
+  useEffect(() => {
+    if (movies.length > 0 && !carousels.length) setCarousels((state) => [...state, { header: 'Uncategorized Movies', data: movies, display: 'flex' }]);
+  }, [movies]);
 
   const collectionRefs = useRef<HTMLElement[]>([]);
-
   const collectionRef = (reference: HTMLUListElement): void => {
     if (reference && !collectionRefs.current.includes(reference)) {
       collectionRefs.current.push(reference);
@@ -33,6 +35,8 @@ const FDMovieList = () => {
    * Gets user document from Firestore
    * Filters flattenedPrimaryData to retrieve a list of user's saved movies
    */
+  let flattenedPrimaryData: Namespace_Tmdb.BaseMedia_Provider[] | undefined = undefined;
+
   const fetchMovies = async (): Promise<void> => {
     // Flatten primaryData from loaderData
     if (!flattenedPrimaryData) {
@@ -55,18 +59,22 @@ const FDMovieList = () => {
     if (isListModal) fetchMovies();
   }, [isListModal]);
 
-  /**
-   * @function addCollection
-   * Adds new collection
-   */
-  const addCollection = (): void => {};
-
   return (
     <div className='fdUserList'>
       <section className='fdUserList__collections'>
-        <FDUserCarousel header={'Uncategorized Movies'} data={movies} display='flex' ref={collectionRef} isEdit={isEdit} collectionRefs={collectionRefs} />
+        {carousels.map(({ header, data, display }, index) => (
+          <FDUserCarousel
+            key={`user-carousel-${index}`}
+            header={header}
+            data={data}
+            display={display}
+            ref={collectionRef}
+            isEdit={isEdit}
+            collectionRefs={collectionRefs}
+          />
+        ))}
       </section>
-      <FDMovieListMenu collectionRefs={collectionRefs} addCollection={addCollection} setIsEdit={setIsEdit} isEdit={isEdit} />
+      <FDMovieListMenu collectionRefs={collectionRefs} setIsEdit={setIsEdit} isEdit={isEdit} carousels={carousels} setCarousels={setCarousels} />
     </div>
   );
 };
