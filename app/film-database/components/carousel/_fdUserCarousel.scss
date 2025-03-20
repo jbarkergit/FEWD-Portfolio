@@ -68,7 +68,7 @@
       grid-template-columns: repeat(auto-fill, minmax(var(--fd-carousel-node-width), auto));
       padding: 0 calc(var(--fd-padding-generic) / 1.5);
     }
-    &[data-edit-mode='true'] {
+    &[data-edit-mode='true']:not(:has(li)) {
       // Edit mode is mandatory layout 'grid'
       height: calc(var(--fd-carousel-node-height) + calc(15px + 3px));
       & li:hover {
