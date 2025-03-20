@@ -1,16 +1,23 @@
-import { useEffect, useRef, useState, type Dispatch, type PointerEvent } from 'react';
+import { useEffect, useState, type Dispatch, type PointerEvent, type SetStateAction } from 'react';
 import { TablerCategoryPlus, TablerEdit, TablerLayoutListFilled, TablerLayoutDashboardFilled, TablerEye, TablerEyeOff } from '~/film-database/assets/svg/icons';
+import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
 const FDMovieListMenu = ({
   collectionRefs,
-  addCollection,
   isEdit,
   setIsEdit,
+  carousels,
+  setCarousels,
 }: {
   collectionRefs: React.RefObject<HTMLElement[]>;
-  addCollection: () => void;
   isEdit: boolean;
   setIsEdit: Dispatch<React.SetStateAction<boolean>>;
+  carousels: {
+    header: string;
+    data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+    display: 'flex' | 'grid';
+  }[];
+  setCarousels: Dispatch<SetStateAction<typeof carousels>>;
 }) => {
   const [isOpacity, setIsOpacity] = useState<boolean>(false);
   const [isGrid, setIsGrid] = useState<boolean>(false);
@@ -55,7 +62,7 @@ const FDMovieListMenu = ({
         data-toggle='true'
         onPointerUp={(event: PointerEvent) => {
           toggleButtonVisibility(event.currentTarget as HTMLButtonElement);
-          addCollection();
+          if (carousels.length < 6) setCarousels((state) => [...state, { data: undefined, display: 'flex', header: 'Unnamed Collection' }]);
         }}>
         <TablerCategoryPlus />
       </button>
