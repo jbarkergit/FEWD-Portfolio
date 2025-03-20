@@ -65,12 +65,15 @@ const FDMovieList = () => {
         {carousels.map(({ header, data, display }, index) => (
           <FDUserCarousel
             key={`user-carousel-${index}`}
+            mapIndex={index}
             header={header}
             data={data}
             display={display}
             ref={collectionRef}
             isEdit={isEdit}
             collectionRefs={collectionRefs}
+            carousels={carousels}
+            setCarousels={setCarousels}
           />
         ))}
       </section>
