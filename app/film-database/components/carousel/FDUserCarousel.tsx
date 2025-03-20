@@ -4,7 +4,7 @@ import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/
 
 type Props = {
   header: string;
-  data: Namespace_Tmdb.BaseMedia_Provider[] | undefined[];
+  data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
   display: 'flex' | 'grid';
   isEdit: boolean;
   collectionRefs: React.RefObject<HTMLElement[]>;
@@ -34,7 +34,6 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, 
 
   function attachListItem(event: PointerEvent): void {
     const target = event.target as HTMLLIElement;
-    // startingPosition =
     const elementWidth: number = target.offsetWidth / 2;
     const elementHeight: number = target.offsetHeight / 2;
     target.style.position = 'absolute';
@@ -42,15 +41,65 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, 
   }
 
   function detachListItem(event: PointerEvent): void {
-    // Create array containing all carousel's positions and dimensions
-    // for (const collection of collectionRefs) {
-    // }
+    // Get position of the list item the user is interacting with upon detachment
+    const detachmentPosition: Record<'x' | 'y', number> = { x: event.clientX, y: event.clientY };
 
-    // if (xyz) {
-    // } else {
-    //   // If element is not in valid parameters, reset position
-    //   // event.target.style.position = 'relative';
-    // }
+    // Create array containing all carousel's rects
+    let collectionsRect: Array<Record<'top' | 'right' | 'bottom' | 'left', number>> = [];
+
+    for (const collection of collectionRefs.current) {
+      const unorderedList = Array.from(collection.children)[1] as HTMLUListElement;
+      const rect: DOMRect = unorderedList.getBoundingClientRect();
+      collectionsRect.push({ top: rect.top, right: rect.right, bottom: rect.bottom, left: rect.left });
+    }
+
+    // Check for a valid detach area
+    let validCollectionIndex: number | null = null;
+
+    for (let i = 0; i < collectionsRect.length; i++) {
+      const { top, right, bottom, left } = collectionsRect[i];
+
+      // Check if the detachmentPosition is within the bounds of this collection
+      if (detachmentPosition.x >= left && detachmentPosition.x <= right && detachmentPosition.y >= top && detachmentPosition.y <= bottom) {
+        validCollectionIndex = i;
+        break;
+      }
+    }
+
+    // Handle detachment validation
+    if (validCollectionIndex !== null) {
+      const targetCollection: HTMLElement = collectionRefs.current[validCollectionIndex];
+      const unorderedList: HTMLUListElement = Array.from(targetCollection.children)[1] as HTMLUListElement;
+      const listItems: HTMLLIElement[] = Array.from(unorderedList.children) as HTMLLIElement[];
+
+      // Identify closest list item position to the detachment position
+      let closestItemIndex: number = -1;
+      let closestDistance: number = Number.MAX_VALUE;
+
+      for (let i = 0; i < listItems.length; i++) {
+        const itemRect: DOMRect = listItems[i].getBoundingClientRect();
+        const distance: number = Math.abs(detachmentPosition.y - itemRect.top);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestItemIndex = i;
+        }
+      }
+
+      // If valid index is available, add item to closest collection
+      if (closestItemIndex !== -1) {
+        // Remove list item from original collection
+        const originalCollection: HTMLElement | null = (event.target as HTMLLIElement).parentElement;
+        originalCollection?.removeChild(event.target as HTMLLIElement);
+
+        // Add list item to closest collection
+        unorderedList.insertBefore(event.target as HTMLLIElement, listItems[closestItemIndex] || null);
+      }
+    }
+
+    // Reset inline styles
+    (event.target as HTMLLIElement).style.position = 'relative';
+    (event.target as HTMLLIElement).style.transform = '';
 
     // Remove event listeners
     (event.target as HTMLLIElement).removeEventListener('pointermove', attachListItem);
@@ -129,7 +178,7 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, 
         <h2>{header}</h2>
       </header>
       <ul ref={ulRef} data-layout={layout} data-edit='false'>
-        {data.map((movie, index) => (
+        {data?.map((movie, index) => (
           <li key={`movie-list-key-${movie ? movie.id : index}`} data-vis={index === 0 ? 'true' : 'false'}>
             <picture>{movie && <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />}</picture>
           </li>
