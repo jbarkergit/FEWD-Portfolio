@@ -1,17 +1,17 @@
-import { useEffect, useState, type Dispatch, type PointerEvent, type SetStateAction } from 'react';
+import { useEffect, useRef, useState, type Dispatch, type PointerEvent, type SetStateAction } from 'react';
 import { TablerCategoryPlus, TablerEdit, TablerLayoutListFilled, TablerLayoutDashboardFilled, TablerEye, TablerEyeOff } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
 const FDMovieListMenu = ({
   collectionRefs,
-  isEdit,
-  setIsEdit,
+  isEditMode,
+  setIsEditMode,
   carousels,
   setCarousels,
 }: {
   collectionRefs: React.RefObject<HTMLElement[]>;
-  isEdit: boolean;
-  setIsEdit: Dispatch<React.SetStateAction<boolean>>;
+  isEditMode: boolean;
+  setIsEditMode: Dispatch<React.SetStateAction<boolean>>;
   carousels: {
     header: string;
     data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
@@ -19,84 +19,116 @@ const FDMovieListMenu = ({
   }[];
   setCarousels: Dispatch<SetStateAction<typeof carousels>>;
 }) => {
-  const [isOpacity, setIsOpacity] = useState<boolean>(false);
-  const [isGrid, setIsGrid] = useState<boolean>(false);
+  const [isListFX, setIsListFX] = useState<boolean>(true);
+  const [layoutType, setLayoutType] = useState<'flex' | 'grid'>('flex');
 
-  /** Toggle button */
-  const toggleButtonVisibility = (element: HTMLElement): void => {
-    element.setAttribute('data-toggle', element.getAttribute('data-toggle') === 'true' ? 'false' : 'true');
+  /**
+   * @function addCollection
+   * Adds new collection to carousels state
+   */
+  const addCollection = (): void => {
+    if (carousels.length < 6) setCarousels((state) => [...state, { data: undefined, display: 'flex', header: '' }]);
   };
 
   /**
-   * function @toggleOpacities
-   * Enable data-attribute to visually indicate that collection items can be edited
+   * @function toggleBtn
+   * Toggles the primary/secondary svg for the desired button
+   * Typically utilizes e.currentTarget as param, but we've constructed it with more control via refs
    */
-  const toggleOpacities = (): void => {
+  const editModeBtn = useRef<HTMLButtonElement>(null),
+    listItemFxBtn = useRef<HTMLButtonElement>(null),
+    layoutTypeBtn = useRef<HTMLButtonElement>(null);
+
+  const toggleBtn = (btnRef: 'editMode' | 'listItemFx' | 'layoutType', isDefaultSVG?: boolean): void => {
+    let btn: HTMLButtonElement | null =
+      btnRef === 'editMode' ? editModeBtn.current : btnRef === 'listItemFx' ? listItemFxBtn.current : btnRef === 'layoutType' ? layoutTypeBtn.current : null;
+
+    if (btn instanceof HTMLButtonElement) {
+      btn.setAttribute('data-toggle', isDefaultSVG ? String(isDefaultSVG) : btn.getAttribute('data-toggle') === 'true' ? 'false' : 'true');
+    }
+  };
+
+  /**
+   * @function toggleListItemFX
+   * Enable/disable attribute data-list-item-fx
+   */
+  const toggleListItemFX = (boolean: boolean): void => {
     if (collectionRefs.current) {
       for (const collection of collectionRefs.current) {
-        (Array.from(collection.children)[1] as HTMLUListElement).setAttribute('data-edit', String(isOpacity));
+        (Array.from(collection.children)[1] as HTMLUListElement).setAttribute('data-list-item-fx', String(boolean));
       }
     }
   };
 
-  useEffect(() => toggleOpacities(), [isOpacity]);
-
   /**
-   * @function toggleAllLayouts
-   * Iterates collectionRefs (lists), applies data-attribute prop to 'flex' or 'grid'
+   * @function toggleListItemFX
+   * Enable/disable attribute data-layout
    */
-  const toggleAllLayouts = (): void => {
+  const toggleLayoutType = (type: 'flex' | 'grid'): void => {
     if (collectionRefs.current) {
       for (const collection of collectionRefs.current) {
-        (Array.from(collection.children)[1] as HTMLUListElement).setAttribute('data-layout', isGrid ? 'grid' : 'flex');
+        (Array.from(collection.children)[1] as HTMLUListElement).setAttribute('data-layout', type);
       }
     }
   };
 
-  useEffect(() => toggleAllLayouts(), [isGrid]);
+  // Handle Edit Mode
+  const handleEditMode = (): void => {
+    // Toggle the buttons for editMode, listItemFx, and layoutType
+    toggleBtn('editMode');
+    toggleBtn('listItemFx');
+    toggleBtn('layoutType');
+
+    // Apply list item effects and layout type based on editMode
+    if (isEditMode) {
+      // When in edit mode, enable list item effects and set layout to grid
+      toggleListItemFX(false);
+      toggleLayoutType('grid');
+    } else {
+      // When not in edit mode, reset list item effects and set layout to flex
+      toggleListItemFX(isListFX);
+      toggleLayoutType(layoutType);
+    }
+  };
+
+  // Handle List FX
+  const handleListFX = (): void => {
+    toggleBtn('listItemFx');
+    toggleListItemFX(isListFX);
+  };
+
+  // Handle Layout Type
+  const handleLayoutType = (): void => {
+    toggleBtn('layoutType');
+    toggleLayoutType(layoutType);
+  };
+
+  // Use Effects for state changes
+  useEffect(() => handleEditMode(), [isEditMode]);
+  useEffect(() => handleListFX(), [isListFX]);
+  useEffect(() => handleLayoutType(), [layoutType]);
 
   return (
     <div className='fdUserList__menu'>
-      <button
-        aria-label='Create new list'
-        data-toggle='true'
-        onPointerUp={(event: PointerEvent) => {
-          toggleButtonVisibility(event.currentTarget as HTMLButtonElement);
-          if (carousels.length < 6) setCarousels((state) => [...state, { data: undefined, display: 'flex', header: 'Unnamed Collection' }]);
-        }}>
+      <button aria-label='Create new list' data-toggle='true' onPointerUp={() => addCollection()}>
         <TablerCategoryPlus />
       </button>
-      <button
-        aria-label='Switch to edit mode'
-        data-toggle='true'
-        onPointerUp={(event: PointerEvent) => {
-          toggleButtonVisibility(event.currentTarget as HTMLButtonElement);
-          setIsOpacity(true);
-          setIsEdit((state) => !state);
-        }}>
+      <button ref={editModeBtn} aria-label='Switch to edit mode' data-toggle='true' onPointerUp={() => setIsEditMode((state) => !state)}>
         <TablerEdit />
       </button>
-      <button
-        aria-label='Lower visibility of unselected movies'
-        data-toggle='true'
-        onPointerUp={(event: PointerEvent) => {
-          toggleButtonVisibility(event.currentTarget as HTMLButtonElement);
-          setIsOpacity((state) => !state);
-        }}>
+      <button ref={listItemFxBtn} aria-label='Lower visibility of unselected movies' data-toggle='false' onPointerUp={() => setIsListFX((state) => !state)}>
         <TablerEye />
         <TablerEyeOff />
       </button>
       <button
-        aria-label={isGrid ? 'Collapse view all lists' : 'Expand view of all lists'}
+        ref={layoutTypeBtn}
+        aria-label={layoutType === 'grid' ? 'Collapse view all lists' : 'Expand view of all lists'}
         data-toggle='true'
-        onPointerUp={(event: PointerEvent) => {
-          if (!isEdit) {
-            toggleButtonVisibility(event.currentTarget as HTMLButtonElement);
-            setIsGrid((state) => {
-              return !state;
-            });
-          }
-        }}>
+        onPointerUp={() =>
+          setLayoutType((state) => {
+            return state === 'flex' ? 'grid' : 'flex';
+          })
+        }>
         <TablerLayoutListFilled />
         <TablerLayoutDashboardFilled />
       </button>
