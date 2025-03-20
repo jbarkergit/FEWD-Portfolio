@@ -20,6 +20,7 @@
     }
   }
   & ul {
+    min-height: var(--fd-carousel-node-height);
     // Allow room for border and shadows
     padding: calc(15px + 3px) 0;
     // FLEX LAYOUT
