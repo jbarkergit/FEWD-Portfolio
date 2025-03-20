@@ -25,7 +25,7 @@ const FDMovieList = () => {
     }
   };
 
-  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   /**
    * @function fetchMovies
@@ -70,14 +70,14 @@ const FDMovieList = () => {
             data={data}
             display={display}
             ref={collectionRef}
-            isEdit={isEdit}
+            isEditMode={isEditMode}
             collectionRefs={collectionRefs}
             carousels={carousels}
             setCarousels={setCarousels}
           />
         ))}
       </section>
-      <FDMovieListMenu collectionRefs={collectionRefs} setIsEdit={setIsEdit} isEdit={isEdit} carousels={carousels} setCarousels={setCarousels} />
+      <FDMovieListMenu collectionRefs={collectionRefs} setIsEditMode={setIsEditMode} isEditMode={isEditMode} carousels={carousels} setCarousels={setCarousels} />
     </div>
   );
 };
