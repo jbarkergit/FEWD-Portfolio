@@ -1,23 +1,38 @@
-import { useRef, useEffect, useState, forwardRef } from 'react';
-import { TablerCategoryFilled } from '~/film-database/assets/svg/icons';
+import { useRef, useEffect, useState, forwardRef, type ChangeEvent, type Dispatch, type SetStateAction } from 'react';
+import { TablerCategoryFilled, TablerCursorText } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
 type Props = {
+  mapIndex: number;
   header: string;
   data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
   display: 'flex' | 'grid';
-  isEdit: boolean;
+  isEditMode: boolean;
   collectionRefs: React.RefObject<HTMLElement[]>;
+  carousels: {
+    header: string;
+    data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+    display: 'flex' | 'grid';
+  }[];
+  setCarousels: Dispatch<
+    SetStateAction<
+      {
+        header: string;
+        data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+        display: 'flex' | 'grid';
+      }[]
+    >
+  >;
 };
 
-const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, isEdit, collectionRefs }, collectionRef) => {
+const FDUserCarousel = forwardRef<HTMLElement, Props>(({ mapIndex, header, data, display, isEditMode, collectionRefs, carousels, setCarousels }, collectionRef) => {
   const ulRef = useRef<HTMLUListElement>(null);
   const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
 
   /** Carousel interactivity */
-  const [layout, setLayout] = useState<'flex' | 'grid'>(display);
   let isInteract: boolean = false;
   let isDragging: boolean = false;
+  let isRenaming: boolean = !!header;
 
   /**
    * @function pointerDown
@@ -114,7 +129,7 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, 
       timeoutId = setTimeout(() => (isDragging = true), 20);
     }
     // Attach and detach list item from cursor for user movie categorization
-    if (isEdit && isDragging && !isActiveElement && event.target instanceof HTMLLIElement) {
+    if (isEditMode && isDragging && !isActiveElement && event.target instanceof HTMLLIElement) {
       event.target.addEventListener('pointermove', attachListItem);
       event.target.addEventListener('pointerup', detachListItem);
       isActiveElement = true;
@@ -152,20 +167,20 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, 
       ulRef.current?.removeEventListener('pointerleave', pointerLeave);
       ulRef.current?.removeEventListener('pointerup', pointerUp);
     };
-  }, [isEdit]);
+  }, [isEditMode]);
 
   /**
    * @function animateListItems
    * Scales all list items and applies filters to their images
    */
   function animateListItems(event: PointerEvent): void {
-    if (!isEdit && !isDragging && listItems) {
+    if (!isEditMode && !isDragging && listItems) {
       const elementIndex: number = listItems.findIndex((item) => item === event.target);
 
       if (elementIndex !== -1) {
         // Iterate ulRef.current.children to disable/enable data-attr
         for (let i = 0; i < listItems.length; i++) {
-          listItems[i].setAttribute('data-vis', i === elementIndex ? 'true' : 'false');
+          listItems[i].setAttribute('data-list-item-visible', i === elementIndex ? 'true' : 'false');
         }
       }
     }
@@ -173,13 +188,39 @@ const FDUserCarousel = forwardRef<HTMLElement, Props>(({ header, data, display, 
 
   return (
     <section className='fdUserCarousel' ref={collectionRef}>
-      <header>
-        <TablerCategoryFilled />
-        <h2>{header}</h2>
+      <header data-rename={isRenaming}>
+        {isRenaming ? (
+          <fieldset>
+            <label>
+              <h2>{header ? header : 'Unnamed Collection'}</h2>
+            </label>
+            <TablerCategoryFilled />
+            <input
+              type='text'
+              placeholder={header ? header : 'Unnamed Collection'}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setCarousels((prevState) => {
+                  return prevState.map((carousel, index) => {
+                    if (index === mapIndex) return { ...carousel, header: e.target.value.trim().toLowerCase() };
+                    return carousel;
+                  });
+                });
+              }}
+            />
+          </fieldset>
+        ) : (
+          <>
+            <TablerCategoryFilled />
+            <h2>{header ? header : 'Unnamed Collection'}</h2>
+          </>
+        )}
+        <button aria-label='Rename collection' onPointerUp={() => (isRenaming = !isRenaming)}>
+          <TablerCursorText />
+        </button>
       </header>
-      <ul ref={ulRef} data-layout={layout} data-edit='false'>
+      <ul ref={ulRef} data-layout={display} data-list-item-fx='true' data-edit-mode={isEditMode}>
         {data?.map((movie, index) => (
-          <li key={`movie-list-key-${movie ? movie.id : index}`} data-vis={index === 0 ? 'true' : 'false'}>
+          <li key={`movie-list-key-${movie ? movie.id : index}`} data-list-item-visible={index === 0 ? 'true' : 'false'}>
             <picture>{movie && <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />}</picture>
           </li>
         ))}
