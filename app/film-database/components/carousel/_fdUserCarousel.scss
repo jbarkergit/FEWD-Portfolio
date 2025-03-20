@@ -5,42 +5,39 @@
   padding-top: calc(var(--fd-gap) * 2);
   & header {
     display: flex;
-    align-items: center;
     gap: calc(var(--fd-gap) / 2);
-    width: fit-content;
     // Remove additional ul padding-top from header's padding bottom
     padding: 0 calc(var(--fd-carousel-node-width) / 4) calc(var(--fd-gap) - calc((15px + 3px))) calc(var(--fd-padding-generic) / 1.5);
-    & h2 {
-      @include m.fdFontXL;
-      text-transform: capitalize;
-    }
     & svg {
       width: 1.6em;
       aspect-ratio: 1/1;
     }
-  }
-  &__newCollection {
-    display: flex;
-    align-items: center;
-    padding: 0 calc(var(--fd-padding-generic) / 1.5);
-    fieldset {
+    & h2 {
+      @include m.fdFontXL;
+      text-transform: capitalize;
+    }
+    & fieldset {
       display: flex;
-      flex-direction: column;
-      gap: var(--fd-gap);
+      gap: calc(var(--fd-gap) / 2);
+      width: 100%;
+      @include m.fdFontL;
       & label {
-        @include m.fdFontXL;
-        text-transform: capitalize;
+        display: none;
       }
-      & input::placeholder {
-        @include m.fdFontL;
+      & input {
+        width: fit-content;
+        &::placeholder {
+          @include m.fdFontL;
+          color: white;
+        }
       }
     }
   }
   & ul {
-    min-height: var(--fd-carousel-node-height);
     // Allow room for border and shadows
     padding: calc(15px + 3px) 0;
-    // FLEX LAYOUT
+    interpolate-size: allow-keywords;
+    transition: height 170ms ease;
     &[data-layout='flex'] {
       display: flex;
       gap: var(--fd-gap);
@@ -63,7 +60,6 @@
         cursor: grabbing;
       }
     }
-    // GRID LAYOUT
     &[data-layout='grid'] {
       display: grid;
       column-gap: var(--fd-gap);
@@ -72,33 +68,39 @@
       grid-template-columns: repeat(auto-fill, minmax(var(--fd-carousel-node-width), auto));
       padding: 0 calc(var(--fd-padding-generic) / 1.5);
     }
-    // EDIT MODE
-    &[data-edit='true'] li:hover {
-      cursor: grab;
+    &[data-edit-mode='true'] {
+      // Edit mode is mandatory layout 'grid'
+      height: calc(var(--fd-carousel-node-height) + calc(15px + 3px));
+      & li:hover {
+        cursor: grab;
+      }
     }
-    &[data-edit='false'] li {
-      // Noise texture on active element
-      &[data-vis='true'] picture {
-        &::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          z-index: 10;
-          border-radius: var(--fd-borderRadius);
-          background-image: url(/app/film-database/assets/gif/vhs-noise.gif);
-          background-size: 480px;
-          background-attachment: fixed;
-          opacity: 0.02;
-          pointer-events: none;
+    &[data-list-item-fx='true'] {
+      & li {
+        &[data-list-item-visible='true'] {
+          & picture {
+            &::after {
+              content: '';
+              position: absolute;
+              inset: 0;
+              z-index: 10;
+              border-radius: var(--fd-borderRadius);
+              background-image: url(/app/film-database/assets/gif/vhs-noise.gif);
+              background-size: 480px;
+              background-attachment: fixed;
+              opacity: 0.02;
+              pointer-events: none;
+            }
+            & img {
+              filter: none;
+            }
+          }
         }
-      }
-      // Remove image filter for active poster
-      &[data-vis='true'] picture img {
-        filter: none;
-      }
-      // Inactive img elements filter
-      &[data-vis='false'] picture img {
-        filter: brightness(35%) saturate(50%);
+        &[data-list-item-visible='false'] {
+          & picture img {
+            filter: brightness(35%) saturate(50%);
+          }
+        }
       }
     }
     & li {
@@ -115,7 +117,7 @@
       &:hover {
         cursor: pointer;
       }
-      &:hover:not([data-vis='true']) picture img {
+      &:hover:not([data-list-item-visible='true']) picture img {
         filter: brightness(80%) saturate(70%);
       }
       & picture,
