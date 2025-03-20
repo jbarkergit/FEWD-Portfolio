@@ -13,8 +13,7 @@ import FDAccountModal from '../features/account/FDAccountModal';
 import FDHeader from '../features/catalog/header/FDHeader';
 import FDHero from '../features/catalog/hero/FDHero';
 import FDMedia from '../features/catalog/media/FDMedia';
-import FDMovieModal from '../features/catalog/modals/content/FDMovieModal';
-import FDModal from '../features/catalog/modals/FDModal';
+import FDModal from '../features/catalog/modals/container/FDModal';
 
 export async function clientLoader() {
   // Auth

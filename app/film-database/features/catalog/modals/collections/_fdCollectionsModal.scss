@@ -1,0 +1,10 @@
+@use '/app/base/sass/util/functions' as f;
+@use '/app/film-database/scss/fdMixins' as m;
+
+.fdCollectionsModal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: inherit;
+  height: inherit;
+}

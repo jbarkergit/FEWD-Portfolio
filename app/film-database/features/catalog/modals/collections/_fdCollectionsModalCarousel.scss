@@ -1,7 +1,7 @@
 @use '/app/base/sass/util/functions' as f;
 @use '/app/film-database/scss/fdMixins' as m;
 
-.fdUserCarousel {
+.FDCollectionsModalCarousel {
   padding-top: calc(var(--fd-gap) * 2);
   & header {
     display: flex;

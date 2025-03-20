@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { useFirestore, type Firestore_UserDocument } from '~/base/firebase/firestore/hooks/useFirestore';
-import FDUserCarousel from '~/film-database/components/carousel/FDUserCarousel';
+import FDUserCarousel from '~/film-database/features/catalog/modals/collections/FDCollectionsModalCarousel';
 import { type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
-import FDMovieListMenu from './FDMovieListMenu';
+import FDCollectionsModalMenu from './FDCollectionsModalMenu';
 
-const FDMovieList = () => {
+const FDCollectionsModal = () => {
   const { primaryData } = useLoaderData();
   const { isListModal } = useCatalogProvider();
 
@@ -60,8 +60,8 @@ const FDMovieList = () => {
   }, [isListModal]);
 
   return (
-    <div className='fdUserList'>
-      <section className='fdUserList__collections'>
+    <div className='fdCollectionsModal'>
+      <section className='fdCollectionsModal__collections'>
         {carousels.map(({ header, data, display }, index) => (
           <FDUserCarousel
             key={`user-carousel-${index}`}
@@ -77,9 +77,15 @@ const FDMovieList = () => {
           />
         ))}
       </section>
-      <FDMovieListMenu collectionRefs={collectionRefs} setIsEditMode={setIsEditMode} isEditMode={isEditMode} carousels={carousels} setCarousels={setCarousels} />
+      <FDCollectionsModalMenu
+        collectionRefs={collectionRefs}
+        setIsEditMode={setIsEditMode}
+        isEditMode={isEditMode}
+        carousels={carousels}
+        setCarousels={setCarousels}
+      />
     </div>
   );
 };
 
-export default FDMovieList;
+export default FDCollectionsModal;

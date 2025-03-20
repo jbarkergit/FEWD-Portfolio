@@ -16,11 +16,14 @@
 @forward '/app/film-database/features/catalog/media/fdMedia';
 @forward '/app/film-database/features/catalog/media/media-carousel-search/fdCarouselSearch';
 
-@forward '/app/film-database/features/catalog/modals/fdModal';
+@forward '/app/film-database/features/catalog/modals/container/fdModal';
+@forward '/app/film-database/features/catalog/modals/movie/fdMovieModal';
+@forward '/app/film-database/features/catalog/modals/collections/fdCollectionsModal';
+@forward '/app/film-database/features/catalog/modals/collections/fdCollectionsModalCarousel';
+@forward '/app/film-database/features/catalog/modals/collections/fdCollectionsModalMenu';
 
 // Components
 @forward '/app/film-database/components/carousel/fdCarousel';
-@forward '/app/film-database/components/carousel/fdUserCarousel';
 
 @forward '/app/film-database/components/iframe/fdiFrame';
 
