@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { useFirestore, type Firestore_UserDocument } from '~/base/firebase/firestore/hooks/useFirestore';
-import FDUserCarousel from '~/film-database/features/catalog/modals/collections/FDCollectionsModalCarousel';
 import { type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import FDCollectionsModalMenu from './FDCollectionsModalMenu';
+import FDCollectionsModalCarousel from '~/film-database/features/catalog/modals/collections/FDCollectionsModalCarousel';
 
 const FDCollectionsModal = () => {
   const { primaryData } = useLoaderData();
@@ -63,16 +63,15 @@ const FDCollectionsModal = () => {
       <section className='fdCollectionsModal__collections'>
         {carousels.length > 0 &&
           carousels.map(({ header, data, display }, index) => (
-            <FDUserCarousel
+            <FDCollectionsModalCarousel
               key={`user-carousel-${index}`}
               mapIndex={index}
               header={header}
               data={data}
               display={display}
               ref={collectionRef}
-              isEditMode={isEditMode}
               collectionRefs={collectionRefs}
-              carousels={carousels}
+              isEditMode={isEditMode}
               setCarousels={setCarousels}
             />
           ))}
