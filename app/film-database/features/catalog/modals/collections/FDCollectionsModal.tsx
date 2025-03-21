@@ -2,21 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { useFirestore, type Firestore_UserDocument } from '~/base/firebase/firestore/hooks/useFirestore';
 import { type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import FDCollectionsModalMenu from './FDCollectionsModalMenu';
 import FDCollectionsModalCarousel from '~/film-database/features/catalog/modals/collections/FDCollectionsModalCarousel';
 
 const FDCollectionsModal = () => {
+  // Prevent additional API calls by calling clientLoader's primaryData
   const { primaryData } = useLoaderData();
-  const { isListModal } = useCatalogProvider();
 
-  const [movies, setMovies] = useState<Namespace_Tmdb.BaseMedia_Provider[]>([]);
-  const [carousels, setCarousels] = useState<{ header: string; data: typeof movies | undefined; display: 'flex' | 'grid' }[]>([]);
+  // User collections state
+  const [carousels, setCarousels] = useState<{ header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined; display: 'flex' | 'grid' }[]>([]);
 
-  useEffect(() => {
-    if (movies.length > 0 && !carousels.length) setCarousels((state) => [...state, { header: 'Uncategorized Movies', data: movies, display: 'flex' }]);
-  }, [movies]);
-
+  // Gather collection refs
   const collectionRefs = useRef<HTMLElement[]>([]);
   const collectionRef = (reference: HTMLUListElement): void => {
     if (reference && !collectionRefs.current.includes(reference)) {
@@ -37,7 +33,7 @@ const FDCollectionsModal = () => {
   let flattenedPrimaryData: Namespace_Tmdb.BaseMedia_Provider[] | undefined = undefined;
 
   const fetchMovies = async (): Promise<void> => {
-    // Flatten primaryData from loaderData
+    // Flatten primaryData from loaderData (memoized)
     if (!flattenedPrimaryData) {
       flattenedPrimaryData = (primaryData as Namespace_Tmdb.Response_Union[]).flatMap((entry) =>
         Object.values(entry).flatMap((subEntry) => subEntry.results || [])
@@ -50,13 +46,16 @@ const FDCollectionsModal = () => {
 
     // Get, filter and set movies from clientLoader's primaryData to prevent api call
     const moviesArr: Namespace_Tmdb.BaseMedia_Provider[] = flattenedPrimaryData.filter((movie) => collection.movies.some((id) => id === movie.id));
-    setMovies(moviesArr);
+
+    // Set initial collection
+    if (moviesArr.length > 0 && !carousels.length) {
+      setCarousels([{ header: 'Uncategorized Movies', data: moviesArr, display: 'flex' }]);
+    }
   };
 
-  // Invoke fetchMovies when isListModal is true to ensure the latest data is populated
   useEffect(() => {
-    if (isListModal) fetchMovies();
-  }, [isListModal]);
+    fetchMovies();
+  }, []);
 
   return (
     <div className='fdCollectionsModal'>
