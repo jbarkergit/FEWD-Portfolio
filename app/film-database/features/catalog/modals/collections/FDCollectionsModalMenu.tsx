@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type Dispatch, type PointerEvent, type SetStateAction } from 'react';
+import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { TablerCategoryPlus, TablerEdit, TablerLayoutListFilled, TablerLayoutDashboardFilled, TablerEye, TablerEyeOff } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
@@ -23,6 +23,8 @@ const FDCollectionsModalMenu = ({
 }) => {
   const [isListFX, setIsListFX] = useState<boolean>(true);
   const [layoutType, setLayoutType] = useState<'flex' | 'grid'>('flex');
+
+  useEffect(() => console.log(`isEditMode: ${isEditMode}, isListFX: ${isListFX}, layoutType: ${layoutType}`), [isEditMode, isListFX, layoutType]);
 
   /**
    * @function addCollection
