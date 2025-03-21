@@ -183,26 +183,8 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
   return (
     <section className='fdCollections__collection' ref={collectionRef}>
       <header>
-        <fieldset>
-          <div>
-            <TablerCategoryFilled />
-            <label>
-              <h2>{header ? header : 'Unnamed Collection'}</h2>
-            </label>
-            <input
-              type='text'
-              placeholder={header ? header : 'Unnamed Collection'}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCarousels((prevState) => {
-                  return prevState.map((carousel, index) => {
-                    if (index === mapIndex) return { ...carousel, header: e.target.value.trim().toLowerCase() };
-                    return carousel;
-                  });
-                });
-              }}
-            />
-          </div>
-        </fieldset>
+        <TablerCategoryFilled />
+        <h2 contentEditable='true'>{header.length > 0 ? header : 'Unnamed Collection'}</h2>
       </header>
       <ul ref={ulRef} data-layout={display} data-list-item-fx='true' data-edit-mode={isEditMode}>
         {data?.map((movie, index) => (

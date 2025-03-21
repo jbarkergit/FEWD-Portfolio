@@ -33,7 +33,7 @@ const FDCollectionsMenu = ({
   const addCollection = (): void => {
     setCarousels((state) => {
       if (state.length > 4) return state;
-      return [...state, { data: undefined, display: 'flex', header: '' }];
+      return [...state, { data: undefined, display: 'flex', header: 'Unnamed Collection' }];
     });
   };
 

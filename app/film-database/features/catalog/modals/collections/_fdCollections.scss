@@ -82,31 +82,19 @@
     gap: var(--fd-gap);
     & header {
       display: flex;
-      gap: calc(var(--fd-gap) / 2);
       // Remove additional ul padding-top from header's padding bottom
       padding: 0 calc(var(--fd-carousel-node-width) / 4) calc(var(--fd-gap) - calc((15px + 3px))) calc(var(--fd-padding-generic) / 1.5);
-      & fieldset {
-        position: relative;
-        display: flex;
-        gap: calc(var(--fd-gap) / 2);
-        width: 100%;
-        & div {
-          display: contents;
-          & svg {
-            width: 1.6em;
-            aspect-ratio: 1/1;
-          }
-          & label h2 {
-            @include m.fdFontL;
-            text-transform: capitalize;
-          }
-          & input {
-            position: absolute;
-            margin-left: calc(1.6em + 0.4em);
-            &::placeholder {
-              opacity: 0;
-            }
-          }
+      & svg {
+        width: 1.6em;
+        aspect-ratio: 1/1;
+      }
+      & h2 {
+        padding: 0 var(--fd-gap);
+        @include m.fdFontL;
+        text-transform: capitalize;
+        cursor: text;
+        &:focus {
+          outline: none;
         }
       }
     }
