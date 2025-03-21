@@ -184,7 +184,9 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
     <section className='fdCollections__collection' ref={collectionRef}>
       <header>
         <TablerCategoryFilled />
-        <h2 contentEditable='true'>{header.length > 0 ? header : 'Unnamed Collection'}</h2>
+        <h2 contentEditable='true' suppressContentEditableWarning={true}>
+          {header.length > 0 ? header : 'Unnamed Collection'}
+        </h2>
       </header>
       <ul ref={ulRef} data-layout={display} data-list-item-fx='true' data-edit-mode={isEditMode}>
         {data?.map((movie, index) => (
