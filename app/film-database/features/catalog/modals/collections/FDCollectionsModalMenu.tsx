@@ -24,7 +24,7 @@ const FDCollectionsModalMenu = ({
   const [isListFX, setIsListFX] = useState<boolean>(true);
   const [layoutType, setLayoutType] = useState<'flex' | 'grid'>('flex');
 
-  useEffect(() => console.log(`isEditMode: ${isEditMode}, isListFX: ${isListFX}, layoutType: ${layoutType}`), [isEditMode, isListFX, layoutType]);
+  // useEffect(() => console.log(`isEditMode: ${isEditMode}, isListFX: ${isListFX}, layoutType: ${layoutType}`), [isEditMode, isListFX, layoutType]);
 
   /**
    * @function addCollection
