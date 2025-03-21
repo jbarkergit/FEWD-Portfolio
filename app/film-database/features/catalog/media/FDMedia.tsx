@@ -7,8 +7,7 @@ import { useCatalogProvider } from '../../../context/CatalogContext';
 import { usePaginateData } from '../../../hooks/usePaginateData';
 // Features
 import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
-// Components
-import FDCarousel from '../../../components/carousel/FDCarousel';
+import FDCarousel from './media-carousel/FDCarousel';
 
 const FDMedia = () => {
   // Context
@@ -58,7 +57,7 @@ const FDMedia = () => {
   /** JSX */
   return (
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
-      {paginatedData?.map(([key, value], index) => <FDCarousel type={'movies'} mapIndex={index} heading={key} data={value} key={`carousel-key-${key}-${value}`} />)}
+      {paginatedData?.map(([key, value], index) => <FDCarousel mapIndex={index} heading={key} data={value} key={`carousel-key-${key}-${value}`} />)}
       <FDCarouselSearch />
     </main>
   );

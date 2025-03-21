@@ -33,11 +33,11 @@
       scroll-behavior: smooth;
       &__li {
         position: relative;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        width: auto;
-        height: auto;
+        width: var(--fd-carousel-node-width);
+        height: var(--fd-carousel-node-height);
+        border-radius: var(--fd-borderRadius);
+        overflow: clip;
+        cursor: pointer;
         // scroll-snap-align: center;
         &:first-of-type {
           margin-left: calc(var(--fd-padding-generic) / 1.5);
@@ -50,23 +50,11 @@
             display: none;
           }
         }
-        & picture {
-          position: relative;
+        & picture,
+        & picture img {
           display: block;
-          width: var(--fd-carousel-node-width);
-          height: var(--fd-carousel-node-height);
-          border-radius: var(--fd-borderRadius);
-          overflow: clip;
-          cursor: pointer;
-          & img {
-            width: inherit;
-            height: inherit;
-            object-fit: cover;
-          }
-        }
-        &__member {
-          display: flex;
-          flex-direction: column;
+          width: inherit;
+          height: inherit;
         }
         &__overlay {
           position: absolute;

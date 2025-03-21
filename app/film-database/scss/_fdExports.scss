@@ -14,6 +14,7 @@
 @forward '/app/film-database/features/catalog/hero/fdHero';
 
 @forward '/app/film-database/features/catalog/media/fdMedia';
+@forward '/app/film-database/features/catalog/media/media-carousel/fdCarousel';
 @forward '/app/film-database/features/catalog/media/media-carousel-search/fdCarouselSearch';
 
 @forward '/app/film-database/features/catalog/modals/container/fdModal';
@@ -21,8 +22,6 @@
 @forward '/app/film-database/features/catalog/modals/collections/fdCollections';
 
 // Components
-@forward '/app/film-database/components/carousel/fdCarousel';
-
 @forward '/app/film-database/components/iframe/fdiFrame';
 
 @forward '/app/film-database/components/movie/fdDetails';

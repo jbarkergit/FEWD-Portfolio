@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import FDCarousel from '../../../../components/carousel/FDCarousel';
+
 import { useTmdbFetcher, type Namespace_Tmdb } from '../../../../composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '../../../../context/CatalogContext';
 import FDiFrame from '../../../../components/iframe/FDiFrame';
@@ -26,9 +26,9 @@ const FDMovie = () => {
         <FDiFrame />
         <FDDetails modal={true} />
         <section className='FDMovie__castCrew'>
-          {castCrew.map(([key, value], index) => (
+          {/* {castCrew.map(([key, value], index) => (
             <FDCarousel type={key === 'cast' ? 'cast' : 'crew'} mapIndex={index} heading={key} data={value} key={`${key}-${index}`} />
-          ))}
+          ))} */}
         </section>
       </div>
     );
