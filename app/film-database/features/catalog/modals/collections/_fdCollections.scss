@@ -1,7 +1,7 @@
 @use '/app/base/sass/util/functions' as f;
 @use '/app/film-database/scss/fdMixins' as m;
 
-.fdUserList__menu {
+.fdCollectionsMenu {
   position: fixed;
   bottom: var(--fd-padding-generic);
   left: 50%;

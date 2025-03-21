@@ -116,7 +116,7 @@ const FDCollectionsMenu = ({
   useEffect(() => handleLayoutType(), [layoutType]);
 
   return (
-    <div className='fdUserList__menu'>
+    <div className='fdCollectionsMenu'>
       <button aria-label='Create new list' data-toggle='true' onPointerUp={() => addCollection()}>
         <TablerCategoryPlus />
       </button>
