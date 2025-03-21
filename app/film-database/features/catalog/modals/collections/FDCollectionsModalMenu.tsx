@@ -6,18 +6,20 @@ const FDCollectionsModalMenu = ({
   collectionRefs,
   isEditMode,
   setIsEditMode,
-  carousels,
   setCarousels,
 }: {
   collectionRefs: React.RefObject<HTMLElement[]>;
   isEditMode: boolean;
   setIsEditMode: Dispatch<React.SetStateAction<boolean>>;
-  carousels: {
-    header: string;
-    data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
-    display: 'flex' | 'grid';
-  }[];
-  setCarousels: Dispatch<SetStateAction<typeof carousels>>;
+  setCarousels: Dispatch<
+    SetStateAction<
+      {
+        header: string;
+        data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+        display: 'flex' | 'grid';
+      }[]
+    >
+  >;
 }) => {
   const [isListFX, setIsListFX] = useState<boolean>(true);
   const [layoutType, setLayoutType] = useState<'flex' | 'grid'>('flex');
@@ -27,7 +29,10 @@ const FDCollectionsModalMenu = ({
    * Adds new collection to carousels state
    */
   const addCollection = (): void => {
-    if (carousels.length < 6) setCarousels((state) => [...state, { data: undefined, display: 'flex', header: '' }]);
+    setCarousels((state) => {
+      if (state.length > 4) return state;
+      return [...state, { data: undefined, display: 'flex', header: '' }];
+    });
   };
 
   /**

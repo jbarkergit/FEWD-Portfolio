@@ -11,7 +11,6 @@ const FDCollectionsModal = () => {
   const { isListModal } = useCatalogProvider();
 
   const [movies, setMovies] = useState<Namespace_Tmdb.BaseMedia_Provider[]>([]);
-
   const [carousels, setCarousels] = useState<{ header: string; data: typeof movies | undefined; display: 'flex' | 'grid' }[]>([]);
 
   useEffect(() => {
@@ -62,28 +61,23 @@ const FDCollectionsModal = () => {
   return (
     <div className='fdCollectionsModal'>
       <section className='fdCollectionsModal__collections'>
-        {carousels.map(({ header, data, display }, index) => (
-          <FDUserCarousel
-            key={`user-carousel-${index}`}
-            mapIndex={index}
-            header={header}
-            data={data}
-            display={display}
-            ref={collectionRef}
-            isEditMode={isEditMode}
-            collectionRefs={collectionRefs}
-            carousels={carousels}
-            setCarousels={setCarousels}
-          />
-        ))}
+        {carousels.length > 0 &&
+          carousels.map(({ header, data, display }, index) => (
+            <FDUserCarousel
+              key={`user-carousel-${index}`}
+              mapIndex={index}
+              header={header}
+              data={data}
+              display={display}
+              ref={collectionRef}
+              isEditMode={isEditMode}
+              collectionRefs={collectionRefs}
+              carousels={carousels}
+              setCarousels={setCarousels}
+            />
+          ))}
       </section>
-      <FDCollectionsModalMenu
-        collectionRefs={collectionRefs}
-        setIsEditMode={setIsEditMode}
-        isEditMode={isEditMode}
-        carousels={carousels}
-        setCarousels={setCarousels}
-      />
+      <FDCollectionsModalMenu collectionRefs={collectionRefs} isEditMode={isEditMode} setIsEditMode={setIsEditMode} setCarousels={setCarousels} />
     </div>
   );
 };
