@@ -99,13 +99,13 @@
       }
     }
     & ul {
-      // Allow room for border and shadows
-      padding: 0 0 calc(15px + 8px) 0;
       interpolate-size: allow-keywords;
       transition: height 170ms ease;
       &[data-layout='flex'] {
         display: flex;
         gap: var(--fd-gap);
+        // Allow room for border and shadows
+        padding: 0 0 calc(15px + 8px) 0;
         overflow-y: clip;
         overflow-x: scroll;
         scrollbar-width: none;
@@ -131,7 +131,7 @@
         // Add ul's padding-bottom for visual consistency
         row-gap: calc(var(--fd-gap) + 15px + 3px);
         grid-template-columns: repeat(auto-fill, minmax(var(--fd-carousel-node-width), auto));
-        padding: 0 calc(var(--fd-padding-generic) / 1.5);
+        padding: 0 calc(var(--fd-padding-generic) / 1.5) calc(15px + 8px) calc(var(--fd-padding-generic) / 1.5);
       }
       &[data-edit-mode='true']:not(:has(li)) {
         // Edit mode is mandatory layout 'grid'
