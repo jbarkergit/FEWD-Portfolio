@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
-import FDMovieModal from '../movie/FDMovieModal';
-import FDMovieList from '../collections/FDCollectionsModal';
+import FDCollections from '../collections/FDCollections';
+import FDMovie from '../movie/FDMovie';
 
 const FDModal = () => {
   // Context
@@ -46,8 +46,8 @@ const FDModal = () => {
     return (
       <div className='fdModal'>
         <div className='fdModal__container' ref={modal}>
-          {isMovieModal && <FDMovieModal />}
-          {isListModal && <FDMovieList />}
+          {isMovieModal && <FDMovie />}
+          {isListModal && <FDCollections />}
         </div>
       </div>
     );

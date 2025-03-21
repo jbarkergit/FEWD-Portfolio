@@ -18,9 +18,7 @@
 
 @forward '/app/film-database/features/catalog/modals/container/fdModal';
 @forward '/app/film-database/features/catalog/modals/movie/fdMovieModal';
-@forward '/app/film-database/features/catalog/modals/collections/fdCollectionsModal';
-@forward '/app/film-database/features/catalog/modals/collections/fdCollectionsModalCarousel';
-@forward '/app/film-database/features/catalog/modals/collections/fdCollectionsModalMenu';
+@forward '/app/film-database/features/catalog/modals/collections/fdCollections';
 
 // Components
 @forward '/app/film-database/components/carousel/fdCarousel';

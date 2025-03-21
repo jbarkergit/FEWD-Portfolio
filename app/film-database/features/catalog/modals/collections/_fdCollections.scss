@@ -1,0 +1,203 @@
+@use '/app/base/sass/util/functions' as f;
+@use '/app/film-database/scss/fdMixins' as m;
+
+.fdUserList__menu {
+  position: fixed;
+  bottom: var(--fd-padding-generic);
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  gap: var(--fd-gap);
+  padding: calc(var(--fd-padding-generic) / 9) calc(var(--fd-padding-generic) / 6);
+  border-radius: var(--fd-borderRadius);
+  background-color: #101010;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  overflow: clip;
+  & button {
+    display: block;
+    position: relative;
+    width: 2em;
+    aspect-ratio: 1/1;
+    // Edit Mode
+    &:nth-of-type(2) {
+      &[data-toggle='true'] {
+        color: white;
+        transition: color 170ms ease-in-out;
+      }
+      &[data-toggle='false'] {
+        color: #6dbe45;
+        transition: color 170ms ease-in-out;
+      }
+    }
+    // Visibility
+    &:nth-of-type(3) {
+      &[data-toggle='true'] svg:nth-of-type(2) {
+        clip-path: polygon(100% 100%, 100% 100%, 0% 100%, 0% 100%);
+        transition: clip-path 170ms ease-in-out;
+      }
+      &[data-toggle='false'] svg {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        transition: clip-path 170ms ease-in-out;
+      }
+    }
+    // Layout
+    &:nth-of-type(4) {
+      &[data-toggle='true'] svg {
+        transition: top 170ms ease-in-out;
+        &:nth-of-type(1) {
+          top: 0;
+        }
+        &:nth-of-type(2) {
+          top: -3em;
+        }
+      }
+      &[data-toggle='false'] svg {
+        transition: top 170ms ease-in-out;
+        &:nth-of-type(1) {
+          top: -3em;
+        }
+        &:nth-of-type(2) {
+          top: 0;
+        }
+      }
+    }
+    & svg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
+.fdCollections {
+  &__collection {
+    & header {
+      display: flex;
+      gap: calc(var(--fd-gap) / 2);
+      // Remove additional ul padding-top from header's padding bottom
+      padding: 0 calc(var(--fd-carousel-node-width) / 4) calc(var(--fd-gap) - calc((15px + 3px))) calc(var(--fd-padding-generic) / 1.5);
+      & fieldset {
+        position: relative;
+        display: flex;
+        gap: calc(var(--fd-gap) / 2);
+        width: 100%;
+        & div {
+          display: contents;
+          & svg {
+            width: 1.6em;
+            aspect-ratio: 1/1;
+          }
+          & label h2 {
+            @include m.fdFontL;
+            text-transform: capitalize;
+          }
+          & input {
+            position: absolute;
+            margin-left: calc(1.6em + 0.4em);
+            &::placeholder {
+              opacity: 0;
+            }
+          }
+        }
+      }
+    }
+    & ul {
+      interpolate-size: allow-keywords;
+      transition: height 170ms ease;
+      &[data-layout='flex'] {
+        display: flex;
+        gap: var(--fd-gap);
+        overflow-y: clip;
+        overflow-x: scroll;
+        scrollbar-width: none;
+        // Carousel padding
+        & li:first-of-type {
+          margin-left: calc(var(--fd-padding-generic) / 1.5);
+        }
+        & li:last-of-type {
+          margin-right: calc(var(--fd-padding-generic) / 1.5);
+        }
+        // Pointer events
+        &:hover {
+          cursor: grab;
+        }
+        &:active,
+        &:active li:hover {
+          cursor: grabbing;
+        }
+      }
+      &[data-layout='grid'] {
+        display: grid;
+        column-gap: var(--fd-gap);
+        // Add ul's padding-bottom for visual consistency
+        row-gap: calc(var(--fd-gap) + 15px + 3px);
+        grid-template-columns: repeat(auto-fill, minmax(var(--fd-carousel-node-width), auto));
+        padding: 0 calc(var(--fd-padding-generic) / 1.5);
+      }
+      &[data-edit-mode='true']:not(:has(li)) {
+        // Edit mode is mandatory layout 'grid'
+        height: calc(var(--fd-carousel-node-height) + calc(15px + 3px));
+        // Allow room for border and shadows
+        padding: calc(15px + 3px) 0;
+        & li:hover {
+          cursor: grab;
+        }
+      }
+      &[data-list-item-fx='true'] {
+        & li {
+          &[data-list-item-visible='true'] {
+            & picture {
+              &::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                z-index: 10;
+                border-radius: var(--fd-borderRadius);
+                background-image: url(/app/film-database/assets/gif/vhs-noise.gif);
+                background-size: 480px;
+                background-attachment: fixed;
+                opacity: 0.02;
+                pointer-events: none;
+              }
+              & img {
+                filter: none;
+              }
+            }
+          }
+          &[data-list-item-visible='false'] {
+            & picture img {
+              filter: brightness(35%) saturate(50%);
+            }
+          }
+        }
+      }
+      & li {
+        flex-shrink: 0;
+        position: relative;
+        width: var(--fd-carousel-node-width);
+        height: var(--fd-carousel-node-height);
+        border-radius: var(--fd-borderRadius);
+        background-color: black;
+        box-shadow:
+          0 8px 10px rgba(0, 0, 0, 0.6),
+          0 15px 15px rgba(0, 0, 0, 0.3);
+        // Hover events
+        &:hover {
+          cursor: pointer;
+        }
+        &:hover:not([data-list-item-visible='true']) picture img {
+          filter: brightness(80%) saturate(70%);
+        }
+        & picture,
+        picture img {
+          border-radius: var(--fd-borderRadius);
+        }
+        & picture img {
+          transition: filter 85ms ease-in-out;
+        }
+      }
+    }
+  }
+}

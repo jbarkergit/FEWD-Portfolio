@@ -6,7 +6,7 @@ import FDiFrame from '../../../../components/iframe/FDiFrame';
 import { usePaginateData } from '../../../../hooks/usePaginateData';
 import FDDetails from '../../../../components/movie/FDDetails';
 
-const FDMovieModal = () => {
+const FDMovie = () => {
   const { heroData, maxCarouselNodes } = useCatalogProvider();
   const [castCrew, setCastCrew] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
@@ -22,10 +22,10 @@ const FDMovieModal = () => {
 
   if (heroData && castCrew)
     return (
-      <div className='fdMovieModal'>
+      <div className='FDMovie'>
         <FDiFrame />
         <FDDetails modal={true} />
-        <section className='fdMovieModal__castCrew'>
+        <section className='FDMovie__castCrew'>
           {castCrew.map(([key, value], index) => (
             <FDCarousel type={key === 'cast' ? 'cast' : 'crew'} mapIndex={index} heading={key} data={value} key={`${key}-${index}`} />
           ))}
@@ -34,4 +34,4 @@ const FDMovieModal = () => {
     );
 };
 
-export default FDMovieModal;
+export default FDMovie;

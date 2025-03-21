@@ -1,5 +1,5 @@
 import { useRef, useEffect, forwardRef, type Dispatch, type SetStateAction } from 'react';
-import { TablerCategoryFilled, TablerCursorText } from '~/film-database/assets/svg/icons';
+import { TablerCategoryFilled } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
 type Props = {
@@ -20,14 +20,13 @@ type Props = {
   >;
 };
 
-const FDCollectionsModalCarousel = forwardRef<HTMLElement, Props>(({ mapIndex, header, data, display, isEditMode, collectionRefs, setCarousels }, collectionRef) => {
+const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, header, data, display, isEditMode, collectionRefs, setCarousels }, collectionRef) => {
   const ulRef = useRef<HTMLUListElement>(null);
   const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
 
   /** Carousel interactivity */
   let isInteract: boolean = false;
   let isDragging: boolean = false;
-  let isRenaming: boolean = !!header;
 
   /**
    * @function pointerDown
@@ -182,14 +181,14 @@ const FDCollectionsModalCarousel = forwardRef<HTMLElement, Props>(({ mapIndex, h
   }
 
   return (
-    <section className='FDCollectionsModalCarousel' ref={collectionRef}>
-      <header data-rename={isRenaming}>
-        {isRenaming ? (
-          <fieldset>
+    <section className='fdCollections__collection' ref={collectionRef}>
+      <header>
+        <fieldset>
+          <div>
+            <TablerCategoryFilled />
             <label>
               <h2>{header ? header : 'Unnamed Collection'}</h2>
             </label>
-            <TablerCategoryFilled />
             <input
               type='text'
               placeholder={header ? header : 'Unnamed Collection'}
@@ -202,16 +201,8 @@ const FDCollectionsModalCarousel = forwardRef<HTMLElement, Props>(({ mapIndex, h
                 });
               }}
             />
-          </fieldset>
-        ) : (
-          <>
-            <TablerCategoryFilled />
-            <h2>{header ? header : 'Unnamed Collection'}</h2>
-          </>
-        )}
-        <button aria-label='Rename collection' onPointerUp={() => (isRenaming = !isRenaming)}>
-          <TablerCursorText />
-        </button>
+          </div>
+        </fieldset>
       </header>
       <ul ref={ulRef} data-layout={display} data-list-item-fx='true' data-edit-mode={isEditMode}>
         {data?.map((movie, index) => (
@@ -224,4 +215,4 @@ const FDCollectionsModalCarousel = forwardRef<HTMLElement, Props>(({ mapIndex, h
   );
 });
 
-export default FDCollectionsModalCarousel;
+export default FDCollectionsCollection;

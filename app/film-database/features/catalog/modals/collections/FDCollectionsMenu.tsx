@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from 
 import { TablerCategoryPlus, TablerEdit, TablerLayoutListFilled, TablerLayoutDashboardFilled, TablerEye, TablerEyeOff } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
-const FDCollectionsModalMenu = ({
+const FDCollectionsMenu = ({
   collectionRefs,
   isEditMode,
   setIsEditMode,
@@ -143,4 +143,4 @@ const FDCollectionsModalMenu = ({
   );
 };
 
-export default FDCollectionsModalMenu;
+export default FDCollectionsMenu;
