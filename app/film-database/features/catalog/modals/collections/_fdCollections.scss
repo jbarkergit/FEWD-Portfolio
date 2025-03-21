@@ -74,7 +74,7 @@
 .fdCollections {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--fd-gap) * 2);
+  gap: calc(var(--fd-gap) * 2 - 15px + 8px);
   padding: var(--fd-padding-generic) 0;
   &__collection {
     display: flex;
