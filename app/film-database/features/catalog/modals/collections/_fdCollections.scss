@@ -99,6 +99,8 @@
       }
     }
     & ul {
+      // Allow room for border and shadows
+      padding: 0 0 calc(15px + 8px) 0;
       interpolate-size: allow-keywords;
       transition: height 170ms ease;
       &[data-layout='flex'] {
@@ -134,8 +136,6 @@
       &[data-edit-mode='true']:not(:has(li)) {
         // Edit mode is mandatory layout 'grid'
         height: calc(var(--fd-carousel-node-height) + calc(15px + 3px));
-        // Allow room for border and shadows
-        padding: calc(15px + 3px) 0;
         & li:hover {
           cursor: grab;
         }
