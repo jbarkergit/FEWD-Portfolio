@@ -111,9 +111,15 @@ const FDDetails = (modal: { modal: boolean }) => {
 
         <ul className='fdDetails__article__col' id='fdDetails--genres'>
           Genres:
-          {heroData?.genre_ids.map((genreId) => {
+          {heroData?.genre_ids.map((genreId, index) => {
             const genreName = Object.keys(tmdbMovieGenres).find((key) => tmdbMovieGenres[key as keyof typeof tmdbMovieGenres] === genreId);
-            return genreName ? <li key={`genreId-${genreId}`}>{genreName.replaceAll('_', ' ') + ','}</li> : null;
+            if (genreName)
+              return (
+                <li key={`genreId-${genreId}`}>
+                  {genreName}
+                  {index !== heroData.genre_ids.length - 1 ? ',' : null}
+                </li>
+              );
           })}
         </ul>
 
@@ -124,7 +130,7 @@ const FDDetails = (modal: { modal: boolean }) => {
               <li key={`provider-${index}`}>
                 {provider.provider_name}
                 {index !== watchProviders.length - 1 ? ',' : null}
-                {/* <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} /> */}
+                <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} />
               </li>
             ))}
           </ul>
