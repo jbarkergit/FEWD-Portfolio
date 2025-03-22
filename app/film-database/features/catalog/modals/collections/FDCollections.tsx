@@ -4,8 +4,11 @@ import { useFirestore, type Firestore_UserDocument } from '~/base/firebase/fires
 import { type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import FDCollectionsModalMenu from './FDCollectionsMenu';
 import FDCollectionsModalCollection from './FDCollectionsCollection';
+import { SvgSpinnersRingResize } from '~/film-database/assets/svg/icons';
 
 const FDCollections = () => {
+  const [isFetching, setIsFetching] = useState<boolean>(true);
+
   // Prevent additional API calls by calling clientLoader's primaryData
   const { primaryData } = useLoaderData();
 
@@ -50,6 +53,7 @@ const FDCollections = () => {
     // Set initial collection
     if (moviesArr.length > 0 && !carousels.length) {
       setCarousels([{ header: 'Uncategorized Movies', data: moviesArr, display: 'flex' }]);
+      setIsFetching(false);
     }
   };
 
@@ -57,27 +61,35 @@ const FDCollections = () => {
     fetchMovies();
   }, []);
 
-  return (
-    <>
-      <section className='fdCollections'>
-        {carousels.length > 0 &&
-          carousels.map(({ header, data, display }, index) => (
-            <FDCollectionsModalCollection
-              key={`user-carousel-${index}`}
-              mapIndex={index}
-              header={header}
-              data={data}
-              display={display}
-              ref={collectionRef}
-              collectionRefs={collectionRefs}
-              isEditMode={isEditMode}
-              setCarousels={setCarousels}
-            />
-          ))}
-      </section>
-      <FDCollectionsModalMenu collectionRefs={collectionRefs} isEditMode={isEditMode} setIsEditMode={setIsEditMode} setCarousels={setCarousels} />
-    </>
-  );
+  if (isFetching) {
+    return (
+      <div className='fetching'>
+        <SvgSpinnersRingResize />
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <section className='fdCollections'>
+          {carousels.length > 0 &&
+            carousels.map(({ header, data, display }, index) => (
+              <FDCollectionsModalCollection
+                key={`user-carousel-${index}`}
+                mapIndex={index}
+                header={header}
+                data={data}
+                display={display}
+                ref={collectionRef}
+                collectionRefs={collectionRefs}
+                isEditMode={isEditMode}
+                setCarousels={setCarousels}
+              />
+            ))}
+        </section>
+        <FDCollectionsModalMenu collectionRefs={collectionRefs} isEditMode={isEditMode} setIsEditMode={setIsEditMode} setCarousels={setCarousels} />
+      </>
+    );
+  }
 };
 
 export default FDCollections;
