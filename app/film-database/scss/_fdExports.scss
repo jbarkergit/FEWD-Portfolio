@@ -18,8 +18,8 @@
 @forward '/app/film-database/features/catalog/media/media-carousel-search/fdCarouselSearch';
 
 @forward '/app/film-database/features/catalog/modals/container/fdModal';
-@forward '/app/film-database/features/catalog/modals/movie/fdMovieModal';
 @forward '/app/film-database/features/catalog/modals/collections/fdCollections';
+@forward '/app/film-database/features/catalog/modals/cineInfo/fdCineInfo';
 
 // Components
 @forward '/app/film-database/components/iframe/fdiFrame';

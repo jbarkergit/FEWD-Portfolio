@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import FDCollections from '../collections/FDCollections';
-import FDMovie from '../movie/FDMovie';
+import FDMovie from '../cineInfo/FDCineInfo';
 
 const FDModal = () => {
   // Context
