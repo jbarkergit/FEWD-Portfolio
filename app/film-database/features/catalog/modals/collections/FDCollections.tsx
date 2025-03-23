@@ -6,16 +6,17 @@ import FDCollectionsModalMenu from './FDCollectionsMenu';
 import FDCollectionsModalCollection from './FDCollectionsCollection';
 import { SvgSpinnersRingResize } from '~/film-database/assets/svg/icons';
 
+type carousels = { header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined; display: 'flex' | 'grid' }[];
+
 const FDCollections = () => {
+  // Fetch loading state
+  const { primaryData } = useLoaderData();
   const [isFetching, setIsFetching] = useState<boolean>(true);
 
-  // Prevent additional API calls by calling clientLoader's primaryData
-  const { primaryData } = useLoaderData();
+  // Hoisted state: user collections
+  const [carousels, setCarousels] = useState<carousels>([]);
 
-  // User collections state
-  const [carousels, setCarousels] = useState<{ header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined; display: 'flex' | 'grid' }[]>([]);
-
-  // Gather collection refs
+  // Reference of all collections
   const collectionRefs = useRef<HTMLElement[]>([]);
   const collectionRef = (reference: HTMLUListElement): void => {
     if (reference && !collectionRefs.current.includes(reference)) {
@@ -23,15 +24,12 @@ const FDCollections = () => {
     }
   };
 
+  // Hoisted state: Collections edit mode
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   /**
-   * @function fetchMovies
-   * @returns Promise<void>
-   * Utilizes primaryData from loaderData to prevent an api call
-   * Flattens primary data from useLoaderData
-   * Gets user document from Firestore
-   * Filters flattenedPrimaryData to retrieve a list of user's saved movies
+   * @description
+   * Retrieves the user's saved movies by flattening primary data from `useLoaderData` and filtering it based on the user's saved movies in Firestore, avoiding an extra API call.
    */
   let flattenedPrimaryData: Namespace_Tmdb.BaseMedia_Provider[] | undefined = undefined;
 
