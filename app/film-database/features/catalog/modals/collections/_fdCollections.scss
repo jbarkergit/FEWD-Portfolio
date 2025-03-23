@@ -230,7 +230,7 @@
       & li {
         flex-shrink: 0;
         position: relative;
-        z-index: 3;
+        z-index: 1;
         width: var(--fd-carousel-node-width);
         height: var(--fd-carousel-node-height);
         border-radius: var(--fd-borderRadius);

@@ -50,7 +50,11 @@ const FDCollections = () => {
 
     // Set initial collection
     if (moviesArr.length > 0 && !carousels.length) {
-      setCarousels([{ header: 'Uncategorized Movies', data: moviesArr, display: 'flex' }]);
+      setCarousels([
+        { header: 'Uncategorized Movies', data: moviesArr, display: 'flex' },
+        { header: 'Uncategorized Movies', data: moviesArr, display: 'flex' },
+        { header: 'Uncategorized Movies', data: moviesArr, display: 'flex' },
+      ]);
       setIsFetching(false);
     }
   };

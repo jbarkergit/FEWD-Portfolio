@@ -28,38 +28,53 @@ type Props = {
 
 const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
   ({ mapIndex, header, data, display, isEditMode, collectionRefs, carousels, setCarousels }, collectionRef) => {
+    // Dynamic integer limitation of list items in a carousel
     const { maxCarouselNodes } = useCatalogProvider();
+
+    // This collection's references
     const ulRef = useRef<HTMLUListElement>(null);
     const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
 
-    /** Carousel interactivity */
-    let isInteract: boolean = false;
-    let isDragging: boolean = false;
-
     /**
      * @function pointerDown
+     * @returns void
+     * @description Sets interactivity in motion by toggling a flag and assigning dependency values
      */
-    const pointerDown = (): void => {
-      isInteract = true;
+    let isInteract: boolean = false;
+    let targetCollection: HTMLUListElement | null = null;
+    let targetElement: HTMLLIElement | null = null;
+
+    const pointerDown = (event: PointerEvent): void => {
+      if (event.currentTarget instanceof HTMLUListElement && event.target instanceof HTMLLIElement) {
+        isInteract = true;
+        targetCollection = event.currentTarget;
+        targetElement = event.target;
+      }
     };
 
     /**
-     * @function pointerMove
+     * @function detachListItem
+     * @returns {void}
+     * @description Attaches active list item to cursor
      */
-    let timeoutId: NodeJS.Timeout;
-    let isActiveElement: boolean = false;
-
     function attachListItem(event: PointerEvent): void {
-      const target = event.target as HTMLLIElement;
-      const elementWidth: number = target.offsetWidth;
-      const elementHeight: number = target.offsetHeight;
-      target.style.position = 'absolute';
-      target.style.transform = `translate(${event.clientX - elementWidth}px, ${event.clientY - elementHeight}px)`;
+      if (event.target instanceof HTMLLIElement) {
+        const target = event.target;
+
+        target.style.position = 'absolute';
+        target.style.zIndex = '2';
+        target.style.transform = `translate(${event.clientX - target.offsetWidth}px, ${event.clientY - target.offsetHeight}px)`;
+      }
     }
 
+    /**
+     * @function detachListItem
+     * @returns {void}
+     * @description Detaches active list item from cursor
+     */
+    let isActiveElement: boolean = false;
+
     function detachListItem(event: PointerEvent): void {
-      console.log(event.currentTarget);
-      console.log(event.target);
       // Get position of the list item the user is interacting with upon detachment
       const detach: Record<'x' | 'y', number> = { x: event.clientX, y: event.clientY };
 
@@ -118,6 +133,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
 
       // Reset inline styles
       (event.target as HTMLLIElement).style.position = 'relative';
+      (event.target as HTMLLIElement).style.zIndex = '1';
       (event.target as HTMLLIElement).style.transform = '';
 
       // Remove event listeners
@@ -125,6 +141,14 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       (event.target as HTMLLIElement).removeEventListener('pointerup', detachListItem);
       isActiveElement = false;
     }
+
+    /**
+     * @function pointerMove
+     * @returns {void}
+     * @description Tracks collections and their items
+     */
+    let isDragging: boolean = false;
+    let timeoutId: NodeJS.Timeout;
 
     const pointerMove = (event: PointerEvent): void => {
       if (isInteract && !isDragging) {
@@ -141,43 +165,25 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
     };
 
     /**
-     * @function pointerLeave
+     * @function resetInteraction
+     * @returns {void}
+     * @description Resets interaction dependencies
      */
-    const pointerLeave = (): void => {
+    const resetInteraction = (): void => {
       clearTimeout(timeoutId);
       isInteract = false;
       isDragging = false;
+      targetCollection = null;
+      targetElement = null;
     };
 
     /**
      * @function pointerUp
+     * @returns {void}
+     * @description Scales all list items and applies filters to their images then invokes @func `resetInteraction`
+     *
      */
     const pointerUp = (event: PointerEvent): void => {
-      animateListItems(event);
-      clearTimeout(timeoutId);
-      isInteract = false;
-      isDragging = false;
-    };
-
-    useEffect(() => {
-      ulRef.current?.addEventListener('pointerdown', pointerDown);
-      ulRef.current?.addEventListener('pointermove', pointerMove);
-      ulRef.current?.addEventListener('pointerleave', pointerLeave);
-      ulRef.current?.addEventListener('pointerup', pointerUp);
-
-      return () => {
-        ulRef.current?.removeEventListener('pointerdown', pointerDown);
-        ulRef.current?.removeEventListener('pointermove', pointerMove);
-        ulRef.current?.removeEventListener('pointerleave', pointerLeave);
-        ulRef.current?.removeEventListener('pointerup', pointerUp);
-      };
-    }, [isEditMode]);
-
-    /**
-     * @function animateListItems
-     * Scales all list items and applies filters to their images
-     */
-    function animateListItems(event: PointerEvent): void {
       if (!isEditMode && !isDragging && listItems) {
         const elementIndex: number = listItems.findIndex((item) => item === event.target);
 
@@ -188,9 +194,35 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
           }
         }
       }
-    }
+      resetInteraction();
+    };
 
-    /** @components */
+    /**
+     * @function useEffect
+     * @returns {void}
+     * @description Handles module's event listeners
+     */
+    useEffect(() => {
+      ulRef.current?.addEventListener('pointerdown', pointerDown);
+      ulRef.current?.addEventListener('pointermove', pointerMove);
+      ulRef.current?.addEventListener('pointerleave', resetInteraction);
+      ulRef.current?.addEventListener('pointerup', pointerUp);
+
+      return () => {
+        ulRef.current?.removeEventListener('pointerdown', pointerDown);
+        ulRef.current?.removeEventListener('pointermove', pointerMove);
+        ulRef.current?.removeEventListener('pointerleave', resetInteraction);
+        ulRef.current?.removeEventListener('pointerup', pointerUp);
+      };
+    }, [isEditMode]);
+
+    /**
+     * @function ListItem
+     * @function @EmptyListItem
+     * @function Collection
+     * @returns {JSX.Element}
+     * @description Simplifies otherwise convoluted JSX mappings
+     */
     const ListItem = ({ movie, index }: { movie: Namespace_Tmdb.BaseMedia_Provider; index: number }): JSX.Element => {
       return (
         <li data-list-item-visible={index === 0 ? 'true' : 'false'}>
@@ -235,6 +267,10 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       return EmptyList;
     };
 
+    /**
+     * @function FDCollectionsCollection
+     * @returns {JSX.Element}
+     */
     return (
       <section className='fdCollections__collection' ref={collectionRef}>
         <header>
