@@ -1,4 +1,4 @@
-import { useRef, useEffect, forwardRef, type Dispatch, type SetStateAction, useMemo, type JSX } from 'react';
+import { useRef, useEffect, forwardRef, type Dispatch, type SetStateAction, type JSX } from 'react';
 import { IcBaselinePlus, TablerCategoryFilled } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
@@ -58,6 +58,8 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
     }
 
     function detachListItem(event: PointerEvent): void {
+      console.log(event.currentTarget);
+      console.log(event.target);
       // Get position of the list item the user is interacting with upon detachment
       const detach: Record<'x' | 'y', number> = { x: event.clientX, y: event.clientY };
 
@@ -191,15 +193,15 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
     /** @components */
     const ListItem = ({ movie, index }: { movie: Namespace_Tmdb.BaseMedia_Provider; index: number }): JSX.Element => {
       return (
-        <li key={`movie-list-key-${movie ? movie.id : index}`} data-list-item-visible={index === 0 ? 'true' : 'false'}>
+        <li data-list-item-visible={index === 0 ? 'true' : 'false'}>
           <picture>{movie && <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />}</picture>
         </li>
       );
     };
 
-    const EmptyListItem = ({ index }: { index: number }): JSX.Element => {
+    const EmptyListItem = (): JSX.Element => {
       return (
-        <div key={`movie-list-empty-key-${index}`}>
+        <div>
           <span />
           <IcBaselinePlus />
         </div>
@@ -210,18 +212,18 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       // If data has list items
       if (data && data.length > 0) {
         // Create new array of list items with data
-        let initMap = data.map((movie, index) => <ListItem movie={movie} index={index} />);
+        let initMap = data.map((movie, index) => <ListItem movie={movie} index={index} key={`collection-${mapIndex}-listItem-${index}`} />);
 
         // If initMap's length is greater than or equal to maxcarouselNodes, return initMap
         if (initMap.length + 1 >= maxCarouselNodes) {
-          initMap.push(<EmptyListItem index={initMap.length + 1} />);
+          initMap.push(<EmptyListItem key={`collection-${mapIndex}-emptyListItem-${initMap.length + 1}`} />);
           return initMap;
         }
 
         // If initMap isn't at least the length of maxCarouselNodes, push empty lists
         for (let i = 0; i < maxCarouselNodes; i++) {
           let listAtIndex = initMap[i];
-          if (!listAtIndex) initMap.push(<EmptyListItem index={i} />);
+          if (!listAtIndex) initMap.push(<EmptyListItem key={`collection-${mapIndex}-emptyListItem-${initMap.length + i + 1}`} />);
         }
 
         // Else return initMap
@@ -229,7 +231,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       }
 
       // If data is empty
-      const EmptyList = Array.from({ length: maxCarouselNodes }).map((eli, index) => <EmptyListItem index={index} />);
+      const EmptyList = Array.from({ length: maxCarouselNodes }).map((eli, index) => <EmptyListItem key={`collection-${mapIndex}-emptyListItem-${index}`} />);
       return EmptyList;
     };
 
