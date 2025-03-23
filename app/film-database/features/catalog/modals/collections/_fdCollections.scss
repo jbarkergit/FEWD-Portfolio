@@ -29,7 +29,7 @@
         transition: color 170ms ease-in-out;
       }
     }
-    // Visibility
+    // List item FX
     &:nth-of-type(3) {
       &[data-toggle='true'] svg:nth-of-type(2) {
         clip-path: polygon(100% 100%, 100% 100%, 0% 100%, 0% 100%);
@@ -40,7 +40,7 @@
         transition: clip-path 170ms ease-in-out;
       }
     }
-    // Layout
+    // Layout Type
     &:nth-of-type(4) {
       &[data-toggle='true'] svg {
         transition: top 170ms ease-in-out;
@@ -104,18 +104,10 @@
       &[data-layout='flex'] {
         display: flex;
         gap: var(--fd-gap);
-
+        padding-bottom: calc(15px + 8px); // Allow room for border and shadows
         overflow-y: clip;
         overflow-x: scroll;
         scrollbar-width: none;
-        // Carousel padding
-        & li:first-of-type {
-          margin-left: calc(var(--fd-padding-generic) / 1.5);
-        }
-        & li:last-of-type {
-          margin-right: calc(var(--fd-padding-generic) / 1.5);
-        }
-        // Pointer events
         &:hover {
           cursor: grab;
         }
@@ -123,28 +115,86 @@
         &:active li:hover {
           cursor: grabbing;
         }
+        // Carousel padding
+        & li:first-of-type {
+          margin-left: calc(var(--fd-padding-generic) / 1.5);
+        }
+        & li:last-of-type {
+          margin-right: calc(var(--fd-padding-generic) / 1.5);
+        }
       }
       &[data-layout='grid'] {
         display: grid;
         column-gap: var(--fd-gap);
-        // Add ul's padding-bottom for visual consistency
-        row-gap: calc(var(--fd-gap) + 15px + 3px);
+        row-gap: calc(var(--fd-gap) + 15px + 3px); // Add ul's padding-bottom for visual consistency
         grid-template-columns: repeat(auto-fill, minmax(var(--fd-carousel-node-width), auto));
-      }
-      &:has(li) {
-        &[data-layout='flex'] {
-          // Allow room for border and shadows
-          padding: 0 0 calc(15px + 8px) 0;
-        }
-        &[data-layout='grid'] {
-          padding: 0 calc(var(--fd-padding-generic) / 1.5) calc(15px + 8px) calc(var(--fd-padding-generic) / 1.5);
-        }
+        margin: 0 calc(var(--fd-padding-generic) / 1.5) calc(15px + 8px) calc(var(--fd-padding-generic) / 1.5);
       }
       &[data-edit-mode='true']:not(:has(li)) {
-        // Edit mode is mandatory layout 'grid'
-        height: calc(var(--fd-carousel-node-height) + calc(15px + 3px));
+        height: calc(var(--fd-carousel-node-height) + calc(15px + 3px)); // Edit mode is mandatory layout 'grid'
         & li:hover {
           cursor: grab;
+        }
+        // Div properties when data-edit-mode is true
+        & div {
+          position: relative;
+          width: var(--fd-carousel-node-width);
+          height: var(--fd-carousel-node-height);
+          border-radius: var(--fd-borderRadius);
+          overflow: clip;
+          interpolate-size: allow-keywords;
+          transition: height 170ms ease;
+          will-change: height;
+          &::before {
+            content: '';
+            position: absolute;
+            top: -25%;
+            left: 10%;
+            width: 75%;
+            height: 150%;
+            background: linear-gradient(99deg, rgb(8 8 8), rgb(255 255 255));
+            opacity: 0.15;
+            animation: borderRotation 15s linear infinite;
+            will-change: transform;
+          }
+          &::after {
+            content: '';
+            position: absolute;
+            top: 0.5%;
+            left: 0.5%;
+            width: 99%;
+            height: 99%;
+            background-color: #1b1b1b;
+            border-radius: inherit;
+          }
+          &:hover span {
+            transform: rotateX(7deg) translateY(-6px);
+          }
+          & span {
+            position: absolute;
+            top: 0.5%;
+            left: 0.5%;
+            transform: translateY(-20%);
+            z-index: 1;
+            width: 99%;
+            height: 120%;
+            background: linear-gradient(226deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 35%, rgba(255, 255, 255, 0.2) 42%, rgba(255, 255, 255, 0) 60%);
+            pointer-events: none;
+            transition: transform 0.65s cubic-bezier(0.18, 0.9, 0.58, 1);
+            will-change: transform;
+            opacity: 0.25;
+          }
+          & svg {
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1.6em;
+            aspect-ratio: 1/1;
+            opacity: 0.8;
+            pointer-events: none;
+          }
         }
       }
       &[data-list-item-fx='true'] {
@@ -185,7 +235,6 @@
         box-shadow:
           0 8px 10px rgba(0, 0, 0, 0.6),
           0 15px 15px rgba(0, 0, 0, 0.3);
-        // Hover events
         &:hover {
           cursor: pointer;
         }
@@ -201,5 +250,14 @@
         }
       }
     }
+  }
+}
+
+@keyframes borderRotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

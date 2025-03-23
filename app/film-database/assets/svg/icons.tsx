@@ -278,17 +278,10 @@ export function TablerEyeOff(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function TablerCursorText(props: SVGProps<SVGSVGElement>) {
+export function IcBaselinePlus(props: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
-      <path
-        fill='none'
-        stroke='currentColor'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        strokeWidth='2'
-        d='M10 12h4M9 4a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3m6-16a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3'
-      />
+      <path fill='currentColor' d='M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z' />
     </svg>
   );
 }

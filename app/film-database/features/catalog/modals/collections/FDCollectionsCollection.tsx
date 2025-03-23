@@ -1,6 +1,7 @@
 import { useRef, useEffect, forwardRef, type Dispatch, type SetStateAction } from 'react';
-import { TablerCategoryFilled } from '~/film-database/assets/svg/icons';
+import { IcBaselinePlus, TablerCategoryFilled } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
+import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
 type Props = {
   mapIndex: number;
@@ -21,6 +22,7 @@ type Props = {
 };
 
 const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, header, data, display, isEditMode, collectionRefs, setCarousels }, collectionRef) => {
+  const { maxCarouselNodes } = useCatalogProvider();
   const ulRef = useRef<HTMLUListElement>(null);
   const listItems: Element[] | null = ulRef.current ? [...ulRef.current.children] : null;
 
@@ -189,11 +191,22 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
         </h2>
       </header>
       <ul ref={ulRef} data-layout={display} data-list-item-fx='true' data-edit-mode={isEditMode}>
-        {data?.map((movie, index) => (
-          <li key={`movie-list-key-${movie ? movie.id : index}`} data-list-item-visible={index === 0 ? 'true' : 'false'}>
-            <picture>{movie && <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />}</picture>
-          </li>
-        ))}
+        {data && data.length > 0 ? (
+          data.map((movie, index) => (
+            <li key={`movie-list-key-${movie ? movie.id : index}`} data-list-item-visible={index === 0 ? 'true' : 'false'}>
+              <picture>{movie && <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />}</picture>
+            </li>
+          ))
+        ) : (
+          <>
+            {Array.from({ length: maxCarouselNodes }).map((eli, index) => (
+              <div key={`movie-list-empty-key-${index}`}>
+                <span />
+                <IcBaselinePlus />
+              </div>
+            ))}
+          </>
+        )}
       </ul>
     </section>
   );
