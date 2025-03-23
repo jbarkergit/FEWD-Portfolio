@@ -82,6 +82,7 @@ const FDCollections = () => {
                 ref={collectionRef}
                 collectionRefs={collectionRefs}
                 isEditMode={isEditMode}
+                carousels={carousels}
                 setCarousels={setCarousels}
               />
             ))}

@@ -135,6 +135,8 @@
         & li:hover {
           cursor: grab;
         }
+      }
+      &[data-edit-mode='true'] {
         // Div properties when data-edit-mode is true
         & div {
           position: relative;
@@ -228,6 +230,7 @@
       & li {
         flex-shrink: 0;
         position: relative;
+        z-index: 3;
         width: var(--fd-carousel-node-width);
         height: var(--fd-carousel-node-height);
         border-radius: var(--fd-borderRadius);
