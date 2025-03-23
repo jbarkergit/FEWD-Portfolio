@@ -217,10 +217,9 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
     }, [isEditMode]);
 
     /**
-     * @function ListItem
-     * @function @EmptyListItem
-     * @function Collection
-     * @returns {JSX.Element}
+     * @function ListItem @returns {JSX.Element}
+     * @function EmptyListItem @returns {JSX.Element}
+     * @function Collection @returns {JSX.Element[]}
      * @description Simplifies otherwise convoluted JSX mappings
      */
     const ListItem = ({ movie, index }: { movie: Namespace_Tmdb.BaseMedia_Provider; index: number }): JSX.Element => {
@@ -240,7 +239,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       );
     };
 
-    const Collection = () => {
+    const Collection = (): JSX.Element[] => {
       // If data has list items
       if (data && data.length > 0) {
         // Create new array of list items with data
