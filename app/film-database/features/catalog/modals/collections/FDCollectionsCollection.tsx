@@ -24,7 +24,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   const NOT_FOUND_INDEX = -1 as const;
 
-  const sensor: {
+  let sensor: {
     isInteract: boolean;
     isActiveElement: boolean;
     pointerCoords: Record<'x' | 'y', number | null>;
@@ -34,7 +34,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
     pointerCoords: { x: null, y: null },
   };
 
-  const source: {
+  let source: {
     colIndex: number;
     listItem: HTMLLIElement | null;
     listItemIndex: number;
@@ -44,7 +44,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
     listItemIndex: NOT_FOUND_INDEX,
   };
 
-  const target: {
+  let target: {
     colIndex: number;
     listItemIndex: number;
   } = {
@@ -96,6 +96,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
    * Invokes @function resetStores and @function resetEventListeners to prepare dom for new potential interactions
    */
   function resetInteraction(error?: { event: 'down' | 'move' | 'up' | 'attach' | 'detach'; reason: string }): void {
+    if (source.listItem && source.listItem.hasAttribute('style')) source.listItem.style.cssText = '';
     resetStores();
     resetEventListeners();
     if (error) console.log(`Event ${error.event.toLocaleUpperCase()} failed. ${error.reason}`);
@@ -159,12 +160,13 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
       source.listItem.style.cssText = `position: absolute; z-index: 2; left: ${offsetX}px; top: ${offsetY}px;`;
       sensor.pointerCoords = { x: event.clientX, y: event.clientY };
-    } else {
-      if (!(source.listItem instanceof HTMLLIElement)) resetInteraction({ event: 'attach', reason: `event.target instance of ${typeof event.target}` });
-      if (!x) resetInteraction({ event: 'attach', reason: 'sensor.pointerCoordinates.x is not valid.' });
-      if (!y) resetInteraction({ event: 'attach', reason: 'sensor.pointerCoordinates.y is not valid.' });
-      return;
     }
+    // else {
+    //   if (!(source.listItem instanceof HTMLLIElement)) resetInteraction({ event: 'attach', reason: `event.target instance of ${typeof event.target}` });
+    //   if (!x) resetInteraction({ event: 'attach', reason: 'sensor.pointerCoordinates.x is not valid.' });
+    //   if (!y) resetInteraction({ event: 'attach', reason: 'sensor.pointerCoordinates.y is not valid.' });
+    //   return;
+    // }
   }
 
   /**
@@ -189,20 +191,20 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
       const detach: Record<'x' | 'y', number> = { x: event.clientX, y: event.clientY };
 
       // Get new collection's unordered list
-      const newCollection: HTMLElement = collectionRefs.current[target.colIndex];
-      const newCollectionUl: HTMLUListElement | null = newCollection.querySelector('ul');
+      const targetCol: HTMLElement = collectionRefs.current[target.colIndex];
+      const targetColUl: HTMLUListElement | null = targetCol.querySelector('ul');
 
-      if (!newCollectionUl) {
+      if (!targetColUl) {
         resetInteraction({ event: 'detach', reason: 'Failure to identify target.colIndex.' });
         return;
       }
 
       // Get new collection's list item rects
-      const newCollectionListItems = Array.from(newCollectionUl.children) as Array<HTMLDivElement | HTMLLIElement>;
-      const newCollectionRects: DOMRect[] = newCollectionListItems.map((li) => li.getBoundingClientRect());
+      const targetColListItems = Array.from(targetColUl.children) as Array<HTMLDivElement | HTMLLIElement>;
+      const targetColRects: DOMRect[] = targetColListItems.map((li) => li.getBoundingClientRect());
 
       // Find the closest item index to the detach point using the Euclidean distance sqrt(x2-x1)^2 + (y2-y1)^2
-      const newCollectionListItemIndex: number = newCollectionRects.reduce<{
+      target.listItemIndex = targetColRects.reduce<{
         rect: DOMRect | null;
         index: number;
         distance: number;
@@ -223,12 +225,6 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
         { rect: null, index: NOT_FOUND_INDEX, distance: Infinity }
       ).index;
 
-      // Edge case: User drops list item on itself
-      if (source.colIndex === target.colIndex && source.listItemIndex === target.listItemIndex) {
-        resetInteraction();
-        return;
-      }
-
       // Create a deep clone of state
       let clone = carousels.current.map((collection) => ({
         ...collection,
@@ -236,7 +232,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
       }));
 
       // Update carousels reference when user drops and drags a list item in the same collection
-      function handleSameCollection(): void {
+      function handleSourceCol(): void {
         let targetData = clone[source.colIndex].data;
 
         if (!targetData) {
@@ -251,7 +247,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
           if (i === source.listItemIndex) continue;
 
           // If the iteration is the detached position, push dragged list item
-          if (i === newCollectionListItemIndex) {
+          if (i === target.listItemIndex) {
             const originalData = carousels.current[source.colIndex].data;
             if (originalData) reordered.push(originalData[source.listItemIndex]);
           }
@@ -276,8 +272,8 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
           const listItemTarget = arr.splice(source.listItemIndex, 1)[0];
 
           // Slice the array into before and after parts
-          const before = arr.slice(0, newCollectionListItemIndex);
-          const after = arr.slice(newCollectionListItemIndex);
+          const before = arr.slice(0, target.listItemIndex);
+          const after = arr.slice(target.listItemIndex);
 
           // Replace collectionUl's children with the reordered array
           collectionUl.replaceChildren(...before, listItemTarget, ...after);
@@ -285,17 +281,17 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
       }
 
       // Update carousels reference when user drops and drags a list item in a new collection
-      function handleNewCollection(): void {
+      function handleTargetCol(): void {
         // Identify collections
         const originalCollection = clone[source.colIndex].data;
-        const newCollection = clone[target.colIndex].data;
+        const targetCol = clone[target.colIndex].data;
 
         if (!originalCollection) {
           resetInteraction({ event: 'detach', reason: 'Clone data at source.colIndex could not be reached.' });
           return;
         }
 
-        if (!newCollection) {
+        if (!targetCol) {
           resetInteraction({ event: 'detach', reason: 'Clone data at target.colIndex could not be reached.' });
           return;
         }
@@ -303,18 +299,18 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
         // Add list item to new collection
         let reordered = [];
 
-        for (let i = 0; i < newCollection.length; i++) {
+        for (let i = 0; i < targetCol.length; i++) {
           // Skip iteration if index is the dragged list item
           if (i === source.listItemIndex) continue;
 
           // If the iteration is the detached position, push dragged list item
-          if (i === newCollectionListItemIndex) {
+          if (i === target.listItemIndex) {
             const originalData = clone[source.colIndex].data;
             if (originalData) reordered.push(originalData[source.listItemIndex]);
           }
 
           // Push iteration's list item
-          reordered.push(newCollection[i]);
+          reordered.push(targetCol[i]);
         }
 
         // Remove list item from original collection
@@ -325,8 +321,8 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
       }
 
       // Handle cases where the list item is being dragged to the same collection or a new collection
-      if (target.colIndex === source.colIndex) handleSameCollection();
-      else handleNewCollection();
+      if (target.colIndex === source.colIndex) handleSourceCol();
+      else handleTargetCol();
 
       // Update carousels.current
       // carousels.current = clone;
@@ -337,7 +333,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
       if (collectionUl instanceof HTMLUListElement) {
         const arr = Array.from(collectionUl.children) as Array<HTMLLIElement | HTMLDivElement>;
-        collectionUl.insertBefore(arr[source.listItemIndex], arr[newCollectionListItemIndex]);
+        collectionUl.insertBefore(arr[source.listItemIndex], arr[target.listItemIndex]);
       } else {
         resetInteraction({ event: 'detach', reason: `Failure to identify collection's unordered list.` });
         return;
@@ -354,7 +350,6 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
     }
 
     resetInteraction();
-    return;
   }
 
   /**
