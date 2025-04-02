@@ -5,16 +5,11 @@ import { type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/
 import FDCollectionsModalMenu from './FDCollectionsMenu';
 import FDCollectionsModalCollection from './FDCollectionsCollection';
 import { SvgSpinnersRingResize } from '~/film-database/assets/svg/icons';
-
-type carousels = { header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined; display: 'flex' | 'grid' }[];
+import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
 const FDCollections = () => {
-  // Fetch loading state
-  const { primaryData } = useLoaderData();
-  const [isFetching, setIsFetching] = useState<boolean>(true);
-
-  // Hoisted state: user collections
-  const [carousels, setCarousels] = useState<carousels>([]);
+  // User collections
+  const carousels = useRef<{ header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined; display: 'flex' | 'grid' }[]>([]);
 
   // Reference of all collections
   const collectionRefs = useRef<HTMLElement[]>([]);
@@ -24,16 +19,20 @@ const FDCollections = () => {
     }
   };
 
-  // Hoisted state: Collections edit mode
+  // User collections edit mode (Hoisted)
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   /**
+   * @function initializeCarousels
    * @description
    * Retrieves the user's saved movies by flattening primary data from `useLoaderData` and filtering it based on the user's saved movies in Firestore, avoiding an extra API call.
    */
+  const [isFetching, setIsFetching] = useState<boolean>(true); // Loading state
+  const { primaryData } = useLoaderData(); // Client loader data
+  const { maxCarouselNodes } = useCatalogProvider(); // Dynamic carousel chunk size
   let flattenedPrimaryData: Namespace_Tmdb.BaseMedia_Provider[] | undefined = undefined;
 
-  const fetchMovies = async (): Promise<void> => {
+  const initializeCarousels = async (): Promise<void> => {
     // Flatten primaryData from loaderData (memoized)
     if (!flattenedPrimaryData) {
       flattenedPrimaryData = (primaryData as Namespace_Tmdb.Response_Union[]).flatMap((entry) =>
@@ -42,41 +41,40 @@ const FDCollections = () => {
     }
 
     // Get user's collection document
-    const collection: Firestore_UserDocument | undefined = await useFirestore.getDocument('users');
-    if (!collection) return;
+    // const collection: Firestore_UserDocument | undefined = await useFirestore.getDocument('users');
+    // if (!collection) return;
 
     // Get, filter and set movies from clientLoader's primaryData to prevent api call
-    const moviesArr: Namespace_Tmdb.BaseMedia_Provider[] = flattenedPrimaryData.filter((movie) => collection.movies.some((id) => id === movie.id));
+    // const moviesArr: Namespace_Tmdb.BaseMedia_Provider[] = flattenedPrimaryData.filter((movie) => collection.movies.some((id) => id === movie.id));
 
     // Set initial collection
-    if (moviesArr.length > 0 && !carousels.length) {
-      setCarousels([
-        { header: 'Uncategorized Movies', data: moviesArr, display: 'flex' },
-        { header: 'Uncategorized Movies', data: moviesArr, display: 'flex' },
-        { header: 'Uncategorized Movies', data: moviesArr, display: 'flex' },
-      ]);
-      setIsFetching(false);
-    }
+    // if (moviesArr.length > 0 && !carousels.length) {
+    carousels.current = [
+      { header: 'Uncategorized Movies', data: Array.from(flattenedPrimaryData).splice(0, maxCarouselNodes), display: 'flex' },
+      { header: 'Uncategorized Movies', data: Array.from(flattenedPrimaryData).splice(0, maxCarouselNodes), display: 'flex' },
+    ];
+    setIsFetching(false);
   };
+  // };
 
   useEffect(() => {
-    fetchMovies();
+    initializeCarousels();
   }, []);
 
-  if (isFetching) {
+  if (isFetching)
     return (
       <div className='fetching'>
         <SvgSpinnersRingResize />
       </div>
     );
-  } else {
+  else
     return (
       <>
         <section className='fdCollections'>
-          {carousels.length > 0 &&
-            carousels.map(({ header, data, display }, index) => (
+          {carousels.current.length > 0 &&
+            carousels.current.map(({ header, data, display }, index) => (
               <FDCollectionsModalCollection
-                key={`user-carousel-${index}`}
+                key={`user-collections-carousel-${index}`}
                 mapIndex={index}
                 header={header}
                 data={data}
@@ -85,14 +83,12 @@ const FDCollections = () => {
                 collectionRefs={collectionRefs}
                 isEditMode={isEditMode}
                 carousels={carousels}
-                setCarousels={setCarousels}
               />
             ))}
         </section>
-        <FDCollectionsModalMenu collectionRefs={collectionRefs} isEditMode={isEditMode} setIsEditMode={setIsEditMode} setCarousels={setCarousels} />
+        <FDCollectionsModalMenu collectionRefs={collectionRefs} isEditMode={isEditMode} setIsEditMode={setIsEditMode} carousels={carousels} />
       </>
     );
-  }
 };
 
 export default FDCollections;

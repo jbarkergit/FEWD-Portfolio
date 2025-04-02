@@ -6,19 +6,17 @@ const FDCollectionsMenu = ({
   collectionRefs,
   isEditMode,
   setIsEditMode,
-  setCarousels,
+  carousels,
 }: {
   collectionRefs: React.RefObject<HTMLElement[]>;
   isEditMode: boolean;
   setIsEditMode: Dispatch<React.SetStateAction<boolean>>;
-  setCarousels: Dispatch<
-    SetStateAction<
-      {
-        header: string;
-        data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
-        display: 'flex' | 'grid';
-      }[]
-    >
+  carousels: React.RefObject<
+    {
+      header: string;
+      data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+      display: 'flex' | 'grid';
+    }[]
   >;
 }) => {
   const [isListFX, setIsListFX] = useState<boolean>(true);
@@ -31,10 +29,14 @@ const FDCollectionsMenu = ({
    * Adds new collection to carousels state
    */
   const addCollection = (): void => {
-    setCarousels((state) => {
-      if (state.length > 4) return state;
-      return [...state, { data: undefined, display: 'flex', header: 'Unnamed Collection' }];
-    });
+    if (carousels.current.length < 4) {
+      carousels.current = [...carousels.current, { data: undefined, display: isEditMode ? 'grid' : 'flex', header: 'Unnamed Collection' }];
+    }
+
+    // setCarousels((state) => {
+    //   if (state.length > 4) return state;
+    //   return [...state, { data: undefined, display: isEditMode ? 'grid' : 'flex', header: 'Unnamed Collection' }];
+    // });
   };
 
   /**

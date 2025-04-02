@@ -3,6 +3,7 @@
 
 .fdCollectionsMenu {
   position: fixed;
+  z-index: 4;
   bottom: var(--fd-padding-generic);
   left: 50%;
   transform: translate(-50%, 0);

@@ -5,7 +5,7 @@ import AuthProvider from './base/firebase/authentication/context/authProvider';
 
 export function meta() {
   return [
-    { title: 'Justin Barker' },
+    { title: 'Portfolio' },
     { charSet: 'utf-8' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { name: 'description', content: 'Front End Web Development Portfolio' },
