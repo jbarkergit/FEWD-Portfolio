@@ -20,31 +20,66 @@ type Props = {
 };
 
 const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, header, data, display, isEditMode, collectionRefs, carousels }, collectionRef) => {
-  // This collection's references
   const ulRef = useRef<HTMLUListElement>(null);
 
+  const NOT_FOUND_INDEX = -1 as const;
+
+  const sensor: {
+    isInteract: boolean;
+    isActiveElement: boolean;
+    pointerCoords: Record<'x' | 'y', number | null>;
+  } = {
+    isInteract: false,
+    isActiveElement: false,
+    pointerCoords: { x: null, y: null },
+  };
+
+  const source: {
+    colIndex: number;
+    listItem: HTMLLIElement | null;
+    listItemIndex: number;
+  } = {
+    colIndex: NOT_FOUND_INDEX,
+    listItem: null,
+    listItemIndex: NOT_FOUND_INDEX,
+  };
+
+  const target: {
+    colIndex: number;
+    listItemIndex: number;
+  } = {
+    colIndex: NOT_FOUND_INDEX,
+    listItemIndex: NOT_FOUND_INDEX,
+  };
+
   /**
-   * @function resetInteraction
+   * @function resetStores
    * @returns {void}
-   * Handle storage of the entire interaction's dependencies and event listeners
+   * Rolls stores back to default state
    */
-  let isInteract: boolean = false;
-  let isActiveElement: boolean = false;
+  const resetStores = (): void => {
+    sensor.isInteract = false;
+    sensor.isActiveElement = false;
+    sensor.pointerCoords = { x: null, y: null };
 
-  let pointerCoordinates: Record<'x' | 'y', number | null> = { x: null, y: null };
+    source.colIndex = NOT_FOUND_INDEX;
+    source.listItem = null;
+    source.listItemIndex = NOT_FOUND_INDEX;
 
-  let originalCollectionIndex: number = -1;
-  let originalCollectionListItemIndex: number = -1;
+    target.colIndex = NOT_FOUND_INDEX;
+    target.listItemIndex = NOT_FOUND_INDEX;
+  };
 
-  let newCollectionIndex: number = -1;
-  let originalCollectionListItem: HTMLLIElement | null = null;
-  let newCollectionListItemIndex: number = -1;
-
-  function resetInteraction(): void {
+  /**
+   * @function resetEventListeners
+   * @returns {void}
+   * Rolls event listeners back to original mount state
+   */
+  function resetEventListeners(): void {
     // Remove target's inline styles and event listeners
-    if (originalCollectionListItem instanceof HTMLLIElement) {
-      if (originalCollectionListItem.hasAttribute('style')) originalCollectionListItem.removeAttribute('style');
-      originalCollectionListItem.removeEventListener('pointermove', attachListItem);
+    if (source.listItem instanceof HTMLLIElement) {
+      if (source.listItem.hasAttribute('style')) source.listItem.removeAttribute('style');
+      source.listItem.removeEventListener('pointermove', attachListItem);
       // originalCollectionListItem.removeEventListener('pointerup', detachListItem);
     }
 
@@ -53,22 +88,17 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
       ulRef.current.addEventListener('pointermove', pointerMove);
       ulRef.current.addEventListener('pointerup', pointerUp);
     }
+  }
 
-    // Reset dependencies
-    isInteract = false;
-    isActiveElement = false;
-
-    isInteract = false;
-    isActiveElement = false;
-
-    pointerCoordinates = { x: null, y: null };
-
-    originalCollectionIndex = -1;
-    originalCollectionListItem = null;
-    originalCollectionListItemIndex = -1;
-
-    newCollectionIndex = -1;
-    newCollectionListItemIndex = -1;
+  /**
+   * @function resetInteraction
+   * @returns {void}
+   * Invokes @function resetStores and @function resetEventListeners to prepare dom for new potential interactions
+   */
+  function resetInteraction(error?: { event: 'down' | 'move' | 'up' | 'attach' | 'detach'; reason: string }): void {
+    resetStores();
+    resetEventListeners();
+    if (error) console.log(`Event ${error.event.toLocaleUpperCase()} failed. ${error.reason}`);
   }
 
   /**
@@ -77,41 +107,41 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
    * @description Sets interactivity in motion by toggling a flag and assigning dependency values
    */
 
-  const pointerDown = (event: PointerEvent): void => {
+  function pointerDown(event: PointerEvent): void {
     const currentTarget = event.currentTarget;
     const target = event.target;
 
     if (currentTarget instanceof HTMLUListElement && target instanceof HTMLLIElement) {
-      isInteract = true;
+      sensor.isInteract = true;
+      sensor.pointerCoords = { x: event.clientX, y: event.clientY };
 
-      pointerCoordinates = { x: event.clientX, y: event.clientY };
+      source.colIndex = collectionRefs.current.findIndex((collection) => collection.querySelector('ul') === currentTarget);
+      source.listItem = target as HTMLLIElement;
 
-      originalCollectionIndex = collectionRefs.current.findIndex((collection) => collection.querySelector('ul') === currentTarget);
+      const srcColUl = collectionRefs.current[source.colIndex].querySelector('ul');
 
-      originalCollectionListItem = target as HTMLLIElement;
-
-      const originalCollectionUl = collectionRefs.current[originalCollectionIndex].querySelector('ul');
-
-      if (originalCollectionIndex === -1 || !originalCollectionUl) {
-        resetInteraction();
-        console.log('Event pointerdown rejection: Original Collection Index === -1 OR originalCollectionUl unavailable.');
+      if (source.colIndex === NOT_FOUND_INDEX || !srcColUl) {
+        resetInteraction({ event: 'down', reason: 'Source collection index not found.' });
         return;
       }
 
-      const liElements = Array.from(originalCollectionUl.children) as Array<HTMLLIElement | HTMLDivElement>;
+      const liElements = Array.from(srcColUl.children) as Array<HTMLLIElement | HTMLDivElement>;
       const targetIndex: number = liElements.findIndex((li) => li === target);
-      originalCollectionListItemIndex = targetIndex;
+      source.listItemIndex = targetIndex;
 
-      if (originalCollectionListItemIndex === -1) {
-        resetInteraction();
-        console.log('Event pointerdown rejection: Original Collection List Item Index === -1');
+      if (source.listItemIndex === NOT_FOUND_INDEX) {
+        resetInteraction({ event: 'down', reason: 'Source list item index not found.' });
         return;
       }
     } else {
-      resetInteraction();
+      if (!(currentTarget instanceof HTMLUListElement)) {
+        resetInteraction({ event: 'down', reason: `event.currentTarget instance of ${typeof event.currentTarget}` });
+      } else {
+        resetInteraction({ event: 'down', reason: `event.target instance of ${typeof event.target}` });
+      }
       return;
     }
-  };
+  }
 
   /**
    * @function attachListItem
@@ -119,24 +149,21 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
    * @description Attaches active list item to cursor
    */
   function attachListItem(event: PointerEvent): void {
-    const x: number | null = pointerCoordinates.x;
-    const y: number | null = pointerCoordinates.y;
+    const x: number | null = sensor.pointerCoords.x;
+    const y: number | null = sensor.pointerCoords.y;
 
-    if (originalCollectionListItem instanceof HTMLLIElement && x && y) {
-      const rect: DOMRect = originalCollectionListItem.getBoundingClientRect();
+    if (source.listItem instanceof HTMLLIElement && x && y) {
+      const rect: DOMRect = source.listItem.getBoundingClientRect();
       const offsetX: number = x - rect.width / 2;
       const offsetY: number = y - rect.height / 2;
 
-      originalCollectionListItem.style.cssText = `position: absolute; z-index: 2; left: ${offsetX}px; top: ${offsetY}px;`;
-      pointerCoordinates = { x: event.clientX, y: event.clientY };
+      source.listItem.style.cssText = `position: absolute; z-index: 2; left: ${offsetX}px; top: ${offsetY}px;`;
+      sensor.pointerCoords = { x: event.clientX, y: event.clientY };
     } else {
-      if (!x) {
-        console.log('Event pointerdown pointermove (attach) rejection: X may be null.');
-      } else if (!y) {
-        console.log('Event pointerdown pointermove (attach) rejection: Y may be null.');
-      } else {
-        console.log('Event pointerdown pointermove (attach) rejection: Target may not be an instanceof HTMLLIElement.');
-      }
+      if (!(source.listItem instanceof HTMLLIElement)) resetInteraction({ event: 'attach', reason: `event.target instance of ${typeof event.target}` });
+      if (!x) resetInteraction({ event: 'attach', reason: 'sensor.pointerCoordinates.x is not valid.' });
+      if (!y) resetInteraction({ event: 'attach', reason: 'sensor.pointerCoordinates.y is not valid.' });
+      return;
     }
   }
 
@@ -149,13 +176,12 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
   function detachListItem(event: PointerEvent): void {
     const currentTarget: EventTarget | null = event.currentTarget;
 
-    if (currentTarget instanceof HTMLUListElement && originalCollectionListItem instanceof HTMLLIElement && collectionRefs.current) {
+    if (currentTarget instanceof HTMLUListElement && source.listItem instanceof HTMLLIElement && collectionRefs.current) {
       // Get index of new collection (currentTarget)
-      newCollectionIndex = collectionRefs.current.findIndex((collection) => collection.querySelector('ul') === currentTarget);
+      target.colIndex = collectionRefs.current.findIndex((collection) => collection.querySelector('ul') === currentTarget);
 
-      if (newCollectionIndex === -1) {
-        console.log('Event pointerup (detach) rejection: newCollectionIndex === -1');
-        resetInteraction();
+      if (target.colIndex === NOT_FOUND_INDEX) {
+        resetInteraction({ event: 'detach', reason: 'target.colIndex is not valid.' });
         return;
       }
 
@@ -163,11 +189,11 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
       const detach: Record<'x' | 'y', number> = { x: event.clientX, y: event.clientY };
 
       // Get new collection's unordered list
-      const newCollection: HTMLElement = collectionRefs.current[newCollectionIndex];
+      const newCollection: HTMLElement = collectionRefs.current[target.colIndex];
       const newCollectionUl: HTMLUListElement | null = newCollection.querySelector('ul');
+
       if (!newCollectionUl) {
-        console.log('Event pointerup (detach) rejection: newCollectionUl may be null.');
-        resetInteraction();
+        resetInteraction({ event: 'detach', reason: 'Failure to identify target.colIndex.' });
         return;
       }
 
@@ -183,38 +209,25 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
       }>(
         (closest, rect, index) => {
           // Skip iteration to prevent the return from being solely the list item's index
-          if (index === originalCollectionListItemIndex) return closest;
+          if (index === source.listItemIndex) return closest;
 
           const rectCenterX = rect.left + rect.width / 2;
           const rectCenterY = rect.top + rect.height / 2;
           const distance = Math.sqrt(Math.pow(rectCenterX - detach.x, 2) + Math.pow(rectCenterY - detach.y, 2));
 
           // If closest rect isn't available yet or the current rect is closer, return updated acc with rect and index
-          if (distance < closest.distance) {
-            return { rect, index, distance };
-          }
+          if (distance < closest.distance) return { rect, index, distance };
 
           return closest;
         },
-        { rect: null, index: -1, distance: Infinity }
+        { rect: null, index: NOT_FOUND_INDEX, distance: Infinity }
       ).index;
 
       // Edge case: User drops list item on itself
-      if (originalCollectionIndex === newCollectionIndex && originalCollectionListItemIndex === newCollectionListItemIndex) {
+      if (source.colIndex === target.colIndex && source.listItemIndex === target.listItemIndex) {
         resetInteraction();
         return;
       }
-
-      //  else {
-      //   console.log(
-      //     originalCollectionIndex === newCollectionIndex,
-      //     `originalCollectionIndex: ${originalCollectionIndex}, newCollectionIndex: ${newCollectionIndex}`
-      //   );
-      //   console.log(
-      //     originalCollectionListItemIndex === newCollectionListItemIndex,
-      //     `originalCollectionListItemIndex: ${originalCollectionListItemIndex}, newCollectionListItemIndex: ${newCollectionListItemIndex}`
-      //   );
-      // }
 
       // Create a deep clone of state
       let clone = carousels.current.map((collection) => ({
@@ -223,12 +236,11 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
       }));
 
       // Update carousels reference when user drops and drags a list item in the same collection
-      function handleSameCollection() {
-        let targetData = clone[originalCollectionIndex].data;
+      function handleSameCollection(): void {
+        let targetData = clone[source.colIndex].data;
 
         if (!targetData) {
-          console.log('Event pointerup (detach) rejection: handleSameCollection misfire, targetData unavailable.');
-          resetInteraction();
+          resetInteraction({ event: 'detach', reason: 'Clone data at source.colIndex could not be reached.' });
           return;
         }
 
@@ -236,12 +248,12 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
         for (let i = 0; i < targetData.length; i++) {
           // Skip iteration if index is the dragged list item
-          if (i === originalCollectionListItemIndex) continue;
+          if (i === source.listItemIndex) continue;
 
           // If the iteration is the detached position, push dragged list item
           if (i === newCollectionListItemIndex) {
-            const originalData = carousels.current[originalCollectionIndex].data;
-            if (originalData) reordered.push(originalData[originalCollectionListItemIndex]);
+            const originalData = carousels.current[source.colIndex].data;
+            if (originalData) reordered.push(originalData[source.listItemIndex]);
           }
 
           // Push iteration's list item
@@ -249,19 +261,19 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
         }
 
         // Mutate clone
-        console.log(clone[0].data?.map((i) => i.title));
-        clone[originalCollectionIndex].data = reordered;
-        console.log(clone[0].data?.map((i) => i.title));
+        // console.log(clone[0].data?.map((i) => i.title));
+        clone[source.colIndex].data = reordered;
+        // console.log(clone[0].data?.map((i) => i.title));
 
         // Handle DOM manipulation
-        const collection: HTMLElement = collectionRefs.current[originalCollectionIndex];
+        const collection: HTMLElement = collectionRefs.current[source.colIndex];
         const collectionUl: HTMLUListElement | null = collection.querySelector('ul');
 
         if (collectionUl instanceof HTMLUListElement) {
           const arr = Array.from(collectionUl.children) as Array<HTMLLIElement | HTMLDivElement>;
 
           // Remove the list item from its original position
-          const listItemTarget = arr.splice(originalCollectionListItemIndex, 1)[0];
+          const listItemTarget = arr.splice(source.listItemIndex, 1)[0];
 
           // Slice the array into before and after parts
           const before = arr.slice(0, newCollectionListItemIndex);
@@ -273,14 +285,18 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
       }
 
       // Update carousels reference when user drops and drags a list item in a new collection
-      function handleNewCollection() {
+      function handleNewCollection(): void {
         // Identify collections
-        const originalCollection = clone[originalCollectionIndex].data;
-        const newCollection = clone[newCollectionIndex].data;
+        const originalCollection = clone[source.colIndex].data;
+        const newCollection = clone[target.colIndex].data;
 
-        if (!originalCollection || !newCollection) {
-          console.log('Event pointerup (detach) rejection: handleNewCollection misfire, originalCollection or newCollection may be unavailable.');
-          resetInteraction();
+        if (!originalCollection) {
+          resetInteraction({ event: 'detach', reason: 'Clone data at source.colIndex could not be reached.' });
+          return;
+        }
+
+        if (!newCollection) {
+          resetInteraction({ event: 'detach', reason: 'Clone data at target.colIndex could not be reached.' });
           return;
         }
 
@@ -289,12 +305,12 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
         for (let i = 0; i < newCollection.length; i++) {
           // Skip iteration if index is the dragged list item
-          if (i === originalCollectionListItemIndex) continue;
+          if (i === source.listItemIndex) continue;
 
           // If the iteration is the detached position, push dragged list item
           if (i === newCollectionListItemIndex) {
-            const originalData = clone[originalCollectionIndex].data;
-            if (originalData) reordered.push(originalData[originalCollectionListItemIndex]);
+            const originalData = clone[source.colIndex].data;
+            if (originalData) reordered.push(originalData[source.listItemIndex]);
           }
 
           // Push iteration's list item
@@ -302,37 +318,43 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
         }
 
         // Remove list item from original collection
-        originalCollection.splice(originalCollectionListItemIndex, 1);
+        originalCollection.splice(source.listItemIndex, 1);
 
         // Mutate clone
-        clone[newCollectionIndex].data = reordered;
+        clone[target.colIndex].data = reordered;
       }
 
       // Handle cases where the list item is being dragged to the same collection or a new collection
-      if (newCollectionIndex === originalCollectionIndex) handleSameCollection();
+      if (target.colIndex === source.colIndex) handleSameCollection();
       else handleNewCollection();
 
       // Update carousels.current
       // carousels.current = clone;
 
       // Handle DOM manipulation
-      const collection: HTMLElement = collectionRefs.current[originalCollectionIndex];
+      const collection: HTMLElement = collectionRefs.current[source.colIndex];
       const collectionUl: HTMLUListElement | null = collection.querySelector('ul');
 
       if (collectionUl instanceof HTMLUListElement) {
         const arr = Array.from(collectionUl.children) as Array<HTMLLIElement | HTMLDivElement>;
-        collectionUl.insertBefore(arr[originalCollectionListItemIndex], arr[newCollectionListItemIndex]);
+        collectionUl.insertBefore(arr[source.listItemIndex], arr[newCollectionListItemIndex]);
+      } else {
+        resetInteraction({ event: 'detach', reason: `Failure to identify collection's unordered list.` });
+        return;
       }
     } else {
       if (!(currentTarget instanceof HTMLUListElement)) {
-        console.log('Event pointerup detach rejection: Current target is not an instance of HTMLULListElement.');
+        resetInteraction({ event: 'detach', reason: `event.target is not an instance of HTMLULListElement. ${typeof event.target}` });
+        return;
       }
-      if (!(originalCollectionListItem instanceof HTMLLIElement)) {
-        console.log('Event pointerup detach rejection: Target is not an instance of HTMLLIElement.');
+      if (!(source.listItem instanceof HTMLLIElement)) {
+        resetInteraction({ event: 'detach', reason: `source.listItem is not an instance of HTMLLIElement. ${typeof source.listItem}` });
+        return;
       }
     }
 
     resetInteraction();
+    return;
   }
 
   /**
@@ -340,32 +362,17 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
    * @returns {void}
    * @description Tracks collections and their items
    */
-  const pointerMove = (): void => {
-    if (isEditMode && isInteract && !isActiveElement && originalCollectionListItem instanceof HTMLLIElement && ulRef.current) {
+  function pointerMove(): void {
+    if (isEditMode && sensor.isInteract && !sensor.isActiveElement && source.listItem instanceof HTMLLIElement && ulRef.current) {
       ulRef.current.removeEventListener('pointermove', pointerMove);
       ulRef.current.removeEventListener('pointerup', pointerUp);
 
       ulRef.current.addEventListener('pointerup', detachListItem);
-      originalCollectionListItem.addEventListener('pointermove', attachListItem);
+      source.listItem.addEventListener('pointermove', attachListItem);
       // originalCollectionListItem.addEventListener('pointerup', detachListItem);
-      isActiveElement = true;
+      sensor.isActiveElement = true;
     }
-    //  else {
-    //   if (!isEditMode) {
-    //     console.log('Event pointermove rejection: Edit mode is not enabled.');
-    //   } else if (!isInteract) {
-    //     console.log('Event pointermove rejection: Flag isInteract is false.');
-    //   } else if (isActiveElement) {
-    //     console.log('Event pointermove rejection: There is already an active element.');
-    //   } else if (!(originalCollectionListItem instanceof HTMLLIElement)) {
-    //     console.log('Event pointermove rejection: Target is not an instanceof HTMLLIElement.');
-    //   } else if (!ulRef.current) {
-    //     console.log('Event pointermove rejection: ulRef.current is not available.');
-    //   } else {
-    //     return;
-    //   }
-    // }
-  };
+  }
 
   /**
    * @function pointerUp
@@ -373,34 +380,33 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
    * @description Scales all list items and applies filters to their images then invokes @func `resetInteraction`
    *
    */
-  const pointerUp = (): void => {
-    // Visibility effect
-    if (!isEditMode && !isActiveElement) {
+  function pointerUp(): void {
+    if (!isEditMode && !sensor.isActiveElement) {
       const listItems: Element[] | null = ulRef.current ? Array.from(ulRef.current.children) : null;
 
-      if (listItems) {
-        const elementIndex: number = listItems.findIndex((item) => item === originalCollectionListItem);
+      if (!listItems) {
+        resetInteraction({ event: 'up', reason: 'Failure to identify list items.' });
+        return;
+      }
 
-        if (elementIndex !== -1) {
-          for (let i = 0; i < listItems.length; i++) {
-            listItems[i].setAttribute('data-list-item-visible', i === elementIndex ? 'true' : 'false');
-          }
-        }
-      } else {
-        console.log('Event pointerup rejection: List items may be null.');
+      const elementIndex: number = listItems.findIndex((item) => item === source.listItem);
+
+      if (elementIndex === NOT_FOUND_INDEX) {
+        resetInteraction({ event: 'up', reason: 'Element index not found.' });
+        return;
+      }
+
+      for (let i = 0; i < listItems.length; i++) {
+        listItems[i].setAttribute('data-list-item-visible', i === elementIndex ? 'true' : 'false');
       }
     } else {
-      if (isEditMode) {
-        console.log('Event pointerup rejection: Edit mode is enabled.');
-      }
-      if (isActiveElement) {
-        console.log('Event pointerup rejection: An element is already active.');
-      }
+      if (isEditMode) resetInteraction({ event: 'up', reason: 'Edit mode is enabled.' });
+      if (sensor.isActiveElement) resetInteraction({ event: 'up', reason: 'An element is already active.' });
+      return;
     }
 
-    // Reset interaction dependencies
-    isInteract = false;
-  };
+    resetInteraction();
+  }
 
   /**
    * @function useEffect
