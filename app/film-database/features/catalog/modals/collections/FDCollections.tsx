@@ -9,7 +9,7 @@ import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
 const FDCollections = () => {
   // User collections
-  const carousels = useRef<{ header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined; display: 'flex' | 'grid' }[]>([]);
+  const [carousels, setCarousels] = useState<{ header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined; display: 'flex' | 'grid' }[]>([]);
 
   // Reference of all collections
   const collectionRefs = useRef<HTMLElement[]>([]);
@@ -49,17 +49,17 @@ const FDCollections = () => {
 
     // Set initial collection
     // if (moviesArr.length > 0 && !carousels.length) {
-    carousels.current = [
+    setCarousels([
       { header: 'Uncategorized Movies', data: Array.from(flattenedPrimaryData).splice(0, maxCarouselNodes), display: 'flex' },
       { header: 'Uncategorized Movies', data: Array.from(flattenedPrimaryData).splice(0, maxCarouselNodes), display: 'flex' },
-    ];
+    ]);
     setIsFetching(false);
   };
   // };
 
   useEffect(() => {
-    initializeCarousels();
-  }, []);
+    if (isFetching) initializeCarousels();
+  }, [isFetching]);
 
   if (isFetching)
     return (
@@ -71,8 +71,8 @@ const FDCollections = () => {
     return (
       <>
         <section className='fdCollections'>
-          {carousels.current.length > 0 &&
-            carousels.current.map(({ header, data, display }, index) => (
+          {carousels.length > 0 &&
+            carousels.map(({ header, data, display }, index) => (
               <FDCollectionsModalCollection
                 key={`user-collections-carousel-${index}`}
                 mapIndex={index}
@@ -83,10 +83,17 @@ const FDCollections = () => {
                 collectionRefs={collectionRefs}
                 isEditMode={isEditMode}
                 carousels={carousels}
+                setCarousels={setCarousels}
               />
             ))}
         </section>
-        <FDCollectionsModalMenu collectionRefs={collectionRefs} isEditMode={isEditMode} setIsEditMode={setIsEditMode} carousels={carousels} />
+        <FDCollectionsModalMenu
+          collectionRefs={collectionRefs}
+          isEditMode={isEditMode}
+          setIsEditMode={setIsEditMode}
+          carousels={carousels}
+          setCarousels={setCarousels}
+        />
       </>
     );
 };

@@ -2,23 +2,27 @@ import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from 
 import { TablerCategoryPlus, TablerEdit, TablerLayoutListFilled, TablerLayoutDashboardFilled, TablerEye, TablerEyeOff } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
-const FDCollectionsMenu = ({
-  collectionRefs,
-  isEditMode,
-  setIsEditMode,
-  carousels,
-}: {
+type Props = {
   collectionRefs: React.RefObject<HTMLElement[]>;
   isEditMode: boolean;
   setIsEditMode: Dispatch<React.SetStateAction<boolean>>;
-  carousels: React.RefObject<
-    {
-      header: string;
-      data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
-      display: 'flex' | 'grid';
-    }[]
+  carousels: {
+    header: string;
+    data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+    display: 'flex' | 'grid';
+  }[];
+  setCarousels: Dispatch<
+    SetStateAction<
+      {
+        header: string;
+        data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+        display: 'flex' | 'grid';
+      }[]
+    >
   >;
-}) => {
+};
+
+const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode, carousels, setCarousels }: Props) => {
   const [isListFX, setIsListFX] = useState<boolean>(true);
   const [layoutType, setLayoutType] = useState<'flex' | 'grid'>('flex');
 
@@ -29,8 +33,8 @@ const FDCollectionsMenu = ({
    * Adds new collection to carousels state
    */
   const addCollection = (): void => {
-    if (carousels.current.length < 4) {
-      carousels.current = [...carousels.current, { data: undefined, display: isEditMode ? 'grid' : 'flex', header: 'Unnamed Collection' }];
+    if (carousels.length < 4) {
+      setCarousels([...carousels, { data: undefined, display: isEditMode ? 'grid' : 'flex', header: 'Unnamed Collection' }]);
     }
 
     // setCarousels((state) => {
