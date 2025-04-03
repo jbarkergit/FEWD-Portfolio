@@ -15,8 +15,8 @@ type Props = {
     data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
     display: 'flex' | 'grid';
   }[];
-  setCarousels: React.Dispatch<
-    React.SetStateAction<
+  setCarousels: Dispatch<
+    SetStateAction<
       {
         header: string;
         data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
@@ -425,7 +425,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
      */
     return (
       <section className='fdCollections__collection' ref={collectionRef}>
-        <FDCollectionsCollectionHeader header={header} />
+        <FDCollectionsCollectionHeader mapIndex={mapIndex} header={header} setCarousels={setCarousels} />
         <FDCollectionsCollectionUl mapIndex={mapIndex} data={data} display={display} isEditMode={isEditMode} ulRef={ulRef} />
       </section>
     );
