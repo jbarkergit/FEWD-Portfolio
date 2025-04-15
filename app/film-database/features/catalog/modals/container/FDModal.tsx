@@ -23,23 +23,14 @@ const FDModal = () => {
   };
 
   /**
-   * @function mountListeners
+   * @function useEffect
    * @returns (() => void
    * Mount event listeners for @handleExteriorClicks
    */
-  const mountListeners = (): (() => void) => {
-    const unmount = () => document.body.removeEventListener('pointerup', handleExteriorClicks);
-
-    if (modal.current) {
-      if (isMovieModal || isListModal) {
-        document.body.addEventListener('pointerup', handleExteriorClicks);
-      }
-    } else unmount();
-
-    return () => unmount();
-  };
-
-  useEffect(() => mountListeners(), [isMovieModal, isListModal]);
+  useEffect(() => {
+    if (isMovieModal || isListModal) document.addEventListener('pointerdown', handleExteriorClicks);
+    return () => document.removeEventListener('pointerdown', handleExteriorClicks);
+  }, [isMovieModal, isListModal]);
 
   /** JSX */
   if (isMovieModal || isListModal)

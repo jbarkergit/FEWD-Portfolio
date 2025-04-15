@@ -7,9 +7,15 @@ import FDCollectionsModalCollection from './FDCollectionsCollection';
 import { SvgSpinnersRingResize } from '~/film-database/assets/svg/icons';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
+export type User_Collection = {
+  header: string;
+  data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+  display: 'flex' | 'grid';
+};
+
 const FDCollections = () => {
   // User collections
-  const [carousels, setCarousels] = useState<{ header: string; data: Namespace_Tmdb.BaseMedia_Provider[] | undefined; display: 'flex' | 'grid' }[]>([]);
+  const [carousels, setCarousels] = useState<Record<string, User_Collection>>({});
 
   // Reference of all collections
   const collectionRefs = useRef<HTMLElement[]>([]);
@@ -49,10 +55,19 @@ const FDCollections = () => {
 
     // Set initial collection
     // if (moviesArr.length > 0 && !carousels.length) {
-    setCarousels([
-      { header: 'Uncategorized Movies', data: Array.from(flattenedPrimaryData).splice(0, maxCarouselNodes), display: 'flex' },
-      { header: 'Uncategorized Movies', data: Array.from(flattenedPrimaryData).splice(0, maxCarouselNodes), display: 'flex' },
-    ]);
+    setCarousels({
+      'user-collection-0': {
+        header: 'Uncategorized Movies',
+        data: Array.from(flattenedPrimaryData).splice(0, maxCarouselNodes),
+        display: 'flex',
+      },
+      'user-collection-1': {
+        header: 'Uncategorized Movies',
+        data: Array.from(flattenedPrimaryData).splice(maxCarouselNodes, maxCarouselNodes),
+        display: 'flex',
+      },
+    });
+
     setIsFetching(false);
   };
   // };
@@ -71,21 +86,20 @@ const FDCollections = () => {
     return (
       <>
         <section className='fdCollections'>
-          {carousels.length > 0 &&
-            carousels.map(({ header, data, display }, index) => (
-              <FDCollectionsModalCollection
-                key={`user-collections-carousel-${index}`}
-                mapIndex={index}
-                header={header}
-                data={data}
-                display={display}
-                ref={collectionRef}
-                collectionRefs={collectionRefs}
-                isEditMode={isEditMode}
-                carousels={carousels}
-                setCarousels={setCarousels}
-              />
-            ))}
+          {Object.values(carousels).map(({ header, data, display }, index) => (
+            <FDCollectionsModalCollection
+              key={`user-collections-collection-${index}`}
+              mapIndex={index}
+              header={header}
+              data={data}
+              display={display}
+              ref={collectionRef}
+              collectionRefs={collectionRefs}
+              isEditMode={isEditMode}
+              carousels={carousels}
+              setCarousels={setCarousels}
+            />
+          ))}
         </section>
         <FDCollectionsModalMenu
           collectionRefs={collectionRefs}

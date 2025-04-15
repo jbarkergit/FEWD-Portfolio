@@ -71,9 +71,7 @@ const FDCollectionsCollectionUl = ({
 
   return (
     <ul ref={ulRef} data-layout={display} data-list-item-fx='true' data-edit-mode={isEditMode}>
-      {buildJSX.map((i, index) => (
-        <Fragment key={`user-collection-${mapIndex}-list-item-${index}`}>{i}</Fragment>
-      ))}
+      {buildJSX}
     </ul>
   );
 };
