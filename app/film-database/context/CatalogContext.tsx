@@ -1,18 +1,26 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import type { FC, ReactNode } from 'react';
+import type { Dispatch, FC, ReactNode, SetStateAction } from 'react';
 import type { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import { useLoaderData } from 'react-router';
+
+export type User_Collection = {
+  header: string;
+  data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+  display: 'flex' | 'grid';
+};
 
 export type Type_heroData = Namespace_Tmdb.BaseMedia_Provider | undefined;
 
 type Context = {
   heroData: Type_heroData;
-  setHeroData: React.Dispatch<React.SetStateAction<Type_heroData>>;
+  setHeroData: Dispatch<SetStateAction<Type_heroData>>;
   maxCarouselNodes: number;
   isMovieModal: boolean;
-  setIsMovieModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsMovieModal: Dispatch<SetStateAction<boolean>>;
   isListModal: boolean;
-  setIsListModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsListModal: Dispatch<SetStateAction<boolean>>;
+  userCollections: Record<string, User_Collection>;
+  setUserCollections: Dispatch<SetStateAction<Record<string, User_Collection>>>;
 };
 
 const CatalogContext = createContext<Context | undefined>(undefined);
@@ -48,9 +56,13 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [isMovieModal, setIsMovieModal] = useState<boolean>(false);
   const [isListModal, setIsListModal] = useState<boolean>(false);
 
+  // User movie collections
+  const [userCollections, setUserCollections] = useState<Record<string, User_Collection>>({});
+
   /** Provider */
   return (
-    <CatalogContext.Provider value={{ heroData, setHeroData, maxCarouselNodes, isMovieModal, setIsMovieModal, isListModal, setIsListModal }}>
+    <CatalogContext.Provider
+      value={{ heroData, setHeroData, maxCarouselNodes, isMovieModal, setIsMovieModal, isListModal, setIsListModal, userCollections, setUserCollections }}>
       {children}
     </CatalogContext.Provider>
   );

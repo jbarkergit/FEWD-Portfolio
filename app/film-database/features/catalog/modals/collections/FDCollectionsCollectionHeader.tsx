@@ -1,17 +1,15 @@
-import { useEffect, useRef, useState, type ChangeEvent, type Dispatch, type SetStateAction } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { TablerCategoryFilled } from '~/film-database/assets/svg/icons';
-import type { User_Collection } from './FDCollections';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
 type Props = {
   mapIndex: number;
   header: string;
-  carousels: Record<string, User_Collection>;
-  setCarousels: Dispatch<SetStateAction<Record<string, User_Collection>>>;
 };
 
-const FDCollectionsCollectionHeader = ({ mapIndex, header, carousels, setCarousels }: Props) => {
-  const [inputValue, setInputValue] = useState(carousels[Object.keys(carousels)[mapIndex]]?.header || 'Uncategorized Movies');
+const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
+  const { userCollections, setUserCollections } = useCatalogProvider();
+  const [inputValue, setInputValue] = useState(userCollections[Object.keys(userCollections)[mapIndex]]?.header || 'Uncategorized Movies');
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
   const { isMovieModal } = useCatalogProvider();
 
@@ -23,10 +21,10 @@ const FDCollectionsCollectionHeader = ({ mapIndex, header, carousels, setCarouse
 
     // Set a new timeout to delay the update
     const timeout = setTimeout(() => {
-      const key = Object.keys(carousels)[mapIndex];
+      const key = Object.keys(userCollections)[mapIndex];
       if (!key) return;
 
-      setCarousels((prevCarousels: any) => {
+      setUserCollections((prevCarousels: any) => {
         const updatedCarousels = { ...prevCarousels };
 
         updatedCarousels[key] = {

@@ -14,8 +14,7 @@ export type User_Collection = {
 };
 
 const FDCollections = () => {
-  // User collections
-  const [carousels, setCarousels] = useState<Record<string, User_Collection>>({});
+  const { userCollections, setUserCollections } = useCatalogProvider();
 
   // Reference of all collections
   const collectionRefs = useRef<HTMLElement[]>([]);
@@ -55,7 +54,7 @@ const FDCollections = () => {
 
     // Set initial collection
     // if (moviesArr.length > 0 && !carousels.length) {
-    setCarousels({
+    setUserCollections({
       'user-collection-0': {
         header: 'Uncategorized Movies',
         data: Array.from(flattenedPrimaryData).splice(0, maxCarouselNodes),
@@ -86,7 +85,7 @@ const FDCollections = () => {
     return (
       <>
         <section className='fdCollections'>
-          {Object.values(carousels).map(({ header, data, display }, index) => (
+          {Object.values(userCollections).map(({ header, data, display }, index) => (
             <FDCollectionsModalCollection
               key={`user-collections-collection-${index}`}
               mapIndex={index}
@@ -96,18 +95,10 @@ const FDCollections = () => {
               ref={collectionRef}
               collectionRefs={collectionRefs}
               isEditMode={isEditMode}
-              carousels={carousels}
-              setCarousels={setCarousels}
             />
           ))}
         </section>
-        <FDCollectionsModalMenu
-          collectionRefs={collectionRefs}
-          isEditMode={isEditMode}
-          setIsEditMode={setIsEditMode}
-          carousels={carousels}
-          setCarousels={setCarousels}
-        />
+        <FDCollectionsModalMenu collectionRefs={collectionRefs} isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
       </>
     );
 };
