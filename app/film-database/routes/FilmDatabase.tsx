@@ -5,7 +5,7 @@ import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAutho
 // Fetch & utility
 import { useTmdbFetcher, type Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 // Context
-import { CatalogProvider, type Type_heroData } from '../context/CatalogContext';
+import { CatalogProvider } from '../context/CatalogContext';
 // Features: Account Page
 import FDAccountBackground from '../features/account/animation/FDAccountBackground';
 import FDAccountModal from '../features/account/FDAccountModal';
@@ -21,7 +21,7 @@ export async function clientLoader() {
 
   // Application dependant data
   let primaryData: Namespace_Tmdb.Response_Union[];
-  let initialHeroData: Type_heroData;
+  let initialHeroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
   let accountData: Namespace_Tmdb.BaseMedia_Provider[][];
 
   const data = (await useTmdbFetcher([
@@ -54,7 +54,7 @@ export async function clientLoader() {
 
   const nowPlayingObj = data[0] as unknown as Namespace_Tmdb.Prefabs_Obj;
   const nowPlayingResults = (nowPlayingObj.now_playing as Namespace_Tmdb.Prefabs_Obj['now_playing']).results as Namespace_Tmdb.Prefabs_Obj['now_playing']['results'];
-  const nowPlayingFirstResult = nowPlayingResults[0] as Type_heroData;
+  const nowPlayingFirstResult = nowPlayingResults[0] as Namespace_Tmdb.BaseMedia_Provider | undefined;
   initialHeroData = nowPlayingFirstResult;
 
   // Account page's background animation data

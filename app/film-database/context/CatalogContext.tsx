@@ -3,17 +3,25 @@ import type { Dispatch, FC, ReactNode, SetStateAction } from 'react';
 import type { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import { useLoaderData } from 'react-router';
 
+/**
+ * @typedef User_Collection
+ * @description Represents a user's media collection in the catalog.
+ * Contains details about the collection header, the media items it holds,
+ * and the layout mode for displaying the collection (either 'flex' or 'grid').
+ */
 export type User_Collection = {
   header: string;
   data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
   display: 'flex' | 'grid';
 };
 
-export type Type_heroData = Namespace_Tmdb.BaseMedia_Provider | undefined;
-
+/**
+ * @typedef Context
+ * @description Global context for managing catalog state, including media data, modals, and user collections.
+ */
 type Context = {
-  heroData: Type_heroData;
-  setHeroData: Dispatch<SetStateAction<Type_heroData>>;
+  heroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
+  setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
   maxCarouselNodes: number;
   isMovieModal: boolean;
   setIsMovieModal: Dispatch<SetStateAction<boolean>>;
@@ -25,41 +33,86 @@ type Context = {
 
 const CatalogContext = createContext<Context | undefined>(undefined);
 
+/**
+ * @component CatalogProvider
+ * @description Provides global catalog state, including featured media, modals, and user collections.
+ */
 export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  // Details && Trailer data state
-  const { initialHeroData } = useLoaderData();
-  const [heroData, setHeroData] = useState<Type_heroData>(initialHeroData);
+  const { initialHeroData, primaryData } = useLoaderData();
 
-  // Dynamic carousel integer
+  // State Variables
+  /** @state Hero data representing the featured media item. */
+  const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(initialHeroData);
+  /** @state Maximum number of carousel items based on the window width. */
   const [maxCarouselNodes, setMaxCarouselNodes] = useState<number>(getMaxCarouselNodes());
+  /** @state Indicates whether the movie modal is visible. */
+  const [isMovieModal, setIsMovieModal] = useState<boolean>(false);
+  /** @state Indicates whether the list modal is visible. */
+  const [isListModal, setIsListModal] = useState<boolean>(false);
+  /** @state A record of user-defined media collections. */
+  const [userCollections, setUserCollections] = useState<Record<string, User_Collection>>({});
 
-  function getMaxCarouselNodes() {
-    const width: number = window.innerWidth;
-
+  /**
+   * @function getMaxCarouselNodes
+   * @description Determines the number of carousel items based on the screen width.
+   * This ensures that the carousel adapts to different screen sizes for optimal viewing.
+   * @returns {number} The number of items to show in the carousel.
+   */
+  function getMaxCarouselNodes(): number {
+    const width = window.innerWidth;
     if (width >= 2561) return 8;
-    if (width <= 2560 && width > 1920) return 7;
-    if (width <= 1920 && width > 1024) return 6;
-    if (width <= 1024 && width > 834) return 4;
-    if (width <= 834 && width > 601) return 3;
-    if (width <= 601) return 2;
-    return 8;
+    if (width > 1920) return 7;
+    if (width > 1024) return 6;
+    if (width > 834) return 4;
+    if (width > 601) return 3;
+    return 2;
   }
 
   useEffect(() => {
     const handleResize = () => setMaxCarouselNodes(getMaxCarouselNodes());
-    handleResize();
+    handleResize(); // initial value
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Modals state
-  const [isMovieModal, setIsMovieModal] = useState<boolean>(false);
-  const [isListModal, setIsListModal] = useState<boolean>(false);
+  /**
+   * @function initializeUserCollections
+   * @description Initializes the user's collections by flattening and using the pre-fetched primary data.
+   * It avoids redundant API calls by using the loader data.
+   * @returns {Promise<void>} Resolves once collections have been initialized.
+   */
+  const initializeUserCollections = async (): Promise<void> => {
+    let flattenedPrimaryData = (primaryData as Namespace_Tmdb.Response_Union[]).flatMap((entry) =>
+      Object.values(entry).flatMap((subEntry) => subEntry.results || [])
+    ) as Namespace_Tmdb.BaseMedia_Provider[];
 
-  // User movie collections
-  const [userCollections, setUserCollections] = useState<Record<string, User_Collection>>({});
+    // Get user's collection document
+    // const collection: Firestore_UserDocument | undefined = await useFirestore.getDocument('users');
+    // if (!collection) return;
 
-  /** Provider */
+    // Get, filter and set movies from clientLoader's primaryData to prevent api call
+    // const moviesArr: Namespace_Tmdb.BaseMedia_Provider[] = flattenedPrimaryData.filter((movie) => collection.movies.some((id) => id === movie.id));
+
+    // Set initial collection
+    // if (moviesArr.length > 0 && !carousels.length) {}
+    setUserCollections({
+      'user-collection-0': {
+        header: 'Uncategorized Movies',
+        data: flattenedPrimaryData.slice(0, maxCarouselNodes),
+        display: 'flex',
+      },
+      'user-collection-1': {
+        header: 'Uncategorized Movies',
+        data: flattenedPrimaryData.slice(maxCarouselNodes, maxCarouselNodes * 2),
+        display: 'flex',
+      },
+    });
+  };
+
+  useEffect(() => {
+    initializeUserCollections();
+  }, []);
+
   return (
     <CatalogContext.Provider
       value={{ heroData, setHeroData, maxCarouselNodes, isMovieModal, setIsMovieModal, isListModal, setIsListModal, userCollections, setUserCollections }}>
@@ -68,8 +121,13 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
+/**
+ * @hook useCatalogProvider
+ * @description Custom hook to access the catalog context. Throws an error if used outside the CatalogProvider.
+ * This ensures that components can only access the catalog state when they are wrapped inside the provider.
+ */
 export const useCatalogProvider = () => {
   const context = useContext(CatalogContext);
-  if (context === undefined) throw new Error('CatalogProvider failure: Not within provider scope. Ensure your component is wrapped in the CatalogProvider.');
+  if (!context) throw new Error('CatalogProvider is required');
   return context;
 };
