@@ -3,7 +3,7 @@ import { useEffect, useState, type JSX } from 'react';
 // Lib
 import type { YouTubePlayer } from 'react-youtube';
 // Assets
-import { MaterialSymbolsPause, MaterialSymbolsPlayArrow, SvgSpinnersRingResize } from '../../../assets/svg/icons';
+import { MaterialSymbolsPause, IcOutlinePlayCircle, SvgSpinnersRingResize } from '../../../assets/svg/icons';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
 const IFrameControllerPlayPause = ({
@@ -33,7 +33,7 @@ const IFrameControllerPlayPause = ({
 
       case 'playing':
       case 'ended':
-        setPlayStateSymbolComponent(<MaterialSymbolsPlayArrow />);
+        setPlayStateSymbolComponent(<IcOutlinePlayCircle />);
         break;
 
       default:

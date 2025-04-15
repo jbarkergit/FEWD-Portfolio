@@ -5,7 +5,7 @@ import { useCatalogProvider } from '../../../../context/CatalogContext';
 // Composables
 import { type Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmdb-api/hooks/useTmdbFetcher';
 // Assets
-import { SvgSpinnersRingResize, MaterialSymbolsPlayArrow } from '../../../../assets/svg/icons';
+import { SvgSpinnersRingResize, IcOutlinePlayCircle } from '../../../../assets/svg/icons';
 
 const FDCarouselSearch = () => {
   // Context
@@ -107,7 +107,7 @@ const FDCarouselSearch = () => {
                       </picture>
                       <div className='fdSearchBar__results__ul__li__overlay' onClick={() => setHeroData(props)}>
                         <button className='fdSearchBar__results__ul__li__overlay--play' aria-label='Play trailer'>
-                          <MaterialSymbolsPlayArrow />
+                          <IcOutlinePlayCircle />
                         </button>
                       </div>
                     </li>

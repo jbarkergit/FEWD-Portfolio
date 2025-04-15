@@ -1,25 +1,19 @@
-import { useRef, useEffect, useId } from 'react';
-import { MaterialSymbolsPlayArrow } from '~/film-database/assets/svg/icons';
+import { useRef, useEffect } from 'react';
+import { BxDotsVerticalRounded, IcBaselineArrowLeft, IcBaselineArrowRight, IcOutlinePlayCircle } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import type { Type_usePaginateData_Data_Provider } from '~/film-database/hooks/usePaginateData';
 
 const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: string; data: Type_usePaginateData_Data_Provider[] }) => {
-  // Context
-  const { setHeroData, maxCarouselNodes } = useCatalogProvider();
-  // References
+  const { userCollections, setHeroData, maxCarouselNodes } = useCatalogProvider();
   const carouselRef = useRef<HTMLUListElement>(null);
-
-  /** Desktop Horizontal Navigation */
   let carouselIndex: number = 0;
 
-  const updateCarouselIndex = (delta: number): void => {
-    carouselIndex = Math.max(0, Math.min(carouselIndex + delta, data.flat().length));
-    navigate();
-  };
-
-  useEffect(() => updateCarouselIndex(0), [maxCarouselNodes]);
-
+  /**
+   * @function navigate
+   * @returns {void}
+   * Carousel scroll functionality
+   */
   const navigate = (): void => {
     if (carouselRef.current) {
       const listItems: HTMLCollection = carouselRef.current.children;
@@ -48,7 +42,22 @@ const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: st
     }
   };
 
-  /** Virtual scroll */
+  /**
+   * @function updateCarouselIndex
+   * @returns {void}
+   * Updates the carousel index, invokes `navigate()`
+   */
+  const updateCarouselIndex = (delta: number): void => {
+    carouselIndex = Math.max(0, Math.min(carouselIndex + delta, data.flat().length));
+    navigate();
+  };
+
+  useEffect(() => updateCarouselIndex(0), [maxCarouselNodes]);
+
+  /**
+   * @function observer Virtual Scroll
+   * Handles visibility of list items as the user scrolls
+   */
   const observer = new IntersectionObserver(
     (entries) => {
       // For each poster in carousel section
@@ -68,7 +77,25 @@ const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: st
     return () => observer.disconnect();
   }, [carouselRef.current]);
 
-  /** JSX */
+  /**
+   * @function toggleCollectionMenu
+   * @returns {void}
+   * Toggles the collection menu on independent movie list items
+   */
+  const collectionsMenu = useRef<HTMLUListElement>(null);
+
+  const toggleCollectionMenu = (): void => {
+    if (collectionsMenu.current) {
+      const attribute: string = 'data-visible';
+      const status: string | null = collectionsMenu.current.getAttribute(attribute);
+      collectionsMenu.current.setAttribute(attribute, status && status === 'false' ? 'true' : 'false');
+    }
+  };
+
+  /**
+   * @function
+   * @returns
+   */
   return (
     data.length > 0 && (
       <section className='fdCarousel' data-anim='active'>
@@ -83,7 +110,7 @@ const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: st
               props = { src: prop.poster_path, alt: prop.title };
 
               return (
-                <li className='fdCarousel__wrapper__ul__li' data-hidden={index < maxCarouselNodes + 1 ? 'false' : 'true'} key={useId()}>
+                <li className='fdCarousel__wrapper__ul__li' data-hidden={index < maxCarouselNodes + 1 ? 'false' : 'true'} key={`carousel-${mapIndex}-li-${index}`}>
                   <picture className='fdCarousel__wrapper__ul__li__picture'>
                     <img
                       className='fdCarousel__wrapper__ul__li__picture--img'
@@ -93,27 +120,33 @@ const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: st
                     />
                   </picture>
                   <div className='fdCarousel__wrapper__ul__li__overlay'>
+                    <button className='fdCarousel__wrapper__ul__li__overlay--collections' aria-label='Add movie to collections' onPointerUp={toggleCollectionMenu}>
+                      <BxDotsVerticalRounded />
+                    </button>
                     <button
                       className='fdCarousel__wrapper__ul__li__overlay--play'
                       aria-label='Play trailer'
                       onClick={() => setHeroData(article as Namespace_Tmdb.BaseMedia_Provider)}>
-                      <MaterialSymbolsPlayArrow />
+                      <IcOutlinePlayCircle />
                     </button>
                   </div>
+                  <ul className='fdCarousel__wrapper__ul__li__collections' ref={collectionsMenu} data-visible='false'>
+                    {Object.entries(userCollections).map((entry, index) => (
+                      <li key={`movie-dropdown-collections-${index}`}>
+                        <button aria-label={`Add movie to ${entry[1].header}`}>{entry[1].header}</button>
+                      </li>
+                    ))}
+                  </ul>
                 </li>
               );
             })}
           </ul>
           <nav className='fdCarousel__wrapper__navigation'>
             <button className='fdCarousel__wrapper__navigation__button' aria-label={'Show Previous'} onClick={() => updateCarouselIndex(-1)}>
-              <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
-                <path fill='currentColor' d='M15.41 7.41L14 6l-6 6l6 6l1.41-1.41L10.83 12z'></path>
-              </svg>
+              <IcBaselineArrowLeft />
             </button>
             <button className='fdCarousel__wrapper__navigation__button' aria-label={'Show More'} onClick={() => updateCarouselIndex(1)}>
-              <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
-                <path fill='currentColor' d='M10 6L8.59 7.41L13.17 12l-4.58 4.59L10 18l6-6z'></path>
-              </svg>
+              <IcBaselineArrowRight />
             </button>
           </nav>
         </div>
