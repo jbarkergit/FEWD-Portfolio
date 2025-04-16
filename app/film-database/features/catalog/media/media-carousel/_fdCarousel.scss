@@ -27,7 +27,6 @@
     &__ul {
       display: flex;
       gap: var(--fd-gap);
-      // @include m.scrollSnappingXAxis;
       overflow-x: scroll;
       scrollbar-width: none;
       scroll-behavior: smooth;
@@ -38,7 +37,6 @@
         border-radius: var(--fd-borderRadius);
         overflow: clip;
         cursor: pointer;
-        // scroll-snap-align: center;
         &:first-of-type {
           margin-left: calc(var(--fd-padding-generic) / 1.5);
         }
@@ -49,6 +47,9 @@
           & picture img {
             display: none;
           }
+        }
+        &:not(:hover) .fdCarousel__wrapper__ul__li__collections[data-active='true'] {
+          opacity: 0;
         }
         & picture,
         & picture img {
@@ -98,21 +99,43 @@
         }
         &__collections {
           position: absolute;
+          top: calc(var(--fd-gap) * 3);
+          right: var(--fd-gap);
           z-index: 5;
           display: flex;
           flex-direction: column;
-          gap: var(--fd-gap);
-          padding: calc(var(--fd-gap) / 4);
-          height: 0;
-          interpolate-size: allow-keywords;
-          transition: height 170ms ease;
-          &[data-visible='true'] {
-            height: auto;
+          border: 1px solid rgba(16 18 27 / 40%);
+          border-radius: var(--fd-borderRadius);
+          overflow: clip;
+          background-color: rgb(20, 20, 20);
+          transition: all 0.2s ease;
+          &[data-active='false'] {
+            opacity: 0;
+            pointer-events: none;
+          }
+          &[data-active='true'] {
+            transform: translateY(calc(var(--fd-gap) / 4));
+            opacity: 1;
+            pointer-events: all;
           }
           & li {
-            @include m.fdFontM;
-            border-bottom: 1px solid black;
-            cursor: pointer;
+            &:hover {
+              background-color: rgb(36, 36, 36);
+            }
+            &:first-of-type button {
+              border-top-left-radius: var(--fd-borderRadius);
+              border-top-right-radius: var(--fd-borderRadius);
+            }
+            &:last-of-type button {
+              border-bottom-right-radius: var(--fd-borderRadius);
+              border-bottom-left-radius: var(--fd-borderRadius);
+            }
+            & button {
+              padding: calc(var(--fd-gap) / 2);
+              @include m.fdFontS;
+              color: white;
+              white-space: nowrap;
+            }
           }
         }
       }

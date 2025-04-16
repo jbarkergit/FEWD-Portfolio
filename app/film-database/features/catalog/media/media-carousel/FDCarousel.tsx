@@ -1,11 +1,12 @@
 import { useRef, useEffect } from 'react';
-import { BxDotsVerticalRounded, IcBaselineArrowLeft, IcBaselineArrowRight, IcOutlinePlayCircle } from '~/film-database/assets/svg/icons';
+import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import type { Type_usePaginateData_Data_Provider } from '~/film-database/hooks/usePaginateData';
+import FDCarouselPoster from './FDCarouselPoster';
 
 const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: string; data: Type_usePaginateData_Data_Provider[] }) => {
-  const { userCollections, setHeroData, maxCarouselNodes } = useCatalogProvider();
+  const { maxCarouselNodes } = useCatalogProvider();
   const carouselRef = useRef<HTMLUListElement>(null);
   let carouselIndex: number = 0;
 
@@ -77,25 +78,7 @@ const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: st
     return () => observer.disconnect();
   }, [carouselRef.current]);
 
-  /**
-   * @function toggleCollectionMenu
-   * @returns {void}
-   * Toggles the collection menu on independent movie list items
-   */
-  const collectionsMenu = useRef<HTMLUListElement>(null);
-
-  const toggleCollectionMenu = (): void => {
-    if (collectionsMenu.current) {
-      const attribute: string = 'data-visible';
-      const status: string | null = collectionsMenu.current.getAttribute(attribute);
-      collectionsMenu.current.setAttribute(attribute, status && status === 'false' ? 'true' : 'false');
-    }
-  };
-
-  /**
-   * @function
-   * @returns
-   */
+  /** @returns */
   return (
     data.length > 0 && (
       <section className='fdCarousel' data-anim='active'>
@@ -104,42 +87,9 @@ const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: st
         </div>
         <div className='fdCarousel__wrapper'>
           <ul className='fdCarousel__wrapper__ul' ref={carouselRef}>
-            {data.flat().map((article, index) => {
-              let props: { src: string | null; alt: string; member?: string | undefined; knownFor?: string | undefined } = { src: '', alt: '' };
-              const prop = article as Namespace_Tmdb.BaseMedia_Provider;
-              props = { src: prop.poster_path, alt: prop.title };
-
-              return (
-                <li className='fdCarousel__wrapper__ul__li' data-hidden={index < maxCarouselNodes + 1 ? 'false' : 'true'} key={`carousel-${mapIndex}-li-${index}`}>
-                  <picture className='fdCarousel__wrapper__ul__li__picture'>
-                    <img
-                      className='fdCarousel__wrapper__ul__li__picture--img'
-                      src={`https://image.tmdb.org/t/p/w780/${props.src}`}
-                      alt={`${props.alt}`}
-                      fetchPriority={mapIndex === 0 ? 'high' : 'low'}
-                    />
-                  </picture>
-                  <div className='fdCarousel__wrapper__ul__li__overlay'>
-                    <button className='fdCarousel__wrapper__ul__li__overlay--collections' aria-label='Add movie to collections' onPointerUp={toggleCollectionMenu}>
-                      <BxDotsVerticalRounded />
-                    </button>
-                    <button
-                      className='fdCarousel__wrapper__ul__li__overlay--play'
-                      aria-label='Play trailer'
-                      onClick={() => setHeroData(article as Namespace_Tmdb.BaseMedia_Provider)}>
-                      <IcOutlinePlayCircle />
-                    </button>
-                  </div>
-                  <ul className='fdCarousel__wrapper__ul__li__collections' ref={collectionsMenu} data-visible='false'>
-                    {Object.entries(userCollections).map((entry, index) => (
-                      <li key={`movie-dropdown-collections-${index}`}>
-                        <button aria-label={`Add movie to ${entry[1].header}`}>{entry[1].header}</button>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              );
-            })}
+            {data.flat().map((article, index) => (
+              <FDCarouselPoster mapIndex={mapIndex} index={index} article={article as Namespace_Tmdb.BaseMedia_Provider} />
+            ))}
           </ul>
           <nav className='fdCarousel__wrapper__navigation'>
             <button className='fdCarousel__wrapper__navigation__button' aria-label={'Show Previous'} onClick={() => updateCarouselIndex(-1)}>
