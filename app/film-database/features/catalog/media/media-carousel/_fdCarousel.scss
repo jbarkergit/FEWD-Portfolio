@@ -139,6 +139,14 @@
               white-space: nowrap;
             }
           }
+          &__mtnc button {
+            display: flex;
+            gap: 4px;
+            & svg {
+              width: 1.2em;
+              aspect-ratio: 1/1;
+            }
+          }
         }
       }
     }

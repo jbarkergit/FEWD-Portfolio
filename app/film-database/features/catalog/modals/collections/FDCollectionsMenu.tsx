@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type Dispatch, type RefObject, type SetStateAction } from 'react';
 import { TablerCategoryPlus, TablerEdit, TablerLayoutListFilled, TablerLayoutDashboardFilled, TablerEye, TablerEyeOff } from '~/film-database/assets/svg/icons';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { addUserCollection } from '~/film-database/hooks/addUserCollection';
 
 type Props = {
   collectionRefs: RefObject<HTMLElement[]>;
@@ -10,25 +11,9 @@ type Props = {
 
 const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props) => {
   const { userCollections, setUserCollections } = useCatalogProvider();
+
   const [isListFX, setIsListFX] = useState<boolean>(true);
   const [layoutType, setLayoutType] = useState<'flex' | 'grid'>('flex');
-
-  /**
-   * @function addCollection
-   * Adds new collection to carousels state
-   */
-  const addCollection = (): void => {
-    if (Object.keys(userCollections).length < 4) {
-      setUserCollections((prevCarousels) => ({
-        ...prevCarousels,
-        [`user-collection-${Object.entries(prevCarousels).length + 1}`]: {
-          header: 'Uncategorized Movies',
-          data: undefined,
-          display: isEditMode ? 'grid' : 'flex',
-        },
-      }));
-    }
-  };
 
   /**
    * @function toggleBtn
@@ -110,7 +95,7 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props)
 
   return (
     <div className='fdCollectionsMenu'>
-      <button aria-label='Create new list' data-toggle='true' onPointerUp={() => addCollection()}>
+      <button aria-label='Create new list' data-toggle='true' onPointerUp={() => addUserCollection(userCollections, setUserCollections, isEditMode)}>
         <TablerCategoryPlus />
       </button>
       <button ref={editModeBtn} aria-label='Switch to edit mode' data-toggle='true' onPointerUp={() => setIsEditMode((state) => !state)}>

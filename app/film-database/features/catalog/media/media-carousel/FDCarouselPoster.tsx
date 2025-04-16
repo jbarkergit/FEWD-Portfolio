@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { BxDotsVerticalRounded, IcOutlinePlayCircle } from '~/film-database/assets/svg/icons';
+import { BxDotsVerticalRounded, IcOutlinePlayCircle, TablerCategoryPlus } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { addUserCollection } from '~/film-database/hooks/addUserCollection';
 
 type Prop_Drill = {
   mapIndex: number;
@@ -10,7 +11,7 @@ type Prop_Drill = {
 };
 
 const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
-  const { userCollections, setHeroData, maxCarouselNodes } = useCatalogProvider();
+  const { userCollections, setUserCollections, setHeroData, maxCarouselNodes } = useCatalogProvider();
 
   const prop = article as Namespace_Tmdb.BaseMedia_Provider;
   const props: { src: string | null; alt: string; member?: string | undefined; knownFor?: string | undefined } = { src: prop.poster_path, alt: prop.title };
@@ -76,6 +77,13 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
             <button aria-label={`Add movie to ${entry[1].header}`}>{entry[1].header}</button>
           </li>
         ))}
+        {Object.entries(userCollections).length < 4 ? (
+          <li className='fdCarousel__wrapper__ul__li__collections__mtnc'>
+            <button aria-label='Add movie to a new collection' onPointerUp={() => addUserCollection(userCollections, setUserCollections, false)}>
+              <TablerCategoryPlus /> New Collection
+            </button>
+          </li>
+        ) : null}
       </ul>
     </li>
   );
