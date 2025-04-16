@@ -48,6 +48,15 @@
             display: none;
           }
         }
+        &:hover {
+          .fdCarousel__wrapper__ul__li__overlay {
+            opacity: 1;
+            cursor: pointer;
+            &--play svg {
+              transform: scale(1.3) rotate(0deg);
+            }
+          }
+        }
         &:not(:hover) .fdCarousel__wrapper__ul__li__collections[data-active='true'] {
           opacity: 0;
         }
@@ -66,13 +75,6 @@
           background-color: #00000052;
           opacity: 0;
           transition: opacity 0.3s ease-in-out;
-          &:hover {
-            opacity: 1;
-            cursor: pointer;
-            .fdCarousel__wrapper__ul__li__overlay--play svg {
-              transform: scale(1.3) rotate(0deg);
-            }
-          }
           & button {
             position: absolute;
             & svg {
