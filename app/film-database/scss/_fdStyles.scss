@@ -89,7 +89,7 @@
   }
   // Desktop 2560x1440
   @media (max-width: 2560px) {
-    --fd-collection-items-per-page: calc(7 / 2);
+    --fd-collection-items-per-page: round(calc(7 / 2));
   }
   // Desktop 1920x1080
   @media (max-width: 1920px) {
@@ -118,7 +118,7 @@
   // @media (max-width: 601px) {
   //   --fd-collection-items-per-page: 2;
   // }
-  @media (max-width: 625px) {
+  @media (max-width: 780px) {
     --fd-collection-items-per-page: 1;
   }
 
