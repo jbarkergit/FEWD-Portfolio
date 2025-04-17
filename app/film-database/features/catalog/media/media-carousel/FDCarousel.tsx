@@ -88,7 +88,7 @@ const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: st
         <div className='fdCarousel__wrapper'>
           <ul className='fdCarousel__wrapper__ul' ref={carouselRef}>
             {data.flat().map((article, index) => (
-              <FDCarouselPoster mapIndex={mapIndex} index={index} article={article as Namespace_Tmdb.BaseMedia_Provider} />
+              <FDCarouselPoster mapIndex={mapIndex} index={index} article={article as Namespace_Tmdb.BaseMedia_Provider} key={`carousel-${mapIndex}-li-${index}`} />
             ))}
           </ul>
           <nav className='fdCarousel__wrapper__navigation'>

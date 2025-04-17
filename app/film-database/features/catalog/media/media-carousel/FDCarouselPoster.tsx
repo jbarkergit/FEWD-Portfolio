@@ -51,7 +51,7 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
 
   /** @returns */
   return (
-    <li className='fdCarousel__wrapper__ul__li' data-hidden={index < maxCarouselNodes + 1 ? 'false' : 'true'} key={`carousel-${mapIndex}-li-${index}`}>
+    <li className='fdCarousel__wrapper__ul__li' data-hidden={index < maxCarouselNodes + 1 ? 'false' : 'true'}>
       <picture className='fdCarousel__wrapper__ul__li__picture'>
         <img
           className='fdCarousel__wrapper__ul__li__picture--img'
@@ -74,12 +74,38 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
       <ul className='fdCarousel__wrapper__ul__li__collections' ref={collectionsMenu} data-active={isCmOpen ? 'true' : 'false'}>
         {Object.entries(userCollections).map((entry, index) => (
           <li key={`movie-dropdown-collections-${index}`}>
-            <button aria-label={`Add movie to ${entry[1].header}`}>{entry[1].header}</button>
+            <button
+              aria-label={`Add movie to ${entry[1].header}`}
+              onPointerUp={() =>
+                addUserCollection({
+                  userCollections,
+                  setUserCollections,
+                  isEditMode: false,
+                  payload: {
+                    data: [prop],
+                    colIndex: index,
+                  },
+                })
+              }>
+              {entry[1].header}
+            </button>
           </li>
         ))}
-        {Object.entries(userCollections).length < 4 ? (
+        {Object.entries(userCollections).length < 5 ? (
           <li className='fdCarousel__wrapper__ul__li__collections__mtnc'>
-            <button aria-label='Add movie to a new collection' onPointerUp={() => addUserCollection(userCollections, setUserCollections, false)}>
+            <button
+              aria-label='Add movie to a new collection'
+              onPointerUp={() =>
+                addUserCollection({
+                  userCollections,
+                  setUserCollections,
+                  isEditMode: false,
+                  payload: {
+                    data: [prop],
+                    colIndex: Object.keys(userCollections).length + 1,
+                  },
+                })
+              }>
               <TablerCategoryPlus /> New Collection
             </button>
           </li>

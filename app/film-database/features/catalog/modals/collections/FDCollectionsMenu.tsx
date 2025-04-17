@@ -95,7 +95,7 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props)
 
   return (
     <div className='fdCollectionsMenu'>
-      <button aria-label='Create new list' data-toggle='true' onPointerUp={() => addUserCollection(userCollections, setUserCollections, isEditMode)}>
+      <button aria-label='Create new list' data-toggle='true' onPointerUp={() => addUserCollection({ userCollections, setUserCollections, isEditMode: isEditMode })}>
         <TablerCategoryPlus />
       </button>
       <button ref={editModeBtn} aria-label='Switch to edit mode' data-toggle='true' onPointerUp={() => setIsEditMode((state) => !state)}>
