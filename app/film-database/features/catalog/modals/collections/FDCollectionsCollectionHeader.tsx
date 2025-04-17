@@ -11,7 +11,6 @@ const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
   const { userCollections, setUserCollections } = useCatalogProvider();
   const [inputValue, setInputValue] = useState(userCollections[Object.keys(userCollections)[mapIndex]]?.header || 'Uncategorized Movies');
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
-  const { isMovieModal } = useCatalogProvider();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -44,22 +43,6 @@ const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
       if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
     };
   }, [debounceTimeout]);
-
-  // useEffect(() => {
-  //   if (!isMovieModal) {
-  //     const key = Object.keys(carousels)[mapIndex];
-  //     if (!key) return;
-
-  //     setCarousels((prevCarousels: any) => {
-  //       const updatedCarousels = { ...prevCarousels };
-  //       updatedCarousels[key] = {
-  //         ...updatedCarousels[key],
-  //         header: inputValue,
-  //       };
-  //       return updatedCarousels;
-  //     });
-  //   }
-  // }, [isMovieModal]);
 
   return (
     <header>

@@ -1,9 +1,10 @@
-import { useRef, useEffect, forwardRef, type RefObject } from 'react';
+import { useRef, useEffect, forwardRef, type RefObject, useCallback } from 'react';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
 import type { User_Collection } from './FDCollections';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import FDCollectionsNavigation from './FDCollectionsNavigation';
 
 type Props = {
   mapIndex: number;
@@ -15,7 +16,7 @@ type Props = {
 };
 
 const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, header, data, display, isEditMode, collectionRefs }, collectionRef) => {
-  const { setUserCollections } = useCatalogProvider();
+  const { setUserCollections, maxCarouselNodes } = useCatalogProvider();
 
   const ulRef = useRef<HTMLUListElement>(null);
 
@@ -357,6 +358,53 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
     };
   }, [isEditMode]);
 
+  let carouselIndex: number = 0;
+
+  /**
+   * @function navigate
+   * @returns {void}
+   * Carousel scroll functionality
+   */
+  const navigate = (): void => {
+    const reference = collectionRefs.current[mapIndex].querySelector('ul')!;
+
+    const listItems: HTMLCollection = reference.children;
+
+    // Target index
+    const targetIndex: number = carouselIndex * maxCarouselNodes;
+
+    // Target element
+    let targetElement: HTMLLIElement | null = null;
+    const target = listItems[targetIndex] as HTMLLIElement;
+    target ? (targetElement = target) : (targetElement = listItems[listItems.length] as HTMLLIElement);
+
+    // Positions
+    const carouselPosition: number = reference.offsetLeft;
+    const scrollPosition: number = targetElement.offsetLeft - carouselPosition;
+
+    // Carousel margins
+    const carouselMargin: number = parseInt((listItems[0] as HTMLLIElement).style.marginLeft);
+
+    // Scroll position accounting carousel's margins
+    const newScrollPosition =
+      targetIndex === 0 ? scrollPosition - carouselMargin : targetIndex === listItems.length ? scrollPosition + carouselMargin : scrollPosition;
+
+    // Scroll
+    reference.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
+  };
+
+  /**
+   * @function updateCarouselIndex
+   * @returns {void}
+   * Updates the carousel index, invokes `navigate()`
+   */
+  const updateCarouselIndex = useCallback((delta: number): void => {
+    carouselIndex = Math.max(0, Math.min(carouselIndex + delta, data!.length));
+    navigate();
+  }, []);
+
+  useEffect(() => updateCarouselIndex(0), [maxCarouselNodes]);
+
   /**
    * @function FDCollectionsCollection
    * @returns {JSX.Element}
@@ -364,8 +412,12 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
   return (
     <section className='fdCollections__collection' ref={collectionRef}>
       <FDCollectionsCollectionHeader mapIndex={mapIndex} header={header} />
-      <FDCollectionsCollectionUl mapIndex={mapIndex} data={data} display={display} isEditMode={isEditMode} ulRef={ulRef} />
+      <div className='fdCollections__collection__wrapper'>
+        <FDCollectionsCollectionUl mapIndex={mapIndex} data={data} display={display} isEditMode={isEditMode} ulRef={ulRef} />
+        <FDCollectionsNavigation updateCarouselIndex={updateCarouselIndex} />
+      </div>
     </section>
   );
 });
+
 export default FDCollectionsCollection;

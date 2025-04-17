@@ -99,158 +99,211 @@
         }
       }
     }
-    & ul {
-      interpolate-size: allow-keywords;
-      transition: height 170ms ease;
-      &[data-layout='flex'] {
-        display: flex;
-        gap: var(--fd-gap);
-        padding-bottom: calc(15px + 8px); // Allow room for border and shadows
-        overflow-y: clip;
-        overflow-x: scroll;
-        scrollbar-width: none;
-        &:hover {
-          cursor: grab;
-        }
-        &:active,
-        &:active li:hover {
-          cursor: grabbing;
-        }
-        // Carousel padding
-        & li:first-of-type {
-          margin-left: calc(var(--fd-padding-generic) / 1.5);
-        }
-        & li:last-of-type {
-          margin-right: calc(var(--fd-padding-generic) / 1.5);
-        }
+    &__wrapper {
+      position: relative;
+      &:hover nav {
+        opacity: 1;
+        transition: opacity 0.22s ease-in-out;
       }
-      &[data-layout='grid'] {
-        display: grid;
-        column-gap: var(--fd-gap);
-        row-gap: calc(var(--fd-gap) + 15px + 3px); // Add ul's padding-bottom for visual consistency
-        grid-template-columns: repeat(auto-fill, minmax(var(--fd-carousel-node-width), auto));
-        margin: 0 calc(var(--fd-padding-generic) / 1.5) calc(15px + 8px) calc(var(--fd-padding-generic) / 1.5);
-      }
-      &[data-edit-mode='true']:not(:has(li)) {
-        height: calc(var(--fd-carousel-node-height) + calc(15px + 3px)); // Edit mode is mandatory layout 'grid'
-        & li:hover {
-          cursor: grab;
+      & ul {
+        interpolate-size: allow-keywords;
+        transition: height 170ms ease;
+        &[data-layout='flex'] {
+          display: flex;
+          gap: var(--fd-gap);
+          padding-bottom: calc(15px + 8px); // Allow room for border and shadows
+          overflow-y: clip;
+          overflow-x: scroll;
+          scrollbar-width: none;
+          &:hover {
+            cursor: grab;
+          }
+          &:active,
+          &:active li:hover {
+            cursor: grabbing;
+          }
+          // Carousel padding
+          & li:first-of-type {
+            margin-left: calc(var(--fd-padding-generic) / 1.5);
+          }
+          & li:last-of-type {
+            margin-right: calc(var(--fd-padding-generic) / 1.5);
+          }
         }
-      }
-      &[data-edit-mode='true'] {
-        // Div properties when data-edit-mode is true
-        & div {
+        &[data-layout='grid'] {
+          display: grid;
+          column-gap: var(--fd-gap);
+          row-gap: calc(var(--fd-gap) + 15px + 3px); // Add ul's padding-bottom for visual consistency
+          grid-template-columns: repeat(auto-fill, minmax(var(--fd-carousel-node-width), auto));
+          margin: 0 calc(var(--fd-padding-generic) / 1.5) calc(15px + 8px) calc(var(--fd-padding-generic) / 1.5);
+        }
+        &[data-edit-mode='true']:not(:has(li)) {
+          height: calc(var(--fd-carousel-node-height) + calc(15px + 3px)); // Edit mode is mandatory layout 'grid'
+          & li:hover {
+            cursor: grab;
+          }
+        }
+        &[data-edit-mode='true'] {
+          // Div properties when data-edit-mode is true
+          & div {
+            position: relative;
+            width: var(--fd-carousel-node-width);
+            height: var(--fd-carousel-node-height);
+            border-radius: var(--fd-borderRadius);
+            overflow: clip;
+            interpolate-size: allow-keywords;
+            transition: height 170ms ease;
+            will-change: height;
+            &::before {
+              content: '';
+              position: absolute;
+              top: -25%;
+              left: 10%;
+              width: 75%;
+              height: 150%;
+              background: linear-gradient(99deg, rgb(8 8 8), rgb(255 255 255));
+              opacity: 0.15;
+              animation: borderRotation 15s linear infinite;
+              will-change: transform;
+            }
+            &::after {
+              content: '';
+              position: absolute;
+              top: 0.5%;
+              left: 0.5%;
+              width: 99%;
+              height: 99%;
+              background-color: #1b1b1b;
+              border-radius: inherit;
+            }
+            &:hover span {
+              transform: rotateX(7deg) translateY(-6px);
+            }
+            & span {
+              position: absolute;
+              top: 0.5%;
+              left: 0.5%;
+              transform: translateY(-20%);
+              z-index: 1;
+              width: 99%;
+              height: 120%;
+              background: linear-gradient(
+                226deg,
+                rgba(255, 255, 255, 0.4) 0%,
+                rgba(255, 255, 255, 0.4) 35%,
+                rgba(255, 255, 255, 0.2) 42%,
+                rgba(255, 255, 255, 0) 60%
+              );
+              pointer-events: none;
+              transition: transform 0.65s cubic-bezier(0.18, 0.9, 0.58, 1);
+              will-change: transform;
+              opacity: 0.25;
+            }
+            & svg {
+              position: absolute;
+              z-index: 1;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 1.6em;
+              aspect-ratio: 1/1;
+              opacity: 0.8;
+              pointer-events: none;
+            }
+          }
+        }
+        &[data-list-item-fx='true'] {
+          & li {
+            &[data-list-item-visible='true'] {
+              & picture {
+                &::after {
+                  content: '';
+                  position: absolute;
+                  inset: 0;
+                  z-index: 10;
+                  border-radius: var(--fd-borderRadius);
+                  background-image: url(/app/film-database/assets/gif/vhs-noise.gif);
+                  background-size: 480px;
+                  background-attachment: fixed;
+                  opacity: 0.02;
+                  pointer-events: none;
+                }
+                & img {
+                  filter: none;
+                }
+              }
+            }
+            &[data-list-item-visible='false'] {
+              & picture img {
+                filter: brightness(35%) saturate(50%);
+              }
+            }
+          }
+        }
+        & li {
+          flex-shrink: 0;
           position: relative;
+          z-index: 1;
           width: var(--fd-carousel-node-width);
           height: var(--fd-carousel-node-height);
           border-radius: var(--fd-borderRadius);
-          overflow: clip;
-          interpolate-size: allow-keywords;
-          transition: height 170ms ease;
-          will-change: height;
-          &::before {
-            content: '';
-            position: absolute;
-            top: -25%;
-            left: 10%;
-            width: 75%;
-            height: 150%;
-            background: linear-gradient(99deg, rgb(8 8 8), rgb(255 255 255));
-            opacity: 0.15;
-            animation: borderRotation 15s linear infinite;
-            will-change: transform;
+          background-color: black;
+          box-shadow:
+            0 8px 10px rgba(0, 0, 0, 0.6),
+            0 15px 15px rgba(0, 0, 0, 0.3);
+          &:hover {
+            cursor: pointer;
           }
-          &::after {
-            content: '';
-            position: absolute;
-            top: 0.5%;
-            left: 0.5%;
-            width: 99%;
-            height: 99%;
-            background-color: #1b1b1b;
-            border-radius: inherit;
+          &:hover:not([data-list-item-visible='true']) picture img {
+            filter: brightness(80%) saturate(70%);
           }
-          &:hover span {
-            transform: rotateX(7deg) translateY(-6px);
+          & picture,
+          picture img {
+            border-radius: var(--fd-borderRadius);
           }
-          & span {
-            position: absolute;
-            top: 0.5%;
-            left: 0.5%;
-            transform: translateY(-20%);
-            z-index: 1;
-            width: 99%;
-            height: 120%;
-            background: linear-gradient(226deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 35%, rgba(255, 255, 255, 0.2) 42%, rgba(255, 255, 255, 0) 60%);
-            pointer-events: none;
-            transition: transform 0.65s cubic-bezier(0.18, 0.9, 0.58, 1);
-            will-change: transform;
-            opacity: 0.25;
-          }
-          & svg {
-            position: absolute;
-            z-index: 1;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 1.6em;
-            aspect-ratio: 1/1;
-            opacity: 0.8;
-            pointer-events: none;
+          & picture img {
+            transition: filter 85ms ease-in-out;
           }
         }
       }
-      &[data-list-item-fx='true'] {
-        & li {
-          &[data-list-item-visible='true'] {
-            & picture {
-              &::after {
-                content: '';
-                position: absolute;
-                inset: 0;
-                z-index: 10;
-                border-radius: var(--fd-borderRadius);
-                background-image: url(/app/film-database/assets/gif/vhs-noise.gif);
-                background-size: 480px;
-                background-attachment: fixed;
-                opacity: 0.02;
-                pointer-events: none;
-              }
-              & img {
-                filter: none;
-              }
-            }
-          }
-          &[data-list-item-visible='false'] {
-            & picture img {
-              filter: brightness(35%) saturate(50%);
-            }
-          }
-        }
-      }
-      & li {
-        flex-shrink: 0;
-        position: relative;
-        z-index: 1;
-        width: var(--fd-carousel-node-width);
+      & nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 6;
+        display: flex;
+        align-items: center;
+        width: 50svw;
+        // Match list items
         height: var(--fd-carousel-node-height);
-        border-radius: var(--fd-borderRadius);
-        background-color: black;
-        box-shadow:
-          0 8px 10px rgba(0, 0, 0, 0.6),
-          0 15px 15px rgba(0, 0, 0, 0.3);
-        &:hover {
-          cursor: pointer;
+        pointer-events: none;
+        opacity: 0;
+        transition: all 280ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+        // Greyzone/crosspath for desktop 1280x720 && tablet
+        @media (width <= 1152px) {
+          display: none;
         }
-        &:hover:not([data-list-item-visible='true']) picture img {
-          filter: brightness(80%) saturate(70%);
+        & button {
+          position: absolute;
+          z-index: 10;
+          height: 50%;
+          background-color: hsla(216, 100%, 3%, 0.5);
+          pointer-events: all;
+          & svg {
+            width: 3em;
+            height: 3em;
+            color: white;
+          }
         }
-        & picture,
-        picture img {
-          border-radius: var(--fd-borderRadius);
+        & button:nth-of-type(1) {
+          left: 0;
+          border-top-right-radius: var(--fd-borderRadius);
+          border-bottom-right-radius: var(--fd-borderRadius);
         }
-        & picture img {
-          transition: filter 85ms ease-in-out;
+        & button:nth-of-type(2) {
+          right: 0;
+          border-top-left-radius: var(--fd-borderRadius);
+          border-bottom-left-radius: var(--fd-borderRadius);
         }
       }
     }
