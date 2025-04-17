@@ -52,7 +52,7 @@ const FDMedia = () => {
     if (!isMovieModal && !isListModal) window.addEventListener('wheel', handleWheel);
     else window.removeEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [fdMediaRef.current, isMovieModal]);
+  }, [fdMediaRef.current, isMovieModal, isListModal]);
 
   /** JSX */
   return (
