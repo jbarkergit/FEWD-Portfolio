@@ -74,3 +74,64 @@
   // 1.97%  385x854
   // Covered by Tablet
 }
+
+[data-layout-collection] {
+  --fd-collection-node-width: calc(
+    (50svw - (2 * var(--fd-padding-generic)) - ((var(--fd-collection-items-per-page) - 1) * var(--fd-gap))) / var(--fd-collection-items-per-page)
+  );
+  --fd-collection-node-height: calc(var(--fd-collection-node-width) / 0.66667);
+
+  // Media Queries - October 2023 to October 2024 Coverage provided by <gs statcounter>
+
+  // Desktop 3840 x 2160
+  @media (min-width: 2561px) {
+    --fd-collection-items-per-page: calc(8 / 2);
+  }
+  // Desktop 2560x1440
+  @media (max-width: 2560px) {
+    --fd-collection-items-per-page: calc(7 / 2);
+  }
+  // Desktop 1920x1080
+  @media (max-width: 1920px) {
+    --fd-collection-items-per-page: calc(6 / 2);
+  }
+  // Desktop 1280x720
+  // Covered by 1920 due to height constraints
+
+  // Tablet
+  // 16.91% 768x1024
+  // 12.97% 810x1080
+  // 8.59% 800x1280
+  // 7%-8% 1280x800
+  // 7%-8% 800x1280
+  // 7.69% 820x1180
+  // 5.81% 1024x1366
+  // 4.65% 601x962
+  // 3.9% 834x1194
+  // 3.67% 744x1133
+  @media (max-width: 1024px) {
+    --fd-collection-items-per-page: calc(4 / 2);
+  }
+  // @media (max-width: 834px) {
+  //   --fd-collection-items-per-page: 3;
+  // }
+  // @media (max-width: 601px) {
+  //   --fd-collection-items-per-page: 2;
+  // }
+  @media (max-width: 625px) {
+    --fd-collection-items-per-page: 1;
+  }
+
+  // Mobile
+  // 28.53% 375x812
+  // 16.58% 390x844
+  // 7.9%   414x896
+  // 7.36%  428x926
+  // 5.03%  412x915
+  // 4.24%  375x667
+  // 3.85%  360x800
+  // 3.73%  393x852
+  // 2.92%  360x780
+  // 1.97%  385x854
+  // Covered by Tablet
+}

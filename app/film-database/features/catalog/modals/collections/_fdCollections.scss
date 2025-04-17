@@ -84,7 +84,7 @@
     & header {
       display: flex;
       // Remove additional ul padding-top from header's padding bottom
-      padding: 0 calc(var(--fd-carousel-node-width) / 4) calc(var(--fd-gap) - calc((15px + 3px))) calc(var(--fd-padding-generic) / 1.5);
+      padding: 0 calc(var(--fd-collection-node-width) / 4) calc(var(--fd-gap) - calc((15px + 3px))) calc(var(--fd-padding-generic) / 1.5);
       & svg {
         width: 1.6em;
         aspect-ratio: 1/1;
@@ -122,7 +122,7 @@
           &:active li:hover {
             cursor: grabbing;
           }
-          // Carousel padding
+          // collection padding
           & li:first-of-type {
             margin-left: calc(var(--fd-padding-generic) / 1.5);
           }
@@ -134,11 +134,11 @@
           display: grid;
           column-gap: var(--fd-gap);
           row-gap: calc(var(--fd-gap) + 15px + 3px); // Add ul's padding-bottom for visual consistency
-          grid-template-columns: repeat(auto-fill, minmax(var(--fd-carousel-node-width), auto));
+          grid-template-columns: repeat(auto-fill, minmax(var(--fd-collection-node-width), auto));
           margin: 0 calc(var(--fd-padding-generic) / 1.5) calc(15px + 8px) calc(var(--fd-padding-generic) / 1.5);
         }
         &[data-edit-mode='true']:not(:has(li)) {
-          height: calc(var(--fd-carousel-node-height) + calc(15px + 3px)); // Edit mode is mandatory layout 'grid'
+          height: calc(var(--fd-collection-node-height) + calc(15px + 3px)); // Edit mode is mandatory layout 'grid'
           & li:hover {
             cursor: grab;
           }
@@ -147,8 +147,8 @@
           // Div properties when data-edit-mode is true
           & div {
             position: relative;
-            width: var(--fd-carousel-node-width);
-            height: var(--fd-carousel-node-height);
+            width: var(--fd-collection-node-width);
+            height: var(--fd-collection-node-height);
             border-radius: var(--fd-borderRadius);
             overflow: clip;
             interpolate-size: allow-keywords;
@@ -244,8 +244,8 @@
           flex-shrink: 0;
           position: relative;
           z-index: 1;
-          width: var(--fd-carousel-node-width);
-          height: var(--fd-carousel-node-height);
+          width: var(--fd-collection-node-width);
+          height: var(--fd-collection-node-height);
           border-radius: var(--fd-borderRadius);
           background-color: black;
           box-shadow:
@@ -275,7 +275,7 @@
         align-items: center;
         width: 100%;
         // Match list items
-        height: var(--fd-carousel-node-height);
+        height: var(--fd-collection-node-height);
         pointer-events: none;
         opacity: 0;
         transition: all 280ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
