@@ -27,7 +27,7 @@ const FDCollections = () => {
 
   return (
     <>
-      <section className='fdCollections' data-layout-collection>
+      <section className='fdCollections'>
         {Object.values(userCollections).map(({ header, data, display }, index) => (
           <FDCollectionsModalCollection
             key={`user-collections-collection-${index}`}

@@ -27,7 +27,7 @@
   }
   &__header {
     width: fit-content;
-    padding: 0 calc(var(--fd-carousel-node-width) / 4) var(--fd-gap) calc(var(--fd-padding-generic) / 1.5);
+    padding: 0 calc(var(--fd-collection-node-width) / 4) var(--fd-gap) calc(var(--fd-padding-generic) / 1.5);
     text-transform: capitalize;
     &--h2 {
       @include m.fdFontXL;
@@ -69,8 +69,8 @@
         & picture {
           position: relative;
           display: block;
-          width: var(--fd-carousel-node-width);
-          height: var(--fd-carousel-node-height);
+          width: var(--fd-collection-node-width);
+          height: var(--fd-collection-node-height);
           border-radius: var(--fd-borderRadius);
           overflow: clip;
           &[data-missing='true'] {
