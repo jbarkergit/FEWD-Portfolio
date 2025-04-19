@@ -19,6 +19,35 @@
   }
 }
 
+.fdiFrame[data-type='modal'] {
+  position: relative;
+  display: inline;
+  width: 100%;
+  aspect-ratio: 16/9;
+  padding-right: 0;
+  overflow: clip;
+  .fdiFrame__controller {
+    position: absolute;
+    bottom: 5.5%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .fdiFrame__player {
+    position: relative;
+    width: inherit;
+    height: auto;
+    aspect-ratio: 16/9;
+    transform: scale(1);
+    &::before,
+    &::after {
+      display: none;
+    }
+    &__iframe {
+      top: 0;
+    }
+  }
+}
+
 .fdiFrame__player {
   position: absolute;
   top: 0;

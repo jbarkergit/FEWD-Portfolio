@@ -7,35 +7,6 @@
   gap: var(--fd-gap);
 }
 
-.fdCineInfo .fdiFrame {
-  position: relative;
-  display: inline;
-  width: 100%;
-  aspect-ratio: 16/9;
-  padding-right: 0;
-  overflow: clip;
-  &__controller {
-    position: absolute;
-    bottom: 5.5%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  &__player {
-    position: relative;
-    width: inherit;
-    height: auto;
-    aspect-ratio: 16/9;
-    transform: scale(1);
-    &::before,
-    &::after {
-      display: none;
-    }
-    &__iframe {
-      top: 0;
-    }
-  }
-}
-
 .fdCineInfo .fdDetails {
   height: auto;
   padding: calc(var(--fd-padding-generic) - var(--fd-gap) * 2) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 2 - var(--fd-gap) * 2)

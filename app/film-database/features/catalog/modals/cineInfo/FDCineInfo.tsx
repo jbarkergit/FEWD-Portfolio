@@ -23,7 +23,7 @@ const FDCineInfo = () => {
   if (heroData && castCrew)
     return (
       <div className='fdCineInfo'>
-        <FDiFrame />
+        <FDiFrame type={'modal'} />
         <FDDetails modal={true} />
         {castCrew.map(([key, value], index) => (
           <FDCineInfoCarousel mapIndex={index} heading={key} data={value} key={`${key}-${index}`} />

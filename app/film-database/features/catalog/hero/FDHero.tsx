@@ -5,7 +5,7 @@ const FDHero = () => {
   return (
     <div className='fdHero'>
       <FDDetails modal={false} />
-      <FDiFrame />
+      <FDiFrame type={'hero'} />
     </div>
   );
 };

@@ -13,7 +13,7 @@ import FDiFramePlayer from './player/FDiFramePlayer';
  * via third party library https://github.com/tjallingt/react-youtube
  */
 
-const FDiFrame = ({ trailerId }: { trailerId?: number }) => {
+const FDiFrame = ({ trailerId, type }: { trailerId?: number; type: 'hero' | 'modal' }) => {
   const { heroData } = useCatalogProvider();
   const [trailers, setTrailers] = useState<Namespace_Tmdb.Videos_Obj['videos']['results'] | undefined>(undefined);
 
@@ -30,7 +30,7 @@ const FDiFrame = ({ trailerId }: { trailerId?: number }) => {
 
   // JSX
   return (
-    <section className='fdiFrame'>
+    <section className='fdiFrame' data-type={type}>
       {trailers && trailers.length > 0 ? (
         <FDiFramePlayer trailers={trailers} setTrailers={setTrailers} />
       ) : (
