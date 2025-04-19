@@ -61,11 +61,11 @@ export const addUserCollection = ({ userCollections, setUserCollections, isEditM
   const index: number = payload?.colIndex ?? Object.keys(userCollections).length + 1;
   const key: string = `user-collection-${index}`;
   const display = isEditMode ? 'grid' : 'flex';
-  const header: string = userCollections[index]?.header ?? ('Uncategorized Movies' as const);
+  const header: string = userCollections[index]?.header ?? 'Uncategorized Movies';
 
   setUserCollections((prev) => {
-    const existing = prev[key];
-    const newData = payload?.data ? [...(existing?.data ?? []), ...payload.data] : undefined;
+    const existing = prev[key] || {};
+    const newData = payload?.data ? [...(existing.data ?? []), ...payload.data] : (existing.data ?? []);
 
     return {
       ...prev,
