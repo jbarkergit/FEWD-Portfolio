@@ -1,11 +1,12 @@
 import { useRef, useEffect, useId } from 'react';
+import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import type { Type_usePaginateData_Data_Provider } from '~/film-database/hooks/usePaginateData';
 
 const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: string; data: Type_usePaginateData_Data_Provider[] }) => {
   // Context
-  const { setHeroData, maxCarouselNodes } = useCatalogProvider();
+  const { maxCarouselNodes } = useCatalogProvider();
   // References
   const carouselRef = useRef<HTMLUListElement>(null);
 
@@ -77,31 +78,30 @@ const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; hea
         <div className='fdCineInfoCarousel__wrapper'>
           <ul className='fdCineInfoCarousel__wrapper__ul' ref={carouselRef}>
             {data.flat().map((article, index) => {
-              let props: { src: string | null; alt: string; member?: string | undefined; knownFor?: string | undefined } = { src: '', alt: '' };
               const prop = article as Namespace_Tmdb.Credits_Obj['credits']['cast'][0];
-              props = { src: prop.profile_path, alt: prop.name, member: prop.name, knownFor: prop.known_for_department };
               return (
                 <li className='fdCineInfoCarousel__wrapper__ul__li' data-hidden={index < maxCarouselNodes + 1 ? 'false' : 'true'} key={useId()}>
-                  <picture className='fdCineInfoCarousel__wrapper__ul__li__picture' data-missing={props.src ? 'false' : 'true'}>
-                    {props.src ? (
+                  <picture className='fdCineInfoCarousel__wrapper__ul__li__picture' data-missing={prop.profile_path ? 'false' : 'true'}>
+                    {prop.profile_path ? (
                       <img
                         className='fdCineInfoCarousel__wrapper__ul__li__picture--img'
-                        src={`https://image.tmdb.org/t/p/w780/${props.src}`}
-                        alt={`${props.alt}`}
+                        src={`https://image.tmdb.org/t/p/w780/${prop.profile_path}`}
+                        alt={`${prop.name}`}
                         fetchPriority={mapIndex <= maxCarouselNodes ? 'high' : 'low'}
                       />
                     ) : (
                       <img
                         className='fdCineInfoCarousel__wrapper__ul__li__picture--img'
                         src={`https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg`}
-                        alt={`${props.alt}`}
+                        alt={`${prop.name}`}
                         fetchPriority='low'
                       />
                     )}
                   </picture>
                   <div className='fdCineInfoCarousel__wrapper__ul__li__member'>
-                    <span>{props.member}</span>
-                    <span>{props.knownFor !== 'Acting' ? props.knownFor : null}</span>
+                    <span>{prop.name}</span>
+                    <span>{prop.character}</span>
+                    <span>{prop.known_for_department !== 'Acting' ? prop.known_for_department : null}</span>
                   </div>
                 </li>
               );
@@ -109,14 +109,10 @@ const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; hea
           </ul>
           <nav className='fdCineInfoCarousel__wrapper__navigation'>
             <button className='fdCineInfoCarousel__wrapper__navigation__button' aria-label={'Show Previous'} onClick={() => updateCarouselIndex(-1)}>
-              <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
-                <path fill='currentColor' d='M15.41 7.41L14 6l-6 6l6 6l1.41-1.41L10.83 12z'></path>
-              </svg>
+              <IcBaselineArrowLeft />
             </button>
             <button className='fdCineInfoCarousel__wrapper__navigation__button' aria-label={'Show More'} onClick={() => updateCarouselIndex(1)}>
-              <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'>
-                <path fill='currentColor' d='M10 6L8.59 7.41L13.17 12l-4.58 4.59L10 18l6-6z'></path>
-              </svg>
+              <IcBaselineArrowRight />
             </button>
           </nav>
         </div>

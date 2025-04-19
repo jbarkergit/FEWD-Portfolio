@@ -12,7 +12,12 @@ const FDCineInfo = () => {
 
   const fetch = async (): Promise<void> => {
     const castCrewResponse = (await useTmdbFetcher({ credits: (heroData as Namespace_Tmdb.BaseMedia_Provider).id })) as Namespace_Tmdb.Credits_Obj;
-    const castCrew = usePaginateData(castCrewResponse, maxCarouselNodes);
+
+    const cast = castCrewResponse.credits.cast;
+    const crew = castCrewResponse.credits.crew.filter((crewMember, index, self) => {
+      return index === self.findIndex((t) => t.name === crewMember.name && crewMember.known_for_department !== 'Acting');
+    });
+    const castCrew = usePaginateData({ credits: { cast: cast, crew: crew, id: castCrewResponse.credits.id } }, maxCarouselNodes);
     setCastCrew(castCrew);
   };
 
