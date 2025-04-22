@@ -33,16 +33,16 @@ const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
 
         return updatedCarousels;
       });
-    }, 1500);
+    }, 800);
 
     debounceTimeout.current = timeout;
   };
 
-  useEffect(() => {
-    return () => {
-      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
-    };
-  }, [debounceTimeout]);
+  // useEffect(() => {
+  //   return () => {
+  //     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+  //   };
+  // }, [debounceTimeout]);
 
   return (
     <header>
