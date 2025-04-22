@@ -72,25 +72,29 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
         </button>
       </div>
       <ul className='fdCarousel__wrapper__ul__li__collections' ref={collectionsMenu} data-active={isCmOpen ? 'true' : 'false'}>
-        {Object.entries(userCollections).map((entry, index) => (
-          <li key={`movie-dropdown-collections-${index}`}>
-            <button
-              aria-label={`Add movie to ${entry[1].header}`}
-              onPointerUp={() =>
-                addUserCollection({
-                  userCollections,
-                  setUserCollections,
-                  isEditMode: false,
-                  payload: {
-                    data: [prop],
-                    colIndex: index,
-                  },
-                })
-              }>
-              {entry[1].header}
-            </button>
-          </li>
-        ))}
+        {Object.entries(userCollections).map(([key, collection], i) => {
+          const keyIndex = parseInt(key.split('-').pop() || '0', 10);
+
+          return (
+            <li key={`movie-dropdown-collections-${i}`}>
+              <button
+                aria-label={`Add movie to ${collection.header}`}
+                onPointerUp={() =>
+                  addUserCollection({
+                    userCollections,
+                    setUserCollections,
+                    isEditMode: false,
+                    payload: {
+                      data: [prop],
+                      colIndex: keyIndex,
+                    },
+                  })
+                }>
+                {collection.header}
+              </button>
+            </li>
+          );
+        })}
         {Object.entries(userCollections).length < 5 ? (
           <li className='fdCarousel__wrapper__ul__li__collections__mtnc'>
             <button

@@ -9,8 +9,8 @@ type Params = {
   userCollections: Record<string, User_Collection>;
   setUserCollections: Dispatch<SetStateAction<Record<string, User_Collection>>>;
   isEditMode: boolean;
-  payload?: {
-    data: User_Collection['data'];
+  payload: {
+    data: User_Collection['data'] | undefined;
     colIndex: number;
   };
 };
@@ -58,10 +58,9 @@ type Params = {
 export const addUserCollection = ({ userCollections, setUserCollections, isEditMode, payload }: Params): void => {
   if (Object.keys(userCollections).length >= 5) return;
 
-  const index: number = payload?.colIndex ?? Object.keys(userCollections).length + 1;
-  const key: string = `user-collection-${index}`;
-  const display = isEditMode ? 'grid' : 'flex';
-  const header: string = userCollections[index]?.header ?? 'Uncategorized Movies';
+  const key: string = `user-collection-${payload.colIndex}`;
+  const display: 'grid' | 'flex' = isEditMode ? 'grid' : 'flex';
+  const header: string = userCollections[payload.colIndex]?.header ?? 'Uncategorized Movies';
 
   setUserCollections((prev) => {
     const existing = prev[key] || {};
