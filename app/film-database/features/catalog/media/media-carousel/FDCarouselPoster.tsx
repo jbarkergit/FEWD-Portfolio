@@ -11,7 +11,7 @@ type Prop_Drill = {
 };
 
 const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
-  const { userCollections, setUserCollections, setHeroData, maxCarouselNodes } = useCatalogProvider();
+  const { userCollections, setUserCollections, setHeroData, viewportChunkSize } = useCatalogProvider();
 
   const prop = article as Namespace_Tmdb.BaseMedia_Provider;
   const props: { src: string | null; alt: string; member?: string | undefined; knownFor?: string | undefined } = { src: prop.poster_path, alt: prop.title };
@@ -51,7 +51,7 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
 
   /** @returns */
   return (
-    <li className='fdCarousel__wrapper__ul__li' data-hidden={index < maxCarouselNodes + 1 ? 'false' : 'true'}>
+    <li className='fdCarousel__wrapper__ul__li' data-hidden={index < viewportChunkSize + 1 ? 'false' : 'true'}>
       <picture className='fdCarousel__wrapper__ul__li__picture'>
         <img
           className='fdCarousel__wrapper__ul__li__picture--img'

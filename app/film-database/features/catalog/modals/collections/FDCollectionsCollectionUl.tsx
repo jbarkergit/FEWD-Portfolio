@@ -1,4 +1,4 @@
-import { Fragment, type JSX, useMemo } from 'react';
+import { type JSX, useMemo } from 'react';
 import { IcBaselinePlus } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
@@ -17,7 +17,7 @@ const FDCollectionsCollectionUl = ({
   ulRef: React.RefObject<HTMLUListElement | null>;
 }) => {
   // Dynamic integer limitation of list items in a carousel
-  const { maxCarouselNodes } = useCatalogProvider();
+  const { viewportChunkSize } = useCatalogProvider();
 
   /**
    * @function ListItem @returns {JSX.Element}
@@ -48,14 +48,14 @@ const FDCollectionsCollectionUl = ({
       // Create new array of list items with data
       let initMap = data.map((movie, index) => <ListItem movie={movie} index={index} key={`collection-${mapIndex}-listItem-${index}`} />);
 
-      // If initMap's length is greater than or equal to maxcarouselNodes, return initMap
-      if (initMap.length + 1 >= maxCarouselNodes) {
+      // If initMap's length is greater than or equal to viewportChunkSize, return initMap
+      if (initMap.length + 1 >= viewportChunkSize) {
         initMap.push(<EmptyListItem key={`collection-${mapIndex}-emptyListItem-${initMap.length + 1}`} />);
         return initMap;
       }
 
-      // If initMap isn't at least the length of maxCarouselNodes, push empty lists
-      for (let i = 0; i < maxCarouselNodes; i++) {
+      // If initMap isn't at least the length of viewportChunkSize, push empty lists
+      for (let i = 0; i < viewportChunkSize; i++) {
         let listAtIndex = initMap[i];
         if (!listAtIndex) initMap.push(<EmptyListItem key={`collection-${mapIndex}-emptyListItem-${initMap.length + i + 1}`} />);
       }
@@ -65,7 +65,7 @@ const FDCollectionsCollectionUl = ({
     }
 
     // If data is empty
-    const EmptyList = Array.from({ length: maxCarouselNodes }).map((eli, index) => <EmptyListItem key={`collection-${mapIndex}-emptyListItem-${index}`} />);
+    const EmptyList = Array.from({ length: viewportChunkSize }).map((eli, index) => <EmptyListItem key={`collection-${mapIndex}-emptyListItem-${index}`} />);
     return EmptyList;
   }, [data]);
 

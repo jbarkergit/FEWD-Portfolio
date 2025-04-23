@@ -22,7 +22,7 @@ export type User_Collection = {
 type Context = {
   heroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
   setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
-  maxCarouselNodes: number;
+  viewportChunkSize: number;
   isMovieModal: boolean;
   setIsMovieModal: Dispatch<SetStateAction<boolean>>;
   isListModal: boolean;
@@ -44,7 +44,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   /** @state Hero data representing the featured media item. */
   const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(initialHeroData);
   /** @state Maximum number of carousel items based on the window width. */
-  const [maxCarouselNodes, setMaxCarouselNodes] = useState<number>(6);
+  const [viewportChunkSize, setViewportChunkSize] = useState<number>(6);
   /** @state Indicates whether the movie modal is visible. */
   const [isMovieModal, setIsMovieModal] = useState<boolean>(false);
   /** @state Indicates whether the list modal is visible. */
@@ -62,7 +62,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const element: Element | null = document.querySelector('.fdCatalog');
 
     if (!element) {
-      setMaxCarouselNodes(6);
+      setViewportChunkSize(6);
       return;
     }
 
@@ -72,7 +72,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const chunkSize = isNaN(itemsPerPage) ? 4 : itemsPerPage;
     console.log(chunkSize);
 
-    setMaxCarouselNodes(chunkSize);
+    setViewportChunkSize(chunkSize);
   }
 
   useEffect(() => {
@@ -106,12 +106,12 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setUserCollections({
       'user-collection-0': {
         header: 'Uncategorized Movies',
-        data: flattenedPrimaryData.slice(0, maxCarouselNodes),
+        data: flattenedPrimaryData.slice(0, viewportChunkSize),
         display: 'flex',
       },
       'user-collection-1': {
         header: 'Uncategorized Movies',
-        data: flattenedPrimaryData.slice(maxCarouselNodes, maxCarouselNodes * 2),
+        data: flattenedPrimaryData.slice(viewportChunkSize, viewportChunkSize * 2),
         display: 'flex',
       },
     });
@@ -123,7 +123,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <CatalogContext.Provider
-      value={{ heroData, setHeroData, maxCarouselNodes, isMovieModal, setIsMovieModal, isListModal, setIsListModal, userCollections, setUserCollections }}>
+      value={{ heroData, setHeroData, viewportChunkSize, isMovieModal, setIsMovieModal, isListModal, setIsListModal, userCollections, setUserCollections }}>
       {children}
     </CatalogContext.Provider>
   );

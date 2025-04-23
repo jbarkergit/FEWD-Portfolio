@@ -7,7 +7,7 @@ import { usePaginateData } from '~/film-database/hooks/usePaginateData';
 import FDCineInfoCarousel from './FDCineInfoCarousel';
 
 const FDCineInfo = () => {
-  const { heroData, maxCarouselNodes } = useCatalogProvider();
+  const { heroData, viewportChunkSize } = useCatalogProvider();
   const [castCrew, setCastCrew] = useState<ReturnType<typeof usePaginateData> | undefined>(undefined);
 
   const fetch = async (): Promise<void> => {
@@ -17,7 +17,7 @@ const FDCineInfo = () => {
     const crew = castCrewResponse.credits.crew.filter((crewMember, index, self) => {
       return index === self.findIndex((t) => t.name === crewMember.name && crewMember.known_for_department !== 'Acting');
     });
-    const castCrew = usePaginateData({ credits: { cast: cast, crew: crew, id: castCrewResponse.credits.id } }, maxCarouselNodes);
+    const castCrew = usePaginateData({ credits: { cast: cast, crew: crew, id: castCrewResponse.credits.id } }, viewportChunkSize);
     setCastCrew(castCrew);
   };
 

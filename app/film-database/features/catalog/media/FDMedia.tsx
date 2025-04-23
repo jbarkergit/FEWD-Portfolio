@@ -12,11 +12,11 @@ import FDSearch from '~/film-database/components/search/FDSearch';
 
 const FDMedia = () => {
   // Context
-  const { isMovieModal, isListModal, maxCarouselNodes } = useCatalogProvider();
+  const { isMovieModal, isListModal, viewportChunkSize } = useCatalogProvider();
 
   // State
   const { primaryData } = useLoaderData();
-  const paginatedData: ReturnType<typeof usePaginateData> = usePaginateData(primaryData, maxCarouselNodes);
+  const paginatedData: ReturnType<typeof usePaginateData> = usePaginateData(primaryData, viewportChunkSize);
 
   // References
   const fdMediaRef = useRef<HTMLElement>(null);

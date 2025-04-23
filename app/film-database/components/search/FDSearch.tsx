@@ -5,7 +5,7 @@ import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
 const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
   // Context
-  const { setHeroData, maxCarouselNodes } = useCatalogProvider();
+  const { setHeroData, viewportChunkSize } = useCatalogProvider();
 
   // State
   const [isTyping, setIsTyping] = useState(false);
@@ -90,7 +90,7 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
       <div className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
           {searchResults && !isTyping
-            ? searchResults.splice(0, maxCarouselNodes).map((props, index) => {
+            ? searchResults.splice(0, viewportChunkSize).map((props, index) => {
                 if (props.poster_path)
                   return (
                     <li className='fdSearchBar__results__ul__li' key={`fd-search-result-${index}`}>

@@ -7,7 +7,7 @@ export type Type_usePaginateData_Data_Provider = Array<
   Namespace_Tmdb.BaseMedia_Provider | Namespace_Tmdb.Credits_Obj['credits']['cast'][0] | Namespace_Tmdb.Credits_Obj['credits']['crew'][0]
 >;
 
-export const usePaginateData = (rawData: Namespace_Tmdb.Response_Union[] | Namespace_Tmdb.Response_Union, maxCarouselNodes: number) => {
+export const usePaginateData = (rawData: Namespace_Tmdb.Response_Union[] | Namespace_Tmdb.Response_Union, viewportChunkSize: number) => {
   // Initialize mutatable map
   let store: Map<Namespace_TmdbEndpointsKeys.Keys_Union, Type_usePaginateData_Data_Provider[]> | undefined = new Map(undefined);
 
@@ -20,8 +20,8 @@ export const usePaginateData = (rawData: Namespace_Tmdb.Response_Union[] | Names
     if (!isKeyMapped) store.set(targetKey, []);
 
     // Paginate data
-    for (let i = 0; i < data.length; i += maxCarouselNodes + 1) {
-      store.get(targetKey)!.push(data.slice(i, i + maxCarouselNodes + 1));
+    for (let i = 0; i < data.length; i += viewportChunkSize + 1) {
+      store.get(targetKey)!.push(data.slice(i, i + viewportChunkSize + 1));
     }
   };
 

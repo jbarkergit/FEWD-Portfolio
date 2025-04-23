@@ -6,7 +6,7 @@ import type { Type_usePaginateData_Data_Provider } from '~/film-database/hooks/u
 import FDCarouselPoster from './FDCarouselPoster';
 
 const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: string; data: Type_usePaginateData_Data_Provider[] }) => {
-  const { maxCarouselNodes } = useCatalogProvider();
+  const { viewportChunkSize } = useCatalogProvider();
   const carouselRef = useRef<HTMLUListElement>(null);
   let carouselIndex: number = 0;
 
@@ -20,7 +20,7 @@ const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: st
       const listItems: HTMLCollection = carouselRef.current.children;
 
       // Target index
-      const targetIndex: number = carouselIndex * maxCarouselNodes;
+      const targetIndex: number = carouselIndex * viewportChunkSize;
 
       // Target element
       let targetElement: HTMLLIElement | null = null;
@@ -53,7 +53,7 @@ const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: st
     navigate();
   };
 
-  useEffect(() => updateCarouselIndex(0), [maxCarouselNodes]);
+  useEffect(() => updateCarouselIndex(0), [viewportChunkSize]);
 
   /**
    * @function observer Virtual Scroll
