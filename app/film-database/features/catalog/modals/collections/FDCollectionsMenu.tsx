@@ -52,7 +52,7 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props)
   const toggleLayoutType = (type: 'flex' | 'grid'): void => {
     if (collectionRefs.current) {
       for (const collection of collectionRefs.current) {
-        (Array.from(collection.children)[1] as HTMLUListElement).setAttribute('data-layout', type);
+        (Array.from(collection.children)[1].querySelector('ul') as HTMLUListElement).setAttribute('data-layout', type);
       }
     }
   };
