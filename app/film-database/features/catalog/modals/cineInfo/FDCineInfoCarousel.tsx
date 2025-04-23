@@ -6,7 +6,7 @@ import type { Type_usePaginateData_Data_Provider } from '~/film-database/hooks/u
 
 const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: string; data: Type_usePaginateData_Data_Provider[] }) => {
   // Context
-  const { viewportChunkSize } = useCatalogProvider();
+  const { modalChunkSize } = useCatalogProvider();
   // References
   const carouselRef = useRef<HTMLUListElement>(null);
 
@@ -18,14 +18,14 @@ const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; hea
     navigate();
   };
 
-  useEffect(() => updateCarouselIndex(0), [viewportChunkSize]);
+  useEffect(() => updateCarouselIndex(0), [modalChunkSize]);
 
   const navigate = (): void => {
     if (carouselRef.current) {
       const listItems: HTMLCollection = carouselRef.current.children;
 
       // Target index
-      const targetIndex: number = carouselIndex * viewportChunkSize;
+      const targetIndex: number = carouselIndex * modalChunkSize;
 
       // Target element
       let targetElement: HTMLLIElement | null = null;
@@ -80,14 +80,14 @@ const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; hea
             {data.flat().map((article, index) => {
               const prop = article as Namespace_Tmdb.Credits_Obj['credits']['cast'][0];
               return (
-                <li className='fdCineInfoCarousel__wrapper__ul__li' data-hidden={index < viewportChunkSize + 1 ? 'false' : 'true'} key={useId()}>
+                <li className='fdCineInfoCarousel__wrapper__ul__li' data-hidden={index < modalChunkSize + 1 ? 'false' : 'true'} key={useId()}>
                   <picture className='fdCineInfoCarousel__wrapper__ul__li__picture' data-missing={prop.profile_path ? 'false' : 'true'}>
                     {prop.profile_path ? (
                       <img
                         className='fdCineInfoCarousel__wrapper__ul__li__picture--img'
                         src={`https://image.tmdb.org/t/p/w780/${prop.profile_path}`}
                         alt={`${prop.name}`}
-                        fetchPriority={mapIndex <= viewportChunkSize ? 'high' : 'low'}
+                        fetchPriority={mapIndex <= modalChunkSize ? 'high' : 'low'}
                       />
                     ) : (
                       <img

@@ -16,7 +16,7 @@ type Props = {
 };
 
 const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, header, data, display, isEditMode, collectionRefs }, collectionRef) => {
-  const { setUserCollections, viewportChunkSize } = useCatalogProvider();
+  const { setUserCollections, modalChunkSize } = useCatalogProvider();
 
   const ulRef = useRef<HTMLUListElement>(null);
 
@@ -371,7 +371,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
     const listItems: HTMLCollection = reference.children;
 
     // Target index
-    const targetIndex: number = carouselIndex * viewportChunkSize;
+    const targetIndex: number = carouselIndex * modalChunkSize;
 
     // Target element
     let targetElement: HTMLLIElement | null = null;
@@ -403,7 +403,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
     navigate();
   }, []);
 
-  useEffect(() => updateCarouselIndex(0), [viewportChunkSize]);
+  useEffect(() => updateCarouselIndex(0), [modalChunkSize]);
 
   /**
    * @function FDCollectionsCollection

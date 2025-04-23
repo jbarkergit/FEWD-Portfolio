@@ -9,7 +9,7 @@ type Props = {
 
 const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
   const { userCollections, setUserCollections } = useCatalogProvider();
-  const [inputValue, setInputValue] = useState(userCollections[Object.keys(userCollections)[mapIndex]]?.header || 'Uncategorized Movies');
+  const [inputValue, setInputValue] = useState(userCollections[Object.keys(userCollections)[mapIndex]]?.header || 'Unnamed Collection');
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

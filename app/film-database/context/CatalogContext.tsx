@@ -65,14 +65,15 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const element: Element | null = document.querySelector('.fdCatalog');
 
     if (!element) {
-      setViewportChunkSize(6);
+      setViewportChunkSize(2);
+      setModalChunkSize(2);
       return;
     }
 
     const styles: CSSStyleDeclaration = getComputedStyle(element);
     const isModalActive: boolean = isMovieModal === true || isListModal === true;
     const itemsPerPage: number = parseInt(styles.getPropertyValue(isModalActive ? '--fd-collection-items-per-page' : '--fd-carousel-items-per-page').trim());
-    const chunkSize = isNaN(itemsPerPage) ? 4 : itemsPerPage;
+    const chunkSize = isNaN(itemsPerPage) ? 2 : itemsPerPage;
 
     isModalActive ? setModalChunkSize(chunkSize) : setViewportChunkSize(chunkSize);
   }
@@ -107,13 +108,13 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     // if (moviesArr.length > 0 && !carousels.length) {}
     setUserCollections({
       'user-collection-0': {
-        header: 'Uncategorized Movies',
-        data: flattenedPrimaryData.slice(0, viewportChunkSize),
+        header: 'Unnamed Collection',
+        data: flattenedPrimaryData,
         display: 'flex',
       },
       'user-collection-1': {
-        header: 'Uncategorized Movies',
-        data: flattenedPrimaryData.slice(viewportChunkSize, viewportChunkSize * 2),
+        header: 'Unnamed Collection',
+        data: flattenedPrimaryData,
         display: 'flex',
       },
     });
