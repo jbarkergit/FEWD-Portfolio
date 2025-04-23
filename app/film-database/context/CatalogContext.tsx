@@ -44,7 +44,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   /** @state Hero data representing the featured media item. */
   const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(initialHeroData);
   /** @state Maximum number of carousel items based on the window width. */
-  const [maxCarouselNodes, setMaxCarouselNodes] = useState<number>(getMaxCarouselNodes());
+  const [maxCarouselNodes, setMaxCarouselNodes] = useState<number>(6);
   /** @state Indicates whether the movie modal is visible. */
   const [isMovieModal, setIsMovieModal] = useState<boolean>(false);
   /** @state Indicates whether the list modal is visible. */
@@ -53,27 +53,35 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [userCollections, setUserCollections] = useState<Record<string, User_Collection>>({});
 
   /**
-   * @function getMaxCarouselNodes
+   * @function getDynamicChunkSize
    * @description Determines the number of carousel items based on the screen width.
    * This ensures that the carousel adapts to different screen sizes for optimal viewing.
    * @returns {number} The number of items to show in the carousel.
    */
-  function getMaxCarouselNodes(): number {
-    const width = window.innerWidth;
-    if (width >= 2561) return 8;
-    if (width > 1920) return 7;
-    if (width > 1024) return 6;
-    if (width > 834) return 4;
-    if (width > 601) return 3;
-    return 2;
+  function getDynamicChunkSize(): void {
+    const isModalActive: boolean = isMovieModal || isListModal;
+
+    const element: Element | null = isModalActive ? document.querySelector('.fdModal__container') : document.querySelector('.fdCatalog');
+
+    if (!element) {
+      setMaxCarouselNodes(6);
+      return;
+    }
+
+    const styles = getComputedStyle(element);
+    const itemsPerPageValue = styles.getPropertyValue('--fd-carousel-items-per-page').trim();
+    const itemsPerPage = parseInt(itemsPerPageValue);
+
+    setMaxCarouselNodes(isNaN(itemsPerPage) ? 6 : itemsPerPage);
   }
 
   useEffect(() => {
-    const handleResize = () => setMaxCarouselNodes(getMaxCarouselNodes());
-    handleResize(); // initial value
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    getDynamicChunkSize();
+    window.addEventListener('resize', getDynamicChunkSize);
+    return () => window.removeEventListener('resize', getDynamicChunkSize);
   }, []);
+
+  useEffect(() => getDynamicChunkSize(), [isMovieModal, isListModal]);
 
   /**
    * @function initializeUserCollections
