@@ -40,7 +40,7 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props)
   const toggleListItemFX = (boolean: boolean): void => {
     if (collectionRefs.current) {
       for (const collection of collectionRefs.current) {
-        (Array.from(collection.children)[1] as HTMLUListElement).setAttribute('data-list-item-fx', String(boolean));
+        (Array.from(collection.children)[1].querySelector('ul') as HTMLUListElement).setAttribute('data-list-item-fx', String(boolean));
       }
     }
   };
@@ -68,7 +68,7 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props)
     if (isEditMode) {
       // When in edit mode, enable list item effects and set layout to grid
       toggleListItemFX(false);
-      toggleLayoutType('grid');
+      toggleLayoutType('flex');
     } else {
       // When not in edit mode, reset list item effects and set layout to flex
       toggleListItemFX(isListFX);
