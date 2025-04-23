@@ -4,7 +4,7 @@
 .fdCollectionsMenu {
   position: fixed;
   z-index: 4;
-  bottom: var(--fd-padding-generic);
+  bottom: calc(var(--fd-padding-generic) / 2);
   left: 50%;
   transform: translate(-50%, 0);
   display: flex;
