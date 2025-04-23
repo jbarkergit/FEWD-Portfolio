@@ -9,8 +9,8 @@ import { CatalogProvider } from '../context/CatalogContext';
 // Features: Account Page
 import FDAccountBackground from '../features/account/animation/FDAccountBackground';
 import FDAccountModal from '../features/account/FDAccountModal';
-//Features: Catalog page
-import FDHeader from '../features/catalog/header/FDHeader';
+// Features: Catalog page
+import FDHeader from '../features/catalog/navigation/FDHeader';
 import FDHero from '../features/catalog/hero/FDHero';
 import FDMedia from '../features/catalog/media/FDMedia';
 import FDModal from '../features/catalog/modals/container/FDModal';

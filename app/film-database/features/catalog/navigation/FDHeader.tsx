@@ -1,7 +1,7 @@
-import { useCatalogProvider } from '../../../context/CatalogContext';
 import { MaterialSymbolsLogoutSharp, MaterialSymbolsMovieSharp } from '~/film-database/assets/svg/icons';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { signOut } from 'firebase/auth';
+import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
 type CTAButton = {
   key: string;

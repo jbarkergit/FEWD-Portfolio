@@ -1,13 +1,9 @@
-// Deps
 import { useState, useEffect, useRef, type ChangeEvent } from 'react';
-// Context
-import { useCatalogProvider } from '../../../../context/CatalogContext';
-// Composables
-import { type Namespace_Tmdb, useTmdbFetcher } from '../../../../composables/tmdb-api/hooks/useTmdbFetcher';
-// Assets
-import { SvgSpinnersRingResize, IcOutlinePlayCircle } from '../../../../assets/svg/icons';
+import { SvgSpinnersRingResize, IcOutlinePlayCircle, IcBaselineSearch } from '~/film-database/assets/svg/icons';
+import { type Namespace_Tmdb, useTmdbFetcher } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
+import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
-const FDCarouselSearch = () => {
+const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
   // Context
   const { setHeroData, maxCarouselNodes } = useCatalogProvider();
 
@@ -17,7 +13,7 @@ const FDCarouselSearch = () => {
   const [searchResults, setSearchResults] = useState<Namespace_Tmdb.Search_Obj['search']['results'] | undefined>(undefined);
 
   // Debounce
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutId = useRef<NodeJS.Timeout | null>(null);
 
   // References
   const labelRef = useRef<HTMLLabelElement>(null);
@@ -52,20 +48,20 @@ const FDCarouselSearch = () => {
     if (searchTerm.length > 0) setIsTyping(true);
 
     // Clear timer
-    if (timerRef.current) window.clearTimeout(timerRef.current);
+    if (timeoutId.current) window.clearTimeout(timeoutId.current);
     // Assign new timer
-    timerRef.current = window.setTimeout(() => invokeFetch(), 850) as unknown as NodeJS.Timeout;
+    timeoutId.current = window.setTimeout(() => invokeFetch(), 850) as unknown as NodeJS.Timeout;
 
     return () => {
-      if (timerRef.current) {
+      if (timeoutId.current) {
         setIsTyping(false);
-        window.clearTimeout(timerRef.current);
+        window.clearTimeout(timeoutId.current);
       }
     };
   }, [searchTerm]);
 
   return (
-    <section className='fdSearchBar'>
+    <section className='fdSearchBar' data-orientation={orientation}>
       <div className='fdSearchBar__header'>
         <fieldset className='fdSearchBar__header__fieldset'>
           <label
@@ -73,11 +69,7 @@ const FDCarouselSearch = () => {
             htmlFor='fdSearchBar__fieldset__input'
             data-opacity={searchTerm.length > 0 ? 'hidden' : 'barelyVisible'}
             ref={labelRef}>
-            <svg xmlns='http://www.w3.org/2000/svg' width='3em' height='1em' viewBox='0 0 24 24'>
-              <path
-                fill='currentColor'
-                d='M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5A6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14'></path>
-            </svg>
+            <IcBaselineSearch />
             <h2>Find the movies you're interested in</h2>
           </label>
           <input
@@ -120,4 +112,4 @@ const FDCarouselSearch = () => {
   );
 };
 
-export default FDCarouselSearch;
+export default FDSearch;

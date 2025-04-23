@@ -6,8 +6,9 @@ import { useCatalogProvider } from '../../../context/CatalogContext';
 // Hooks
 import { usePaginateData } from '../../../hooks/usePaginateData';
 // Features
-import FDCarouselSearch from './media-carousel-search/FDCarouselSearch';
 import FDCarousel from './media-carousel/FDCarousel';
+// Components
+import FDSearch from '~/film-database/components/search/FDSearch';
 
 const FDMedia = () => {
   // Context
@@ -58,7 +59,7 @@ const FDMedia = () => {
   return (
     <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
       {paginatedData?.map(([key, value], index) => <FDCarousel mapIndex={index} heading={key} data={value} key={`carousel-key-${key}-${value}`} />)}
-      <FDCarouselSearch />
+      <FDSearch orientation='desktop' />
     </main>
   );
 };

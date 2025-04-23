@@ -35,6 +35,10 @@
       &[data-opacity='hidden'] {
         opacity: 0;
       }
+      & svg {
+        width: 1em;
+        aspect-ratio: 1/1;
+      }
       & h2 {
         @include m.fdFontXL;
         text-transform: capitalize;

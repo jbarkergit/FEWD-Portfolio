@@ -9,13 +9,12 @@
 @forward '/app/film-database/features/account/animation/fdAccountBackground';
 
 // Catalog Page Features
-@forward '/app/film-database/features/catalog/header/fdHeader';
+@forward '/app/film-database/features/catalog/navigation/fdHeader';
 
 @forward '/app/film-database/features/catalog/hero/fdHero';
 
 @forward '/app/film-database/features/catalog/media/fdMedia';
 @forward '/app/film-database/features/catalog/media/media-carousel/fdCarousel';
-@forward '/app/film-database/features/catalog/media/media-carousel-search/fdCarouselSearch';
 
 @forward '/app/film-database/features/catalog/modals/container/fdModal';
 @forward '/app/film-database/features/catalog/modals/collections/fdCollections';
@@ -25,6 +24,8 @@
 @forward '/app/film-database/components/iframe/fdiFrame';
 
 @forward '/app/film-database/components/movie/fdDetails';
+
+@forward '/app/film-database/components/search/fdSearch';
 
 // Hooks
 @forward '/app/film-database/hooks/fdHookJsxReturns';

@@ -23,10 +23,10 @@ export function TheMovieDatabaseLogo(): JSX.Element {
   );
 }
 
-export function Exit(props: SVGProps<SVGSVGElement>) {
+export function MaterialSymbolsLogoutSharp(props: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
-      <path fill='currentColor' d='M10.09 15.59L11.5 17l5-5l-5-5l-1.41 1.41L12.67 11H3v2h9.67zM21 3H3v6h2V5h14v14H5v-4H3v6h18z' />
+      <path fill='currentColor' d='M3 21V3h9v2H5v14h7v2zm13-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z' />
     </svg>
   );
 }
@@ -310,6 +310,17 @@ export function BxDotsVerticalRounded(props: SVGProps<SVGSVGElement>) {
       <path
         fill='currentColor'
         d='M12 10c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m0-6c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m0 12c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2'
+      />
+    </svg>
+  );
+}
+
+export function IcBaselineSearch(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
+      <path
+        fill='currentColor'
+        d='M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5A6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14'
       />
     </svg>
   );
