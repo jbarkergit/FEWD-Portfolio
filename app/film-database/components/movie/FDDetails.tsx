@@ -7,7 +7,7 @@ import { useTmdbFetcher, type Namespace_Tmdb } from '~/film-database/composables
 // Data
 import { tmdbMovieGenres } from '~/film-database/composables/tmdb-api/data/tmdbGenres';
 // Assets
-import { EmptyStar, Exit, FullStar, HalfStar, SvgSpinnersRingResize, TheMovieDatabaseLogo } from '../../assets/svg/icons';
+import { EmptyStar, FullStar, HalfStar, MaterialSymbolsLogoutSharp, SvgSpinnersRingResize, TheMovieDatabaseLogo } from '../../assets/svg/icons';
 
 const FDDetails = (modal: { modal: boolean }) => {
   const { heroData, setIsMovieModal } = useCatalogProvider();
@@ -98,7 +98,7 @@ const FDDetails = (modal: { modal: boolean }) => {
     <section className='fdDetails' data-modal={modal.modal}>
       <article className='fdDetails__article'>
         <button className='fdDetails__article--exit' id='fdDetails--exit' aria-label='Close View More Modal' onPointerUp={() => setIsMovieModal(false)}>
-          <Exit />
+          <MaterialSymbolsLogoutSharp />
         </button>
 
         <footer className='fdDetails__article__footer'>
