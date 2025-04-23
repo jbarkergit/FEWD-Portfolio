@@ -23,6 +23,7 @@ type Context = {
   heroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
   setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
   viewportChunkSize: number;
+  modalChunkSize: number;
   isMovieModal: boolean;
   setIsMovieModal: Dispatch<SetStateAction<boolean>>;
   isListModal: boolean;
@@ -44,7 +45,9 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   /** @state Hero data representing the featured media item. */
   const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(initialHeroData);
   /** @state Maximum number of carousel items based on the window width. */
-  const [viewportChunkSize, setViewportChunkSize] = useState<number>(6);
+  const [viewportChunkSize, setViewportChunkSize] = useState<number>(2);
+  /** @state Maximum number of carousel items based on the modal width. */
+  const [modalChunkSize, setModalChunkSize] = useState<number>(2);
   /** @state Indicates whether the movie modal is visible. */
   const [isMovieModal, setIsMovieModal] = useState<boolean>(false);
   /** @state Indicates whether the list modal is visible. */
@@ -70,9 +73,8 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const isModalActive: boolean = isMovieModal === true || isListModal === true;
     const itemsPerPage: number = parseInt(styles.getPropertyValue(isModalActive ? '--fd-collection-items-per-page' : '--fd-carousel-items-per-page').trim());
     const chunkSize = isNaN(itemsPerPage) ? 4 : itemsPerPage;
-    console.log(chunkSize);
 
-    setViewportChunkSize(chunkSize);
+    isModalActive ? setModalChunkSize(chunkSize) : setViewportChunkSize(chunkSize);
   }
 
   useEffect(() => {
@@ -123,7 +125,18 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <CatalogContext.Provider
-      value={{ heroData, setHeroData, viewportChunkSize, isMovieModal, setIsMovieModal, isListModal, setIsListModal, userCollections, setUserCollections }}>
+      value={{
+        heroData,
+        setHeroData,
+        viewportChunkSize,
+        modalChunkSize,
+        isMovieModal,
+        setIsMovieModal,
+        isListModal,
+        setIsListModal,
+        userCollections,
+        setUserCollections,
+      }}>
       {children}
     </CatalogContext.Provider>
   );
