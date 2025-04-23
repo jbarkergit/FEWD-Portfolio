@@ -42,22 +42,22 @@ const FDDetails = (modal: { modal: boolean }) => {
    * @function getMovieBtn
    * @returns Promise<void>
    * Stores boolean based on whether or not userDoc.movies contains heroData.id (if userDocs contains movie)
-   */
-  const [isMovieBtn, setIsMovieBtn] = useState<boolean | null>(null);
+  //  */
+  // const [isMovieBtn, setIsMovieBtn] = useState<boolean | null>(null);
 
-  const getMovieBtn = async (): Promise<void> => {
-    const userDoc = await useFirestore.getDocument('users');
+  // const getMovieBtn = async (): Promise<void> => {
+  //   const userDoc = await useFirestore.getDocument('users');
 
-    setIsMovieBtn(() => {
-      if (!userDoc) return null;
-      if (!userDoc.movies.some((num) => num === heroData.id)) return true;
-      return false;
-    });
-  };
+  //   setIsMovieBtn(() => {
+  //     if (!userDoc) return null;
+  //     if (!userDoc.movies.some((num) => num === heroData.id)) return true;
+  //     return false;
+  //   });
+  // };
 
-  useEffect(() => {
-    getMovieBtn();
-  }, [heroData]);
+  // useEffect(() => {
+  //   getMovieBtn();
+  // }, [heroData]);
 
   /** @returns */
   return (
@@ -74,7 +74,7 @@ const FDDetails = (modal: { modal: boolean }) => {
         </footer>
         <header className='fdDetails__article__header'>
           <h2>{heroData.title}</h2>
-          {isMovieBtn ? (
+          {/* {isMovieBtn ? (
             <button
               aria-label='Add to your movie list'
               onPointerUp={async () => {
@@ -92,7 +92,7 @@ const FDDetails = (modal: { modal: boolean }) => {
               }}>
               <MaterialSymbolsLightHeartMinusRounded />
             </button>
-          )}
+          )} */}
         </header>
 
         <ul className='fdDetails__article__col'>
