@@ -2,15 +2,12 @@ import { useEffect, useState, type JSX } from 'react';
 import { Link } from 'react-router';
 // Context
 import { useCatalogProvider } from '../../context/CatalogContext';
-// Firebase
-import { useFirestore } from '~/base/firebase/firestore/hooks/useFirestore';
 // Hooks
 import { useTmdbFetcher, type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
-import useVoteAvgVisual from '~/film-database/hooks/useVoteAvgVisual';
 // Data
 import { tmdbMovieGenres } from '~/film-database/composables/tmdb-api/data/tmdbGenres';
 // Assets
-import { Exit, MaterialSymbolsHeartPlus, MaterialSymbolsLightHeartMinusRounded, SvgSpinnersRingResize, TheMovieDatabaseLogo } from '../../assets/svg/icons';
+import { EmptyStar, Exit, FullStar, HalfStar, SvgSpinnersRingResize, TheMovieDatabaseLogo } from '../../assets/svg/icons';
 
 const FDDetails = (modal: { modal: boolean }) => {
   const { heroData, setIsMovieModal } = useCatalogProvider();
@@ -36,27 +33,6 @@ const FDDetails = (modal: { modal: boolean }) => {
   useEffect(() => {
     fetchWatchProviders();
   }, [heroData]);
-
-  /**
-   * @function getMovieBtn
-   * @returns Promise<void>
-   * Stores boolean based on whether or not userDoc.movies contains heroData.id (if userDocs contains movie)
-  //  */
-  // const [isMovieBtn, setIsMovieBtn] = useState<boolean | null>(null);
-
-  // const getMovieBtn = async (): Promise<void> => {
-  //   const userDoc = await useFirestore.getDocument('users');
-
-  //   setIsMovieBtn(() => {
-  //     if (!userDoc) return null;
-  //     if (!userDoc.movies.some((num) => num === heroData.id)) return true;
-  //     return false;
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   getMovieBtn();
-  // }, [heroData]);
 
   /**
    * @function useFormattedDate
@@ -89,6 +65,34 @@ const FDDetails = (modal: { modal: boolean }) => {
     );
   };
 
+  /**
+   * @function useVoteAvgVisual
+   * @returns Vote average in svg star visual reference
+   */
+  const useVoteAvgVisual = (voteAvg: number): JSX.Element | undefined => {
+    // 0-10 vote scale (contains floating point value) floored and converted to 0-5 vote scale
+    const flooredVoteAverage: number = Math.floor(voteAvg / 2);
+
+    // Helpers
+    const hasFloatingValue: boolean = voteAvg % 2 >= 1;
+    const maxStars: number = 5;
+
+    const fullStars: number = flooredVoteAverage;
+    const halfStars: 1 | 0 = hasFloatingValue ? 1 : 0;
+    const emptyStars: number = maxStars - fullStars - halfStars;
+
+    const stars: JSX.Element[] = [...Array(fullStars).fill(<FullStar />), ...Array(halfStars).fill(<HalfStar />), ...Array(emptyStars).fill(<EmptyStar />)];
+
+    return (
+      <ul className='voteAvgVisual' aria-label={`Vote Average ${voteAvg / 2} out of 5`}>
+        {stars.map((Star, index) => (
+          <li className='voteAvgVisual__star' key={`star-${index}`}>
+            {Star}
+          </li>
+        ))}
+      </ul>
+    );
+  };
   /** @returns */
   return (
     <section className='fdDetails' data-modal={modal.modal}>
@@ -104,25 +108,6 @@ const FDDetails = (modal: { modal: boolean }) => {
         </footer>
         <header className='fdDetails__article__header'>
           <h2>{heroData.title}</h2>
-          {/* {isMovieBtn ? (
-            <button
-              aria-label='Add to your movie list'
-              onPointerUp={async () => {
-                await useFirestore.updateDocumentMovies('users', { movieId: heroData.id, concat: true });
-                await getMovieBtn();
-              }}>
-              <MaterialSymbolsHeartPlus />
-            </button>
-          ) : (
-            <button
-              aria-label='Remove from your movie list'
-              onPointerUp={async () => {
-                await useFirestore.updateDocumentMovies('users', { movieId: heroData.id, concat: false });
-                await getMovieBtn();
-              }}>
-              <MaterialSymbolsLightHeartMinusRounded />
-            </button>
-          )} */}
         </header>
 
         <ul className='fdDetails__article__col'>
