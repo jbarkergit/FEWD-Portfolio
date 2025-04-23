@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithCredential, signInWithEmailAndPassword } from 'firebase/auth';
 import { forwardRef, useState } from 'react';
 import type { ChangeEvent, FC, JSX, ReactNode } from 'react';
 import { z } from 'zod';
@@ -45,7 +45,14 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
 
     try {
       if (parse.success) {
-        await createUserWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
+        const userCredential = await createUserWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
+
+        if (userCredential && userCredential.user) {
+          await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
+          setTimeout(() => window.location.reload(), 0);
+        } else {
+          throw new Error('Failed to create user account.');
+        }
       } else {
         const errorMessage = parse.error.errors.map((err) => `${err.path.join('.')} - ${err.message}`).join(', ');
         throw new Error(`One or more form fields are not valid: ${errorMessage}`);
