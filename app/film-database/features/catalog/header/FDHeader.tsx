@@ -1,5 +1,5 @@
 import { useCatalogProvider } from '../../../context/CatalogContext';
-import { MaterialSymbolsMovieSharp } from '~/film-database/assets/svg/icons';
+import { MaterialSymbolsLogoutSharp, MaterialSymbolsMovieSharp } from '~/film-database/assets/svg/icons';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { signOut } from 'firebase/auth';
 
@@ -17,11 +17,7 @@ const FDHeader = () => {
     right: [
       {
         key: 'Sign Out',
-        icon: (
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
-            <path fill='currentColor' d='M5 5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2H5zm16 7l-4-4v3H9v2h8v3z'></path>
-          </svg>
-        ),
+        icon: <MaterialSymbolsLogoutSharp />,
         func: async (): Promise<void> => {
           await signOut(firebaseAuth);
           window.location.reload();
