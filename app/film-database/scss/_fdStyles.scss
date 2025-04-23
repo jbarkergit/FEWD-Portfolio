@@ -89,7 +89,8 @@
   }
   // Desktop 2560x1440
   @media (max-width: 2560px) {
-    --fd-collection-items-per-page: round(calc(7 / 2));
+    //round(7/2) cannot use math func and read property in js
+    --fd-collection-items-per-page: 4;
   }
   // Desktop 1920x1080
   @media (max-width: 1920px) {

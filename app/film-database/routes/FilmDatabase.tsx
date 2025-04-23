@@ -74,7 +74,7 @@ export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
     <CatalogProvider>
       <div className='filmDatabase'>
         <FDHeader />
-        <div className='fdCatalog' data-layout-carousel>
+        <div className='fdCatalog' data-layout-carousel data-layout-collection>
           <FDHero />
           <FDMedia />
           <FDModal />

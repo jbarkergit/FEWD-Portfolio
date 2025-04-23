@@ -59,20 +59,20 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
    * @returns {number} The number of items to show in the carousel.
    */
   function getDynamicChunkSize(): void {
-    const isModalActive: boolean = isMovieModal || isListModal;
-
-    const element: Element | null = isModalActive ? document.querySelector('.fdModal__container') : document.querySelector('.fdCatalog');
+    const element: Element | null = document.querySelector('.fdCatalog');
 
     if (!element) {
       setMaxCarouselNodes(6);
       return;
     }
 
-    const styles = getComputedStyle(element);
-    const itemsPerPageValue = styles.getPropertyValue('--fd-carousel-items-per-page').trim();
-    const itemsPerPage = parseInt(itemsPerPageValue);
+    const styles: CSSStyleDeclaration = getComputedStyle(element);
+    const isModalActive: boolean = isMovieModal === true || isListModal === true;
+    const itemsPerPage: number = parseInt(styles.getPropertyValue(isModalActive ? '--fd-collection-items-per-page' : '--fd-carousel-items-per-page').trim());
+    const chunkSize = isNaN(itemsPerPage) ? 4 : itemsPerPage;
+    console.log(chunkSize);
 
-    setMaxCarouselNodes(isNaN(itemsPerPage) ? 6 : itemsPerPage);
+    setMaxCarouselNodes(chunkSize);
   }
 
   useEffect(() => {

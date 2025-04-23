@@ -36,7 +36,7 @@ const FDModal = () => {
   if (isMovieModal || isListModal)
     return (
       <div className='fdModal'>
-        <div className='fdModal__container' ref={modal} data-layout-collection>
+        <div className='fdModal__container' ref={modal}>
           {isMovieModal && <FDMovie />}
           {isListModal && <FDCollections />}
         </div>
