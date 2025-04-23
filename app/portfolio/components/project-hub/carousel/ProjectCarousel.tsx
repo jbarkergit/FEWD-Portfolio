@@ -276,7 +276,7 @@ const ProjectCarousel = ({
         {projectData.map((project) => (
           <div className='mainContent__track__project' ref={articleRef} key={project.key}>
             <Link
-              to={state.anchorEnabled ? project.url : ''}
+              to={state.anchorEnabled ? project.url : '/'}
               aria-label={`${project.key} Live Demo`}
               onDragStart={(e) => e.preventDefault()}
               onDrag={(e) => e.stopPropagation()}>
