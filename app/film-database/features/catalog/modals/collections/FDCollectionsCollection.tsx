@@ -148,15 +148,9 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
       const offsetX: number = x - rect.width / 2;
       const offsetY: number = y - rect.height / 2;
 
-      source.listItem.style.cssText = `position: absolute; z-index: 2; left: ${offsetX}px; top: ${offsetY}px;`;
+      source.listItem.style.cssText = `position: fixed; z-index: 2; left: ${offsetX}px; top: ${offsetY}px;`;
       sensor.pointerCoords = { x: event.clientX, y: event.clientY };
     }
-    // else {
-    //   if (!(source.listItem instanceof HTMLLIElement)) resetInteraction({ event: 'attach', reason: `event.target instance of ${typeof event.target}` });
-    //   if (!x) resetInteraction({ event: 'attach', reason: 'sensor.pointerCoordinates.x is not valid.' });
-    //   if (!y) resetInteraction({ event: 'attach', reason: 'sensor.pointerCoordinates.y is not valid.' });
-    //   return;
-    // }
   }
 
   /**
