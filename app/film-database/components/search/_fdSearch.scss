@@ -78,7 +78,7 @@
       position: relative;
       width: var(--fd-carousel-node-width);
       height: var(--fd-carousel-node-height);
-      border-radius: var(--fd-borderRadius);
+      border-radius: var(--fd-border-radius);
       overflow: clip;
       scroll-snap-align: center;
       &__article {
@@ -113,7 +113,7 @@
         &--play svg {
           width: 1.8em;
           height: 1.8em;
-          color: white;
+          color: var(--fd-font-color-primary);
         }
         &--play svg {
           transform: scale(0.8) rotate(45deg);

@@ -10,8 +10,8 @@
   display: flex;
   gap: var(--fd-gap);
   padding: calc(var(--fd-padding-generic) / 9) calc(var(--fd-padding-generic) / 6);
-  border-radius: var(--fd-borderRadius);
-  background-color: #101010;
+  border-radius: var(--fd-border-radius);
+  background-color: var(--fd-bc-offset);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
   overflow: clip;
   & button {
@@ -22,7 +22,8 @@
     // Edit Mode
     &:nth-of-type(2) {
       &[data-toggle='true'] {
-        color: white;
+        color: var(--fd-font-color-primary);
+
         transition: color 170ms ease-in-out;
       }
       &[data-toggle='false'] {
@@ -151,7 +152,7 @@
             position: relative;
             width: var(--fd-collection-node-width);
             height: var(--fd-collection-node-height);
-            border-radius: var(--fd-borderRadius);
+            border-radius: var(--fd-border-radius);
             overflow: clip;
             interpolate-size: allow-keywords;
             transition: height 170ms ease;
@@ -175,7 +176,7 @@
               left: 0.5%;
               width: 99%;
               height: 99%;
-              background-color: #1b1b1b;
+              background-color: hsl(0, 0%, 11%);
               border-radius: inherit;
             }
             &:hover span {
@@ -223,7 +224,7 @@
                   position: absolute;
                   inset: 0;
                   z-index: 10;
-                  border-radius: var(--fd-borderRadius);
+                  border-radius: var(--fd-border-radius);
                   background-image: url(/app/film-database/assets/gif/vhs-noise.gif);
                   background-size: 480px;
                   background-attachment: fixed;
@@ -248,8 +249,8 @@
           z-index: 1;
           width: var(--fd-collection-node-width);
           height: var(--fd-collection-node-height);
-          border-radius: var(--fd-borderRadius);
-          background-color: black;
+          border-radius: var(--fd-border-radius);
+          background-color: var(--fd-bc-primary);
           box-shadow:
             0 8px 10px rgba(0, 0, 0, 0.6),
             0 15px 15px rgba(0, 0, 0, 0.3);
@@ -261,7 +262,7 @@
           }
           & picture,
           picture img {
-            border-radius: var(--fd-borderRadius);
+            border-radius: var(--fd-border-radius);
           }
           & picture img {
             transition: filter 85ms ease-in-out;
@@ -289,23 +290,23 @@
           position: absolute;
           z-index: 10;
           height: 50%;
-          background-color: hsla(216, 100%, 3%, 0.5);
+          background-color: var(--fd-bc-btn);
           pointer-events: all;
           & svg {
             width: 3em;
             height: 3em;
-            color: white;
+            color: var(--fd-font-color-primary);
           }
         }
         & button:nth-of-type(1) {
           left: 0;
-          border-top-right-radius: var(--fd-borderRadius);
-          border-bottom-right-radius: var(--fd-borderRadius);
+          border-top-right-radius: var(--fd-border-radius);
+          border-bottom-right-radius: var(--fd-border-radius);
         }
         & button:nth-of-type(2) {
           right: 0;
-          border-top-left-radius: var(--fd-borderRadius);
-          border-bottom-left-radius: var(--fd-borderRadius);
+          border-top-left-radius: var(--fd-border-radius);
+          border-bottom-left-radius: var(--fd-border-radius);
         }
       }
     }

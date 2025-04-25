@@ -2,9 +2,9 @@
 
 :root {
   /* Box Model */
-  --fd-padding-generic: clamp(1.5rem, 1rem + 5vw, 7rem);
-  --fd-borderRadius: 9.6px;
-  --fd-gap: 14px;
+  --fd-padding-generic: clamp(1.5rem, 1rem + 5vw, 7rem); // padding
+  --fd-border-radius: 9.6px; // border
+  --fd-gap: 14px; // display gap
 
   /* Typography */
   --fd-font-size-xxl: clamp(1.875rem, 3vw, 2.25rem); /* 30px to 36px */
@@ -13,8 +13,15 @@
   --fd-font-size-m: clamp(1rem, 1.5vw, 1.125rem); /* 16px to 18px */
   --fd-font-size-s: clamp(0.875rem, 1vw, 1rem); /* 14px to 16px */
 
-  /* Shadows */
-  --fd-font-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  --fd-font-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25); // text-shadow
+  --fd-font-color-primary: hsl(0, 0%, 100%); // color
+
+  /* background-color */
+  --fd-bc-primary: hsl(0, 0%, 0%);
+  --fd-bc-secondary: hsl(0, 0%, 100%);
+  --fd-bc-offset: hsl(0, 0%, 9%);
+  --fd-bc-btn: hsla(216, 100%, 3%, 0.5);
+  --fd-bc-hover-poster: hsla(0, 0%, 0%, 0.322);
 }
 
 [data-layout-carousel] {

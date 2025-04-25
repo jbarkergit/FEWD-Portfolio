@@ -25,7 +25,7 @@
         display: grid;
         place-items: center;
         @include m.fdFontL;
-        color: white;
+        color: var(--fd-font-color-primary);
         & svg {
           width: 1.8rem;
           aspect-ratio: 1/1;
