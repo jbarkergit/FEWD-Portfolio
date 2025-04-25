@@ -1,5 +1,13 @@
-import { useEffect, useRef, useState, type Dispatch, type RefObject, type SetStateAction } from 'react';
-import { TablerCategoryPlus, TablerEdit, TablerLayoutListFilled, TablerLayoutDashboardFilled, TablerEye, TablerEyeOff } from '~/film-database/assets/svg/icons';
+import { useEffect, useMemo, useRef, useState, type Dispatch, type RefObject, type SetStateAction } from 'react';
+import {
+  TablerCategoryPlus,
+  TablerEdit,
+  TablerLayoutListFilled,
+  TablerLayoutDashboardFilled,
+  TablerEye,
+  TablerEyeOff,
+  MaterialSymbolsLogoutSharp,
+} from '~/film-database/assets/svg/icons';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import { addUserCollection } from '~/film-database/hooks/addUserCollection';
 
@@ -10,89 +18,66 @@ type Props = {
 };
 
 const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props) => {
-  const { userCollections, setUserCollections } = useCatalogProvider();
+  const { userCollections, setUserCollections, setIsListModal } = useCatalogProvider();
+
+  const [collectionUls, setCollectionUls] = useState<HTMLUListElement[]>([]);
 
   const [isListFX, setIsListFX] = useState<boolean>(true);
   const [layoutType, setLayoutType] = useState<'flex' | 'grid'>('flex');
+
+  const editModeBtn = useRef<HTMLButtonElement>(null),
+    listItemFxBtn = useRef<HTMLButtonElement>(null),
+    layoutTypeBtn = useRef<HTMLButtonElement>(null);
 
   /**
    * @function toggleBtn
    * Toggles the primary/secondary svg for the desired button
    * Typically utilizes e.currentTarget as param, but we've constructed it with more control via refs
    */
-  const editModeBtn = useRef<HTMLButtonElement>(null),
-    listItemFxBtn = useRef<HTMLButtonElement>(null),
-    layoutTypeBtn = useRef<HTMLButtonElement>(null);
-
-  const toggleBtn = (btnRef: 'editMode' | 'listItemFx' | 'layoutType', isDefaultSVG?: boolean): void => {
-    let btn: HTMLButtonElement | null =
-      btnRef === 'editMode' ? editModeBtn.current : btnRef === 'listItemFx' ? listItemFxBtn.current : btnRef === 'layoutType' ? layoutTypeBtn.current : null;
-
-    if (btn instanceof HTMLButtonElement) {
-      btn.setAttribute('data-toggle', isDefaultSVG ? String(isDefaultSVG) : btn.getAttribute('data-toggle') === 'true' ? 'false' : 'true');
-    }
+  const toggleBtn = (button: HTMLButtonElement | null, state: boolean): void => {
+    if (button) button.setAttribute('data-toggle', String(state));
   };
 
   /**
-   * @function toggleListItemFX
-   * Enable/disable attribute data-list-item-fx
+   * @function setCollectionUls
+   * @returns {HTMLUListElement[] | undefined}
+   * Reduces computations for dependant functions
    */
-  const toggleListItemFX = (boolean: boolean): void => {
-    if (collectionRefs.current) {
-      for (const collection of collectionRefs.current) {
-        (Array.from(collection.children)[1].querySelector('ul') as HTMLUListElement).setAttribute('data-list-item-fx', String(boolean));
-      }
+  useEffect(() => {
+    if (!collectionRefs.current) return;
+
+    const uls: HTMLUListElement[] = [];
+
+    for (const collection of collectionRefs.current) {
+      if (!collection) continue;
+      const divElement = collection.querySelector('div');
+      const ulElement = divElement?.querySelector('ul') as HTMLUListElement | null;
+      if (ulElement) uls.push(ulElement);
     }
-  };
+
+    setCollectionUls(uls);
+  }, [collectionRefs.current]);
 
   /**
-   * @function toggleListItemFX
-   * Enable/disable attribute data-layout
+   * @function useEffect
+   * Toggles modes when corresponding state is altered
    */
-  const toggleLayoutType = (type: 'flex' | 'grid'): void => {
-    if (collectionRefs.current) {
-      for (const collection of collectionRefs.current) {
-        (Array.from(collection.children)[1].querySelector('ul') as HTMLUListElement).setAttribute('data-layout', type);
-      }
+  useEffect(() => {
+    if (!collectionUls) return;
+
+    toggleBtn(editModeBtn.current, !isEditMode);
+    toggleBtn(listItemFxBtn.current, !isListFX);
+    toggleBtn(layoutTypeBtn.current, layoutType === 'flex');
+
+    for (const ul of collectionUls) {
+      ul.setAttribute('data-layout', layoutType);
+      ul.setAttribute('data-list-item-fx', String(isListFX));
     }
-  };
+  }, [isEditMode, isListFX, layoutType, collectionUls]);
 
-  // Handle Edit Mode
-  const handleEditMode = (): void => {
-    // Toggle the buttons for editMode, listItemFx, and layoutType
-    toggleBtn('editMode');
-    toggleBtn('listItemFx');
-    toggleBtn('layoutType');
-
-    // Apply list item effects and layout type based on editMode
-    if (isEditMode) {
-      // When in edit mode, enable list item effects and set layout to grid
-      toggleListItemFX(false);
-      toggleLayoutType('flex');
-    } else {
-      // When not in edit mode, reset list item effects and set layout to flex
-      toggleListItemFX(isListFX);
-      toggleLayoutType(layoutType);
-    }
-  };
-
-  // Handle List FX
-  const handleListFX = (): void => {
-    toggleBtn('listItemFx');
-    toggleListItemFX(isListFX);
-  };
-
-  // Handle Layout Type
-  const handleLayoutType = (): void => {
-    toggleBtn('layoutType');
-    toggleLayoutType(layoutType);
-  };
-
-  // Use Effects for state changes
-  useEffect(() => handleEditMode(), [isEditMode]);
-  useEffect(() => handleListFX(), [isListFX]);
-  useEffect(() => handleLayoutType(), [layoutType]);
-
+  /**
+   * @returns
+   */
   return (
     <div className='fdCollectionsMenu'>
       <button
@@ -127,8 +112,11 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props)
             return state === 'flex' ? 'grid' : 'flex';
           })
         }>
-        <TablerLayoutListFilled />
         <TablerLayoutDashboardFilled />
+        <TablerLayoutListFilled />
+      </button>
+      <button aria-label='Close collections modal' onPointerUp={() => setIsListModal(false)}>
+        <MaterialSymbolsLogoutSharp />
       </button>
     </div>
   );
