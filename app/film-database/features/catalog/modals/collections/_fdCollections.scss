@@ -123,10 +123,12 @@
             cursor: grabbing;
           }
           // collection padding
-          & li:first-of-type {
+          & li:first-of-type,
+          & div:first-of-type {
             margin-left: calc(var(--fd-padding-generic) / 1.5);
           }
-          & li:last-of-type {
+          & li:last-of-type,
+          & div:last-of-type {
             margin-right: calc(var(--fd-padding-generic) / 1.5);
           }
         }
