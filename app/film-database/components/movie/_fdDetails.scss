@@ -93,3 +93,24 @@
 #fdDetails--genres {
   padding-top: var(--fd-gap);
 }
+
+.voteAvgVisual {
+  display: flex;
+  gap: calc(var(--fd-gap) / 12);
+  &__star {
+    width: 1.25em;
+    & svg {
+      width: inherit;
+      aspect-ratio: 1;
+    }
+  }
+}
+
+.formattedReleaseDate {
+  text-transform: capitalize;
+  &[data-status='green'] {
+    color: #54c470;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+}
