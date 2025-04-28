@@ -45,6 +45,8 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   // State Variables
   /** @state Hero data representing the featured media item. */
   const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(initialHeroData);
+  /** @ref Remove dom traversal requirements for dynamic chunk sizes */
+  const root = useRef<HTMLDivElement>(null);
   /** @state Maximum number of carousel items based on the window width. */
   const [viewportChunkSize, setViewportChunkSize] = useState<number>(2);
   /** @state Maximum number of carousel items based on the modal width. */
@@ -57,30 +59,20 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [userCollections, setUserCollections] = useState<Record<string, User_Collection>>({});
 
   /**
-   * @useRef root
-   * Required to ensure `getDynamicChunkSize` is never missing dep `.fdCatalog`
-   */
-  const root = useRef<HTMLDivElement>(null);
-
-  /**
    * @function getDynamicChunkSize
    * @description Determines the number of carousel items based on the screen width.
    * This ensures that the carousel adapts to different screen sizes for optimal viewing.
    * @returns {number} The number of items to show in the carousel.
    */
   function getDynamicChunkSize(): void {
-    if (!root.current) {
-      setViewportChunkSize(2);
-      setModalChunkSize(2);
-      return;
-    }
+    if (!root.current) return;
 
     const styles: CSSStyleDeclaration = getComputedStyle(root.current);
-    const isModalActive: boolean = isMovieModal === true || isListModal === true;
-    const itemsPerPage: number = parseInt(styles.getPropertyValue(isModalActive ? '--fd-collection-items-per-page' : '--fd-carousel-items-per-page').trim());
-    const chunkSize = isNaN(itemsPerPage) ? 2 : itemsPerPage;
+    const carouselQuantity: number = parseInt(styles.getPropertyValue('--fd-carousel-items-per-page').trim());
+    const collectionQuantity: number = parseInt(styles.getPropertyValue('--fd-collection-items-per-page').trim());
 
-    isModalActive ? setModalChunkSize(chunkSize) : setViewportChunkSize(chunkSize);
+    setViewportChunkSize(isNaN(carouselQuantity) ? 2 : carouselQuantity);
+    setModalChunkSize(isNaN(collectionQuantity) ? 2 : collectionQuantity);
   }
 
   useEffect(() => {
