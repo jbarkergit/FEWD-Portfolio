@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ChangeEvent } from 'react';
+import { useDeferredValue, useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { TablerCategoryFilled } from '~/film-database/assets/svg/icons';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
@@ -9,7 +9,8 @@ type Props = {
 
 const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
   const { userCollections, setUserCollections } = useCatalogProvider();
-  const [inputValue, setInputValue] = useState(userCollections[Object.keys(userCollections)[mapIndex]]?.header || 'Unnamed Collection');
+  const [inputValue, setInputValue] = useState<string>(userCollections[Object.keys(userCollections)[mapIndex]]?.header || 'Unnamed Collection');
+  const deferredInputValue: string = useDeferredValue(inputValue);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +49,7 @@ const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
     <header>
       <TablerCategoryFilled />
       <h2>
-        <input type='text' value={header.length > 0 ? inputValue : 'Unnamed Collection'} onChange={handleInputChange} />
+        <input type='text' value={header.length > 0 ? deferredInputValue : 'Unnamed Collection'} onChange={handleInputChange} />
       </h2>
     </header>
   );

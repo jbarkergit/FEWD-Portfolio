@@ -91,12 +91,16 @@
         aspect-ratio: 1/1;
       }
       & h2 {
+        width: 100%;
         padding: 0 var(--fd-gap);
         @include m.fdFontL;
         text-transform: capitalize;
         cursor: text;
         &:focus {
           outline: none;
+        }
+        & input {
+          text-transform: capitalize;
         }
       }
     }
