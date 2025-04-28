@@ -155,7 +155,12 @@ article {
 input {
   background-color: transparent;
   box-sizing: border-box;
+  border: 0;
+  border-color: transparent;
   cursor: text;
+  &:focus-visible {
+    outline: 0;
+  }
 }
 abbr {
   text-decoration: none;
