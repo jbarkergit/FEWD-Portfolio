@@ -153,7 +153,7 @@ article {
   scroll-padding: 0.625rem 0 0 0;
 }
 input {
-  all: unset; // WARNING: Position priority
+  background-color: transparent;
   box-sizing: border-box;
   cursor: text;
 }
