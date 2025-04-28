@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { Dispatch, FC, ReactNode, SetStateAction } from 'react';
 import type { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import { useLoaderData } from 'react-router';
@@ -30,6 +30,7 @@ type Context = {
   setIsListModal: Dispatch<SetStateAction<boolean>>;
   userCollections: Record<string, User_Collection>;
   setUserCollections: Dispatch<SetStateAction<Record<string, User_Collection>>>;
+  root: React.RefObject<HTMLDivElement | null>;
 };
 
 const CatalogContext = createContext<Context | undefined>(undefined);
@@ -56,21 +57,25 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [userCollections, setUserCollections] = useState<Record<string, User_Collection>>({});
 
   /**
+   * @useRef root
+   * Required to ensure `getDynamicChunkSize` is never missing dep `.fdCatalog`
+   */
+  const root = useRef<HTMLDivElement>(null);
+
+  /**
    * @function getDynamicChunkSize
    * @description Determines the number of carousel items based on the screen width.
    * This ensures that the carousel adapts to different screen sizes for optimal viewing.
    * @returns {number} The number of items to show in the carousel.
    */
   function getDynamicChunkSize(): void {
-    const element: Element | null = document.querySelector('.fdCatalog');
-
-    if (!element) {
+    if (!root.current) {
       setViewportChunkSize(2);
       setModalChunkSize(2);
       return;
     }
 
-    const styles: CSSStyleDeclaration = getComputedStyle(element);
+    const styles: CSSStyleDeclaration = getComputedStyle(root.current);
     const isModalActive: boolean = isMovieModal === true || isListModal === true;
     const itemsPerPage: number = parseInt(styles.getPropertyValue(isModalActive ? '--fd-collection-items-per-page' : '--fd-carousel-items-per-page').trim());
     const chunkSize = isNaN(itemsPerPage) ? 2 : itemsPerPage;
@@ -82,7 +87,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     getDynamicChunkSize();
     window.addEventListener('resize', getDynamicChunkSize);
     return () => window.removeEventListener('resize', getDynamicChunkSize);
-  }, []);
+  }, [root.current]);
 
   useEffect(() => getDynamicChunkSize(), [isMovieModal, isListModal]);
 
@@ -137,6 +142,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
         setIsListModal,
         userCollections,
         setUserCollections,
+        root,
       }}>
       {children}
     </CatalogContext.Provider>

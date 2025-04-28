@@ -11,9 +11,8 @@ import FDAccountBackground from '../features/account/animation/FDAccountBackgrou
 import FDAccountModal from '../features/account/FDAccountModal';
 // Features: Catalog page
 import FDHeader from '../features/catalog/navigation/FDHeader';
-import FDHero from '../features/catalog/hero/FDHero';
-import FDMedia from '../features/catalog/media/FDMedia';
-import FDModal from '../features/catalog/modals/container/FDModal';
+import FDCatalog from '../features/catalog/FDCatalog';
+import { preload } from 'react-dom';
 
 export async function clientLoader() {
   // Auth
@@ -68,17 +67,14 @@ export async function clientLoader() {
 }
 
 export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
+  preload('https://api.themoviedb.org');
   const { isAuth } = loaderData;
 
   return isAuth ? (
     <CatalogProvider>
       <div className='filmDatabase'>
         <FDHeader />
-        <div className='fdCatalog' data-layout-carousel data-layout-collection>
-          <FDHero />
-          <FDMedia />
-          <FDModal />
-        </div>
+        <FDCatalog />
       </div>
     </CatalogProvider>
   ) : (
