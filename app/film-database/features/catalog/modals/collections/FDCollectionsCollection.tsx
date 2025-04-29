@@ -15,6 +15,23 @@ type Props = {
   collectionRefs: RefObject<HTMLElement[]>;
 };
 
+type Sensor = {
+  isInteract: boolean;
+  isActiveElement: boolean;
+  pointerCoords: Record<'x' | 'y', number | null>;
+};
+
+type Source = {
+  colIndex: number;
+  listItem: HTMLLIElement | null;
+  listItemIndex: number;
+};
+
+type Target = {
+  colIndex: number;
+  listItemIndex: number;
+};
+
 const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, header, data, display, isEditMode, collectionRefs }, collectionRef) => {
   const { setUserCollections, modalChunkSize } = useCatalogProvider();
 
@@ -22,33 +39,26 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   const NOT_FOUND_INDEX = -1 as const;
 
-  let sensor: {
-    isInteract: boolean;
-    isActiveElement: boolean;
-    pointerCoords: Record<'x' | 'y', number | null>;
-  } = {
+  let sensorRef = useRef<Sensor>({
     isInteract: false,
     isActiveElement: false,
     pointerCoords: { x: null, y: null },
-  };
+  });
 
-  let source: {
-    colIndex: number;
-    listItem: HTMLLIElement | null;
-    listItemIndex: number;
-  } = {
+  let sourceRef = useRef<Source>({
     colIndex: NOT_FOUND_INDEX,
     listItem: null,
     listItemIndex: NOT_FOUND_INDEX,
-  };
+  });
 
-  let target: {
-    colIndex: number;
-    listItemIndex: number;
-  } = {
+  let targetRef = useRef<Target>({
     colIndex: NOT_FOUND_INDEX,
     listItemIndex: NOT_FOUND_INDEX,
-  };
+  });
+
+  const sensor: Sensor = sensorRef.current;
+  const source: Source = sourceRef.current;
+  const target: Target = targetRef.current;
 
   /**
    * @function resetStores
