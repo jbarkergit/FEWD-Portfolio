@@ -1,4 +1,4 @@
-import { useRef, useEffect, forwardRef, type RefObject, useCallback } from 'react';
+import { useRef, useEffect, forwardRef, type RefObject, useCallback, useLayoutEffect } from 'react';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
@@ -60,6 +60,8 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
   const source: Source = sourceRef.current;
   const target: Target = targetRef.current;
 
+  const shouldResetRef = useRef<boolean>(false);
+
   /**
    * @function resetStores
    * @returns {void}
@@ -108,6 +110,13 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
     resetEventListeners();
     if (error) console.log(`Event ${error.event.toLocaleUpperCase()} failed. ${error.reason}`);
   }
+
+  useLayoutEffect(() => {
+    if (shouldResetRef.current) {
+      resetInteraction();
+      shouldResetRef.current = false;
+    }
+  }, []);
 
   /**
    * @function pointerDown
@@ -277,10 +286,12 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
         data: rearranged,
       };
 
+      // Queue stores reset
+      shouldResetRef.current = true;
+
+      // Update state
       return updatedCarousels;
     });
-
-    setTimeout(() => resetInteraction(), 0);
   }
 
   /**
