@@ -67,7 +67,7 @@ export async function clientLoader() {
 }
 
 export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
-  preload('https://api.themoviedb.org');
+  preload('https://api.themoviedb.org', { as: 'fetch' });
   const { isAuth } = loaderData;
 
   return isAuth ? (
