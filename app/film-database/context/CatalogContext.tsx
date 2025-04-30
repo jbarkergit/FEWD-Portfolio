@@ -11,7 +11,7 @@ import { useLoaderData } from 'react-router';
  */
 export type User_Collection = {
   header: string;
-  data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+  data: Namespace_Tmdb.BaseMedia_Provider[] | null;
   display: 'flex' | 'grid';
 };
 
@@ -68,8 +68,13 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     if (!root.current) return;
 
     const styles: CSSStyleDeclaration = getComputedStyle(root.current);
-    const carouselQuantity: number = parseInt(styles.getPropertyValue('--fd-carousel-items-per-page').trim());
-    const collectionQuantity: number = parseInt(styles.getPropertyValue('--fd-collection-items-per-page').trim());
+
+    function getQuantity(value: string): number {
+      return parseInt(styles.getPropertyValue(value).trim());
+    }
+
+    const carouselQuantity: number = getQuantity('--fd-carousel-items-per-page');
+    const collectionQuantity: number = getQuantity('--fd-collection-items-per-page');
 
     setViewportChunkSize(isNaN(carouselQuantity) ? 2 : carouselQuantity);
     setModalChunkSize(isNaN(collectionQuantity) ? 2 : collectionQuantity);
