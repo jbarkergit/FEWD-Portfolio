@@ -33,57 +33,61 @@ type Target = {
 };
 
 const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, header, data, display, isEditMode, collectionRefs }, collectionRef) => {
+  // Context
   const { setUserCollections, modalChunkSize } = useCatalogProvider();
 
+  // References
   const ulRef = useRef<HTMLUListElement>(null);
 
+  // Magic constant
   const NOT_FOUND_INDEX = -1 as const;
 
-  let sensorRef = useRef<Sensor>({
+  // Sensor store default
+  const sensorDefault: Sensor = {
     isInteract: false,
     isActiveElement: false,
     pointerCoords: { x: null, y: null },
-  });
+  };
 
-  let sourceRef = useRef<Source>({
+  // Source store default
+  const sourceDefault: Source = {
     colIndex: NOT_FOUND_INDEX,
     listItem: null,
     listItemIndex: NOT_FOUND_INDEX,
-  });
+  };
 
-  let targetRef = useRef<Target>({
+  // Target store default
+  const targetDefault: Target = {
     colIndex: NOT_FOUND_INDEX,
     listItemIndex: NOT_FOUND_INDEX,
-  });
+  };
 
-  const sensor: Sensor = sensorRef.current;
-  const source: Source = sourceRef.current;
-  const target: Target = targetRef.current;
+  // Store references
+  let sensorRef = useRef<Sensor>(sensorDefault);
+  let sourceRef = useRef<Source>(sourceDefault);
+  let targetRef = useRef<Target>(targetDefault);
 
-  const shouldResetRef = useRef<boolean>(false);
+  // Simplified store references
+  let sensor: Sensor = sensorRef.current;
+  let source: Source = sourceRef.current;
+  let target: Target = targetRef.current;
+
+  // `collections` state setter race conditional flag
+  let shouldResetRef = useRef<boolean>(false);
 
   /**
    * @function resetStores
-   * @returns {void}
-   * Rolls stores back to default state
+   * @description Rolls stores back to default state
    */
   const resetStores = (): void => {
-    sensor.isInteract = false;
-    sensor.isActiveElement = false;
-    sensor.pointerCoords = { x: null, y: null };
-
-    source.colIndex = NOT_FOUND_INDEX;
-    source.listItem = null;
-    source.listItemIndex = NOT_FOUND_INDEX;
-
-    target.colIndex = NOT_FOUND_INDEX;
-    target.listItemIndex = NOT_FOUND_INDEX;
+    sensorRef.current = sensorDefault;
+    sourceRef.current = sourceDefault;
+    targetRef.current = targetDefault;
   };
 
   /**
    * @function resetEventListeners
-   * @returns {void}
-   * Rolls event listeners back to original mount state
+   * @description Rolls event listeners back to original mount state
    */
   function resetEventListeners(): void {
     // Remove target's inline styles and event listeners
@@ -101,14 +105,12 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   /**
    * @function resetInteraction
-   * @returns {void}
-   * Invokes @function resetStores and @function resetEventListeners to prepare dom for new potential interactions
+   * @description Invokes @function resetStores and @function resetEventListeners to prepare dom for new potential interactions
    */
   function resetInteraction(error?: { event: 'down' | 'move' | 'up' | 'attach' | 'detach'; reason: string }): void {
-    if (source.listItem && source.listItem.hasAttribute('style')) source.listItem.style.cssText = '';
-    resetStores();
     resetEventListeners();
-    if (error) console.log(`Event ${error.event.toLocaleUpperCase()} failed. ${error.reason}`);
+    resetStores();
+    if (error) console.error(`Event ${error.event.toLocaleUpperCase()} failed. ${error.reason}`);
   }
 
   useLayoutEffect(() => {
@@ -120,7 +122,6 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   /**
    * @function pointerDown
-   * @returns void
    * @description Sets interactivity in motion by toggling a flag and assigning dependency values
    */
 
@@ -155,7 +156,6 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   /**
    * @function attachListItem
-   * @returns {void}
    * @description Attaches active list item to cursor
    */
   function attachListItem(event: PointerEvent): void {
@@ -175,7 +175,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
   /**
    * @function findEuclidean
    * @returns {number}
-   * Returns the Eudclidean distance
+   * @description Finds Eudclidean distance within supplied DOMRect[] and returns the index of the closest element
    */
   const findEuclidean = (detach: Record<'x' | 'y', number>, data: DOMRect[]): number => {
     return data.reduce<{
@@ -208,7 +208,6 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   /**
    * @function detachListItem
-   * @returns {void}
    * @description Detaches active list item from cursor, handles transfer of list item inbetween collections
    */
 
@@ -296,7 +295,6 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   /**
    * @function pointerMove
-   * @returns {void}
    * @description Tracks collections and their items
    */
   function pointerMove(): void {
@@ -316,8 +314,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   /**
    * @function toggleLiVisibility
-   * @returns {void}
-   * Toggles the visibility of the clicked list item if edit mode is disabled and user is not dragging
+   * @description Toggles the visibility of the clicked list item if edit mode is disabled and user is not dragging
    */
   function toggleLiVisibility(): void {
     const listItems: Element[] | null = ulRef.current ? Array.from(ulRef.current.children) : null;
@@ -343,9 +340,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   /**
    * @function pointerUp
-   * @returns {void}
    * @description Scales all list items and applies filters to their images then invokes @func `resetInteraction`
-   *
    */
   function pointerUp(): void {
     if (!isEditMode && !sensor.isActiveElement) {
@@ -358,7 +353,6 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   /**
    * @function useEffect
-   * @returns {void}
    * @description Handles module's event listeners
    */
   useEffect(() => {
@@ -377,8 +371,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   /**
    * @function navigate
-   * @returns {void}
-   * Carousel scroll functionality
+   * @description Carousel scroll functionality
    */
   const navigate = (): void => {
     const reference = collectionRefs.current[mapIndex].querySelector('ul')!;
@@ -410,7 +403,6 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
 
   /**
    * @function updateCarouselIndex
-   * @returns {void}
    * Updates the carousel index, invokes `navigate()`
    */
   const updateCarouselIndex = useCallback((delta: number): void => {
