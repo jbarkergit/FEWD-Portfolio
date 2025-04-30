@@ -1,15 +1,30 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import FDCollectionsModalMenu from './FDCollectionsMenu';
 import FDCollectionsModalCollection from './FDCollectionsCollection';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
+export type Sensor = {
+  isInteract: boolean;
+  isActiveElement: boolean;
+  pointerCoords: Record<'x' | 'y', number | null>;
+};
+
+export type Source = {
+  colIndex: number;
+  listItem: HTMLLIElement | null;
+  listItemIndex: number;
+};
+
+export type Target = {
+  colIndex: number;
+  listItemIndex: number;
+};
+
 const FDCollections = () => {
+  /** @context */
   const { userCollections } = useCatalogProvider();
 
-  // User collections edit mode (Hoisted)
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-
-  // Reference of all collections
+  /** @reference Array of all collections */
   const collectionRefs = useRef<HTMLElement[]>([]);
 
   const collectionRef = (reference: HTMLUListElement): void => {
@@ -17,6 +32,47 @@ const FDCollections = () => {
       collectionRefs.current.push(reference);
     }
   };
+
+  /** @state User collections edit mode (hoisted) */
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+
+  /** @constant */
+  const NOT_FOUND_INDEX = -1 as const;
+
+  /** @state Sensor store default (hoisted) */
+  const createSensorDefault = (): Sensor => ({
+    isInteract: false,
+    isActiveElement: false,
+    pointerCoords: { x: null, y: null },
+  });
+
+  /** @state Source store default (hoisted)  */
+  const createSourceDefault = (): Source => ({
+    colIndex: NOT_FOUND_INDEX,
+    listItem: null,
+    listItemIndex: NOT_FOUND_INDEX,
+  });
+
+  /** @state Target store default (hoisted)  */
+  const createTargetDefault = (): Target => ({
+    colIndex: NOT_FOUND_INDEX,
+    listItemIndex: NOT_FOUND_INDEX,
+  });
+
+  /** @references (hoisted) */
+  let sensorRef = useRef<Sensor>(createSensorDefault());
+  let sourceRef = useRef<Source>(createSourceDefault());
+  let targetRef = useRef<Target>(createTargetDefault());
+
+  /**
+   * @function resetStores
+   * @description Rolls stores back to default state
+   */
+  const resetStores = useCallback((): void => {
+    sensorRef.current = createSensorDefault();
+    sourceRef.current = createSourceDefault();
+    targetRef.current = createTargetDefault();
+  }, []);
 
   return (
     <>
@@ -31,6 +87,10 @@ const FDCollections = () => {
             ref={collectionRef}
             collectionRefs={collectionRefs}
             isEditMode={isEditMode}
+            sensorRef={sensorRef}
+            sourceRef={sourceRef}
+            targetRef={targetRef}
+            resetStores={resetStores}
           />
         ))}
       </section>
