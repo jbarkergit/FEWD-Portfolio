@@ -4,56 +4,21 @@ import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import type { Type_usePaginateData_Data_Provider } from '~/film-database/hooks/usePaginateData';
 import FDCarouselPoster from './FDCarouselPoster';
+import { useCarouselNavigation } from '~/film-database/hooks/useCarouselNavigation';
 
 const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: string; data: Type_usePaginateData_Data_Provider[] }) => {
   const { viewportChunkSize } = useCatalogProvider();
   const carouselRef = useRef<HTMLUListElement>(null);
-  let carouselIndex: number = 0;
 
   /**
-   * @function navigate
-   * @returns {void}
-   * Carousel scroll functionality
+   * @function useCarouselNavigation
+   * @description Hook that handles navigation for all carousels across the application
    */
-  const navigate = (): void => {
-    if (carouselRef.current) {
-      const listItems: HTMLCollection = carouselRef.current.children;
-
-      // Target index
-      const targetIndex: number = carouselIndex * viewportChunkSize;
-
-      // Target element
-      let targetElement: HTMLLIElement | null = null;
-      const target = listItems[targetIndex] as HTMLLIElement;
-      target ? (targetElement = target) : (targetElement = listItems[listItems.length] as HTMLLIElement);
-
-      // Positions
-      const carouselPosition: number = carouselRef.current.offsetLeft;
-      const scrollPosition: number = targetElement.offsetLeft - carouselPosition;
-
-      // Carousel margins
-      const carouselMargin: number = parseInt((listItems[0] as HTMLLIElement).style.marginLeft);
-
-      // Scroll position accounting carousel's margins
-      const newScrollPosition =
-        targetIndex === 0 ? scrollPosition - carouselMargin : targetIndex === listItems.length ? scrollPosition + carouselMargin : scrollPosition;
-
-      // Scroll
-      carouselRef.current.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
-    }
-  };
-
-  /**
-   * @function updateCarouselIndex
-   * @returns {void}
-   * Updates the carousel index, invokes `navigate()`
-   */
-  const updateCarouselIndex = (delta: number): void => {
-    carouselIndex = Math.max(0, Math.min(carouselIndex + delta, data.flat().length));
-    navigate();
-  };
-
-  useEffect(() => updateCarouselIndex(0), [viewportChunkSize]);
+  const updateCarouselIndex = useCarouselNavigation({
+    dataLength: data.length,
+    chunkSize: viewportChunkSize,
+    reference: carouselRef,
+  });
 
   /**
    * @function observer Virtual Scroll

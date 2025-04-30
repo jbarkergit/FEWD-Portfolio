@@ -1,15 +1,15 @@
-import { useRef, useEffect, forwardRef, type RefObject, useCallback, useLayoutEffect } from 'react';
+import { useRef, useEffect, forwardRef, type RefObject, useLayoutEffect } from 'react';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
-import type { User_Collection } from './FDCollections';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { useCatalogProvider, type User_Collection } from '~/film-database/context/CatalogContext';
 import FDCollectionsNavigation from './FDCollectionsNavigation';
+import { useCarouselNavigation } from '~/film-database/hooks/useCarouselNavigation';
 
 type Props = {
   mapIndex: number;
   header: string;
-  data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+  data: Namespace_Tmdb.BaseMedia_Provider[] | null;
   display: 'flex' | 'grid';
   isEditMode: boolean;
   collectionRefs: RefObject<HTMLElement[]>;
@@ -33,6 +33,8 @@ type Target = {
 };
 
 const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, header, data, display, isEditMode, collectionRefs }, collectionRef) => {
+  if (!data) return null;
+
   // Context
   const { setUserCollections, modalChunkSize } = useCatalogProvider();
 
@@ -367,50 +369,15 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
     };
   }, [isEditMode]);
 
-  let carouselIndex: number = 0;
-
   /**
-   * @function navigate
-   * @description Carousel scroll functionality
+   * @function useCarouselNavigation
+   * @description Hook that handles navigation for all carousels across the application
    */
-  const navigate = (): void => {
-    const reference = collectionRefs.current[mapIndex].querySelector('ul')!;
-
-    const listItems: HTMLCollection = reference.children;
-
-    // Target index
-    const targetIndex: number = carouselIndex * modalChunkSize;
-
-    // Target element
-    let targetElement: HTMLLIElement | null = null;
-    const target = listItems[targetIndex] as HTMLLIElement;
-    target ? (targetElement = target) : (targetElement = listItems[listItems.length] as HTMLLIElement);
-
-    // Positions
-    const carouselPosition: number = reference.offsetLeft;
-    const scrollPosition: number = targetElement.offsetLeft - carouselPosition;
-
-    // Carousel margins
-    const carouselMargin: number = parseInt((listItems[0] as HTMLLIElement).style.marginLeft);
-
-    // Scroll position accounting carousel's margins
-    const newScrollPosition =
-      targetIndex === 0 ? scrollPosition - carouselMargin : targetIndex === listItems.length ? scrollPosition + carouselMargin : scrollPosition;
-
-    // Scroll
-    reference.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
-  };
-
-  /**
-   * @function updateCarouselIndex
-   * Updates the carousel index, invokes `navigate()`
-   */
-  const updateCarouselIndex = useCallback((delta: number): void => {
-    carouselIndex = Math.max(0, Math.min(carouselIndex + delta, data!.length));
-    navigate();
-  }, []);
-
-  useEffect(() => updateCarouselIndex(0), [modalChunkSize]);
+  const updateCarouselIndex = useCarouselNavigation({
+    dataLength: data.length,
+    chunkSize: modalChunkSize,
+    reference: ulRef,
+  });
 
   /**
    * @function FDCollectionsCollection
@@ -420,7 +387,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(({ mapIndex, head
     <section className='fdCollections__collection' ref={collectionRef}>
       <FDCollectionsCollectionHeader mapIndex={mapIndex} header={header} />
       <div className='fdCollections__collection__wrapper'>
-        <FDCollectionsCollectionUl mapIndex={mapIndex} data={data} display={display} isEditMode={isEditMode} ulRef={ulRef} />
+        <FDCollectionsCollectionUl mapIndex={mapIndex} data={data} display={display} isEditMode={isEditMode} ref={ulRef} />
         <FDCollectionsNavigation updateCarouselIndex={updateCarouselIndex} />
       </div>
     </section>

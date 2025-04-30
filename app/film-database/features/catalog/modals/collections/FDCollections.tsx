@@ -1,14 +1,7 @@
 import { useRef, useState } from 'react';
-import { type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import FDCollectionsModalMenu from './FDCollectionsMenu';
 import FDCollectionsModalCollection from './FDCollectionsCollection';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
-
-export type User_Collection = {
-  header: string;
-  data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
-  display: 'flex' | 'grid';
-};
 
 const FDCollections = () => {
   const { userCollections } = useCatalogProvider();

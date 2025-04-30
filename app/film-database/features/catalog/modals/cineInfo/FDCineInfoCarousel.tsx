@@ -2,6 +2,7 @@ import { useRef, useEffect, useId } from 'react';
 import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { useCarouselNavigation } from '~/film-database/hooks/useCarouselNavigation';
 import type { Type_usePaginateData_Data_Provider } from '~/film-database/hooks/usePaginateData';
 
 const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: string; data: Type_usePaginateData_Data_Provider[] }) => {
@@ -10,43 +11,15 @@ const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; hea
   // References
   const carouselRef = useRef<HTMLUListElement>(null);
 
-  /** Desktop Horizontal Navigation */
-  let carouselIndex: number = 0;
-
-  const updateCarouselIndex = (delta: number): void => {
-    carouselIndex = Math.max(0, Math.min(carouselIndex + delta, data.flat().length));
-    navigate();
-  };
-
-  useEffect(() => updateCarouselIndex(0), [modalChunkSize]);
-
-  const navigate = (): void => {
-    if (carouselRef.current) {
-      const listItems: HTMLCollection = carouselRef.current.children;
-
-      // Target index
-      const targetIndex: number = carouselIndex * modalChunkSize;
-
-      // Target element
-      let targetElement: HTMLLIElement | null = null;
-      const target = listItems[targetIndex] as HTMLLIElement;
-      target ? (targetElement = target) : (targetElement = listItems[listItems.length] as HTMLLIElement);
-
-      // Positions
-      const carouselPosition: number = carouselRef.current.offsetLeft;
-      const scrollPosition: number = targetElement.offsetLeft - carouselPosition;
-
-      // Carousel margins
-      const carouselMargin: number = parseInt((listItems[0] as HTMLLIElement).style.marginLeft);
-
-      // Scroll position accounting carousel's margins
-      const newScrollPosition =
-        targetIndex === 0 ? scrollPosition - carouselMargin : targetIndex === listItems.length ? scrollPosition + carouselMargin : scrollPosition;
-
-      // Scroll
-      carouselRef.current.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
-    }
-  };
+  /**
+   * @function useCarouselNavigation
+   * @description Hook that handles navigation for all carousels across the application
+   */
+  const updateCarouselIndex = useCarouselNavigation({
+    dataLength: data.length,
+    chunkSize: modalChunkSize,
+    reference: carouselRef,
+  });
 
   /** Virtual scroll */
   const observer = new IntersectionObserver(

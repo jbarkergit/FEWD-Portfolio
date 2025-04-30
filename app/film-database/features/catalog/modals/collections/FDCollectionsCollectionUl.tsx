@@ -1,21 +1,16 @@
-import { type JSX, useMemo } from 'react';
+import { forwardRef, type JSX, useMemo } from 'react';
 import { IcBaselinePlus } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
-const FDCollectionsCollectionUl = ({
-  mapIndex,
-  data,
-  display,
-  isEditMode,
-  ulRef,
-}: {
+type Props = {
   mapIndex: number;
-  data: Namespace_Tmdb.BaseMedia_Provider[] | undefined;
+  data: Namespace_Tmdb.BaseMedia_Provider[];
   display: string;
   isEditMode: boolean;
-  ulRef: React.RefObject<HTMLUListElement | null>;
-}) => {
+};
+
+const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(({ mapIndex, data, display, isEditMode }, ulRef) => {
   // Dynamic integer limitation of list items in a carousel
   const { modalChunkSize } = useCatalogProvider();
 
@@ -74,6 +69,6 @@ const FDCollectionsCollectionUl = ({
       {buildJSX}
     </ul>
   );
-};
+});
 
 export default FDCollectionsCollectionUl;
