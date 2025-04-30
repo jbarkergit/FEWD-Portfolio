@@ -13,6 +13,8 @@
       line-height: 150%;
     }
     & p {
+      display: flex;
+      flex-direction: column;
       & nav {
         display: inline;
         width: min-content;

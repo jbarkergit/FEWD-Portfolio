@@ -75,11 +75,16 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       <article>
         <h1>{err.message}</h1>
         <p>
-          {`${err.details} Please return to the `}
-          <Link to='/' aria-label='Return to application hub'>
-            {'application hub '}
-          </Link>
-          {'to continue browsing.'}
+          <span>{err.details}</span>
+          <span>
+            Please return to the{' '}
+            <nav>
+              <Link to='/' aria-label='Return to application hub'>
+                {'application hub '}
+              </Link>
+            </nav>
+            {'to continue browsing.'}
+          </span>
         </p>
       </article>
     </main>
