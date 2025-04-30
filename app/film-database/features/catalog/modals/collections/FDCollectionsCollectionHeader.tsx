@@ -49,7 +49,7 @@ const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
     <header>
       <TablerCategoryFilled />
       <h2>
-        <input type='text' value={header.length > 0 ? deferredInputValue : 'Unnamed Collection'} onChange={handleInputChange} />
+        <input type='text' value={header && header.length > 0 ? deferredInputValue : 'Unnamed Collection'} onChange={handleInputChange} />
       </h2>
     </header>
   );
