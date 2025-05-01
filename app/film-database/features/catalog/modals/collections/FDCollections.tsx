@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
-import FDCollectionsModalMenu from './FDCollectionsMenu';
-import FDCollectionsModalCollection from './FDCollectionsCollection';
+import FDCollectionsModalMenu from './carousels/FDCollectionsMenu';
+import FDCollectionsModalCollection from './carousels/FDCollectionsCollection';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
 export type Sensor = {

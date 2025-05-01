@@ -3,9 +3,9 @@ import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/
 import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
 import { useCatalogProvider, type User_Collection } from '~/film-database/context/CatalogContext';
-import FDCollectionsNavigation from './FDCollectionsNavigation';
 import { useCarouselNavigation } from '~/film-database/hooks/useCarouselNavigation';
-import type { Sensor, Source, Target } from './FDCollections';
+import type { Sensor, Source, Target } from '../FDCollections';
+import FDCollectionsNavigation from './FDCollectionsNavigation';
 
 type Props = {
   mapIndex: number;
