@@ -10,7 +10,7 @@
 
 .fdSearchBar__header {
   display: flex;
-  padding: 0 var(--fd-padding-generic) var(--fd-gap) var(--fd-padding-generic);
+  padding: 0 calc(var(--fd-carousel-node-width) / 4) var(--fd-gap) calc(var(--fd-padding-generic) / 1.5);
   height: fit-content;
   &__fieldset {
     position: relative;
