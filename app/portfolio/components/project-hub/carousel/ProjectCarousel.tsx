@@ -9,12 +9,10 @@ const ProjectCarousel = ({
   projectSlideIndex,
   setProjectSlideIndex,
   featureState,
-  setFeatureState,
 }: {
   projectSlideIndex: number;
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
   featureState: Record<string, boolean>;
-  setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
 }) => {
   /** References */
   const mainRef = useRef<HTMLDivElement>(null);

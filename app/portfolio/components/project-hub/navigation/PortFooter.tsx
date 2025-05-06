@@ -94,7 +94,7 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
           <button
             id='project-links'
             aria-label='Open Project Insights'
-            onClick={() =>
+            onPointerUp={() =>
               featureState.projectDetailsActive
                 ? setFeatureState({ ...featureState, projectDetailsActive: false })
                 : setFeatureState({ ...featureState, projectDetailsActive: true })

@@ -1,4 +1,4 @@
-import type { Dispatch, MutableRefObject, SetStateAction } from 'react';
+import type { Dispatch, RefObject, SetStateAction } from 'react';
 import ProjectCarousel from '../components/project-hub/carousel/ProjectCarousel';
 import PortFooter from '../components/project-hub/navigation/PortFooter';
 import PortHeader from '../components/project-hub/navigation/PortHeader';
@@ -8,22 +8,11 @@ type ProjectHubType = {
   setProjectSlideIndex: Dispatch<SetStateAction<number>>;
   featureState: Record<string, boolean>;
   setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
-  portMobileMenu: boolean;
-  setPortMobileMenu: Dispatch<SetStateAction<boolean>>;
-  portMobileMenuRef: MutableRefObject<HTMLElement | null>;
+  portMobileMenuRefReceiver: RefObject<HTMLElement | null>;
   usePortMobileMenu: () => void;
 };
 
-const ProjectHub = ({
-  projectSlideIndex,
-  setProjectSlideIndex,
-  featureState,
-  setFeatureState,
-  portMobileMenu,
-  setPortMobileMenu,
-  portMobileMenuRef,
-  usePortMobileMenu,
-}: ProjectHubType) => {
+const ProjectHub = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState, portMobileMenuRefReceiver, usePortMobileMenu }: ProjectHubType) => {
   return (
     <section className='projectHub'>
       <h2>Project hub</h2>
@@ -32,17 +21,9 @@ const ProjectHub = ({
         setProjectSlideIndex={setProjectSlideIndex}
         featureState={featureState}
         setFeatureState={setFeatureState}
-        portMobileMenu={portMobileMenu}
-        setPortMobileMenu={setPortMobileMenu}
-        portMobileMenuRef={portMobileMenuRef}
         usePortMobileMenu={usePortMobileMenu}
       />
-      <ProjectCarousel
-        projectSlideIndex={projectSlideIndex}
-        setProjectSlideIndex={setProjectSlideIndex}
-        featureState={featureState}
-        setFeatureState={setFeatureState}
-      />
+      <ProjectCarousel projectSlideIndex={projectSlideIndex} setProjectSlideIndex={setProjectSlideIndex} featureState={featureState} />
       <PortFooter projectSlideIndex={projectSlideIndex} featureState={featureState} setFeatureState={setFeatureState} />
     </section>
   );
