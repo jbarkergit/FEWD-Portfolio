@@ -1,4 +1,4 @@
-import type { MutableRefObject } from 'react';
+import type { RefObject } from 'react';
 
 type StyleDistancesType = {
   scale: number;
@@ -6,8 +6,8 @@ type StyleDistancesType = {
 };
 
 export const useCarouselSlideAnimator = (
-  container: MutableRefObject<HTMLDivElement | null>,
-  arrayOfSlides: MutableRefObject<HTMLElement[]>,
+  container: RefObject<HTMLDivElement | null>,
+  arrayOfSlides: RefObject<HTMLElement[]>,
   horizontalCarousel: boolean
 ): StyleDistancesType[] => {
   // Accumulator array to return

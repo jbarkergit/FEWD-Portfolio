@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { MutableRefObject } from 'react';
 import PortMobileMenu from '../components/mobile-menu/PortMobileMenu';
 import ProjectInsights from '../features/ProjectInsights';
 import ProjectHub from '../features/ProjectHub';
