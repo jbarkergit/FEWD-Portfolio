@@ -5,7 +5,7 @@ import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
 type Props = {
   mapIndex: number;
-  data: Namespace_Tmdb.BaseMedia_Provider[];
+  data: Namespace_Tmdb.BaseMedia_Provider[] | null;
   display: string;
   isEditMode: boolean;
 };
@@ -59,7 +59,7 @@ const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(({ mapInde
       return initMap;
     } else {
       // If data is empty
-      const EmptyList = Array.from({ length: modalChunkSize }).map((eli, index) => <EmptyListItem key={`collection-${mapIndex}-emptyListItem-${index}`} />);
+      const EmptyList = Array.from({ length: modalChunkSize + 1 }).map((eli, index) => <EmptyListItem key={`collection-${mapIndex}-emptyListItem-${index}`} />);
       return EmptyList;
     }
   }, [data, modalChunkSize]);

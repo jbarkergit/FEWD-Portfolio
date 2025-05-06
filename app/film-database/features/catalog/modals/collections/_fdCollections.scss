@@ -19,50 +19,6 @@
     position: relative;
     width: 2em;
     aspect-ratio: 1/1;
-    // Edit Mode
-    &:nth-of-type(2) {
-      &[data-toggle='true'] {
-        color: var(--fd-font-color-primary);
-
-        transition: color 170ms ease-in-out;
-      }
-      &[data-toggle='false'] {
-        color: #6dbe45;
-        transition: color 170ms ease-in-out;
-      }
-    }
-    // List item FX
-    &:nth-of-type(3) {
-      &[data-toggle='true'] svg:nth-of-type(2) {
-        clip-path: polygon(100% 100%, 100% 100%, 0% 100%, 0% 100%);
-        transition: clip-path 170ms ease-in-out;
-      }
-      &[data-toggle='false'] svg {
-        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-        transition: clip-path 170ms ease-in-out;
-      }
-    }
-    // Layout Type
-    &:nth-of-type(4) {
-      &[data-toggle='true'] svg {
-        transition: top 170ms ease-in-out;
-        &:nth-of-type(1) {
-          top: 0;
-        }
-        &:nth-of-type(2) {
-          top: -3em;
-        }
-      }
-      &[data-toggle='false'] svg {
-        transition: top 170ms ease-in-out;
-        &:nth-of-type(1) {
-          top: -3em;
-        }
-        &:nth-of-type(2) {
-          top: 0;
-        }
-      }
-    }
     & svg {
       width: 100%;
       height: 100%;
@@ -71,21 +27,61 @@
       left: 0;
     }
   }
+  &--edit {
+    transition: color 170ms ease-in-out;
+    &[data-toggle='true'] {
+      color: var(--fd-font-color-primary);
+    }
+    &[data-toggle='false'] {
+      color: #6dbe45;
+    }
+  }
+  &--visibility {
+    &[data-toggle='false'] svg {
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    &[data-toggle='true'] svg:nth-of-type(2) {
+      clip-path: polygon(100% 100%, 100% 100%, 0% 100%, 0% 100%);
+    }
+    & svg {
+      transition: clip-path 170ms ease-in-out;
+    }
+  }
+  &--layout {
+    & svg {
+      transition: top 170ms ease-in-out;
+    }
+    &[data-toggle='true'] svg {
+      &:nth-of-type(1) {
+        top: 0;
+      }
+      &:nth-of-type(2) {
+        top: -3em;
+      }
+    }
+    &[data-toggle='false'] svg {
+      &:nth-of-type(1) {
+        top: -3em;
+      }
+      &:nth-of-type(2) {
+        top: 0;
+      }
+    }
+  }
 }
 
 .fdCollections {
   display: flex;
   flex-direction: column;
   gap: calc(var(--fd-gap) * 2 - 15px + 8px);
-  padding: var(--fd-padding-generic) 0;
+  // Add menu height to padding-bottom (svg size + padding-top + padding-bottom)
+  padding: calc(var(--fd-padding-generic) / 2) 0 calc(var(--fd-padding-generic) + 2em + (calc(var(--fd-padding-generic) / 9) * 2)) 0;
   &__collection {
     display: flex;
     flex-direction: column;
-    gap: var(--fd-gap);
     & header {
       display: flex;
-      // Remove additional ul padding-top from header's padding bottom
-      padding: 0 calc(var(--fd-collection-node-width) / 4) calc(var(--fd-gap) - calc((15px + 3px))) calc(var(--fd-padding-generic) / 1.5);
+      padding: 0 calc(var(--fd-carousel-node-width) / 4) var(--fd-gap) calc(var(--fd-padding-generic) / 1.5);
       & svg {
         width: 1.6em;
         aspect-ratio: 1/1;
@@ -95,13 +91,7 @@
         padding: 0 var(--fd-gap);
         @include m.fdFontL;
         text-transform: capitalize;
-        cursor: text;
-        &:focus {
-          outline: none;
-        }
-        & input {
-          text-transform: capitalize;
-        }
+        cursor: default;
       }
     }
     &__wrapper {
@@ -111,165 +101,155 @@
         transition: opacity 0.22s ease-in-out;
       }
       & ul {
-        interpolate-size: allow-keywords;
-        transition: height 170ms ease;
+        // Allocate room for shadows (padding-bottom)
+        padding: 0 calc(var(--fd-padding-generic) / 1.5) calc(15px + 8px) calc(var(--fd-padding-generic) / 1.5);
         &[data-layout='flex'] {
           display: flex;
           gap: var(--fd-gap);
-          padding-bottom: calc(15px + 8px); // Allow room for border and shadows
           overflow-y: clip;
           overflow-x: scroll;
           scrollbar-width: none;
-          &:hover {
-            cursor: grab;
-          }
-          &:active,
-          &:active li:hover {
-            cursor: grabbing;
-          }
-          // collection padding
-          & li:first-of-type,
-          & div:first-of-type {
-            margin-left: calc(var(--fd-padding-generic) / 1.5);
-          }
-          & li:last-of-type,
-          & div:last-of-type {
-            margin-right: calc(var(--fd-padding-generic) / 1.5);
-          }
         }
         &[data-layout='grid'] {
           display: grid;
-          column-gap: var(--fd-gap);
-          row-gap: calc(var(--fd-gap) + 15px + 3px); // Add ul's padding-bottom for visual consistency
           grid-template-columns: repeat(auto-fill, minmax(var(--fd-collection-node-width), auto));
-          margin: 0 calc(var(--fd-padding-generic) / 1.5) calc(15px + 8px) calc(var(--fd-padding-generic) / 1.5);
-        }
-        &[data-edit-mode='true']:not(:has(li)) {
-          height: calc(var(--fd-collection-node-height) + calc(15px + 3px)); // Edit mode is mandatory layout 'grid'
-          & li:hover {
-            cursor: grab;
+          column-gap: var(--fd-gap);
+          row-gap: calc(var(--fd-gap) + 23px); // Add ul's padding-bottom for visual consistency
+          & li {
+            cursor: pointer;
+          }
+          & ~ nav {
+            display: none;
           }
         }
         &[data-edit-mode='true'] {
-          // Div properties when data-edit-mode is true
+          &:has(li) {
+            cursor: grab;
+            &:active {
+              cursor: grabbing;
+            }
+          }
+          & li:active {
+            cursor: grabbing;
+          }
+        }
+        &[data-edit-mode='false'] {
           & div {
-            position: relative;
-            width: var(--fd-collection-node-width);
-            height: var(--fd-collection-node-height);
-            border-radius: var(--fd-border-radius);
-            overflow: clip;
-            interpolate-size: allow-keywords;
-            transition: height 170ms ease;
-            will-change: height;
-            &::before {
-              content: '';
-              position: absolute;
-              top: -25%;
-              left: 10%;
-              width: 75%;
-              height: 150%;
-              background: linear-gradient(99deg, rgb(8 8 8), rgb(255 255 255));
-              opacity: 0.15;
-              animation: borderRotation 15s linear infinite;
-              will-change: transform;
-            }
-            &::after {
-              content: '';
-              position: absolute;
-              top: 0.5%;
-              left: 0.5%;
-              width: 99%;
-              height: 99%;
-              background-color: hsl(0, 0%, 11%);
-              border-radius: inherit;
-            }
-            &:hover span {
-              transform: rotateX(7deg) translateY(-6px);
-            }
-            & span {
-              position: absolute;
-              top: 0.5%;
-              left: 0.5%;
-              transform: translateY(-20%);
-              z-index: 1;
-              width: 99%;
-              height: 120%;
-              background: linear-gradient(
-                226deg,
-                rgba(255, 255, 255, 0.4) 0%,
-                rgba(255, 255, 255, 0.4) 35%,
-                rgba(255, 255, 255, 0.2) 42%,
-                rgba(255, 255, 255, 0) 60%
-              );
-              pointer-events: none;
-              transition: transform 0.65s cubic-bezier(0.18, 0.9, 0.58, 1);
-              will-change: transform;
-              opacity: 0.25;
-            }
-            & svg {
-              position: absolute;
-              z-index: 1;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              width: 1.6em;
-              aspect-ratio: 1/1;
-              opacity: 0.8;
-              pointer-events: none;
-            }
+            height: 0;
+          }
+          &:not(:has(li)) {
+            display: flex;
+            padding: 0 calc(var(--fd-padding-generic) / 1.5) 0 calc(var(--fd-padding-generic) / 1.5);
+            margin: 0;
+          }
+          & li:hover {
+            cursor: pointer;
           }
         }
         &[data-list-item-fx='true'] {
           & li {
-            &[data-list-item-visible='true'] {
-              & picture {
-                &::after {
-                  content: '';
-                  position: absolute;
-                  inset: 0;
-                  z-index: 10;
-                  border-radius: var(--fd-border-radius);
-                  background-image: url(/app/film-database/assets/gif/vhs-noise.gif);
-                  background-size: 480px;
-                  background-attachment: fixed;
-                  opacity: 0.02;
-                  pointer-events: none;
-                }
-                & img {
-                  filter: none;
-                }
+            &[data-list-item-visible='true'] picture {
+              &::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                z-index: 10;
+                border-radius: var(--fd-border-radius);
+                background-image: url(/app/film-database/assets/gif/vhs-noise.gif);
+                background-size: 480px;
+                background-attachment: fixed;
+                opacity: 0.02;
+                pointer-events: none;
+              }
+              & img {
+                filter: none;
               }
             }
-            &[data-list-item-visible='false'] {
-              & picture img {
-                filter: brightness(35%) saturate(50%);
-              }
+            &[data-list-item-visible='false'] picture img {
+              filter: brightness(35%) saturate(50%);
             }
           }
         }
-        & li {
+        &:not(:has(li)) ~ nav {
+          display: none;
+        }
+        & li,
+        & div {
           flex-shrink: 0;
           position: relative;
           z-index: 1;
           width: var(--fd-collection-node-width);
           height: var(--fd-collection-node-height);
           border-radius: var(--fd-border-radius);
+          overflow: clip;
+        }
+        & li {
           background-color: var(--fd-bc-primary);
           box-shadow:
             0 8px 10px rgba(0, 0, 0, 0.6),
             0 15px 15px rgba(0, 0, 0, 0.3);
-          &:hover {
-            cursor: pointer;
-          }
           &:hover:not([data-list-item-visible='true']) picture img {
             filter: brightness(80%) saturate(70%);
           }
           & picture,
-          picture img {
-            border-radius: var(--fd-border-radius);
-          }
           & picture img {
+            border-radius: inherit;
+          }
+          picture img {
             transition: filter 85ms ease-in-out;
+          }
+        }
+        & div {
+          interpolate-size: allow-keywords;
+          transition: height 170ms ease;
+          will-change: height;
+          &::before {
+            content: '';
+            position: absolute;
+            top: -25%;
+            left: 10%;
+            width: 75%;
+            height: 150%;
+            background: linear-gradient(99deg, rgb(8 8 8), rgb(255 255 255));
+            opacity: 0.15;
+            animation: borderRotation 15s linear infinite;
+            will-change: transform;
+          }
+          &::after {
+            content: '';
+            position: absolute;
+            top: 0.5%;
+            left: 0.5%;
+            width: 99%;
+            height: 99%;
+            background-color: hsl(0, 0%, 11%);
+            border-radius: inherit;
+          }
+          &:hover span {
+            transform: rotateX(7deg) translateY(-6px);
+          }
+          & span {
+            position: absolute;
+            top: 0.5%;
+            left: 0.5%;
+            transform: translateY(-20%);
+            z-index: 1;
+            width: 99%;
+            height: 120%;
+            background: linear-gradient(226deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 35%, rgba(255, 255, 255, 0.2) 42%, rgba(255, 255, 255, 0) 60%);
+            transition: transform 0.65s cubic-bezier(0.18, 0.9, 0.58, 1);
+            will-change: transform;
+            opacity: 0.25;
+          }
+          & svg {
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1.6em;
+            aspect-ratio: 1/1;
+            opacity: 0.8;
           }
         }
       }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type Dispatch, type RefObject, type SetStateAction } from 'react';
+import { useEffect, useRef, useState, type Dispatch, type RefObject, type SetStateAction } from 'react';
 import {
   TablerCategoryPlus,
   TablerEdit,
@@ -15,14 +15,15 @@ type Props = {
   collectionRefs: RefObject<HTMLElement[]>;
   isEditMode: boolean;
   setIsEditMode: Dispatch<SetStateAction<boolean>>;
+  isListFX: boolean;
+  setIsListFX: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props) => {
+const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode, isListFX, setIsListFX }: Props) => {
   const { userCollections, setUserCollections, setIsListModal } = useCatalogProvider();
 
   const [collectionUls, setCollectionUls] = useState<HTMLUListElement[]>([]);
 
-  const [isListFX, setIsListFX] = useState<boolean>(true);
   const [layoutType, setLayoutType] = useState<'flex' | 'grid'>('flex');
 
   const editModeBtn = useRef<HTMLButtonElement>(null),
@@ -75,12 +76,11 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props)
     }
   }, [isEditMode, isListFX, layoutType, collectionUls]);
 
-  /**
-   * @returns
-   */
+  /** @returns */
   return (
     <div className='fdCollectionsMenu'>
       <button
+        className='fdCollectionsMenu--collection'
         aria-label='Create new list'
         data-toggle='true'
         onPointerUp={() =>
@@ -96,15 +96,26 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props)
         }>
         <TablerCategoryPlus />
       </button>
-      <button ref={editModeBtn} aria-label='Switch to edit mode' data-toggle='true' onPointerUp={() => setIsEditMode((state) => !state)}>
+      <button
+        ref={editModeBtn}
+        className='fdCollectionsMenu--edit'
+        aria-label='Switch to edit mode'
+        data-toggle='true'
+        onPointerUp={() => setIsEditMode((state) => !state)}>
         <TablerEdit />
       </button>
-      <button ref={listItemFxBtn} aria-label='Lower visibility of unselected movies' data-toggle='false' onPointerUp={() => setIsListFX((state) => !state)}>
+      <button
+        ref={listItemFxBtn}
+        className='fdCollectionsMenu--visibility'
+        aria-label='Lower visibility of unselected movies'
+        data-toggle='false'
+        onPointerUp={() => setIsListFX((state) => !state)}>
         <TablerEye />
         <TablerEyeOff />
       </button>
       <button
         ref={layoutTypeBtn}
+        className='fdCollectionsMenu--layout'
         aria-label={layoutType === 'grid' ? 'Collapse view all lists' : 'Expand view of all lists'}
         data-toggle='true'
         onPointerUp={() =>
@@ -115,7 +126,7 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode }: Props)
         <TablerLayoutDashboardFilled />
         <TablerLayoutListFilled />
       </button>
-      <button aria-label='Close collections modal' onPointerUp={() => setIsListModal(false)}>
+      <button className='fdCollectionsMenu--close' aria-label='Close collections modal' onPointerUp={() => setIsListModal(false)}>
         <MaterialSymbolsLogoutSharp />
       </button>
     </div>

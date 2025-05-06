@@ -1,11 +1,11 @@
 import { useRef, useEffect, forwardRef, type RefObject } from 'react';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
-import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
 import { useCatalogProvider, type User_Collection } from '~/film-database/context/CatalogContext';
 import { useCarouselNavigation } from '~/film-database/hooks/useCarouselNavigation';
-import type { Sensor, Source, Target } from '../FDCollections';
+import type { Sensor, Source, Target } from './FDCollections';
 import FDCollectionsNavigation from './FDCollectionsNavigation';
+import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 
 type Props = {
   mapIndex: number;
@@ -13,6 +13,7 @@ type Props = {
   data: Namespace_Tmdb.BaseMedia_Provider[] | null;
   display: 'flex' | 'grid';
   isEditMode: boolean;
+  isListFX: boolean;
   collectionRefs: RefObject<HTMLElement[]>;
   sensorRef: React.RefObject<Sensor>;
   sourceRef: React.RefObject<Source>;
@@ -21,11 +22,9 @@ type Props = {
 };
 
 const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
-  ({ mapIndex, header, data, display, isEditMode, collectionRefs, sensorRef, sourceRef, targetRef, resetStores }, collectionRef) => {
-    if (!data) return null;
-
+  ({ mapIndex, header, data, display, isEditMode, isListFX, collectionRefs, sensorRef, sourceRef, targetRef, resetStores }, collectionRef) => {
     // Context
-    const { setUserCollections, modalChunkSize } = useCatalogProvider();
+    const { setUserCollections, modalChunkSize, userCollections, setModalTrailer } = useCatalogProvider();
 
     // References
     const ulRef = useRef<HTMLUListElement>(null);
@@ -201,29 +200,30 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
         const sourceData: Namespace_Tmdb.BaseMedia_Provider[] = prevCarousels[sourceKey]?.data || [];
         const targetData: Namespace_Tmdb.BaseMedia_Provider[] = prevCarousels[targetKey]?.data || [];
 
-        // Rearrange data based on whether it's the same collection or a new collection
-        let rearranged = [];
+        // Remove the item from sourceData
+        const newSourceData: Namespace_Tmdb.BaseMedia_Provider[] = sourceData.filter((_, index) => index !== sourceRef.current.listItemIndex);
 
-        for (let i = 0; i < targetData.length; i++) {
-          if (isSameCollection && i === sourceRef.current.listItemIndex) continue; // Skip if same collection
-          if (i === targetRef.current.listItemIndex) rearranged.push(sourceData[sourceRef.current.listItemIndex]);
-          rearranged.push(isSameCollection ? sourceData[i] : targetData[i]);
+        // Insert item into targetData
+        const newTargetData: Namespace_Tmdb.BaseMedia_Provider[] = [
+          ...targetData.slice(0, targetRef.current.listItemIndex),
+          sourceData[sourceRef.current.listItemIndex],
+          ...targetData.slice(targetRef.current.listItemIndex),
+        ];
+
+        const updatedCarousels = {
+          ...prevCarousels,
+          [sourceKey]: {
+            ...prevCarousels[sourceKey],
+            data: isSameCollection ? newTargetData : newSourceData,
+          },
+        };
+
+        if (!isSameCollection) {
+          updatedCarousels[targetKey] = {
+            ...prevCarousels[targetKey],
+            data: newTargetData,
+          };
         }
-
-        // Create a copy of the previous carousels object to avoid mutation
-        const updatedCarousels: { [x: string]: User_Collection } = { ...prevCarousels };
-
-        // Mutate the source collection's data
-        updatedCarousels[sourceKey] = {
-          ...prevCarousels[sourceKey],
-          data: [...sourceData.slice(0, sourceRef.current.listItemIndex), ...sourceData.slice(sourceRef.current.listItemIndex + 1)],
-        };
-
-        // Mutate the target collection's data
-        updatedCarousels[targetKey] = {
-          ...prevCarousels[targetKey],
-          data: rearranged,
-        };
 
         // Update state
         return updatedCarousels;
@@ -241,10 +241,10 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
         ulRef.current.removeEventListener('pointermove', pointerMove);
         ulRef.current.removeEventListener('pointerup', pointerUp);
 
+        sensorRef.current.isActiveElement = true;
+
         ulRef.current.addEventListener('pointerup', detachListItem);
         sourceRef.current.listItem.addEventListener('pointermove', attachListItem);
-
-        sensorRef.current.isActiveElement = true;
       } else {
         resetInteraction();
         return;
@@ -253,7 +253,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
 
     /**
      * @function toggleLiVisibility
-     * @description Toggles the visibility of the clicked list item if edit mode is disabled and user is not dragging
+     * @description Toggles the visibility of the clicked list item if edit mode is disabled and user is not dragging, set trailers if isListFX is true
      */
     function toggleLiVisibility(): void {
       const listItems: Element[] | null = ulRef.current ? Array.from(ulRef.current.children) : null;
@@ -274,7 +274,13 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
         listItems[i].setAttribute('data-list-item-visible', i === elementIndex ? 'true' : 'false');
       }
 
-      resetInteraction();
+      if (isListFX) {
+        const collectionData = Object.values(userCollections)[mapIndex]?.data;
+        const targetData = collectionData?.[elementIndex];
+        if (targetData) setModalTrailer(targetData);
+      }
+
+      setTimeout(() => resetInteraction(), 0);
     }
 
     /**
@@ -304,14 +310,14 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
         ulRef.current?.removeEventListener('pointermove', pointerMove);
         ulRef.current?.removeEventListener('pointerup', pointerUp);
       };
-    }, [isEditMode]);
+    }, [isEditMode, isListFX]);
 
     /**
      * @function useCarouselNavigation
      * @description Hook that handles navigation for all carousels across the application
      */
     const updateCarouselIndex = useCarouselNavigation({
-      dataLength: data.length,
+      dataLength: data ? data.length : 0,
       chunkSize: modalChunkSize,
       reference: ulRef,
     });

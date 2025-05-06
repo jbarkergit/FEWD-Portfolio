@@ -14,19 +14,19 @@ import FDiFramePlayer from './player/FDiFramePlayer';
  */
 
 const FDiFrame = ({ trailerId, type }: { trailerId?: number; type: 'hero' | 'modal' }) => {
-  const { heroData } = useCatalogProvider();
+  const { heroData, modalTrailer } = useCatalogProvider();
   const [trailers, setTrailers] = useState<Namespace_Tmdb.Videos_Obj['videos']['results'] | undefined>(undefined);
 
   // Fetch trailer user request
   const fetchTrailerRequest = async (): Promise<void> => {
-    const data = (await useTmdbFetcher({ videos: trailerId ? trailerId : heroData?.id })) as Namespace_Tmdb.Videos_Obj;
+    const data = (await useTmdbFetcher({ videos: trailerId ? trailerId : type === 'hero' ? heroData?.id : modalTrailer?.id })) as Namespace_Tmdb.Videos_Obj;
     const filteredEntries = data.videos.results.filter((obj) => obj.name.includes('Trailer'));
     setTrailers(filteredEntries);
   };
 
   useEffect(() => {
-    if (heroData) fetchTrailerRequest();
-  }, [heroData]);
+    if (heroData || modalTrailer) fetchTrailerRequest();
+  }, [heroData, modalTrailer]);
 
   // JSX
   return (

@@ -31,6 +31,8 @@ type Context = {
   userCollections: Record<string, User_Collection>;
   setUserCollections: Dispatch<SetStateAction<Record<string, User_Collection>>>;
   root: React.RefObject<HTMLDivElement | null>;
+  modalTrailer: Namespace_Tmdb.BaseMedia_Provider | undefined;
+  setModalTrailer: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
 };
 
 const CatalogContext = createContext<Context | undefined>(undefined);
@@ -42,21 +44,22 @@ const CatalogContext = createContext<Context | undefined>(undefined);
 export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { initialHeroData, primaryData } = useLoaderData();
 
-  // State Variables
-  /** @state Hero data representing the featured media item. */
-  const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(initialHeroData);
   /** @ref Remove dom traversal requirements for dynamic chunk sizes */
   const root = useRef<HTMLDivElement>(null);
   /** @state Maximum number of carousel items based on the window width. */
   const [viewportChunkSize, setViewportChunkSize] = useState<number>(2);
   /** @state Maximum number of carousel items based on the modal width. */
   const [modalChunkSize, setModalChunkSize] = useState<number>(2);
+  /** @state A record of user-defined media collections. */
+  const [userCollections, setUserCollections] = useState<Record<string, User_Collection>>({});
   /** @state Indicates whether the movie modal is visible. */
   const [isMovieModal, setIsMovieModal] = useState<boolean>(false);
   /** @state Indicates whether the list modal is visible. */
   const [isListModal, setIsListModal] = useState<boolean>(false);
-  /** @state A record of user-defined media collections. */
-  const [userCollections, setUserCollections] = useState<Record<string, User_Collection>>({});
+  /** @state Hero data representing the featured media item. */
+  const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(initialHeroData);
+  /** @state Modal trailer data representing the featured media item */
+  const [modalTrailer, setModalTrailer] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(initialHeroData);
 
   /**
    * @function getDynamicChunkSize
@@ -110,8 +113,8 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     // if (moviesArr.length > 0 && !carousels.length) {}
     setUserCollections({
       'user-collection-0': {
-        header: 'Unnamed Collection',
-        data: flattenedPrimaryData,
+        header: 'Trailer Queue',
+        data: null,
         display: 'flex',
       },
       'user-collection-1': {
@@ -140,6 +143,8 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
         userCollections,
         setUserCollections,
         root,
+        modalTrailer,
+        setModalTrailer,
       }}>
       {children}
     </CatalogContext.Provider>

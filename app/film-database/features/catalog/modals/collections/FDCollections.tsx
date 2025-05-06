@@ -1,7 +1,8 @@
-import { useCallback, useRef, useState } from 'react';
-import FDCollectionsModalMenu from './carousels/FDCollectionsMenu';
-import FDCollectionsModalCollection from './carousels/FDCollectionsCollection';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import FDCollectionsModalMenu from './FDCollectionsMenu';
+import FDCollectionsModalCollection from './FDCollectionsCollection';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import FDiFrame from '~/film-database/components/iframe/FDiFrame';
 
 export type Sensor = {
   isInteract: boolean;
@@ -24,6 +25,8 @@ const FDCollections = () => {
   /** @context */
   const { userCollections } = useCatalogProvider();
 
+  useEffect(() => console.log(userCollections), [userCollections]);
+
   /** @reference Array of all collections */
   const collectionRefs = useRef<HTMLElement[]>([]);
 
@@ -33,8 +36,11 @@ const FDCollections = () => {
     }
   };
 
-  /** @state User collections edit mode (hoisted) */
+  /** @state User collections edit mode flag (hoisted) */
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+
+  /** @state List effect flag (hoisted) */
+  const [isListFX, setIsListFX] = useState<boolean>(true);
 
   /** @constant */
   const NOT_FOUND_INDEX = -1 as const;
@@ -76,6 +82,7 @@ const FDCollections = () => {
 
   return (
     <>
+      <FDiFrame type='modal' />
       <section className='fdCollections'>
         {Object.values(userCollections).map(({ header, data, display }, index) => (
           <FDCollectionsModalCollection
@@ -87,6 +94,7 @@ const FDCollections = () => {
             ref={collectionRef}
             collectionRefs={collectionRefs}
             isEditMode={isEditMode}
+            isListFX={isListFX}
             sensorRef={sensorRef}
             sourceRef={sourceRef}
             targetRef={targetRef}
@@ -94,7 +102,7 @@ const FDCollections = () => {
           />
         ))}
       </section>
-      <FDCollectionsModalMenu collectionRefs={collectionRefs} isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
+      <FDCollectionsModalMenu collectionRefs={collectionRefs} isEditMode={isEditMode} isListFX={isListFX} setIsListFX={setIsListFX} setIsEditMode={setIsEditMode} />
     </>
   );
 };
