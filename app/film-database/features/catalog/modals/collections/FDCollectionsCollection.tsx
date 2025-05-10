@@ -19,10 +19,11 @@ type Props = {
   sourceRef: RefObject<Source>;
   targetRef: RefObject<Target>;
   resetStores: () => void;
+  triggerError: () => void;
 };
 
 const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
-  ({ mapIndex, header, data, display, isEditMode, isListFX, collectionRefs, sensorRef, sourceRef, targetRef, resetStores }, collectionRef) => {
+  ({ mapIndex, header, data, display, isEditMode, isListFX, collectionRefs, sensorRef, sourceRef, targetRef, resetStores, triggerError }, collectionRef) => {
     // Context
     const { setUserCollections, modalChunkSize, userCollections, setModalTrailer } = useCatalogProvider();
 
@@ -211,7 +212,11 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
 
         // If the dragged list item is dropped in a collection that already contains the list item
         const containsListItem: boolean = sourceData.some((item) => item.id === targetData[targetRef.current.listItemIndex]?.id);
-        if (containsListItem) return prevCarousels;
+
+        if (containsListItem) {
+          triggerError();
+          return prevCarousels;
+        }
 
         // Remove the item from sourceData
         const newSourceData: Namespace_Tmdb.BaseMedia_Provider[] = sourceData.filter((_, index) => index !== sourceRef.current.listItemIndex);

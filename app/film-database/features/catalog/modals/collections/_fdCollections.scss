@@ -305,3 +305,35 @@
     transform: rotate(360deg);
   }
 }
+
+.fdCollectionsErrorHandler {
+  position: fixed;
+  z-index: 3;
+  padding: calc(var(--fd-padding-generic) / 9) calc(var(--fd-padding-generic) / 6);
+  border-radius: var(--fd-border-radius);
+  background-color: var(--fd-bc-offset);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  overflow: clip;
+  transition: all 0.22s ease-in-out;
+  & div {
+    display: flex;
+    gap: calc(var(--fd-gap) / 2);
+    white-space: nowrap;
+    & svg {
+      width: 1.6em;
+      aspect-ratio: 1/1;
+    }
+  }
+  &[data-error='true'] {
+    bottom: calc(var(--fd-padding-generic) + 1em);
+    left: 50%;
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  &[data-error='false'] {
+    bottom: calc(var(--fd-padding-generic) / 2);
+    left: 50%;
+    transform: translate(-50%, 0);
+    opacity: 0;
+  }
+}

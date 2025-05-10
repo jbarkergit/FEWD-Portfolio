@@ -3,6 +3,7 @@ import FDCollectionsModalMenu from './FDCollectionsMenu';
 import FDCollectionsModalCollection from './FDCollectionsCollection';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import FDiFrame from '~/film-database/components/iframe/FDiFrame';
+import FDCollectionsErrorHandler from './FDCollectionsErrorHandler';
 
 export type Sensor = {
   isInteract: boolean;
@@ -42,6 +43,15 @@ const FDCollections = () => {
 
   /** @state List effect flag (hoisted) */
   const [isListFX, setIsListFX] = useState<boolean>(true);
+
+  /** @ref User collection error */
+  const errorRef = useRef<HTMLDivElement>(null);
+
+  const triggerError = useCallback((): void => {
+    const attr: string = 'data-error';
+    errorRef.current?.setAttribute(attr, 'true');
+    setTimeout(() => errorRef.current?.setAttribute(attr, 'false'), 3200);
+  }, []);
 
   /** @constant */
   const NOT_FOUND_INDEX = -1 as const;
@@ -101,10 +111,12 @@ const FDCollections = () => {
             sourceRef={sourceRef}
             targetRef={targetRef}
             resetStores={resetStores}
+            triggerError={triggerError}
           />
         ))}
       </section>
       <FDCollectionsModalMenu collectionRefs={collectionRefs} isEditMode={isEditMode} isListFX={isListFX} setIsListFX={setIsListFX} setIsEditMode={setIsEditMode} />
+      <FDCollectionsErrorHandler ref={errorRef} />
     </>
   );
 };
