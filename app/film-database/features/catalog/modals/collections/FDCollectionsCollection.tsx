@@ -126,16 +126,18 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
         distance: number;
       }>(
         (closest, rect, index) => {
-          // Skip iteration to prevent the return from being solely the list item's index
-          if (index === sourceRef.current.listItemIndex) return closest;
+          // Check if the detachment point is within the bounds of the current rect
+          const isWithinBounds = detach.x >= rect.left && detach.x <= rect.right && detach.y >= rect.top && detach.y <= rect.bottom;
 
-          // Find center of rect
+          if (isWithinBounds) return { rect, index, distance: 0 };
+
+          // Find the center of the rect
           const rectCenter: { x: number; y: number } = {
             x: rect.left + rect.width / 2,
             y: rect.top + rect.height / 2,
           };
 
-          // Calculate uclidean distance: sqrt(x2-x1)^2 + (y2-y1)^2
+          // Calculate Euclidean distance: sqrt((x2-x1)^2 + (y2-y1)^2)
           const distance = Math.sqrt(Math.pow(rectCenter.x - detach.x, 2) + Math.pow(rectCenter.y - detach.y, 2));
 
           // If the current rect is closer, update closest
@@ -160,7 +162,6 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       const { x, y } = sensorRef.current.initialPointerCoords;
 
       if (detach.x === x && detach.y === y) {
-        console.log(x, y, detach.x, detach.y);
         resetInteraction();
         return;
       }
@@ -200,6 +201,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       setUserCollections((prevCarousels) => {
         const isSameCollection: boolean = sourceRef.current.colIndex == targetRef.current.colIndex;
         const isSameListItemIndex: boolean = sourceRef.current.listItemIndex == targetRef.current.listItemIndex;
+
         // If the dragged list item is dropped in the same collection at the same position
         if (isSameCollection && isSameListItemIndex) return prevCarousels;
 
@@ -211,7 +213,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
         const targetData: Namespace_Tmdb.BaseMedia_Provider[] = prevCarousels[targetKey]?.data || [];
 
         // If the dragged list item is dropped in a collection that already contains the list item
-        const containsListItem: boolean = sourceData.some((item) => item.id === targetData[targetRef.current.listItemIndex]?.id);
+        const containsListItem: boolean = targetData.some((item) => item.id === sourceData[sourceRef.current.listItemIndex]?.id);
 
         if (containsListItem) {
           triggerError();
@@ -228,20 +230,18 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
           ...targetData.slice(targetRef.current.listItemIndex),
         ];
 
+        // State object
         const updatedCarousels = {
           ...prevCarousels,
           [sourceKey]: {
             ...prevCarousels[sourceKey],
-            data: isSameCollection ? newTargetData : newSourceData,
+            data: newSourceData,
           },
-        };
-
-        if (!isSameCollection) {
-          updatedCarousels[targetKey] = {
+          [targetKey]: {
             ...prevCarousels[targetKey],
             data: newTargetData,
-          };
-        }
+          },
+        };
 
         // Update state
         return updatedCarousels;
