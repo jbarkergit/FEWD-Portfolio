@@ -1,16 +1,18 @@
-import { forwardRef, type JSX, useMemo } from 'react';
+import { forwardRef, type JSX, type RefObject, useMemo } from 'react';
 import { IcBaselinePlus } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import type { Sensor } from './FDCollections';
 
 type Props = {
   mapIndex: number;
   data: Namespace_Tmdb.BaseMedia_Provider[] | null;
   display: string;
   isEditMode: boolean;
+  sensorRef: RefObject<Sensor>;
 };
 
-const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(({ mapIndex, data, display, isEditMode }, ulRef) => {
+const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(({ mapIndex, data, display, isEditMode, sensorRef }, ulRef) => {
   // Dynamic integer limitation of list items in a carousel
   const { modalChunkSize } = useCatalogProvider();
 
@@ -22,7 +24,7 @@ const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(({ mapInde
    */
   const ListItem = ({ movie, index }: { movie: Namespace_Tmdb.BaseMedia_Provider; index: number }): JSX.Element => {
     return (
-      <li data-list-item-visible={index === 0 ? 'true' : 'false'}>
+      <li data-list-item-visible={index === 0 ? 'true' : 'false'} role='option' aria-grabbed={sensorRef.current.isInteract ? 'true' : 'false'}>
         <picture>{movie && <img src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} alt={`${movie.title}`} fetchPriority={'high'} />}</picture>
       </li>
     );
@@ -65,7 +67,7 @@ const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(({ mapInde
   }, [data, modalChunkSize]);
 
   return (
-    <ul ref={ulRef} data-layout={display} data-list-item-fx='true' data-edit-mode={isEditMode}>
+    <ul ref={ulRef} data-layout={display} data-list-item-fx='true' data-edit-mode={isEditMode} aria-label='Reorderable list of movies' role='listbox'>
       {buildJSX}
     </ul>
   );

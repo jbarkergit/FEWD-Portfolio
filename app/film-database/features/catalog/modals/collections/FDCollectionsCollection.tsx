@@ -348,7 +348,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       <section className='fdCollections__collection' ref={collectionRef}>
         <FDCollectionsCollectionHeader mapIndex={mapIndex} header={header} />
         <div className='fdCollections__collection__wrapper'>
-          <FDCollectionsCollectionUl mapIndex={mapIndex} data={data} display={display} isEditMode={isEditMode} ref={ulRef} />
+          <FDCollectionsCollectionUl mapIndex={mapIndex} data={data} display={display} isEditMode={isEditMode} ref={ulRef} sensorRef={sensorRef} />
           <FDCollectionsNavigation updateCarouselIndex={updateCarouselIndex} />
         </div>
       </section>
