@@ -12,5 +12,5 @@ export default defineConfig({
     setupFiles: ['./app/setupTests.ts'],
   },
   build: { copyPublicDir: false, cssMinify: true, ssr: false },
-  define: { 'process.env': process.env },
+  // define: { 'process.env': process.env },
 });
