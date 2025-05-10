@@ -209,13 +209,12 @@ export namespace Namespace_Tmdb {
 /** Fetch util */
 const fetchTmdbData = async (keyValuePair: { key: Namespace_TmdbEndpointsKeys.Keys_Union; endpoint: string }): Promise<unknown | undefined> => {
   const abortController: AbortController = new AbortController();
-  const bearerToken = import.meta.env.VITE_TMDB_AUTH_KEY;
 
   const options: RequestInit = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${bearerToken}`,
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_READ_ACCESS_TOKEN}`,
     },
     signal: abortController.signal,
   };
