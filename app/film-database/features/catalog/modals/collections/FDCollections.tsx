@@ -7,6 +7,7 @@ import FDiFrame from '~/film-database/components/iframe/FDiFrame';
 export type Sensor = {
   isInteract: boolean;
   isActiveElement: boolean;
+  initialPointerCoords: Record<'x' | 'y', number | null>;
   pointerCoords: Record<'x' | 'y', number | null>;
 };
 
@@ -49,6 +50,7 @@ const FDCollections = () => {
   const createSensorDefault = (): Sensor => ({
     isInteract: false,
     isActiveElement: false,
+    initialPointerCoords: { x: null, y: null },
     pointerCoords: { x: null, y: null },
   });
 

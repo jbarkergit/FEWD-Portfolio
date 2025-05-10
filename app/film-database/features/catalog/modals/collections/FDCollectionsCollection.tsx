@@ -1,7 +1,7 @@
 import { useRef, useEffect, forwardRef, type RefObject } from 'react';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
-import { useCatalogProvider, type User_Collection } from '~/film-database/context/CatalogContext';
+import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import { useCarouselNavigation } from '~/film-database/hooks/useCarouselNavigation';
 import type { Sensor, Source, Target } from './FDCollections';
 import FDCollectionsNavigation from './FDCollectionsNavigation';
@@ -15,9 +15,9 @@ type Props = {
   isEditMode: boolean;
   isListFX: boolean;
   collectionRefs: RefObject<HTMLElement[]>;
-  sensorRef: React.RefObject<Sensor>;
-  sourceRef: React.RefObject<Source>;
-  targetRef: React.RefObject<Target>;
+  sensorRef: RefObject<Sensor>;
+  sourceRef: RefObject<Source>;
+  targetRef: RefObject<Target>;
   resetStores: () => void;
 };
 
@@ -66,11 +66,12 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
      */
 
     function pointerDown(event: PointerEvent): void {
-      const currentTarget = event.currentTarget;
-      const target = event.target;
+      const currentTarget: EventTarget | null = event.currentTarget;
+      const target: EventTarget | null = event.target;
 
       if (currentTarget instanceof HTMLUListElement && target instanceof HTMLLIElement) {
         sensorRef.current.isInteract = true;
+        sensorRef.current.initialPointerCoords = { x: event.clientX, y: event.clientY };
         sensorRef.current.pointerCoords = { x: event.clientX, y: event.clientY };
 
         sourceRef.current.colIndex = collectionRefs.current.findIndex((collection) => collection.querySelector('ul') === currentTarget);
@@ -153,6 +154,15 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
     function detachListItem(event: PointerEvent): void {
       // Get detachment position
       const detach: Record<'x' | 'y', number> = { x: event.clientX, y: event.clientY };
+
+      // Ensure that the user isn't misclicking
+      const { x, y } = sensorRef.current.initialPointerCoords;
+
+      if (detach.x === x && detach.y === y) {
+        console.log(x, y, detach.x, detach.y);
+        resetInteraction();
+        return;
+      }
 
       // Get index of new collection
       const collectionRects: DOMRect[] = collectionRefs.current.map((col) => col.getBoundingClientRect());
