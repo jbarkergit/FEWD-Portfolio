@@ -199,7 +199,6 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       setUserCollections((prevCarousels) => {
         const isSameCollection: boolean = sourceRef.current.colIndex == targetRef.current.colIndex;
         const isSameListItemIndex: boolean = sourceRef.current.listItemIndex == targetRef.current.listItemIndex;
-
         // If the dragged list item is dropped in the same collection at the same position
         if (isSameCollection && isSameListItemIndex) return prevCarousels;
 
@@ -209,6 +208,10 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
 
         const sourceData: Namespace_Tmdb.BaseMedia_Provider[] = prevCarousels[sourceKey]?.data || [];
         const targetData: Namespace_Tmdb.BaseMedia_Provider[] = prevCarousels[targetKey]?.data || [];
+
+        // If the dragged list item is dropped in a collection that already contains the list item
+        const containsListItem: boolean = sourceData.some((item) => item.id === targetData[targetRef.current.listItemIndex]?.id);
+        if (containsListItem) return prevCarousels;
 
         // Remove the item from sourceData
         const newSourceData: Namespace_Tmdb.BaseMedia_Provider[] = sourceData.filter((_, index) => index !== sourceRef.current.listItemIndex);
