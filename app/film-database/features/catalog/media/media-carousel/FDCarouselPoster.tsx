@@ -79,7 +79,7 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
             <li key={`movie-dropdown-collections-${i}`}>
               <button
                 aria-label={`Add movie to ${collection.header}`}
-                onPointerUp={() =>
+                onPointerUp={() => {
                   addUserCollection({
                     userCollections,
                     setUserCollections,
@@ -88,8 +88,9 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
                       data: [prop],
                       colIndex: keyIndex,
                     },
-                  })
-                }>
+                  });
+                  setIsCmOpen(false);
+                }}>
                 {collection.header}
               </button>
             </li>
@@ -99,7 +100,7 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
           <li className='fdCarousel__wrapper__ul__li__collections__mtnc'>
             <button
               aria-label='Add movie to a new collection'
-              onPointerUp={() =>
+              onPointerUp={() => {
                 addUserCollection({
                   userCollections,
                   setUserCollections,
@@ -108,8 +109,9 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
                     data: [prop],
                     colIndex: Object.keys(userCollections).length + 1,
                   },
-                })
-              }>
+                });
+                setIsCmOpen(false);
+              }}>
               <TablerCategoryPlus /> New Collection
             </button>
           </li>
