@@ -145,7 +145,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
-  useEffect(() => handleModalTrailerQueue(), [userCollections]);
+  useEffect(() => handleModalTrailerQueue(), [userCollections, isListModal]);
 
   return (
     <CatalogContext.Provider
