@@ -1,29 +1,35 @@
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useState, type PointerEvent } from 'react';
 import type { ChangeEvent, FC, JSX, ReactNode } from 'react';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { zodSchema } from '~/base/validation/schema/zodSchema';
+import FDLoginWithGroup from '../components/FDLoginWithGroup';
+import FDModalParent from '../components/FDModalParent';
 
-type Type_PropDrill = {
-  ModalParent: FC<{ children: ReactNode }>;
-  LoginWithGroup: () => JSX.Element;
+type Props = {
   setModal: React.Dispatch<React.SetStateAction<'signin' | 'registry' | 'reset'>>;
 };
 
-const schema = z.object({ emailAddress: zodSchema.contact.shape.emailAddress, password: zodSchema.account.shape.password });
-
-const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalParent, LoginWithGroup, setModal }, signInRefReceiver) => {
-  const [values, setValues] = useState({
+const FDAccountSignIn = forwardRef<HTMLUListElement, Props>(({ setModal }, signInRefReceiver) => {
+  // Input values store
+  const [values, setValues] = useState<Record<string, string>>({
     emailAddress: '',
     password: '',
   });
 
-  const [submitted, setSubmitted] = useState(false); // Track whether the form has been submitted
+  // Submitted flag
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
+  // Zod
+  const schema = z.object({ emailAddress: zodSchema.contact.shape.emailAddress, password: zodSchema.account.shape.password });
   const parse = schema.safeParse(values);
 
-  const valueSetter = (e: ChangeEvent<HTMLInputElement>): void => {
+  /**
+   * @function handleValues
+   * @description Sets values store with input values
+   */
+  const handleValues = (e: ChangeEvent<HTMLInputElement>): void => {
     const key = e.target.name as keyof typeof values;
 
     setValues((prevValues) => {
@@ -31,9 +37,15 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
     });
   };
 
-  const handleSubmit = async (e: React.PointerEvent): Promise<void> => {
+  /**
+   * @function handleSubmit
+   * @description Handles form submission
+   * @param e: Pointer Event
+   */
+  const handleSubmit = async (e: PointerEvent): Promise<void> => {
     e.preventDefault();
-    setSubmitted(true); // Mark the form as submitted
+    setSubmitted(true);
+
     if (schema.safeParse(values).success) {
       await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
       window.location.reload();
@@ -42,7 +54,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
 
   return (
     <>
-      <ModalParent>
+      <FDModalParent>
         <ul className='fdAccountModal__modals__form__fieldset__ul' ref={signInRefReceiver} data-visible='true'>
           <li className='fdAccountModal__modals__form__fieldset__ul__li'>
             <label id='emailAddress' htmlFor='fdUserAccountSignInEmailAddress'>
@@ -63,7 +75,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
               autoCapitalize='off'
               placeholder='johndoe@gmail.com'
               onPointerUp={() => focus()}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
             />
             {submitted && parse.error?.errors.some((err) => err.path.includes('emailAddress')) && (
               <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('emailAddress'))[0].message}</span>
@@ -92,7 +104,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
               autoCapitalize='off'
               placeholder='••••••••'
               onPointerUp={() => focus()}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => valueSetter(e)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
             />
             {submitted && parse.error?.errors.some((err) => err.path.includes('password')) && (
               <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('password'))[0].message}</span>
@@ -108,7 +120,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
             I forgot my password.
           </button>
         </ul>
-      </ModalParent>
+      </FDModalParent>
 
       <div className='fdAccountModal__modals__btns'>
         <button aria-label='Sign in with your credentials' onPointerUp={handleSubmit}>
@@ -117,7 +129,7 @@ const FDAccountSignIn = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalPar
         <button aria-label='Create a new account' onPointerUp={() => setModal('registry')}>
           Create a new account
         </button>
-        <LoginWithGroup />
+        <FDLoginWithGroup />
       </div>
     </>
   );

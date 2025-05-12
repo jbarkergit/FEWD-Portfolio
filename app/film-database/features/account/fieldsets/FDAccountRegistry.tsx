@@ -1,24 +1,17 @@
 import { createUserWithEmailAndPassword, signInWithCredential, signInWithEmailAndPassword } from 'firebase/auth';
 import { forwardRef, useState } from 'react';
-import type { ChangeEvent, FC, JSX, ReactNode } from 'react';
+import type { ChangeEvent } from 'react';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { zodSchema } from '~/base/validation/schema/zodSchema';
+import FDLoginWithGroup from '../components/FDLoginWithGroup';
+import FDModalParent from '../components/FDModalParent';
 
 type Type_PropDrill = {
-  ModalParent: FC<{ children: ReactNode }>;
-  LoginWithGroup: () => JSX.Element;
   setModal: React.Dispatch<React.SetStateAction<'signin' | 'registry' | 'reset'>>;
 };
 
-const schema = z.object({
-  firstName: zodSchema.user.shape.firstName,
-  lastName: zodSchema.user.shape.lastName,
-  emailAddress: zodSchema.contact.shape.emailAddress,
-  password: zodSchema.account.shape.password,
-});
-
-const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalParent, LoginWithGroup, setModal }, registryRefReceiver) => {
+const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ setModal }, registryRefReceiver) => {
   const [values, setValues] = useState({
     firstName: '',
     lastName: '',
@@ -26,8 +19,14 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
     password: '',
   });
 
-  const [showErrors, setShowErrors] = useState(false); // State to manage error visibility
+  const schema = z.object({
+    firstName: zodSchema.user.shape.firstName,
+    lastName: zodSchema.user.shape.lastName,
+    emailAddress: zodSchema.contact.shape.emailAddress,
+    password: zodSchema.account.shape.password,
+  });
 
+  const [showErrors, setShowErrors] = useState(false);
   const parse = schema.safeParse(values);
 
   const valueSetter = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
@@ -41,7 +40,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
 
   const submitForm = async (e: React.PointerEvent<HTMLButtonElement>): Promise<void> => {
     e.preventDefault();
-    setShowErrors(true); // Show errors when form is submitted
+    setShowErrors(true);
 
     try {
       if (parse.success) {
@@ -64,7 +63,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
 
   return (
     <>
-      <ModalParent>
+      <FDModalParent>
         <ul className='fdAccountModal__modals__form__fieldset__ul' ref={registryRefReceiver} data-visible='false'>
           <div className='fdAccountModal__modals__form__fieldset__ul__name'>
             {[
@@ -172,7 +171,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
             )}
           </li>
         </ul>
-      </ModalParent>
+      </FDModalParent>
       <div className='fdAccountModal__modals__btns'>
         <button id='fdUserAccountSubmitForm' aria-label='Submit registration form' onPointerUp={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
           Complete registration
@@ -180,7 +179,7 @@ const FDAccountRegistry = forwardRef<HTMLUListElement, Type_PropDrill>(({ ModalP
         <button aria-label='Sign in' onPointerUp={() => setModal('signin')}>
           Sign into an existing account
         </button>
-        <LoginWithGroup />
+        <FDLoginWithGroup />
       </div>
     </>
   );
