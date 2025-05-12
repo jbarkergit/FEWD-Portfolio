@@ -129,6 +129,24 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     initializeUserCollections();
   }, []);
 
+  /**
+   * @function handleModalTrailerQueue
+   * @description Sets the modal trailer data for the featured media item.
+   */
+  const handleModalTrailerQueue = (): void => {
+    if (userCollections) {
+      const collection = userCollections['user-collection-0'];
+      if (!collection) return;
+
+      const data = collection.data;
+      if (!data) return;
+
+      setModalTrailer(data[0]);
+    }
+  };
+
+  useEffect(() => handleModalTrailerQueue(), [userCollections]);
+
   return (
     <CatalogContext.Provider
       value={{

@@ -1,10 +1,12 @@
 // Deps
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // Lib
 import YouTube from 'react-youtube';
 import type { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
 // Components
 import IFrameController from '../iframe-controller/IFrameController';
+import { useCatalogProvider, type User_Collection } from '~/film-database/context/CatalogContext';
+import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
 const FDiFramePlayer = ({
   trailers,
@@ -40,6 +42,9 @@ const FDiFramePlayer = ({
     >
   >;
 }) => {
+  // Context
+  const { isListModal, userCollections, modalTrailer, setModalTrailer } = useCatalogProvider();
+
   // Init player
   const playerRef = useRef<YouTube | null>(null);
 
@@ -75,8 +80,33 @@ const FDiFramePlayer = ({
 
   // Player destruction
   const destroyPlayer = (target: YouTubePlayer) => {
-    target.destroy();
-    setTrailers(undefined);
+    const destroy = (): void => {
+      target.destroy();
+      setTrailers(undefined);
+    };
+
+    if (!isListModal) {
+      destroy();
+      return;
+    }
+
+    const queueCollection = userCollections['user-collection-0'];
+
+    if (!queueCollection?.data) {
+      destroy();
+      return;
+    }
+
+    const queueData = queueCollection.data;
+    const endedTrailerId = queueData.findIndex((prop) => prop.id === modalTrailer?.id);
+    const nextTrailer = queueData[endedTrailerId + 1];
+
+    if (!nextTrailer) {
+      destroy();
+      return;
+    }
+
+    setModalTrailer(nextTrailer);
   };
 
   // Global player states
