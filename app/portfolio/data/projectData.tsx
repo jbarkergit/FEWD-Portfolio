@@ -1,5 +1,3 @@
-import { Link } from 'react-router';
-
 export const projectData = [
   {
     key: 'film database',
@@ -16,30 +14,40 @@ export const projectData = [
       <>
         <h2>Film Database</h2>
         <p>
-          From the core architecture to the user interface elements, this project represents a self-directed effort to build a movie-database website from scratch.
-          It was an excellent opportunity to deepen my JavaScript knowledge and sharpen my critical thinking skills. The project utilizes{' '}
-          <Link to='https://www.themoviedb.org/'>TheMovieDatabase API</Link> for data, the{' '}
-          <Link to='https://www.npmjs.com/package/react-youtube'>React-YouTube</Link> library for integrating a custom iFrame controller, and Firebase for
-          authentication and CRUD functionality.
+          This self-initiated movie database website was developed from the ground up using Vite, React, TypeScript, and styled with SASS. It integrates the
+          TheMovieDatabase (TMDB) API for movie data, React-YouTube for embedded video playback, and Firebase for authentication and full CRUD operations. Form
+          validation is handled using Zod.
         </p>
         <p>
-          Working with <Link to='https://www.themoviedb.org/'>TMDB</Link> presented several challenges, such as inconsistently formatted URLs and the lack of WEBP
-          images. To address these issues, I implemented a type library of sorts and additional type-guarded fetch logic to ensure successful HTTP responses. Through
-          iterative refactoring and performance checks, I developed custom hooks to process data safely and efficiently with the added benefit of preventing
-          unnecessary API calls through use of sessionStorage. While the final solution is somewhat verbose, it performs well, though there’s always room for further
-          optimization.
+          Working with TMDB presented several challenges, such as inconsistently formatted URLs and the absence of WEBP image support. To minimize the risk of API
+          call failures, I built custom type-safe fetch utilities and used TypeScript guards—paired with an experimental naming convention—for reliable type
+          inference and autocompletion. I also optimized data fetching by leveraging sessionStorage to avoid redundant requests. While these solutions improved
+          performance and stability, some areas could benefit from further refactoring.
         </p>
         <p>
-          The UI design was heavily inspired by Netflix and Prime Video. To create a consistent and visually appealing interface, I used{' '}
-          <Link to='https://developers.google.com/youtube/iframe_api_reference'>YouTube's Player API</Link> to display trailers. However, the native controls didn't
-          fit the desired aesthetic, which led me to develop a custom solution for the video player interface. Despite the challenges with the iFrame’s native
-          behavior and limited documentation, I successfully integrated a custom controller overlay using{' '}
-          <Link to='https://www.npmjs.com/package/react-youtube'>React-YouTube</Link>, achieving a seamless design.
+          The user interface draws inspiration from platforms like Netflix and Prime Video. For trailer playback, I integrated the YouTube IFrame Player API, and to
+          enhance the user experience, I developed a custom overlay using React-YouTube to match the application’s aesthetic. While YouTube’s recommendation overlays
+          cannot be removed, the final implementation maintains a cohesive and visually consistent experience.
         </p>
         <p>
-          Once the UI was complete, I focused on improving my CSS transition skills, which provided invaluable experience. This project deepened my appreciation for
-          intricate, CSS-based animations. Navigating new complexities required a thorough cleanup of my stylesheets and exploration of unfamiliar properties.
-          Through trial and error, I optimized performance to ensure a smooth user experience across all devices.
+          A significant UI challenge was implementing a responsive carousel with dynamically sized items. Rather than relying on JavaScript-heavy solutions, I built
+          a CSS-driven approach using viewport-based calculations and custom properties to determine item dimensions. The layout adapts across screen sizes using
+          media queries informed by real-world device usage statistics. Custom properties dynamically calculate width-to-height ratios and the number of items per
+          page. To support interactivity and synchronize layout logic, I mounted resize event listeners and passed computed values through context as dependencies
+          for various components. This approach improved performance, reduced layout-related edge cases, and achieved a maintainable balance between CSS and
+          JavaScript.
+        </p>
+        <p>
+          To deepen my backend integration experience, I implemented authentication and a modal feature that allows users to organize movies into custom collections
+          and queue trailers for sequential viewing. These interactions are backed by Firestore for data persistence and real-time updates. Rather than using
+          drag-and-drop libraries like dndkit or relying on HTML5’s native draggable attributes, I chose to build the drag-and-drop functionality from scratch to
+          better understand the underlying mechanics. This involved managing native drag events, calculating distances, handling complex state transitions, and
+          resolving race conditions. A limitation to this approach is reduced accessibility—due to the deprecation of ARIA support for draggable elements, full
+          WAI-ARIA compliance is not fully achievable.
+        </p>
+        <p>
+          Finally, the project offered a chance to refine my CSS animation and transition skills. I optimized stylesheets, explored advanced animation properties,
+          and ensured smooth visual transitions across devices, contributing to a polished and responsive user experience.
         </p>
       </>
     ),
