@@ -2,176 +2,173 @@
 @use '/app/film-database/scss/fdMixins' as m;
 
 .fdAccount {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: grid;
-  place-items: center;
+  display: block;
   width: 100%;
   height: 100svh;
   padding: calc((100svh / 16) * 2);
+  @include m.grainPsuedo;
 }
 
-.fdAccountModal {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  width: 65%;
-  min-height: 80%;
-  border-radius: var(--fd-border-radius);
-  box-shadow:
-    0px 2px 2px 0px rgba(0, 0, 0, 0.5),
-    inset 0px -3px 6px -2px rgba(0, 0, 0, 0.3);
-  overflow: clip;
-  opacity: 1;
-  transition: opacity ease-in 1.1s;
-  &[data-visible='true'] {
-    opacity: 1;
-    transform: opacity 0.5s ease-in-out;
-  }
-  &[data-visible='false'] {
-    opacity: 0;
-    pointer-events: none;
-  }
-  &[data-visible='mount'] {
-    opacity: 1;
-    transition: opacity 1.65s cubic-bezier(1, 0, 0.62, 1) 0.9s;
-  }
-  & > * {
-    z-index: 9;
-    will-change: opacity;
-    &:first-child {
-      flex: 0 1 40%;
-      background-color: hsl(220, 33%, 96%);
-      color: black;
-    }
-    &:last-child {
-      flex: 1 0 60%;
-      background-color: hsl(220, 33%, 98%);
-      color: black;
-    }
-  }
-}
+// .fdAccountModal {
+//   position: relative;
+//   z-index: 1;
+//   display: flex;
+//   width: 65%;
+//   min-height: 80%;
+//   border-radius: var(--fd-border-radius);
+//   box-shadow:
+//     0px 2px 2px 0px rgba(0, 0, 0, 0.5),
+//     inset 0px -3px 6px -2px rgba(0, 0, 0, 0.3);
+//   overflow: clip;
+//   opacity: 1;
+//   transition: opacity ease-in 1.1s;
+//   &[data-visible='true'] {
+//     opacity: 1;
+//     transform: opacity 0.5s ease-in-out;
+//   }
+//   &[data-visible='false'] {
+//     opacity: 0;
+//     pointer-events: none;
+//   }
+//   &[data-visible='mount'] {
+//     opacity: 1;
+//     transition: opacity 1.65s cubic-bezier(1, 0, 0.62, 1) 0.9s;
+//   }
+//   & > * {
+//     z-index: 9;
+//     will-change: opacity;
+//     &:first-child {
+//       flex: 0 1 40%;
+//       background-color: hsl(220, 33%, 96%);
+//       color: black;
+//     }
+//     &:last-child {
+//       flex: 1 0 60%;
+//       background-color: hsl(220, 33%, 98%);
+//       color: black;
+//     }
+//   }
+// }
 
-.fdAccountModal__article {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--fd-gap) * 2.5);
-  padding: calc(var(--fd-gap) * 6) calc(var(--fd-gap) * 6);
-  & img {
-    position: absolute;
-    z-index: 1;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 110%;
-    transform: translate(-50%, -50%);
-    filter: brightness(0.25);
-  }
-  & h2,
-  p {
-    position: relative;
-    z-index: 2;
-    color: var(--fd-font-color-primary);
-  }
-  & h2 {
-    @include m.fdFontL;
-    text-wrap: balance;
-  }
-  & p {
-    width: 100%;
-    @include m.fdFontM;
-    font-weight: 500;
-    text-wrap: pretty;
-  }
-}
+// .fdAccountModal__article {
+//   position: relative;
+//   display: flex;
+//   flex-direction: column;
+//   gap: calc(var(--fd-gap) * 2.5);
+//   padding: calc(var(--fd-gap) * 6) calc(var(--fd-gap) * 6);
+//   & img {
+//     position: absolute;
+//     z-index: 1;
+//     top: 50%;
+//     left: 50%;
+//     width: 100%;
+//     height: 110%;
+//     transform: translate(-50%, -50%);
+//     filter: brightness(0.25);
+//   }
+//   & h2,
+//   p {
+//     position: relative;
+//     z-index: 2;
+//     color: var(--fd-font-color-primary);
+//   }
+//   & h2 {
+//     @include m.fdFontL;
+//     text-wrap: balance;
+//   }
+//   & p {
+//     width: 100%;
+//     @include m.fdFontM;
+//     font-weight: 500;
+//     text-wrap: pretty;
+//   }
+// }
 
-.fdAccountModal__modals {
-  padding: calc(var(--fd-gap) * 6) calc(var(--fd-gap) * 6);
-  &__form__fieldset__ul {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-bottom: var(--fd-gap);
-    &:has(button) li {
-      padding-bottom: 0;
-    }
-    & div {
-      width: 100%;
-    }
-    & li {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      padding-bottom: calc(var(--fd-gap) * 2);
-      & label {
-        padding: 0 0 2px 3px;
-        @include m.fdFontM;
-      }
-      & .error-message {
-        padding: calc(var(--fd-gap) / 2) 0 0 f.rem(3);
-      }
-      & input,
-      select {
-        padding: f.rem(3) 1ch;
-        border: 1px solid #e5e5e7;
-        border-radius: calc(var(--fd-border-radius) / 2);
-        background-color: var(--fd-bc-secondary);
-      }
-    }
-    & button {
-      margin: 4px 0 var(--fd-gap) calc(var(--fd-gap) / 2);
-    }
-    // Registry
-    &__name,
-    &__dob,
-    &__password {
-      display: flex;
-      gap: var(--fd-gap);
-    }
-    &__name li,
-    &__password li {
-      flex: 1 1 calc(100% / 2);
-    }
-    &__dob li {
-      flex: 1 1 calc(100% / 3);
-    }
-  }
-  // Global
-  &__btns {
-    width: 100%;
-    & button,
-    &__grouped button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.65ch;
-      height: f.rem(46);
-      padding: var(--fd-gap);
-      border-radius: calc(var(--fd-border-radius) / 2);
-      margin-bottom: var(--fd-gap);
-      @include m.fdFontM;
-      & svg {
-        width: 1.3em;
-        aspect-ratio: 1/1;
-      }
-    }
-    & button {
-      width: inherit;
-      background-color: #004eec;
-      @include m.fdFontM;
-      color: var(--fd-font-color-primary);
-    }
-    &__grouped {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: var(--fd-gap);
-      & button:nth-of-type(1) {
-      }
-      & button:nth-of-type(2) {
-      }
-    }
-  }
-}
+// .fdAccountModal__modals {
+//   padding: calc(var(--fd-gap) * 6) calc(var(--fd-gap) * 6);
+//   &__form__fieldset__ul {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: flex-start;
+//     padding-bottom: var(--fd-gap);
+//     &:has(button) li {
+//       padding-bottom: 0;
+//     }
+//     & div {
+//       width: 100%;
+//     }
+//     & li {
+//       display: flex;
+//       flex-direction: column;
+//       width: 100%;
+//       padding-bottom: calc(var(--fd-gap) * 2);
+//       & label {
+//         padding: 0 0 2px 3px;
+//         @include m.fdFontM;
+//       }
+//       & .error-message {
+//         padding: calc(var(--fd-gap) / 2) 0 0 f.rem(3);
+//       }
+//       & input,
+//       select {
+//         padding: f.rem(3) 1ch;
+//         border: 1px solid #e5e5e7;
+//         border-radius: calc(var(--fd-border-radius) / 2);
+//         background-color: var(--fd-bc-secondary);
+//       }
+//     }
+//     & button {
+//       margin: 4px 0 var(--fd-gap) calc(var(--fd-gap) / 2);
+//     }
+//     // Registry
+//     &__name,
+//     &__dob,
+//     &__password {
+//       display: flex;
+//       gap: var(--fd-gap);
+//     }
+//     &__name li,
+//     &__password li {
+//       flex: 1 1 calc(100% / 2);
+//     }
+//     &__dob li {
+//       flex: 1 1 calc(100% / 3);
+//     }
+//   }
+//   // Global
+//   &__btns {
+//     width: 100%;
+//     & button,
+//     &__grouped button {
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       gap: 0.65ch;
+//       height: f.rem(46);
+//       padding: var(--fd-gap);
+//       border-radius: calc(var(--fd-border-radius) / 2);
+//       margin-bottom: var(--fd-gap);
+//       @include m.fdFontM;
+//       & svg {
+//         width: 1.3em;
+//         aspect-ratio: 1/1;
+//       }
+//     }
+//     & button {
+//       width: inherit;
+//       background-color: #004eec;
+//       @include m.fdFontM;
+//       color: var(--fd-font-color-primary);
+//     }
+//     &__grouped {
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       gap: var(--fd-gap);
+//       & button:nth-of-type(1) {
+//       }
+//       & button:nth-of-type(2) {
+//       }
+//     }
+//   }
+// }
