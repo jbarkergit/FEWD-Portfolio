@@ -54,7 +54,7 @@
       background-color: var(--fd-bc-offset);
       &:nth-child(1) {
         flex: 1 1 auto;
-        padding: calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 2);
+        padding: calc(var(--fd-padding-generic) / 2) var(--fd-padding-generic) calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 2);
         border-bottom-left-radius: var(--fd-border-radius);
         border-top-left-radius: var(--fd-border-radius);
         & button {
@@ -74,7 +74,6 @@
           justify-content: center;
           align-items: center;
           height: 100%;
-          padding-right: 15%;
           & fieldset {
             display: flex;
             flex-direction: column;
