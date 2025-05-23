@@ -161,6 +161,9 @@ input {
   &:focus-visible {
     outline: 0;
   }
+  &[type='checkbox'] {
+    cursor: pointer;
+  }
 }
 abbr {
   text-decoration: none;
