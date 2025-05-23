@@ -1,20 +1,23 @@
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
-import { useState, type PointerEvent } from 'react';
-import type { ChangeEvent, RefObject } from 'react';
+import { useRef, useState, type PointerEvent } from 'react';
+import type { ChangeEvent, HTMLAttributes, RefObject } from 'react';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { zodSchema } from '~/base/validation/schema/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
+import FDGitHubBtn from '../buttons/FDGitHubBtn';
+import FDGoogleBtn from '../buttons/FDGoogleBtn';
 
-const FDAccountSignIn = ({ toggleSectionVisibility }: { toggleSectionVisibility: (ref: RefObject<HTMLDivElement>) => void }) => {
+const FDAccountSignIn = ({ toggleSectionVisibility }: { toggleSectionVisibility: (ref: RefObject<HTMLFieldSetElement | null>) => void }) => {
+  /** @reference */
+  const signInRef = useRef<HTMLFieldSetElement>(null);
+
   /** @state Input values store */
   const { values, handleValues } = useFormValues({ emailAddress: '', password: '' });
 
   /** @schema ZOD */
   const schema = z.object({ emailAddress: zodSchema.contact.shape.emailAddress, password: zodSchema.account.shape.password });
-
-  /** @state Validation Errors */
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const parse = schema.safeParse(values);
 
   /**
    * @function handleSubmit
@@ -23,10 +26,8 @@ const FDAccountSignIn = ({ toggleSectionVisibility }: { toggleSectionVisibility:
    */
   const handleSubmit = async (e: PointerEvent): Promise<void> => {
     e.preventDefault();
-    const parse = schema.safeParse(values);
 
     if (parse.success) {
-      setErrors({});
       await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
       window.location.reload();
     } else {
@@ -37,88 +38,92 @@ const FDAccountSignIn = ({ toggleSectionVisibility }: { toggleSectionVisibility:
           errorMessages[error.path[0]] = error.message;
         }
       }
-
-      setErrors(errorMessages);
     }
   };
 
   return (
-    <>
-      <legend className='fdAccountModal__form__fieldset__legend'>Sign in</legend>
-      <ul className='fdAccountModal__modals__form__fieldset__ul' data-visible='true'>
-        <li className='fdAccountModal__modals__form__fieldset__ul__li'>
-          <label id='emailAddress' htmlFor='fdUserAccountSignInEmailAddress'>
-            Email address
-          </label>
-          <input
-            form='fdRegistery'
-            id='fdUserAccountSignInEmailAddress'
-            name='emailAddress'
-            type='email'
-            inputMode='email'
-            minLength={3}
-            maxLength={76}
-            size={12}
-            required={true}
-            aria-required='true'
-            aria-invalid={schema.safeParse(values.emailAddress).success}
-            autoCapitalize='off'
-            placeholder='johndoe@gmail.com'
-            onPointerUp={() => focus()}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
-          />
-          {errors.emailAddress && <span className='error-message'>{errors.emailAddress}</span>}
-        </li>
-        <button className='fdAccountModal__modals__form__fieldset__ul__btn' aria-label='Forgot email'>
-          I forgot my email.
-        </button>
-
-        <li className='fdAccountModal__modals__form__fieldset__ul__li'>
-          <label id='password' htmlFor='fdUserAccountSignInPassword'>
-            Password
-          </label>
-          <input
-            form='fdRegistery'
-            id='fdUserAccountSignInPassword'
-            name='password'
-            type='password'
-            inputMode='text'
-            minLength={8}
-            maxLength={32}
-            size={12}
-            required={true}
-            aria-required='true'
-            aria-invalid={schema.safeParse(values.password).success}
-            autoCapitalize='off'
-            placeholder='••••••••'
-            onPointerUp={() => focus()}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
-          />
-          {errors.password && <span className='error-message'>{errors.password}</span>}
-        </li>
-        <button
-          className='fdAccountModal__modals__form__fieldset__ul__btn'
-          aria-label='Forgot password'
-          onPointerUp={(e) => {
-            e.preventDefault();
-            if (schema.safeParse(values).success) sendPasswordResetEmail(firebaseAuth, values.emailAddress);
-          }}>
-          I forgot my password.
-        </button>
+    <fieldset className='fdAccount__container__wrapper__form__fieldset' data-visible='true' ref={signInRef}>
+      <div>
+        <legend>Get Started Now</legend>
+        <p>Welcome back to Film Database, let's get you signed in.</p>
+      </div>
+      <div>
+        <FDGitHubBtn />
+        <FDGoogleBtn />
+      </div>
+      <ul className='fdAccount__container__wrapper__form__fieldset__ul' data-visible='true' data-signin>
+        {[
+          {
+            labelId: 'Email address',
+            id: 'fdUserAccountSignInEmailAddress',
+            name: 'emailAddress',
+            type: 'email',
+            inputMode: 'email',
+            minLength: 3,
+            maxLength: 76,
+            placeholder: 'johndoe@gmail.com',
+          },
+          {
+            labelId: 'Password',
+            id: 'fdUserAccountSignInPassword',
+            name: 'password',
+            type: 'password',
+            inputMode: 'text',
+            minLength: 8,
+            maxLength: 32,
+            placeholder: '••••••••',
+          },
+        ].map((field, index) => (
+          <li key={field.id} className='fdAccount__container__wrapper__form__fieldset__ul__li'>
+            <label id={field.id} htmlFor={field.id}>
+              {field.labelId}
+            </label>
+            <input
+              form='fdRegistery'
+              id={field.id}
+              name={field.name}
+              type={field.type}
+              inputMode={field.inputMode as HTMLAttributes<HTMLInputElement>['inputMode']}
+              size={12}
+              required={true}
+              aria-required='true'
+              aria-invalid={parse.success}
+              autoCapitalize={field.type === 'text' ? 'words' : 'off'}
+              placeholder={field.placeholder}
+              minLength={field.minLength}
+              maxLength={field.maxLength}
+              onPointerUp={() => focus()}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
+            />
+            {index === 1 && (
+              <button
+                aria-label='Reset your password'
+                onPointerUp={(e) => {
+                  e.preventDefault();
+                  if (schema.safeParse(values).success) sendPasswordResetEmail(firebaseAuth, values.emailAddress);
+                }}>
+                I forgot my password.
+              </button>
+            )}
+            {parse.error?.errors.some((err) => err.path.includes(field.name)) && (
+              <div className='fdAccount__container__wrapper__form__fieldset__ul__li--error'>
+                {parse.error.errors.find((err) => err.path.includes(field.name))?.message}
+              </div>
+            )}
+          </li>
+        ))}
       </ul>
-
-      <div className='fdAccountModal__modals__btns'>
+      <div>
         <button aria-label='Sign in with your credentials' onPointerUp={handleSubmit}>
           Sign in
         </button>
-        <button
-          aria-label='Create a new account'
-          // onPointerUp={() => setModal('registry')}
-        >
-          Create a new account
-        </button>
+        <div>
+          <button aria-label='Create a new account' onPointerUp={() => toggleSectionVisibility(signInRef)}>
+            Create a new account
+          </button>
+        </div>
       </div>
-    </>
+    </fieldset>
   );
 };
 

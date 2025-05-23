@@ -1,12 +1,17 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { useState } from 'react';
-import type { ChangeEvent, RefObject } from 'react';
+import { useRef } from 'react';
+import type { ChangeEvent, HTMLAttributes, RefObject } from 'react';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { zodSchema } from '~/base/validation/schema/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
+import FDGitHubBtn from '../buttons/FDGitHubBtn';
+import FDGoogleBtn from '../buttons/FDGoogleBtn';
 
-const FDAccountRegistry = ({ toggleSectionVisibility }: { toggleSectionVisibility: (ref: RefObject<HTMLDivElement>) => void }) => {
+const FDAccountRegistry = ({ toggleSectionVisibility }: { toggleSectionVisibility: (ref: RefObject<HTMLFieldSetElement | null>) => void }) => {
+  /** @reference */
+  const registryRef = useRef<HTMLFieldSetElement>(null);
+
   /** @state Input values store */
   const { values, handleValues } = useFormValues({ firstName: '', lastName: '', emailAddress: '', password: '' });
 
@@ -17,14 +22,10 @@ const FDAccountRegistry = ({ toggleSectionVisibility }: { toggleSectionVisibilit
     emailAddress: zodSchema.contact.shape.emailAddress,
     password: zodSchema.account.shape.password,
   });
-
-  /** @state Validation Errors */
-  const [errors, setErrors] = useState(false);
   const parse = schema.safeParse(values);
 
   const submitForm = async (e: React.PointerEvent<HTMLButtonElement>): Promise<void> => {
     e.preventDefault();
-    setErrors(true);
 
     try {
       if (parse.success) {
@@ -46,129 +47,118 @@ const FDAccountRegistry = ({ toggleSectionVisibility }: { toggleSectionVisibilit
   };
 
   return (
-    <>
-      <legend className='fdAccountModal__form__fieldset__legend'>Registry</legend>
-
-      <ul className='fdAccountModal__modals__form__fieldset__ul' data-visible='false'>
-        <div className='fdAccountModal__modals__form__fieldset__ul__name'>
-          {[
-            { labelId: 'firstName', id: 'fdUserAccountFirstName', name: 'firstName', label: 'First name', isRequired: true, placeholder: 'John' },
-            { labelId: 'lastName', id: 'fdUserAccountLastName', name: 'lastName', label: 'Last name', isRequired: false, placeholder: 'Doe' },
-          ].map((field) => (
-            <li key={field.id}>
-              <label id={field.labelId} htmlFor={field.id}>
-                {field.label}
-              </label>
-              <input
-                form='fdRegistery'
-                id={field.id}
-                name={field.name}
-                type='text'
-                inputMode='text'
-                size={12}
-                required={field.isRequired}
-                aria-required={field.isRequired ? 'true' : 'false'}
-                aria-invalid={errors && !parse.success} // Only show invalid state after submission
-                autoCapitalize='words'
-                placeholder={field.placeholder}
-                onPointerUp={() => focus()}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
-              />
-              {errors && parse.error?.errors.some((err) => err.path.includes(field.name)) && (
-                <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes(field.name))[0].message}</span>
-              )}
-            </li>
-          ))}
-        </div>
-        <li className='fdAccountModal__modals__form__fieldset__ul__li'>
-          <label id='emailAddress' htmlFor='fdUserAccountEmailAddress'>
-            Email address
+    <fieldset className='fdAccount__container__wrapper__form__fieldset' ref={registryRef} data-visible='true'>
+      <div>
+        <legend>Get Started Now</legend>
+        <p>Welcome to Film Database, create an account to start your experience.</p>
+      </div>
+      <div>
+        <FDGitHubBtn />
+        <FDGoogleBtn />
+      </div>
+      <ul className='fdAccount__container__wrapper__form__fieldset__ul' data-registry>
+        {[
+          {
+            labelId: 'firstName',
+            id: 'fdUserAccountFirstName',
+            name: 'firstName',
+            label: 'First name',
+            type: 'text',
+            inputMode: 'text',
+            required: true,
+            placeholder: 'John',
+          },
+          {
+            labelId: 'lastName',
+            id: 'fdUserAccountLastName',
+            name: 'lastName',
+            label: 'Last name',
+            type: 'text',
+            inputMode: 'text',
+            required: false,
+            placeholder: 'Doe',
+          },
+          {
+            labelId: 'emailAddress',
+            id: 'fdUserAccountEmailAddress',
+            name: 'emailAddress',
+            label: 'Email address',
+            type: 'email',
+            inputMode: 'email',
+            required: true,
+            placeholder: 'johndoe@gmail.com',
+            minLength: 3,
+            maxLength: 76,
+          },
+          {
+            labelId: 'password',
+            id: 'fdUserAccountPassword',
+            name: 'password',
+            label: 'Password',
+            type: 'password',
+            inputMode: 'text',
+            required: true,
+            placeholder: '••••••••',
+            minLength: 8,
+            maxLength: 32,
+          },
+          {
+            labelId: 'passwordConfirmation',
+            id: 'fdUserAccountPasswordConfirmation',
+            name: 'passwordConfirmation',
+            label: 'Retype password',
+            type: 'password',
+            inputMode: 'text',
+            required: true,
+            placeholder: '••••••••',
+            minLength: 8,
+            maxLength: 32,
+          },
+        ].map((field) => (
+          <li key={field.id} className='fdAccount__container__wrapper__form__fieldset__ul__li'>
+            <label id={field.labelId} htmlFor={field.id}>
+              {field.label}
+            </label>
+            <input
+              form='fdRegistery'
+              id={field.id}
+              name={field.name}
+              type={field.type}
+              inputMode={field.inputMode as HTMLAttributes<HTMLInputElement>['inputMode']}
+              size={12}
+              required={field.required}
+              aria-required={field.required ? 'true' : 'false'}
+              aria-invalid={parse.success}
+              autoCapitalize={field.type === 'text' ? 'words' : 'off'}
+              placeholder={field.placeholder}
+              minLength={field.minLength}
+              maxLength={field.maxLength}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
+            />
+            {parse.error?.errors.some((err) => err.path.includes(field.name)) && (
+              <div className='fdAccount__container__wrapper__form__fieldset__ul__li--error'>
+                {parse.error.errors.find((err) => err.path.includes(field.name))?.message}
+              </div>
+            )}
+          </li>
+        ))}
+        <li className='fdAccount__container__wrapper__form__fieldset__ul__li'>
+          <input type='checkbox' name='agree' id='agree' />
+          <label htmlFor='agree'>
+            <span>I have read and agree to the</span>&nbsp;
+            <button aria-label='Read terms and conditions'>terms and conditions</button>
           </label>
-          <input
-            form='fdRegistery'
-            id='fdUserAccountEmailAddress'
-            name='emailAddress'
-            type='email'
-            inputMode='email'
-            minLength={3}
-            maxLength={76}
-            size={12}
-            required={true}
-            aria-required='true'
-            aria-invalid={errors && !parse.success}
-            autoCapitalize='off'
-            placeholder='johndoe@gmail.com'
-            onPointerUp={() => focus()}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
-          />
-          {errors && parse.error?.errors.some((err) => err.path.includes('emailAddress')) && (
-            <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('emailAddress'))[0].message}</span>
-          )}
-        </li>
-        <li className='fdAccountModal__modals__form__fieldset__ul__li'>
-          <label id='password' htmlFor='fdUserAccountPassword'>
-            Password
-          </label>
-          <input
-            form='fdRegistery'
-            id='fdUserAccountPassword'
-            name='password'
-            type='password'
-            inputMode='text'
-            minLength={8}
-            maxLength={32}
-            size={12}
-            required={true}
-            aria-required='true'
-            aria-invalid={errors && !parse.success}
-            autoCapitalize='off'
-            placeholder='••••••••'
-            onPointerUp={() => focus()}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
-          />
-          {errors && parse.error?.errors.some((err) => err.path.includes('password')) && (
-            <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('password'))[0].message}</span>
-          )}
-        </li>
-        <li className='fdAccountModal__modals__form__fieldset__ul__li'>
-          <label id='passwordConfirmation' htmlFor='fdUserAccountPasswordConfirmation'>
-            Retype password
-          </label>
-          <input
-            form='fdRegistery'
-            id='fdUserAccountPasswordConfirmation'
-            name='passwordConfirmation'
-            type='password'
-            inputMode='text'
-            minLength={8}
-            maxLength={32}
-            size={12}
-            required={true}
-            aria-required='true'
-            aria-invalid={errors && !parse.success}
-            autoCapitalize='off'
-            placeholder='••••••••'
-            onPointerUp={() => focus()}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
-          />
-          {errors && parse.error?.errors.some((err) => err.path.includes('passwordConfirmation')) && (
-            <span className='error-message'>{parse.error.errors.filter((err) => err.path.includes('passwordConfirmation'))[0].message}</span>
-          )}
         </li>
       </ul>
-
-      <div className='fdAccountModal__modals__btns'>
+      <div>
         <button id='fdUserAccountSubmitForm' aria-label='Submit registration form' onPointerUp={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
-          Complete registration
+          Complete Registration
         </button>
-        <button
-          aria-label='Sign in'
-          // onPointerUp={() => setModal('signin')}
-        >
+        <button aria-label='Sign into an existing account' onPointerUp={() => toggleSectionVisibility(registryRef)}>
           Sign into an existing account
         </button>
       </div>
-    </>
+    </fieldset>
   );
 };
 

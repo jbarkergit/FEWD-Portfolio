@@ -1,14 +1,14 @@
-import { useRef, useCallback, type RefObject } from 'react';
+import { useRef, useCallback, type RefObject, useMemo } from 'react';
 import { useLoaderData } from 'react-router';
-import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
-import { GoogleAuthProvider, signInWithPopup, GithubAuthProvider } from 'firebase/auth';
 import FDAccountSignIn from './fieldsets/FDAccountSignIn';
 import FDAccountRegistry from './fieldsets/FDAccountRegistry';
-import { DeviconGoogle, TablerBrandGithubFilled } from '~/film-database/assets/svg/icons';
+import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
+import FDAccountModalPoster from './features/FDAccountModalPoster';
 
 const FDAccountModal = () => {
   /** @loaderData */
-  const { accountData } = useLoaderData();
+  const { accountData, primaryData } = useLoaderData();
+  const films = useMemo(() => (primaryData[0] as Namespace_Tmdb.Prefabs_Obj).now_playing.results, [primaryData]);
 
   /**
    * @function setTimeout
@@ -22,19 +22,20 @@ const FDAccountModal = () => {
    * @description Toggles visibility of modal's components
    */
 
-  let previousRef: RefObject<HTMLDivElement> | null = null;
+  type ToggleVisibilityParam = RefObject<HTMLFieldSetElement | null>;
+  let previousRef: ToggleVisibilityParam;
 
-  const toggleSectionVisibility = useCallback((ref: RefObject<HTMLDivElement>) => {
+  const toggleSectionVisibility = useCallback((ref: ToggleVisibilityParam) => {
     if (!ref.current) return;
 
     const attribute: string = 'data-visible';
-    const getVisibility = (reference: typeof ref) => reference.current.getAttribute(attribute);
+    const getVisibility = (reference: ToggleVisibilityParam): string | null => (reference.current ? reference.current.getAttribute(attribute) : null);
 
     if (previousRef && previousRef.current) {
       previousRef.current.setAttribute(attribute, 'false');
     }
 
-    const isVisible = getVisibility(ref) === 'true' || getVisibility(ref) === 'mount';
+    const isVisible: boolean = getVisibility(ref) === 'true';
     ref.current.setAttribute(attribute, isVisible ? 'false' : 'true');
     previousRef = ref;
   }, []);
@@ -42,37 +43,15 @@ const FDAccountModal = () => {
   /** @JSX */
   return (
     <main className='fdAccount' data-layout-carousel>
-      <form className='fdAccountModal__form'>
-        <fieldset className='fdAccountModal__form__fieldset'>
-          <FDAccountSignIn toggleSectionVisibility={toggleSectionVisibility} />
-          <FDAccountRegistry toggleSectionVisibility={toggleSectionVisibility} />
-        </fieldset>
-        <div className='fdAccount__cta'>
-          <button
-            aria-label='Sign in with Google'
-            onPointerUp={async (e) => {
-              e.preventDefault();
-              const provider = new GoogleAuthProvider();
-              await signInWithPopup(firebaseAuth, provider);
-              window.location.reload();
-            }}>
-            <DeviconGoogle />
-          </button>
-          <button
-            aria-label='Sign in with Github'
-            onPointerUp={async (e) => {
-              e.preventDefault();
-              const provider = new GithubAuthProvider();
-              await signInWithPopup(firebaseAuth, provider);
-              window.location.reload();
-            }}>
-            <TablerBrandGithubFilled />
-          </button>
+      <div className='fdAccount__container' ref={accountRef} data-visible='false'>
+        <div className='fdAccount__container__wrapper'>
+          <form className='fdAccount__container__wrapper__form'>
+            {/* <FDAccountRegistry toggleSectionVisibility={toggleSectionVisibility} /> */}
+            <FDAccountSignIn toggleSectionVisibility={toggleSectionVisibility} />
+          </form>
         </div>
-        {/* <button type='submit' className='fdAccountModal__form__fieldset__button'>
-            Submit Form
-          </button> */}
-      </form>
+        <FDAccountModalPoster films={films} />
+      </div>
     </main>
   );
 };
