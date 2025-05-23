@@ -21,7 +21,6 @@ const FDAccountModal = () => {
    * @function toggleModalVisibility
    * @description Toggles visibility of modal's components
    */
-
   type ToggleVisibilityParam = RefObject<HTMLFieldSetElement | null>;
   let previousRef: ToggleVisibilityParam;
 
@@ -46,7 +45,7 @@ const FDAccountModal = () => {
       <div className='fdAccount__container' ref={accountRef} data-visible='false'>
         <div className='fdAccount__container__wrapper'>
           <form className='fdAccount__container__wrapper__form'>
-            {/* <FDAccountRegistry toggleSectionVisibility={toggleSectionVisibility} /> */}
+            <FDAccountRegistry toggleSectionVisibility={toggleSectionVisibility} />
             <FDAccountSignIn toggleSectionVisibility={toggleSectionVisibility} />
           </form>
         </div>

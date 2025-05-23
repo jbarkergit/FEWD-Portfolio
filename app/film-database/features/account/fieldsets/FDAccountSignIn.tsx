@@ -1,6 +1,5 @@
+import { type ChangeEvent, type HTMLAttributes, type RefObject, useRef, type PointerEvent } from 'react';
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
-import { useRef, useState, type PointerEvent } from 'react';
-import type { ChangeEvent, HTMLAttributes, RefObject } from 'react';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { zodSchema } from '~/base/validation/schema/zodSchema';
@@ -42,7 +41,7 @@ const FDAccountSignIn = ({ toggleSectionVisibility }: { toggleSectionVisibility:
   };
 
   return (
-    <fieldset className='fdAccount__container__wrapper__form__fieldset' data-visible='true' ref={signInRef}>
+    <fieldset className='fdAccount__container__wrapper__form__fieldset' data-visible='false' ref={signInRef}>
       <div>
         <legend>Get Started Now</legend>
         <p>Welcome back to Film Database, let's get you signed in.</p>
@@ -118,7 +117,12 @@ const FDAccountSignIn = ({ toggleSectionVisibility }: { toggleSectionVisibility:
           Sign in
         </button>
         <div>
-          <button aria-label='Create a new account' onPointerUp={() => toggleSectionVisibility(signInRef)}>
+          <button
+            aria-label='Create a new account'
+            onPointerUp={(e: PointerEvent) => {
+              e.preventDefault();
+              toggleSectionVisibility(signInRef);
+            }}>
             Create a new account
           </button>
         </div>

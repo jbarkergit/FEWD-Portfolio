@@ -1,6 +1,5 @@
+import { useRef, type PointerEvent, type ChangeEvent, type HTMLAttributes, type RefObject } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { useRef } from 'react';
-import type { ChangeEvent, HTMLAttributes, RefObject } from 'react';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { zodSchema } from '~/base/validation/schema/zodSchema';
@@ -154,7 +153,12 @@ const FDAccountRegistry = ({ toggleSectionVisibility }: { toggleSectionVisibilit
         <button id='fdUserAccountSubmitForm' aria-label='Submit registration form' onPointerUp={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
           Complete Registration
         </button>
-        <button aria-label='Sign into an existing account' onPointerUp={() => toggleSectionVisibility(registryRef)}>
+        <button
+          aria-label='Sign into an existing account'
+          onPointerUp={(e: PointerEvent) => {
+            e.preventDefault();
+            toggleSectionVisibility(registryRef);
+          }}>
           Sign into an existing account
         </button>
       </div>
