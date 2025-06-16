@@ -1,4 +1,4 @@
-import { type ChangeEvent, type HTMLAttributes, type RefObject, useRef, type PointerEvent } from 'react';
+import { type ChangeEvent, type HTMLAttributes, type RefObject, useRef, type PointerEvent, useState } from 'react';
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
@@ -14,6 +14,9 @@ const FDAccountSignIn = ({ toggleSectionVisibility }: { toggleSectionVisibility:
   /** @state Input values store */
   const { values, handleValues } = useFormValues({ emailAddress: '', password: '' });
 
+  /** @state Form submission tracker */
+  const [submit, setSubmit] = useState<boolean>(false);
+
   /** @schema ZOD */
   const schema = z.object({ emailAddress: zodSchema.contact.shape.emailAddress, password: zodSchema.account.shape.password });
   const parse = schema.safeParse(values);
@@ -25,6 +28,7 @@ const FDAccountSignIn = ({ toggleSectionVisibility }: { toggleSectionVisibility:
    */
   const handleSubmit = async (e: PointerEvent): Promise<void> => {
     e.preventDefault();
+    setSubmit(true);
 
     if (parse.success) {
       await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
@@ -97,32 +101,24 @@ const FDAccountSignIn = ({ toggleSectionVisibility }: { toggleSectionVisibility:
             {index === 1 && (
               <button
                 aria-label='Reset your password'
-                onPointerUp={(e) => {
-                  e.preventDefault();
-                  if (schema.safeParse(values).success) sendPasswordResetEmail(firebaseAuth, values.emailAddress);
-                }}>
+                onPointerUp={() => (schema.safeParse(values).success ? sendPasswordResetEmail(firebaseAuth, values.emailAddress) : null)}>
                 I forgot my password.
               </button>
             )}
-            {parse.error?.errors.some((err) => err.path.includes(field.name)) && (
+            {submit && parse.error?.errors.some((err) => err.path.includes(field.name)) && (values[field.name as keyof typeof values] as string).length > 0 ? (
               <div className='fdAccount__container__wrapper__form__fieldset__ul__li--error'>
                 {parse.error.errors.find((err) => err.path.includes(field.name))?.message}
               </div>
-            )}
+            ) : null}
           </li>
         ))}
       </ul>
       <div>
-        <button aria-label='Sign in with your credentials' onPointerUp={handleSubmit}>
+        <button type='button' aria-label='Sign in with your credentials' onPointerUp={handleSubmit}>
           Sign in
         </button>
         <div>
-          <button
-            aria-label='Create a new account'
-            onPointerUp={(e: PointerEvent) => {
-              e.preventDefault();
-              toggleSectionVisibility(signInRef);
-            }}>
+          <button type='button' aria-label='Create a new account' onPointerUp={() => toggleSectionVisibility(signInRef)}>
             Create a new account
           </button>
         </div>

@@ -5,6 +5,7 @@ import { TablerBrandGithubFilled } from '~/film-database/assets/svg/icons';
 const FDGitHubBtn = () => {
   return (
     <button
+      type='button'
       aria-label='Sign in with Github'
       onPointerUp={async (e) => {
         e.preventDefault();

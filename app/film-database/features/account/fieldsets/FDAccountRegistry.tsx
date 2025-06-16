@@ -1,4 +1,4 @@
-import { useRef, type PointerEvent, type ChangeEvent, type HTMLAttributes, type RefObject } from 'react';
+import { useRef, type ChangeEvent, type HTMLAttributes, type RefObject } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
@@ -23,7 +23,12 @@ const FDAccountRegistry = ({ toggleSectionVisibility }: { toggleSectionVisibilit
   });
   const parse = schema.safeParse(values);
 
-  const submitForm = async (e: React.PointerEvent<HTMLButtonElement>): Promise<void> => {
+  /**
+   * @function handleSubmit
+   * @description Handles form submission
+   * @param e: Pointer Event
+   */
+  const handleSubmit = async (e: React.PointerEvent<HTMLButtonElement>): Promise<void> => {
     e.preventDefault();
 
     try {
@@ -150,15 +155,14 @@ const FDAccountRegistry = ({ toggleSectionVisibility }: { toggleSectionVisibilit
         </li>
       </ul>
       <div>
-        <button id='fdUserAccountSubmitForm' aria-label='Submit registration form' onPointerUp={(e: React.PointerEvent<HTMLButtonElement>) => submitForm(e)}>
+        <button
+          type='button'
+          id='fdUserAccountSubmitForm'
+          aria-label='Submit registration form'
+          onPointerUp={(e: React.PointerEvent<HTMLButtonElement>) => handleSubmit(e)}>
           Complete Registration
         </button>
-        <button
-          aria-label='Sign into an existing account'
-          onPointerUp={(e: PointerEvent) => {
-            e.preventDefault();
-            toggleSectionVisibility(registryRef);
-          }}>
+        <button type='button' aria-label='Sign into an existing account' onPointerUp={() => toggleSectionVisibility(registryRef)}>
           Sign into an existing account
         </button>
       </div>

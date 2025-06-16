@@ -5,6 +5,7 @@ import { DeviconGoogle } from '~/film-database/assets/svg/icons';
 const FDGoogleBtn = () => {
   return (
     <button
+      type='button'
       aria-label='Sign in with Google'
       onPointerUp={async (e) => {
         e.preventDefault();
