@@ -118,11 +118,9 @@ const FDAccountSignIn = forwardRef<HTMLFieldSetElement, FDAccountSignInProps>(({
         <button type='button' aria-label='Sign in with your credentials' onPointerUp={handleSubmit}>
           Sign in
         </button>
-        <div>
-          <button type='button' aria-label='Create a new account' onPointerUp={() => toggleSectionVisibility()}>
-            Create a new account
-          </button>
-        </div>
+        <button type='button' aria-label='Create a new account' onPointerUp={() => toggleSectionVisibility()}>
+          Create a new account
+        </button>
       </div>
     </fieldset>
   );
