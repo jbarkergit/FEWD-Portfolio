@@ -42,7 +42,7 @@ const FDAccountBackground = () => {
                     <div className='fdAccountBackground__backdrop__set__li__container'>
                       <img
                         className='fdAccountBackground__backdrop__set__li__container--img'
-                        src={`https://image.tmdb.org/t/p/${isCenteredListItem ? `original` : `w780`}/${article?.backdrop_path}`}
+                        src={`https://image.tmdb.org/t/p/${isCenteredListItem ? `original` : `w300`}/${article?.backdrop_path}`}
                         alt={`${article?.title}`}
                         onLoad={() => (isLastListItem ? animator() : null)}
                       />
