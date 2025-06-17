@@ -202,15 +202,18 @@
         }
       }
       &:nth-child(2) {
-        flex: 1 1 auto;
+        flex: 0 1 auto;
         padding: calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 4);
         border-top-right-radius: var(--fd-border-radius);
         border-bottom-right-radius: var(--fd-border-radius);
         & picture {
           position: relative;
+          display: block;
+          height: 100%;
+          aspect-ratio: 2/3;
           & img {
-            height: 100%;
-            aspect-ratio: 2/3;
+            height: inherit;
+            aspect-ratio: inherit;
             border-radius: var(--fd-border-radius);
             box-shadow:
               0 8px 10px rgba(0, 0, 0, 0.6),
