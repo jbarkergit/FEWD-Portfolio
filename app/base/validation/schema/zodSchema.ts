@@ -9,10 +9,7 @@ export const zodSchema = {
     age: z.number().min(18, { message: 'You are not of age. Access permissions revoked.' }),
   }),
   account: z.object({
-    password: z
-      .string()
-      .trim()
-      .regex(regex.password, 'Password must contain at least one letter, one digit, one special character, and be at least 8 characters long.'),
+    password: z.string().trim().regex(regex.password, 'Password must contain at least one digit, one special character, and be at least 8 characters long.'),
   }),
   entity: z.object({
     business: z.string().trim().optional(),
