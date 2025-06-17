@@ -1,4 +1,4 @@
-import { type ChangeEvent, type HTMLAttributes, type RefObject, useRef, type PointerEvent, useState } from 'react';
+import { type ChangeEvent, type HTMLAttributes, type PointerEvent, useState, forwardRef } from 'react';
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
@@ -7,10 +7,11 @@ import { useFormValues } from '~/film-database/hooks/useFormValues';
 import FDGitHubBtn from '../buttons/FDGitHubBtn';
 import FDGoogleBtn from '../buttons/FDGoogleBtn';
 
-const FDAccountSignIn = ({ toggleSectionVisibility }: { toggleSectionVisibility: (ref: RefObject<HTMLFieldSetElement | null>) => void }) => {
-  /** @reference */
-  const signInRef = useRef<HTMLFieldSetElement>(null);
+type FDAccountSignInProps = {
+  toggleSectionVisibility: () => void;
+};
 
+const FDAccountSignIn = forwardRef<HTMLFieldSetElement, FDAccountSignInProps>(({ toggleSectionVisibility }, signInRef) => {
   /** @state Input values store */
   const { values, handleValues } = useFormValues({ emailAddress: '', password: '' });
 
@@ -118,13 +119,13 @@ const FDAccountSignIn = ({ toggleSectionVisibility }: { toggleSectionVisibility:
           Sign in
         </button>
         <div>
-          <button type='button' aria-label='Create a new account' onPointerUp={() => toggleSectionVisibility(signInRef)}>
+          <button type='button' aria-label='Create a new account' onPointerUp={() => toggleSectionVisibility()}>
             Create a new account
           </button>
         </div>
       </div>
     </fieldset>
   );
-};
+});
 
 export default FDAccountSignIn;

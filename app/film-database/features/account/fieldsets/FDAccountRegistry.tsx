@@ -1,4 +1,4 @@
-import { useRef, type ChangeEvent, type HTMLAttributes, type RefObject } from 'react';
+import { forwardRef, type ChangeEvent, type HTMLAttributes } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
@@ -7,10 +7,11 @@ import { useFormValues } from '~/film-database/hooks/useFormValues';
 import FDGitHubBtn from '../buttons/FDGitHubBtn';
 import FDGoogleBtn from '../buttons/FDGoogleBtn';
 
-const FDAccountRegistry = ({ toggleSectionVisibility }: { toggleSectionVisibility: (ref: RefObject<HTMLFieldSetElement | null>) => void }) => {
-  /** @reference */
-  const registryRef = useRef<HTMLFieldSetElement>(null);
+type FDAccountRegistryProps = {
+  toggleSectionVisibility: () => void;
+};
 
+const FDAccountRegistry = forwardRef<HTMLFieldSetElement, FDAccountRegistryProps>(({ toggleSectionVisibility }, registryRef) => {
   /** @state Input values store */
   const { values, handleValues } = useFormValues({ firstName: '', lastName: '', emailAddress: '', password: '' });
 
@@ -162,12 +163,12 @@ const FDAccountRegistry = ({ toggleSectionVisibility }: { toggleSectionVisibilit
           onPointerUp={(e: React.PointerEvent<HTMLButtonElement>) => handleSubmit(e)}>
           Complete Registration
         </button>
-        <button type='button' aria-label='Sign into an existing account' onPointerUp={() => toggleSectionVisibility(registryRef)}>
+        <button type='button' aria-label='Sign into an existing account' onPointerUp={() => toggleSectionVisibility()}>
           Sign into an existing account
         </button>
       </div>
     </fieldset>
   );
-};
+});
 
 export default FDAccountRegistry;
