@@ -39,9 +39,9 @@
     &[data-visible='init'] {
       transform: scale(0.9);
     }
-    &[data-visible='mount'] {
-      // Transition duration mimics &__set&[data-visible='mount']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(4)
-      // Transition delay mimics &__set&[data-visible='mount']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(1)
+    &[data-visible='true'] {
+      // Transition duration mimics &__set&[data-visible='true']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(4)
+      // Transition delay mimics &__set&[data-visible='true']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(1)
       transition: transform 1.8s cubic-bezier(1, 0, 0.62, 1) 1.4s;
       transform: scale(5.3);
     }
@@ -61,7 +61,7 @@
           transform: translateY(calc(0svh - (25svh - var(--fd-gap) * 2)));
         }
       }
-      &[data-visible='mount'] {
+      &[data-visible='true'] {
         .fdAccountBackground__backdrop__set__li {
           // :1: lags behind :2, arrives fast, fast to destination
           // :2: lags behind :3, arrives fast, slow to destination
@@ -79,47 +79,25 @@
             transition: transform 1.45s cubic-bezier(0.3, 0, 0.3, 1) 0.7s;
           }
           &:nth-of-type(4) {
-            transition: transform 1.8s cubic-bezier(0.3, 0, 0.2, 1) 0s;
+            transition: transform 1.8s cubic-bezier(0.3, 0, 0.4, 1) 0s;
           }
         }
         &:nth-of-type(odd) {
           .fdAccountBackground__backdrop__set__li {
-            &:nth-of-type(1) {
-              transform: translateY(calc(75svh - ((25svh - var(--fd-gap) * 2) / 2)));
-            }
-            &:nth-of-type(2) {
-              transform: translateY(calc(50svh - ((25svh - var(--fd-gap) * 2) / 2)));
-            }
-            &:nth-of-type(3) {
-              transform: translateY(calc(25svh - ((25svh - var(--fd-gap) * 2) / 2)));
-            }
-            &:nth-of-type(4) {
-              transform: translateY(calc(0svh - ((25svh - var(--fd-gap) * 2) / 2)));
-            }
+            transform: translateY(calc((75svh - (var(--i) - 1) * 25svh) - ((25svh - var(--fd-gap) * 2) / 2)));
           }
         }
         &:nth-of-type(even) {
           .fdAccountBackground__backdrop__set__li {
-            &:nth-of-type(1) {
-              transform: translateY(calc(0svh));
-            }
-            &:nth-of-type(2) {
-              transform: translateY(calc(25svh));
-            }
-            &:nth-of-type(3) {
-              transform: translateY(calc(50svh));
-            }
-            &:nth-of-type(4) {
-              transform: translateY(calc(75svh));
-            }
+            transform: translateY(calc(var(--i) * 25svh));
           }
         }
         &:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(2) div img {
           // NOTE: transform doesn't play nice with nested tags post psuedo; therefore, we've opted for a single animation (which hurts performance)
-          // Animation mimics transition properties from &__set&[data-visible='mount'] .fdAccountBackground__backdrop__set__li
+          // Animation mimics transition properties from &__set&[data-visible='true'] .fdAccountBackground__backdrop__set__li
           // Duration mimics :nth-of-type(4)
           // Delay mimics :nth-of-type(1)
-          // Bezier mimics &__set[data-visible='mount']
+          // Bezier mimics &__set[data-visible='true']
           filter: opacity(1);
           transform: scale(1.25);
           animation: imgScale 1.8s cubic-bezier(1, 0, 0.62, 1) 1.4s forwards;
