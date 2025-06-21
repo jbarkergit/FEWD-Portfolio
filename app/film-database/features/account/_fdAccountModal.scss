@@ -232,23 +232,27 @@
             pointer-events: none;
           }
           & img {
+            display: inherit;
+            height: inherit;
+            aspect-ratio: inherit;
             border-radius: inherit;
+            opacity: 1;
+
             mask-repeat: no-repeat;
             mask-position: center;
             mask-size: 100% 100%;
             mask-mode: alpha;
+
             animation: fade 1s ease-out forwards;
-            animation-fill-mode: forwards;
             animation-delay: calc(var(--i) * 6.5s);
             animation-iteration-count: 1;
-            will-change: opacity, mask-image;
+            will-change: opacity, mask-size, mask-image;
             &:not(:nth-of-type(1)) {
               position: absolute;
               top: 0;
               left: 0;
-              width: inherit;
               height: inherit;
-              opacity: 0;
+              aspect-ratio: inherit;
             }
           }
         }
@@ -282,17 +286,15 @@
 
 @keyframes fade {
   0% {
-    // mask-image: radial-gradient(circle at center, black 0%, black 20%, transparent 80%);
-    // mask-size: 100% 100%;
-    opacity: 0;
+    mask-image: radial-gradient(circle at center, #000000 0%, #000000 20%, #000000 80%);
+    mask-size: 100% 100%;
   }
   50% {
-    // mask-image: radial-gradient(circle at center, black 0%, black 20%, transparent 80%);
-    // mask-size: 100% 100%;
     opacity: 1;
   }
   100% {
-    // mask-size: 1000% 1000%;
+    mask-image: radial-gradient(circle at center, black 0%, black 20%, transparent 80%);
+    mask-size: 1000% 1000%;
     opacity: 0;
   }
 }
