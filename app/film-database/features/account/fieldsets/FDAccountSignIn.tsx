@@ -15,9 +15,6 @@ const FDAccountSignIn = forwardRef<HTMLFieldSetElement, FDAccountSignInProps>(({
   /** @state Input values store */
   const { values, handleValues } = useFormValues({ emailAddress: '', password: '' });
 
-  /** @state Form submission tracker */
-  const [submit, setSubmit] = useState<boolean>(false);
-
   /** @schema ZOD */
   const schema = z.object({ emailAddress: zodSchema.contact.shape.emailAddress, password: zodSchema.account.shape.password });
   const parse = schema.safeParse(values);
@@ -29,7 +26,6 @@ const FDAccountSignIn = forwardRef<HTMLFieldSetElement, FDAccountSignInProps>(({
    */
   const handleSubmit = async (e: PointerEvent): Promise<void> => {
     e.preventDefault();
-    setSubmit(true);
 
     if (parse.success) {
       await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
@@ -106,7 +102,7 @@ const FDAccountSignIn = forwardRef<HTMLFieldSetElement, FDAccountSignInProps>(({
                 I forgot my password.
               </button>
             )}
-            {submit && parse.error?.errors.some((err) => err.path.includes(field.name)) && (values[field.name as keyof typeof values] as string).length > 0 ? (
+            {parse.error?.errors.some((err) => err.path.includes(field.name)) && (values[field.name as keyof typeof values] as string).length > 0 ? (
               <div className='fdAccount__container__wrapper__form__fieldset__ul__li--error'>
                 {parse.error.errors.find((err) => err.path.includes(field.name))?.message}
               </div>

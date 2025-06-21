@@ -1,4 +1,4 @@
-import { forwardRef, type ChangeEvent, type HTMLAttributes } from 'react';
+import { forwardRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
@@ -33,19 +33,20 @@ const FDAccountRegistry = forwardRef<HTMLFieldSetElement, FDAccountRegistryProps
     e.preventDefault();
 
     try {
-      if (parse.success) {
-        const userCredential = await createUserWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
-
-        if (userCredential && userCredential.user) {
-          await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
-          setTimeout(() => window.location.reload(), 0);
-        } else {
-          throw new Error('Failed to create user account.');
-        }
-      } else {
+      if (!parse.success) {
         const errorMessage = parse.error.errors.map((err) => `${err.path.join('.')} - ${err.message}`).join(', ');
         throw new Error(`One or more form fields are not valid: ${errorMessage}`);
       }
+
+      const userCredential = await createUserWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
+
+      if (!userCredential?.user) {
+        throw new Error('Failed to create user account.');
+      }
+
+      await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
+
+      setTimeout(() => window.location.reload(), 0);
     } catch (error) {
       console.error(error);
     }
@@ -140,7 +141,7 @@ const FDAccountRegistry = forwardRef<HTMLFieldSetElement, FDAccountRegistryProps
               maxLength={field.maxLength}
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
             />
-            {parse.error?.errors.some((err) => err.path.includes(field.name)) && (
+            {parse.error?.errors.some((err) => err.path.includes(field.name)) && (values[field.name as keyof typeof values] as string).length > 0 && (
               <div className='fdAccount__container__wrapper__form__fieldset__ul__li--error'>
                 {parse.error.errors.find((err) => err.path.includes(field.name))?.message}
               </div>
