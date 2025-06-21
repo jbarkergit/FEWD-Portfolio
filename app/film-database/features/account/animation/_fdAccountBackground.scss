@@ -109,7 +109,10 @@
         width: 100%;
         // Gap won't work with abs pos; therefore, we add the gaps to height
         height: calc(25% - var(--fd-gap) * 2);
-        overflow: clip;
+        // Apparently, unlike overflow: hidden, clip does not work as a containing block for abs/fixed elements.
+        // It will not force the browser to composite the contents reliably during animations.
+        // If combined with transform, some browsers (e.g. Chromium-based browsers) may rasterize incorrectly or flicker during scale/translate transitions.
+        // overflow: clip; // Causes black bar artifacts on high res displays during transitions
         will-change: transform;
         &__container {
           position: relative;
@@ -117,7 +120,8 @@
           &--img {
             width: inherit;
             height: inherit;
-            image-rendering: crisp-edges;
+            // image-rendering: crisp-edges; // Makes anti-aliasing worse during animation
+            image-rendering: auto;
           }
         }
       }
