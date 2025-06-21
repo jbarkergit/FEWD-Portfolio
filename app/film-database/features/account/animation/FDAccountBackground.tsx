@@ -8,6 +8,7 @@ const FDAccountBackground = () => {
 
   /** @state */
   const [visible, setVisible] = useState<boolean>(false);
+  useEffect(() => console.log(visible), [visible]);
 
   /**
    * @function getCenteredIndex
@@ -71,7 +72,7 @@ const FDAccountBackground = () => {
                 <picture className='fdAccountBackground__backdrop__set__li__container'>
                   <img
                     className='fdAccountBackground__backdrop__set__li__container--img'
-                    src={`https://image.tmdb.org/t/p/${article.id === mostCenteredImageID ? `original` : `w300`}/${article?.backdrop_path}`}
+                    src={`https://image.tmdb.org/t/p/${article.id === mostCenteredImageID ? `original` : `w780`}/${article?.backdrop_path}`}
                     alt={article?.title}
                     onLoad={onLoadCounter}
                     // style={mostCenteredImageID === article.id ? { border: '2px solid red' } : {}}
