@@ -47,7 +47,7 @@ const FDAccountModalPoster = ({ films }: { films: Namespace_Tmdb.BaseMedia_Provi
 
   useEffect(() => {
     createPosters();
-    setInterval(() => createPosters(), films.length * 7500);
+    setInterval(() => createPosters(), films.length * 6500);
   }, [films]);
 
   /** @JSX */
