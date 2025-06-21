@@ -60,7 +60,7 @@ const FDAccountModalPoster = ({ films }: { films: Namespace_Tmdb.BaseMedia_Provi
             fetchPriority={index === 0 ? 'high' : 'low'}
             src={`https://image.tmdb.org/t/p/original/${poster.poster_path}`}
             alt={poster.title}
-            style={{ '--i': posters.length - index - 1 } as CSSProperties}
+            style={{ '--i': posters.length - index } as CSSProperties}
           />
         ))}
       </picture>
