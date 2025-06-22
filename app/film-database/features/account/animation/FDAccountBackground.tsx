@@ -66,7 +66,7 @@ const FDAccountBackground = () => {
     <div className='fdAccountBackground'>
       <div className='fdAccountBackground__backdrop' data-visible={String(visible)}>
         {accountData.map((set: Namespace_Tmdb.BaseMedia_Provider[], setIndex: number) => (
-          <ul className='fdAccountBackground__backdrop__set' key={`backdrop-set-${setIndex}`} data-visible={String(visible)}>
+          <ul className='fdAccountBackground__backdrop__set' key={`backdrop-set-${setIndex}`}>
             {set.map((article: Namespace_Tmdb.BaseMedia_Provider, index: number) => (
               <li className='fdAccountBackground__backdrop__set__li' key={`backdrop-image-${article.id}`} style={{ '--i': index } as CSSProperties}>
                 <picture className='fdAccountBackground__backdrop__set__li__container'>
