@@ -35,12 +35,12 @@
     width: 100%;
     height: 100%;
     transform-origin: center center;
-    will-change: scale;
+    will-change: transform;
     &[data-visible='true'] {
       // Transition duration mimics &__set&[data-visible='true']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(4)
       // Transition delay mimics &__set&[data-visible='true']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(1)
-      transition: transform 1.8s cubic-bezier(1, 0, 0.62, 1) 1.4s;
       transform: scale(5.3);
+      transition: transform 1.8s cubic-bezier(1, 0, 0.62, 1) 1.4s;
       .fdAccountBackground__backdrop__set:nth-of-type(odd) .fdAccountBackground__backdrop__set__li {
         transform: translateY(calc((75svh - (var(--i) - 1) * 25svh) - ((25svh - var(--fd-gap) * 2) / 2)));
       }
@@ -55,7 +55,7 @@
         filter: opacity(1);
         transform: scale(1);
         animation: imgScale 1.8s cubic-bezier(1, 0, 0.62, 1) 1.4s forwards;
-        will-change: scale;
+        will-change: transform;
       }
       .fdAccountBackground__backdrop__set__li {
         // :1: lags behind :2, arrives fast, fast to destination
