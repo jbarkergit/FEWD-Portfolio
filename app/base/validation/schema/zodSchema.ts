@@ -35,3 +35,12 @@ export type Type_ZodSchema = {
   Fields: ZodSchema_Fields;
   User: ZodSchema_User;
 };
+
+export const schemaRegistration = z.object({
+  firstName: zodSchema.user.shape.firstName,
+  lastName: zodSchema.user.shape.lastName,
+  emailAddress: zodSchema.contact.shape.emailAddress,
+  password: zodSchema.account.shape.password,
+});
+
+export const schemaLogin = z.object({ emailAddress: zodSchema.contact.shape.emailAddress, password: zodSchema.account.shape.password });

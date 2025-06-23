@@ -1,9 +1,8 @@
-import { useRef, useCallback, type RefObject, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import { useLoaderData } from 'react-router';
-import FDAccountSignIn from './fieldsets/FDAccountSignIn';
-import FDAccountRegistry from './fieldsets/FDAccountRegistry';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import FDAccountModalPoster from './features/FDAccountModalPoster';
+import FDAccountFieldset from './fieldsets/shared/FDAccountFieldset';
 
 const FDAccountModal = () => {
   /** @loaderData */
@@ -11,8 +10,8 @@ const FDAccountModal = () => {
   const films = useMemo(() => (primaryData[0] as Namespace_Tmdb.Prefabs_Obj).now_playing.results, [primaryData]);
 
   /** @reference */
-  const registryRef = useRef<HTMLFieldSetElement>(null),
-    signInRef = useRef<HTMLFieldSetElement>(null);
+  // const registryRef = useRef<HTMLFieldSetElement>(null),
+  // signInRef = useRef<HTMLFieldSetElement>(null);
 
   /**
    * @function setTimeout
@@ -25,17 +24,17 @@ const FDAccountModal = () => {
    * @function toggleModalVisibility
    * @description Toggles visibility of modal's components
    */
-  const toggleSectionVisibility = useCallback(() => {
-    if (!registryRef.current || !signInRef.current) return;
+  // const toggleSectionVisibility = useCallback(() => {
+  //   if (!registryRef.current || !signInRef.current) return;
 
-    const attribute: string = 'data-visible';
+  //   const attribute: string = 'data-visible';
 
-    for (const reference of [signInRef.current, registryRef.current]) {
-      const current: string | null = reference.getAttribute(attribute);
-      const value: boolean = current === 'true';
-      reference.setAttribute(attribute, String(!value));
-    }
-  }, []);
+  //   for (const reference of [signInRef.current, registryRef.current]) {
+  //     const current: string | null = reference.getAttribute(attribute);
+  //     const value: boolean = current === 'true';
+  //     reference.setAttribute(attribute, String(!value));
+  //   }
+  // }, []);
 
   /** @JSX */
   return (
@@ -43,8 +42,9 @@ const FDAccountModal = () => {
       <div className='fdAccount__container' ref={accountRef} data-visible='false'>
         <main className='fdAccount__container__wrapper'>
           <form className='fdAccount__container__wrapper__form'>
-            <FDAccountRegistry toggleSectionVisibility={toggleSectionVisibility} ref={registryRef} />
-            <FDAccountSignIn toggleSectionVisibility={toggleSectionVisibility} ref={signInRef} />
+            {/* <FDAccountRegistry toggleSectionVisibility={toggleSectionVisibility} ref={registryRef} /> */}
+            {/* <FDAccountSignIn toggleSectionVisibility={toggleSectionVisibility} ref={signInRef} /> */}
+            <FDAccountFieldset />
           </form>
         </main>
         <FDAccountModalPoster films={films} />
