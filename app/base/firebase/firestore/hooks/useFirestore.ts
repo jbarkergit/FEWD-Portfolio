@@ -1,7 +1,8 @@
 import { doc, DocumentReference, DocumentSnapshot, getDoc, setDoc, updateDoc, type DocumentData } from 'firebase/firestore';
 import { database, firebaseAuth } from '../../config/firebaseConfig';
-import type { User } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, type User } from 'firebase/auth';
 import isUserAuthorized from '../../authentication/utility/isUserAuthorized';
+import type { z } from 'zod';
 
 type Firestore_CollectionNames = 'users';
 
@@ -98,4 +99,38 @@ const updateDocumentMovies = async (collectionName: Firestore_CollectionNames, m
   }
 };
 
-export const useFirestore = { getUser, getDocument, updateDocumentMovies };
+const createUser = async <Input, Output>(parse: z.SafeParseReturnType<Input, Output>, values: Record<string, string>) => {
+  try {
+    if (!parse.success) {
+      const errorMessage = parse.error.errors.map((err) => `${err.path.join('.')} - ${err.message}`).join(', ');
+      throw new Error(`One or more form fields are not valid: ${errorMessage}`);
+    }
+
+    const userCredential = await createUserWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
+
+    if (!userCredential?.user) throw new Error('Failed to create user account.');
+
+    await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
+
+    setTimeout(() => window.location.reload(), 0);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const signIn = async <Input, Output>(parse: z.SafeParseReturnType<Input, Output>, values: Record<string, string>) => {
+  if (parse.success) {
+    await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
+    window.location.reload();
+  } else {
+    const errorMessages: Record<string, string> = {};
+
+    for (const error of parse.error.errors) {
+      if (error.path[0]) {
+        errorMessages[error.path[0]] = error.message;
+      }
+    }
+  }
+};
+
+export const useFirestore = { getUser, getDocument, updateDocumentMovies, createUser, signIn };

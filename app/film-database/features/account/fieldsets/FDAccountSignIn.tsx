@@ -1,11 +1,12 @@
-import { type ChangeEvent, type HTMLAttributes, type PointerEvent, useState, forwardRef } from 'react';
-import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import { type ChangeEvent, type HTMLAttributes, forwardRef } from 'react';
+import { sendPasswordResetEmail } from 'firebase/auth';
 import { z } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { zodSchema } from '~/base/validation/schema/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
 import FDGitHubBtn from '../buttons/FDGitHubBtn';
 import FDGoogleBtn from '../buttons/FDGoogleBtn';
+import { useFirestore } from '~/base/firebase/firestore/hooks/useFirestore';
 
 type FDAccountSignInProps = {
   toggleSectionVisibility: () => void;
@@ -18,28 +19,6 @@ const FDAccountSignIn = forwardRef<HTMLFieldSetElement, FDAccountSignInProps>(({
   /** @schema ZOD */
   const schema = z.object({ emailAddress: zodSchema.contact.shape.emailAddress, password: zodSchema.account.shape.password });
   const parse = schema.safeParse(values);
-
-  /**
-   * @function handleSubmit
-   * @description Handles form submission
-   * @param e: Pointer Event
-   */
-  const handleSubmit = async (e: PointerEvent): Promise<void> => {
-    e.preventDefault();
-
-    if (parse.success) {
-      await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
-      window.location.reload();
-    } else {
-      const errorMessages: Record<string, string> = {};
-
-      for (const error of parse.error.errors) {
-        if (error.path[0]) {
-          errorMessages[error.path[0]] = error.message;
-        }
-      }
-    }
-  };
 
   return (
     <fieldset className='fdAccount__container__wrapper__form__fieldset' data-visible='false' ref={signInRef}>
@@ -111,7 +90,7 @@ const FDAccountSignIn = forwardRef<HTMLFieldSetElement, FDAccountSignInProps>(({
         ))}
       </ul>
       <div>
-        <button type='button' aria-label='Sign in with your credentials' onPointerUp={handleSubmit}>
+        <button type='button' aria-label='Sign in with your credentials' onPointerUp={() => useFirestore.signIn(parse, values)}>
           Sign in
         </button>
         <button type='button' aria-label='Create a new account' onPointerUp={() => toggleSectionVisibility()}>
