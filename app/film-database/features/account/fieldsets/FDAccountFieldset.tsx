@@ -1,10 +1,10 @@
 import { useState, type ChangeEvent, type HTMLAttributes } from 'react';
 import { schemaRegistration, schemaLogin } from '~/base/validation/schema/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
-import FDGitHubBtn from '../../buttons/FDGitHubBtn';
-import FDGoogleBtn from '../../buttons/FDGoogleBtn';
 import { useFirestore } from '~/base/firebase/firestore/hooks/useFirestore';
 import { fieldsets } from '~/base/validation/fieldsets/fieldsets';
+import FDGitHubBtn from '../buttons/FDGitHubBtn';
+import FDGoogleBtn from '../buttons/FDGoogleBtn';
 
 const fieldStore = {
   registration: fieldsets.registration,
