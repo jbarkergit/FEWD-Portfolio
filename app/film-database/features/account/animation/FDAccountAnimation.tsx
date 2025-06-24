@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, typ
 import { useLoaderData } from 'react-router';
 import type { Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 
-const FDAccountBackground = () => {
+const FDAccountAnimation = () => {
   /** @loaderData */
   const { accountData } = useLoaderData();
 
@@ -62,15 +62,15 @@ const FDAccountBackground = () => {
   }, [visible]);
 
   return (
-    <div className='fdAccountBackground'>
-      <div className='fdAccountBackground__backdrop' data-visible={String(visible)}>
+    <div className='fdAccountAnimation'>
+      <div className='fdAccountAnimation__backdrop' data-visible={String(visible)}>
         {accountData.map((set: Namespace_Tmdb.BaseMedia_Provider[], setIndex: number) => (
-          <ul className='fdAccountBackground__backdrop__set' key={`backdrop-set-${setIndex}`}>
+          <ul className='fdAccountAnimation__backdrop__set' key={`backdrop-set-${setIndex}`}>
             {set.map((article: Namespace_Tmdb.BaseMedia_Provider, index: number) => (
-              <li className='fdAccountBackground__backdrop__set__li' key={`backdrop-image-${article.id}`} style={{ '--i': index } as CSSProperties}>
-                <picture className='fdAccountBackground__backdrop__set__li__container'>
+              <li className='fdAccountAnimation__backdrop__set__li' key={`backdrop-image-${article.id}`} style={{ '--i': index } as CSSProperties}>
+                <picture className='fdAccountAnimation__backdrop__set__li__container'>
                   <img
-                    className='fdAccountBackground__backdrop__set__li__container--img'
+                    className='fdAccountAnimation__backdrop__set__li__container--img'
                     src={`https://image.tmdb.org/t/p/${article.id === mostCenteredImageID ? `original` : `w780`}/${article?.backdrop_path}`}
                     alt={article?.title}
                     onLoad={onLoadCounter}
@@ -87,4 +87,4 @@ const FDAccountBackground = () => {
   );
 };
 
-export default FDAccountBackground;
+export default FDAccountAnimation;

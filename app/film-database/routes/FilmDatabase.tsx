@@ -7,7 +7,7 @@ import { useTmdbFetcher, type Namespace_Tmdb } from '../composables/tmdb-api/hoo
 // Context
 import { CatalogProvider } from '../context/CatalogContext';
 // Features: Account Page
-import FDAccountBackground from '../features/account/animation/FDAccountBackground';
+import FDAccountAnimation from '../features/account/animation/FDAccountAnimation';
 import FDAccountModal from '../features/account/FDAccountModal';
 // Features: Catalog page
 import FDHeader from '../features/catalog/navigation/FDHeader';
@@ -79,7 +79,7 @@ export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
     </CatalogProvider>
   ) : (
     <>
-      <FDAccountBackground />
+      <FDAccountAnimation />
       <FDAccountModal />
     </>
   );

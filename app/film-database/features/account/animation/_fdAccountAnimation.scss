@@ -2,7 +2,7 @@
 @use '/app/film-database/scss/fdMixins' as m;
 
 // Inspired by camillemormal, wrote from scratch in scss
-.fdAccountBackground {
+.fdAccountAnimation {
   position: fixed;
   top: 0;
   left: 0;
@@ -37,27 +37,27 @@
     transform-origin: center center;
     will-change: transform;
     &[data-visible='true'] {
-      // Transition duration mimics &__set&[data-visible='true']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(4)
-      // Transition delay mimics &__set&[data-visible='true']:nth-of-type(odd) .fdAccountBackground__backdrop__set__li:nth-of-type(1)
+      // Transition duration mimics &__set&[data-visible='true']:nth-of-type(odd) .fdAccountAnimation__backdrop__set__li:nth-of-type(4)
+      // Transition delay mimics &__set&[data-visible='true']:nth-of-type(odd) .fdAccountAnimation__backdrop__set__li:nth-of-type(1)
       transform: scale(5.3);
       transition: transform 1.8s cubic-bezier(1, 0, 0.62, 1) 1.4s;
-      .fdAccountBackground__backdrop__set:nth-of-type(odd) .fdAccountBackground__backdrop__set__li {
+      .fdAccountAnimation__backdrop__set:nth-of-type(odd) .fdAccountAnimation__backdrop__set__li {
         transform: translateY(calc((75svh - (var(--i) - 1) * 25svh) - ((25svh - var(--fd-gap) * 2) / 2)));
       }
-      .fdAccountBackground__backdrop__set:nth-of-type(even) .fdAccountBackground__backdrop__set__li {
+      .fdAccountAnimation__backdrop__set:nth-of-type(even) .fdAccountAnimation__backdrop__set__li {
         transform: translateY(calc(var(--i) * 25svh));
       }
-      .fdAccountBackground__backdrop__set:nth-of-type(3) .fdAccountBackground__backdrop__set__li:nth-of-type(3) picture img {
+      .fdAccountAnimation__backdrop__set:nth-of-type(3) .fdAccountAnimation__backdrop__set__li:nth-of-type(3) picture img {
         // NOTE: transform doesn't play nice with nested tags post psuedo; therefore, we've opted for a single animation (which hurts performance)
         // NOTE: Overflow: clip/hidden causes artifacts; therefore, we should delay filter: scale IF initial starting scale is ABOVE 1
-        // Animation mimics transition properties from &__set&[data-visible='true'] .fdAccountBackground__backdrop__set__li
+        // Animation mimics transition properties from &__set&[data-visible='true'] .fdAccountAnimation__backdrop__set__li
         // Duration mimics :nth-of-type(4), Delay mimics :nth-of-type(1), Bezier mimics &__set[data-visible='true']
         filter: opacity(1);
         transform: scale(1);
         animation: imgScale 1.8s cubic-bezier(1, 0, 0.62, 1) 1.4s forwards;
         will-change: transform;
       }
-      .fdAccountBackground__backdrop__set__li {
+      .fdAccountAnimation__backdrop__set__li {
         // :1: lags behind :2, arrives fast, fast to destination
         // :2: lags behind :3, arrives fast, slow to destination
         // :3: launches at the slow bezier ascention of :4 to create visual lag, arrives fast, slow to arrive to transform destination
@@ -80,10 +80,10 @@
     }
     &[data-visible='false'] {
       opacity: 0;
-      .fdAccountBackground__backdrop__set:nth-of-type(odd) .fdAccountBackground__backdrop__set__li {
+      .fdAccountAnimation__backdrop__set:nth-of-type(odd) .fdAccountAnimation__backdrop__set__li {
         transform: translateY(100svh);
       }
-      .fdAccountBackground__backdrop__set:nth-of-type(even) .fdAccountBackground__backdrop__set__li {
+      .fdAccountAnimation__backdrop__set:nth-of-type(even) .fdAccountAnimation__backdrop__set__li {
         // Mimics height of list items
         transform: translateY(calc(0svh - (25svh - var(--fd-gap) * 2)));
       }
