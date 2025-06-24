@@ -8,7 +8,6 @@ const FDAccountBackground = () => {
 
   /** @state */
   const [visible, setVisible] = useState<boolean>(false);
-  useEffect(() => console.log(visible), [visible]);
 
   /**
    * @function getCenteredIndex
@@ -40,7 +39,7 @@ const FDAccountBackground = () => {
   // Simple reset of counter when accountData changes
   useEffect(() => {
     counter.current = 0;
-  }, [accountData]);
+  }, []);
 
   // Memoize total images to avoid recalculating on every render
   const totalImages = useMemo(() => accountData.reduce((total: number, set: Namespace_Tmdb.BaseMedia_Provider[]) => total + set.length, 0), [accountData]);
@@ -75,6 +74,7 @@ const FDAccountBackground = () => {
                     src={`https://image.tmdb.org/t/p/${article.id === mostCenteredImageID ? `original` : `w780`}/${article?.backdrop_path}`}
                     alt={article?.title}
                     onLoad={onLoadCounter}
+                    onError={onLoadCounter}
                     // style={mostCenteredImageID === article.id ? { border: '2px solid red' } : {}}
                   />
                 </picture>
