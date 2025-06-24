@@ -55,11 +55,7 @@ const FDAccountFieldset = () => {
 
   /** @JSX */
   return (
-    <fieldset
-      className='fdAccount__container__wrapper__form__fieldset'
-      // ref={registryRef}
-      // data-visible='true'
-    >
+    <fieldset className='fdAccount__container__wrapper__form__fieldset'>
       <div>
         <legend>{isRegistrationForm ? `Get Started Now` : `Start a new session`}</legend>
         <p>{isRegistrationForm ? `Welcome to Film Database, create an account to start a session.` : `Welcome back to Film Database, let's get you logged in.`}</p>
@@ -111,9 +107,9 @@ const FDAccountFieldset = () => {
         </button>
         <button
           type='button'
-          aria-label={isRegistrationForm ? 'Sign into an existing account' : 'Create a new account'}
+          aria-label={isRegistrationForm ? 'Log into an existing account' : 'Create a new account'}
           onPointerUp={() => setForm(isRegistrationForm ? 'login' : 'registration')}>
-          {isRegistrationForm ? 'Sign into an existing account' : 'Create a new account'}
+          {isRegistrationForm ? 'Log into an existing account' : 'Create a new account'}
         </button>
       </div>
     </fieldset>

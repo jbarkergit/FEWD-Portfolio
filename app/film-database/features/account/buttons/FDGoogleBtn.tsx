@@ -6,14 +6,14 @@ const FDGoogleBtn = () => {
   return (
     <button
       type='button'
-      aria-label='Sign in with Google'
+      aria-label='Log in with Google'
       onPointerUp={async (e) => {
         e.preventDefault();
         const provider = new GoogleAuthProvider();
         await signInWithPopup(firebaseAuth, provider);
         window.location.reload();
       }}>
-      <DeviconGoogle /> Sign in with Google
+      <DeviconGoogle /> Log in with Google
     </button>
   );
 };

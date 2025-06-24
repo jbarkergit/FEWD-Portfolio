@@ -72,9 +72,6 @@
             flex-direction: column;
             gap: var(--fd-gap);
             width: calc(400px * 2 + var(--fd-gap));
-            &[data-visible='false'] {
-              display: none;
-            }
             & div:nth-of-type(1) {
               padding-bottom: 0;
               & legend {
@@ -98,7 +95,7 @@
             & ul {
               gap: calc(var(--fd-gap) * 1.5);
               padding-bottom: calc(var(--fd-gap) * 2.25);
-              &[data-registry] {
+              &[data-form='registration'] {
                 display: grid;
                 gap: var(--fd-gap);
                 grid-template-columns: repeat(2, minmax(0, 400px));
@@ -143,7 +140,7 @@
                   }
                 }
               }
-              &[data-signin] {
+              &[data-form='login'] {
                 display: flex;
                 flex-direction: column;
                 & li {

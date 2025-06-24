@@ -6,14 +6,14 @@ const FDGitHubBtn = () => {
   return (
     <button
       type='button'
-      aria-label='Sign in with Github'
+      aria-label='Log in with Github'
       onPointerUp={async (e) => {
         e.preventDefault();
         const provider = new GithubAuthProvider();
         await signInWithPopup(firebaseAuth, provider);
         window.location.reload();
       }}>
-      <TablerBrandGithubFilled /> Sign in with GitHub
+      <TablerBrandGithubFilled /> Log in with GitHub
     </button>
   );
 };
