@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type HTMLAttributes } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes, type JSX } from 'react';
 import { schemaRegistration, schemaLogin } from '~/base/validation/schema/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
 import { useFirestore } from '~/base/firebase/firestore/hooks/useFirestore';
@@ -25,7 +25,11 @@ const FDAccountFieldset = () => {
     login: useFormValues({ emailAddress: '', password: '' }),
   };
 
-  const { values, handleValues } = form === 'registration' ? formValues.registration : formValues.login;
+  const isRegistrationForm: boolean = form === 'registration';
+
+  const { values, handleValues } = isRegistrationForm ? formValues.registration : formValues.login;
+
+  const [formHeight, setFormHeight] = useState<number | null>(null);
 
   /** @zod schema and parsing */
   const schema = schemas[form];
@@ -45,17 +49,57 @@ const FDAccountFieldset = () => {
 
   const handleSubmit = () => {
     if (!parse.success) return;
-    if (form === 'registration') createUser(parse, values);
+    if (isRegistrationForm) createUser(parse, values);
     else signIn(parse, values);
   };
 
-  /** @global */
-  const isRegistrationForm: boolean = form === 'registration';
+  /**
+   * @function animator
+   * @description Handles animations for form transitions
+   */
+  const fieldsetRef = useRef<HTMLFieldSetElement>(null);
+
+  const animator = (): void => {
+    if (!fieldsetRef.current) return;
+
+    fieldsetRef.current.setAttribute('data-animate', 'unmount');
+    setTimeout(() => setForm(isRegistrationForm ? 'login' : 'registration'), 500);
+  };
+
+  useEffect(() => {
+    if (fieldsetRef.current) fieldsetRef.current.setAttribute('data-animate', 'mount');
+  }, [form]);
+
+  /**
+   * @function useEffect
+   * @description Observes height of the registration fieldset on mount to align the login forms height for visual consistency
+   */
+  useEffect(() => {
+    if (!fieldsetRef.current) return;
+
+    const updateHeight = () => {
+      if (isRegistrationForm) setFormHeight(fieldsetRef.current!.scrollHeight);
+    };
+
+    updateHeight();
+
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(fieldsetRef.current);
+
+    return () => observer.disconnect();
+  }, [isRegistrationForm]);
+
+  /** @map */
   const fields = fieldStore[form];
 
   /** @JSX */
   return (
-    <fieldset className='fdAccount__container__wrapper__form__fieldset'>
+    <fieldset
+      className='fdAccount__container__wrapper__form__fieldset'
+      ref={fieldsetRef}
+      data-form={form}
+      data-animate='premount'
+      style={{ height: formHeight ? formHeight : 0 }}>
       <div>
         <legend>{isRegistrationForm ? `Get Started Now` : `Start a new session`}</legend>
         <p>{isRegistrationForm ? `Welcome to Film Database, create an account to start a session.` : `Welcome back to Film Database, let's get you logged in.`}</p>
@@ -64,7 +108,7 @@ const FDAccountFieldset = () => {
         <FDGitHubBtn />
         <FDGoogleBtn />
       </div>
-      <ul className='fdAccount__container__wrapper__form__fieldset__ul' data-form={form}>
+      <ul className='fdAccount__container__wrapper__form__fieldset__ul'>
         {fields.map(({ labelId, id, name, label, type, inputMode, required, placeholder, minLength, maxLength }) => (
           <li key={id} className='fdAccount__container__wrapper__form__fieldset__ul__li'>
             <label id={labelId} htmlFor={id}>
@@ -105,10 +149,7 @@ const FDAccountFieldset = () => {
         <button type='button' aria-label={isRegistrationForm ? 'Submit registration form' : 'Sign in with your credentials'} onPointerUp={handleSubmit}>
           {isRegistrationForm ? 'Complete Registration' : 'Log in'}
         </button>
-        <button
-          type='button'
-          aria-label={isRegistrationForm ? 'Log into an existing account' : 'Create a new account'}
-          onPointerUp={() => setForm(isRegistrationForm ? 'login' : 'registration')}>
+        <button type='button' aria-label={isRegistrationForm ? 'Log into an existing account' : 'Create a new account'} onPointerUp={animator}>
           {isRegistrationForm ? 'Log into an existing account' : 'Create a new account'}
         </button>
       </div>
