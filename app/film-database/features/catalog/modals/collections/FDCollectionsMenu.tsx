@@ -24,7 +24,7 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode, isListFX
 
   const [collectionUls, setCollectionUls] = useState<HTMLUListElement[]>([]);
 
-  const [layoutType, setLayoutType] = useState<'flex' | 'grid'>('flex');
+  // const [layoutType, setLayoutType] = useState<'flex' | 'grid'>('flex');
 
   const editModeBtn = useRef<HTMLButtonElement>(null),
     listItemFxBtn = useRef<HTMLButtonElement>(null),
@@ -68,13 +68,18 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode, isListFX
 
     toggleBtn(editModeBtn.current, !isEditMode);
     toggleBtn(listItemFxBtn.current, !isListFX);
-    toggleBtn(layoutTypeBtn.current, layoutType === 'flex');
+    // toggleBtn(layoutTypeBtn.current, layoutType === 'flex');
 
     for (const ul of collectionUls) {
-      ul.setAttribute('data-layout', layoutType);
+      // ul.setAttribute('data-layout', layoutType);
       ul.setAttribute('data-list-item-fx', String(isListFX));
     }
-  }, [isEditMode, isListFX, layoutType, collectionUls]);
+  }, [
+    isEditMode,
+    isListFX,
+    // layoutType,
+    collectionUls,
+  ]);
 
   /** @returns */
   return (
@@ -113,7 +118,7 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode, isListFX
         <TablerEye />
         <TablerEyeOff />
       </button>
-      <button
+      {/* <button
         ref={layoutTypeBtn}
         className='fdCollectionsMenu--layout'
         aria-label={layoutType === 'grid' ? 'Collapse view all lists' : 'Expand view of all lists'}
@@ -125,7 +130,7 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode, isListFX
         }>
         <TablerLayoutDashboardFilled />
         <TablerLayoutListFilled />
-      </button>
+      </button> */}
       <button className='fdCollectionsMenu--close' aria-label='Close collections modal' onPointerUp={() => setIsListModal(false)}>
         <MaterialSymbolsLogoutSharp />
       </button>

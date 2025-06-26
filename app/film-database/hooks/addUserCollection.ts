@@ -59,7 +59,8 @@ export const addUserCollection = ({ userCollections, setUserCollections, isEditM
   if (Object.keys(userCollections).length >= 5) return;
 
   const key: string = `user-collection-${payload.colIndex}`;
-  const display: 'grid' | 'flex' = isEditMode ? 'grid' : 'flex';
+  // const display: 'grid' | 'flex' = isEditMode ? 'grid' : 'flex';
+  const display = 'flex' as const;
   const header: string = userCollections[payload.colIndex]?.header ?? 'Unnamed Collection';
 
   setUserCollections((prev) => {
