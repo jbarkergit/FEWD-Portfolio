@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { array } from 'zod/v4';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 
 const FDAccountModalPoster = ({ films }: { films: Namespace_Tmdb.BaseMedia_Provider[] }) => {
