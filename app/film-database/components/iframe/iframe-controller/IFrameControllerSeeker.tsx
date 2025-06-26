@@ -69,7 +69,8 @@ const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer }) => {
         useSlider(e);
       }}
       onPointerLeave={() => setIsDragging(false)}
-      onPointerMove={(e: React.PointerEvent<HTMLButtonElement>) => useSlider(e)}>
+      onPointerMove={(e: React.PointerEvent<HTMLButtonElement>) => useSlider(e)}
+      onDragStart={(e) => e.preventDefault()}>
       <span className='fdiFrame__controller__seeker--range' />
       <span className='fdiFrame__controller__seeker--slider' ref={sliderRef} style={{ width: `${dragPos}px` }} />
     </button>
