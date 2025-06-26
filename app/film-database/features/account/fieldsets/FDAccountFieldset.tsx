@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes, type JSX } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
 import { schemaRegistration, schemaLogin } from '~/base/validation/schema/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
 import { useFirestore } from '~/base/firebase/firestore/hooks/useFirestore';
 import { fieldsets } from '~/base/validation/fieldsets/fieldsets';
-import FDGitHubBtn from '../buttons/FDGitHubBtn';
-import FDGoogleBtn from '../buttons/FDGoogleBtn';
+import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
+import { handleAuthProvider } from '~/base/firebase/authentication/utility/handleAuthProvider';
 
 const fieldStore = {
   registration: fieldsets.registration,
@@ -105,8 +105,12 @@ const FDAccountFieldset = () => {
         <p>{isRegistrationForm ? `Welcome to Film Database, create an account to start a session.` : `Welcome back to Film Database, let's get you logged in.`}</p>
       </div>
       <div>
-        <FDGitHubBtn />
-        <FDGoogleBtn />
+        <button type='button' aria-label='Log in with Github' onPointerUp={() => handleAuthProvider('github')}>
+          <TablerBrandGithubFilled /> Log in with GitHub
+        </button>
+        <button type='button' aria-label='Log in with Google' onPointerUp={() => handleAuthProvider('google')}>
+          <DeviconGoogle /> Log in with Google
+        </button>
       </div>
       <ul className='fdAccount__container__wrapper__form__fieldset__ul'>
         {fields.map(({ labelId, id, name, label, type, inputMode, required, placeholder, minLength, maxLength }) => (
