@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
 import { schemaRegistration, schemaLogin } from '~/base/validation/schema/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
-import { useFirestore } from '~/base/firebase/firestore/hooks/useFirestore';
 import { fieldsets } from '~/base/validation/fieldsets/fieldsets';
 import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
 import { handleAuthProvider } from '~/base/firebase/authentication/utility/handleAuthProvider';
+import { createFirestoreUser } from '~/base/firebase/firestore/utility/createFirestoreUser';
+import { useFirestoreLogin } from '~/base/firebase/firestore/utility/useFirestoreLogin';
 
 const fieldStore = {
   registration: fieldsets.registration,
@@ -45,12 +46,10 @@ const FDAccountFieldset = () => {
    * @function handleSubmit
    * @description Invokes @function useFirestore hook corresponding to current form
    */
-  const { createUser, signIn } = useFirestore;
-
   const handleSubmit = () => {
     if (!parse.success) return;
-    if (isRegistrationForm) createUser(parse, values);
-    else signIn(parse, values);
+    if (isRegistrationForm) createFirestoreUser(parse, values);
+    else useFirestoreLogin(parse, values);
   };
 
   /**
