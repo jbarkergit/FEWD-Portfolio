@@ -12,7 +12,6 @@ import FDAccountModal from '../features/account/FDAccountModal';
 // Features: Catalog page
 import FDHeader from '../features/catalog/navigation/FDHeader';
 import FDCatalog from '../features/catalog/FDCatalog';
-import { preload } from 'react-dom';
 
 export async function clientLoader() {
   // Auth
@@ -67,7 +66,6 @@ export async function clientLoader() {
 }
 
 export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
-  preload('https://api.themoviedb.org', { as: 'fetch' });
   const { isAuth } = loaderData;
 
   return isAuth ? (
