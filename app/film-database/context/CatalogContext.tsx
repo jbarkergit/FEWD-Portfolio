@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { Dispatch, FC, ReactNode, SetStateAction } from 'react';
 import type { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import { useLoaderData } from 'react-router';
@@ -147,26 +147,26 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => handleModalTrailerQueue(), [userCollections, isListModal]);
 
-  return (
-    <CatalogContext.Provider
-      value={{
-        heroData,
-        setHeroData,
-        viewportChunkSize,
-        modalChunkSize,
-        isMovieModal,
-        setIsMovieModal,
-        isListModal,
-        setIsListModal,
-        userCollections,
-        setUserCollections,
-        root,
-        modalTrailer,
-        setModalTrailer,
-      }}>
-      {children}
-    </CatalogContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      heroData,
+      setHeroData,
+      viewportChunkSize,
+      modalChunkSize,
+      isMovieModal,
+      setIsMovieModal,
+      isListModal,
+      setIsListModal,
+      userCollections,
+      setUserCollections,
+      root,
+      modalTrailer,
+      setModalTrailer,
+    }),
+    [heroData, viewportChunkSize, modalChunkSize, isMovieModal, isListModal, userCollections, root, modalTrailer]
   );
+
+  return <CatalogContext.Provider value={contextValue}>{children}</CatalogContext.Provider>;
 };
 
 /**
