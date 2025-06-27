@@ -12,6 +12,7 @@ import FDAccountModal from '../features/account/FDAccountModal';
 // Features: Catalog page
 import FDHeader from '../features/catalog/navigation/FDHeader';
 import FDCatalog from '../features/catalog/FDCatalog';
+import { useRef } from 'react';
 
 export async function clientLoader() {
   // Auth
@@ -68,6 +69,16 @@ export async function clientLoader() {
 export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
   const { isAuth } = loaderData;
 
+  const animationRef = useRef<HTMLDivElement>(null);
+  const accountRef = useRef<HTMLDivElement>(null);
+
+  const unmountAnimation = (): void => {
+    if (!animationRef.current || !accountRef.current) return;
+    const attribute: string = 'data-visible';
+    animationRef.current.setAttribute(attribute, 'false');
+    accountRef.current.setAttribute(attribute, 'true');
+  };
+
   return isAuth ? (
     <CatalogProvider>
       <div className='filmDatabase'>
@@ -77,8 +88,8 @@ export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
     </CatalogProvider>
   ) : (
     <>
-      <FDAccountAnimation />
-      <FDAccountModal />
+      <FDAccountAnimation ref={animationRef} unmountAnimation={unmountAnimation} />
+      <FDAccountModal ref={accountRef} />
     </>
   );
 }

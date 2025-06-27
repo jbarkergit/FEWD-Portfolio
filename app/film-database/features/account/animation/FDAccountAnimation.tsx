@@ -1,13 +1,19 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, type CSSProperties } from 'react';
 import { useLoaderData } from 'react-router';
 import type { Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
 
-const FDAccountAnimation = () => {
+const FDAccountAnimation = forwardRef<HTMLDivElement, { unmountAnimation: () => void }>(({ unmountAnimation }, animationRef) => {
+  /**
+   * @function useEffect
+   * @description Handles animation on mount
+   */
+  const exposedRef = useRef<HTMLDivElement>(null);
+  useImperativeHandle(animationRef, () => exposedRef.current!, []);
+  useEffect(() => console.log(exposedRef), []);
+  useEffect(() => exposedRef.current?.setAttribute('data-visible', 'true'), []);
+
   /** @loaderData */
   const { accountData } = useLoaderData();
-
-  /** @state */
-  const [visible, setVisible] = useState<boolean>(false);
 
   /**
    * @function getCenteredIndex
@@ -29,41 +35,9 @@ const FDAccountAnimation = () => {
     return middleItem?.id ?? -1;
   }, [accountData]);
 
-  /**
-   * @function counter
-   * @description Manual counter helps assist when real world conditions are not ideal for loading images.
-   * Example (prior implication): const isLastListItem = setIndex === accountData.length - 1 && liIndex === 3;
-   */
-  const counter = useRef<number>(0);
-
-  // Simple reset of counter when accountData changes
-  useEffect(() => {
-    counter.current = 0;
-  }, []);
-
-  // Memoize total images to avoid recalculating on every render
-  const totalImages = useMemo(() => accountData.reduce((total: number, set: Namespace_Tmdb.BaseMedia_Provider[]) => total + set.length, 0), [accountData]);
-
-  // The magic stuff happens here
-  const onLoadCounter = useCallback((): void => {
-    counter.current += 1;
-    if (counter.current === totalImages) setVisible(true);
-  }, [totalImages]);
-
-  /**
-   * @function useLayoutEffect
-   * @description This effect is used to set the visibility of the backdrop after it has mounted.
-   */
-  useLayoutEffect(() => {
-    if (visible) {
-      const timeout = setTimeout(() => setVisible(false), 3200);
-      return () => clearTimeout(timeout);
-    }
-  }, [visible]);
-
   return (
     <div className='fdAccountAnimation'>
-      <div className='fdAccountAnimation__backdrop' data-visible={String(visible)}>
+      <div className='fdAccountAnimation__backdrop' ref={exposedRef} data-visible='false' onAnimationEnd={unmountAnimation}>
         {accountData.map((set: Namespace_Tmdb.BaseMedia_Provider[], setIndex: number) => (
           <ul className='fdAccountAnimation__backdrop__set' key={`backdrop-set-${setIndex}`}>
             {set.map((article: Namespace_Tmdb.BaseMedia_Provider, index: number) => (
@@ -73,9 +47,6 @@ const FDAccountAnimation = () => {
                     className='fdAccountAnimation__backdrop__set__li__container--img'
                     src={`https://image.tmdb.org/t/p/${article.id === mostCenteredImageID ? `original` : `w780`}/${article?.backdrop_path}`}
                     alt={article?.title}
-                    onLoad={onLoadCounter}
-                    onError={onLoadCounter}
-                    // style={mostCenteredImageID === article.id ? { border: '2px solid red' } : {}}
                   />
                 </picture>
               </li>
@@ -85,6 +56,6 @@ const FDAccountAnimation = () => {
       </div>
     </div>
   );
-};
+});
 
 export default FDAccountAnimation;
