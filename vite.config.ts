@@ -1,4 +1,5 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
+import type { ViteUserConfig } from 'vitest/config';
 import { reactRouter } from '@react-router/dev/vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -13,4 +14,4 @@ export default defineConfig({
   },
   build: { copyPublicDir: false, cssMinify: true, ssr: false },
   // define: { 'process.env': process.env },
-});
+}) as ViteUserConfig;
