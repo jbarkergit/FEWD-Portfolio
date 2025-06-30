@@ -1,5 +1,5 @@
 {
-  "include": [".react-router/types/**/*", "vite.config.ts", ".eslintrc.cjs", "src"],
+  "include": [".react-router/types/**/*", "vite.config.ts", ".eslintrc.cjs", "react-router.config.ts", "src"],
   "compilerOptions": {
     // Target & Environment
     "target": "ES2022", // Modern output (class fields, top-level await, etc.)
