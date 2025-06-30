@@ -21,7 +21,7 @@ module.exports = {
   ],
   rules: {
     // ✅ Common Overrides
-    'react/react-in-jsx-scope': 'off', // Not needed in React 17+
+    'react/react-in-jsx-scope': 'on',
     'prettier/prettier': ['error'], // Enforce Prettier formatting as ESLint errors
 
     // Optional Relaxations:
