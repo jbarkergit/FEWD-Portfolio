@@ -11,7 +11,7 @@ module.exports = {
   // Formatting Style
   bracketSameLine: true, // Put the `>` of a multiline JSX element at the end of the last line
   bracketSpacing: true, // Add space between brackets in object literals: { foo: bar }
-  endOfLine: 'lf', // Use Unix-style line endings
+  endOfLine: 'auto', // Use Unix-style line endings
   htmlWhitespaceSensitivity: 'ignore', // Ignore whitespace in HTML (good for React/JSX)
 
   // Syntax Preferences
