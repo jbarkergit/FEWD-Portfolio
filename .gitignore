@@ -7,39 +7,52 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Folders
-node_modules
-dist
-dist-ssr
-*.local
-public
-.react-router/
+# Build output
+dist/
+dist-ssr/
+public/
 
-# Editor directories and files
-.vscode
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Runtime data
+*.local
+
+# Cache
+.cache/
+vite.cache/
+.next/
+out/
+turbo/
+.pnpm-debug.log
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+
+# VS Code
+.vscode/
+!.vscode/extensions.json  # Allow shared extensions list
+
+# JetBrains IDEs (WebStorm, etc.)
+.idea/
+
+# macOS
 .DS_Store
+
+# Windows
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
+
+# Misc
 *.sw?
 
-# Dependencies
-package-lock.json
-
-# Environment Variables
-# loaded in all cases
-.env  
-# loaded in all cases, ignored by git
-.env.local          
-# only loaded in specified mode
-.env.development
-.env.test
-.env.production       
-# only loaded in specified mode, ignored by git
-.env.development.local
-.env.test.local
-.env.production.local
+# Custom folders
+.react-router/
