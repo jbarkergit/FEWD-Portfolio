@@ -1,26 +1,49 @@
 {
-  "include": ["**/*", "**/.server/**/*", "**/.client/**/*", ".react-router/types/**/*", "vite.config.ts", ".eslintrc.cjs", "/src"],
+  "include": [".react-router/types/**/*", "vite.config.ts", ".eslintrc.cjs", "src"],
   "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "types": ["node", "vite/client"],
-    "target": "ES2022",
-    "module": "ES2022",
-    "moduleResolution": "bundler",
-    "jsx": "react-jsx",
-    "rootDirs": [".", "./", "./.react-router/types"],
-    "baseUrl": ".",
-    "paths": { "~/*": ["./app/*"] },
-    "esModuleInterop": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "useDefineForClassFields": true,
-    "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true
+    // Target & Environment
+    "target": "ES2022", // Modern output (class fields, top-level await, etc.)
+    "lib": ["DOM", "DOM.Iterable", "ES2022"], // Include standard DOM & ES libs
+
+    // Module System
+    "module": "ES2022", // Output as ESModules
+    "moduleResolution": "bundler", // Vite-native module resolution
+    "moduleDetection": "force", // Only treat explicit `import`/`export` files as modules
+
+    // JSX & React
+    "jsx": "react-jsx", // Modern JSX transform (React 17+)
+
+    // Interop & Import Flexibility
+    "esModuleInterop": true, // Enables default import compatibility
+    "allowSyntheticDefaultImports": true, // Allow default imports even if not explicitly exported
+    "verbatimModuleSyntax": true, // Preserve `import`/`export` as written
+
+    // File Handling
+    "allowJs": false, // Disallow `.js` files (set to true if needed)
+    "resolveJsonModule": true, // Allow `import x from './file.json'`
+    "noEmit": true, // Don’t emit JS (Vite handles builds)
+
+    // Type Safety
+    "strict": true, // Enables all strict type checks (the umbrella flag)
+    "noImplicitAny": true, // Disallow `any` unless explicitly typed
+    "noUncheckedIndexedAccess": true, // Forces checks for all index signatures
+    "noImplicitOverride": true, // Require `override` keyword for method overrides
+    "useDefineForClassFields": true, // Aligns TS behavior with modern JS class fields
+
+    // Project Hygiene
+    "forceConsistentCasingInFileNames": true, // Ensure case-sensitive imports
+    "skipLibCheck": true, // Skip type-checking for `.d.ts` in node_modules
+    "isolatedModules": true, // Required for tools like Babel/Vite
+
+    // Path Aliases & Resolution
+    "baseUrl": ".", // Base path for relative imports
+    "rootDirs": [".", "./", "./.react-router/types"], // Useful for multi-root setups
+    "paths": {
+      "~/*": ["./app/*"] // Alias `~/foo` to `./app/foo`
+    },
+
+    // Additional
+    "types": ["node", "vite/client"], // Include type definitions for Node and Vite client
+    "outDir": "dist" // Output directory for compiled files (not used with noEmit: true)
   }
 }
