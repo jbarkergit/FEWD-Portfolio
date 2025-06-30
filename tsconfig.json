@@ -1,11 +1,14 @@
 {
   "include": [
+    // "**/*",
+    // "**/.server/**/*",
+    // "**/.client/**/*",
     ".react-router/types/**/*",
     "vite.config.ts",
     ".eslintrc.cjs",
     "react-router.config.ts",
     "reset.d.ts",
-    "src"
+    "app"
   ],
   "compilerOptions": {
     // Target & Environment
