@@ -7,15 +7,7 @@ type NumberKeys = keyof typeof tmdbEndpoints.number;
 type StringKeys = keyof typeof tmdbEndpoints.string;
 type EndpointKeys = NeverKeys | NumberKeys | StringKeys;
 
-type TmdbCallArgs<K> = K extends NeverKeys
-  ? K
-  : K extends NumberKeys
-    ? { [P in K]: number }
-    : K extends StringKeys
-      ? { [P in K]: string }
-      : undefined;
-
-type TmdbCallQuery<K extends EndpointKeys> = K extends NeverKeys
+type Query<K extends EndpointKeys> = K extends NeverKeys
   ? undefined
   : K extends NumberKeys
     ? number
@@ -23,7 +15,15 @@ type TmdbCallQuery<K extends EndpointKeys> = K extends NeverKeys
       ? string
       : never;
 
-const createEndpoint = <K extends EndpointKeys>(key: EndpointKeys, query: TmdbCallQuery<K>) => {
+type DataReturn<K> = K extends NeverKeys
+  ? TmdbResponse['never']
+  : K extends NumberKeys
+    ? TmdbResponse['number'][K]
+    : K extends StringKeys
+      ? TmdbResponse['string'][K]
+      : undefined;
+
+const createEndpoint = <K extends EndpointKeys>(key: K, query: Query<K>): string | undefined => {
   const allEndpoints = Object.assign({}, tmdbEndpoints.never, tmdbEndpoints.number, tmdbEndpoints.string);
 
   const endpoint = allEndpoints[key];
@@ -50,7 +50,7 @@ const createEndpoint = <K extends EndpointKeys>(key: EndpointKeys, query: TmdbCa
   }
 };
 
-const callApi = async <K extends EndpointKeys>(key: EndpointKeys, query: TmdbCallQuery<K>) => {
+const callApi = async <K extends EndpointKeys>(key: K, query: Query<K>): Promise<DataReturn<K> | undefined> => {
   try {
     const controller = new AbortController();
 
@@ -73,33 +73,44 @@ const callApi = async <K extends EndpointKeys>(key: EndpointKeys, query: TmdbCal
 
     const result = await response.json();
     sessionStorage.setItem(key, JSON.stringify(result));
-    return result;
+    return result as DataReturn<K>;
   } catch (e) {
     console.error(e);
   }
 };
 
-const retrieveCachedValue = (key: EndpointKeys) => {
+const retrieveCachedValue = <K extends EndpointKeys>(key: K): DataReturn<K> | null => {
   const entry = sessionStorage.getItem(key);
   const value = entry ? JSON.parse(entry) : null;
-  if (value) return { [key]: value };
+  if (value) return value as DataReturn<K>;
   return null;
 };
 
-const handleArg = async <K extends EndpointKeys>(key: K, query: TmdbCallQuery<K>): Promise<any> => {
+const handleArg = async <K extends EndpointKeys>(
+  key: K,
+  query: Query<K>
+): Promise<ReturnType<typeof retrieveCachedValue | typeof callApi>> => {
   const cachedValue = retrieveCachedValue(key);
   if (cachedValue) return cachedValue;
   return await callApi(key, query);
 };
 
-export const tmdbCall = async <K extends EndpointKeys>(args: TmdbCallArgs<K> | TmdbCallArgs<K>[]): Promise<any[]> => {
+type TmdbCallArgs<K> = K extends NeverKeys
+  ? K
+  : K extends NumberKeys
+    ? { [P in K]: number }
+    : K extends StringKeys
+      ? { [P in K]: string }
+      : undefined;
+
+export const tmdbCall = async <K extends EndpointKeys>(args: TmdbCallArgs<K> | TmdbCallArgs<K>[]) => {
   const parameters = Array.isArray(args) ? args : [args];
 
   const promises = parameters.map((arg) => {
     if (typeof arg === 'string') {
       return handleArg(arg, undefined);
     } else if (typeof arg === 'object') {
-      const [key, query] = Object.entries(arg)[0] as [K, TmdbCallQuery<K>];
+      const [key, query] = Object.entries(arg)[0] as [K, Query<K>];
       return handleArg(key, query);
     } else {
       console.error(`Function 'tmdbCall' received invalid argument: ${arg}`);

@@ -49,13 +49,13 @@ type CreditsProvider = {
 };
 
 export type TmdbResponse = {
-  static: {
+  never: {
     dates: {
       maximum: string;
       minimum: string;
     };
   } & PaginatedResponse<MovieProvider>;
-  integer: {
+  number: {
     credits: {
       id: number;
       cast: CreditsProvider &
