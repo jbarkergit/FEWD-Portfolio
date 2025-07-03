@@ -95,22 +95,34 @@ const handleArg = async <K extends EndpointKeys>(
   return await callApi(key, query);
 };
 
-type TmdbCallArgs<K> = K extends NeverKeys
-  ? K
+type OptionMap<K> = K extends NeverKeys
+  ? K // literal
   : K extends NumberKeys
-    ? { [P in K]: number }
+    ? { [P in K]: number } // {key: number}
     : K extends StringKeys
-      ? { [P in K]: string }
+      ? { [P in K]: string } // {key: string}
       : undefined;
 
-export const tmdbCall = async <K extends EndpointKeys>(args: TmdbCallArgs<K> | TmdbCallArgs<K>[]) => {
+type Options = {
+  [K in EndpointKeys]: OptionMap<K>; // Generate option for every key
+}[EndpointKeys]; // Unionize
+
+type InferKey<T> = {
+  [K in EndpointKeys]: T extends OptionMap<K> ? K : never; // If T is assignable to argument shape K
+}[EndpointKeys]; // Unionize
+
+type TmdbCallReturn<T extends Options> = T extends any[]
+  ? Array<DataReturn<InferKey<T[number]>>>
+  : [DataReturn<InferKey<T>>];
+
+export const tmdbCall = async <T extends Options>(args: T | T[]): Promise<TmdbCallReturn<T>> => {
   const parameters = Array.isArray(args) ? args : [args];
 
   const promises = parameters.map((arg) => {
     if (typeof arg === 'string') {
       return handleArg(arg, undefined);
     } else if (typeof arg === 'object') {
-      const [key, query] = Object.entries(arg)[0] as [K, Query<K>];
+      const [key, query] = Object.entries(arg)[0] as [InferKey<typeof arg>, Query<InferKey<typeof arg>>];
       return handleArg(key, query);
     } else {
       console.error(`Function 'tmdbCall' received invalid argument: ${arg}`);
@@ -122,10 +134,9 @@ export const tmdbCall = async <K extends EndpointKeys>(args: TmdbCallArgs<K> | T
   const fulfilled = responses.filter((entry) => entry.status === 'fulfilled');
   const rejected = responses.filter((entry) => entry.status === 'rejected');
 
-  if (fulfilled.length === 0) console.error(`Function 'tmdbCall' failed to fulfill any requests.`);
   if (rejected.length > 0)
     rejected.forEach((rejection) => console.error(`Function 'tmdbCall' rejection ${rejection.reason}`));
 
-  const values = fulfilled.map((entry) => entry.value);
-  return values;
+  const values = fulfilled.map((entry) => entry.value as DataReturn<any>);
+  return Array.isArray(args) ? (values as TmdbCallReturn<T>) : ([values[0]] as TmdbCallReturn<T>);
 };
