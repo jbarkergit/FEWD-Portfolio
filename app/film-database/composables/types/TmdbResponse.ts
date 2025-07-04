@@ -50,25 +50,35 @@ type CreditsProvider = {
 
 export type TmdbResponse = {
   never: {
-    dates: {
-      maximum: string;
-      minimum: string;
-    };
-  } & PaginatedResponse<MovieProvider>;
+    now_playing: {
+      dates: {
+        maximum: string;
+        minimum: string;
+      };
+    } & PaginatedResponse<MovieProvider>;
+    popular: PaginatedResponse<MovieProvider>;
+    top_rated: PaginatedResponse<MovieProvider>;
+    trending_this_week: PaginatedResponse<MovieProvider>;
+    trending_today: PaginatedResponse<MovieProvider>;
+    upcoming: {
+      dates: {
+        maximum: string;
+        minimum: string;
+      };
+    } & PaginatedResponse<MovieProvider>;
+  };
   number: {
     credits: {
       id: number;
-      cast: CreditsProvider &
-        {
-          cast_id: number;
-          character: string;
-          order: number;
-        }[];
-      crew: CreditsProvider &
-        {
-          department: string;
-          job: string;
-        }[];
+      cast: (CreditsProvider & {
+        cast_id: number;
+        character: string;
+        order: number;
+      })[];
+      crew: (CreditsProvider & {
+        department: string;
+        job: string;
+      })[];
     };
     details: {
       adult: boolean;
@@ -118,7 +128,7 @@ export type TmdbResponse = {
       vote_average: number;
       vote_count: number;
     };
-    recommendations: MovieProvider & { media_type: 'movie' }[];
+    recommendations: (MovieProvider & { media_type: 'movie' })[];
     reviews: {
       author: string;
       author_details: {
