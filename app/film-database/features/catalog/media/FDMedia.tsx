@@ -1,6 +1,5 @@
-// Deps
 import { useEffect, useRef } from 'react';
-import { useLoaderData } from 'react-router';
+import { useFLoader } from '~/film-database/routes/FilmDatabase';
 // Context
 import { useCatalogProvider } from '../../../context/CatalogContext';
 // Hooks
@@ -15,7 +14,7 @@ const FDMedia = () => {
   const { isMovieModal, isListModal, viewportChunkSize } = useCatalogProvider();
 
   // State
-  const { primaryData } = useLoaderData();
+  const { primaryData } = useFLoader();
   const paginatedData: ReturnType<typeof usePaginateData> = usePaginateData(primaryData, viewportChunkSize);
 
   // References
@@ -32,12 +31,15 @@ const FDMedia = () => {
     const carouselNodesArr: Element[] = [...fdMediaRef.current.children];
 
     // Gather indexes
-    const activeNodeIndex: number = carouselNodesArr.findIndex((node: Element) => node.getAttribute('data-anim') === 'active');
+    const activeNodeIndex: number = carouselNodesArr.findIndex(
+      (node: Element) => node.getAttribute('data-anim') === 'active'
+    );
     const nextActiveNodeIndex: number = Math.max(0, Math.min(activeNodeIndex + delta, carouselNodesArr.length - 1));
 
     // Handle attributes
     if (nextActiveNodeIndex !== activeNodeIndex) {
-      if (nextActiveNodeIndex > activeNodeIndex) carouselNodesArr[activeNodeIndex].setAttribute('data-anim', 'disabled');
+      if (nextActiveNodeIndex > activeNodeIndex)
+        carouselNodesArr[activeNodeIndex].setAttribute('data-anim', 'disabled');
       carouselNodesArr[nextActiveNodeIndex].setAttribute('data-anim', 'active');
     }
 
@@ -57,8 +59,18 @@ const FDMedia = () => {
 
   /** JSX */
   return (
-    <main className='fdMedia' ref={fdMediaRef} style={{ top: '0px' }}>
-      {paginatedData?.map(([key, value], index) => <FDCarousel mapIndex={index} heading={key} data={value} key={`carousel-key-${key}-${value}`} />)}
+    <main
+      className='fdMedia'
+      ref={fdMediaRef}
+      style={{ top: '0px' }}>
+      {paginatedData?.map(([key, value], index) => (
+        <FDCarousel
+          mapIndex={index}
+          heading={key}
+          data={value}
+          key={`carousel-key-${key}-${value}`}
+        />
+      ))}
       <FDSearch orientation='desktop' />
     </main>
   );

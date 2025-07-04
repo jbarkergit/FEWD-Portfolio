@@ -1,9 +1,10 @@
-// Router
+import { useRef } from 'react';
 import type { Route } from './+types/FilmDatabase';
+import { useLoaderData } from 'react-router';
 // Auth
 import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAuthorized';
-// Fetch & utility
-import { useTmdbFetcher, type Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
+// Composables
+import { tmdbCall } from '../composables/tmdbCall';
 // Context
 import { CatalogProvider } from '../context/CatalogContext';
 // Features: Account Page
@@ -12,22 +13,17 @@ import FDAccountModal from '../features/account/FDAccountModal';
 // Features: Catalog page
 import FDHeader from '../features/catalog/navigation/FDHeader';
 import FDCatalog from '../features/catalog/FDCatalog';
-import { useRef } from 'react';
 
 export async function clientLoader() {
-  // Auth
   const isAuth = await isUserAuthorized();
 
-  // Application dependant data
-  let primaryData: Namespace_Tmdb.Response_Union[];
-  let initialHeroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
-  let accountData: Namespace_Tmdb.BaseMedia_Provider[][];
-
-  const data = (await useTmdbFetcher([
-    { now_playing: undefined },
-    // { upcoming: undefined },
-    // { trending_today: undefined },
-    // { trending_this_week: undefined },
+  const primaryData = await tmdbCall([
+    'now_playing',
+    'upcoming',
+    'trending_today',
+    'trending_this_week',
+    'popular',
+    'top_rated',
     // { discover: 'action' },
     // { discover: 'adventure' },
     // { discover: 'animation' },
@@ -47,24 +43,12 @@ export async function clientLoader() {
     // { discover: 'tv_movie' },
     // { discover: 'war' },
     // { discover: 'western' },
-  ])) as Namespace_Tmdb.Response_Union[];
+  ]);
 
-  primaryData = data;
-
-  const nowPlayingObj = data[0] as unknown as Namespace_Tmdb.Prefabs_Obj;
-  const nowPlayingResults = (nowPlayingObj.now_playing as Namespace_Tmdb.Prefabs_Obj['now_playing']).results as Namespace_Tmdb.Prefabs_Obj['now_playing']['results'];
-  const nowPlayingFirstResult = nowPlayingResults[0] as Namespace_Tmdb.BaseMedia_Provider | undefined;
-  initialHeroData = nowPlayingFirstResult;
-
-  // Account page's background animation data
-  const nowPlayingData = (data[0] as Namespace_Tmdb.Prefabs_Obj)['now_playing'].results as Namespace_Tmdb.Prefabs_Obj['now_playing']['results'];
-  let slicedAccountData: Namespace_Tmdb.BaseMedia_Provider[][] = [];
-  for (let i = 0; i < Math.ceil(nowPlayingData.length / 4); i++) slicedAccountData.push(nowPlayingData.slice(i * 4, i * 4 + 4));
-  accountData = slicedAccountData;
-
-  // Return
-  return { isAuth, primaryData, initialHeroData, accountData };
+  return { isAuth, primaryData };
 }
+
+export const useFLoader = () => useLoaderData() as Awaited<ReturnType<typeof clientLoader>>;
 
 export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
   const { isAuth } = loaderData;
@@ -88,7 +72,10 @@ export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
     </CatalogProvider>
   ) : (
     <>
-      <FDAccountAnimation ref={animationRef} unmountAnimation={unmountAnimation} />
+      <FDAccountAnimation
+        ref={animationRef}
+        unmountAnimation={unmountAnimation}
+      />
       <FDAccountModal ref={accountRef} />
     </>
   );

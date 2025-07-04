@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { Dispatch, FC, ReactNode, SetStateAction } from 'react';
 import type { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
-import { useLoaderData } from 'react-router';
+import { useFLoader } from '../routes/FilmDatabase';
 
 /**
  * @typedef User_Collection
@@ -42,7 +42,7 @@ const CatalogContext = createContext<Context | undefined>(undefined);
  * @description Provides global catalog state, including featured media, modals, and user collections.
  */
 export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const { initialHeroData, primaryData } = useLoaderData();
+  const { primaryData } = useFLoader();
 
   /** @ref Remove dom traversal requirements for dynamic chunk sizes */
   const root = useRef<HTMLDivElement>(null);
@@ -57,9 +57,11 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   /** @state Indicates whether the list modal is visible. */
   const [isListModal, setIsListModal] = useState<boolean>(false);
   /** @state Hero data representing the featured media item. */
-  const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(initialHeroData);
+  const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(primaryData[0].results[0]);
   /** @state Modal trailer data representing the featured media item */
-  const [modalTrailer, setModalTrailer] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(initialHeroData);
+  const [modalTrailer, setModalTrailer] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(
+    primaryData[0].results[0]
+  );
 
   /**
    * @function getDynamicChunkSize
