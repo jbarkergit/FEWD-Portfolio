@@ -5,9 +5,9 @@ import type { TmdbResponse } from './types/TmdbResponse';
 type NeverKeys = keyof typeof tmdbEndpoints.never;
 type NumberKeys = keyof typeof tmdbEndpoints.number;
 type StringKeys = keyof typeof tmdbEndpoints.string;
-type EndpointKeys = NeverKeys | NumberKeys | StringKeys;
+export type TmdbEndpointKeys = NeverKeys | NumberKeys | StringKeys;
 
-type Query<K extends EndpointKeys> = K extends NeverKeys
+type Query<K extends TmdbEndpointKeys> = K extends NeverKeys
   ? undefined
   : K extends NumberKeys
     ? number
@@ -23,7 +23,7 @@ type DataReturn<K> = K extends NeverKeys
       ? TmdbResponse['string'][K]
       : undefined;
 
-const createEndpoint = <K extends EndpointKeys>(key: K, query: Query<K>): string | undefined => {
+const createEndpoint = <K extends TmdbEndpointKeys>(key: K, query: Query<K>): string | undefined => {
   const allEndpoints = Object.assign({}, tmdbEndpoints.never, tmdbEndpoints.number, tmdbEndpoints.string);
 
   const endpoint = allEndpoints[key];
@@ -50,7 +50,7 @@ const createEndpoint = <K extends EndpointKeys>(key: K, query: Query<K>): string
   }
 };
 
-const callApi = async <K extends EndpointKeys>(key: K, query: Query<K>): Promise<DataReturn<K> | undefined> => {
+const callApi = async <K extends TmdbEndpointKeys>(key: K, query: Query<K>): Promise<DataReturn<K> | undefined> => {
   try {
     const controller = new AbortController();
 
@@ -79,14 +79,14 @@ const callApi = async <K extends EndpointKeys>(key: K, query: Query<K>): Promise
   }
 };
 
-const retrieveCachedValue = <K extends EndpointKeys>(key: K): DataReturn<K> | null => {
+const retrieveCachedValue = <K extends TmdbEndpointKeys>(key: K): DataReturn<K> | null => {
   const entry = sessionStorage.getItem(key);
   const value = entry ? JSON.parse(entry) : null;
   if (value) return value as DataReturn<K>;
   return null;
 };
 
-const handleArg = async <K extends EndpointKeys>(
+const handleArg = async <K extends TmdbEndpointKeys>(
   key: K,
   query: Query<K>
 ): Promise<ReturnType<typeof retrieveCachedValue | typeof callApi>> => {
@@ -104,12 +104,12 @@ type OptionMap<K> = K extends NeverKeys
       : undefined;
 
 type Options = {
-  [K in EndpointKeys]: OptionMap<K>; // Generate option for every key
-}[EndpointKeys]; // Unionize
+  [K in TmdbEndpointKeys]: OptionMap<K>; // Generate option for every key
+}[TmdbEndpointKeys]; // Unionize
 
 type InferKey<T> = {
-  [K in EndpointKeys]: T extends OptionMap<K> ? K : never; // If T is assignable to argument shape K
-}[EndpointKeys]; // Unionize
+  [K in TmdbEndpointKeys]: T extends OptionMap<K> ? K : never; // If T is assignable to argument shape K
+}[TmdbEndpointKeys]; // Unionize
 
 type TmdbCallReturn<T extends Options> = T extends any[]
   ? Array<DataReturn<InferKey<T[number]>>>
