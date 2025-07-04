@@ -1,4 +1,4 @@
-type MovieProvider = {
+export type MovieProvider = {
   adult: boolean;
   backdrop_path: string | null;
   genre_ids: number[];
