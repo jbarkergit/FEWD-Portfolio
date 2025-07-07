@@ -1,10 +1,12 @@
-import { useRef, useState, useEffect, useId } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import type { ChangeEvent } from 'react';
 import { Link } from 'react-router';
 import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
 
 function useProductSearch(searchTerm: string) {
-  return ecommerceProducts.filter((product) => product.sku.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 9);
+  return ecommerceProducts
+    .filter((product) => product.sku.toLowerCase().includes(searchTerm.toLowerCase()))
+    .slice(0, 9);
 }
 
 const SearchBar = () => {
@@ -29,8 +31,12 @@ const SearchBar = () => {
   const searchResults = useProductSearch(searchTerm);
 
   return (
-    <div className='searchBar' ref={searchBarRef}>
-      <label className='searchBar__label' htmlFor='searchBar__input'>
+    <div
+      className='searchBar'
+      ref={searchBarRef}>
+      <label
+        className='searchBar__label'
+        htmlFor='searchBar__input'>
         Search Products
       </label>
       <input
@@ -50,15 +56,21 @@ const SearchBar = () => {
       />
       {searchTerm.length > 0 && (
         <div className='searchBar__return'>
-          <ul className='searchBar__return__ul' tabIndex={-1}>
+          <ul
+            className='searchBar__return__ul'
+            tabIndex={-1}>
             {searchResults.length <= 0 ? (
-              <li className='searchBar__return__ul__li' key={useId()}>
+              <li className='searchBar__return__ul__li'>
                 <span className='searchBar__return__ul__li--noResult'>Sorry, no results.</span>
               </li>
             ) : (
               searchResults.map((product) => (
-                <li className='searchBar__return__ul__li' key={product.sku}>
-                  <Link to={`/ecommerce/products/${product.sku}`} onClick={() => setSearchTerm('')}>
+                <li
+                  className='searchBar__return__ul__li'
+                  key={product.sku}>
+                  <Link
+                    to={`/ecommerce/products/${product.sku}`}
+                    onClick={() => setSearchTerm('')}>
                     {product.company} {product.unit}
                   </Link>
                 </li>

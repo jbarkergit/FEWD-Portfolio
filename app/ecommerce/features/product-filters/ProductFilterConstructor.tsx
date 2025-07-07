@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useId } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router';
 
 const ProductFilterConstructor = (initFilterName: string, filterData: string[] | Set<string>) => {
@@ -37,7 +37,9 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
     //toggles modalStatus to false if document.body is clicked, stops bubbling if selectMenu || button clicked
     const handleExteriorClick = (e: PointerEvent): void => {
       const target = e.target as HTMLElement;
-      selectMenuRef.current?.contains(target) || accordionRef.current?.contains(target) ? e.stopPropagation : setModalStatus(false);
+      selectMenuRef.current?.contains(target) || accordionRef.current?.contains(target)
+        ? e.stopPropagation
+        : setModalStatus(false);
     };
 
     document.body.addEventListener('pointerdown', handleExteriorClick);
@@ -45,21 +47,37 @@ const ProductFilterConstructor = (initFilterName: string, filterData: string[] |
   }, [modalStatus]);
 
   return (
-    <section className='productFilter' tabIndex={0}>
-      <div className='productFilter__select' ref={selectMenuRef} onClick={() => (modalStatus ? setModalStatus(false) : setModalStatus(true))}>
+    <section
+      className='productFilter'
+      tabIndex={0}>
+      <div
+        className='productFilter__select'
+        ref={selectMenuRef}
+        onClick={() => (modalStatus ? setModalStatus(false) : setModalStatus(true))}>
         <span className='productFilter__select--area'>{filterName}</span>
         <span className='productFilter__select--area'>
-          <svg xmlns='http://www.w3.org/2000/svg' width='0.79em' height='1.25em' viewBox='0 0 320 512'>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='0.79em'
+            height='1.25em'
+            viewBox='0 0 320 512'>
             <path
               fill='#ffffff'
               d='M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z'></path>
           </svg>
         </span>
       </div>
-      <ul className='productFilter__accordion' data-status='false' ref={accordionRef}>
+      <ul
+        className='productFilter__accordion'
+        data-status='false'
+        ref={accordionRef}>
         {useFilterData().map((data: string) => (
-          <li className='productFilter__accordion__listItem' key={useId()}>
-            <label className='productFilter__accordion__listItem--label' htmlFor={data}>
+          <li
+            className='productFilter__accordion__listItem'
+            key={`accordion-product-filter-${data}`}>
+            <label
+              className='productFilter__accordion__listItem--label'
+              htmlFor={data}>
               {data}
             </label>
             <Link

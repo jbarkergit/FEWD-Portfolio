@@ -1,11 +1,19 @@
-import { useRef, useEffect, useId } from 'react';
+import { useRef, useEffect } from 'react';
 import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/assets/svg/icons';
 import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import { useCarouselNavigation } from '~/film-database/hooks/useCarouselNavigation';
 import type { Type_usePaginateData_Data_Provider } from '~/film-database/hooks/usePaginateData';
 
-const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: string; data: Type_usePaginateData_Data_Provider[] }) => {
+const FDCineInfoCarousel = ({
+  mapIndex,
+  heading,
+  data,
+}: {
+  mapIndex: number;
+  heading: string;
+  data: Type_usePaginateData_Data_Provider[];
+}) => {
   // Context
   const { modalChunkSize } = useCatalogProvider();
   // References
@@ -37,24 +45,34 @@ const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; hea
 
   useEffect(() => {
     // Observe each carousel section
-    if (carouselRef.current) for (let i = 0; i < carouselRef.current.children.length; i++) observer.observe(carouselRef.current.children[i]);
+    if (carouselRef.current)
+      for (let i = 0; i < carouselRef.current.children.length; i++) observer.observe(carouselRef.current.children[i]);
     return () => observer.disconnect();
   }, [carouselRef.current]);
 
   /** JSX */
   return (
     data.length > 0 && (
-      <section className='fdCineInfoCarousel' data-anim='active'>
+      <section
+        className='fdCineInfoCarousel'
+        data-anim='active'>
         <header className='fdCineInfoCarousel__header'>
           <h2 className='fdCineInfoCarousel__header--h2'>{heading.replaceAll('_', ' ')}</h2>
         </header>
         <div className='fdCineInfoCarousel__wrapper'>
-          <ul className='fdCineInfoCarousel__wrapper__ul' ref={carouselRef}>
+          <ul
+            className='fdCineInfoCarousel__wrapper__ul'
+            ref={carouselRef}>
             {data.flat().map((article, index) => {
               const prop = article as Namespace_Tmdb.Credits_Obj['credits']['cast'][0];
               return (
-                <li className='fdCineInfoCarousel__wrapper__ul__li' data-hidden={index < modalChunkSize + 1 ? 'false' : 'true'} key={useId()}>
-                  <picture className='fdCineInfoCarousel__wrapper__ul__li__picture' data-missing={prop.profile_path ? 'false' : 'true'}>
+                <li
+                  className='fdCineInfoCarousel__wrapper__ul__li'
+                  data-hidden={index < modalChunkSize + 1 ? 'false' : 'true'}
+                  key={`cineInfo-carousel-${article.id}-${index}`}>
+                  <picture
+                    className='fdCineInfoCarousel__wrapper__ul__li__picture'
+                    data-missing={prop.profile_path ? 'false' : 'true'}>
                     {prop.profile_path ? (
                       <img
                         className='fdCineInfoCarousel__wrapper__ul__li__picture--img'
@@ -81,10 +99,16 @@ const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; hea
             })}
           </ul>
           <nav className='fdCineInfoCarousel__wrapper__navigation'>
-            <button className='fdCineInfoCarousel__wrapper__navigation__button' aria-label={'Show Previous'} onClick={() => updateCarouselIndex(-1)}>
+            <button
+              className='fdCineInfoCarousel__wrapper__navigation__button'
+              aria-label={'Show Previous'}
+              onClick={() => updateCarouselIndex(-1)}>
               <IcBaselineArrowLeft />
             </button>
-            <button className='fdCineInfoCarousel__wrapper__navigation__button' aria-label={'Show More'} onClick={() => updateCarouselIndex(1)}>
+            <button
+              className='fdCineInfoCarousel__wrapper__navigation__button'
+              aria-label={'Show More'}
+              onClick={() => updateCarouselIndex(1)}>
               <IcBaselineArrowRight />
             </button>
           </nav>
