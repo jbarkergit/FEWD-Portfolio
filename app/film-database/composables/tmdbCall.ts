@@ -1,25 +1,26 @@
 import { tmdbDiscoveryIds } from './const/tmdbDiscoveryIds';
 import { tmdbEndpoints } from './const/tmdbEndpoints';
-import type { TmdbResponse } from './types/TmdbResponse';
+import type {
+  TmdbEndpointKeys,
+  TmdbNeverKeys,
+  TmdbNumberKeys,
+  TmdbResponse,
+  TmdbStringKeys,
+} from './types/TmdbResponse';
 
-type NeverKeys = keyof typeof tmdbEndpoints.never;
-type NumberKeys = keyof typeof tmdbEndpoints.number;
-type StringKeys = keyof typeof tmdbEndpoints.string;
-export type TmdbEndpointKeys = NeverKeys | NumberKeys | StringKeys;
-
-type Query<K extends TmdbEndpointKeys> = K extends NeverKeys
+type Query<K extends TmdbEndpointKeys> = K extends TmdbNeverKeys
   ? undefined
-  : K extends NumberKeys
+  : K extends TmdbNumberKeys
     ? number
-    : K extends StringKeys
+    : K extends TmdbStringKeys
       ? string
       : never;
 
-type DataReturn<K> = K extends NeverKeys
+type DataReturn<K> = K extends TmdbNeverKeys
   ? TmdbResponse['never']
-  : K extends NumberKeys
+  : K extends TmdbNumberKeys
     ? TmdbResponse['number'][K]
-    : K extends StringKeys
+    : K extends TmdbStringKeys
       ? TmdbResponse['string'][K]
       : undefined;
 
@@ -95,11 +96,11 @@ const handleArg = async <K extends TmdbEndpointKeys>(
   return await callApi(key, query);
 };
 
-type OptionMap<K> = K extends NeverKeys
+type OptionMap<K> = K extends TmdbNeverKeys
   ? K // literal
-  : K extends NumberKeys
+  : K extends TmdbNumberKeys
     ? { [P in K]: number } // {key: number}
-    : K extends StringKeys
+    : K extends TmdbStringKeys
       ? { [P in K]: string } // {key: string}
       : undefined;
 

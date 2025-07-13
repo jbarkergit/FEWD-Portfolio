@@ -1,3 +1,5 @@
+import type { tmdbEndpoints } from '~/film-database/composables/const/tmdbEndpoints';
+
 export type MovieProvider = {
   adult: boolean;
   backdrop_path: string | null;
@@ -171,3 +173,8 @@ export type TmdbResponse = {
     search: PaginatedResponse<MovieProvider>;
   };
 };
+
+export type TmdbNeverKeys = keyof typeof tmdbEndpoints.never;
+export type TmdbNumberKeys = keyof typeof tmdbEndpoints.number;
+export type TmdbStringKeys = keyof typeof tmdbEndpoints.string;
+export type TmdbEndpointKeys = TmdbNeverKeys | TmdbNumberKeys | TmdbStringKeys;
