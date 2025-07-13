@@ -23,7 +23,8 @@ module.exports = {
     // ✅ Common Overrides
     'react/react-in-jsx-scope': 'on',
     'prettier/prettier': ['error'], // Enforce Prettier formatting as ESLint errors
-
+    'object-property-newline': ['error', { allowMultiplePropertiesPerLine: false }], // Force objects to wrap
+    'array-element-newline': ['error', 'always'], // Force arrays to wrap
     // Optional Relaxations:
     // 'import/prefer-default-export': 'off', // Uncomment if you prefer named exports
     // '@typescript-eslint/no-unused-vars': ['warn'], // Less aggressive on unused vars
