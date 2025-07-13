@@ -64,8 +64,8 @@ export const addUserCollection = ({ userCollections, setUserCollections, isEditM
   const header: string = userCollections[payload.colIndex]?.header ?? 'Unnamed Collection';
 
   setUserCollections((prev) => {
-    const existing = prev[key] || {};
-    const newData = payload?.data ? [...(existing.data ?? []), ...payload.data] : (existing.data ?? []);
+    const existing = prev[key];
+    if (!existing) return prev;
 
     return {
       ...prev,
@@ -73,7 +73,7 @@ export const addUserCollection = ({ userCollections, setUserCollections, isEditM
         ...existing,
         header,
         display,
-        data: newData,
+        data: payload?.data ? [...(existing.data ?? []), ...payload.data] : (existing.data ?? []),
       },
     };
   });
