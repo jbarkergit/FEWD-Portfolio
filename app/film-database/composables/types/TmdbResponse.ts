@@ -130,7 +130,7 @@ export type TmdbResponse = {
       vote_average: number;
       vote_count: number;
     };
-    recommendations: PaginatedResponse<(MovieProvider & { media_type: 'movie' })[]>;
+    recommendations: PaginatedResponse<MovieProvider & { media_type: 'movie' }>;
     reviews: { id: number } & PaginatedResponse<
       {
         author: string;
