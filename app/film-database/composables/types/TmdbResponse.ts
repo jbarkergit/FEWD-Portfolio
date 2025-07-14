@@ -176,6 +176,19 @@ export type TmdbResponse = {
   };
 };
 
+export type TmdbResponseFlat = {
+  [K in
+    | keyof TmdbResponse['never']
+    | keyof TmdbResponse['number']
+    | keyof TmdbResponse['string']]: K extends keyof TmdbResponse['never']
+    ? TmdbResponse['never'][K]
+    : K extends keyof TmdbResponse['number']
+      ? TmdbResponse['number'][K]
+      : K extends keyof TmdbResponse['string']
+        ? TmdbResponse['string'][K]
+        : never;
+};
+
 export type TmdbNeverKeys = keyof typeof tmdbEndpoints.never;
 export type TmdbNumberKeys = keyof typeof tmdbEndpoints.number;
 export type TmdbStringKeys = keyof typeof tmdbEndpoints.string;
