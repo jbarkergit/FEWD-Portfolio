@@ -17,12 +17,12 @@ type Query<K extends TmdbEndpointKeys> = K extends TmdbNeverKeys
       : never;
 
 type DataReturn<K> = K extends TmdbNeverKeys
-  ? TmdbResponse['never']
+  ? TmdbResponse['never'][K]
   : K extends TmdbNumberKeys
     ? TmdbResponse['number'][K]
     : K extends TmdbStringKeys
       ? TmdbResponse['string'][K]
-      : undefined;
+      : never;
 
 const createEndpoint = <K extends TmdbEndpointKeys>(key: K, query: Query<K>): string | undefined => {
   const allEndpoints = Object.assign({}, tmdbEndpoints.never, tmdbEndpoints.number, tmdbEndpoints.string);
@@ -96,7 +96,7 @@ const handleArg = async <K extends TmdbEndpointKeys>(
   return await callApi(key, query);
 };
 
-type OptionMap<K> = K extends TmdbNeverKeys
+type ArgumentOptions<K> = K extends TmdbNeverKeys
   ? K // literal
   : K extends TmdbNumberKeys
     ? { [P in K]: number } // {key: number}
@@ -104,26 +104,28 @@ type OptionMap<K> = K extends TmdbNeverKeys
       ? { [P in K]: string } // {key: string}
       : undefined;
 
-type Options = {
-  [K in TmdbEndpointKeys]: OptionMap<K>; // Generate option for every key
+type Arguments = {
+  [K in TmdbEndpointKeys]: ArgumentOptions<K>; // Generate option for every key
 }[TmdbEndpointKeys]; // Unionize
 
-type InferKey<T> = {
-  [K in TmdbEndpointKeys]: T extends OptionMap<K> ? K : never; // If T is assignable to argument shape K
+type ArgumentToKey<T> = {
+  [K in TmdbEndpointKeys]: T extends ArgumentOptions<K> ? K : never; // If T is assignable to argument shape K
 }[TmdbEndpointKeys]; // Unionize
 
-type TmdbCallReturn<T extends Options> = T extends any[]
-  ? Array<DataReturn<InferKey<T[number]>>>
-  : [DataReturn<InferKey<T>>];
+type CallReturn<T extends Arguments | readonly Arguments[]> = T extends readonly any[]
+  ? { [K in keyof T]: T[K] extends Arguments ? DataReturn<ArgumentToKey<T[K]>> : never }
+  : DataReturn<ArgumentToKey<T>>;
 
-export const tmdbCall = async <T extends Options>(args: T | T[]): Promise<TmdbCallReturn<T>> => {
+export const tmdbCall = async <const T extends Arguments | readonly [...Arguments[]]>(
+  args: T
+): Promise<CallReturn<T>> => {
   const parameters = Array.isArray(args) ? args : [args];
 
   const promises = parameters.map((arg) => {
     if (typeof arg === 'string') {
-      return handleArg(arg, undefined);
-    } else if (typeof arg === 'object') {
-      const [key, query] = Object.entries(arg)[0] as [InferKey<typeof arg>, Query<InferKey<typeof arg>>];
+      return handleArg(arg as TmdbEndpointKeys, undefined);
+    } else if (arg && typeof arg === 'object') {
+      const [key, query] = Object.entries(arg)[0] as [ArgumentToKey<typeof arg>, Query<ArgumentToKey<typeof arg>>];
       return handleArg(key, query);
     } else {
       console.error(`Function 'tmdbCall' received invalid argument: ${arg}`);
@@ -139,5 +141,5 @@ export const tmdbCall = async <T extends Options>(args: T | T[]): Promise<TmdbCa
     rejected.forEach((rejection) => console.error(`Function 'tmdbCall' rejection ${rejection.reason}`));
 
   const values = fulfilled.map((entry) => entry.value as DataReturn<any>);
-  return Array.isArray(args) ? (values as TmdbCallReturn<T>) : ([values[0]] as TmdbCallReturn<T>);
+  return Array.isArray(args) ? (values as CallReturn<T>) : (values[0] as CallReturn<T>);
 };
