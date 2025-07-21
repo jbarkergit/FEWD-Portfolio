@@ -1,5 +1,10 @@
 import type { tmdbEndpoints } from '~/film-database/composables/const/tmdbEndpoints';
 
+export type TmdbNeverKeys = keyof typeof tmdbEndpoints.never;
+export type TmdbNumberKeys = keyof typeof tmdbEndpoints.number;
+export type TmdbStringKeys = keyof typeof tmdbEndpoints.string;
+export type TmdbEndpointKeys = TmdbNeverKeys | TmdbNumberKeys | TmdbStringKeys;
+
 export type MovieProvider = {
   adult: boolean;
   backdrop_path: string | null;
@@ -176,7 +181,7 @@ export type TmdbResponse = {
   };
 };
 
-export type TmdbResponseFlat = {
+type TmdbResponseFlattened = {
   [K in
     | keyof TmdbResponse['never']
     | keyof TmdbResponse['number']
@@ -189,7 +194,7 @@ export type TmdbResponseFlat = {
         : never;
 };
 
-export type TmdbNeverKeys = keyof typeof tmdbEndpoints.never;
-export type TmdbNumberKeys = keyof typeof tmdbEndpoints.number;
-export type TmdbStringKeys = keyof typeof tmdbEndpoints.string;
-export type TmdbEndpointKeys = TmdbNeverKeys | TmdbNumberKeys | TmdbStringKeys;
+export type TmdbResponseFlat =
+  | Exclude<TmdbResponseFlattened[keyof TmdbResponseFlattened], TmdbResponseFlattened['credits']>
+  | TmdbResponseFlattened['credits']['cast']
+  | TmdbResponseFlattened['credits']['crew'];
