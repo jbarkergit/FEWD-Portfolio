@@ -5,7 +5,7 @@ export type TmdbNumberKeys = keyof typeof tmdbEndpoints.number;
 export type TmdbStringKeys = keyof typeof tmdbEndpoints.string;
 export type TmdbEndpointKeys = TmdbNeverKeys | TmdbNumberKeys | TmdbStringKeys;
 
-export type MovieProvider = {
+export type TmdbMovieProvider = {
   adult: boolean;
   backdrop_path: string | null;
   genre_ids: number[];
@@ -62,17 +62,17 @@ export type TmdbResponse = {
         maximum: string;
         minimum: string;
       };
-    } & PaginatedResponse<MovieProvider>;
-    popular: PaginatedResponse<MovieProvider>;
-    top_rated: PaginatedResponse<MovieProvider>;
-    trending_this_week: PaginatedResponse<MovieProvider>;
-    trending_today: PaginatedResponse<MovieProvider>;
+    } & PaginatedResponse<TmdbMovieProvider>;
+    popular: PaginatedResponse<TmdbMovieProvider>;
+    top_rated: PaginatedResponse<TmdbMovieProvider>;
+    trending_this_week: PaginatedResponse<TmdbMovieProvider>;
+    trending_today: PaginatedResponse<TmdbMovieProvider>;
     upcoming: {
       dates: {
         maximum: string;
         minimum: string;
       };
-    } & PaginatedResponse<MovieProvider>;
+    } & PaginatedResponse<TmdbMovieProvider>;
   };
   number: {
     credits: {
@@ -135,7 +135,7 @@ export type TmdbResponse = {
       vote_average: number;
       vote_count: number;
     };
-    recommendations: PaginatedResponse<MovieProvider & { media_type: 'movie' }>;
+    recommendations: PaginatedResponse<TmdbMovieProvider & { media_type: 'movie' }>;
     reviews: { id: number } & PaginatedResponse<
       {
         author: string;
@@ -174,14 +174,14 @@ export type TmdbResponse = {
         US: WatchProviderCountry;
       };
     };
-    discover: PaginatedResponse<MovieProvider>;
+    discover: PaginatedResponse<TmdbMovieProvider>;
   };
   string: {
-    search: PaginatedResponse<MovieProvider>;
+    search: PaginatedResponse<TmdbMovieProvider>;
   };
 };
 
-type TmdbResponseFlattened = {
+type TmdbResponseFlat = {
   [K in
     | keyof TmdbResponse['never']
     | keyof TmdbResponse['number']
@@ -194,7 +194,7 @@ type TmdbResponseFlattened = {
         : never;
 };
 
-export type TmdbResponseFlat =
-  | Exclude<TmdbResponseFlattened[keyof TmdbResponseFlattened], TmdbResponseFlattened['credits']>
-  | TmdbResponseFlattened['credits']['cast']
-  | TmdbResponseFlattened['credits']['crew'];
+export type TmdbEndpointResponseMap =
+  | Exclude<TmdbResponseFlat[keyof TmdbResponseFlat], TmdbResponseFlat['credits']>
+  | TmdbResponseFlat['credits']['cast']
+  | TmdbResponseFlat['credits']['crew'];
