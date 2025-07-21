@@ -181,7 +181,7 @@ export type TmdbResponse = {
   };
 };
 
-type TmdbResponseFlat = {
+export type TmdbResponseFlat = {
   [K in
     | keyof TmdbResponse['never']
     | keyof TmdbResponse['number']
