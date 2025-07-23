@@ -13,15 +13,20 @@
     z-index: 3;
     display: flex;
     width: 100%;
-    aspect-ratio: 2.39/1;
     padding: 1.5px;
-    margin: var(--fd-padding-generic);
     border-radius: var(--fd-border-radius);
     background-color: var(--fd-bc-offset);
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
     overflow: clip;
     opacity: 1;
     transition: opacity ease-in 1.1s;
+    @media (min-width: 1980px) {
+      aspect-ratio: 2.39/1;
+      margin: var(--fd-padding-generic);
+    }
+    @media (max-width: 1979px) {
+      height: 100%;
+    }
     &::before {
       content: '';
       position: absolute;
@@ -44,6 +49,7 @@
       pointer-events: none;
     }
     &__wrapper {
+      height: 100%;
       background-color: var(--fd-bc-offset);
       &:nth-child(1) {
         flex: 1 1 auto;
@@ -51,6 +57,9 @@
           calc(var(--fd-padding-generic) / 2);
         border-bottom-left-radius: var(--fd-border-radius);
         border-top-left-radius: var(--fd-border-radius);
+        @media (max-width: 1980px) {
+          padding: calc(var(--fd-padding-generic) / 2);
+        }
         & button {
           display: flex;
           justify-content: center;
@@ -74,14 +83,7 @@
             gap: var(--fd-gap);
             max-width: calc(400px * 2 + var(--fd-gap));
             width: 100%;
-            // &[data-animate='premount'] {
-            //   & div:nth-of-type(1) {
-            //   }
-            //   & ul li {
-            //   }
-            //   & div:nth-of-type(3) {
-            //   }
-            // }
+            height: auto;
             &[data-animate='unmount'] {
               & div:nth-of-type(1) {
                 & legend,
@@ -111,7 +113,7 @@
               }
             }
             & button {
-              max-width: 50%;
+              // max-width: 50%;
               @include m.fdFontM;
               color: var(--fd-font-color-primary);
               & svg {
@@ -132,7 +134,14 @@
                 display: grid;
                 grid-template-columns: repeat(2, minmax(0, 400px));
                 grid-template-rows: repeat(4, auto);
+                @media (max-width: 680px) {
+                  display: flex;
+                  flex-direction: column;
+                }
                 & li {
+                  @media (max-width: 510px) {
+                    width: 100%;
+                  }
                   &:nth-of-type(1) {
                     grid-area: 1 / 1 / 2 / 2;
                   }
@@ -153,6 +162,7 @@
                   }
                   &:nth-of-type(6) {
                     grid-area: 4 / 1 / 5 / 3;
+                    gap: 1.5px;
                     flex-direction: row;
                     align-items: center;
                     height: min-content;
@@ -163,6 +173,7 @@
                     // Checkbox
                     & label {
                       display: flex;
+                      flex-wrap: wrap;
                       & span {
                         color: hsl(0, 0%, 40%);
                       }
@@ -181,10 +192,16 @@
                 flex-direction: column;
               }
             }
-            & div:nth-of-type(1) legend {
-              font-size: clamp(1.5rem, 2.5vw, 1.875rem);
-              font-weight: 600;
-              line-height: 150%;
+            & div:nth-of-type(1) {
+              & legend {
+                font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+                font-weight: 600;
+                line-height: 150%;
+              }
+              & p {
+                width: clamp(25ch, 100%, 75ch);
+                white-space: wrap;
+              }
             }
             & div:nth-of-type(2) {
               display: flex;
@@ -195,6 +212,12 @@
                 transition: all ease-in-out 120ms;
                 &:hover {
                   background-color: hsl(0, 0%, 15%);
+                }
+                @media (max-width: 445px) {
+                  flex: 1 1 50%;
+                  & span {
+                    display: none;
+                  }
                 }
               }
             }
@@ -258,6 +281,9 @@
           calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 4);
         border-top-right-radius: var(--fd-border-radius);
         border-bottom-right-radius: var(--fd-border-radius);
+        @media (max-width: 1980px) {
+          display: none;
+        }
         & picture {
           position: relative;
           display: block;

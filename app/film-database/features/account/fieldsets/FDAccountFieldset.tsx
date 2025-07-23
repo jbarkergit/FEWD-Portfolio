@@ -22,7 +22,13 @@ const FDAccountFieldset = () => {
   const [form, setForm] = useState<'registration' | 'login'>('registration');
 
   const formValues = {
-    registration: useFormValues({ firstName: '', lastName: '', emailAddress: '', password: '', passwordConfirmation: '' }),
+    registration: useFormValues({
+      firstName: '',
+      lastName: '',
+      emailAddress: '',
+      password: '',
+      passwordConfirmation: '',
+    }),
     login: useFormValues({ emailAddress: '', password: '' }),
   };
 
@@ -101,20 +107,34 @@ const FDAccountFieldset = () => {
       style={{ height: formHeight ? formHeight : 0 }}>
       <div>
         <legend>{isRegistrationForm ? `Get Started Now` : `Start a new session`}</legend>
-        <p>{isRegistrationForm ? `Welcome to Film Database, create an account to start a session.` : `Welcome back to Film Database, let's get you logged in.`}</p>
+        <p>
+          {isRegistrationForm
+            ? `Welcome to Film Database, create an account to start a session.`
+            : `Welcome back to Film Database, let's get you logged in.`}
+        </p>
       </div>
       <div>
-        <button type='button' aria-label='Log in with Github' onPointerUp={() => handleAuthProvider('github')}>
-          <TablerBrandGithubFilled /> Log in with GitHub
+        <button
+          type='button'
+          aria-label='Log in with Github'
+          onPointerUp={() => handleAuthProvider('github')}>
+          <TablerBrandGithubFilled /> <span>Log in with GitHub</span>
         </button>
-        <button type='button' aria-label='Log in with Google' onPointerUp={() => handleAuthProvider('google')}>
-          <DeviconGoogle /> Log in with Google
+        <button
+          type='button'
+          aria-label='Log in with Google'
+          onPointerUp={() => handleAuthProvider('google')}>
+          <DeviconGoogle /> <span>Log in with Google</span>
         </button>
       </div>
       <ul className='fdAccount__container__wrapper__form__fieldset__ul'>
         {fields.map(({ labelId, id, name, label, type, inputMode, required, placeholder, minLength, maxLength }) => (
-          <li key={id} className='fdAccount__container__wrapper__form__fieldset__ul__li'>
-            <label id={labelId} htmlFor={id}>
+          <li
+            key={id}
+            className='fdAccount__container__wrapper__form__fieldset__ul__li'>
+            <label
+              id={labelId}
+              htmlFor={id}>
               {label}
             </label>
             <input
@@ -140,7 +160,11 @@ const FDAccountFieldset = () => {
         ))}
         {isRegistrationForm && (
           <li className='fdAccount__container__wrapper__form__fieldset__ul__li'>
-            <input type='checkbox' name='agree' id='agree' />
+            <input
+              type='checkbox'
+              name='agree'
+              id='agree'
+            />
             <label htmlFor='agree'>
               <span>I have read and agree to the</span>&nbsp;
               <button aria-label='Read terms and conditions'>terms and conditions</button>
@@ -149,10 +173,16 @@ const FDAccountFieldset = () => {
         )}
       </ul>
       <div>
-        <button type='button' aria-label={isRegistrationForm ? 'Submit registration form' : 'Sign in with your credentials'} onPointerUp={handleSubmit}>
+        <button
+          type='button'
+          aria-label={isRegistrationForm ? 'Submit registration form' : 'Sign in with your credentials'}
+          onPointerUp={handleSubmit}>
           {isRegistrationForm ? 'Complete Registration' : 'Log in'}
         </button>
-        <button type='button' aria-label={isRegistrationForm ? 'Log into an existing account' : 'Create a new account'} onPointerUp={animator}>
+        <button
+          type='button'
+          aria-label={isRegistrationForm ? 'Log into an existing account' : 'Create a new account'}
+          onPointerUp={animator}>
           {isRegistrationForm ? 'Log into an existing account' : 'Create a new account'}
         </button>
       </div>
