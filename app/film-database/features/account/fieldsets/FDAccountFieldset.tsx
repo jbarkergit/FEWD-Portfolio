@@ -104,7 +104,7 @@ const FDAccountFieldset = () => {
       ref={fieldsetRef}
       data-form={form}
       data-animate='premount'
-      style={{ height: formHeight ? formHeight : 0 }}>
+      style={{ height: formHeight ? formHeight : 'auto' }}>
       <div>
         <legend>{isRegistrationForm ? `Get Started Now` : `Start a new session`}</legend>
         <p>
