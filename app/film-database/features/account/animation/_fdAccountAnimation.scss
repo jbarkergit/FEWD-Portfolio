@@ -47,7 +47,10 @@
       .fdAccountAnimation__backdrop__set:nth-of-type(even) .fdAccountAnimation__backdrop__set__li {
         transform: translateY(calc(var(--i) * 25svh));
       }
-      .fdAccountAnimation__backdrop__set:nth-of-type(3) .fdAccountAnimation__backdrop__set__li:nth-of-type(3) picture img {
+      .fdAccountAnimation__backdrop__set:nth-of-type(3)
+        .fdAccountAnimation__backdrop__set__li:nth-of-type(3)
+        picture
+        img {
         // NOTE: transform doesn't play nice with nested tags post psuedo; therefore, we've opted for a single animation (which hurts performance)
         // NOTE: Overflow: clip/hidden causes artifacts; therefore, we should delay filter: scale IF initial starting scale is ABOVE 1
         // Animation mimics transition properties from &__set&[data-visible='true'] .fdAccountAnimation__backdrop__set__li
@@ -124,7 +127,7 @@
     filter: opacity(1);
   }
   to {
-    transform: scale(0.75);
+    transform: scale(1.25);
     filter: opacity(0);
   }
 }
