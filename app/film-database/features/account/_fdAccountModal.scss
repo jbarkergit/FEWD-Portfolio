@@ -10,7 +10,7 @@
   @include m.grainPsuedo;
   &__container {
     position: relative;
-    z-index: 1;
+    z-index: 3;
     display: flex;
     width: 100%;
     aspect-ratio: 2.39/1;
@@ -37,7 +37,7 @@
     }
     &[data-visible='true'] {
       opacity: 1;
-      transform: opacity 0.5s ease-in-out;
+      transition: opacity 0.2s ease-in;
     }
     &[data-visible='false'] {
       opacity: 0;
@@ -47,7 +47,8 @@
       background-color: var(--fd-bc-offset);
       &:nth-child(1) {
         flex: 1 1 auto;
-        padding: calc(var(--fd-padding-generic) / 2) var(--fd-padding-generic) calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 2);
+        padding: calc(var(--fd-padding-generic) / 2) var(--fd-padding-generic) calc(var(--fd-padding-generic) / 2)
+          calc(var(--fd-padding-generic) / 2);
         border-bottom-left-radius: var(--fd-border-radius);
         border-top-left-radius: var(--fd-border-radius);
         & button {
@@ -253,7 +254,8 @@
       }
       &:nth-child(2) {
         flex: 0 1 auto;
-        padding: calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 4);
+        padding: calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 4)
+          calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 4);
         border-top-right-radius: var(--fd-border-radius);
         border-bottom-right-radius: var(--fd-border-radius);
         & picture {
