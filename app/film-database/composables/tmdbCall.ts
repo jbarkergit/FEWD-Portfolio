@@ -111,10 +111,10 @@ type ArgumentToKey<T> = {
   [K in TmdbEndpointKeys]: T extends ArgumentOptions<K> ? K : never; // If T is assignable to argument shape K
 }[TmdbEndpointKeys]; // Unionize
 
-type CallReturn<T extends Arguments | Arguments[]> = T extends any[] // If T is an array of arguments
+type CallReturn<T> = T extends any[] // If T is an array of arguments
   ? {
       [K in keyof T]: T[K] extends Arguments
-        ? { key: ArgumentToKey<T>; response: DataReturn<ArgumentToKey<T[K]>> }
+        ? { key: ArgumentToKey<T[K]>; response: DataReturn<ArgumentToKey<T[K]>> }
         : never;
     }
   : { key: ArgumentToKey<T>; response: DataReturn<ArgumentToKey<T>> };
@@ -122,16 +122,22 @@ type CallReturn<T extends Arguments | Arguments[]> = T extends any[] // If T is 
 export type TmdbState<T extends TmdbEndpointKeys> = CallReturn<ArgumentOptions<T>>;
 
 export const tmdbCall = async <T extends Arguments | Arguments[]>(args: T): Promise<CallReturn<T>> => {
-  const parameters = Array.isArray(args) ? args : [args];
+  const parameters = (Array.isArray(args) ? args : [args]) as Arguments[];
 
-  const promises = parameters.map((arg) => {
+  const handleBadArgument = (arg: unknown) => {
+    console.error(`Failure to map promise for ${arg}`);
+    return { key: arg && typeof arg === 'string' ? arg : undefined, response: undefined };
+  };
+
+  const promises = parameters.map(async (arg) => {
     if (typeof arg === 'string') {
-      return { key: arg, response: handleArg(arg as TmdbEndpointKeys, undefined) };
-    }
-
-    if (arg && typeof arg === 'object') {
-      const [key, query] = Object.entries(arg)[0] as [ArgumentToKey<typeof arg>, Query<ArgumentToKey<typeof arg>>];
-      return { key: key, response: handleArg(key, query) };
+      return { key: arg, response: await handleArg(arg, undefined) };
+    } else if (arg && typeof arg === 'object') {
+      const entries = Object.entries(arg)[0];
+      if (entries) return { key: entries[0], response: await handleArg(entries[0] as TmdbEndpointKeys, entries[1]) };
+      else handleBadArgument(arg);
+    } else {
+      handleBadArgument(arg);
     }
   });
 
@@ -145,5 +151,6 @@ export const tmdbCall = async <T extends Arguments | Arguments[]>(args: T): Prom
     }
   }
 
-  return Array.isArray(args) ? (fulfilled as CallReturn<T>) : (fulfilled[0] as CallReturn<T>);
+  const result = Array.isArray(args) ? fulfilled : fulfilled[0];
+  return result as CallReturn<T>;
 };
