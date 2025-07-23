@@ -1,20 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
 import { BxDotsVerticalRounded, IcOutlinePlayCircle, TablerCategoryPlus } from '~/film-database/assets/svg/icons';
-import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
+import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import { addUserCollection } from '~/film-database/hooks/addUserCollection';
 
 type Prop_Drill = {
   mapIndex: number;
   index: number;
-  article: Namespace_Tmdb.BaseMedia_Provider;
+  article: TmdbMovieProvider;
 };
 
 const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
   const { userCollections, setUserCollections, setHeroData, viewportChunkSize } = useCatalogProvider();
 
-  const prop = article as Namespace_Tmdb.BaseMedia_Provider;
-  const props: { src: string | null; alt: string; member?: string | undefined; knownFor?: string | undefined } = { src: prop.poster_path, alt: prop.title };
+  const props: { src: string | null; alt: string; member?: string | undefined; knownFor?: string | undefined } = {
+    src: article.poster_path,
+    alt: article.title,
+  };
 
   const collectionsMenu = useRef<HTMLUListElement>(null);
   const cmAttribute: string = 'data-active';
@@ -51,7 +53,9 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
 
   /** @returns */
   return (
-    <li className='fdCarousel__wrapper__ul__li' data-hidden={index < viewportChunkSize + 1 ? 'false' : 'true'}>
+    <li
+      className='fdCarousel__wrapper__ul__li'
+      data-hidden={index < viewportChunkSize + 1 ? 'false' : 'true'}>
       <picture className='fdCarousel__wrapper__ul__li__picture'>
         <img
           className='fdCarousel__wrapper__ul__li__picture--img'
@@ -61,17 +65,23 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
         />
       </picture>
       <div className='fdCarousel__wrapper__ul__li__overlay'>
-        <button className='fdCarousel__wrapper__ul__li__overlay--collections' aria-label='Add movie to collections' onPointerUp={() => toggleCollectionMenu()}>
+        <button
+          className='fdCarousel__wrapper__ul__li__overlay--collections'
+          aria-label='Add movie to collections'
+          onPointerUp={() => toggleCollectionMenu()}>
           <BxDotsVerticalRounded />
         </button>
         <button
           className='fdCarousel__wrapper__ul__li__overlay--play'
           aria-label='Play trailer'
-          onClick={() => setHeroData(article as Namespace_Tmdb.BaseMedia_Provider)}>
+          onClick={() => setHeroData(article)}>
           <IcOutlinePlayCircle />
         </button>
       </div>
-      <ul className='fdCarousel__wrapper__ul__li__collections' ref={collectionsMenu} data-active={isCmOpen ? 'true' : 'false'}>
+      <ul
+        className='fdCarousel__wrapper__ul__li__collections'
+        ref={collectionsMenu}
+        data-active={isCmOpen ? 'true' : 'false'}>
         {Object.entries(userCollections).map(([key, collection], i) => {
           const keyIndex = parseInt(key.split('-').pop() || '0', 10);
 
@@ -85,7 +95,7 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
                     setUserCollections,
                     isEditMode: false,
                     payload: {
-                      data: [prop],
+                      data: [article],
                       colIndex: keyIndex,
                     },
                   });
@@ -106,7 +116,7 @@ const FDCarouselPoster = ({ mapIndex, index, article }: Prop_Drill) => {
                   setUserCollections,
                   isEditMode: false,
                   payload: {
-                    data: [prop],
+                    data: [article],
                     colIndex: Object.keys(userCollections).length + 1,
                   },
                 });

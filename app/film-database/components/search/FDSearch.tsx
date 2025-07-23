@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, type ChangeEvent } from 'react';
 import { SvgSpinnersRingResize, IcOutlinePlayCircle, IcBaselineSearch } from '~/film-database/assets/svg/icons';
-import { type Namespace_Tmdb, useTmdbFetcher } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
+import { tmdbCall } from '~/film-database/composables/tmdbCall';
+import type { TmdbResponse } from '~/film-database/composables/types/TmdbResponse';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 
 const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
@@ -10,7 +11,9 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
   // State
   const [isTyping, setIsTyping] = useState(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<Namespace_Tmdb.Search_Obj['search']['results'] | undefined>(undefined);
+  const [searchResults, setSearchResults] = useState<TmdbResponse['string']['search']['results'] | undefined>(
+    undefined
+  );
 
   // Debounce
   const timeoutId = useRef<NodeJS.Timeout | null>(null);
@@ -38,8 +41,8 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
   const invokeFetch = async () => {
     if (searchTerm.length > 0) {
       setIsTyping(false);
-      const data = (await useTmdbFetcher({ search: searchTerm })) as Namespace_Tmdb.Search_Obj;
-      if (data) setSearchResults(data.search.results);
+      const search = await tmdbCall({ search: searchTerm });
+      if (search) setSearchResults(search.response.results);
     }
   };
 
@@ -61,7 +64,9 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
   }, [searchTerm]);
 
   return (
-    <section className='fdSearchBar' data-orientation={orientation}>
+    <section
+      className='fdSearchBar'
+      data-orientation={orientation}>
       <div className='fdSearchBar__header'>
         <fieldset className='fdSearchBar__header__fieldset'>
           <label
@@ -81,24 +86,37 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
             onPointerLeave={() => handleLabelVisibility('barelyVisible')}
             onFocus={() => handleLabelVisibility('visible')}
             onBlur={() => handleLabelVisibility('barelyVisible')}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e?.target.value.replace(' ', '-').toLowerCase())}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setSearchTerm(e?.target.value.replace(' ', '-').toLowerCase())
+            }
           />
           {isTyping ? <SvgSpinnersRingResize /> : null}
         </fieldset>
       </div>
 
-      <div className='fdSearchBar__results' data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
+      <div
+        className='fdSearchBar__results'
+        data-anim={searchResults && searchResults.length > 0 ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
           {searchResults && !isTyping
             ? searchResults.splice(0, viewportChunkSize).map((props, index) => {
                 if (props.poster_path)
                   return (
-                    <li className='fdSearchBar__results__ul__li' key={`fd-search-result-${index}`}>
+                    <li
+                      className='fdSearchBar__results__ul__li'
+                      key={`fd-search-result-${index}`}>
                       <picture className='fdSearchBar__results__ul__li__article'>
-                        <img src={`https://image.tmdb.org/t/p/w780${props.poster_path}`} alt={`${props.title}`} />
+                        <img
+                          src={`https://image.tmdb.org/t/p/w780${props.poster_path}`}
+                          alt={`${props.title}`}
+                        />
                       </picture>
-                      <div className='fdSearchBar__results__ul__li__overlay' onClick={() => setHeroData(props)}>
-                        <button className='fdSearchBar__results__ul__li__overlay--play' aria-label='Play trailer'>
+                      <div
+                        className='fdSearchBar__results__ul__li__overlay'
+                        onClick={() => setHeroData(props)}>
+                        <button
+                          className='fdSearchBar__results__ul__li__overlay--play'
+                          aria-label='Play trailer'>
                           <IcOutlinePlayCircle />
                         </button>
                       </div>

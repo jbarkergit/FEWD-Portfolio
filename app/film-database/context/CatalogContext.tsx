@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { Dispatch, FC, ReactNode, SetStateAction } from 'react';
-import type { Namespace_Tmdb } from '../composables/tmdb-api/hooks/useTmdbFetcher';
 import { useFLoader } from '../routes/FilmDatabase';
+import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 
 /**
  * @typedef User_Collection
@@ -11,7 +11,7 @@ import { useFLoader } from '../routes/FilmDatabase';
  */
 export type User_Collection = {
   header: string;
-  data: Namespace_Tmdb.BaseMedia_Provider[] | null;
+  data: TmdbMovieProvider[] | null;
   display: 'flex' | 'grid';
 };
 
@@ -20,8 +20,8 @@ export type User_Collection = {
  * @description Global context for managing catalog state, including media data, modals, and user collections.
  */
 type Context = {
-  heroData: Namespace_Tmdb.BaseMedia_Provider | undefined;
-  setHeroData: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
+  heroData: TmdbMovieProvider | undefined;
+  setHeroData: Dispatch<SetStateAction<TmdbMovieProvider | undefined>>;
   viewportChunkSize: number;
   modalChunkSize: number;
   isMovieModal: boolean;
@@ -31,8 +31,8 @@ type Context = {
   userCollections: Record<string, User_Collection>;
   setUserCollections: Dispatch<SetStateAction<Record<string, User_Collection>>>;
   root: React.RefObject<HTMLDivElement | null>;
-  modalTrailer: Namespace_Tmdb.BaseMedia_Provider | undefined;
-  setModalTrailer: Dispatch<SetStateAction<Namespace_Tmdb.BaseMedia_Provider | undefined>>;
+  modalTrailer: TmdbMovieProvider | undefined;
+  setModalTrailer: Dispatch<SetStateAction<TmdbMovieProvider | undefined>>;
 };
 
 const CatalogContext = createContext<Context | undefined>(undefined);
@@ -42,32 +42,39 @@ const CatalogContext = createContext<Context | undefined>(undefined);
  * @description Provides global catalog state, including featured media, modals, and user collections.
  */
 export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  /** @clientLoader */
   const { primaryData } = useFLoader();
 
   /** @ref Remove dom traversal requirements for dynamic chunk sizes */
   const root = useRef<HTMLDivElement>(null);
+
   /** @state Maximum number of carousel items based on the window width. */
   const [viewportChunkSize, setViewportChunkSize] = useState<number>(2);
+
   /** @state Maximum number of carousel items based on the modal width. */
   const [modalChunkSize, setModalChunkSize] = useState<number>(2);
+
   /** @state A record of user-defined media collections. */
   const [userCollections, setUserCollections] = useState<Record<string, User_Collection>>({});
+
   /** @state Indicates whether the movie modal is visible. */
   const [isMovieModal, setIsMovieModal] = useState<boolean>(false);
+
   /** @state Indicates whether the list modal is visible. */
   const [isListModal, setIsListModal] = useState<boolean>(false);
+
   /** @state Hero data representing the featured media item. */
-  const [heroData, setHeroData] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(primaryData[0].results[0]);
-  /** @state Modal trailer data representing the featured media item */
-  const [modalTrailer, setModalTrailer] = useState<Namespace_Tmdb.BaseMedia_Provider | undefined>(
-    primaryData[0].results[0]
+  const [heroData, setHeroData] = useState<TmdbMovieProvider | undefined>(
+    primaryData[0] ? primaryData[0].response.results[0] : undefined
   );
+
+  /** @state Modal trailer data representing the featured media item */
+  const [modalTrailer, setModalTrailer] = useState<TmdbMovieProvider | undefined>(undefined);
 
   /**
    * @function getDynamicChunkSize
    * @description Determines the number of carousel items based on the screen width.
    * This ensures that the carousel adapts to different screen sizes for optimal viewing.
-   * @returns {number} The number of items to show in the carousel.
    */
   function getDynamicChunkSize(): void {
     if (!root.current) return;
@@ -100,16 +107,12 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
    * @returns {Promise<void>} Resolves once collections have been initialized.
    */
   const initializeUserCollections = async (): Promise<void> => {
-    let flattenedPrimaryData = (primaryData as Namespace_Tmdb.Response_Union[]).flatMap((entry) =>
-      Object.values(entry).flatMap((subEntry) => subEntry.results || [])
-    ) as Namespace_Tmdb.BaseMedia_Provider[];
-
     // Get user's collection document
     // const collection: Firestore_UserDocument | undefined = await useFirestore.getDocument('users');
     // if (!collection) return;
 
     // Get, filter and set movies from clientLoader's primaryData to prevent api call
-    // const moviesArr: Namespace_Tmdb.BaseMedia_Provider[] = flattenedPrimaryData.filter((movie) => collection.movies.some((id) => id === movie.id));
+    // const moviesArr: TmdbMovieProvider[] = flattenedPrimaryData.filter((movie) => collection.movies.some((id) => id === movie.id));
 
     // Set initial collection
     // if (moviesArr.length > 0 && !carousels.length) {}
@@ -121,7 +124,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
       },
       'user-collection-1': {
         header: 'Unnamed Collection',
-        data: flattenedPrimaryData,
+        data: primaryData.flatMap(({ response }) => response.results),
         display: 'flex',
       },
     });

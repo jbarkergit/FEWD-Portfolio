@@ -1,19 +1,18 @@
 import { useRef, useEffect } from 'react';
 import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/assets/svg/icons';
-import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
+import type { TmdbState } from '~/film-database/composables/tmdbCall';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import { useCarouselNavigation } from '~/film-database/hooks/useCarouselNavigation';
-import type { Type_usePaginateData_Data_Provider } from '~/film-database/hooks/usePaginateData';
 
-const FDCineInfoCarousel = ({
-  mapIndex,
-  heading,
-  data,
-}: {
-  mapIndex: number;
-  heading: string;
-  data: Type_usePaginateData_Data_Provider[];
-}) => {
+type Cast = TmdbState<'credits'>['response']['cast'][number];
+type Crew = TmdbState<'credits'>['response']['crew'][number];
+
+type CastChunks = Cast[][];
+type CrewChunks = Crew[][];
+
+type DataProp = CastChunks | CrewChunks;
+
+const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: string; data: DataProp }) => {
   // Context
   const { modalChunkSize } = useCatalogProvider();
   // References
@@ -45,8 +44,13 @@ const FDCineInfoCarousel = ({
 
   useEffect(() => {
     // Observe each carousel section
-    if (carouselRef.current)
-      for (let i = 0; i < carouselRef.current.children.length; i++) observer.observe(carouselRef.current.children[i]);
+    if (carouselRef.current) {
+      const children = carouselRef.current.children;
+
+      for (let i = 0; i < children.length; i++) {
+        observer.observe(children[i]!);
+      }
+    }
     return () => observer.disconnect();
   }, [carouselRef.current]);
 
@@ -64,7 +68,6 @@ const FDCineInfoCarousel = ({
             className='fdCineInfoCarousel__wrapper__ul'
             ref={carouselRef}>
             {data.flat().map((article, index) => {
-              const prop = article as Namespace_Tmdb.Credits_Obj['credits']['cast'][0];
               return (
                 <li
                   className='fdCineInfoCarousel__wrapper__ul__li'
@@ -72,27 +75,27 @@ const FDCineInfoCarousel = ({
                   key={`cineInfo-carousel-${article.id}-${index}`}>
                   <picture
                     className='fdCineInfoCarousel__wrapper__ul__li__picture'
-                    data-missing={prop.profile_path ? 'false' : 'true'}>
-                    {prop.profile_path ? (
+                    data-missing={article.profile_path ? 'false' : 'true'}>
+                    {article.profile_path ? (
                       <img
                         className='fdCineInfoCarousel__wrapper__ul__li__picture--img'
-                        src={`https://image.tmdb.org/t/p/w780/${prop.profile_path}`}
-                        alt={`${prop.name}`}
+                        src={`https://image.tmdb.org/t/p/w780/${article.profile_path}`}
+                        alt={`${article.name}`}
                         fetchPriority={mapIndex <= modalChunkSize ? 'high' : 'low'}
                       />
                     ) : (
                       <img
                         className='fdCineInfoCarousel__wrapper__ul__li__picture--img'
                         src={`https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg`}
-                        alt={`${prop.name}`}
+                        alt={`${article.name}`}
                         fetchPriority='low'
                       />
                     )}
                   </picture>
                   <div className='fdCineInfoCarousel__wrapper__ul__li__member'>
-                    <span>{prop.name}</span>
-                    <span>{prop.character}</span>
-                    <span>{prop.known_for_department !== 'Acting' ? prop.known_for_department : null}</span>
+                    <span>{article.name}</span>
+                    <span>{article.character}</span>
+                    <span>{article.known_for_department !== 'Acting' ? article.known_for_department : null}</span>
                   </div>
                 </li>
               );

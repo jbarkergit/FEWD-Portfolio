@@ -1,46 +1,16 @@
-// Deps
-import { useEffect, useRef, useState } from 'react';
-// Lib
+import { useRef, useState } from 'react';
 import YouTube from 'react-youtube';
 import type { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
-// Components
 import IFrameController from '../iframe-controller/IFrameController';
-import { useCatalogProvider, type User_Collection } from '~/film-database/context/CatalogContext';
-import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
+import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 
 const FDiFramePlayer = ({
   trailers,
   setTrailers,
 }: {
-  trailers: {
-    id: string;
-    iso_639_1: string;
-    iso_3166_1: string;
-    key: string;
-    name: string;
-    official: boolean;
-    published_at: string;
-    site: string;
-    size: number;
-    type: string;
-  }[];
-  setTrailers: React.Dispatch<
-    React.SetStateAction<
-      | {
-          id: string;
-          iso_639_1: string;
-          iso_3166_1: string;
-          key: string;
-          name: string;
-          official: boolean;
-          published_at: string;
-          site: string;
-          size: number;
-          type: string;
-        }[]
-      | undefined
-    >
-  >;
+  trailers: TmdbResponseFlat['videos']['results'];
+  setTrailers: React.Dispatch<React.SetStateAction<TmdbResponseFlat['videos']['results'] | undefined>>;
 }) => {
   // Context
   const { isListModal, userCollections, modalTrailer, setModalTrailer } = useCatalogProvider();
@@ -110,8 +80,9 @@ const FDiFramePlayer = ({
   };
 
   // Global player states
-  const [playState, setPlayState] = useState<'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined>(undefined);
-  // const [qualityState, setQualityState] = useState<{ resolution: string; definition: string | undefined }[] | undefined>(undefined);
+  const [playState, setPlayState] = useState<
+    'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined
+  >(undefined);
 
   // playState
   const onStateChange = (playState: number) => {
@@ -119,27 +90,18 @@ const FDiFramePlayer = ({
       case -1:
         setPlayState('unstarted');
         break;
-
       case 0:
         setPlayState('ended');
         break;
-
       case 1:
         setPlayState('playing');
         break;
-
       case 2:
         setPlayState('paused');
         break;
-
       case 3:
         setPlayState('buffering');
         break;
-
-      case 5:
-        setPlayState('cued');
-        break;
-
       default:
         setPlayState('cued');
         break;
@@ -148,14 +110,19 @@ const FDiFramePlayer = ({
 
   return (
     <>
-      {playerRef.current && playerRef.current.internalPlayer ? <IFrameController player={playerRef.current.internalPlayer} playState={playState} /> : null}
+      {playerRef.current && playerRef.current.internalPlayer ? (
+        <IFrameController
+          player={playerRef.current.internalPlayer}
+          playState={playState}
+        />
+      ) : null}
       <YouTube
         ref={playerRef}
-        videoId={`${trailers[0].key}`}
+        videoId={`${trailers[0]?.key}`}
         opts={opts}
         className='fdiFrame__player'
         iframeClassName='fdiFrame__player__iframe'
-        title={`YouTube video player: ${trailers[0].name}`}
+        title={`YouTube video player: ${trailers[0]?.name}`}
         style={undefined}
         loading={'eager'}
         onStateChange={(event: YouTubeEvent<number>) => onStateChange(event.data)}

@@ -9,7 +9,9 @@ type Props = {
 
 const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
   const { userCollections, setUserCollections } = useCatalogProvider();
-  const [inputValue, setInputValue] = useState<string>(userCollections[Object.keys(userCollections)[mapIndex]]?.header || 'Unnamed Collection');
+  const [inputValue, setInputValue] = useState<string>(
+    userCollections[Object.keys(userCollections)[mapIndex]!]?.header || 'Unnamed Collection'
+  );
   const deferredInputValue: string = useDeferredValue(inputValue);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -52,7 +54,11 @@ const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
         {mapIndex === 0 ? (
           deferredInputValue
         ) : (
-          <input type='text' value={header && header.length > 0 ? deferredInputValue : 'Unnamed Collection'} onChange={handleInputChange} />
+          <input
+            type='text'
+            value={header && header.length > 0 ? deferredInputValue : 'Unnamed Collection'}
+            onChange={handleInputChange}
+          />
         )}
       </h2>
     </header>

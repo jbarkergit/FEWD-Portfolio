@@ -1,16 +1,16 @@
 import { useRef, useEffect, forwardRef, type RefObject } from 'react';
-import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { useCatalogProvider, type User_Collection } from '~/film-database/context/CatalogContext';
 import { useCarouselNavigation } from '~/film-database/hooks/useCarouselNavigation';
 import type { Sensor, Source, Target } from './FDCollections';
 import FDCollectionsNavigation from './FDCollectionsNavigation';
 import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
+import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 
 type Props = {
   mapIndex: number;
   header: string;
-  data: Namespace_Tmdb.BaseMedia_Provider[] | null;
+  data: TmdbMovieProvider[] | null;
   display: 'flex' | 'grid';
   isEditMode: boolean;
   isListFX: boolean;
@@ -23,7 +23,23 @@ type Props = {
 };
 
 const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
-  ({ mapIndex, header, data, display, isEditMode, isListFX, collectionRefs, sensorRef, sourceRef, targetRef, resetStores, triggerError }, collectionRef) => {
+  (
+    {
+      mapIndex,
+      header,
+      data,
+      display,
+      isEditMode,
+      isListFX,
+      collectionRefs,
+      sensorRef,
+      sourceRef,
+      targetRef,
+      resetStores,
+      triggerError,
+    },
+    collectionRef
+  ) => {
     // Context
     const { setUserCollections, modalChunkSize, userCollections, setModalTrailer } = useCatalogProvider();
 
@@ -75,10 +91,12 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
         sensorRef.current.initialPointerCoords = { x: event.clientX, y: event.clientY };
         sensorRef.current.pointerCoords = { x: event.clientX, y: event.clientY };
 
-        sourceRef.current.colIndex = collectionRefs.current.findIndex((collection) => collection.querySelector('ul') === currentTarget);
+        sourceRef.current.colIndex = collectionRefs.current.findIndex(
+          (collection) => collection.querySelector('ul') === currentTarget
+        );
         sourceRef.current.listItem = target as HTMLLIElement;
 
-        const srcColUl = collectionRefs.current[sourceRef.current.colIndex].querySelector('ul');
+        const srcColUl = collectionRefs.current[sourceRef.current.colIndex]?.querySelector('ul');
 
         if (sourceRef.current.colIndex == NOT_FOUND_INDEX || !srcColUl) {
           resetInteraction({ event: 'down', reason: 'Source collection index not found.' });
@@ -127,7 +145,8 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       }>(
         (closest, rect, index) => {
           // Check if the detachment point is within the bounds of the current rect
-          const isWithinBounds = detach.x >= rect.left && detach.x <= rect.right && detach.y >= rect.top && detach.y <= rect.bottom;
+          const isWithinBounds =
+            detach.x >= rect.left && detach.x <= rect.right && detach.y >= rect.top && detach.y <= rect.bottom;
 
           if (isWithinBounds) return { rect, index, distance: 0 };
 
@@ -177,8 +196,8 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       }
 
       // Get new collection's unordered list
-      const targetCol: HTMLElement = collectionRefs.current[targetRef.current.colIndex];
-      const targetColUl: HTMLUListElement | null = targetCol.querySelector('ul');
+      const targetCol = collectionRefs.current[targetRef.current.colIndex];
+      const targetColUl = targetCol?.querySelector('ul');
 
       if (!targetColUl) {
         resetInteraction({ event: 'detach', reason: 'Failure to identify target.colIndex.' });
@@ -186,7 +205,9 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       }
 
       // Get new collection's list item rects
-      const targetColListItems: (HTMLLIElement | HTMLDivElement)[] = Array.from(targetColUl.children) as Array<HTMLDivElement | HTMLLIElement>;
+      const targetColListItems: (HTMLLIElement | HTMLDivElement)[] = Array.from(targetColUl.children) as Array<
+        HTMLDivElement | HTMLLIElement
+      >;
       const targetColRects: DOMRect[] = targetColListItems.map((li) => li.getBoundingClientRect());
 
       // Find the closest item index to the detach point
@@ -206,14 +227,20 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
         if (isSameCollection && isSameListItemIndex) return prevCarousels;
 
         // Identify the source and target collections by their keys
-        const sourceKey: string = Object.keys(prevCarousels)[sourceRef.current.colIndex];
-        const targetKey: string = Object.keys(prevCarousels)[targetRef.current.colIndex];
+        const sourceKey = Object.keys(prevCarousels)[sourceRef.current.colIndex];
+        const targetKey = Object.keys(prevCarousels)[targetRef.current.colIndex];
+        if (!sourceKey || !targetKey) return prevCarousels;
 
-        const sourceData: Namespace_Tmdb.BaseMedia_Provider[] = prevCarousels[sourceKey]?.data || [];
-        const targetData: Namespace_Tmdb.BaseMedia_Provider[] = prevCarousels[targetKey]?.data || [];
+        const source = prevCarousels[sourceKey];
+        const target = prevCarousels[targetKey];
+
+        const sourceData = (source && (source.data as TmdbMovieProvider[])) || [];
+        const targetData = (target && (target.data as TmdbMovieProvider[])) || [];
 
         // If the dragged list item is dropped in a collection that already contains the list item
-        const containsListItem: boolean = targetData.some((item) => item.id === sourceData[sourceRef.current.listItemIndex]?.id);
+        const containsListItem: boolean = targetData.some(
+          (item) => item.id === sourceData[sourceRef.current.listItemIndex]?.id
+        );
 
         if (containsListItem) {
           triggerError();
@@ -221,26 +248,30 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
         }
 
         // Remove the item from sourceData
-        const newSourceData: Namespace_Tmdb.BaseMedia_Provider[] = sourceData.filter((_, index) => index !== sourceRef.current.listItemIndex);
+        const newSourceData: TmdbMovieProvider[] = sourceData.filter(
+          (_, index) => index !== sourceRef.current.listItemIndex
+        );
 
         // Insert item into targetData
-        const newTargetData: Namespace_Tmdb.BaseMedia_Provider[] = [
+        const newTargetData = [
           ...targetData.slice(0, targetRef.current.listItemIndex),
           sourceData[sourceRef.current.listItemIndex],
           ...targetData.slice(targetRef.current.listItemIndex),
         ];
 
+        if (!newTargetData || !newTargetData.length) return prevCarousels;
+
         // State object
         const updatedCarousels = {
           ...prevCarousels,
           [sourceKey]: {
-            ...prevCarousels[sourceKey],
+            ...prevCarousels[sourceKey]!,
             data: newSourceData,
-          },
+          } as User_Collection,
           [targetKey]: {
-            ...prevCarousels[targetKey],
+            ...prevCarousels[targetKey]!,
             data: newTargetData,
-          },
+          } as User_Collection,
         };
 
         // Update state
@@ -255,7 +286,13 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
      * @description Tracks collections and their items
      */
     function pointerMove(): void {
-      if (isEditMode && sensorRef.current.isInteract && !sensorRef.current.isActiveElement && sourceRef.current.listItem instanceof HTMLLIElement && ulRef.current) {
+      if (
+        isEditMode &&
+        sensorRef.current.isInteract &&
+        !sensorRef.current.isActiveElement &&
+        sourceRef.current.listItem instanceof HTMLLIElement &&
+        ulRef.current
+      ) {
         ulRef.current.removeEventListener('pointermove', pointerMove);
         ulRef.current.removeEventListener('pointerup', pointerUp);
 
@@ -289,7 +326,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       }
 
       for (let i = 0; i < listItems.length; i++) {
-        listItems[i].setAttribute('data-list-item-visible', i === elementIndex ? 'true' : 'false');
+        listItems[i]?.setAttribute('data-list-item-visible', i === elementIndex ? 'true' : 'false');
       }
 
       if (isListFX) {
@@ -309,7 +346,8 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
       if (!isEditMode && !sensorRef.current.isActiveElement) {
         toggleLiVisibility();
       } else {
-        if (sensorRef.current.isActiveElement) resetInteraction({ event: 'up', reason: 'An element is already active.' });
+        if (sensorRef.current.isActiveElement)
+          resetInteraction({ event: 'up', reason: 'An element is already active.' });
         return;
       }
     }
@@ -345,10 +383,22 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
      * @returns {JSX.Element}
      */
     return (
-      <section className='fdCollections__collection' ref={collectionRef}>
-        <FDCollectionsCollectionHeader mapIndex={mapIndex} header={header} />
+      <section
+        className='fdCollections__collection'
+        ref={collectionRef}>
+        <FDCollectionsCollectionHeader
+          mapIndex={mapIndex}
+          header={header}
+        />
         <div className='fdCollections__collection__wrapper'>
-          <FDCollectionsCollectionUl mapIndex={mapIndex} data={data} display={display} isEditMode={isEditMode} ref={ulRef} sensorRef={sensorRef} />
+          <FDCollectionsCollectionUl
+            mapIndex={mapIndex}
+            data={data}
+            display={display}
+            isEditMode={isEditMode}
+            ref={ulRef}
+            sensorRef={sensorRef}
+          />
           <FDCollectionsNavigation updateCarouselIndex={updateCarouselIndex} />
         </div>
       </section>

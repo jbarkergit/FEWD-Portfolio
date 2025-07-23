@@ -1,12 +1,17 @@
 import { useRef, useEffect } from 'react';
 import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/assets/svg/icons';
-import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
-import type { Type_usePaginateData_Data_Provider } from '~/film-database/hooks/usePaginateData';
 import FDCarouselPoster from './FDCarouselPoster';
 import { useCarouselNavigation } from '~/film-database/hooks/useCarouselNavigation';
+import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 
-const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: string; data: Type_usePaginateData_Data_Provider[] }) => {
+type Props = {
+  mapIndex: number;
+  heading: string;
+  data: TmdbMovieProvider[][];
+};
+
+const FDCarousel = ({ mapIndex, heading, data }: Props) => {
   const { viewportChunkSize } = useCatalogProvider();
   const carouselRef = useRef<HTMLUListElement>(null);
 
@@ -37,30 +42,50 @@ const FDCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: st
     { threshold: 0 }
   );
 
+  // Observe each carousel section
   useEffect(() => {
-    // Observe each carousel section
-    if (carouselRef.current) for (let i = 0; i < carouselRef.current.children.length; i++) observer.observe(carouselRef.current.children[i]);
+    if (carouselRef.current) {
+      for (let i = 0; i < carouselRef.current.children.length; i++) {
+        const node = carouselRef.current.children[i];
+        if (node) observer.observe(node);
+      }
+    }
     return () => observer.disconnect();
   }, [carouselRef.current]);
 
   /** @returns */
   return (
     data.length > 0 && (
-      <section className='fdCarousel' data-anim='active'>
+      <section
+        className='fdCarousel'
+        data-anim='active'>
         <div className='fdCarousel__header'>
           <h2 className='fdCarousel__header--h2'>{heading.replaceAll('_', ' ')}</h2>
         </div>
         <div className='fdCarousel__wrapper'>
-          <ul className='fdCarousel__wrapper__ul' ref={carouselRef}>
+          <ul
+            className='fdCarousel__wrapper__ul'
+            ref={carouselRef}>
             {data.flat().map((article, index) => (
-              <FDCarouselPoster mapIndex={mapIndex} index={index} article={article as Namespace_Tmdb.BaseMedia_Provider} key={`carousel-${mapIndex}-li-${index}`} />
+              <FDCarouselPoster
+                mapIndex={mapIndex}
+                index={index}
+                article={article}
+                key={`carousel-${mapIndex}-li-${index}`}
+              />
             ))}
           </ul>
           <nav className='fdCarousel__wrapper__navigation'>
-            <button className='fdCarousel__wrapper__navigation__button' aria-label={'Show Previous'} onClick={() => updateCarouselIndex(-1)}>
+            <button
+              className='fdCarousel__wrapper__navigation__button'
+              aria-label={'Show Previous'}
+              onClick={() => updateCarouselIndex(-1)}>
               <IcBaselineArrowLeft />
             </button>
-            <button className='fdCarousel__wrapper__navigation__button' aria-label={'Show More'} onClick={() => updateCarouselIndex(1)}>
+            <button
+              className='fdCarousel__wrapper__navigation__button'
+              aria-label={'Show More'}
+              onClick={() => updateCarouselIndex(1)}>
               <IcBaselineArrowRight />
             </button>
           </nav>

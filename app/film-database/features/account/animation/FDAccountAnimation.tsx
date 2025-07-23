@@ -1,43 +1,47 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, type CSSProperties } from 'react';
-import type { Namespace_Tmdb } from '../../../composables/tmdb-api/hooks/useTmdbFetcher';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState, type CSSProperties } from 'react';
+import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
+import { useFLoader } from '~/film-database/routes/FilmDatabase';
 
 const FDAccountAnimation = forwardRef<HTMLDivElement, { unmountAnimation: () => void }>(
   ({ unmountAnimation }, animationRef) => {
+    const exposedRef = useRef<HTMLDivElement>(null);
+    useImperativeHandle(animationRef, () => exposedRef.current!, []);
+    const { primaryData } = useFLoader();
+    const [posters, setPosters] = useState<TmdbMovieProvider[][]>();
+
     /**
      * @function useEffect
      * @description Handles animation on mount
      */
-    const exposedRef = useRef<HTMLDivElement>(null);
-    useImperativeHandle(animationRef, () => exposedRef.current!, []);
-    useEffect(() => console.log(exposedRef), []);
     useEffect(() => exposedRef.current?.setAttribute('data-visible', 'true'), []);
-
-    /**
-     * @function getCenteredIndex
-     * @description Finds the visual center of an array's length
-     */
-    const getCenteredIndex = (length: number) => Math.round((length - 1) / 2);
 
     /**
      * @function mostCenteredImageID
      * @description Aims to abstract logic from map scope in order to leverage TMDB image paths with numerous dimensions to improve image load times
      */
-
-    // const nowPlayingData = (data[0] as Namespace_Tmdb.Prefabs_Obj)['now_playing']
-    //   .results as Namespace_Tmdb.Prefabs_Obj['now_playing']['results'];
-    // let accountData: Namespace_Tmdb.BaseMedia_Provider[][] = [];
-    // for (let i = 0; i < Math.ceil(nowPlayingData.length / 4); i++)
-    //   slicedAccountData.push(nowPlayingData.slice(i * 4, i * 4 + 4));
-
     const mostCenteredImageID: number = useMemo(() => {
-      if (!accountData.length) return -1;
+      if (!primaryData[0]) return -1;
 
-      const middleSet = accountData[getCenteredIndex(accountData.length)];
+      const nowPlaying = primaryData[0].response.results;
+      let posters: TmdbMovieProvider[][] = [];
+
+      for (let i = 0; i < Math.ceil(nowPlaying.length / 4); i++) {
+        posters.push(nowPlaying.slice(i * 4, i * 4 + 4));
+      }
+
+      if (!posters.length) return -1;
+
+      setPosters(posters);
+
+      // Find the visual center of an array's length
+      const getCenteredIndex = (length: number) => Math.round((length - 1) / 2);
+
+      const middleSet = posters[getCenteredIndex(posters.length)];
       if (!middleSet?.length) return -1;
 
       const middleItem = middleSet?.[getCenteredIndex(middleSet.length)];
       return middleItem?.id ?? -1;
-    }, [accountData]);
+    }, [primaryData[0]]);
 
     return (
       <div className='fdAccountAnimation'>
@@ -46,11 +50,11 @@ const FDAccountAnimation = forwardRef<HTMLDivElement, { unmountAnimation: () => 
           ref={exposedRef}
           data-visible='false'
           onAnimationEnd={unmountAnimation}>
-          {accountData.map((set: Namespace_Tmdb.BaseMedia_Provider[], setIndex: number) => (
+          {posters?.map((set: TmdbMovieProvider[], setIndex: number) => (
             <ul
               className='fdAccountAnimation__backdrop__set'
               key={`backdrop-set-${setIndex}`}>
-              {set.map((article: Namespace_Tmdb.BaseMedia_Provider, index: number) => (
+              {set.map((article: TmdbMovieProvider, index: number) => (
                 <li
                   className='fdAccountAnimation__backdrop__set__li'
                   key={`backdrop-image-${article.id}`}

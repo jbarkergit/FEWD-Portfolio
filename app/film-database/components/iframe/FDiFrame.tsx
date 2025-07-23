@@ -1,41 +1,47 @@
-// Deps
 import { useEffect, useState } from 'react';
-// Composables
-import { useTmdbFetcher } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
-import type { Namespace_Tmdb } from '../../composables/tmdb-api/hooks/useTmdbFetcher';
-// Context
 import { useCatalogProvider } from '../../context/CatalogContext';
-// Components
 import FDiFramePlayer from './player/FDiFramePlayer';
+import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
+import { tmdbCall } from '~/film-database/composables/tmdbCall';
 
 /** This component utilizes YouTube Player API
  * https://developers.google.com/youtube/iframe_api_reference
  * via third party library https://github.com/tjallingt/react-youtube
  */
 
-const FDiFrame = ({ trailerId, type }: { trailerId?: number; type: 'hero' | 'modal' }) => {
+const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
   const { heroData, modalTrailer } = useCatalogProvider();
-  const [trailers, setTrailers] = useState<Namespace_Tmdb.Videos_Obj['videos']['results'] | undefined>(undefined);
+  const [trailers, setTrailers] = useState<TmdbResponseFlat['videos']['results'] | undefined>(undefined);
 
   // Fetch trailer user request
-  const fetchTrailerRequest = async (): Promise<void> => {
-    const data = (await useTmdbFetcher({ videos: trailerId ? trailerId : type === 'hero' ? heroData?.id : modalTrailer?.id })) as Namespace_Tmdb.Videos_Obj;
-    const filteredEntries = data.videos.results.filter((obj) => obj.name.includes('Trailer'));
+  const fetchTrailer = async (): Promise<void> => {
+    const id = type === 'hero' ? heroData?.id : modalTrailer?.id;
+    if (!id) return;
+    const videos = await tmdbCall({ videos: id });
+    const filteredEntries = videos.response.results.filter((obj) => obj.name.includes('Trailer'));
     setTrailers(filteredEntries);
   };
 
   useEffect(() => {
-    if (heroData || modalTrailer) fetchTrailerRequest();
+    fetchTrailer();
   }, [heroData, modalTrailer]);
 
   // JSX
   return (
-    <section className='fdiFrame' data-type={type}>
-      {trailers && trailers.length > 0 ? (
-        <FDiFramePlayer trailers={trailers} setTrailers={setTrailers} />
+    <section
+      className='fdiFrame'
+      data-type={type}>
+      {trailers && trailers.length ? (
+        <FDiFramePlayer
+          trailers={trailers}
+          setTrailers={setTrailers}
+        />
       ) : (
         <picture className='fdiFrame__player'>
-          <img src={`https://image.tmdb.org/t/p/original/${heroData?.backdrop_path}`} alt={heroData?.title} />
+          <img
+            src={`https://image.tmdb.org/t/p/original/${heroData?.backdrop_path}`}
+            alt={heroData?.title}
+          />
         </picture>
       )}
     </section>

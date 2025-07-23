@@ -1,13 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useFLoader } from '~/film-database/routes/FilmDatabase';
-// Context
 import { useCatalogProvider } from '../../../context/CatalogContext';
-// Hooks
-import { usePaginateData } from '../../../hooks/usePaginateData';
-// Features
 import FDCarousel from './media-carousel/FDCarousel';
-// Components
 import FDSearch from '~/film-database/components/search/FDSearch';
+import { tmdbChunk } from '~/film-database/utility/tmdbChunk';
 
 const FDMedia = () => {
   // Context
@@ -15,7 +11,13 @@ const FDMedia = () => {
 
   // State
   const { primaryData } = useFLoader();
-  const paginatedData: ReturnType<typeof usePaginateData> = usePaginateData(primaryData, viewportChunkSize);
+  const chunkedData = useMemo(
+    () =>
+      primaryData.map((r) => {
+        return { key: r.key, response: tmdbChunk(r.response.results, viewportChunkSize) };
+      }),
+    [primaryData, viewportChunkSize]
+  );
 
   // References
   const fdMediaRef = useRef<HTMLElement>(null);
@@ -38,9 +40,11 @@ const FDMedia = () => {
 
     // Handle attributes
     if (nextActiveNodeIndex !== activeNodeIndex) {
-      if (nextActiveNodeIndex > activeNodeIndex)
+      if (carouselNodesArr[activeNodeIndex] && nextActiveNodeIndex > activeNodeIndex) {
         carouselNodesArr[activeNodeIndex].setAttribute('data-anim', 'disabled');
-      carouselNodesArr[nextActiveNodeIndex].setAttribute('data-anim', 'active');
+      }
+      if (carouselNodesArr[nextActiveNodeIndex])
+        carouselNodesArr[nextActiveNodeIndex].setAttribute('data-anim', 'active');
     }
 
     // Scroll
@@ -63,12 +67,12 @@ const FDMedia = () => {
       className='fdMedia'
       ref={fdMediaRef}
       style={{ top: '0px' }}>
-      {paginatedData?.map(([key, value], index) => (
+      {chunkedData?.map(({ key, response }, index) => (
         <FDCarousel
           mapIndex={index}
           heading={key}
-          data={value}
-          key={`carousel-key-${key}-${value}`}
+          data={response}
+          key={`media-carousel-index-${index}-key-${key}`}
         />
       ))}
       <FDSearch orientation='desktop' />

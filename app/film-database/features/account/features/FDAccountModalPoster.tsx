@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import type { Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
+import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 
-const FDAccountModalPoster = ({ films }: { films: Namespace_Tmdb.BaseMedia_Provider[] }) => {
+const FDAccountModalPoster = ({ films }: { films: TmdbMovieProvider[] }) => {
   /** @state */
-  const [posters, setPosters] = useState<Namespace_Tmdb.BaseMedia_Provider[]>([]);
+  const [posters, setPosters] = useState<TmdbMovieProvider[]>([]);
 
   /** @ref */
   const indexQueue = useRef<number[]>([]);
@@ -18,8 +18,15 @@ const FDAccountModalPoster = ({ films }: { films: Namespace_Tmdb.BaseMedia_Provi
     // If index queue length is equal to or greater than the even films length, shuffle the queue via Fisher-Yates shuffle algorithm
     if (indexQueue.current.length >= films.length) {
       for (let i = nextQueue.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [nextQueue[i], nextQueue[j]] = [nextQueue[j], nextQueue[i]];
+        const j: number = Math.floor(Math.random() * (i + 1));
+
+        const valI: number | undefined = nextQueue[i];
+        const valJ: number | undefined = nextQueue[j];
+
+        if (typeof valI === 'number' && typeof valJ === 'number') {
+          nextQueue[i] = valJ;
+          nextQueue[j] = valI;
+        }
       }
     }
     // Generate unique indexes until the queue length matches the even films length
@@ -40,7 +47,12 @@ const FDAccountModalPoster = ({ films }: { films: Namespace_Tmdb.BaseMedia_Provi
   const createPosters = (): void => {
     generateOrShuffleIndexes();
     let tempPosterQueue: typeof posters = [];
-    for (let i = 0; i < films.length; i++) tempPosterQueue.push(films[indexQueue.current[i]]);
+
+    for (let i = 0; i < films.length; i++) {
+      const j: number | undefined = indexQueue.current[i];
+      if (j && films[j]) tempPosterQueue.push(films[j]);
+    }
+
     setPosters(tempPosterQueue);
   };
 

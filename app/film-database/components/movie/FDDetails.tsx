@@ -1,13 +1,17 @@
 import { useEffect, useState, type JSX } from 'react';
 import { Link } from 'react-router';
-// Context
 import { useCatalogProvider } from '../../context/CatalogContext';
-// Hooks
-import { useTmdbFetcher, type Namespace_Tmdb } from '~/film-database/composables/tmdb-api/hooks/useTmdbFetcher';
-// Data
-import { tmdbMovieGenres } from '~/film-database/composables/tmdb-api/data/tmdbGenres';
-// Assets
-import { EmptyStar, FullStar, HalfStar, MaterialSymbolsLogoutSharp, SvgSpinnersRingResize, TheMovieDatabaseLogo } from '../../assets/svg/icons';
+import {
+  EmptyStar,
+  FullStar,
+  HalfStar,
+  MaterialSymbolsLogoutSharp,
+  SvgSpinnersRingResize,
+  TheMovieDatabaseLogo,
+} from '../../assets/svg/icons';
+import { tmdbCall } from '~/film-database/composables/tmdbCall';
+import type { TmdbResponse } from '~/film-database/composables/types/TmdbResponse';
+import { tmdbDiscoveryIds } from '~/film-database/composables/const/tmdbDiscoveryIds';
 
 const FDDetails = (modal: { modal: boolean }) => {
   const { heroData, setIsMovieModal } = useCatalogProvider();
@@ -19,15 +23,17 @@ const FDDetails = (modal: { modal: boolean }) => {
       </section>
     );
 
-  /**
-   * @function Anonymous
-   * Fetches watchProviders
-   */
-  const [watchProviders, setWatchProviders] = useState<Namespace_Tmdb.WatchProviders_Obj['watchProviders']['results']['US']['flatrate'] | undefined>(undefined);
+  const [watchProviders, setWatchProviders] = useState<
+    TmdbResponse['number']['watchProviders']['results']['US']['flatrate'] | undefined
+  >(undefined);
 
+  /**
+   * @function fetchWatchProviders
+   * @description Fetches watchProviders
+   */
   const fetchWatchProviders = async () => {
-    const data = (await useTmdbFetcher({ watchProviders: heroData?.id })) as Namespace_Tmdb.WatchProviders_Obj;
-    setWatchProviders(data.watchProviders.results.US.flatrate);
+    const data = await tmdbCall({ watchProviders: heroData?.id });
+    setWatchProviders(data.response.results.US.flatrate);
   };
 
   useEffect(() => {
@@ -59,7 +65,9 @@ const FDDetails = (modal: { modal: boolean }) => {
     }
 
     return (
-      <div className='formattedReleaseDate' data-status='green'>
+      <div
+        className='formattedReleaseDate'
+        data-status='green'>
         {'Now Available'}
       </div>
     );
@@ -81,12 +89,20 @@ const FDDetails = (modal: { modal: boolean }) => {
     const halfStars: 1 | 0 = hasFloatingValue ? 1 : 0;
     const emptyStars: number = maxStars - fullStars - halfStars;
 
-    const stars: JSX.Element[] = [...Array(fullStars).fill(<FullStar />), ...Array(halfStars).fill(<HalfStar />), ...Array(emptyStars).fill(<EmptyStar />)];
+    const stars: JSX.Element[] = [
+      ...Array(fullStars).fill(<FullStar />),
+      ...Array(halfStars).fill(<HalfStar />),
+      ...Array(emptyStars).fill(<EmptyStar />),
+    ];
 
     return (
-      <ul className='voteAvgVisual' aria-label={`Vote Average ${voteAvg / 2} out of 5`}>
+      <ul
+        className='voteAvgVisual'
+        aria-label={`Vote Average ${voteAvg / 2} out of 5`}>
         {stars.map((Star, index) => (
-          <li className='voteAvgVisual__star' key={`star-${index}`}>
+          <li
+            className='voteAvgVisual__star'
+            key={`star-${index}`}>
             {Star}
           </li>
         ))}
@@ -95,9 +111,15 @@ const FDDetails = (modal: { modal: boolean }) => {
   };
   /** @returns */
   return (
-    <section className='fdDetails' data-modal={modal.modal}>
+    <section
+      className='fdDetails'
+      data-modal={modal.modal}>
       <article className='fdDetails__article'>
-        <button className='fdDetails__article--exit' id='fdDetails--exit' aria-label='Close View More Modal' onPointerUp={() => setIsMovieModal(false)}>
+        <button
+          className='fdDetails__article--exit'
+          id='fdDetails--exit'
+          aria-label='Close View More Modal'
+          onPointerUp={() => setIsMovieModal(false)}>
           <MaterialSymbolsLogoutSharp />
         </button>
 
@@ -115,7 +137,9 @@ const FDDetails = (modal: { modal: boolean }) => {
           {useFormattedDate(heroData.release_date)}
           <li>
             <nav id='fdDetails--nav'>
-              <button aria-label={`View more details about ${heroData.title}`} onClick={() => setIsMovieModal(true)}>
+              <button
+                aria-label={`View more details about ${heroData.title}`}
+                onClick={() => setIsMovieModal(true)}>
                 View more details
               </button>
             </nav>
@@ -124,10 +148,14 @@ const FDDetails = (modal: { modal: boolean }) => {
 
         <p>{heroData.overview}</p>
 
-        <ul className='fdDetails__article__col' id='fdDetails--genres'>
+        <ul
+          className='fdDetails__article__col'
+          id='fdDetails--genres'>
           Genres:
           {heroData?.genre_ids.map((genreId, index) => {
-            const genreName = Object.keys(tmdbMovieGenres).find((key) => tmdbMovieGenres[key as keyof typeof tmdbMovieGenres] === genreId);
+            const genreName = Object.keys(tmdbDiscoveryIds).find(
+              (key) => tmdbDiscoveryIds[key as keyof typeof tmdbDiscoveryIds] === genreId
+            );
             if (genreName)
               return (
                 <li key={`genreId-${genreId}`}>
@@ -139,7 +167,9 @@ const FDDetails = (modal: { modal: boolean }) => {
         </ul>
 
         {watchProviders?.length && (
-          <ul className='fdDetails__article__col' id='fdDetails--providers'>
+          <ul
+            className='fdDetails__article__col'
+            id='fdDetails--providers'>
             Available on:{' '}
             {watchProviders?.map((provider, index) => (
               <li key={`provider-${index}`}>

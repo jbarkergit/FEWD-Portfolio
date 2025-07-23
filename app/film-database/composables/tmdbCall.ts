@@ -90,8 +90,10 @@ const handleArg = async <K extends TmdbEndpointKeys>(
   key: K,
   query: Query<K>
 ): Promise<ReturnType<typeof retrieveCachedValue | typeof callApi>> => {
-  const cachedValue = retrieveCachedValue(key);
-  if (cachedValue) return cachedValue;
+  if (key !== 'videos') {
+    const cachedValue = retrieveCachedValue(key);
+    if (cachedValue) return cachedValue;
+  }
   return await callApi(key, query);
 };
 
