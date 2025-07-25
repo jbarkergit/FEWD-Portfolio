@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
+import { useFLoader } from '~/film-database/routes/FilmDatabase';
 
-const FDAccountModalPoster = ({ films }: { films: TmdbMovieProvider[] }) => {
+const FDAccountModalPoster = () => {
+  /** @loaderData */
+  const { primaryData } = useFLoader();
+  const nowPlaying = primaryData[0]?.response.results;
+  if (!nowPlaying) return;
+
   /** @state */
   const [posters, setPosters] = useState<TmdbMovieProvider[]>([]);
 
@@ -9,31 +15,22 @@ const FDAccountModalPoster = ({ films }: { films: TmdbMovieProvider[] }) => {
   const indexQueue = useRef<number[]>([]);
 
   /**
-   * @function generateOrShuffleIndexes()
-   * @description Generate or shuffle randomly selected indexes within bounds of the films array.
+   * @function shuffleIndexes()
+   * @description Randomly shuffle indexQueue within bounds of the films array.
    */
-  const generateOrShuffleIndexes = (): void => {
-    let nextQueue: number[] = [...indexQueue.current];
+  const shuffleIndexes = (): void => {
+    const nextQueue: number[] =
+      indexQueue.current.length - 1 >= nowPlaying.length ? [...indexQueue.current] : [...nowPlaying.keys()];
 
-    // If index queue length is equal to or greater than the even films length, shuffle the queue via Fisher-Yates shuffle algorithm
-    if (indexQueue.current.length >= films.length) {
-      for (let i = nextQueue.length - 1; i > 0; i--) {
-        const j: number = Math.floor(Math.random() * (i + 1));
+    // Fisher-Yates shuffle
+    for (let i = nextQueue.length - 1; i > 0; i--) {
+      const j: number = Math.floor(Math.random() * (i + 1));
 
-        const valI: number | undefined = nextQueue[i];
-        const valJ: number | undefined = nextQueue[j];
+      const valI: number | undefined = nextQueue[i];
+      const valJ: number | undefined = nextQueue[j];
 
-        if (typeof valI === 'number' && typeof valJ === 'number') {
-          nextQueue[i] = valJ;
-          nextQueue[j] = valI;
-        }
-      }
-    }
-    // Generate unique indexes until the queue length matches the even films length
-    else {
-      while (nextQueue.length < films.length) {
-        const randomIndex = Math.floor(Math.random() * films.length);
-        if (!nextQueue.includes(randomIndex)) nextQueue.push(randomIndex);
+      if (typeof valI === 'number' && typeof valJ === 'number') {
+        [nextQueue[i], nextQueue[j]] = [valJ, valI];
       }
     }
 
@@ -45,12 +42,12 @@ const FDAccountModalPoster = ({ films }: { films: TmdbMovieProvider[] }) => {
    * @description Generate a random queue of film posters for the fade effect.
    */
   const createPosters = (): void => {
-    generateOrShuffleIndexes();
+    shuffleIndexes();
     let tempPosterQueue: typeof posters = [];
 
-    for (let i = 0; i < films.length; i++) {
+    for (let i = 0; i < nowPlaying.length - 1; i++) {
       const j: number | undefined = indexQueue.current[i];
-      if (j && films[j]) tempPosterQueue.push(films[j]);
+      if (j && nowPlaying[0]) tempPosterQueue.push(nowPlaying[j]!);
     }
 
     setPosters(tempPosterQueue);
@@ -58,10 +55,10 @@ const FDAccountModalPoster = ({ films }: { films: TmdbMovieProvider[] }) => {
 
   useEffect(() => {
     createPosters();
-    const totalDuration: number = films.length * 6500;
+    const totalDuration: number = (nowPlaying.length - 2) * 5700;
     const interval: NodeJS.Timeout = setInterval(() => createPosters(), totalDuration);
     return () => clearInterval(interval);
-  }, [films]);
+  }, [primaryData]);
 
   /** @JSX */
   return (
@@ -70,7 +67,7 @@ const FDAccountModalPoster = ({ films }: { films: TmdbMovieProvider[] }) => {
         {posters.map((poster, index) => (
           <img
             key={poster.poster_path}
-            fetchPriority={index === 0 ? 'high' : 'low'}
+            fetchPriority={index === posters.length - 1 ? 'high' : 'low'}
             src={`https://image.tmdb.org/t/p/original/${poster.poster_path}`}
             alt={poster.title}
             style={{ '--i': posters.length - index } as CSSProperties}
