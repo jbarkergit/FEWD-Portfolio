@@ -63,13 +63,15 @@ const FDAccountFieldset = () => {
    * @description Observes height of the registration fieldset on mount to align the login forms height for visual consistency
    */
   useEffect(() => {
-    if (!fieldsetRef.current) return;
+    const node = fieldsetRef.current;
+    if (!node) return;
 
-    const updateHeight = () => setFormHeight(fieldsetRef.current!.scrollHeight);
-    updateHeight();
-
-    const observer = new ResizeObserver(updateHeight);
-    observer.observe(fieldsetRef.current);
+    const observer = new ResizeObserver(() => {
+      if (form === 'registration') {
+        setFormHeight(node.scrollHeight);
+      }
+    });
+    observer.observe(node);
 
     return () => observer.disconnect();
   }, [form]);
