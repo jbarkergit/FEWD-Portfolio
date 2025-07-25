@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
 import { schemaRegistration, schemaLogin } from '~/base/validation/schema/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
 import { fieldsets } from '~/base/validation/fieldsets/fieldsets';
@@ -188,7 +188,7 @@ const FDAccountFieldset = () => {
           type='button'
           aria-label={form === 'registration' ? 'Submit registration form' : 'Sign in with your credentials'}
           onPointerUp={handleSubmit}>
-          {form === 'registration' ? 'Complete Registration' : 'Log in'}
+          <span>{form === 'registration' ? 'Complete Registration' : 'Log in'}</span>
         </button>
         <button
           type='button'
