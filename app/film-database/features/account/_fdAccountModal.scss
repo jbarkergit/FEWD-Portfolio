@@ -88,7 +88,11 @@
               & div:nth-of-type(1) {
                 & legend,
                 p {
-                  animation: textOut 500ms cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+                  letter-spacing: -0.5em;
+                  opacity: 0;
+                  transition:
+                    letter-spacing 500ms cubic-bezier(0.55, 0.085, 0.68, 0.53),
+                    opacity 500ms cubic-bezier(0.55, 0.085, 0.68, 0.53);
                 }
               }
               & ul {
@@ -104,7 +108,11 @@
               & div:nth-of-type(1) {
                 & legend,
                 p {
-                  animation: textIn 0.7s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+                  letter-spacing: 0em;
+                  opacity: 1;
+                  transition:
+                    letter-spacing 500ms cubic-bezier(0.215, 0.61, 0.355, 1),
+                    opacity 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
                 }
               }
               & ul li {
@@ -332,31 +340,6 @@
         }
       }
     }
-  }
-}
-
-@keyframes textOut {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    letter-spacing: -0.5em;
-    opacity: 0;
-  }
-}
-@keyframes textIn {
-  0% {
-    letter-spacing: -0.5em;
-    opacity: 0;
-  }
-  40% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 1;
   }
 }
 

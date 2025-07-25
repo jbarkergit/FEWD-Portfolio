@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
 import { schemaRegistration, schemaLogin } from '~/base/validation/schema/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
 import { fieldsets } from '~/base/validation/fieldsets/fieldsets';
@@ -32,11 +32,11 @@ const FDAccountFieldset = () => {
     login: useFormValues({ emailAddress: '', password: '' }),
   };
 
-  const isRegistrationForm: boolean = form === 'registration';
-
-  const { values, handleValues } = isRegistrationForm ? formValues.registration : formValues.login;
-
+  const { values, handleValues } = form === 'registration' ? formValues.registration : formValues.login;
   const [formHeight, setFormHeight] = useState<number | null>(null);
+
+  /** @refs */
+  const fieldsetRef = useRef<HTMLFieldSetElement>(null);
 
   /** @zod schema and parsing */
   const schema = schemas[form];
@@ -54,26 +54,9 @@ const FDAccountFieldset = () => {
    */
   const handleSubmit = () => {
     if (!parse.success) return;
-    if (isRegistrationForm) createFirestoreUser(parse, values);
+    if (form === 'registration') createFirestoreUser(parse, values);
     else useFirestoreLogin(parse, values);
   };
-
-  /**
-   * @function animator
-   * @description Handles animations for form transitions
-   */
-  const fieldsetRef = useRef<HTMLFieldSetElement>(null);
-
-  const animator = (): void => {
-    if (!fieldsetRef.current) return;
-
-    fieldsetRef.current.setAttribute('data-animate', 'unmount');
-    setTimeout(() => setForm(isRegistrationForm ? 'login' : 'registration'), 500);
-  };
-
-  useEffect(() => {
-    if (fieldsetRef.current) fieldsetRef.current.setAttribute('data-animate', 'mount');
-  }, [form]);
 
   /**
    * @function useEffect
@@ -82,17 +65,43 @@ const FDAccountFieldset = () => {
   useEffect(() => {
     if (!fieldsetRef.current) return;
 
-    const updateHeight = () => {
-      if (isRegistrationForm) setFormHeight(fieldsetRef.current!.scrollHeight);
-    };
-
+    const updateHeight = () => setFormHeight(fieldsetRef.current!.scrollHeight);
     updateHeight();
 
     const observer = new ResizeObserver(updateHeight);
     observer.observe(fieldsetRef.current);
 
     return () => observer.disconnect();
-  }, [isRegistrationForm]);
+  }, [form]);
+
+  /**
+   * @function animateForm @function onAnimationStart @function onFormChange
+   * @description Animates fieldsets on form state change
+   */
+  const onFormChange = () => {
+    const handleState = () => setForm(form === 'registration' ? 'login' : 'registration');
+
+    if (!fieldsetRef.current) {
+      handleState();
+    } else {
+      fieldsetRef.current.setAttribute('data-animate', 'unmount');
+      setTimeout(() => handleState(), 500);
+    }
+  };
+
+  // There's no reliable way to ensure the fieldsets elements have mounted, so we're utilizing MutationObserver to handle the 'data-animate' MOUNT
+  useEffect(() => {
+    const node = fieldsetRef.current;
+    if (!node) return;
+
+    const observer = new MutationObserver(() => {
+      node.setAttribute('data-animate', 'mount');
+      observer.disconnect();
+    });
+
+    observer.observe(node, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [form]);
 
   /** @map */
   const fields = fieldStore[form];
@@ -103,12 +112,12 @@ const FDAccountFieldset = () => {
       className='fdAccount__container__wrapper__form__fieldset'
       ref={fieldsetRef}
       data-form={form}
-      data-animate='premount'
+      data-animate='mount'
       style={{ height: formHeight ? formHeight : 'auto' }}>
       <div>
-        <legend>{isRegistrationForm ? `Get Started Now` : `Start a new session`}</legend>
+        <legend>{form === 'registration' ? `Get Started Now` : `Start a new session`}</legend>
         <p>
-          {isRegistrationForm
+          {form === 'registration'
             ? `Welcome to Film Database, create an account to start a session.`
             : `Welcome back to Film Database, let's get you logged in.`}
         </p>
@@ -158,7 +167,7 @@ const FDAccountFieldset = () => {
             )}
           </li>
         ))}
-        {isRegistrationForm && (
+        {form === 'registration' && (
           <li className='fdAccount__container__wrapper__form__fieldset__ul__li'>
             <input
               type='checkbox'
@@ -175,15 +184,15 @@ const FDAccountFieldset = () => {
       <div>
         <button
           type='button'
-          aria-label={isRegistrationForm ? 'Submit registration form' : 'Sign in with your credentials'}
+          aria-label={form === 'registration' ? 'Submit registration form' : 'Sign in with your credentials'}
           onPointerUp={handleSubmit}>
-          {isRegistrationForm ? 'Complete Registration' : 'Log in'}
+          {form === 'registration' ? 'Complete Registration' : 'Log in'}
         </button>
         <button
           type='button'
-          aria-label={isRegistrationForm ? 'Log into an existing account' : 'Create a new account'}
-          onPointerUp={animator}>
-          {isRegistrationForm ? 'Log into an existing account' : 'Create a new account'}
+          aria-label={form === 'registration' ? 'Log into an existing account' : 'Create a new account'}
+          onPointerUp={onFormChange}>
+          {form === 'registration' ? 'Log into an existing account' : 'Create a new account'}
         </button>
       </div>
     </fieldset>
