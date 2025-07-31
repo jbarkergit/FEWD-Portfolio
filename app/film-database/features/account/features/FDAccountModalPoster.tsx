@@ -15,12 +15,12 @@ const FDAccountModalPoster = () => {
   const indexQueue = useRef<number[]>([]);
 
   /**
-   * @function shuffleIndexes()
+   * @function shuffleIndexes
    * @description Randomly shuffle indexQueue within bounds of the films array.
    */
   const shuffleIndexes = (): void => {
-    const nextQueue: number[] =
-      indexQueue.current.length - 1 >= nowPlaying.length ? [...indexQueue.current] : [...nowPlaying.keys()];
+    const isIndexQueueFull: boolean = indexQueue.current.length >= nowPlaying.length;
+    const nextQueue: number[] = isIndexQueueFull ? indexQueue.current : [...nowPlaying.keys()];
 
     // Fisher-Yates shuffle
     for (let i = nextQueue.length - 1; i > 0; i--) {
@@ -31,6 +31,9 @@ const FDAccountModalPoster = () => {
 
       if (typeof valI === 'number' && typeof valJ === 'number') {
         [nextQueue[i], nextQueue[j]] = [valJ, valI];
+      } else {
+        console.log(nextQueue);
+        console.error('Failure to shuffle poster indexes.');
       }
     }
 
@@ -43,22 +46,32 @@ const FDAccountModalPoster = () => {
    */
   const createPosters = (): void => {
     shuffleIndexes();
-    let tempPosterQueue: typeof posters = [];
+    let queue: typeof posters = [];
 
     for (let i = 0; i < nowPlaying.length - 1; i++) {
       const j: number | undefined = indexQueue.current[i];
-      if (j && nowPlaying[0]) tempPosterQueue.push(nowPlaying[j]!);
+      if (j && nowPlaying[0]) queue.push(nowPlaying[j]!);
     }
 
-    setPosters(tempPosterQueue);
+    setPosters(queue);
   };
 
+  const shouldRender: boolean = window.innerWidth > 1250;
+
   useEffect(() => {
-    createPosters();
-    const totalDuration: number = (nowPlaying.length - 2) * 5700;
-    const interval: NodeJS.Timeout = setInterval(() => createPosters(), totalDuration);
-    return () => clearInterval(interval);
+    if (shouldRender) createPosters();
   }, [primaryData]);
+
+  useEffect(() => {
+    if (shouldRender) {
+      const transitionDelay: number = 5700;
+      const animationDuration: number = 700;
+      const compensation: number = 300;
+      const totalDuration: number = (posters.length - 2) * transitionDelay - animationDuration - compensation;
+      const interval: NodeJS.Timeout = setInterval(() => createPosters(), totalDuration);
+      return () => clearInterval(interval);
+    }
+  }, [posters]);
 
   /** @JSX */
   return (
