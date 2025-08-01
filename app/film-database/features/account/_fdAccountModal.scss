@@ -56,6 +56,9 @@
 .fdAccount__container__wrapper {
   height: 100%;
   background-color: var(--fd-bc-offset);
+  @media (max-width: 1799px) {
+    box-shadow: 16px 12px 12px 0px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .fdAccount__container__wrapper:nth-child(1) {
@@ -69,17 +72,21 @@
   }
   @media (max-width: 1799px) {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
     z-index: 5;
+    transform: translateY(-50%);
     width: fit-content;
+    height: 70%;
     padding: calc(var(--fd-padding-generic) / 4);
+    border-top-right-radius: var(--fd-border-radius);
+    border-bottom-right-radius: var(--fd-border-radius);
     background-color: var(--fd-bc-offset);
-    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
   }
   @media (max-width: 1250px) {
     position: relative;
     width: 100%;
+    height: 100%;
   }
   & button {
     display: flex;
@@ -129,7 +136,7 @@
           & legend,
           p span {
             opacity: 1;
-            transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+            transition-timing-function: ease-in;
           }
         }
       }
@@ -138,7 +145,7 @@
           & legend,
           p span {
             opacity: 0;
-            transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition-timing-function: ease-out;
           }
         }
       }
@@ -214,8 +221,9 @@
       }
       & div:nth-of-type(1) {
         & legend,
-        & p {
+        & p span {
           text-shadow: 0 0 3px rgb(0 0 0);
+          white-space: wrap;
           will-change: opacity;
         }
         & legend {
@@ -225,7 +233,6 @@
         }
         & p {
           width: clamp(25ch, 100%, 75ch);
-          white-space: wrap;
         }
       }
       & div:nth-of-type(2) {
