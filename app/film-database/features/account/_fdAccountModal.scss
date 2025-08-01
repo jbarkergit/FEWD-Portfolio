@@ -126,33 +126,158 @@
       max-width: calc(400px * 2 + var(--fd-gap));
       width: 100%;
       & div:nth-of-type(1) legend,
-      div:nth-of-type(1) p span {
-        transition-property: opacity;
-        transition-duration: calc(580ms / var(--word-count));
-        transition-delay: calc(var(--i) * (580ms / var(--word-count)));
+      div:nth-of-type(1) p {
+        will-change: opacity;
+      }
+      & ul li {
+        // Can't use inline JS-injected CSS variables for transition delays due to mount delays causing delayed transitions (e.g., --delay offsets on mount).
+        // Fixing duration per list item is tricky because without dynamically calculating --maxDuration and delays, total duration can exceed --maxDuration.
+        // Fieldsets have different numbers of inputs, so manual transition-delays via CSS :nth-of-type selectors is the fallback.
+        // The real clean solution: mount form state as a data-attribute on the <ul>, allowing precise control over :nth-of-type styling based on dynamic form length.
+        // --maxDuration: 600ms;
+        // --iteration: calc(var(--maxDuration) / var(--fieldLength));
+        // --delay: calc(var(--i) * var(--iteration));
+        // --duration: calc(var(--maxDuration) - var(--delay));
+        transition-property: max-height, opacity;
+        will-change: max-height, opacity;
+        overflow: clip;
+      }
+      & div:nth-of-type(3) button {
+        will-change: opacity, transform, filter;
+        & span {
+          will-change: opacity;
+        }
       }
       &[data-animate='mount'] {
         & div:nth-of-type(1) {
           & legend,
-          p span {
+          p {
+            opacity: 1;
+            transition: opacity 600ms ease-in;
+          }
+        }
+        & ul {
+          & li {
+            max-height: 500px;
             opacity: 1;
             transition-timing-function: ease-in;
+          }
+          &[data-form='registration'] li {
+            --duration: calc(600ms / 4);
+            transition-duration: var(--duration);
+            &:nth-of-type(1),
+            &:nth-of-type(2) {
+              transition-delay: calc(0 * var(--duration));
+            }
+            &:nth-of-type(3) {
+              transition-delay: calc(1 * var(--duration));
+            }
+            &:nth-of-type(4),
+            &:nth-of-type(5) {
+              transition-delay: calc(2 * var(--duration));
+            }
+            &:nth-of-type(6) {
+              transition-delay: calc(3 * var(--duration));
+            }
+          }
+          &[data-form='login'] li {
+            --duration: calc(600ms / 2);
+            transition-duration: var(--duration);
+            &:nth-of-type(1) {
+              transition-delay: calc(0 * var(--duration));
+            }
+            &:nth-of-type(2) {
+              transition-delay: calc(1 * var(--duration));
+            }
+          }
+        }
+        // See notes above
+        // & ul li {
+        //   max-height: 500px;
+        //   opacity: 1;
+        //   // transition:
+        //   //   max-height var(--duration) cubic-bezier(0.65, 0, 0.35, 1.6) var(--delay),
+        //   //   opacity var(--duration) ease-in var(--delay);
+        // }
+        & div:nth-of-type(3) button {
+          opacity: 1;
+          transform: translateY(0) scaleY(1) scaleX(1);
+          filter: blur(0);
+          transition:
+            transform 600ms ease-in both,
+            opacity 600ms ease-in both,
+            filter 600ms ease-in both;
+          & span {
+            opacity: 1;
+            transition: opacity 600ms ease-in;
           }
         }
       }
       &[data-animate='unmount'] {
         & div:nth-of-type(1) {
           & legend,
-          p span {
+          p {
             opacity: 0;
-            transition-timing-function: ease-out;
+            transition: opacity 600ms ease-out;
+          }
+        }
+        & ul {
+          & li {
+            max-height: 0px;
+            opacity: 0;
+            transition-timing-function: ease-in;
+          }
+          &[data-form='registration'] li {
+            --duration: calc(600ms / 4);
+            transition-duration: var(--duration);
+            &:nth-of-type(1),
+            &:nth-of-type(2) {
+              transition-delay: calc(3 * var(--duration));
+            }
+            &:nth-of-type(3) {
+              transition-delay: calc(2 * var(--duration));
+            }
+            &:nth-of-type(4),
+            &:nth-of-type(5) {
+              transition-delay: calc(1 * var(--duration));
+            }
+            &:nth-of-type(6) {
+              transition-delay: calc(0 * var(--duration));
+            }
+          }
+          &[data-form='login'] li {
+            --duration: calc(600ms / 2);
+            transition-duration: var(--duration);
+            &:nth-of-type(1) {
+              transition-delay: calc(1 * var(--duration));
+            }
+            &:nth-of-type(2) {
+              transition-delay: calc(0 * var(--duration));
+            }
+          }
+        }
+        // See notes above
+        // & ul li {
+        //   max-height: 0px;
+        //   opacity: 0;
+        //   // transition:
+        //   //   max-height var(--duration) cubic-bezier(0.77, 0, 0.175, 1) var(--delay),
+        //   //   opacity var(--duration) ease-out var(--delay);
+        // }
+        & div:nth-of-type(3) button {
+          transform: translateY(-10px) scaleY(0.98) scaleX(0.94);
+          opacity: 0;
+          filter: blur(8px);
+          transition:
+            transform 600ms ease-out both,
+            opacity 600ms ease-out both,
+            filter 600ms ease-out both;
+          & span {
+            opacity: 0;
+            transition: opacity 600ms ease-out;
           }
         }
       }
-      //  & ul li {
-      //   }
-      //   & div:nth-of-type(3) {
-      //   }
       &[data-form='registration'] {
         .fdAccount__container__wrapper__form__fieldset__ul {
           display: grid;
@@ -221,7 +346,7 @@
       }
       & div:nth-of-type(1) {
         & legend,
-        & p span {
+        & p {
           text-shadow: 0 0 3px rgb(0 0 0);
           white-space: wrap;
           will-change: opacity;

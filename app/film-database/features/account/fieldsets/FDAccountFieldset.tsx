@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent, type CSSProperties, type HTMLAttributes } from 'react';
 import { schemaRegistration, schemaLogin } from '~/base/validation/schema/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
 import { fieldsets } from '~/base/validation/fieldsets/fieldsets';
@@ -81,13 +81,13 @@ const FDAccountFieldset = () => {
    * @description Animates fieldsets on form state change
    */
   const onFormChange = () => {
-    const handleState = () => setForm(form === 'registration' ? 'login' : 'registration');
+    const handleState = () => setForm((f) => (f === 'registration' ? 'login' : 'registration'));
 
     if (!fieldsetRef.current) {
       handleState();
     } else {
       fieldsetRef.current.setAttribute('data-animate', 'unmount');
-      setTimeout(() => handleState(), 500);
+      setTimeout(() => handleState(), 600);
     }
   };
 
@@ -138,7 +138,9 @@ const FDAccountFieldset = () => {
           <DeviconGoogle /> <span>Log in with Google</span>
         </button>
       </div>
-      <ul className='fdAccount__container__wrapper__form__fieldset__ul'>
+      <ul
+        className='fdAccount__container__wrapper__form__fieldset__ul'
+        data-form={form}>
         {fields.map(({ labelId, id, name, label, type, inputMode, required, placeholder, minLength, maxLength }) => (
           <li
             key={id}
