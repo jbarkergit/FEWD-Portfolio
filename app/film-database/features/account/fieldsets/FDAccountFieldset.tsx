@@ -94,7 +94,6 @@ const FDAccountFieldset = () => {
     <fieldset
       className='fdAccount__container__wrapper__form__fieldset'
       ref={fieldsetRef}
-      data-form={form}
       data-animate='mount'>
       <div>
         <legend>{form === 'registration' ? `Get Started Now` : `Start a new session`}</legend>
