@@ -33,7 +33,6 @@ const FDAccountFieldset = () => {
   };
 
   const { values, handleValues } = form === 'registration' ? formValues.registration : formValues.login;
-  const [formHeight, setFormHeight] = useState<number | null>(null);
 
   /** @refs */
   const fieldsetRef = useRef<HTMLFieldSetElement>(null);
@@ -57,24 +56,6 @@ const FDAccountFieldset = () => {
     if (form === 'registration') createFirestoreUser(parse, values);
     else useFirestoreLogin(parse, values);
   };
-
-  /**
-   * @function useEffect
-   * @description Observes height of the registration fieldset on mount to align the login forms height for visual consistency
-   */
-  useEffect(() => {
-    const node = fieldsetRef.current;
-    if (!node) return;
-
-    const observer = new ResizeObserver(() => {
-      if (form === 'registration') {
-        setFormHeight(node.scrollHeight);
-      }
-    });
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, [form]);
 
   /**
    * @function animateForm @function onAnimationStart @function onFormChange
@@ -114,8 +95,7 @@ const FDAccountFieldset = () => {
       className='fdAccount__container__wrapper__form__fieldset'
       ref={fieldsetRef}
       data-form={form}
-      data-animate='mount'
-      style={{ height: formHeight ? formHeight : 'auto' }}>
+      data-animate='mount'>
       <div>
         <legend>{form === 'registration' ? `Get Started Now` : `Start a new session`}</legend>
         <p>
