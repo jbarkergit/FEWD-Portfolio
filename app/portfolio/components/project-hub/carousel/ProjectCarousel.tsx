@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef } from 'react';
 import { Link } from 'react-router';
-import { useCarouselSlideAnimator } from '../hooks/useCarouselSlideAnimator';
+import { useCarouselSlideAnimator } from '../../../hooks/useCarouselSlideAnimator';
 import { projectData } from '../../../data/projectData';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
 
