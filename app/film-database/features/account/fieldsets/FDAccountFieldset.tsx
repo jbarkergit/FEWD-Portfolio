@@ -1,15 +1,100 @@
 import { useEffect, useRef, useState, type ChangeEvent, type CSSProperties, type HTMLAttributes } from 'react';
 import { schemaRegistration, schemaLogin } from '~/base/validation/schema/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
-import { fieldsets } from '~/base/validation/fieldsets/fieldsets';
 import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
 import { handleAuthProvider } from '~/base/firebase/authentication/utility/handleAuthProvider';
 import { createFirestoreUser } from '~/base/firebase/firestore/utility/createFirestoreUser';
 import { useFirestoreLogin } from '~/base/firebase/firestore/utility/useFirestoreLogin';
 
+const registration = [
+  {
+    labelId: 'firstName',
+    id: 'fdUserAccountFirstName',
+    name: 'firstName',
+    label: 'First name',
+    type: 'text',
+    inputMode: 'text',
+    required: true,
+    placeholder: 'John',
+  },
+  {
+    labelId: 'lastName',
+    id: 'fdUserAccountLastName',
+    name: 'lastName',
+    label: 'Last name',
+    type: 'text',
+    inputMode: 'text',
+    required: false,
+    placeholder: 'Doe',
+  },
+  {
+    labelId: 'emailAddress',
+    id: 'fdUserAccountEmailAddress',
+    name: 'emailAddress',
+    label: 'Email address',
+    type: 'email',
+    inputMode: 'email',
+    required: true,
+    placeholder: 'johndoe@gmail.com',
+    minLength: 3,
+    maxLength: 76,
+  },
+  {
+    labelId: 'password',
+    id: 'fdUserAccountPassword',
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    inputMode: 'text',
+    required: true,
+    placeholder: '••••••••',
+    minLength: 8,
+    maxLength: 32,
+  },
+  {
+    labelId: 'passwordConfirmation',
+    id: 'fdUserAccountPasswordConfirmation',
+    name: 'passwordConfirmation',
+    label: 'Retype password',
+    type: 'password',
+    inputMode: 'text',
+    required: true,
+    placeholder: '••••••••',
+    minLength: 8,
+    maxLength: 32,
+  },
+];
+
+const login = [
+  {
+    labelId: 'Email address',
+    id: 'fdUserAccountSignInEmailAddress',
+    name: 'emailAddress',
+    label: 'Email address',
+    type: 'email',
+    inputMode: 'email',
+    required: true,
+    placeholder: 'johndoe@gmail.com',
+    minLength: 3,
+    maxLength: 76,
+  },
+  {
+    labelId: 'Password',
+    id: 'fdUserAccountSignInPassword',
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    inputMode: 'text',
+    required: true,
+    placeholder: '••••••••',
+    minLength: 8,
+    maxLength: 32,
+  },
+];
+
 const fieldStore = {
-  registration: fieldsets.registration,
-  login: fieldsets.login,
+  registration: registration,
+  login: login,
 };
 
 const schemas = {
