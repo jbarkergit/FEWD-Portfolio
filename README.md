@@ -77,9 +77,3 @@
 ## Code Formatting
 
 - **[prettier](https://www.npmjs.com/package/prettier)**: Opinionated code formatter.
-
-## Commit Message Convention
-
-- **Commitizen and Associated Packages**:
-  - **[commitizen](https://www.npmjs.com/package/commitizen)**: Helps create structured commit messages.
-  - **[cz-conventional-changelog](https://www.npmjs.com/package/cz-conventional-changelog)**: Adapter following the conventional-changelog format, enabling automatic generation of changelogs.
