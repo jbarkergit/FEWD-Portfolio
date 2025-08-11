@@ -1,22 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import PortMobileMenu from '../components/mobile-menu/PortMobileMenu';
 import ProjectInsights from '../features/ProjectInsights';
 import ProjectHub from '../features/ProjectHub';
 import Contact from '../features/Contact';
+import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
 
 /** Component */
-const Portfolio = () => {
-  /** @state Active Project Slide Index Tracker */
-  const [projectSlideIndex, setProjectSlideIndex] = useState<number>(0);
-
-  /** @state Active grid position tracker */
-  const [featureState, setFeatureState] = useState<Record<string, boolean>>({
-    projectDetailsActive: false,
-    contactFormActive: false,
-  });
-
-  /** @state Carousel navigation menu */
-  const [portMobileMenu, setPortMobileMenu] = useState<boolean>(false);
+export default function PortfolioContainer() {
+  const { projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState, portMobileMenu, setPortMobileMenu } =
+    usePortfolioContext();
 
   /** @references */
   const portfolioRef = useRef<HTMLDivElement>(null);
@@ -89,25 +81,16 @@ const Portfolio = () => {
 
   /** Portfolio */
   return (
-    <div className='portfolio' ref={portfolioRef}>
-      <ProjectHub
-        projectSlideIndex={projectSlideIndex}
-        setProjectSlideIndex={setProjectSlideIndex}
-        featureState={featureState}
-        setFeatureState={setFeatureState}
-        portMobileMenuRefReceiver={portMobileMenuRefReceiver}
+    <div
+      className='portfolio'
+      ref={portfolioRef}>
+      <ProjectHub usePortMobileMenu={usePortMobileMenu} />
+      <ProjectInsights />
+      <Contact />
+      <PortMobileMenu
+        ref={portMobileMenuRefReceiver}
         usePortMobileMenu={usePortMobileMenu}
       />
-      <ProjectInsights
-        projectSlideIndex={projectSlideIndex}
-        setProjectSlideIndex={setProjectSlideIndex}
-        featureState={featureState}
-        setFeatureState={setFeatureState}
-      />
-      <Contact />
-      <PortMobileMenu ref={portMobileMenuRefReceiver} setProjectSlideIndex={setProjectSlideIndex} usePortMobileMenu={usePortMobileMenu} />
     </div>
   );
-};
-
-export default Portfolio;
+}

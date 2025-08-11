@@ -1,19 +1,16 @@
 import { useEffect, useRef } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router';
 import { projectData } from '../../../data/projectData';
+import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
 
-//Prop drill from Portfolio page
-type PropDrillType = {
-  projectSlideIndex: number;
-  setProjectSlideIndex: Dispatch<SetStateAction<number>>;
-  featureState: Record<string, boolean>;
-  setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
+type Props = {
   usePortMobileMenu: () => void;
 };
 
 /** Component */
-const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState, usePortMobileMenu }: PropDrillType) => {
+const PortHeader = ({ usePortMobileMenu }: Props) => {
+  const { projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState } = usePortfolioContext();
+
   const initialRender = useRef<boolean>(true),
     carouselNavSectionLeft = useRef<HTMLDivElement>(null),
     carouselNavSectionRight = useRef<HTMLDivElement>(null),
@@ -28,12 +25,21 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
 
   // Set arrow position of project navigation by number
   useEffect(() => {
-    if (unorderedListRef.current) unorderedListRef.current.style.setProperty('--afterPsuedoSelector', `${unorderedListChildrenPositionArray[projectSlideIndex]}px`);
+    if (unorderedListRef.current)
+      unorderedListRef.current.style.setProperty(
+        '--afterPsuedoSelector',
+        `${unorderedListChildrenPositionArray[projectSlideIndex]}px`
+      );
   }, [projectSlideIndex]);
 
   /** Component Transition Out */
   const getCarouselNavHeaderChildrenArray = (): HTMLElement[] => {
-    if (carouselNavSectionLeft.current && carouselNavSectionRight.current && carouselNavSectionRightNav.current && carouselNavSectionRightAnimator.current) {
+    if (
+      carouselNavSectionLeft.current &&
+      carouselNavSectionRight.current &&
+      carouselNavSectionRightNav.current &&
+      carouselNavSectionRightAnimator.current
+    ) {
       return [
         ...carouselNavSectionLeft.current.children,
         ...carouselNavSectionRight.current.children,
@@ -50,13 +56,23 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
 
     if (Object.values(featureState).some((value) => value === true)) {
       // Grid transition out animator
-      getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavHeaderOut'));
+      getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) =>
+        element.setAttribute('data-status', 'carouselNavHeaderOut')
+      );
     } else if (!initialRender) {
       // Grid transition in animator
-      setTimeout(() => getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavHeaderIn')), 1000);
+      setTimeout(
+        () =>
+          getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) =>
+            element.setAttribute('data-status', 'carouselNavHeaderIn')
+          ),
+        1000
+      );
     } else {
       // Mount animator
-      getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavHeaderIn'));
+      getCarouselNavHeaderChildrenArray().forEach((element: HTMLElement) =>
+        element.setAttribute('data-status', 'carouselNavHeaderIn')
+      );
     }
   }, [featureState]);
 
@@ -69,10 +85,14 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
   return (
     <header className='carouselNav'>
       <section className='carouselNav__section'>
-        <div className='carouselNav__section__left' ref={carouselNavSectionLeft}>
+        <div
+          className='carouselNav__section__left'
+          ref={carouselNavSectionLeft}>
           <h2>Navigate projects by number</h2>
           <span className='carouselNav__section__left--location'>{`Project 0${projectSlideIndex + 1}.`}</span>
-          <nav className='carouselNav__section__left__projectNav' aria-labelledby='project-navigation'>
+          <nav
+            className='carouselNav__section__left__projectNav'
+            aria-labelledby='project-navigation'>
             <ul ref={unorderedListRef}>
               {projectData.map((_, index) => (
                 <li key={_.key + index}>
@@ -100,13 +120,26 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
           carouselNavSectionRightNav.current?.removeAttribute('data-status');
           animatorLineArray.current?.forEach((line: HTMLSpanElement) => line.removeAttribute('data-status'));
         }}>
-        <div className='carouselNav__section__right' ref={carouselNavSectionRight}>
+        <div
+          className='carouselNav__section__right'
+          ref={carouselNavSectionRight}>
           <h2>External Links</h2>
-          <nav className='carouselNav__section__right__nav carouselNavHeaderRight' aria-labelledby='external-links' ref={carouselNavSectionRightNav}>
-            <Link to='https://github.com/jbarkergit' id='external-links' target='_blank' aria-label='Visit GitHub Profile'>
+          <nav
+            className='carouselNav__section__right__nav carouselNavHeaderRight'
+            aria-labelledby='external-links'
+            ref={carouselNavSectionRightNav}>
+            <Link
+              to='https://github.com/jbarkergit'
+              id='external-links'
+              target='_blank'
+              aria-label='Visit GitHub Profile'>
               GitHub
             </Link>
-            <Link to='https://leetcode.com/u/jbarkerlc/' id='external-links' target='_blank' aria-label='Visit LeetCode Profile'>
+            <Link
+              to='https://leetcode.com/u/jbarkerlc/'
+              id='external-links'
+              target='_blank'
+              aria-label='Visit LeetCode Profile'>
               LeetCode
             </Link>
             <button
@@ -119,20 +152,40 @@ const PortHeader = ({ projectSlideIndex, setProjectSlideIndex, featureState, set
               Contact
             </button>
           </nav>
-          <div className='carouselNav__section__right__animator' ref={carouselNavSectionRightAnimator}>
-            <span className='carouselNav__section__right__animator--line' ref={animatorLine} />
-            <span className='carouselNav__section__right__animator--line' ref={animatorLine} />
-            <span className='carouselNav__section__right__animator--line' ref={animatorLine} />
+          <div
+            className='carouselNav__section__right__animator'
+            ref={carouselNavSectionRightAnimator}>
+            <span
+              className='carouselNav__section__right__animator--line'
+              ref={animatorLine}
+            />
+            <span
+              className='carouselNav__section__right__animator--line'
+              ref={animatorLine}
+            />
+            <span
+              className='carouselNav__section__right__animator--line'
+              ref={animatorLine}
+            />
           </div>
         </div>
       </section>
 
       <section className='carouselNav__section'>
         <div className='carouselNav__section__mobile'>
-          <button className='carouselNav__section__mobile--menu' aria-label='Open link menu' onPointerUp={() => usePortMobileMenu()}>
+          <button
+            className='carouselNav__section__mobile--menu'
+            aria-label='Open link menu'
+            onPointerUp={() => usePortMobileMenu()}>
             Menu
-            <svg xmlns='http://www.w3.org/2000/svg' width='1.5em' height='1.5em' viewBox='0 0 24 24'>
-              <path fill='#ffffff' d='m12 15l-5-5h10z'></path>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='1.5em'
+              height='1.5em'
+              viewBox='0 0 24 24'>
+              <path
+                fill='#ffffff'
+                d='m12 15l-5-5h10z'></path>
             </svg>
           </button>
         </div>

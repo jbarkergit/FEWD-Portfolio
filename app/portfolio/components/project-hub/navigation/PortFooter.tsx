@@ -1,15 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router';
 import { projectData } from '../../../data/projectData';
+import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
 
-type ProjectNavPropType = {
-  projectSlideIndex: number;
-  featureState: Record<string, boolean>;
-  setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
-};
+const PortFooter = () => {
+  const { projectSlideIndex, featureState, setFeatureState } = usePortfolioContext();
 
-const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: ProjectNavPropType) => {
   const footerNavigationLeft = useRef<HTMLElement>(null);
   const footerNavigationRight = useRef<HTMLDivElement>(null);
 
@@ -24,11 +20,17 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
       footerNavigationLeft.current?.setAttribute('data-transition', transitionStatus);
     };
 
-    footerNavigationLeft.current?.getAttribute('data-transition') === 'false' ? setFooterDataAttr('true') : setFooterDataAttr('false');
+    footerNavigationLeft.current?.getAttribute('data-transition') === 'false'
+      ? setFooterDataAttr('true')
+      : setFooterDataAttr('false');
 
     setTimeout(() => {
       if (projectData[projectSlideIndex].key !== '' && projectData[projectSlideIndex].url !== '') {
-        setNavigationIndicator({ key: projectData[projectSlideIndex].key, insights: 'Project Insights', demoLink: 'Live Demo' });
+        setNavigationIndicator({
+          key: projectData[projectSlideIndex].key,
+          insights: 'Project Insights',
+          demoLink: 'Live Demo',
+        });
       } else if (projectData[projectSlideIndex].key !== '' && projectData[projectSlideIndex].url === '') {
         setNavigationIndicator({ key: projectData[projectSlideIndex].key, insights: 'Project Insights', demoLink: '' });
       } else {
@@ -53,13 +55,23 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
 
     if (Object.values(featureState).some((value) => value === true)) {
       // Grid transition out animator
-      getCarouselNavFooterChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavFooterOut'));
+      getCarouselNavFooterChildrenArray().forEach((element: HTMLElement) =>
+        element.setAttribute('data-status', 'carouselNavFooterOut')
+      );
     } else if (!initialRender) {
       // Grid transition in animator
-      setTimeout(() => getCarouselNavFooterChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavFooterIn')), 1000);
+      setTimeout(
+        () =>
+          getCarouselNavFooterChildrenArray().forEach((element: HTMLElement) =>
+            element.setAttribute('data-status', 'carouselNavFooterIn')
+          ),
+        1000
+      );
     } else {
       // Mount animator
-      getCarouselNavFooterChildrenArray().forEach((element: HTMLElement) => element.setAttribute('data-status', 'carouselNavFooterIn'));
+      getCarouselNavFooterChildrenArray().forEach((element: HTMLElement) =>
+        element.setAttribute('data-status', 'carouselNavFooterIn')
+      );
     }
   }, [featureState]);
 
@@ -87,7 +99,10 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
   return (
     <footer className='carouselNav carouselNav--footer'>
       <section className='carouselNav__section'>
-        <nav className='carouselNav__section__left' aria-labelledby='project-links' ref={footerNavigationLeft}>
+        <nav
+          className='carouselNav__section__left'
+          aria-labelledby='project-links'
+          ref={footerNavigationLeft}>
           <Link to={projectData[projectSlideIndex].url}>
             <h2 data-activity='visible'>{navigationIndicator.key}</h2>
           </Link>
@@ -101,16 +116,22 @@ const PortFooter = ({ projectSlideIndex, featureState, setFeatureState }: Projec
             }>
             {navigationIndicator.insights}
           </button>
-          <Link to={projectData[projectSlideIndex].url} id='project-links' aria-label='Project Live Demo'>
+          <Link
+            to={projectData[projectSlideIndex].url}
+            id='project-links'
+            aria-label='Project Live Demo'>
             {navigationIndicator.demoLink}
           </Link>
         </nav>
       </section>
 
       <section className='carouselNav__section'>
-        <div className='carouselNav__section__right' ref={footerNavigationRight}>
+        <div
+          className='carouselNav__section__right'
+          ref={footerNavigationRight}>
           <span className='carouselNav__section__right--timezone'>
-            {currentTime} • CDT (GMT-5) <h2 style={{ display: 'none' }}>Current time in Central Daylight Time, GMT-5</h2>
+            {currentTime} • CDT (GMT-5){' '}
+            <h2 style={{ display: 'none' }}>Current time in Central Daylight Time, GMT-5</h2>
           </span>
         </div>
       </section>

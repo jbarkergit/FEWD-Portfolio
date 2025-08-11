@@ -1,19 +1,12 @@
 import { useEffect, useReducer, useRef } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router';
 import { useCarouselSlideAnimator } from '../hooks/useCarouselSlideAnimator';
 import { projectData } from '../../../data/projectData';
+import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
 
-/** Component */
-const ProjectCarousel = ({
-  projectSlideIndex,
-  setProjectSlideIndex,
-  featureState,
-}: {
-  projectSlideIndex: number;
-  setProjectSlideIndex: Dispatch<SetStateAction<number>>;
-  featureState: Record<string, boolean>;
-}) => {
+const ProjectCarousel = () => {
+  const { projectSlideIndex, setProjectSlideIndex, featureState } = usePortfolioContext();
+
   /** References */
   const mainRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
@@ -29,7 +22,10 @@ const ProjectCarousel = ({
 
       setTimeout(() => {
         article.style.transform = index === state.activeSlideIndex ? `scale(${1})` : `scale(${0.8})`;
-        article.style.filter = index === state.activeSlideIndex ? `grayscale(0%) sepia(0%) brightness(100%)` : `grayscale(85%) sepia(80%) brightness(50%)`;
+        article.style.filter =
+          index === state.activeSlideIndex
+            ? `grayscale(0%) sepia(0%) brightness(100%)`
+            : `grayscale(85%) sepia(80%) brightness(50%)`;
       }, 50);
     });
   };
@@ -52,7 +48,10 @@ const ProjectCarousel = ({
   type state = typeof initState;
 
   type ActionType =
-    | { type: 'POINTER_DOWN'; payload: { anchorEnabled: boolean; initPageX: number; pageX: number; initPageY: number; pageY: number } }
+    | {
+        type: 'POINTER_DOWN';
+        payload: { anchorEnabled: boolean; initPageX: number; pageX: number; initPageY: number; pageY: number };
+      }
     | { type: 'POINTER_MOVE'; payload: { anchorEnabled: boolean; pageX: number; pageY: number } }
     | { type: 'POINTER_LEAVE'; payload: { anchorEnabled: boolean; previousTrackPos: number } }
     | { type: 'POINTER_UP'; payload: { previousTrackPos: number } }
@@ -60,7 +59,9 @@ const ProjectCarousel = ({
     | { type: 'EXTERNAL_NAVIGATION' };
 
   const reducer = (state: state, action: ActionType): state => {
-    const carouselLeftPadding: number = parseInt(window.getComputedStyle(carouselRef.current as HTMLDivElement).paddingLeft);
+    const carouselLeftPadding: number = parseInt(
+      window.getComputedStyle(carouselRef.current as HTMLDivElement).paddingLeft
+    );
     const arrayOfArticlePositions: number[] = articleArray.current.map((child: HTMLElement) => child.offsetLeft * -1);
     const activeSlidePosition: number = arrayOfArticlePositions[projectSlideIndex];
 
@@ -82,13 +83,19 @@ const ProjectCarousel = ({
           // Calculate track position
           const pointerTravelDistance: number = action.payload.pageX - state.initPageX;
           const newTrackPosition: number = state.previousTrackPos + pointerTravelDistance;
-          const maxTravelDelta: number = (carouselRef.current?.scrollWidth as number) * -1 + (articleArray.current[0].offsetWidth + carouselLeftPadding * 2);
+          const maxTravelDelta: number =
+            (carouselRef.current?.scrollWidth as number) * -1 +
+            (articleArray.current[0].offsetWidth + carouselLeftPadding * 2);
           const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, 0), maxTravelDelta);
 
           articleArray.current?.forEach((article: HTMLElement) => article.removeAttribute('data-status'));
 
           // Scale && Filter
-          const styleDistancesArray: { scale: number; filter: string }[] = useCarouselSlideAnimator(mainRef, articleArray, true);
+          const styleDistancesArray: { scale: number; filter: string }[] = useCarouselSlideAnimator(
+            mainRef,
+            articleArray,
+            true
+          );
 
           articleArray.current?.forEach((article: HTMLElement, index: number) => {
             const styleDistances: { scale: number; filter: string } = styleDistancesArray[index];
@@ -142,8 +149,10 @@ const ProjectCarousel = ({
           const scrollYDirection = { verticalUp: -1, veritcalDown: 1 };
 
           let nextClosestIndex: number = state.activeSlideIndex;
-          if (scrollWheelDirection === scrollYDirection.verticalUp) nextClosestIndex = Math.min(state.activeSlideIndex + 1, arrayOfArticlePositions.length - 1);
-          if (scrollWheelDirection === scrollYDirection.veritcalDown) nextClosestIndex = Math.max(state.activeSlideIndex - 1, 0);
+          if (scrollWheelDirection === scrollYDirection.verticalUp)
+            nextClosestIndex = Math.min(state.activeSlideIndex + 1, arrayOfArticlePositions.length - 1);
+          if (scrollWheelDirection === scrollYDirection.veritcalDown)
+            nextClosestIndex = Math.max(state.activeSlideIndex - 1, 0);
 
           const closestChildPos: number = arrayOfArticlePositions[nextClosestIndex] + carouselLeftPadding;
 
@@ -184,7 +193,13 @@ const ProjectCarousel = ({
     const userPointerDownHandler = (e: PointerEvent): void => {
       dispatch({
         type: 'POINTER_DOWN',
-        payload: { anchorEnabled: true, initPageX: e.pageX as number, pageX: e.pageX as number, initPageY: e.pageY as number, pageY: e.pageY as number },
+        payload: {
+          anchorEnabled: true,
+          initPageX: e.pageX as number,
+          pageX: e.pageX as number,
+          initPageY: e.pageY as number,
+          pageY: e.pageY as number,
+        },
       });
     };
 
@@ -269,17 +284,34 @@ const ProjectCarousel = ({
 
   /** Component */
   return (
-    <main className='mainContent' ref={mainRef}>
-      <div className='mainContent__track' ref={carouselRef} style={state.trackStyle} data-status={!state.pointerDown ? 'smooth' : ''}>
+    <main
+      className='mainContent'
+      ref={mainRef}>
+      <div
+        className='mainContent__track'
+        ref={carouselRef}
+        style={state.trackStyle}
+        data-status={!state.pointerDown ? 'smooth' : ''}>
         {projectData.map((project) => (
-          <div className='mainContent__track__project' ref={articleRef} key={project.key}>
+          <div
+            className='mainContent__track__project'
+            ref={articleRef}
+            key={project.key}>
             <Link
               to={state.anchorEnabled ? project.url : '/'}
               aria-label={`${project.key} Live Demo`}
               onDragStart={(e) => e.preventDefault()}
               onDrag={(e) => e.stopPropagation()}>
               <picture>
-                <img src={project.imgSrc} alt={project.imgAlt} rel='preload' loading='eager' draggable='false' decoding='async' fetchPriority='high' />
+                <img
+                  src={project.imgSrc}
+                  alt={project.imgAlt}
+                  rel='preload'
+                  loading='eager'
+                  draggable='false'
+                  decoding='async'
+                  fetchPriority='high'
+                />
               </picture>
             </Link>
           </div>
