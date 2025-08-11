@@ -1,15 +1,28 @@
 import { z } from 'zod';
-import { regex } from '../regex/regex';
 
 export const zodSchema = {
   user: z.object({
-    firstName: z.string().trim().min(1, { message: 'First name is required.' }),
-    lastName: z.string().trim().min(1, { message: 'Last name is required.' }),
+    firstName: z
+      .string()
+      .trim()
+      .regex(/[a-zA-Z-']{1,}$/)
+      .min(1, { message: 'First name is required.' }),
+    lastName: z
+      .string()
+      .trim()
+      .regex(/[a-zA-Z-']{1,}$/)
+      .min(1, { message: 'Last name is required.' }),
     dateOfBirth: z.date(),
     age: z.number().min(18, { message: 'You are not of age. Access permissions revoked.' }),
   }),
   account: z.object({
-    password: z.string().trim().regex(regex.password, 'Password must contain at least one digit, one special character, and be at least 8 characters long.'),
+    password: z
+      .string()
+      .trim()
+      .regex(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        'Password must contain at least one digit, one special character, and be at least 8 characters long.'
+      ),
   }),
   entity: z.object({
     business: z.string().trim().optional(),
@@ -24,16 +37,12 @@ export const zodSchema = {
 };
 
 type ZodSchema = typeof zodSchema;
-type ZodSchema_Contact = z.infer<ZodSchema['contact']>;
-type ZodSchema_Entity = z.infer<ZodSchema['entity']>;
-type ZodSchema_Fields = z.infer<ZodSchema['fields']>;
-type ZodSchema_User = z.infer<ZodSchema['user']>;
 
 export type Type_ZodSchema = {
-  Contact: ZodSchema_Contact;
-  Entity: ZodSchema_Entity;
-  Fields: ZodSchema_Fields;
-  User: ZodSchema_User;
+  Contact: z.infer<ZodSchema['contact']>;
+  Entity: z.infer<ZodSchema['entity']>;
+  Fields: z.infer<ZodSchema['fields']>;
+  User: z.infer<ZodSchema['user']>;
 };
 
 export const schemaRegistration = z.object({
@@ -43,4 +52,7 @@ export const schemaRegistration = z.object({
   password: zodSchema.account.shape.password,
 });
 
-export const schemaLogin = z.object({ emailAddress: zodSchema.contact.shape.emailAddress, password: zodSchema.account.shape.password });
+export const schemaLogin = z.object({
+  emailAddress: zodSchema.contact.shape.emailAddress,
+  password: zodSchema.account.shape.password,
+});
