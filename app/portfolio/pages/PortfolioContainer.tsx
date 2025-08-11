@@ -7,8 +7,7 @@ import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
 
 /** Component */
 export default function PortfolioContainer() {
-  const { projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState, portMobileMenu, setPortMobileMenu } =
-    usePortfolioContext();
+  const { featureState, portMobileMenu, setPortMobileMenu } = usePortfolioContext();
 
   /** @references */
   const portfolioRef = useRef<HTMLDivElement>(null);
@@ -19,7 +18,7 @@ export default function PortfolioContainer() {
    * @description Scrolls to a specific child in the portfolio grid
    */
   const useFeatureScroll = (index: number, behavior: ScrollBehavior): void => {
-    const delay: 0 | 660 = Object.values(featureState).some(Boolean) ? 660 : 0;
+    const delay: 0 | 400 = Object.values(featureState).some(Boolean) ? 400 : 0;
 
     setTimeout(() => {
       const project = portfolioRef.current?.children[index] as HTMLElement | undefined;
