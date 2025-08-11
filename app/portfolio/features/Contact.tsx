@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { z } from 'zod';
-import { zodSchema } from '~/base/validation/schema/zodSchema';
+import { zodSchema } from '~/base/validation/zodSchema';
 
 type Inputs = Record<
   'firstName' | 'lastName' | 'email' | 'phone' | 'agency' | 'role',

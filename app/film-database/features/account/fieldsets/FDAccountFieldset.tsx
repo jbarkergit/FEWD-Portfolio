@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState, type ChangeEvent, type CSSProperties, type HTMLAttributes } from 'react';
-import { schemaRegistration, schemaLogin } from '~/base/validation/schema/zodSchema';
+import { useEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
+import { zodSchema } from '~/base/validation/zodSchema';
 import { useFormValues } from '~/film-database/hooks/useFormValues';
 import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
 import { handleAuthProvider } from '~/base/firebase/authentication/utility/handleAuthProvider';
 import { createFirestoreUser } from '~/base/firebase/firestore/utility/createFirestoreUser';
 import { useFirestoreLogin } from '~/base/firebase/firestore/utility/useFirestoreLogin';
+import z from 'zod';
 
 const registration = [
   {
@@ -98,8 +99,16 @@ const fieldStore = {
 };
 
 const schemas = {
-  registration: schemaRegistration,
-  login: schemaLogin,
+  registration: z.object({
+    firstName: zodSchema.user.shape.firstName,
+    lastName: zodSchema.user.shape.lastName,
+    emailAddress: zodSchema.contact.shape.emailAddress,
+    password: zodSchema.account.shape.password,
+  }),
+  login: z.object({
+    emailAddress: zodSchema.contact.shape.emailAddress,
+    password: zodSchema.account.shape.password,
+  }),
 };
 
 const FDAccountFieldset = () => {
