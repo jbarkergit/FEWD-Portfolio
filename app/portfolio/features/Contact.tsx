@@ -1,6 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { z } from 'zod';
 import { zodSchema } from '~/base/validation/zodSchema';
+import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
+
+const schema = z.object({
+  firstName: zodSchema.user.shape.firstName,
+  lastName: zodSchema.user.shape.lastName,
+  phoneNumber: zodSchema.contact.shape.phoneNumber,
+  emailAddress: zodSchema.contact.shape.emailAddress,
+  business: zodSchema.entity.shape.business,
+  role: zodSchema.entity.shape.role,
+  message: zodSchema.fields.shape.message,
+});
 
 type Inputs = Record<
   'firstName' | 'lastName' | 'email' | 'phone' | 'agency' | 'role',
@@ -16,16 +27,6 @@ const inputs: Inputs = {
   role: { htmlFor: 'role', label: 'Role (Optional)', inputType: 'text', inputReg: 'role' },
 };
 
-const schema = z.object({
-  firstName: zodSchema.user.shape.firstName,
-  lastName: zodSchema.user.shape.lastName,
-  phoneNumber: zodSchema.contact.shape.phoneNumber,
-  emailAddress: zodSchema.contact.shape.emailAddress,
-  business: zodSchema.entity.shape.business,
-  role: zodSchema.entity.shape.role,
-  message: zodSchema.fields.shape.message,
-});
-
 type FormData = {
   firstName: string;
   lastName: string;
@@ -37,6 +38,8 @@ type FormData = {
 };
 
 const Contact = () => {
+  const { setFeatureState } = usePortfolioContext();
+
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
@@ -142,6 +145,7 @@ const Contact = () => {
                   id={htmlFor}
                   type={inputType}
                   name={key === 'phone' ? 'phoneNumber' : key === 'email' ? 'emailAddress' : key} // match schema keys
+                  placeholder=' '
                   value={
                     key === 'phone'
                       ? formData.phoneNumber
@@ -186,6 +190,15 @@ const Contact = () => {
 
           <button type='submit'>Submit</button>
         </form>
+        <button
+          className='contact__container--return'
+          onPointerUp={() =>
+            setFeatureState((p) => {
+              return { ...p, contactFormActive: false };
+            })
+          }>
+          Return
+        </button>
       </div>
     </section>
   );
