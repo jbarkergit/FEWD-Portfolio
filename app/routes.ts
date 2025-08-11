@@ -7,7 +7,7 @@ function useEcommercePaths() {
 }
 
 export default [
-  index('./portfolio/pages/Portfolio.tsx'),
+  index('./portfolio/routes/Portfolio.tsx'),
 
   route('ecommerce', './ecommerce/pages/Home.tsx'),
   route('ecommerce/products', './ecommerce/pages/ProductCatalog.tsx'),
