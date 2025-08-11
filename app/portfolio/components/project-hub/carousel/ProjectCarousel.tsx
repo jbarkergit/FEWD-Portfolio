@@ -190,17 +190,30 @@ const ProjectCarousel = () => {
 
   /** Dispatch Actions */
   useEffect(() => {
+    let pointerDownTimer: NodeJS.Timeout | null = null;
+
     const userPointerDownHandler = (e: PointerEvent): void => {
-      dispatch({
-        type: 'POINTER_DOWN',
-        payload: {
-          anchorEnabled: true,
-          initPageX: e.pageX as number,
-          pageX: e.pageX as number,
-          initPageY: e.pageY as number,
-          pageY: e.pageY as number,
-        },
-      });
+      if (pointerDownTimer) clearTimeout(pointerDownTimer);
+
+      pointerDownTimer = setTimeout(() => {
+        dispatch({
+          type: 'POINTER_DOWN',
+          payload: {
+            anchorEnabled: true,
+            initPageX: e.pageX as number,
+            pageX: e.pageX as number,
+            initPageY: e.pageY as number,
+            pageY: e.pageY as number,
+          },
+        });
+      }, 40);
+    };
+
+    const cancelPointerDown = () => {
+      if (pointerDownTimer) {
+        clearTimeout(pointerDownTimer);
+        pointerDownTimer = null;
+      }
     };
 
     const userPointerMoveHandler = (e: PointerEvent): void => {
@@ -211,6 +224,7 @@ const ProjectCarousel = () => {
     };
 
     const userPointerLeaveHandler = (): void => {
+      cancelPointerDown();
       dispatch({
         type: 'POINTER_LEAVE',
         payload: { anchorEnabled: true, previousTrackPos: state.trackPos },
@@ -218,6 +232,7 @@ const ProjectCarousel = () => {
     };
 
     const userPointerUpHandler = (): void => {
+      cancelPointerDown();
       dispatch({
         type: 'POINTER_UP',
         payload: { previousTrackPos: state.trackPos },
@@ -247,6 +262,7 @@ const ProjectCarousel = () => {
         carouselRef.current.removeEventListener('pointerup', userPointerUpHandler);
         carouselRef.current.removeEventListener('wheel', userWheelEventHandler);
       }
+      cancelPointerDown();
     };
   }, [featureState]);
 
