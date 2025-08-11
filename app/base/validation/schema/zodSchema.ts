@@ -31,7 +31,12 @@ export const zodSchema = {
   }),
   contact: z.object({
     emailAddress: z.string().trim().email({ message: 'Invalid email address.' }),
-    phoneNumber: z.number().min(10, { message: 'Invalid phone number.' }),
+    phoneNumber: z
+      .string()
+      .min(10, { message: 'Phone number must be at least 10 digits.' })
+      .refine((val) => val.replace(/\D/g, '').length >= 10, {
+        message: 'Phone number must have at least 10 digits',
+      }),
   }),
   fields: z.object({ message: z.string().trim().min(5, { message: 'Please type your inquiry.' }) }),
 };

@@ -1,5 +1,4 @@
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import React, { useState } from 'react';
 import { z } from 'zod';
 import { zodSchema } from '~/base/validation/schema/zodSchema';
 
@@ -27,26 +26,93 @@ const schema = z.object({
   message: zodSchema.fields.shape.message,
 });
 
+type FormData = {
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+  phoneNumber: string;
+  message: string;
+  business?: string;
+  role?: string;
+};
+
 const Contact = () => {
-  // Form submission handler
-  const onSubmit = async (data: any) => {
-    // Prep form data to send via Web3Forms API
-    const formData = new FormData();
-    formData.append('access_key', import.meta.env.VITE_WEB_FORMS_KEY!);
+  const [formData, setFormData] = useState<FormData>({
+    firstName: '',
+    lastName: '',
+    emailAddress: '',
+    phoneNumber: '',
+    message: '',
+    business: '',
+    role: '',
+  });
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Handle input change
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  // Web3Forms submission
+  const submitForm = async (data: typeof formData) => {
+    const formDataObj = new FormData();
+    formDataObj.append('access_key', import.meta.env.VITE_WEB_FORMS_KEY!);
 
     for (const key in data) {
-      formData.append(key, data[key]);
+      const value = data[key as keyof typeof data];
+      if (value !== undefined) {
+        formDataObj.append(key, value);
+      }
     }
 
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formDataObj,
+    });
+
+    const result = (await response.json()) as { success: boolean };
+
+    if (!result.success) {
+      throw new Error(JSON.stringify(result));
+    }
+  };
+
+  // Submit handler
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Zod Schema Validation
+    const result = schema.safeParse(formData);
+
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      for (const issue of result.error.issues) {
+        fieldErrors[issue.path[0] as string] = issue.message;
+      }
+      setErrors(fieldErrors);
+      return;
+    }
+
+    // Clear errors
+    setErrors({});
+
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formData,
+      await submitForm(result.data);
+
+      // Reset form input values to provide a visual indicator that the form has been submitted
+      setFormData({
+        firstName: '',
+        lastName: '',
+        emailAddress: '',
+        phoneNumber: '',
+        business: '',
+        role: '',
+        message: '',
       });
-
-      const result = (await response.json()) as { success: boolean };
-
-      if (!result.success) throw new Error(JSON.stringify(result));
     } catch (error) {
       console.error('Submission error:', error);
     }
@@ -66,33 +132,58 @@ const Contact = () => {
         <form
           id='user-form'
           className='contact__container__form'
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit}
           aria-labelledby='form-title'>
           <ul className='contact__container__form__ul'>
-            {/* Inputs */}
-            {Object.entries(inputs).map((key, []) => (
-              <li>
-                <label htmlFor='message'>Message</label>
-                <textarea
-                  id='message'
-                  placeholder=' '
-                  {...register('message')}
+            {Object.entries(inputs).map(([key, { htmlFor, label, inputType }]) => (
+              <li key={`contact-list-item-${key}`}>
+                <label htmlFor={htmlFor}>{label}</label>
+                <input
+                  id={htmlFor}
+                  type={inputType}
+                  name={key === 'phone' ? 'phoneNumber' : key === 'email' ? 'emailAddress' : key} // match schema keys
+                  value={
+                    key === 'phone'
+                      ? formData.phoneNumber
+                      : key === 'email'
+                        ? formData.emailAddress
+                        : formData[key as keyof FormData]
+                  }
+                  onChange={handleChange}
+                  aria-invalid={!!errors[key === 'phone' ? 'phoneNumber' : key === 'email' ? 'emailAddress' : key]}
+                  aria-describedby={`${htmlFor}-error`}
                 />
-                {errors.message && <span>{String(errors.message?.message)}</span>}
+                {errors[key === 'phone' ? 'phoneNumber' : key === 'email' ? 'emailAddress' : key] && (
+                  <span
+                    id={`${htmlFor}-error`}
+                    role='alert'>
+                    {errors[key === 'phone' ? 'phoneNumber' : key === 'email' ? 'emailAddress' : key]}
+                  </span>
+                )}
               </li>
             ))}
-            {/* Message */}
+
+            {/* Message textarea */}
             <li>
               <label htmlFor='message'>Message</label>
               <textarea
                 id='message'
-                placeholder=' '
-                {...register('message')}
+                name='message'
+                value={formData.message}
+                onChange={handleChange}
+                aria-invalid={!!errors.message}
+                aria-describedby='message-error'
               />
-              {errors.message && <span>{String(errors.message?.message)}</span>}
+              {errors.message && (
+                <span
+                  id='message-error'
+                  role='alert'>
+                  {errors.message}
+                </span>
+              )}
             </li>
           </ul>
-          {/* Submit Button */}
+
           <button type='submit'>Submit</button>
         </form>
       </div>
