@@ -4,15 +4,17 @@
 .fdCineInfo {
   display: flex;
   flex-direction: column;
-}
-
-.fdCineInfo .fdDetails {
-  height: auto;
-  padding: var(--fd-padding-generic) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5);
-  &__article {
-    width: 100%;
-    padding-bottom: calc(var(--fd-gap) * 2);
-    // border-bottom: 1px solid #4d4545;
+  .fdDetails {
+    height: auto;
+    padding: calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5)
+      calc(var(--fd-padding-generic) / 4) calc(var(--fd-padding-generic) / 1.5);
+    &__article {
+      width: 100%;
+      padding-bottom: calc(var(--fd-gap) * 2);
+    }
+  }
+  .fdCineInfoCarousel__wrapper__ul__li {
+    cursor: default;
   }
 }
 
