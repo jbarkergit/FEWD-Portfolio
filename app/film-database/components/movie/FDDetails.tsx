@@ -151,7 +151,6 @@ const FDDetails = (modal: { modal: boolean }) => {
         <ul
           className='fdDetails__article__col'
           id='fdDetails--genres'>
-          Genres:
           {heroData?.genre_ids.map((genreId, index) => {
             const genreName = Object.keys(tmdbDiscoveryIds).find(
               (key) => tmdbDiscoveryIds[key as keyof typeof tmdbDiscoveryIds] === genreId
@@ -159,8 +158,8 @@ const FDDetails = (modal: { modal: boolean }) => {
             if (genreName)
               return (
                 <li key={`genreId-${genreId}`}>
-                  {genreName}
-                  {index !== heroData.genre_ids.length - 1 ? ',' : null}
+                  {genreName.replaceAll('_', ' ')}
+                  {index !== heroData.genre_ids.length - 1 ? ' •' : null}
                 </li>
               );
           })}
