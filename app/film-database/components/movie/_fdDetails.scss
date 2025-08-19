@@ -92,6 +92,8 @@
 
 #fdDetails--genres {
   padding-top: var(--fd-gap);
+  @include m.fdFontS;
+  letter-spacing: 0.03em;
 }
 
 .voteAvgVisual {
