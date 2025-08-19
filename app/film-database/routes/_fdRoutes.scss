@@ -8,6 +8,8 @@
   height: 100svh;
   background-color: var(--fd-bc-primary);
   overflow: clip;
+  overscroll-behavior: none;
+  touch-action: none;
 }
 
 .fdUserAccount,
