@@ -13,7 +13,7 @@ const FDiFramePlayer = ({
   setTrailers: React.Dispatch<React.SetStateAction<TmdbResponseFlat['videos']['results'] | undefined>>;
 }) => {
   // Context
-  const { isListModal, userCollections, modalTrailer, setModalTrailer } = useCatalogProvider();
+  const { isModal, userCollections, modalTrailer, setModalTrailer } = useCatalogProvider();
 
   // Init player
   const playerRef = useRef<YouTube | null>(null);
@@ -55,7 +55,7 @@ const FDiFramePlayer = ({
       setTrailers(undefined);
     };
 
-    if (!isListModal) {
+    if (!isModal) {
       destroy();
       return;
     }

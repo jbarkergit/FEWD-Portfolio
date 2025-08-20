@@ -2,8 +2,6 @@ import { useEffect, useRef, useState, type Dispatch, type RefObject, type SetSta
 import {
   TablerCategoryPlus,
   TablerEdit,
-  TablerLayoutListFilled,
-  TablerLayoutDashboardFilled,
   TablerEye,
   TablerEyeOff,
   MaterialSymbolsLogoutSharp,
@@ -20,7 +18,7 @@ type Props = {
 };
 
 const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode, isListFX, setIsListFX }: Props) => {
-  const { userCollections, setUserCollections, setIsListModal } = useCatalogProvider();
+  const { userCollections, setUserCollections, setIsModal } = useCatalogProvider();
 
   const [collectionUls, setCollectionUls] = useState<HTMLUListElement[]>([]);
 
@@ -131,7 +129,10 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode, isListFX
         <TablerLayoutDashboardFilled />
         <TablerLayoutListFilled />
       </button> */}
-      <button className='fdCollectionsMenu--close' aria-label='Close collections modal' onPointerUp={() => setIsListModal(false)}>
+      <button
+        className='fdCollectionsMenu--close'
+        aria-label='Close collections modal'
+        onPointerUp={() => setIsModal(false)}>
         <MaterialSymbolsLogoutSharp />
       </button>
     </div>

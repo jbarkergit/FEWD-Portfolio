@@ -7,7 +7,7 @@ import { tmdbChunk } from '~/film-database/utility/tmdbChunk';
 
 const FDMedia = () => {
   // Context
-  const { isMovieModal, isListModal, viewportChunkSize } = useCatalogProvider();
+  const { isModal, viewportChunkSize } = useCatalogProvider();
 
   // State
   const { primaryData } = useFLoader();
@@ -56,10 +56,10 @@ const FDMedia = () => {
 
   /** Event Listeners */
   useEffect(() => {
-    if (!isMovieModal && !isListModal) window.addEventListener('wheel', handleWheel);
+    if (!isModal) window.addEventListener('wheel', handleWheel);
     else window.removeEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [fdMediaRef.current, isMovieModal, isListModal]);
+  }, [fdMediaRef.current, isModal]);
 
   /** JSX */
   return (

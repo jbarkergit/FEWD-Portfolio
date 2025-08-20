@@ -24,10 +24,8 @@ type Context = {
   setHeroData: Dispatch<SetStateAction<TmdbMovieProvider | undefined>>;
   viewportChunkSize: number;
   modalChunkSize: number;
-  isMovieModal: boolean;
-  setIsMovieModal: Dispatch<SetStateAction<boolean>>;
-  isListModal: boolean;
-  setIsListModal: Dispatch<SetStateAction<boolean>>;
+  isModal: boolean;
+  setIsModal: Dispatch<SetStateAction<boolean>>;
   userCollections: Record<string, User_Collection>;
   setUserCollections: Dispatch<SetStateAction<Record<string, User_Collection>>>;
   root: React.RefObject<HTMLDivElement | null>;
@@ -57,11 +55,8 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   /** @state A record of user-defined media collections. */
   const [userCollections, setUserCollections] = useState<Record<string, User_Collection>>({});
 
-  /** @state Indicates whether the movie modal is visible. */
-  const [isMovieModal, setIsMovieModal] = useState<boolean>(false);
-
-  /** @state Indicates whether the list modal is visible. */
-  const [isListModal, setIsListModal] = useState<boolean>(false);
+  /** @state Indicates whether the modal is visible. */
+  const [isModal, setIsModal] = useState<boolean>(false);
 
   /** @state Hero data representing the featured media item. */
   const [heroData, setHeroData] = useState<TmdbMovieProvider | undefined>(
@@ -98,7 +93,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     return () => window.removeEventListener('resize', getDynamicChunkSize);
   }, [root.current]);
 
-  useEffect(() => getDynamicChunkSize(), [isMovieModal, isListModal]);
+  useEffect(() => getDynamicChunkSize(), [isModal]);
 
   /**
    * @function initializeUserCollections
@@ -150,26 +145,21 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
-  useEffect(() => handleModalTrailerQueue(), [userCollections, isListModal]);
+  useEffect(() => handleModalTrailerQueue(), [userCollections, isModal]);
 
-  const contextValue = useMemo(
-    () => ({
-      heroData,
-      setHeroData,
-      viewportChunkSize,
-      modalChunkSize,
-      isMovieModal,
-      setIsMovieModal,
-      isListModal,
-      setIsListModal,
-      userCollections,
-      setUserCollections,
-      root,
-      modalTrailer,
-      setModalTrailer,
-    }),
-    [heroData, viewportChunkSize, modalChunkSize, isMovieModal, isListModal, userCollections, root, modalTrailer]
-  );
+  const contextValue = {
+    heroData,
+    setHeroData,
+    viewportChunkSize,
+    modalChunkSize,
+    isModal,
+    setIsModal,
+    userCollections,
+    setUserCollections,
+    root,
+    modalTrailer,
+    setModalTrailer,
+  };
 
   return <CatalogContext.Provider value={contextValue}>{children}</CatalogContext.Provider>;
 };

@@ -14,7 +14,7 @@ import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbRes
 import { tmdbDiscoveryIds } from '~/film-database/composables/const/tmdbDiscoveryIds';
 
 const FDDetails = ({ modal }: { modal: boolean }) => {
-  const { heroData, setIsMovieModal } = useCatalogProvider();
+  const { heroData, setIsModal } = useCatalogProvider();
 
   if (!heroData)
     return (
@@ -173,7 +173,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
         <button
           className='fdDetails--close'
           aria-label='Close View More Modal'
-          onPointerUp={() => setIsMovieModal(false)}>
+          onPointerUp={() => setIsModal(false)}>
           <MaterialSymbolsLogoutSharp />
         </button>
       )}
@@ -189,7 +189,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
             <nav>
               <button
                 aria-label={`View more details about ${heroData.title}`}
-                onClick={() => setIsMovieModal(true)}>
+                onClick={() => setIsModal(true)}>
                 View more details
               </button>
             </nav>
