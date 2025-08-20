@@ -214,7 +214,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
             aria-label='Streaming Platforms'>
             Streaming on:{' '}
             {watchProviders.flatrate?.map((provider, index) => (
-              <li key={`provider-${index}`}>
+              <li key={`provider-stream-${provider.provider_id}`}>
                 {provider.provider_name}
                 {index !== watchProviders.flatrate!.length - 1 ? ',' : null}
                 <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} />
@@ -227,7 +227,10 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
             <div>Purchase {heroData.title}</div>
             <ul aria-label='Purchase available on Platforms'>
               {watchProviders.buy.map((entry) => (
-                <li aria-label={entry.provider_name}>
+                <li
+                  aria-label={entry.provider_name}
+                  key={`provider-buy-${entry.provider_id}`}>
+                  {/* <Link to={`${entry.}`}></Link> */}
                   <picture>
                     <img
                       src={`https://image.tmdb.org/t/p/w780/${entry.logo_path}`}
@@ -244,7 +247,9 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
             <div>Rent {heroData.title}</div>
             <ul aria-label='Rental available on Platforms'>
               {watchProviders.rent.map((entry) => (
-                <li aria-label={entry.provider_name}>
+                <li
+                  aria-label={entry.provider_name}
+                  key={`provider-rent-${entry.provider_id}`}>
                   <picture>
                     <img
                       src={`https://image.tmdb.org/t/p/w780/${entry.logo_path}`}
