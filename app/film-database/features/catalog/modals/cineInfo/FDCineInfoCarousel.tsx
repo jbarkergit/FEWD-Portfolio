@@ -14,7 +14,8 @@ type DataProp = CastChunks | CrewChunks;
 
 const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; heading: string; data: DataProp }) => {
   // Context
-  const { modalChunkSize } = useCatalogProvider();
+  const { modalChunkSize, setIsModal } = useCatalogProvider();
+
   // References
   const carouselRef = useRef<HTMLUListElement>(null);
 
@@ -75,8 +76,7 @@ const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; hea
                   key={`cineInfo-carousel-${article.id}-${index}`}>
                   <button
                     aria-label={`Read more about ${article.name}`}
-                    // onPointerUp={() => }
-                  >
+                    onPointerUp={() => setIsModal('person')}>
                     <picture
                       className='fdCineInfoCarousel__wrapper__ul__li__picture'
                       data-missing={article.profile_path ? 'false' : 'true'}>
