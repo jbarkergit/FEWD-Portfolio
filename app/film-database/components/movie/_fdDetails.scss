@@ -96,6 +96,9 @@
       }
     }
   }
+  ~ .fdCineInfoCarousel:last-child {
+    padding-bottom: var(--fd-padding-generic);
+  }
 }
 
 .voteAvgVisual {
