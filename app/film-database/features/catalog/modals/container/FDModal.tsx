@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import FDCollections from '../collections/FDCollections';
 import FDMovie from '../cineInfo/FDCineInfo';
+import FDPerson from '~/film-database/features/catalog/modals/person/FDPerson';
 
 const FDModal = () => {
   // Context
@@ -17,7 +18,7 @@ const FDModal = () => {
    */
   const handleExteriorClicks = (event: PointerEvent): void => {
     if (!modal.current?.contains(event.target as Node)) {
-      setIsModal(false);
+      setIsModal(undefined);
     }
   };
 
@@ -38,8 +39,9 @@ const FDModal = () => {
         <div
           className='fdModal__container'
           ref={modal}>
-          {isModal && <FDMovie />}
-          {isListModal && <FDCollections />}
+          {isModal === 'movie' && <FDMovie />}
+          {isModal === 'collections' && <FDCollections />}
+          {isModal === 'person' && <FDPerson />}
         </div>
       </div>
     );

@@ -13,7 +13,7 @@ const FDHeader = () => {
   const { setIsModal } = useCatalogProvider();
 
   const cta: { left: CTAButton[]; right: CTAButton[] } = {
-    left: [{ key: 'Saved Movies', icon: <MaterialSymbolsMovieSharp />, func: (): void => setIsModal(true) }],
+    left: [{ key: 'Saved Movies', icon: <MaterialSymbolsMovieSharp />, func: (): void => setIsModal('collections') }],
     right: [
       {
         key: 'Sign Out',

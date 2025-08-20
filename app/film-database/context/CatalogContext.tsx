@@ -24,8 +24,8 @@ type Context = {
   setHeroData: Dispatch<SetStateAction<TmdbMovieProvider | undefined>>;
   viewportChunkSize: number;
   modalChunkSize: number;
-  isModal: boolean;
-  setIsModal: Dispatch<SetStateAction<boolean>>;
+  isModal: 'collections' | 'movie' | 'person' | undefined;
+  setIsModal: Dispatch<SetStateAction<'collections' | 'movie' | 'person' | undefined>>;
   userCollections: Record<string, User_Collection>;
   setUserCollections: Dispatch<SetStateAction<Record<string, User_Collection>>>;
   root: React.RefObject<HTMLDivElement | null>;
@@ -56,7 +56,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [userCollections, setUserCollections] = useState<Record<string, User_Collection>>({});
 
   /** @state Indicates whether the modal is visible. */
-  const [isModal, setIsModal] = useState<boolean>(false);
+  const [isModal, setIsModal] = useState<'collections' | 'movie' | 'person' | undefined>(undefined);
 
   /** @state Hero data representing the featured media item. */
   const [heroData, setHeroData] = useState<TmdbMovieProvider | undefined>(

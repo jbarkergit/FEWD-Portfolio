@@ -132,7 +132,7 @@ const FDCollectionsMenu = ({ collectionRefs, isEditMode, setIsEditMode, isListFX
       <button
         className='fdCollectionsMenu--close'
         aria-label='Close collections modal'
-        onPointerUp={() => setIsModal(false)}>
+        onPointerUp={() => setIsModal(undefined)}>
         <MaterialSymbolsLogoutSharp />
       </button>
     </div>
