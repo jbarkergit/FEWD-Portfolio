@@ -179,15 +179,17 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
       <ul className='fdDetails__col'>
         {voteAvg()}
         {getAvailability()}
-        <li>
-          <nav>
-            <button
-              aria-label={`View more details about ${heroData.title}`}
-              onClick={() => setIsMovieModal(true)}>
-              View more details
-            </button>
-          </nav>
-        </li>
+        {!modal && (
+          <li>
+            <nav>
+              <button
+                aria-label={`View more details about ${heroData.title}`}
+                onClick={() => setIsMovieModal(true)}>
+                View more details
+              </button>
+            </nav>
+          </li>
+        )}
       </ul>
       <p>{heroData.overview}</p>
       {modal && (
