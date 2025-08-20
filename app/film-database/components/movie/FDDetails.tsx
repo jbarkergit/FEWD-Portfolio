@@ -156,14 +156,16 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
         <Link to='https://www.themoviedb.org/?language=en-US'>
           <TheMovieDatabaseLogo />
         </Link>
-        <Link to='https://www.justwatch.com/us/JustWatch-Streaming-API'>
-          <picture>
-            <img
-              aria-label='JustWatch API'
-              src='/app/film-database/assets/api/JustWatch-logo-large.webp'
-            />
-          </picture>
-        </Link>
+        {modal && (
+          <Link to='https://www.justwatch.com/us/JustWatch-Streaming-API'>
+            <picture>
+              <img
+                aria-label='JustWatch API'
+                src='/app/film-database/assets/api/JustWatch-logo-large.webp'
+              />
+            </picture>
+          </Link>
+        )}
       </footer>
       <button
         className='fdDetails--close'
