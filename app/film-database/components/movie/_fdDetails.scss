@@ -9,6 +9,9 @@
   flex-direction: column;
   height: inherit;
   padding: var(--fd-padding-generic) 0 calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5);
+  &[data-modal='false'] {
+    justify-content: center;
+  }
   &--close {
     position: absolute;
     z-index: 13;

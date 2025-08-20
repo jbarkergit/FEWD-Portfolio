@@ -151,7 +151,9 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
 
   /** @returns */
   return (
-    <article className='fdDetails'>
+    <article
+      className='fdDetails'
+      data-modal={modal}>
       <footer className='fdDetails__footer'>
         <Link to='https://www.themoviedb.org/?language=en-US'>
           <TheMovieDatabaseLogo />
@@ -167,12 +169,15 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
           </Link>
         )}
       </footer>
-      <button
-        className='fdDetails--close'
-        aria-label='Close View More Modal'
-        onPointerUp={() => setIsMovieModal(false)}>
-        <MaterialSymbolsLogoutSharp />
-      </button>
+      {modal && (
+        <button
+          className='fdDetails--close'
+          aria-label='Close View More Modal'
+          onPointerUp={() => setIsMovieModal(false)}>
+          <MaterialSymbolsLogoutSharp />
+        </button>
+      )}
+
       <header className='fdDetails__header'>
         <h2>{heroData.title}</h2>
       </header>
