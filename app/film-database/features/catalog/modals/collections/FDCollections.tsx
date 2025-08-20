@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import FDCollectionsModalMenu from './FDCollectionsMenu';
 import FDCollectionsModalCollection from './FDCollectionsCollection';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
@@ -26,8 +26,6 @@ export type Target = {
 const FDCollections = () => {
   /** @context */
   const { userCollections } = useCatalogProvider();
-
-  useEffect(() => console.log(userCollections), [userCollections]);
 
   /** @reference Array of all collections */
   const collectionRefs = useRef<HTMLElement[]>([]);
@@ -115,7 +113,13 @@ const FDCollections = () => {
           />
         ))}
       </section>
-      <FDCollectionsModalMenu collectionRefs={collectionRefs} isEditMode={isEditMode} isListFX={isListFX} setIsListFX={setIsListFX} setIsEditMode={setIsEditMode} />
+      <FDCollectionsModalMenu
+        collectionRefs={collectionRefs}
+        isEditMode={isEditMode}
+        isListFX={isListFX}
+        setIsListFX={setIsListFX}
+        setIsEditMode={setIsEditMode}
+      />
       <FDCollectionsErrorHandler ref={errorRef} />
     </>
   );
