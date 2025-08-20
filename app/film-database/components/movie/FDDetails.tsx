@@ -10,10 +10,10 @@ import {
   TheMovieDatabaseLogo,
 } from '../../assets/svg/icons';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
-import type { TmdbResponse } from '~/film-database/composables/types/TmdbResponse';
+import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { tmdbDiscoveryIds } from '~/film-database/composables/const/tmdbDiscoveryIds';
 
-const FDDetails = (modal: { modal: boolean }) => {
+const FDDetails = ({ modal }: { modal: boolean }) => {
   const { heroData, setIsMovieModal } = useCatalogProvider();
 
   if (!heroData)
@@ -23,17 +23,16 @@ const FDDetails = (modal: { modal: boolean }) => {
       </section>
     );
 
-  const [watchProviders, setWatchProviders] = useState<
-    TmdbResponse['number']['watchProviders']['results']['US']['flatrate'] | undefined
-  >(undefined);
+  const [watchProviders, setWatchProviders] = useState<TmdbResponseFlat['watchProviders']['results']['US'] | undefined>(
+    undefined
+  );
 
   /**
    * @function fetchWatchProviders
-   * @description Fetches watchProviders
    */
   const fetchWatchProviders = async () => {
     const data = await tmdbCall({ watchProviders: heroData?.id });
-    setWatchProviders(data.response.results.US.flatrate);
+    setWatchProviders(data.response.results.US);
   };
 
   useEffect(() => {
@@ -41,43 +40,12 @@ const FDDetails = (modal: { modal: boolean }) => {
   }, [heroData]);
 
   /**
-   * @function useFormattedDate
-   * @returns Movie release date OR 'Now Available'
-   * Compares current date to movie release date to determine if the film has been released
+   * @function voteAvg
+   * @returns Visual rating of movie out of 5 stars
    */
-  const useFormattedDate = (release: string): JSX.Element => {
-    // Handle dates
-    const currentDate: string = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-    const releaseDate: string = release.replaceAll('-', '');
+  const voteAvg = (): JSX.Element | undefined => {
+    const voteAvg = heroData.vote_average;
 
-    // Convert releaseDate to Date object
-    const releaseDateObj = new Date(`${releaseDate.slice(0, 4)}-${releaseDate.slice(4, 6)}-${releaseDate.slice(6, 8)}`);
-
-    // Return JSX.Element indicating release status
-    if (releaseDate > currentDate) {
-      return (
-        <div className='formattedReleaseDate'>{`Available ${releaseDateObj.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })}`}</div>
-      );
-    }
-
-    return (
-      <div
-        className='formattedReleaseDate'
-        data-status='green'>
-        {'Now Available'}
-      </div>
-    );
-  };
-
-  /**
-   * @function useVoteAvgVisual
-   * @returns Vote average in svg star visual reference
-   */
-  const useVoteAvgVisual = (voteAvg: number): JSX.Element | undefined => {
     // 0-10 vote scale (contains floating point value) floored and converted to 0-5 vote scale
     const flooredVoteAverage: number = Math.floor(voteAvg / 2);
 
@@ -96,91 +64,157 @@ const FDDetails = (modal: { modal: boolean }) => {
     ];
 
     return (
-      <ul
+      <li
         className='voteAvgVisual'
         aria-label={`Vote Average ${voteAvg / 2} out of 5`}>
         {stars.map((Star, index) => (
-          <li
+          <span
             className='voteAvgVisual__star'
             key={`star-${index}`}>
             {Star}
-          </li>
+          </span>
         ))}
-      </ul>
+      </li>
     );
   };
+
+  /**
+   * @function getAvailability
+   * @returns Movie availability
+   * Determines if movie has been released by comparing current date to movie release date
+   * Checks for rent or buy options and streaming service availability
+   * Note: Some services offer early streaming for movies in theatres via rental and/or purchase
+   */
+  const earlyViewingProviders = ['Google Play Movies', 'Apple TV', 'Prime Video'];
+
+  const hasEarlyViewing =
+    watchProviders &&
+    watchProviders.buy?.some(
+      (p) =>
+        earlyViewingProviders.includes(p.provider_name) ||
+        watchProviders.rent?.some((p) => earlyViewingProviders.includes(p.provider_name))
+    );
+
+  const getAvailability = (): JSX.Element | undefined => {
+    const rel = heroData!.release_date.replaceAll('-', ''); // YYYY/MM/DD ISO format converted to 8 digits
+
+    const relDates = {
+      year: parseInt(rel.slice(0, 4), 10),
+      month: parseInt(rel.slice(4, 6), 10) - 1,
+      day: parseInt(rel.slice(6, 8), 10),
+    };
+
+    const release = new Date(relDates.year, relDates.month, relDates.day);
+    const local = new Date();
+
+    // Not yet released
+    if (release > local) {
+      return (
+        <li className='formattedReleaseDate'>
+          {`Available ${release.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}`}
+        </li>
+      );
+    }
+
+    if (watchProviders) {
+      // Streaming
+      if (watchProviders.flatrate && watchProviders.flatrate.length > 0) {
+        return (
+          <li
+            className='formattedReleaseDate'
+            data-status='green'>
+            Streaming
+          </li>
+        );
+      }
+      // In Theatres & Early Streaming
+      // Note that the TMDB API does not list these providers as streaming service (.flatrate property) if available for early streaming
+      if ((!watchProviders.flatrate && watchProviders.buy) || (!watchProviders.flatrate && watchProviders.rent)) {
+        return (
+          <li
+            className='formattedReleaseDate'
+            data-status='green'>
+            {hasEarlyViewing ? 'In Theatres & Early Streaming' : 'In Theatres'}
+          </li>
+        );
+      }
+    }
+  };
+
+  const genreIds = heroData?.genre_ids.map((genreId) =>
+    Object.keys(tmdbDiscoveryIds).find((key) => tmdbDiscoveryIds[key as keyof typeof tmdbDiscoveryIds] === genreId)
+  );
+
+  useEffect(() => {
+    console.log(watchProviders);
+  }, [watchProviders]);
+
   /** @returns */
   return (
-    <section
-      className='fdDetails'
-      data-modal={modal.modal}>
-      <article className='fdDetails__article'>
-        <button
-          className='fdDetails__article--exit'
-          id='fdDetails--exit'
-          aria-label='Close View More Modal'
-          onPointerUp={() => setIsMovieModal(false)}>
-          <MaterialSymbolsLogoutSharp />
-        </button>
-
-        <footer className='fdDetails__article__footer'>
-          <Link to='https://www.themoviedb.org/?language=en-US'>
-            <TheMovieDatabaseLogo />
-          </Link>
-        </footer>
-        <header className='fdDetails__article__header'>
-          <h2>{heroData.title}</h2>
-        </header>
-
-        <ul className='fdDetails__article__col'>
-          <li>{useVoteAvgVisual(heroData.vote_average)}</li>
-          {useFormattedDate(heroData.release_date)}
-          <li>
-            <nav id='fdDetails--nav'>
-              <button
-                aria-label={`View more details about ${heroData.title}`}
-                onClick={() => setIsMovieModal(true)}>
-                View more details
-              </button>
-            </nav>
-          </li>
+    <article className='fdDetails'>
+      <button
+        className='fdDetails--close'
+        aria-label='Close View More Modal'
+        onPointerUp={() => setIsMovieModal(false)}>
+        <MaterialSymbolsLogoutSharp />
+      </button>
+      <header className='fdDetails__header'>
+        <h2>{heroData.title}</h2>
+      </header>
+      <ul className='fdDetails__col'>
+        {voteAvg()}
+        {getAvailability()}
+        <li>
+          <nav>
+            <button
+              aria-label={`View more details about ${heroData.title}`}
+              onClick={() => setIsMovieModal(true)}>
+              View more details
+            </button>
+          </nav>
+        </li>
+      </ul>
+      <p>{heroData.overview}</p>
+      {modal && (
+        <ul className='fdDetails__col'>
+          {genreIds.map((genre, index) => (
+            <li key={`genre-${genre}-index-${index}`}>
+              {genre?.replaceAll('_', ' ')}
+              {index !== heroData.genre_ids.length - 1 ? ' •' : null}
+            </li>
+          ))}
         </ul>
-
-        <p>{heroData.overview}</p>
-
-        <ul
-          className='fdDetails__article__col'
-          id='fdDetails--genres'>
-          {heroData?.genre_ids.map((genreId, index) => {
-            const genreName = Object.keys(tmdbDiscoveryIds).find(
-              (key) => tmdbDiscoveryIds[key as keyof typeof tmdbDiscoveryIds] === genreId
-            );
-            if (genreName)
-              return (
-                <li key={`genreId-${genreId}`}>
-                  {genreName.replaceAll('_', ' ')}
-                  {index !== heroData.genre_ids.length - 1 ? ' •' : null}
-                </li>
-              );
-          })}
+      )}
+      {modal && watchProviders?.flatrate?.length && (
+        <ul className='fdDetails__col'>
+          Streaming on:{' '}
+          {watchProviders.flatrate?.map((provider, index) => (
+            <li key={`provider-${index}`}>
+              {provider.provider_name}
+              {index !== watchProviders.flatrate!.length - 1 ? ',' : null}
+              <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} />
+            </li>
+          ))}
         </ul>
-
-        {watchProviders?.length && (
-          <ul
-            className='fdDetails__article__col'
-            id='fdDetails--providers'>
-            Available on:{' '}
-            {watchProviders?.map((provider, index) => (
-              <li key={`provider-${index}`}>
-                {provider.provider_name}
-                {index !== watchProviders.length - 1 ? ',' : null}
-                <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </article>
-    </section>
+      )}
+      <footer className='fdDetails__footer'>
+        <Link to='https://www.themoviedb.org/?language=en-US'>
+          <TheMovieDatabaseLogo />
+        </Link>
+        <Link to='https://www.justwatch.com/us/JustWatch-Streaming-API'>
+          <picture>
+            <img
+              aria-label='JustWatch API'
+              src='/app/film-database/assets/api/JustWatch-logo-large.webp'
+            />
+          </picture>
+        </Link>
+      </footer>
+    </article>
   );
 };
 
