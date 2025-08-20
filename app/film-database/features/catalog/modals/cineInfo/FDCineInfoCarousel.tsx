@@ -73,30 +73,33 @@ const FDCineInfoCarousel = ({ mapIndex, heading, data }: { mapIndex: number; hea
                   className='fdCineInfoCarousel__wrapper__ul__li'
                   data-hidden={index < modalChunkSize + 1 ? 'false' : 'true'}
                   key={`cineInfo-carousel-${article.id}-${index}`}>
-                  <picture
-                    className='fdCineInfoCarousel__wrapper__ul__li__picture'
-                    data-missing={article.profile_path ? 'false' : 'true'}>
-                    {article.profile_path ? (
-                      <img
-                        className='fdCineInfoCarousel__wrapper__ul__li__picture--img'
-                        src={`https://image.tmdb.org/t/p/w780/${article.profile_path}`}
-                        alt={`${article.name}`}
-                        fetchPriority={mapIndex <= modalChunkSize ? 'high' : 'low'}
-                      />
-                    ) : (
-                      <img
-                        className='fdCineInfoCarousel__wrapper__ul__li__picture--img'
-                        src={`https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg`}
-                        alt={`${article.name}`}
-                        fetchPriority='low'
-                      />
-                    )}
-                  </picture>
-                  <div className='fdCineInfoCarousel__wrapper__ul__li__member'>
-                    <span>{article.name}</span>
-                    <span>{article.character}</span>
-                    <span>{article.known_for_department !== 'Acting' ? article.known_for_department : null}</span>
-                  </div>
+                  <button
+                    aria-label={`Read more about ${article.name}`}
+                    // onPointerUp={() => }
+                  >
+                    <picture
+                      className='fdCineInfoCarousel__wrapper__ul__li__picture'
+                      data-missing={article.profile_path ? 'false' : 'true'}>
+                      {article.profile_path ? (
+                        <img
+                          src={`https://image.tmdb.org/t/p/w780/${article.profile_path}`}
+                          alt={`${article.name}`}
+                          fetchPriority={mapIndex <= modalChunkSize ? 'high' : 'low'}
+                        />
+                      ) : (
+                        <img
+                          src={`https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg`}
+                          alt={`${article.name}`}
+                          fetchPriority='low'
+                        />
+                      )}
+                    </picture>
+                    <div className='fdCineInfoCarousel__wrapper__ul__li__member'>
+                      <span>{article.name}</span>
+                      <span>{article.character}</span>
+                      <span>{article.known_for_department !== 'Acting' ? article.known_for_department : null}</span>
+                    </div>
+                  </button>
                 </li>
               );
             })}
