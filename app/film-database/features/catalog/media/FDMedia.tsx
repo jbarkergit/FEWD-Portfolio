@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useFLoader } from '~/film-database/routes/FilmDatabase';
 import { useCatalogProvider } from '../../../context/CatalogContext';
 import FDCarousel from './media-carousel/FDCarousel';
-import FDSearch from '~/film-database/components/search/FDSearch';
+import FDSearch from '~/film-database/features/catalog/media/search/FDSearch';
 import { tmdbChunk } from '~/film-database/utility/tmdbChunk';
 
 const FDMedia = () => {

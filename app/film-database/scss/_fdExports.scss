@@ -15,6 +15,7 @@
 
 @forward '/app/film-database/features/catalog/media/fdMedia';
 @forward '/app/film-database/features/catalog/media/media-carousel/fdCarousel';
+@forward '/app/film-database/features/catalog/media/search/fdSearch';
 
 @forward '/app/film-database/features/catalog/modals/container/fdModal';
 @forward '/app/film-database/features/catalog/modals/collections/fdCollections';
@@ -24,5 +25,3 @@
 @forward '/app/film-database/components/iframe/fdiFrame';
 
 @forward '/app/film-database/components/movie/fdDetails';
-
-@forward '/app/film-database/components/search/fdSearch';
