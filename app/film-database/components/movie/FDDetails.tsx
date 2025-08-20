@@ -149,13 +149,22 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     Object.keys(tmdbDiscoveryIds).find((key) => tmdbDiscoveryIds[key as keyof typeof tmdbDiscoveryIds] === genreId)
   );
 
-  useEffect(() => {
-    console.log(watchProviders);
-  }, [watchProviders]);
-
   /** @returns */
   return (
     <article className='fdDetails'>
+      <footer className='fdDetails__footer'>
+        <Link to='https://www.themoviedb.org/?language=en-US'>
+          <TheMovieDatabaseLogo />
+        </Link>
+        <Link to='https://www.justwatch.com/us/JustWatch-Streaming-API'>
+          <picture>
+            <img
+              aria-label='JustWatch API'
+              src='/app/film-database/assets/api/JustWatch-logo-large.webp'
+            />
+          </picture>
+        </Link>
+      </footer>
       <button
         className='fdDetails--close'
         aria-label='Close View More Modal'
@@ -189,31 +198,56 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
           ))}
         </ul>
       )}
-      {modal && watchProviders?.flatrate?.length && (
-        <ul className='fdDetails__col'>
-          Streaming on:{' '}
-          {watchProviders.flatrate?.map((provider, index) => (
-            <li key={`provider-${index}`}>
-              {provider.provider_name}
-              {index !== watchProviders.flatrate!.length - 1 ? ',' : null}
-              <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} />
-            </li>
-          ))}
-        </ul>
-      )}
-      <footer className='fdDetails__footer'>
-        <Link to='https://www.themoviedb.org/?language=en-US'>
-          <TheMovieDatabaseLogo />
-        </Link>
-        <Link to='https://www.justwatch.com/us/JustWatch-Streaming-API'>
-          <picture>
-            <img
-              aria-label='JustWatch API'
-              src='/app/film-database/assets/api/JustWatch-logo-large.webp'
-            />
-          </picture>
-        </Link>
-      </footer>
+      <div className='fdDetails__providers'>
+        {modal && watchProviders?.flatrate?.length && (
+          <ul
+            className='fdDetails__providers__provider'
+            aria-label='Streaming Platforms'>
+            Streaming on:{' '}
+            {watchProviders.flatrate?.map((provider, index) => (
+              <li key={`provider-${index}`}>
+                {provider.provider_name}
+                {index !== watchProviders.flatrate!.length - 1 ? ',' : null}
+                <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} />
+              </li>
+            ))}
+          </ul>
+        )}
+        {modal && watchProviders?.buy?.length && (
+          <div className='fdDetails__providers__provider'>
+            <div>Purchase {heroData.title}</div>
+            <ul aria-label='Purchase available on Platforms'>
+              {watchProviders.buy.map((entry) => (
+                <li aria-label={entry.provider_name}>
+                  <picture>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w780/${entry.logo_path}`}
+                      alt={`${entry.provider_name}`}
+                    />
+                  </picture>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {modal && watchProviders?.rent?.length && (
+          <div className='fdDetails__providers__provider'>
+            <div>Rent {heroData.title}</div>
+            <ul aria-label='Rental available on Platforms'>
+              {watchProviders.rent.map((entry) => (
+                <li aria-label={entry.provider_name}>
+                  <picture>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w780/${entry.logo_path}`}
+                      alt={`${entry.provider_name}`}
+                    />
+                  </picture>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </article>
   );
 };
