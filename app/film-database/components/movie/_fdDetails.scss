@@ -82,8 +82,10 @@
       gap: var(--fd-gap);
       & div {
         @include m.fdFontM;
-        font-weight: 500;
-        line-height: 225%;
+        text-transform: uppercase;
+        font-weight: 700;
+        line-height: 235%;
+        letter-spacing: 0.04em;
       }
       & ul {
         display: flex;
