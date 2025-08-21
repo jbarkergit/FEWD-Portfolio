@@ -66,6 +66,9 @@
           flex-direction: column;
           align-items: flex-start;
           gap: var(--fd-gap);
+          &:hover picture img {
+            transform: scale(1.025);
+          }
           & picture {
             position: relative;
             display: block;
@@ -82,6 +85,8 @@
             & img {
               width: inherit;
               height: inherit;
+              transition: transform ease-in-out 250ms;
+              will-change: transform;
             }
           }
           & div {
