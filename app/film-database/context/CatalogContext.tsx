@@ -26,11 +26,12 @@ type Context = {
   modalChunkSize: number;
   isModal: 'collections' | 'movie' | 'person' | undefined;
   setIsModal: Dispatch<SetStateAction<'collections' | 'movie' | 'person' | undefined>>;
+  modalTrailer: TmdbMovieProvider | undefined;
+  setModalTrailer: Dispatch<SetStateAction<TmdbMovieProvider | undefined>>;
+  personRef: React.RefObject<number | null>;
   userCollections: Record<string, User_Collection>;
   setUserCollections: Dispatch<SetStateAction<Record<string, User_Collection>>>;
   root: React.RefObject<HTMLDivElement | null>;
-  modalTrailer: TmdbMovieProvider | undefined;
-  setModalTrailer: Dispatch<SetStateAction<TmdbMovieProvider | undefined>>;
 };
 
 const CatalogContext = createContext<Context | undefined>(undefined);
@@ -57,6 +58,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   /** @state Indicates whether the modal is visible. */
   const [isModal, setIsModal] = useState<'collections' | 'movie' | 'person' | undefined>(undefined);
+  const personRef = useRef<number>(null);
 
   /** @state Hero data representing the featured media item. */
   const [heroData, setHeroData] = useState<TmdbMovieProvider | undefined>(
@@ -154,11 +156,12 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     modalChunkSize,
     isModal,
     setIsModal,
-    userCollections,
-    setUserCollections,
-    root,
     modalTrailer,
     setModalTrailer,
+    userCollections,
+    setUserCollections,
+    personRef,
+    root,
   };
 
   return <CatalogContext.Provider value={contextValue}>{children}</CatalogContext.Provider>;
