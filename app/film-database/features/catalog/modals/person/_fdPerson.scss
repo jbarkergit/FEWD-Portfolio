@@ -5,9 +5,7 @@
   display: flex;
   padding: calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 4)
     calc(var(--fd-padding-generic) / 1.5);
-  & section {
-  }
-  & section:nth-of-type(1) {
+  &__section {
     & picture {
       position: relative;
       display: block;
@@ -28,7 +26,7 @@
         will-change: transform;
       }
     }
-    & ul {
+    &__general {
       display: flex;
       flex-direction: column;
       & li {
@@ -43,16 +41,11 @@
       }
     }
   }
-  & section:nth-of-type(2) {
-    & div:nth-of-type(2),
-    & div:nth-of-type(3) {
-      position: relative;
-      width: 100%;
-      // navigation overlay on track hover
-      &:hover nav {
-        opacity: 1;
-        transition: opacity 0.22s ease-in-out;
-      }
+  &__section {
+    &__bio {
+    }
+    &__carousels .fdCineInfoCarousel__wrapper {
+      width: inherit;
     }
   }
 }
