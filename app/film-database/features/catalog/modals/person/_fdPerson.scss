@@ -1,0 +1,58 @@
+@use '/app/base/sass/util/functions' as f;
+@use '/app/film-database/scss/fdMixins' as m;
+
+.fdPerson {
+  display: flex;
+  padding: calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 4)
+    calc(var(--fd-padding-generic) / 1.5);
+  & section {
+  }
+  & section:nth-of-type(1) {
+    & picture {
+      position: relative;
+      display: block;
+      width: var(--fd-collection-node-width);
+      height: var(--fd-collection-node-height);
+      border-radius: var(--fd-border-radius);
+      overflow: clip;
+      &[data-missing='true'] {
+        align-content: center;
+        & img {
+          height: auto;
+        }
+      }
+      & img {
+        width: inherit;
+        height: inherit;
+        transition: transform ease-in-out 250ms;
+        will-change: transform;
+      }
+    }
+    & ul {
+      display: flex;
+      flex-direction: column;
+      & li {
+        display: flex;
+        flex-direction: column;
+        & span:nth-of-type(1) {
+          @include m.fdFontM;
+        }
+        & span:nth-of-type(2) {
+          @include m.fdFontS;
+        }
+      }
+    }
+  }
+  & section:nth-of-type(2) {
+    & div:nth-of-type(2),
+    & div:nth-of-type(3) {
+      position: relative;
+      width: 100%;
+      // navigation overlay on track hover
+      &:hover nav {
+        opacity: 1;
+        transition: opacity 0.22s ease-in-out;
+      }
+    }
+  }
+}
