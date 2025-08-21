@@ -19,6 +19,8 @@ export const tmdbEndpoints = {
     videos: `${BASE_URL}movie/{movie_id}/videos`,
     watchProviders: `${BASE_URL}movie/{movie_id}/watch/providers`,
     discover: `${BASE_URL}discover/movie?with_genres={genre_id}`,
+    personDetails: `${BASE_URL}/person/{movie_id}`,
+    personCredits: `${BASE_URL}/person/{movie_id}/combined_credits`,
   },
   string: {
     search: `${BASE_URL}search/movie?query={search_term}&${QUERY_PARAMS}${ADULT_PARAMS}`,
