@@ -141,7 +141,7 @@
             }
           }
           &__mtnc {
-            &button {
+            & button {
               display: flex;
               gap: 4px;
               & svg {
@@ -153,43 +153,43 @@
         }
       }
     }
-  }
-  &__navigation {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    width: 100svw;
-    height: 100%;
-    pointer-events: none;
-    opacity: 0;
-    // Greyzone/crosspath for desktop 1280x720 && tablet
-    @media (width <= 1152px) {
-      display: none;
-    }
-    &__button {
+    &__navigation {
       position: absolute;
-      z-index: 10;
-      height: 50%;
-      background-color: var(--fd-bc-btn);
-      pointer-events: all;
-      & svg {
-        width: 3em;
-        height: 3em;
-        color: var(--fd-font-color-primary);
-      }
-    }
-    &__button:nth-of-type(1) {
+      top: 0;
       left: 0;
-      border-top-right-radius: var(--fd-border-radius);
-      border-bottom-right-radius: var(--fd-border-radius);
-    }
-    &__button:nth-of-type(2) {
-      right: 0;
-      border-top-left-radius: var(--fd-border-radius);
-      border-bottom-left-radius: var(--fd-border-radius);
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      width: 100svw;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0;
+      // Greyzone/crosspath for desktop 1280x720 && tablet
+      @media (width <= 1152px) {
+        display: none;
+      }
+      &--button {
+        position: absolute;
+        z-index: 10;
+        height: 50%;
+        background-color: var(--fd-bc-btn);
+        pointer-events: all;
+        & svg {
+          width: 3em;
+          height: 3em;
+          color: var(--fd-font-color-primary);
+        }
+      }
+      &--button:nth-of-type(1) {
+        left: 0;
+        border-top-right-radius: var(--fd-border-radius);
+        border-bottom-right-radius: var(--fd-border-radius);
+      }
+      &--button:nth-of-type(2) {
+        right: 0;
+        border-top-left-radius: var(--fd-border-radius);
+        border-bottom-left-radius: var(--fd-border-radius);
+      }
     }
   }
 }
