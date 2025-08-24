@@ -14,15 +14,14 @@
 @forward '/app/film-database/features/catalog/hero/fdHero';
 
 @forward '/app/film-database/features/catalog/media/fdMedia';
-@forward '/app/film-database/features/catalog/media/media-carousel/fdCarousel';
 @forward '/app/film-database/features/catalog/media/search/fdSearch';
 
-@forward '/app/film-database/features/catalog/modals/container/fdModal';
+@forward '/app/film-database/features/catalog/modals/fdModal';
 @forward '/app/film-database/features/catalog/modals/collections/fdCollections';
 @forward '/app/film-database/features/catalog/modals/cineInfo/fdCineInfo';
 @forward '/app/film-database/features/catalog/modals/person/fdPerson';
 
 // Components
+@forward '/app/film-database/components/carousel/genericCarousel';
 @forward '/app/film-database/components/iframe/fdiFrame';
-
 @forward '/app/film-database/components/movie/fdDetails';
