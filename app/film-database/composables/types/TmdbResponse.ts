@@ -193,12 +193,12 @@ export type TmdbResponse = {
     };
     personCredits: {
       id: number;
-      cast: (TmdbMovieProvider & {
+      cast: (CreditsProvider & {
         cast_id: number;
         character: string;
         order: number;
       })[];
-      crew: (TmdbMovieProvider & {
+      crew: (CreditsProvider & {
         department: string;
         job: string;
       })[];
