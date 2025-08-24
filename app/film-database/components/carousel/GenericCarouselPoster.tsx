@@ -55,28 +55,76 @@ function GenericCarouselPoster({ carouselName, carouselIndex, posterIndex, entry
       data-hidden={posterIndex < viewportChunkSize + 1 ? 'false' : 'true'}>
       {carouselName === 'media' && (
         <>
-          <picture className='fdCarousel__wrapper__ul__li__picture'>
+          <picture className='genericCarousel__wrapper__ul__li__picture'>
             <img
-              className='fdCarousel__wrapper__ul__li__picture--img'
+              className='genericCarousel__wrapper__ul__li__picture--img'
               src={`https://image.tmdb.org/t/p/w780/${entry.poster_path}`}
               alt={`${entry.title}`}
               fetchPriority={carouselIndex === 0 ? 'high' : 'low'}
             />
           </picture>
-          <div className='fdCarousel__wrapper__ul__li__overlay'>
+          <div className='genericCarousel__wrapper__ul__li__overlay'>
             <button
-              className='fdCarousel__wrapper__ul__li__overlay--collections'
+              className='genericCarousel__wrapper__ul__li__overlay--collections'
               aria-label='Add movie to collections'
               onPointerUp={() => toggleCollectionMenu()}>
               <BxDotsVerticalRounded />
             </button>
             <button
-              className='fdCarousel__wrapper__ul__li__overlay--play'
+              className='genericCarousel__wrapper__ul__li__overlay--play'
               aria-label='Play trailer'
               onClick={() => setHeroData(entry)}>
               <IcOutlinePlayCircle />
             </button>
           </div>
+          <ul
+            className='genericCarousel__wrapper__ul__li__collections'
+            ref={collectionsMenu}
+            data-active={isCollectionDropdown ? 'true' : 'false'}>
+            {Object.entries(userCollections).map(([key, collection], i) => {
+              const keyIndex = parseInt(key.split('-').pop() || '0', 10);
+              return (
+                <li key={`${carouselName}-carousel-${carouselIndex}-poster-${posterIndex}-collection-dropdown-${i}`}>
+                  <button
+                    aria-label={`Add movie to ${collection.header}`}
+                    onPointerUp={() => {
+                      addUserCollection({
+                        userCollections,
+                        setUserCollections,
+                        isEditMode: false,
+                        payload: {
+                          data: [entry],
+                          colIndex: keyIndex,
+                        },
+                      });
+                      setIsCollectionDropdown(false);
+                    }}>
+                    {collection.header}
+                  </button>
+                </li>
+              );
+            })}
+            {Object.entries(userCollections).length < 5 ? (
+              <li className='genericCarousel__wrapper__ul__li__collections__mtnc'>
+                <button
+                  aria-label='Add movie to a new collection'
+                  onPointerUp={() => {
+                    addUserCollection({
+                      userCollections,
+                      setUserCollections,
+                      isEditMode: false,
+                      payload: {
+                        data: [entry],
+                        colIndex: Object.keys(userCollections).length + 1,
+                      },
+                    });
+                    setIsCollectionDropdown(false);
+                  }}>
+                  <TablerCategoryPlus /> New Collection
+                </button>
+              </li>
+            ) : null}
+          </ul>
         </>
       )}
       {carouselName === 'cinemaInformation' && (
@@ -117,74 +165,6 @@ function GenericCarouselPoster({ carouselName, carouselIndex, posterIndex, entry
             fetchPriority={carouselIndex === 0 ? 'high' : 'low'}
           />
         </picture>
-      )}
-      {carouselName === 'media' && (
-        <div className='genericCarousel__wrapper__ul__li__overlay'>
-          {carouselName === 'media' && (
-            <button
-              className='genericCarousel__wrapper__ul__li__overlay--collections'
-              aria-label='Add movie to collections'
-              onPointerUp={() => toggleCollectionMenu()}>
-              <BxDotsVerticalRounded />
-            </button>
-          )}
-          <button
-            className='genericCarousel__wrapper__ul__li__overlay--play'
-            aria-label='Play trailer'
-            onPointerUp={() => setHeroData(entry)}>
-            <IcOutlinePlayCircle />
-          </button>
-        </div>
-      )}
-      {carouselName === 'media' && (
-        <ul
-          className='genericCarousel__wrapper__ul__li__collections'
-          ref={collectionsMenu}
-          data-active={isCollectionDropdown ? 'true' : 'false'}>
-          {Object.entries(userCollections).map(([key, collection], i) => {
-            const keyIndex = parseInt(key.split('-').pop() || '0', 10);
-            return (
-              <li key={`${carouselName}-carousel-${carouselIndex}-poster-${posterIndex}-collection-dropdown-${i}`}>
-                <button
-                  aria-label={`Add movie to ${collection.header}`}
-                  onPointerUp={() => {
-                    addUserCollection({
-                      userCollections,
-                      setUserCollections,
-                      isEditMode: false,
-                      payload: {
-                        data: [entry],
-                        colIndex: keyIndex,
-                      },
-                    });
-                    setIsCollectionDropdown(false);
-                  }}>
-                  {collection.header}
-                </button>
-              </li>
-            );
-          })}
-          {Object.entries(userCollections).length < 5 ? (
-            <li className='genericCarousel__wrapper__ul__li__collections__mtnc'>
-              <button
-                aria-label='Add movie to a new collection'
-                onPointerUp={() => {
-                  addUserCollection({
-                    userCollections,
-                    setUserCollections,
-                    isEditMode: false,
-                    payload: {
-                      data: [entry],
-                      colIndex: Object.keys(userCollections).length + 1,
-                    },
-                  });
-                  setIsCollectionDropdown(false);
-                }}>
-                <TablerCategoryPlus /> New Collection
-              </button>
-            </li>
-          ) : null}
-        </ul>
       )}
     </li>
   );
