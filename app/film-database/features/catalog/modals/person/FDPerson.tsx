@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
-import PersonMovieCarousel from '~/film-database/features/catalog/modals/person/PersonMovieCarousel';
+import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
 
 const FDPerson = () => {
   const { personRef } = useCatalogProvider();
 
   const [person, setPerson] = useState<{
     details: TmdbResponseFlat['personDetails'] | undefined;
-    credits: TmdbResponseFlat['personCredits'] | undefined;
+    credits: TmdbResponseFlat['credits'] | undefined;
   }>({ details: undefined, credits: undefined });
 
   const { details, credits } = person;
@@ -89,13 +89,18 @@ const FDPerson = () => {
             <span>{details.biography}</span>
           </div>
           <div className='fdPerson__section__carousels'>
-            {[credits.cast, credits.crew].map((entry, index) => (
-              <PersonMovieCarousel
-                heading={index === 0 ? 'Movies' : 'Shows'}
-                data={entry}
-                key={`person-cast-crew-map-${index}`}
-              />
-            ))}
+            <GenericCarousel
+              carouselIndex={1}
+              carouselName={'person'}
+              heading={'Movies'}
+              data={credits.cast}
+            />
+            <GenericCarousel
+              carouselIndex={2}
+              carouselName={'person'}
+              heading={'Shows'}
+              data={credits.crew}
+            />
           </div>
         </section>
       </article>

@@ -2,66 +2,41 @@ import { useState, useEffect } from 'react';
 import FDiFrame from '~/film-database/components/iframe/FDiFrame';
 import FDDetails from '~/film-database/components/movie/FDDetails';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
-import FDCineInfoCarousel from './FDCineInfoCarousel';
-import { tmdbCall, type TmdbState } from '~/film-database/composables/tmdbCall';
-import { tmdbChunk } from '~/film-database/utility/tmdbChunk';
+import { tmdbCall } from '~/film-database/composables/tmdbCall';
+import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
+import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 
 const FDCineInfo = () => {
-  const { heroData, modalChunkSize } = useCatalogProvider();
-  const [credits, setCredits] = useState<TmdbState<'credits'> | undefined>(undefined);
-
-  type Chunk<T> = T[][];
-
-  const [castCrew, setCastCrew] = useState<
-    | {
-        cast: Chunk<TmdbState<'credits'>['response']['cast'][number]>;
-        crew: Chunk<TmdbState<'credits'>['response']['crew'][number]>;
-      }
-    | undefined
-  >(undefined);
+  const { heroData } = useCatalogProvider();
+  const [credits, setCredits] = useState<TmdbResponseFlat['credits'] | undefined>(undefined);
 
   const fetch = async (): Promise<void> => {
     if (!heroData) return;
     const credits = await tmdbCall({ credits: heroData.id });
-    setCredits(credits);
+    setCredits(credits.response);
   };
 
   useEffect(() => {
     fetch();
   }, [heroData]);
 
-  const chunk = () => {
-    if (!credits) return;
-
-    const castChunks = tmdbChunk(credits.response.cast, modalChunkSize);
-
-    const filteredCrew = credits.response.crew.filter(
-      (crewMember, index, self) =>
-        index === self.findIndex((t) => t.name === crewMember.name && crewMember.known_for_department !== 'Acting')
-    );
-
-    const crewChunks = tmdbChunk(filteredCrew, modalChunkSize);
-
-    setCastCrew({ cast: castChunks, crew: crewChunks });
-  };
-
-  useEffect(() => {
-    chunk();
-  }, [credits, modalChunkSize]);
-
-  if (heroData && castCrew)
+  if (credits)
     return (
       <div className='fdCineInfo'>
         <FDiFrame type={'modal'} />
         <FDDetails modal={true} />
-        {Object.entries(castCrew).map(([key, value], index) => (
-          <FDCineInfoCarousel
-            mapIndex={index}
-            heading={key}
-            data={value}
-            key={`${key}-${index}`}
-          />
-        ))}
+        <GenericCarousel
+          carouselIndex={1}
+          carouselName={'cinemaInformation'}
+          heading={'Cast'}
+          data={credits.cast}
+        />
+        <GenericCarousel
+          carouselIndex={2}
+          carouselName={'cinemaInformation'}
+          heading={'Crew'}
+          data={credits.crew}
+        />
       </div>
     );
 };

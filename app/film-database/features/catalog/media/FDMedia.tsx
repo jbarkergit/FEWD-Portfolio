@@ -1,25 +1,12 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useFLoader } from '~/film-database/routes/FilmDatabase';
 import { useCatalogProvider } from '../../../context/CatalogContext';
-import FDCarousel from './media-carousel/FDCarousel';
 import FDSearch from '~/film-database/features/catalog/media/search/FDSearch';
-import { tmdbChunk } from '~/film-database/utility/tmdbChunk';
+import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
 
 const FDMedia = () => {
-  // Context
-  const { isModal, viewportChunkSize } = useCatalogProvider();
-
-  // State
+  const { isModal } = useCatalogProvider();
   const { primaryData } = useFLoader();
-  const chunkedData = useMemo(
-    () =>
-      primaryData.map((r) => {
-        return { key: r.key, response: tmdbChunk(r.response.results, viewportChunkSize) };
-      }),
-    [primaryData, viewportChunkSize]
-  );
-
-  // References
   const fdMediaRef = useRef<HTMLElement>(null);
 
   /**
@@ -67,12 +54,13 @@ const FDMedia = () => {
       className='fdMedia'
       ref={fdMediaRef}
       style={{ top: '0px' }}>
-      {chunkedData?.map(({ key, response }, index) => (
-        <FDCarousel
-          mapIndex={index}
+      {primaryData.map(({ key, response }, index) => (
+        <GenericCarousel
+          carouselIndex={index}
+          carouselName={'media'}
           heading={key}
-          data={response}
-          key={`media-carousel-index-${index}-key-${key}`}
+          data={response.results}
+          key={`media-carousel-${index}`}
         />
       ))}
       <FDSearch orientation='desktop' />

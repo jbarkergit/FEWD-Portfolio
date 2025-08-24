@@ -1,11 +1,11 @@
 import { useRef, useEffect, forwardRef, type RefObject } from 'react';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
 import { useCatalogProvider, type User_Collection } from '~/film-database/context/CatalogContext';
-import { useCarouselNavigation } from '~/film-database/hooks/useCarouselNavigation';
 import type { Sensor, Source, Target } from './FDCollections';
 import FDCollectionsNavigation from './FDCollectionsNavigation';
 import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
+import { navigateGenericCarousel } from '~/film-database/components/carousel/navigateGenericCarousel';
 
 type Props = {
   mapIndex: number;
@@ -372,7 +372,7 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
      * @function useCarouselNavigation
      * @description Hook that handles navigation for all carousels across the application
      */
-    const updateCarouselIndex = useCarouselNavigation({
+    const updateCarouselIndex = navigateGenericCarousel({
       dataLength: data ? data.length : 0,
       chunkSize: modalChunkSize,
       reference: ulRef,
