@@ -2,7 +2,7 @@ import { useEffect, useReducer, useRef } from 'react';
 import { Link } from 'react-router';
 import { projectData } from '../../../data/projectData';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
-import { getCarouselSlideFX } from '~/portfolio/features/projects/carousel/animateCarouselSlide';
+import { getCarouselSlideFX } from '~/portfolio/features/projects/carousel/getCarouselSlideFX';
 
 type ActionType =
   | {
