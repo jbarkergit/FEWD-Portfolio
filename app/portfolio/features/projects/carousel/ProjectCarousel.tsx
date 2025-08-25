@@ -1,8 +1,8 @@
 import { useEffect, useReducer, useRef } from 'react';
 import { Link } from 'react-router';
-import { useCarouselSlideAnimator } from '../../../hooks/useCarouselSlideAnimator';
 import { projectData } from '../../../data/projectData';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
+import { animateCarouselSlide } from '~/portfolio/features/projects/carousel/animateCarouselSlide';
 
 const ProjectCarousel = () => {
   const { projectSlideIndex, setProjectSlideIndex, featureState } = usePortfolioContext();
@@ -91,7 +91,7 @@ const ProjectCarousel = () => {
           articleArray.current?.forEach((article: HTMLElement) => article.removeAttribute('data-status'));
 
           // Scale && Filter
-          const styleDistancesArray: { scale: number; filter: string }[] = useCarouselSlideAnimator(
+          const styleDistancesArray: { scale: number; filter: string }[] = animateCarouselSlide(
             mainRef,
             articleArray,
             true

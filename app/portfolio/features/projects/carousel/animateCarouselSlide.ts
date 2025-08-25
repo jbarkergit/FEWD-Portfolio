@@ -5,7 +5,7 @@ type StyleDistancesType = {
   filter: string;
 };
 
-export const useCarouselSlideAnimator = (
+export const animateCarouselSlide = (
   container: RefObject<HTMLDivElement | null>,
   arrayOfSlides: RefObject<HTMLElement[]>,
   horizontalCarousel: boolean
@@ -33,7 +33,9 @@ export const useCarouselSlideAnimator = (
 
       const exponents: Record<string, number> = {
         carouselPadding: horizontalCarousel ? exponentData.carouselPaddingX : exponentData.carouselPaddingY,
-        slideDistanceFromViewport: horizontalCarousel ? exponentData.slideDistanceFromViewportCenterX : exponentData.slideDistanceFromViewportCenterY,
+        slideDistanceFromViewport: horizontalCarousel
+          ? exponentData.slideDistanceFromViewportCenterX
+          : exponentData.slideDistanceFromViewportCenterY,
         containerDimensions: horizontalCarousel ? carouselSliderWidth : carouselSliderHeight,
       };
 
@@ -59,7 +61,8 @@ export const useCarouselSlideAnimator = (
       const scaleFilterClamp = Math.min(scale.filterMaximum, Math.max(scale.filterMinimum, newScaleValue));
 
       /** Calculate filter intensity: distance between slide and viewport center */
-      const filterIntensity: number = (scaleFilterClamp - scale.filterMinimum) / (scale.filterMaximum - scale.filterMinimum);
+      const filterIntensity: number =
+        (scaleFilterClamp - scale.filterMinimum) / (scale.filterMaximum - scale.filterMinimum);
 
       const saturationFilter: Record<string, number> = {
         grayscale: 85 - filterIntensity * 85,
