@@ -2,10 +2,10 @@ import { useRef, useEffect, forwardRef, type RefObject } from 'react';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
 import { useCatalogProvider, type User_Collection } from '~/film-database/context/CatalogContext';
 import type { Sensor, Source, Target } from './FDCollections';
-import FDCollectionsNavigation from './FDCollectionsNavigation';
 import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import { navigateGenericCarousel } from '~/film-database/components/carousel/navigateGenericCarousel';
+import GenericCarouselNavigation from '~/film-database/components/carousel/GenericCarouselNavigation';
 
 type Props = {
   mapIndex: number;
@@ -369,40 +369,35 @@ const FDCollectionsCollection = forwardRef<HTMLElement, Props>(
     }, [isEditMode, isListFX]);
 
     /**
-     * @function useCarouselNavigation
-     * @description Hook that handles navigation for all carousels across the application
-     */
-    const updateCarouselIndex = navigateGenericCarousel({
-      dataLength: data ? data.length : 0,
-      chunkSize: modalChunkSize,
-      reference: ulRef,
-    });
-
-    /**
      * @function FDCollectionsCollection
      * @returns {JSX.Element}
      */
-    return (
-      <section
-        className='fdCollections__collection'
-        ref={collectionRef}>
-        <FDCollectionsCollectionHeader
-          mapIndex={mapIndex}
-          header={header}
-        />
-        <div className='fdCollections__collection__wrapper'>
-          <FDCollectionsCollectionUl
+    if (data)
+      return (
+        <section
+          className='fdCollections__collection'
+          ref={collectionRef}>
+          <FDCollectionsCollectionHeader
             mapIndex={mapIndex}
-            data={data}
-            display={display}
-            isEditMode={isEditMode}
-            ref={ulRef}
-            sensorRef={sensorRef}
+            header={header}
           />
-          <FDCollectionsNavigation updateCarouselIndex={updateCarouselIndex} />
-        </div>
-      </section>
-    );
+          <div className='fdCollections__collection__wrapper'>
+            <FDCollectionsCollectionUl
+              mapIndex={mapIndex}
+              data={data}
+              display={display}
+              isEditMode={isEditMode}
+              ref={ulRef}
+              sensorRef={sensorRef}
+            />
+            <GenericCarouselNavigation
+              dataLength={data.length}
+              chunkSize={'modal'}
+              reference={ulRef}
+            />
+          </div>
+        </section>
+      );
   }
 );
 
