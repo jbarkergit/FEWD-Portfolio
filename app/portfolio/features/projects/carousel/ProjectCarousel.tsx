@@ -31,7 +31,7 @@ const ProjectCarousel = () => {
 
   /** Scale && Filter Hook */
   const animateSlide = (): void => {
-    for (let i = 0; i > articleArray.current.length; i++) {
+    for (let i = 0; i < articleArray.current.length; i++) {
       const article = articleArray.current[i];
 
       function transformAndScale(article: HTMLElement): void {
@@ -104,7 +104,7 @@ const ProjectCarousel = () => {
             true
           );
 
-          for (let i = 0; i > articleArray.current.length; i++) {
+          for (let i = 0; i < articleArray.current.length; i++) {
             const article = articleArray.current[i];
             const style = styleDistancesArray[i];
 
