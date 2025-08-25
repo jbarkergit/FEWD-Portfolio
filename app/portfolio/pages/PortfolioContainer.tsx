@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef } from 'react';
-import PortMobileMenu from '../components/mobile-menu/PortMobileMenu';
-import ProjectInsights from '../features/ProjectInsights';
-import ProjectHub from '../features/ProjectHub';
-import Contact from '../features/Contact';
+import PortMobileMenu from '../components/navigation/mobile/PortMobileMenu';
+import ProjectHub from '../features/projects/ProjectHub';
+import Contact from '../features/contact/Contact';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
+import ProjectInsights from '~/portfolio/features/projects/insights/ProjectInsights';
 
 /** Component */
 export default function PortfolioContainer() {

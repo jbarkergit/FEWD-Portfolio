@@ -1,5 +1,5 @@
-import { projectData } from '../data/projectData';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
+import { projectData } from '~/portfolio/data/projectData';
 
 const ProjectInsights = () => {
   const { projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState } = usePortfolioContext();

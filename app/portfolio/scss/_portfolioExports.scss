@@ -5,10 +5,10 @@
 @forward '/app/portfolio/pages/portfolio';
 
 // Features
-@forward '/app/portfolio/features/projectInsights';
-@forward '/app/portfolio/features/contact';
+@forward '/app/portfolio/features/projects/carousel/projectCarousel.scss';
+@forward '/app/portfolio/features/projects/insights/projectInsights';
+@forward '/app/portfolio/features/contact/contact';
 
 // Components
-@forward '/app/portfolio/components/project-hub/carousel/projectCarousel.scss';
-@forward '/app/portfolio/components/project-hub/navigation/portNavigation';
-@forward '/app/portfolio/components/mobile-menu/portMobileMenu';
+@forward '/app/portfolio/components/navigation/desktop/portNavigation';
+@forward '/app/portfolio/components/navigation/mobile/portMobileMenu';

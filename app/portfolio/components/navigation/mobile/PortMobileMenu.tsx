@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import type { ForwardedRef } from 'react';
-import { projectData } from '../../data/projectData';
+import { projectData } from '../../../data/projectData';
 import { Link } from 'react-router';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
 
