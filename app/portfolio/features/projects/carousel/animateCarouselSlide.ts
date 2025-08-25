@@ -5,7 +5,7 @@ type StyleDistancesType = {
   filter: string;
 };
 
-export const animateCarouselSlide = (
+export const getCarouselSlideFX = (
   container: RefObject<HTMLDivElement | null>,
   arrayOfSlides: RefObject<HTMLElement[]>,
   horizontalCarousel: boolean

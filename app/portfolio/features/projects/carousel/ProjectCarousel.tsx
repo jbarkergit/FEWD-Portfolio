@@ -2,7 +2,18 @@ import { useEffect, useReducer, useRef } from 'react';
 import { Link } from 'react-router';
 import { projectData } from '../../../data/projectData';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
-import { animateCarouselSlide } from '~/portfolio/features/projects/carousel/animateCarouselSlide';
+import { getCarouselSlideFX } from '~/portfolio/features/projects/carousel/animateCarouselSlide';
+
+type ActionType =
+  | {
+      type: 'POINTER_DOWN';
+      payload: { anchorEnabled: boolean; initPageX: number; pageX: number; initPageY: number; pageY: number };
+    }
+  | { type: 'POINTER_MOVE'; payload: { anchorEnabled: boolean; pageX: number; pageY: number } }
+  | { type: 'POINTER_LEAVE'; payload: { anchorEnabled: boolean; previousTrackPos: number } }
+  | { type: 'POINTER_UP'; payload: { previousTrackPos: number } }
+  | { type: 'WHEEL_SCROLL'; payload: { deltaY: number } }
+  | { type: 'EXTERNAL_NAVIGATION' };
 
 const ProjectCarousel = () => {
   const { projectSlideIndex, setProjectSlideIndex, featureState } = usePortfolioContext();
@@ -11,23 +22,30 @@ const ProjectCarousel = () => {
   const mainRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const articleArray = useRef<HTMLElement[]>([]);
+
   const articleRef = (reference: HTMLDivElement) => {
-    if (reference && !articleArray.current.includes(reference)) articleArray.current.push(reference);
+    if (reference && !articleArray.current.includes(reference)) {
+      articleArray.current.push(reference);
+    }
   };
 
   /** Scale && Filter Hook */
   const animateSlide = (): void => {
-    articleArray.current?.forEach((article: HTMLElement, index: number) => {
-      article.setAttribute('data-status', 'smooth');
+    for (let i = 0; i > articleArray.current.length; i++) {
+      const article = articleArray.current[i];
 
-      setTimeout(() => {
-        article.style.transform = index === state.activeSlideIndex ? `scale(${1})` : `scale(${0.8})`;
+      function transformAndScale(article: HTMLElement): void {
+        article.setAttribute('data-status', 'smooth');
+
+        article.style.transform = i === state.activeSlideIndex ? `scale(${1})` : `scale(${0.8})`;
         article.style.filter =
-          index === state.activeSlideIndex
+          i === state.activeSlideIndex
             ? `grayscale(0%) sepia(0%) brightness(100%)`
             : `grayscale(85%) sepia(80%) brightness(50%)`;
-      }, 50);
-    });
+      }
+
+      if (article) setTimeout(() => transformAndScale(article), 50);
+    }
   };
 
   /** Reducer */
@@ -45,20 +63,7 @@ const ProjectCarousel = () => {
     trackStyle: { transform: `translateX(0px)` },
   };
 
-  type state = typeof initState;
-
-  type ActionType =
-    | {
-        type: 'POINTER_DOWN';
-        payload: { anchorEnabled: boolean; initPageX: number; pageX: number; initPageY: number; pageY: number };
-      }
-    | { type: 'POINTER_MOVE'; payload: { anchorEnabled: boolean; pageX: number; pageY: number } }
-    | { type: 'POINTER_LEAVE'; payload: { anchorEnabled: boolean; previousTrackPos: number } }
-    | { type: 'POINTER_UP'; payload: { previousTrackPos: number } }
-    | { type: 'WHEEL_SCROLL'; payload: { deltaY: number } }
-    | { type: 'EXTERNAL_NAVIGATION' };
-
-  const reducer = (state: state, action: ActionType): state => {
+  const reducer = (state: typeof initState, action: ActionType): typeof initState => {
     const carouselLeftPadding: number = parseInt(
       window.getComputedStyle(carouselRef.current as HTMLDivElement).paddingLeft
     );
@@ -91,7 +96,7 @@ const ProjectCarousel = () => {
           articleArray.current?.forEach((article: HTMLElement) => article.removeAttribute('data-status'));
 
           // Scale && Filter
-          const styleDistancesArray: { scale: number; filter: string }[] = animateCarouselSlide(
+          const styleDistancesArray: { scale: number; filter: string }[] = getCarouselSlideFX(
             mainRef,
             articleArray,
             true
