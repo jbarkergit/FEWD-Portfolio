@@ -41,10 +41,11 @@ export const navigateGenericCarousel = (
 
   const updateCarouselIndex = useCallback(
     (delta: number): void => {
-      carouselIndexRef.current = Math.max(0, Math.min(carouselIndexRef.current + delta, dataLength));
+      const maxIndex = Math.ceil(dataLength / chunkSize) - 1;
+      carouselIndexRef.current = Math.max(0, Math.min(carouselIndexRef.current + delta, maxIndex));
       navigate();
     },
-    [dataLength, navigate, reference]
+    [dataLength, chunkSize, navigate]
   );
 
   useEffect(() => updateCarouselIndex(0), [chunkSize]);
