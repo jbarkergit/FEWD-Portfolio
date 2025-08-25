@@ -15,6 +15,20 @@ type ActionType =
   | { type: 'WHEEL_SCROLL'; payload: { deltaY: number } }
   | { type: 'EXTERNAL_NAVIGATION' };
 
+const initState = {
+  activeSlideIndex: 0,
+  pointerDown: false,
+  wheelEventActive: false,
+  anchorEnabled: true,
+  initPageX: 0,
+  pageX: 0,
+  initPageY: 0,
+  pageY: 0,
+  previousTrackPos: 0,
+  trackPos: 0,
+  trackStyle: { transform: `translateX(0px)` },
+};
+
 const ProjectCarousel = () => {
   const { projectSlideIndex, setProjectSlideIndex, featureState } = usePortfolioContext();
 
@@ -49,20 +63,6 @@ const ProjectCarousel = () => {
   };
 
   /** Reducer */
-  const initState = {
-    activeSlideIndex: 0,
-    pointerDown: false,
-    wheelEventActive: false,
-    anchorEnabled: true,
-    initPageX: 0,
-    pageX: 0,
-    initPageY: 0,
-    pageY: 0,
-    previousTrackPos: 0,
-    trackPos: 0,
-    trackStyle: { transform: `translateX(0px)` },
-  };
-
   const reducer = (state: typeof initState, action: ActionType): typeof initState => {
     const carouselLeftPadding: number = parseInt(
       window.getComputedStyle(carouselRef.current as HTMLDivElement).paddingLeft
@@ -201,78 +201,80 @@ const ProjectCarousel = () => {
   const [state, dispatch] = useReducer(reducer, initState);
 
   /** Dispatch Actions */
+  let pointerDownTimer: NodeJS.Timeout | null = null;
+
+  const userPointerDownHandler = (e: PointerEvent): void => {
+    if (pointerDownTimer) clearTimeout(pointerDownTimer);
+
+    pointerDownTimer = setTimeout(() => {
+      dispatch({
+        type: 'POINTER_DOWN',
+        payload: {
+          anchorEnabled: true,
+          initPageX: e.pageX as number,
+          pageX: e.pageX as number,
+          initPageY: e.pageY as number,
+          pageY: e.pageY as number,
+        },
+      });
+    }, 40);
+  };
+
+  const cancelPointerDown = () => {
+    if (pointerDownTimer) {
+      clearTimeout(pointerDownTimer);
+      pointerDownTimer = null;
+    }
+  };
+
+  const userPointerMoveHandler = (e: PointerEvent): void => {
+    dispatch({
+      type: 'POINTER_MOVE',
+      payload: { anchorEnabled: false, pageX: e.pageX as number, pageY: e.pageY },
+    });
+  };
+
+  const userPointerLeaveHandler = (): void => {
+    cancelPointerDown();
+    dispatch({
+      type: 'POINTER_LEAVE',
+      payload: { anchorEnabled: true, previousTrackPos: state.trackPos },
+    });
+  };
+
+  const userPointerUpHandler = (): void => {
+    cancelPointerDown();
+    dispatch({
+      type: 'POINTER_UP',
+      payload: { previousTrackPos: state.trackPos },
+    });
+  };
+
+  const userWheelEventHandler = (e: WheelEvent): void => {
+    dispatch({
+      type: 'WHEEL_SCROLL',
+      payload: { deltaY: e.deltaY },
+    });
+  };
+
   useEffect(() => {
-    let pointerDownTimer: NodeJS.Timeout | null = null;
+    const carousel = carouselRef.current;
 
-    const userPointerDownHandler = (e: PointerEvent): void => {
-      if (pointerDownTimer) clearTimeout(pointerDownTimer);
-
-      pointerDownTimer = setTimeout(() => {
-        dispatch({
-          type: 'POINTER_DOWN',
-          payload: {
-            anchorEnabled: true,
-            initPageX: e.pageX as number,
-            pageX: e.pageX as number,
-            initPageY: e.pageY as number,
-            pageY: e.pageY as number,
-          },
-        });
-      }, 40);
-    };
-
-    const cancelPointerDown = () => {
-      if (pointerDownTimer) {
-        clearTimeout(pointerDownTimer);
-        pointerDownTimer = null;
-      }
-    };
-
-    const userPointerMoveHandler = (e: PointerEvent): void => {
-      dispatch({
-        type: 'POINTER_MOVE',
-        payload: { anchorEnabled: false, pageX: e.pageX as number, pageY: e.pageY },
-      });
-    };
-
-    const userPointerLeaveHandler = (): void => {
-      cancelPointerDown();
-      dispatch({
-        type: 'POINTER_LEAVE',
-        payload: { anchorEnabled: true, previousTrackPos: state.trackPos },
-      });
-    };
-
-    const userPointerUpHandler = (): void => {
-      cancelPointerDown();
-      dispatch({
-        type: 'POINTER_UP',
-        payload: { previousTrackPos: state.trackPos },
-      });
-    };
-
-    const userWheelEventHandler = (e: WheelEvent): void => {
-      dispatch({
-        type: 'WHEEL_SCROLL',
-        payload: { deltaY: e.deltaY },
-      });
-    };
-
-    if (carouselRef.current && !Object.values(featureState).some((value: boolean) => value === true)) {
-      carouselRef.current.addEventListener('pointerdown', userPointerDownHandler);
-      carouselRef.current.addEventListener('pointermove', userPointerMoveHandler);
-      carouselRef.current.addEventListener('pointerleave', userPointerLeaveHandler);
-      carouselRef.current.addEventListener('pointerup', userPointerUpHandler);
-      carouselRef.current.addEventListener('wheel', userWheelEventHandler);
+    if (carousel && !Object.values(featureState).some((value: boolean) => value === true)) {
+      carousel.addEventListener('pointerdown', userPointerDownHandler);
+      carousel.addEventListener('pointermove', userPointerMoveHandler);
+      carousel.addEventListener('pointerleave', userPointerLeaveHandler);
+      carousel.addEventListener('pointerup', userPointerUpHandler);
+      carousel.addEventListener('wheel', userWheelEventHandler);
     }
 
     return () => {
-      if (carouselRef.current) {
-        carouselRef.current.removeEventListener('pointerdown', userPointerDownHandler);
-        carouselRef.current.removeEventListener('pointermove', userPointerMoveHandler);
-        carouselRef.current.removeEventListener('pointerleave', userPointerLeaveHandler);
-        carouselRef.current.removeEventListener('pointerup', userPointerUpHandler);
-        carouselRef.current.removeEventListener('wheel', userWheelEventHandler);
+      if (carousel) {
+        carousel.removeEventListener('pointerdown', userPointerDownHandler);
+        carousel.removeEventListener('pointermove', userPointerMoveHandler);
+        carousel.removeEventListener('pointerleave', userPointerLeaveHandler);
+        carousel.removeEventListener('pointerup', userPointerUpHandler);
+        carousel.removeEventListener('wheel', userWheelEventHandler);
       }
       cancelPointerDown();
     };
@@ -283,30 +285,33 @@ const ProjectCarousel = () => {
 
   /** Sync global active project index tracker and useReducer state */
   useEffect(() => {
-    if (state.activeSlideIndex !== projectSlideIndex) dispatch({ type: 'EXTERNAL_NAVIGATION' });
+    if (state.activeSlideIndex !== projectSlideIndex) {
+      dispatch({ type: 'EXTERNAL_NAVIGATION' });
+    }
   }, [projectSlideIndex]);
 
   useEffect(() => {
-    if (projectSlideIndex !== state.activeSlideIndex) setProjectSlideIndex(state.activeSlideIndex);
+    if (projectSlideIndex !== state.activeSlideIndex) {
+      setProjectSlideIndex(state.activeSlideIndex);
+    }
   }, [state.activeSlideIndex]);
 
   /** Grid transition */
   const initialRender = useRef<boolean>(true);
 
   useEffect(() => {
-    if (initialRender.current) initialRender.current = false;
+    if (initialRender.current) {
+      initialRender.current = false;
+    }
 
     if (Object.values(featureState).some((value) => value === true)) {
-      // Grid transition out animator
       const entryWithTrue = Object.entries(featureState).find(([key, value]) => value === true);
       const trueKey = entryWithTrue ? entryWithTrue[0] : null;
-      mainRef.current?.setAttribute('data-status', trueKey === 'projectDetailsActive' ? 'disabled' : 'contact');
+      mainRef.current?.setAttribute('data-status', trueKey === 'projectDetailsActive' ? 'disabled' : 'contact'); // Grid transition out animator
     } else if (!initialRender) {
-      // Grid transition in animator
-      setTimeout(() => mainRef.current?.setAttribute('data-status', 'active'), 1000);
+      setTimeout(() => mainRef.current?.setAttribute('data-status', 'active'), 1000); // Grid transition in animator
     } else {
-      // Mount animator
-      mainRef.current?.setAttribute('data-status', 'active');
+      mainRef.current?.setAttribute('data-status', 'active'); // Mount animator
     }
   }, [featureState]);
 
