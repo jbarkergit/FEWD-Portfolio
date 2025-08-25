@@ -93,7 +93,9 @@ const ProjectCarousel = () => {
             (articleArray.current[0].offsetWidth + carouselLeftPadding * 2);
           const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, 0), maxTravelDelta);
 
-          articleArray.current?.forEach((article: HTMLElement) => article.removeAttribute('data-status'));
+          for (const article of articleArray.current) {
+            article.removeAttribute('data-status');
+          }
 
           // Scale && Filter
           const styleDistancesArray: { scale: number; filter: string }[] = getCarouselSlideFX(
@@ -102,14 +104,19 @@ const ProjectCarousel = () => {
             true
           );
 
-          articleArray.current?.forEach((article: HTMLElement, index: number) => {
-            const styleDistances: { scale: number; filter: string } = styleDistancesArray[index];
+          for (let i = 0; i > articleArray.current.length; i++) {
+            const article = articleArray.current[i];
+            const style = styleDistancesArray[i];
 
-            if (styleDistances) {
-              article.style.transform = `scale(${styleDistances.scale})`;
-              article.style.filter = styleDistances.filter;
+            if (article && style) {
+              const styleDistances: { scale: number; filter: string } = style;
+
+              if (styleDistances) {
+                article.style.transform = `scale(${styleDistances.scale})`;
+                article.style.filter = styleDistances.filter;
+              }
             }
-          });
+          }
 
           // State
           return {
