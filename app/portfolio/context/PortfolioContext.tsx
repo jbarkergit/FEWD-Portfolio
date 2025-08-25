@@ -12,16 +12,16 @@ type Context = {
 const PortfolioContext = createContext<Context | undefined>(undefined);
 
 export const PortfolioProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  /** @state Active Project Slide Index Tracker */
+  // Active Project Slide Index Tracker
   const [projectSlideIndex, setProjectSlideIndex] = useState<number>(0);
 
-  /** @state Active grid position tracker */
+  // Active grid position tracker
   const [featureState, setFeatureState] = useState<Record<string, boolean>>({
     projectDetailsActive: false,
     contactFormActive: false,
   });
 
-  /** @state Carousel navigation menu */
+  // Carousel navigation menu
   const [portMobileMenu, setPortMobileMenu] = useState<boolean>(false);
 
   const contextValue = {
