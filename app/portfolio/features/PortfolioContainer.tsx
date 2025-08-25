@@ -3,7 +3,7 @@ import PortMobileMenu from '../components/navigation/mobile/PortMobileMenu';
 import ProjectHub from './projects/ProjectHub';
 import Contact from './contact/Contact';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
-import ProjectInsights from '~/portfolio/features/projects/insights/ProjectInsights';
+import ProjectInsights from '~/portfolio/features/insights/ProjectInsights';
 
 /** Component */
 export default function PortfolioContainer() {
