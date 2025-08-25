@@ -25,24 +25,8 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
   data,
 }: Props<CN>) {
   const { modalChunkSize, viewportChunkSize } = useCatalogProvider();
-  const [chunk, setChunk] = useState<(typeof data)[][]>([]);
   const carouselRef = useRef<HTMLUListElement>(null);
-
-  /**
-   * @function chunk
-   */
   const isModal: boolean = carouselName === 'media' ? false : carouselName === 'cinemaInformation' ? true : false;
-
-  // useEffect(() => {
-  //   let chunked: GenericCarouselData<T>[][] = [];
-  //   const chunkSize = isModal ? modalChunkSize : viewportChunkSize;
-
-  //   for (let i = 0; i < data.length; i += chunkSize + 1) {
-  //     chunked.push(data.slice(i, i + chunkSize + 1));
-  //   }
-
-  //   setChunk(chunked);
-  // }, []);
 
   /**
    * @function observer Virtual Scroll
