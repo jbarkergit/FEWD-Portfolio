@@ -1,5 +1,5 @@
 import { PortfolioProvider } from '~/portfolio/context/PortfolioContext';
-import PortfolioContainer from '~/portfolio/pages/PortfolioContainer';
+import PortfolioContainer from '~/portfolio/features/PortfolioContainer';
 
 export default function () {
   return (

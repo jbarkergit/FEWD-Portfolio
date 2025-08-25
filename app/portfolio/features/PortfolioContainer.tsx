@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import PortMobileMenu from '../components/navigation/mobile/PortMobileMenu';
-import ProjectHub from '../features/projects/ProjectHub';
-import Contact from '../features/contact/Contact';
+import ProjectHub from './projects/ProjectHub';
+import Contact from './contact/Contact';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
 import ProjectInsights from '~/portfolio/features/projects/insights/ProjectInsights';
 
