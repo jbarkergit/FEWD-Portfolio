@@ -116,7 +116,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setUserCollections({
       'user-collection-0': {
         header: 'Trailer Queue',
-        data: null,
+        data: [],
         display: 'flex',
       },
       'user-collection-1': {
