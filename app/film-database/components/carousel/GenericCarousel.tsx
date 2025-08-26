@@ -11,19 +11,17 @@ export type GenericCarouselMap = {
   person: TmdbResponseFlat['personCredits']['cast'] | TmdbResponseFlat['personCredits']['crew'];
 };
 
-type Props<CN extends keyof GenericCarouselMap> = {
-  carouselIndex: number;
-  carouselName: CN;
-  heading: string;
-  data: GenericCarouselMap[CN];
-};
-
 function GenericCarousel<CN extends keyof GenericCarouselMap>({
   carouselIndex,
   carouselName,
   heading,
   data,
-}: Props<CN>) {
+}: {
+  carouselIndex: number;
+  carouselName: CN;
+  heading: string;
+  data: GenericCarouselMap[CN];
+}) {
   const { modalChunkSize, viewportChunkSize } = useCatalogProvider();
   const carouselRef = useRef<HTMLUListElement>(null);
   const isModal: boolean = carouselName === 'media' ? false : carouselName === 'cinemaInformation' ? true : false;
@@ -56,7 +54,6 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
     return () => observer.disconnect();
   }, [carouselRef.current]);
 
-  // if (chunk)
   return (
     <section
       className='genericCarousel'
