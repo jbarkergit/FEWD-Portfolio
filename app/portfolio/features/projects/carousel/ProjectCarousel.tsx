@@ -43,25 +43,6 @@ const ProjectCarousel = () => {
     }
   };
 
-  /** Scale && Filter Hook */
-  const animateSlide = (): void => {
-    for (let i = 0; i < articleArray.current.length; i++) {
-      const article = articleArray.current[i];
-
-      function transformAndScale(article: HTMLElement): void {
-        article.setAttribute('data-status', 'smooth');
-
-        article.style.transform = i === state.activeSlideIndex ? `scale(${1})` : `scale(${0.8})`;
-        article.style.filter =
-          i === state.activeSlideIndex
-            ? `grayscale(0%) sepia(0%) brightness(100%)`
-            : `grayscale(85%) sepia(80%) brightness(50%)`;
-      }
-
-      if (article) setTimeout(() => transformAndScale(article), 50);
-    }
-  };
-
   /** Reducer */
   const reducer = (state: typeof initState, action: ActionType): typeof initState => {
     const carouselLeftPadding: number = parseInt(
@@ -137,8 +118,6 @@ const ProjectCarousel = () => {
             const activeSlideDistance = Math.abs(activeSlidePosition - state.trackPos);
             if (slideDistanceIteration < activeSlideDistance) state.activeSlideIndex = i;
           }
-
-          animateSlide();
 
           return {
             ...state,
@@ -280,10 +259,26 @@ const ProjectCarousel = () => {
     };
   }, [featureState]);
 
-  /** Slide Animator */
-  useEffect(() => animateSlide(), [state.activeSlideIndex]);
+  /** Carousel slide animator */
+  useEffect(() => {
+    for (let i = 0; i < articleArray.current.length; i++) {
+      const article = articleArray.current[i];
 
-  /** Sync global active project index tracker and useReducer state */
+      function transformAndScale(article: HTMLElement): void {
+        article.setAttribute('data-status', 'smooth');
+
+        article.style.transform = i === state.activeSlideIndex ? `scale(${1})` : `scale(${0.8})`;
+        article.style.filter =
+          i === state.activeSlideIndex
+            ? `grayscale(0%) sepia(0%) brightness(100%)`
+            : `grayscale(85%) sepia(80%) brightness(50%)`;
+      }
+
+      if (article) setTimeout(() => transformAndScale(article), 50);
+    }
+  }, [state.activeSlideIndex, state.pointerDown]);
+
+  /** Sync projectSlideIndex from context with useReducer state for header project navigation */
   useEffect(() => {
     if (state.activeSlideIndex !== projectSlideIndex) {
       dispatch({ type: 'EXTERNAL_NAVIGATION' });
@@ -296,7 +291,7 @@ const ProjectCarousel = () => {
     }
   }, [state.activeSlideIndex]);
 
-  /** Grid transition */
+  /** Mount animation */
   const initialRender = useRef<boolean>(true);
 
   useEffect(() => {
