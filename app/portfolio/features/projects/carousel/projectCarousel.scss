@@ -111,40 +111,27 @@
       justify-content: flex-start;
       will-change: width, transform, filter;
       transform-origin: bottom;
-      &[data-status='smooth'] {
-        transition: all 360ms ease-in-out;
-      }
-      &[data-status='disabled'] {
-        transform: scale(0.8);
-        transform-origin: bottom;
-        filter: grayscale(85%) sepia(80%) brightness(50%);
-      }
       @media (width <= 950px) {
         flex: 0 0 100svw;
       }
-      & a {
-        display: block;
-        height: 100%;
+      &:hover {
+        cursor: pointer;
+      }
+      &:active {
+        cursor: grabbing;
+      }
+      & picture {
+        display: flex;
+        align-items: flex-end;
+        height: inherit;
         max-height: inherit;
-        &:hover {
-          cursor: pointer;
-        }
-        &:active {
-          cursor: grabbing;
-        }
-        & picture {
-          display: flex;
-          align-items: flex-end;
-          height: inherit;
-          max-height: inherit;
-        }
-        & picture img {
-          display: block;
-          width: 100%;
-          height: auto;
-          object-fit: contain;
-          filter: brightness(92%);
-        }
+      }
+      & picture img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        filter: brightness(92%);
       }
     }
   }
