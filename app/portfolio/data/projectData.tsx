@@ -66,7 +66,7 @@ export const projectData = [
     key: 'ecommerce',
     url: 'ecommerce',
     technologies: {
-      application_programming_interface: ['N/A'],
+      application_programming_interface: ['N/A - Custom JSON Store'],
       ui_component_libraries: ['N/A'],
       software_development_kits: ['N/A'],
       utilities_and_services: ['N/A'],
@@ -121,7 +121,7 @@ export const projectData = [
     key: '2024 portfolio',
     url: '',
     technologies: {
-      application_programming_interface: ['N/A - Custom JSON Store'],
+      application_programming_interface: ['N/A'],
       software_development_kits: ['N/A'],
       utilities_and_services: ['Zod', 'Web3Forms'],
       tools_and_libraries: ['vite', 'react', 'react-router', 'typescript', 'sass'],
