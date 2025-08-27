@@ -65,72 +65,78 @@ const ProjectCarousel = () => {
         };
 
       case 'POINTER_MOVE':
-        if (state.pointerDown) {
-          // Calculate track position
-          const pointerTravelDistance: number = action.payload.pageX - state.initPageX;
-          const newTrackPosition: number = state.previousTrackPos + pointerTravelDistance;
-          const maxTravelDelta: number =
-            (carouselRef.current?.scrollWidth as number) * -1 +
-            (articleArray.current[0].offsetWidth + carouselLeftPadding * 2);
-          const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, 0), maxTravelDelta);
+        if (!state.pointerDown) return state;
 
-          for (const article of articleArray.current) {
-            article.removeAttribute('data-status');
-          }
+        // Calculate track position
+        const pointerTravelDistance: number = action.payload.pageX - state.initPageX;
+        const newTrackPosition: number = state.previousTrackPos + pointerTravelDistance;
 
-          // Scale && Filter
-          const styleDistancesArray: { scale: number; filter: string }[] = getCarouselSlideFX(
-            mainRef,
-            articleArray,
-            true
-          );
+        const carouselScrollWidth: number = (carouselRef.current?.scrollWidth as number) * -1;
+        const articleSample = articleArray.current[0];
+        if (!articleSample) return state;
+        const articleOffsetWidth: number = articleSample.offsetWidth + carouselLeftPadding * 2;
 
-          for (let i = 0; i < articleArray.current.length; i++) {
-            const article = articleArray.current[i];
-            const style = styleDistancesArray[i];
+        const maxTravelDelta: number = carouselScrollWidth + articleOffsetWidth;
+        const clampedTrackPosition: number = Math.max(Math.min(newTrackPosition, 0), maxTravelDelta);
 
-            if (article && style) {
-              const styleDistances: { scale: number; filter: string } = style;
+        for (const article of articleArray.current) {
+          article.removeAttribute('data-status');
+        }
 
-              if (styleDistances) {
-                article.style.transform = `scale(${styleDistances.scale})`;
-                article.style.filter = styleDistances.filter;
-              }
+        // Scale && Filter
+        const styleDistancesArray: { scale: number; filter: string }[] = getCarouselSlideFX(
+          mainRef,
+          articleArray,
+          true
+        );
+
+        for (let i = 0; i < articleArray.current.length; i++) {
+          const article = articleArray.current[i];
+          const style = styleDistancesArray[i];
+
+          if (article && style) {
+            const styleDistances: { scale: number; filter: string } = style;
+
+            if (styleDistances) {
+              article.style.transform = `scale(${styleDistances.scale})`;
+              article.style.filter = styleDistances.filter;
             }
           }
-
-          // State
-          return {
-            ...state,
-            anchorEnabled: action.payload.anchorEnabled,
-            trackPos: clampedTrackPosition,
-            trackStyle: { transform: `translateX(${clampedTrackPosition}px)` },
-          };
-        } else {
-          return state;
         }
+
+        // State
+        return {
+          ...state,
+          anchorEnabled: action.payload.anchorEnabled,
+          trackPos: clampedTrackPosition,
+          trackStyle: { transform: `translateX(${clampedTrackPosition}px)` },
+        };
 
       case 'POINTER_LEAVE':
       case 'POINTER_UP':
-        if (state.pointerDown) {
-          for (let i = 0; i < arrayOfArticlePositions.length; i++) {
-            const slideDistanceIteration = Math.abs(arrayOfArticlePositions[i] - state.trackPos);
-            const activeSlideDistance = Math.abs(activeSlidePosition - state.trackPos);
-            if (slideDistanceIteration < activeSlideDistance) state.activeSlideIndex = i;
-          }
+        if (!state.pointerDown) return state;
 
-          return {
-            ...state,
-            pointerDown: false,
-            previousTrackPos: arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding,
-            trackPos: arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding,
-            trackStyle: {
-              transform: `translateX(${arrayOfArticlePositions[state.activeSlideIndex] + carouselLeftPadding}px)`,
-            },
-          };
-        } else {
-          return state;
+        for (let i = 0; i < arrayOfArticlePositions.length; i++) {
+          const iteration = arrayOfArticlePositions[i];
+          if (!iteration) return state;
+
+          const slideDistanceIteration = Math.abs(iteration - state.trackPos);
+          const activeSlideDistance = Math.abs(activeSlidePosition - state.trackPos);
+          if (slideDistanceIteration < activeSlideDistance) state.activeSlideIndex = i;
         }
+
+        const activeArticlePosition = arrayOfArticlePositions[state.activeSlideIndex];
+        if (!activeArticlePosition) return state;
+
+        return {
+          ...state,
+          pointerDown: false,
+          previousTrackPos: activeArticlePosition + carouselLeftPadding,
+          trackPos: activeArticlePosition + carouselLeftPadding,
+          trackStyle: {
+            transform: `translateX(${activeArticlePosition + carouselLeftPadding}px)`,
+          },
+        };
 
       case 'WHEEL_SCROLL':
         setTimeout(() => (state.wheelEventActive = false), 360);
@@ -140,12 +146,17 @@ const ProjectCarousel = () => {
           const scrollYDirection = { verticalUp: -1, veritcalDown: 1 };
 
           let nextClosestIndex: number = state.activeSlideIndex;
-          if (scrollWheelDirection === scrollYDirection.verticalUp)
+          if (scrollWheelDirection === scrollYDirection.verticalUp) {
             nextClosestIndex = Math.min(state.activeSlideIndex + 1, arrayOfArticlePositions.length - 1);
-          if (scrollWheelDirection === scrollYDirection.veritcalDown)
-            nextClosestIndex = Math.max(state.activeSlideIndex - 1, 0);
+          }
 
-          const closestChildPos: number = arrayOfArticlePositions[nextClosestIndex] + carouselLeftPadding;
+          if (scrollWheelDirection === scrollYDirection.veritcalDown) {
+            nextClosestIndex = Math.max(state.activeSlideIndex - 1, 0);
+          }
+
+          const closestChild = arrayOfArticlePositions[nextClosestIndex];
+          if (!closestChild) return state;
+          const closestChildPos: number = closestChild + carouselLeftPadding;
 
           return {
             ...state,
@@ -199,18 +210,18 @@ const ProjectCarousel = () => {
     }, 40);
   };
 
-  const cancelPointerDown = () => {
-    if (pointerDownTimer) {
-      clearTimeout(pointerDownTimer);
-      pointerDownTimer = null;
-    }
-  };
-
   const userPointerMoveHandler = (e: PointerEvent): void => {
     dispatch({
       type: 'POINTER_MOVE',
       payload: { anchorEnabled: false, pageX: e.pageX as number, pageY: e.pageY },
     });
+  };
+
+  const cancelPointerDown = () => {
+    if (pointerDownTimer) {
+      clearTimeout(pointerDownTimer);
+      pointerDownTimer = null;
+    }
   };
 
   const userPointerLeaveHandler = (): void => {
