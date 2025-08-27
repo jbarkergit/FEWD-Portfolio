@@ -430,11 +430,14 @@ const ProjectCarousel = () => {
           <Link
             className='mainContent__track__project'
             ref={articleRef}
-            to={state.anchorEnabled ? project.url : '/'}
+            // To prevent navigation dupes due to use of the map method we have to force the string as an absolute as opposed to relative by utilizing a string method
+            to={`/${project.url.toLowerCase()}`}
             aria-label={`${project.key} Live Demo`}
             key={project.key}
-            onDragStart={(e) => e.preventDefault()}
-            onDrag={(e) => e.stopPropagation()}>
+            onClick={(e) => {
+              if (!state.anchorEnabled) e.preventDefault();
+            }}
+            onDragStart={(e) => e.preventDefault()}>
             <picture>
               <img
                 src={project.imgSrc}
