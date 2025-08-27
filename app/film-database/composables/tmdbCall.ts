@@ -121,8 +121,6 @@ type CallReturn<T> = T extends any[] // If T is an array of arguments
     }
   : { key: ArgumentToKey<T>; response: DataReturn<ArgumentToKey<T>> };
 
-export type TmdbState<T extends TmdbEndpointKeys> = CallReturn<ArgumentOptions<T>>;
-
 export const tmdbCall = async <T extends Arguments | Arguments[]>(args: T): Promise<CallReturn<T>> => {
   const parameters = (Array.isArray(args) ? args : [args]) as Arguments[];
 
