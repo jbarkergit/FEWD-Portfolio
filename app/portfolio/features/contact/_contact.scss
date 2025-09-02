@@ -16,6 +16,7 @@
     flex-direction: column;
     gap: 64px;
     height: 80%;
+    min-width: 65%;
     aspect-ratio: 4/3;
     padding: 8rem s.$box-model-viewport-x 8rem s.$box-model-viewport-x;
     background: radial-gradient(
@@ -25,9 +26,14 @@
       hsl(200, 40%, 20%) 100%
     );
     box-shadow: 0px -20px 15px -3px hsl(240, 4%, 8%);
+    overflow-y: scroll;
+    scrollbar-width: none;
     @media (width <= 1480px) {
       width: 100%;
-      padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x s.$box-model-viewport-x s.$box-model-viewport-x;
+      height: fit-content;
+      aspect-ratio: unset;
+      padding: 0 s.$box-model-viewport-x calc(s.$box-model-viewport-x * 2) s.$box-model-viewport-x;
+      background: none;
     }
     & article {
       & h2,
@@ -126,6 +132,9 @@
     }
     &--return {
       width: fit-content;
+      @media (width <= 1480px) {
+        display: none;
+      }
     }
   }
 }
