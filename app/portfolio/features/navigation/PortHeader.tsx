@@ -1,14 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
-import { projectData } from '../../../data/projectData';
+import { projectData } from '../../data/projectData';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
 
-type Props = {
-  usePortMobileMenu: () => void;
-};
-
 /** Component */
-const PortHeader = ({ usePortMobileMenu }: Props) => {
+const PortHeader = () => {
   const { projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState } = usePortfolioContext();
 
   const initialRender = useRef<boolean>(true),
@@ -125,7 +121,7 @@ const PortHeader = ({ usePortMobileMenu }: Props) => {
           ref={carouselNavSectionRight}>
           <h2>External Links</h2>
           <nav
-            className='carouselNav__section__right__nav carouselNavHeaderRight'
+            className='carouselNav__section__right__nav'
             aria-labelledby='external-links'
             ref={carouselNavSectionRightNav}>
             <Link
@@ -168,26 +164,6 @@ const PortHeader = ({ usePortMobileMenu }: Props) => {
               ref={animatorLine}
             />
           </div>
-        </div>
-      </section>
-
-      <section className='carouselNav__section'>
-        <div className='carouselNav__section__mobile'>
-          <button
-            className='carouselNav__section__mobile--menu'
-            aria-label='Open link menu'
-            onPointerUp={() => usePortMobileMenu()}>
-            Menu
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='1.5em'
-              height='1.5em'
-              viewBox='0 0 24 24'>
-              <path
-                fill='#ffffff'
-                d='m12 15l-5-5h10z'></path>
-            </svg>
-          </button>
         </div>
       </section>
     </header>

@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
-import PortMobileMenu from '../components/navigation/mobile/PortMobileMenu';
+import { useEffect, useRef } from 'react';
 import ProjectHub from './projects/ProjectHub';
 import Contact from './contact/Contact';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
@@ -7,11 +6,10 @@ import ProjectInsights from '~/portfolio/features/insights/ProjectInsights';
 
 /** Component */
 export default function PortfolioContainer() {
-  const { featureState, portMobileMenu, setPortMobileMenu } = usePortfolioContext();
+  const { featureState } = usePortfolioContext();
 
   /** @references */
   const portfolioRef = useRef<HTMLDivElement>(null);
-  const portMobileMenuRefReceiver = useRef<HTMLElement | null>(null);
 
   /**
    * @function useFeatureScroll
@@ -68,28 +66,14 @@ export default function PortfolioContainer() {
     return () => window.removeEventListener('resize', handleResize);
   }, [featureState]);
 
-  /**
-   * @function usePortMobileMenu
-   * @description Handles attributes for menu
-   */
-  const usePortMobileMenu = useCallback((): void => {
-    if (!portMobileMenuRefReceiver.current) return;
-    portMobileMenuRefReceiver.current.setAttribute('data-status', !portMobileMenu ? 'active' : 'false');
-    setPortMobileMenu((state) => !state);
-  }, []);
-
   /** Portfolio */
   return (
     <div
       className='portfolio'
       ref={portfolioRef}>
-      <ProjectHub usePortMobileMenu={usePortMobileMenu} />
+      <ProjectHub />
       <ProjectInsights />
       <Contact />
-      <PortMobileMenu
-        ref={portMobileMenuRefReceiver}
-        usePortMobileMenu={usePortMobileMenu}
-      />
     </div>
   );
 }

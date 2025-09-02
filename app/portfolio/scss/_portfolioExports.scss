@@ -8,7 +8,4 @@
 @forward '/app/portfolio/features/projects/carousel/projectCarousel.scss';
 @forward '/app/portfolio/features/insights/projectInsights';
 @forward '/app/portfolio/features/contact/contact';
-
-// Components
-@forward '/app/portfolio/components/navigation/desktop/portNavigation';
-@forward '/app/portfolio/components/navigation/mobile/portMobileMenu';
+@forward '/app/portfolio/features/navigation/portNavigation';

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
-import { projectData } from '../../../data/projectData';
+import { projectData } from '../../data/projectData';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
 
 const PortFooter = () => {
