@@ -93,6 +93,7 @@
     width: max-content;
     height: 100%;
     padding: 0 s.$box-model-viewport-x 0 s.$box-model-viewport-x;
+    touch-action: none;
     &:hover {
       cursor: grab;
     }
