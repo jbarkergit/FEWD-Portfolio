@@ -48,8 +48,7 @@
     & form {
       display: flex;
       flex-direction: column;
-      gap: calc(s.$portfolio-gap * 2);
-      height: 100%;
+      margin-top: 14px;
       & ul {
         display: flex;
         flex-wrap: wrap;
@@ -69,10 +68,16 @@
           &:has(input:not(:focus):not(:placeholder-shown)) label {
             // reflects height of input: height (font-size) + padding-bottom
             transform: translateY(calc((1.125rem + 6px + 6px) * -1));
-            transition: transform ease-in-out 65ms;
+            opacity: 0;
+            transition:
+              transform ease-in-out 65ms,
+              opacity ease-in-out 65ms;
           }
           &:has(textarea) label {
             position: relative;
+          }
+          &:last-child {
+            margin-top: -14px;
           }
           & label {
             position: absolute;
@@ -80,6 +85,7 @@
             left: 6px;
             transform: translateY(0px);
             pointer-events: none;
+            text-transform: capitalize;
           }
           & input,
           & textarea {
@@ -91,6 +97,7 @@
             border-bottom-right-radius: 3px;
             // border-bottom-left-radius: 3px;
             white-space: nowrap;
+            text-transform: capitalize;
           }
           & input:not([type='textarea']) {
             // Matches font-size + padding
@@ -109,6 +116,7 @@
       & button {
         width: 50%;
         padding: 0.5rem 0rem;
+        margin-top: 3.2rem;
         border-radius: 6px;
         background-color: hsl(165, 60%, 45%);
         box-shadow: 0px 3px 6px rgb(0 0 0);
