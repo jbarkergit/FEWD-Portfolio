@@ -3,8 +3,9 @@
 
 .contact {
   position: relative;
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   width: 100svw;
   height: 100svh;
   @media (width <= 1480px) {
@@ -13,14 +14,22 @@
   &__container {
     display: flex;
     flex-direction: column;
-    width: 65%;
+    gap: 64px;
+    height: 80%;
+    aspect-ratio: 4/3;
     padding: 8rem s.$box-model-viewport-x 8rem s.$box-model-viewport-x;
+    background: radial-gradient(
+      circle at top left,
+      hsl(240, 4%, 10%) 0%,
+      hsl(250, 20%, 15%) 40%,
+      hsl(200, 40%, 20%) 100%
+    );
+    box-shadow: 0px -20px 15px -3px hsl(240, 4%, 8%);
     @media (width <= 1480px) {
       width: 100%;
       padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x s.$box-model-viewport-x s.$box-model-viewport-x;
     }
     & article {
-      padding-bottom: calc(s.$portfolio-gap * 3);
       & h2,
       p {
         width: clamp(20ch, 100%, 65ch);
@@ -39,7 +48,6 @@
     & form {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       gap: calc(s.$portfolio-gap * 2);
       height: 100%;
       & ul {
@@ -68,7 +76,7 @@
           }
           & label {
             position: absolute;
-            top: -6px;
+            top: -8px;
             left: 6px;
             transform: translateY(0px);
             pointer-events: none;
@@ -110,7 +118,6 @@
     }
     &--return {
       width: fit-content;
-      margin-top: 12px;
     }
   }
 }
