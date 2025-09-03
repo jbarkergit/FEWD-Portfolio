@@ -71,7 +71,8 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
       <div className='genericCarousel__wrapper'>
         <ul
           className='genericCarousel__wrapper__ul'
-          ref={carouselRef}>
+          ref={carouselRef}
+          data-modal={carouselName}>
           {data.length
             ? data.flat().map((entry, posterIndex) => (
                 <GenericCarouselPoster
