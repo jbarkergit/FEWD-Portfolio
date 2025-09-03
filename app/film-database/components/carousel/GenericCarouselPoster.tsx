@@ -144,7 +144,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
           aria-label={`Read more about ${cinemaEntry.name}`}
           onPointerUp={() => setIsModal('person')}>
           <picture
-            className='fdCineInfoCarousel__wrapper__ul__li__picture'
+            className='genericCarousel__wrapper__ul__li__picture'
             data-missing={cinemaEntry.profile_path ? 'false' : 'true'}>
             {cinemaEntry.profile_path ? (
               <img
@@ -160,7 +160,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
               />
             )}
           </picture>
-          <div className='fdCineInfoCarousel__wrapper__ul__li__member'>
+          <div className='genericCarousel__wrapper__ul__li__member'>
             <span>{cinemaEntry.name}</span>
             {/* @ts-ignore */}
             <span>{cinemaEntry.character}</span>

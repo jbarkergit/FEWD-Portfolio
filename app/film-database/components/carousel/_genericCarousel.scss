@@ -36,8 +36,6 @@
         position: relative;
         width: var(--fd-carousel-node-width);
         height: var(--fd-carousel-node-height);
-        border-radius: var(--fd-border-radius);
-        overflow: clip;
         cursor: pointer;
         &:first-of-type {
           margin-left: calc(var(--fd-padding-generic) / 1.5);
@@ -60,11 +58,44 @@
         &:not(:hover) .genericCarousel__wrapper__ul__li__collections[data-active='true'] {
           opacity: 0;
         }
+        & picture {
+          border-radius: var(--fd-border-radius);
+          overflow: clip;
+        }
         & picture,
         & picture img {
           display: block;
           width: inherit;
+          height: 100%;
+        }
+        & button {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          gap: 14px;
+          width: inherit;
           height: inherit;
+          & picture {
+            flex: 1 1 auto;
+            // Button Gap, Div Line Heights Padding, Large Font, Medium Font,
+            max-height: calc(100% - (14px + 14px + 1.5rem + 1.125rem));
+          }
+          & div {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            & span {
+              text-transform: capitalize;
+            }
+            & span:nth-of-type(1) {
+              @include m.fdFontL;
+              white-space: wrap;
+            }
+            & span:nth-of-type(2) {
+              @include m.fdFontM;
+            }
+          }
         }
         &__overlay {
           position: absolute;
@@ -136,7 +167,6 @@
               padding: calc(var(--fd-gap) / 2);
               @include m.fdFontS;
               color: var(--fd-font-color-primary);
-
               white-space: nowrap;
             }
           }
