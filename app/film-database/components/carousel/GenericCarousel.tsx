@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import GenericCarouselNavigation from '~/film-database/components/carousel/GenericCarouselNavigation';
 import type { TmdbMovieProvider, TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import GenericCarouselPoster from '~/film-database/components/carousel/GenericCarouselPoster';
@@ -24,7 +24,14 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
 }) {
   const { modalChunkSize, viewportChunkSize } = useCatalogProvider();
   const carouselRef = useRef<HTMLUListElement>(null);
-  const isModal: boolean = carouselName === 'media' ? false : carouselName === 'cinemaInformation' ? true : false;
+  const isModal: boolean =
+    carouselName === 'media'
+      ? false
+      : carouselName === 'cinemaInformation'
+        ? true
+        : carouselName === 'person'
+          ? true
+          : false;
 
   /**
    * @function observer Virtual Scroll
