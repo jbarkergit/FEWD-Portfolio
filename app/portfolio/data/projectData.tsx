@@ -59,7 +59,7 @@ export const projectData = [
         </p>
       </>
     ),
-    imgSrc: '/app/portfolio/assets/carousel-posters/film-database-screenshot.webp',
+    imgSrc: '/app/portfolio/assets/carousel-posters/film-database-screenshot.png',
     imgAlt: 'Film Database Development Project',
   },
   {

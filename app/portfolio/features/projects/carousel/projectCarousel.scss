@@ -126,12 +126,14 @@
         align-items: flex-end;
         height: inherit;
         max-height: inherit;
+        overflow: clip;
       }
       & picture img {
         display: block;
         width: 100%;
         height: auto;
         object-fit: contain;
+        transform: scale(1.01);
         filter: brightness(92%);
       }
     }
