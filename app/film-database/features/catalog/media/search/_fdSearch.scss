@@ -79,6 +79,7 @@
       width: var(--fd-carousel-node-width);
       height: var(--fd-carousel-node-height);
       border-radius: var(--fd-border-radius);
+      background-color: var(--fd-bc-offset);
       overflow: clip;
       scroll-snap-align: center;
       &__article {
