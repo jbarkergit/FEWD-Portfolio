@@ -47,14 +47,17 @@ const IFrameControllerPlayPause = ({
   }, [playState]);
 
   // Pause video when modal opens
-  const { isMovieModal } = useCatalogProvider();
+  const { isModal } = useCatalogProvider();
 
   useEffect(() => {
-    player.pauseVideo();
-  }, [isMovieModal]);
+    if (isModal) player.pauseVideo();
+  }, [isModal]);
 
   return (
-    <button className='fdiFrame__controller__controls__button' aria-label={playState === 'playing' ? 'Pause video' : 'Play video'} onClick={() => alterPlayState()}>
+    <button
+      className='fdiFrame__controller__controls__button'
+      aria-label={playState === 'playing' ? 'Pause video' : 'Play video'}
+      onClick={() => alterPlayState()}>
       {playStateSymbolComponent}
     </button>
   );
