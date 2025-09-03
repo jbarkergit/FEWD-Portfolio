@@ -59,7 +59,7 @@ export const projectData = [
         </p>
       </>
     ),
-    imgSrc: '/app/portfolio/assets/carousel-posters/film-database-screenshot.png',
+    imgSrc: '/app/portfolio/assets/projects/webp/filmDatabase-screenshot.webp',
     imgAlt: 'Film Database Development Project',
   },
   {
@@ -114,7 +114,7 @@ export const projectData = [
         </p>
       </>
     ),
-    imgSrc: '/app/portfolio/assets/carousel-posters/ecommerce-screenshot.webp',
+    imgSrc: '/app/portfolio/assets/projects/webp/ecommerce-screenshot.webp',
     imgAlt: 'Ecommerce Web Development Project',
   },
   {
@@ -158,7 +158,7 @@ export const projectData = [
         </p>
       </>
     ),
-    imgSrc: '/app/portfolio/assets/carousel-posters/portfolio-screenshot.webp',
+    imgSrc: '/app/portfolio/assets/projects/webp/portfolio-screenshot.webp',
     imgAlt: 'Portfolio Project Hub',
   },
 ];
