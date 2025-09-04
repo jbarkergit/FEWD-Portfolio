@@ -2,10 +2,20 @@
 @use '/app/film-database/scss/fdMixins' as m;
 
 .fdPerson {
+  position: relative;
   display: flex;
   gap: calc(var(--fd-gap) * 2);
   padding: calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 4)
     calc(var(--fd-padding-generic) / 1.5);
+  min-height: 100%;
+  & svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%);
+    width: 2.6em;
+    aspect-ratio: 1/1;
+  }
   &__section {
     display: flex;
     flex-direction: column;
