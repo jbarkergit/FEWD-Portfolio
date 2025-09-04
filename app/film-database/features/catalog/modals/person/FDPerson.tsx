@@ -9,10 +9,45 @@ const FDPerson = () => {
 
   const [person, setPerson] = useState<{
     details: TmdbResponseFlat['personDetails'] | undefined;
-    credits: TmdbResponseFlat['credits'] | undefined;
+    credits: TmdbResponseFlat['personCredits'] | undefined;
   }>({ details: undefined, credits: undefined });
 
   const { details, credits } = person;
+
+  const [castCreditsGrouped, setCastCreditsGrouped] = useState<
+    {
+      year: string;
+      films: TmdbResponseFlat['personCredits']['cast'] | undefined;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    if (!credits) return;
+
+    type Cast = TmdbResponseFlat['personCredits']['cast'][number];
+
+    // Flatten if nested
+    const allCast: Cast[] = Array.isArray(credits.cast[0]) ? credits.cast.flat(1) : credits.cast;
+
+    // Filter out TV and missing release dates
+    const filteredCast = allCast.filter((film) => film.media_type !== 'tv' && film.release_date);
+
+    // Group by year
+    const grouped: Record<string, Cast[]> = {};
+
+    for (const i of filteredCast) {
+      const year = new Date(i.release_date!).getFullYear().toString();
+      if (!grouped[year]) grouped[year] = [];
+      grouped[year].push(i);
+    }
+
+    // Convert grouped to an to array of { year, films } sorted by year
+    const castCreditsGroupedByYear = Object.keys(grouped)
+      .sort((a, b) => Number(b) - Number(a))
+      .map((year) => ({ year, films: grouped[year] }));
+
+    setCastCreditsGrouped(castCreditsGroupedByYear);
+  }, [credits]);
 
   const fetchPerson = async () => {
     if (personRef.current) {
@@ -29,7 +64,7 @@ const FDPerson = () => {
   if (details && credits)
     return (
       <article className='fdPerson'>
-        <section className='fdPerson__section'>
+        <div className='fdPerson__section'>
           <picture data-missing={details.profile_path ? 'false' : 'true'}>
             {details.profile_path ? (
               <img
@@ -45,7 +80,7 @@ const FDPerson = () => {
               />
             )}
           </picture>
-          <ul className='fdPerson__section__general'>
+          <ul>
             <li>
               <h2>{details.name}</h2>
             </li>
@@ -82,27 +117,46 @@ const FDPerson = () => {
               ))}
             </li>
           </ul>
-        </section>
-        <section className='fdPerson__section'>
+        </div>
+
+        <div className='fdPerson__section'>
           <div className='fdPerson__section__bio'>
             <span>Biography</span>
             <span>{details.biography}</span>
           </div>
-          <div className='fdPerson__section__carousels'>
+
+          <div className='fdPerson__section__knownFor'>
             <GenericCarousel
               carouselIndex={1}
-              carouselName={'person'}
+              carouselName={'media'}
               heading={'Movies'}
               data={credits.cast}
             />
-            <GenericCarousel
-              carouselIndex={2}
-              carouselName={'person'}
-              heading={'Shows'}
-              data={credits.crew}
-            />
           </div>
-        </section>
+
+          <table className='fdPerson__table'>
+            <tbody className='fdPerson__table__tbody'>
+              {castCreditsGrouped.map((group, index) => (
+                <tr
+                  className='fdPerson__table__tbody__tr'
+                  key={`person-casted-group-${index}`}>
+                  <td className='fdPerson__table__tbody__tr__td'>
+                    <table className='fdPerson__table__tbody__tr__td__table'>
+                      <tbody className='fdPerson__table__tbody__tr__td__table__tbody'>
+                        {group.films?.map((film) => (
+                          <tr key={`person-casted-group-${index}-movieId-${film.id}`}>
+                            <td>{group.year}</td>
+                            <td>{film.title}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </article>
     );
 };

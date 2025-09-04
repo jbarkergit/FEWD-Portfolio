@@ -55,6 +55,27 @@ type CreditsProvider = {
   credit_id: string;
 };
 
+type PersonCreditsProvider = {
+  adult: boolean;
+  backdrop_path: string;
+  character: string;
+  credit_id: string;
+  genre_ids: number[];
+  id: number;
+  media_type: string;
+  order: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
+
 export type TmdbResponse = {
   never: {
     now_playing: {
@@ -193,15 +214,8 @@ export type TmdbResponse = {
     };
     personCredits: {
       id: number;
-      cast: (CreditsProvider & {
-        cast_id: number;
-        character: string;
-        order: number;
-      })[];
-      crew: (CreditsProvider & {
-        department: string;
-        job: string;
-      })[];
+      cast: PersonCreditsProvider[];
+      crew: PersonCreditsProvider[];
     };
   };
   string: {

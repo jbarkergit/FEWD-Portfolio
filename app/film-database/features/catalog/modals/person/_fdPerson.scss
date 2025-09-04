@@ -3,49 +3,74 @@
 
 .fdPerson {
   display: flex;
+  gap: calc(var(--fd-gap) * 2);
   padding: calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5) calc(var(--fd-padding-generic) / 4)
     calc(var(--fd-padding-generic) / 1.5);
   &__section {
-    & picture {
-      position: relative;
-      display: block;
-      width: var(--fd-collection-node-width);
-      height: var(--fd-collection-node-height);
-      border-radius: var(--fd-border-radius);
-      overflow: clip;
-      &[data-missing='true'] {
-        align-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--fd-gap) * 2);
+    overflow-x: clip;
+    &:nth-of-type(1) {
+      flex: 1 1 var(--fd-collection-node-width);
+      & picture {
+        position: relative;
+        display: block;
+        width: var(--fd-collection-node-width);
+        height: var(--fd-collection-node-height);
+        border-radius: var(--fd-border-radius);
+        overflow: clip;
+        &[data-missing='true'] {
+          align-content: center;
+          & img {
+            height: auto;
+          }
+        }
         & img {
-          height: auto;
+          width: inherit;
+          height: inherit;
+          transition: transform ease-in-out 250ms;
+          will-change: transform;
         }
       }
-      & img {
-        width: inherit;
-        height: inherit;
-        transition: transform ease-in-out 250ms;
-        will-change: transform;
+      & ul {
+        display: flex;
+        gap: calc(var(--fd-gap) / 2);
+        flex-direction: column;
+        & li {
+          display: flex;
+          flex-direction: column;
+          & span:nth-of-type(1) {
+            @include m.fdFontM;
+          }
+          & span:nth-of-type(2) {
+            @include m.fdFontS;
+          }
+        }
       }
     }
-    &__general {
-      display: flex;
-      flex-direction: column;
-      & li {
+    &:nth-of-type(2) {
+      flex: 1 0 calc(100% - var(--fd-collection-node-width) - (var(--fd-gap) * 2));
+      & div:nth-of-type(1) {
         display: flex;
         flex-direction: column;
         & span:nth-of-type(1) {
-          @include m.fdFontM;
+          @include m.fdFontL;
         }
         & span:nth-of-type(2) {
-          @include m.fdFontS;
+          @include m.fdFontM;
+          display: -webkit-box;
+          line-clamp: 4;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+          overflow: clip;
+          max-width: 57ch;
+          @include m.fdFontM;
+          text-shadow: var(--fd-font-shadow);
         }
       }
-    }
-  }
-  &__section {
-    &__bio {
-    }
-    &__carousels .fdCineInfoCarousel__wrapper {
-      width: inherit;
+      & div:nth-of-type(2) {
+      }
     }
   }
 }
