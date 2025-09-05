@@ -17,23 +17,26 @@ const IFrameController = ({
   playState: 'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined;
 }) => {
   const [playerVolume, setPlayerVolume] = useState<number>(0);
-  const alignIFrameVolume = () => player.setVolume(playerVolume);
 
   useEffect(() => {
     if (playerVolume > 0) player.unMute();
-    alignIFrameVolume();
+    player.setVolume(playerVolume);
   }, [playerVolume]);
 
   return (
     <div className='fdiFrame__controller'>
       <IFrameControllerSeeker player={player} />
       <div className='fdiFrame__controller__controls'>
-        <IFrameControllerPlayPause player={player} playState={playState} />
-        <IFrameControllerVolumeIndicator player={player} playerVolume={playerVolume} />
+        <IFrameControllerPlayPause
+          player={player}
+          playState={playState}
+        />
+        <IFrameControllerVolumeIndicator
+          player={player}
+          playerVolume={playerVolume}
+        />
         <IFrameControllerVolumeSlider setPlayerVolume={setPlayerVolume} />
-        <IFrameControllerTimeStamp player={player} playState={playState} />
-        {/* (depreciated) */}
-        {/* <IFrameControllerPlayback player={player} qualityState={qualityState} /> */}
+        <IFrameControllerTimeStamp player={player} />
       </div>
     </div>
   );

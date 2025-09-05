@@ -6,8 +6,9 @@ import type { YouTubePlayer } from 'react-youtube';
 const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer }) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [dragPos, setDragPos] = useState<number>(0);
-  useEffect(() => setDragPos(0), [player]);
   const [time, setTime] = useState<number>(0);
+
+  useEffect(() => setDragPos(0), [player]);
 
   const seekerRef = useRef<HTMLButtonElement>(null);
   const sliderRef = useRef<HTMLSpanElement>(null);
@@ -72,7 +73,11 @@ const IFrameControllerSeeker = ({ player }: { player: YouTubePlayer }) => {
       onPointerMove={(e: React.PointerEvent<HTMLButtonElement>) => useSlider(e)}
       onDragStart={(e) => e.preventDefault()}>
       <span className='fdiFrame__controller__seeker--range' />
-      <span className='fdiFrame__controller__seeker--slider' ref={sliderRef} style={{ width: `${dragPos}px` }} />
+      <span
+        className='fdiFrame__controller__seeker--slider'
+        ref={sliderRef}
+        style={{ width: `${dragPos}px` }}
+      />
     </button>
   );
 };

@@ -17,17 +17,23 @@ const IFrameControllerPlayback = ({
       }[]
     | undefined;
 }) => {
-  /** Modal */
-  const menuRef = useRef<HTMLUListElement>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const setModal = (arg: string) => menuRef.current?.setAttribute('data-modal', arg);
+
+  const menuRef = useRef<HTMLUListElement>(null);
+  const playbackCogRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    const setModal = (arg: string) => menuRef.current?.setAttribute('data-modal', arg);
     isModalOpen ? setModal('open') : setModal('closed');
   }, [isModalOpen]);
 
-  /** Modal exterior clicks */
-  const playbackCogRef = useRef<HTMLButtonElement>(null);
+  /** Handle exterior clicks */
+  const mountEventListeners = () => {
+    window.addEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
+  };
+  const unmountEventListeners = () => {
+    window.removeEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
+  };
 
   const handleExteriorModalClick = (target: EventTarget | null) => {
     if (
@@ -39,11 +45,6 @@ const IFrameControllerPlayback = ({
       unmountEventListeners();
     }
   };
-
-  const mountEventListeners = () =>
-    window.addEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
-  const unmountEventListeners = () =>
-    window.removeEventListener('pointerup', (event) => handleExteriorModalClick(event.target));
 
   return (
     <div className='fdiFrame__controller__controls__playback'>

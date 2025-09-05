@@ -13,13 +13,11 @@ const IFrameControllerPlayPause = ({
   player: YouTubePlayer;
   playState: 'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined;
 }) => {
-  const alterPlayState = async () => {
-    playState === 'playing' ? player.pauseVideo() : player.playVideo();
-  };
-
+  const { isModal } = useCatalogProvider();
   const [playStateSymbolComponent, setPlayStateSymbolComponent] = useState<JSX.Element>(<SvgSpinnersRingResize />);
 
-  const reflectPlayerState = async (): Promise<void> => {
+  // Reflect player state
+  useEffect(() => {
     switch (playState) {
       case 'buffering':
       case 'cued':
@@ -40,15 +38,11 @@ const IFrameControllerPlayPause = ({
         setPlayStateSymbolComponent(<SvgSpinnersRingResize />);
         break;
     }
-  };
-
-  useEffect(() => {
-    reflectPlayerState();
   }, [playState]);
 
-  // Pause video when modal opens
-  const { isModal } = useCatalogProvider();
+  const alterPlayState = async () => (playState === 'playing' ? player.pauseVideo() : player.playVideo());
 
+  // Pause video when modal opens
   useEffect(() => {
     if (isModal) player.pauseVideo();
   }, [isModal]);

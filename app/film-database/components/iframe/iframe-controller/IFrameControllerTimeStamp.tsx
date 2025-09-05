@@ -3,20 +3,17 @@ import { useState, useEffect } from 'react';
 // Lib
 import type { YouTubePlayer } from 'react-youtube';
 
-const IFrameControllerTimeStamp = ({
-  player,
-  playState,
-}: {
-  player: YouTubePlayer;
-  playState: 'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined;
-}) => {
-  const [timeStamp, setTimeStamp] = useState<{ current: string; duration: string }>({ current: '00:00', duration: '00:00' });
+const formatTime = (time: number): string => {
+  const minutes: number = Math.floor(time / 60);
+  const seconds: number = Math.floor(time % 60);
+  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+};
 
-  const formatTime = (time: number): string => {
-    const minutes: number = Math.floor(time / 60);
-    const seconds: number = Math.floor(time % 60);
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  };
+const IFrameControllerTimeStamp = ({ player }: { player: YouTubePlayer }) => {
+  const [timeStamp, setTimeStamp] = useState<{ current: string; duration: string }>({
+    current: '00:00',
+    duration: '00:00',
+  });
 
   const updatePlayerTimeStamp = async () => {
     const currentTime: number = await player.getCurrentTime();
@@ -32,12 +29,18 @@ const IFrameControllerTimeStamp = ({
   }, [player]);
 
   return (
-    <div className='fdiFrame__controller__controls__timestamp' aria-label='Video timestamp information'>
-      <div className='fdiFrame__controller__controls__timestamp--current' aria-label={`Current playback time ${timeStamp.current}`}>
+    <div
+      className='fdiFrame__controller__controls__timestamp'
+      aria-label='Video timestamp information'>
+      <div
+        className='fdiFrame__controller__controls__timestamp--current'
+        aria-label={`Current playback time ${timeStamp.current}`}>
         {timeStamp.current}
       </div>
       <div className='fdiFrame__controller__controls__timestamp--separator'> / </div>
-      <div className='fdiFrame__controller__controls__timestamp--duration' aria-label={`Video duration ${timeStamp.duration}`}>
+      <div
+        className='fdiFrame__controller__controls__timestamp--duration'
+        aria-label={`Video duration ${timeStamp.duration}`}>
         {timeStamp.duration}
       </div>
     </div>

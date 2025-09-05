@@ -3,13 +3,18 @@ import { useEffect, useState } from 'react';
 // Lib
 import type { YouTubePlayer } from 'react-youtube';
 // Assets
-import { MaterialSymbolsVolumeOff, MaterialSymbolsVolumeDown, MaterialSymbolsVolumeUp } from '../../../assets/svg/icons';
+import {
+  MaterialSymbolsVolumeOff,
+  MaterialSymbolsVolumeDown,
+  MaterialSymbolsVolumeUp,
+} from '../../../assets/svg/icons';
 
 const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: YouTubePlayer; playerVolume: number }) => {
   const [symbolComponent, setSymbolComponent] = useState(<MaterialSymbolsVolumeOff />);
   const [prevSymbolComponent, setPrevSymbolComponent] = useState(<MaterialSymbolsVolumeOff />);
 
-  const handleVolumeIndicator = () => {
+  // Handle volume indicator
+  useEffect(() => {
     switch (true) {
       case playerVolume === 0:
         setSymbolComponent(<MaterialSymbolsVolumeOff />);
@@ -27,10 +32,6 @@ const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: You
         setSymbolComponent(<MaterialSymbolsVolumeOff />);
         break;
     }
-  };
-
-  useEffect(() => {
-    handleVolumeIndicator();
   }, [playerVolume]);
 
   const alterMuteState = async () => {
@@ -47,7 +48,10 @@ const IFrameControllerVolumeIndicator = ({ player, playerVolume }: { player: You
   };
 
   return (
-    <button className='fdiFrame__controller__controls__button' aria-label={playerVolume === 0 ? 'Unmute video' : 'Mute video'} onClick={() => alterMuteState()}>
+    <button
+      className='fdiFrame__controller__controls__button'
+      aria-label={playerVolume === 0 ? 'Unmute video' : 'Mute video'}
+      onClick={() => alterMuteState()}>
       {symbolComponent}
     </button>
   );

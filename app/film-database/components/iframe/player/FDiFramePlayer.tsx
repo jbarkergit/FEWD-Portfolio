@@ -5,6 +5,36 @@ import IFrameController from '../iframe-controller/IFrameController';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 
+// iFrame options
+const opts: YouTubeProps['opts'] = {
+  height: undefined,
+  width: undefined,
+  playerVars: {
+    // https://developers.google.com/youtube/player_parameters
+    autoplay: 1,
+    cc_lang_pref: 'eng',
+    cc_load_policy: 1,
+    // color: undefined,
+    controls: 0, // 0 = disabled
+    disablekb: 1, // 1 = disabled
+    // enablejsapi?: 0 | 1 | undefined;
+    // end?: number | undefined;
+    fs: 0, // 0 = disabled
+    hl: 'eng',
+    iv_load_policy: 3,
+    loop: 0,
+    // origin: '',
+    // playlist?: string | undefined;
+    playsinline: 1,
+    rel: 0,
+    // start?: number | undefined;
+    widget_referrer: undefined,
+    // Required for autoplay, is not defined by react-youtube lib
+    // @ts-ignore
+    mute: 1,
+  },
+};
+
 const FDiFramePlayer = ({
   trailers,
   setTrailers,
@@ -17,36 +47,6 @@ const FDiFramePlayer = ({
 
   // Init player
   const playerRef = useRef<YouTube | null>(null);
-
-  // iFrame options
-  const opts: YouTubeProps['opts'] = {
-    height: undefined,
-    width: undefined,
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-      cc_lang_pref: 'eng',
-      cc_load_policy: 1,
-      // color: undefined,
-      controls: 0, // 0 = disabled
-      disablekb: 1, // 1 = disabled
-      // enablejsapi?: 0 | 1 | undefined;
-      // end?: number | undefined;
-      fs: 0, // 0 = disabled
-      hl: 'eng',
-      iv_load_policy: 3,
-      loop: 0,
-      // origin: '',
-      // playlist?: string | undefined;
-      playsinline: 1,
-      rel: 0,
-      // start?: number | undefined;
-      widget_referrer: undefined,
-      // Required for autoplay, is not defined by react-youtube lib
-      // @ts-ignore
-      mute: 1,
-    },
-  };
 
   // Player destruction
   const destroyPlayer = (target: YouTubePlayer) => {
