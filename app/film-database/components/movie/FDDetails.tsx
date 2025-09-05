@@ -13,6 +13,8 @@ import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { tmdbDiscoveryIds } from '~/film-database/composables/const/tmdbDiscoveryIds';
 
+const discoveryIdMap = Object.fromEntries(Object.entries(tmdbDiscoveryIds).map(([k, v]) => [v, k]));
+
 const FDDetails = ({ modal }: { modal: boolean }) => {
   const { heroData, setIsModal } = useCatalogProvider();
 
@@ -30,20 +32,26 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
   /**
    * @function fetchWatchProviders
    */
-  const fetchWatchProviders = async () => {
-    const data = await tmdbCall({ watchProviders: heroData?.id });
-    setWatchProviders(data.response.results.US);
-  };
-
   useEffect(() => {
-    fetchWatchProviders();
+    if (!heroData) return;
+
+    let cancelled = false;
+
+    (async () => {
+      const data = await tmdbCall({ watchProviders: heroData.id });
+      if (!cancelled) setWatchProviders(data.response.results.US);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [heroData]);
 
   /**
    * @function voteAvg
    * @returns Visual rating of movie out of 5 stars
    */
-  const voteAvg = (): JSX.Element | undefined => {
+  const getVoteAverageVisual = (): JSX.Element | undefined => {
     const voteAvg = heroData.vote_average;
 
     // 0-10 vote scale (contains floating point value) floored and converted to 0-5 vote scale
@@ -145,9 +153,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     }
   };
 
-  const genreIds = heroData?.genre_ids.map((genreId) =>
-    Object.keys(tmdbDiscoveryIds).find((key) => tmdbDiscoveryIds[key as keyof typeof tmdbDiscoveryIds] === genreId)
-  );
+  const genreIds = heroData?.genre_ids.map((id) => discoveryIdMap[id]);
 
   /** @returns */
   return (
@@ -182,7 +188,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
         <h2>{heroData.title}</h2>
       </header>
       <ul className='fdDetails__col'>
-        {voteAvg()}
+        {getVoteAverageVisual()}
         {getAvailability()}
         {!modal && (
           <li>
