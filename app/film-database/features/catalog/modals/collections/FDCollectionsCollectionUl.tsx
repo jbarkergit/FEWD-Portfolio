@@ -12,6 +12,15 @@ type Props = {
   sensorRef: RefObject<Sensor>;
 };
 
+const EmptyListItem = (): JSX.Element => {
+  return (
+    <div>
+      <span />
+      <IcBaselinePlus />
+    </div>
+  );
+};
+
 const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
   ({ mapIndex, data, display, isEditMode, sensorRef }, ulRef) => {
     // Dynamic integer limitation of list items in a carousel
@@ -39,15 +48,6 @@ const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
             )}
           </picture>
         </li>
-      );
-    };
-
-    const EmptyListItem = (): JSX.Element => {
-      return (
-        <div>
-          <span />
-          <IcBaselinePlus />
-        </div>
       );
     };
 
