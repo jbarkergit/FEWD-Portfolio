@@ -374,11 +374,13 @@ const FDCollectionsCollection = ({
             ref={ulRef}
             sensorRef={sensorRef}
           />
-          <GenericCarouselNavigation
-            dataLength={data.length}
-            chunkSize={'modal'}
-            reference={ulRefs.current[mapIndex]}
-          />
+          {ulRefs.current[mapIndex] && (
+            <GenericCarouselNavigation
+              dataLength={data.length}
+              chunkSize={'modal'}
+              reference={ulRefs.current[mapIndex]}
+            />
+          )}
         </div>
       </section>
     );

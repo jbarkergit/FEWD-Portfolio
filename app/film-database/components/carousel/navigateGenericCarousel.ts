@@ -1,7 +1,7 @@
 import { useRef, useCallback, useEffect } from 'react';
 
 export const navigateGenericCarousel = (
-  reference: HTMLUListElement | undefined,
+  reference: HTMLUListElement | null,
   chunkSize: number,
   dataLength: number
 ): ((delta: number) => void) => {

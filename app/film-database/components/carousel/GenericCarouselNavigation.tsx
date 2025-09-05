@@ -5,7 +5,7 @@ import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 type Props = {
   dataLength: number;
   chunkSize: 'viewport' | 'modal';
-  reference: HTMLUListElement | undefined;
+  reference: HTMLUListElement | null;
 };
 
 const GenericCarouselNavigation = ({ dataLength, chunkSize, reference }: Props) => {
