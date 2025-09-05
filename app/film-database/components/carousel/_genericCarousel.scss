@@ -32,6 +32,9 @@
       touch-action: pan-x;
       scrollbar-width: none;
       scroll-behavior: smooth;
+      @media (max-width: 1200px) {
+        touch-action: pan-x pan-y;
+      }
       &[data-modal='cinemaInformation'],
       &[data-modal='person'] {
         & li {
