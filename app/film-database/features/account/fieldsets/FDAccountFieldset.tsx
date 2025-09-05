@@ -155,9 +155,9 @@ const FDAccountFieldset = () => {
    * @function animateForm @function onAnimationStart @function onFormChange
    * @description Animates fieldsets on form state change
    */
-  const onFormChange = () => {
-    const handleState = () => setForm((f) => (f === 'registration' ? 'login' : 'registration'));
+  const handleState = () => setForm((f) => (f === 'registration' ? 'login' : 'registration'));
 
+  const onFormChange = () => {
     if (!fieldsetRef.current) {
       handleState();
     } else {
