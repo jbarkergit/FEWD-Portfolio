@@ -94,7 +94,7 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
         <GenericCarouselNavigation
           dataLength={data.length}
           chunkSize={isModal ? 'modal' : 'viewport'}
-          reference={carouselRef}
+          reference={carouselRef.current!}
         />
       </div>
     </section>

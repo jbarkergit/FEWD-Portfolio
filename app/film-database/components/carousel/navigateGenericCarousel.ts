@@ -1,26 +1,21 @@
-/**
- * @function useCarouselNavigation
- * @description Carousel scroll functionality
- */
-
-import { useRef, useCallback, useEffect, type RefObject } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 
 export const navigateGenericCarousel = (
-  reference: RefObject<HTMLUListElement | null>,
+  reference: HTMLUListElement | undefined,
   chunkSize: number,
   dataLength: number
 ): ((delta: number) => void) => {
-  const carouselIndexRef = useRef(0);
+  const carouselIndexRef = useRef<number>(0);
 
   const navigate = useCallback((): void => {
-    if (reference.current instanceof HTMLUListElement) {
-      const listItems: HTMLCollection = reference.current.children;
+    if (reference instanceof HTMLUListElement) {
+      const listItems: HTMLCollection = reference.children;
       const targetIndex: number = carouselIndexRef.current * chunkSize;
 
       let targetElement: HTMLLIElement | null = listItems[targetIndex] as HTMLLIElement;
       if (!targetElement) targetElement = listItems[listItems.length - 1] as HTMLLIElement;
 
-      const carouselPosition: number = reference.current.offsetLeft;
+      const carouselPosition: number = reference.offsetLeft;
       const scrollPosition: number = targetElement.offsetLeft - carouselPosition;
 
       const firstItem = listItems[0] as HTMLLIElement | HTMLDivElement;
@@ -33,9 +28,7 @@ export const navigateGenericCarousel = (
             ? scrollPosition + carouselMargin
             : scrollPosition;
 
-      reference.current.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
-    } else {
-      console.log('no' + reference);
+      reference.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
     }
   }, [chunkSize, reference]);
 

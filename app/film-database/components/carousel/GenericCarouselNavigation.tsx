@@ -1,4 +1,3 @@
-import type { RefObject } from 'react';
 import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/assets/svg/icons';
 import { navigateGenericCarousel } from '~/film-database/components/carousel/navigateGenericCarousel';
 import { useCatalogProvider } from '~/film-database/context/CatalogContext';
@@ -6,7 +5,7 @@ import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 type Props = {
   dataLength: number;
   chunkSize: 'viewport' | 'modal';
-  reference: RefObject<HTMLUListElement | null>;
+  reference: HTMLUListElement | undefined;
 };
 
 const GenericCarouselNavigation = ({ dataLength, chunkSize, reference }: Props) => {

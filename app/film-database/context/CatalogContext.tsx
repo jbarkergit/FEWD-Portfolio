@@ -121,7 +121,7 @@ export const CatalogProvider: FC<{ children: ReactNode }> = ({ children }) => {
       },
       'user-collection-1': {
         header: 'Unnamed Collection',
-        data: primaryData.flatMap(({ response }) => response.results),
+        data: primaryData[0]?.response.results!,
         display: 'flex',
       },
     });
