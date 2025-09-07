@@ -16,6 +16,10 @@ $final-scale: $scale-factor * $scale-buffer;
   z-index: 1;
   display: block;
   height: inherit;
+  @media (max-width: 1050px) {
+    display: flex;
+    flex-direction: column;
+  }
   &[data-type='hero'] {
     .fdiFrame__player {
       position: relative;
@@ -77,13 +81,22 @@ $final-scale: $scale-factor * $scale-buffer;
     }
   }
   &[data-type='modal'] {
-    height: auto;
-  }
-  @media (max-width: 1050px) {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: auto;
+    .fdiFrame__player {
+      width: 100%;
+      aspect-ratio: 16/9;
+    }
+    .fdiFrame__player__iframe {
+      width: inherit;
+      aspect-ratio: inherit;
+    }
+    .fdiFrame__controller {
+      display: none;
+    }
   }
-
   &__controller {
     position: absolute;
     bottom: 0;
