@@ -11,6 +11,9 @@
   height: auto;
   padding: 30px calc(var(--fd-padding-generic) / 1.5);
   pointer-events: none;
+  @media (max-width: 950px) {
+    position: relative;
+  }
   &__ul {
     flex: 0 0 50%;
     display: flex;

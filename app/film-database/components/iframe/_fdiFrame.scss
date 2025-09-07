@@ -1,213 +1,206 @@
 @use '/app/base/sass/util/functions' as f;
 @use '/app/film-database/scss/fdMixins' as m;
 
-.fdiFrame {
-  position: relative;
-  flex: 1;
-  display: flex;
-  align-items: flex-end;
-  height: inherit;
-  &:hover .fdiFrame__controller {
-    opacity: 1;
-  }
-  @media (min-width: 1440px) {
-    justify-content: center;
-  }
-  @media (max-width: 1439px) {
-    justify-content: flex-end;
-    padding-right: 10%;
-  }
-}
+$iframe-aspect: 16/9;
+$trailer-aspect: 21/9;
+$scale-factor: $trailer-aspect / $iframe-aspect;
+$scale-buffer: 1.25; // 25% extra scaling to help hide the bottom black bar and subtitles
+$final-scale: $scale-factor * $scale-buffer;
 
-.fdiFrame[data-type='modal'] {
+.fdiFrame:hover .fdiFrame__controller {
+  opacity: 1;
+}
+.fdiFrame {
+  flex: 1 1 auto;
   position: relative;
-  display: inline;
-  width: 100%;
-  aspect-ratio: 16/9;
-  padding-right: 0;
-  overflow: clip;
-  .fdiFrame__controller {
+  z-index: 1;
+  display: block;
+  height: inherit;
+  &[data-type='hero'] {
+  }
+  &[data-type='modal'] {
+  }
+  &__player {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    width: inherit;
+    height: inherit;
+    margin-top: 50px; // Slight center correction
+    @media (max-width: 1850px) {
+      margin-top: 0;
+    }
+    @media (max-width: 650px) {
+      justify-content: center;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: inherit;
+      aspect-ratio: 16/9;
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, 1) 15%, transparent 34%),
+        linear-gradient(to right, rgba(0, 0, 0, 1) 1%, transparent 20%);
+      transform: scale(calc(#{$final-scale} + 0.01));
+      transform-origin: center right;
+      pointer-events: none;
+      @media (max-width: 1850px) {
+        width: 100svw;
+        background: linear-gradient(to top, rgba(0, 0, 0, 1) 15%, transparent 34%);
+        transform: scale(calc(#{$final-scale} + 0.15));
+        transform-origin: center center;
+      }
+    }
+    &__iframe,
+    & img {
+      display: block;
+      height: inherit;
+      aspect-ratio: 16/9;
+      // YouTube IFrame Player API Requirements (16/9)
+      min-width: 480px;
+      min-height: 270px;
+      // Stretch iframe to exceed the container
+      transform: scale($final-scale);
+      // Align scaling from the top; top stays put, extra height grows downward
+      transform-origin: center right;
+      pointer-events: none;
+      @media (max-width: 1850px) {
+        position: absolute;
+        width: 100svw;
+        transform: scale(calc(#{$final-scale} + 0.15));
+        transform-origin: center center;
+      }
+      @media (max-width: 950px) {
+        position: relative;
+        transform: unset;
+      }
+    }
+  }
+  &__controller {
     position: absolute;
-    bottom: 5.5%;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-  }
-  .fdiFrame__player {
-    position: relative;
-    width: inherit;
-    height: auto;
-    aspect-ratio: 16/9;
-    transform: scale(1);
-    &::before,
-    &::after {
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    min-height: 48px;
+    padding: f.rem(6) f.rem(26) f.rem(12) f.rem(26);
+    // iFrame height * 16/9 to decimal point * transform: scale(1.3) / 4
+    // margin-right: calc(((62svh * 1.7778) * 1.3) / 4);
+    border-radius: 8px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.25s cubic-bezier(0, 0, 0.2, 1);
+    @media (max-width: 1024px) {
       display: none;
     }
-    &__iframe {
-      top: 0;
-    }
-  }
-}
-
-.fdiFrame__player {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 1;
-  height: 63svh;
-  aspect-ratio: 21/9;
-  overflow: clip;
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    width: inherit;
-    height: inherit;
-    background:
-      linear-gradient(to top, rgba(0, 0, 0, 1) 8%, transparent 40%),
-      linear-gradient(to right, rgba(0, 0, 0, 1) 0%, transparent 40%);
-    pointer-events: none;
-  }
-  & img,
-  & iframe {
-    position: absolute;
-    top: -25px;
-    right: -25px;
-    transform: scale(1.3);
-    transform-origin: center center;
-    @media (max-width: 1200px) {
-      transform-origin: left center;
-    }
-  }
-  & iframe {
-    aspect-ratio: inherit;
-    pointer-events: none;
-    width: inherit;
-    height: inherit;
-    // YouTube IFrame Player API Requirements (16/9)
-    min-width: 480px;
-    min-height: 270px;
-  }
-}
-
-.fdiFrame__controller {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  width: fit-content;
-  min-height: 48px;
-  padding: f.rem(6) f.rem(26) f.rem(12) f.rem(26);
-  // iFrame height * 16/9 to decimal point * transform: scale(1.3) / 4
-  // margin-right: calc(((62svh * 1.7778) * 1.3) / 4);
-  border-radius: 8px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
-  opacity: 0;
-  transition: opacity 0.25s cubic-bezier(0, 0, 0.2, 1);
-  @media (max-width: 1024px) {
-    display: none;
-  }
-  &__seeker {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 400px;
-    height: 20px;
-    overflow: clip;
-    &:hover .fdiFrame__controller__seeker--range {
-      height: 10px;
-    }
-    &:hover .fdiFrame__controller__seeker--slider {
-      height: 10px;
-      background-color: rgb(255, 255, 255, 0.8);
-      transition: height ease-in-out 65ms;
-    }
-    &--range,
-    &--slider {
-      position: absolute;
-      width: 100%;
-      height: 5px;
-      border-radius: 2px;
-      interpolate-size: allow-keywords;
-    }
-    &--range {
-      z-index: 1;
-      background-color: rgb(255, 255, 255, 0.2);
-      box-shadow:
-        4px 3px 6px rgba(0, 0, 0, 0.25),
-        -4px 3px 6px rgba(0, 0, 0, 0.25);
-    }
-    &--slider {
-      z-index: 2;
-      width: 0px;
-      background-color: rgb(255, 255, 255, 0.4);
-      transition: width ease-in-out 100ms;
-    }
-  }
-  &__controls {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: f.rem(10);
-    & > * {
-      margin: 0 2px;
-      opacity: 0.9;
-      transition: opacity 0.1s cubic-bezier(0.4, 0, 1, 1);
-    }
-    &__button {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: fit-content;
-      max-width: calc(24px * 2);
-      height: 100%;
-      & svg {
-        width: 1.8em;
-        height: 1.8em;
-        color: var(--fd-font-color-primary);
-      }
-    }
-    &__slider {
+    &__seeker {
       position: relative;
       display: flex;
       align-items: center;
-      width: 125px;
-      height: 16px;
-      margin-left: 6px;
-      margin-right: 2px;
-      &--range {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        height: 4px;
-        border-radius: 2px;
-        background-color: var(--fd-bc-secondary);
-      }
-      &--handle {
-        position: absolute;
-        top: 50%;
-        left: 0%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        width: 10px;
+      width: 400px;
+      height: 20px;
+      overflow: clip;
+      &:hover .fdiFrame__controller__seeker--range {
         height: 10px;
-        border-radius: 50%;
-        background-color: var(--fd-bc-secondary);
+      }
+      &:hover .fdiFrame__controller__seeker--slider {
+        height: 10px;
+        background-color: rgb(255, 255, 255, 0.8);
+        transition: height ease-in-out 65ms;
+      }
+      &--range,
+      &--slider {
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        border-radius: 2px;
+        interpolate-size: allow-keywords;
+      }
+      &--range {
+        z-index: 1;
+        background-color: rgb(255, 255, 255, 0.2);
         box-shadow:
           4px 3px 6px rgba(0, 0, 0, 0.25),
           -4px 3px 6px rgba(0, 0, 0, 0.25);
       }
+      &--slider {
+        z-index: 2;
+        width: 0px;
+        background-color: rgb(255, 255, 255, 0.4);
+        transition: width ease-in-out 100ms;
+      }
     }
-    &__timestamp {
+    &__controls {
+      position: relative;
       display: flex;
-      gap: 4px;
-      margin-left: 12px;
-      margin-right: 4px;
+      align-items: center;
+      gap: f.rem(10);
       & > * {
-        @include m.fdFontM;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        margin: 0 2px;
+        opacity: 0.9;
+        transition: opacity 0.1s cubic-bezier(0.4, 0, 1, 1);
+      }
+      &__button {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
+        max-width: calc(24px * 2);
+        height: 100%;
+        & svg {
+          width: 1.8em;
+          height: 1.8em;
+          color: var(--fd-font-color-primary);
+        }
+      }
+      &__slider {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 125px;
+        height: 16px;
+        margin-left: 6px;
+        margin-right: 2px;
+        &--range {
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          height: 4px;
+          border-radius: 2px;
+          background-color: var(--fd-bc-secondary);
+        }
+        &--handle {
+          position: absolute;
+          top: 50%;
+          left: 0%;
+          transform: translate(-50%, -50%);
+          z-index: 2;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: var(--fd-bc-secondary);
+          box-shadow:
+            4px 3px 6px rgba(0, 0, 0, 0.25),
+            -4px 3px 6px rgba(0, 0, 0, 0.25);
+        }
+      }
+      &__timestamp {
+        display: flex;
+        gap: 4px;
+        margin-left: 12px;
+        margin-right: 4px;
+        & > * {
+          @include m.fdFontM;
+          text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
       }
     }
   }

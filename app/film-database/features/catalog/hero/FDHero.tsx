@@ -4,8 +4,10 @@ import FDDetails from '../../../components/movie/FDDetails';
 const FDHero = () => {
   return (
     <div className='fdHero'>
-      <FDDetails modal={false} />
-      <FDiFrame type={'hero'} />
+      <div className='fdHero__container'>
+        <FDDetails modal={false} />
+        <FDiFrame type={'hero'} />
+      </div>
     </div>
   );
 };
