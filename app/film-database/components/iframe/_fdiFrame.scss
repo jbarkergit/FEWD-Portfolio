@@ -20,6 +20,10 @@ $final-scale: $scale-factor * $scale-buffer;
   }
   &[data-type='modal'] {
   }
+  @media (max-width: 1050px) {
+    display: flex;
+    flex-direction: column;
+  }
   &__player {
     position: relative;
     display: flex;
@@ -97,8 +101,10 @@ $final-scale: $scale-factor * $scale-buffer;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
     opacity: 0;
     transition: opacity 0.25s cubic-bezier(0, 0, 0.2, 1);
-    @media (max-width: 1024px) {
-      display: none;
+    @media (max-width: 1050px) {
+      order: 2;
+      position: relative;
+      opacity: 1;
     }
     &__seeker {
       position: relative;
