@@ -17,71 +17,73 @@ $final-scale: $scale-factor * $scale-buffer;
   display: block;
   height: inherit;
   &[data-type='hero'] {
+    .fdiFrame__player {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      width: inherit;
+      height: inherit;
+      margin-top: 50px; // Slight center correction
+      @media (max-width: 1850px) {
+        margin-top: 0;
+      }
+      @media (max-width: 650px) {
+        justify-content: center;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: inherit;
+        aspect-ratio: 16/9;
+        background:
+          linear-gradient(to top, rgba(0, 0, 0, 1) 15%, transparent 34%),
+          linear-gradient(to right, rgba(0, 0, 0, 1) 1%, transparent 20%);
+        transform: scale(calc(#{$final-scale} + 0.01));
+        transform-origin: center right;
+        pointer-events: none;
+        @media (max-width: 1850px) {
+          width: 100svw;
+          background: linear-gradient(to top, rgba(0, 0, 0, 1) 15%, transparent 34%);
+          transform: scale(calc(#{$final-scale} + 0.15));
+          transform-origin: center center;
+        }
+      }
+      &__iframe,
+      & img {
+        display: block;
+        height: inherit;
+        aspect-ratio: 16/9;
+        // YouTube IFrame Player API Requirements (16/9)
+        min-width: 480px;
+        min-height: 270px;
+        // Stretch iframe to exceed the container
+        transform: scale($final-scale);
+        // Align scaling from the top; top stays put, extra height grows downward
+        transform-origin: center right;
+        pointer-events: none;
+        @media (max-width: 1850px) {
+          position: absolute;
+          width: 100svw;
+          transform: scale(calc(#{$final-scale} + 0.15));
+          transform-origin: center center;
+        }
+        @media (max-width: 950px) {
+          position: relative;
+          transform: unset;
+        }
+      }
+    }
   }
   &[data-type='modal'] {
+    height: auto;
   }
   @media (max-width: 1050px) {
     display: flex;
     flex-direction: column;
   }
-  &__player {
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    width: inherit;
-    height: inherit;
-    margin-top: 50px; // Slight center correction
-    @media (max-width: 1850px) {
-      margin-top: 0;
-    }
-    @media (max-width: 650px) {
-      justify-content: center;
-    }
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: inherit;
-      aspect-ratio: 16/9;
-      background:
-        linear-gradient(to top, rgba(0, 0, 0, 1) 15%, transparent 34%),
-        linear-gradient(to right, rgba(0, 0, 0, 1) 1%, transparent 20%);
-      transform: scale(calc(#{$final-scale} + 0.01));
-      transform-origin: center right;
-      pointer-events: none;
-      @media (max-width: 1850px) {
-        width: 100svw;
-        background: linear-gradient(to top, rgba(0, 0, 0, 1) 15%, transparent 34%);
-        transform: scale(calc(#{$final-scale} + 0.15));
-        transform-origin: center center;
-      }
-    }
-    &__iframe,
-    & img {
-      display: block;
-      height: inherit;
-      aspect-ratio: 16/9;
-      // YouTube IFrame Player API Requirements (16/9)
-      min-width: 480px;
-      min-height: 270px;
-      // Stretch iframe to exceed the container
-      transform: scale($final-scale);
-      // Align scaling from the top; top stays put, extra height grows downward
-      transform-origin: center right;
-      pointer-events: none;
-      @media (max-width: 1850px) {
-        position: absolute;
-        width: 100svw;
-        transform: scale(calc(#{$final-scale} + 0.15));
-        transform-origin: center center;
-      }
-      @media (max-width: 950px) {
-        position: relative;
-        transform: unset;
-      }
-    }
-  }
+
   &__controller {
     position: absolute;
     bottom: 0;
