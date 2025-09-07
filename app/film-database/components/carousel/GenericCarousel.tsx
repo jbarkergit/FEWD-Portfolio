@@ -37,29 +37,27 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
    * @function observer Virtual Scroll
    * Handles visibility of list items as the user scrolls
    */
-  const observer = new IntersectionObserver(
-    (carousel) => {
-      for (const poster of carousel) {
-        if (poster.isIntersecting) {
-          if (poster.target.getAttribute('data-hidden') === 'true') {
-            poster.target.setAttribute('data-hidden', 'false');
-          }
-          observer.unobserve(poster.target);
-        }
-      }
-    },
-    { threshold: 0 }
-  );
-
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.target.getAttribute('data-hidden') === 'true') {
+            entry.target.setAttribute('data-hidden', 'false');
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0 }
+    );
+
     if (carouselRef.current) {
-      for (let i = 0; i < carouselRef.current.children.length; i++) {
-        const node = carouselRef.current.children[i];
-        if (node) observer.observe(node);
+      for (const node of carouselRef.current.children) {
+        observer.observe(node);
       }
     }
+
     return () => observer.disconnect();
-  }, [carouselRef.current]);
+  }, [data]);
 
   return (
     <section
