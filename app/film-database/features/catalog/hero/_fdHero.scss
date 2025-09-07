@@ -6,7 +6,7 @@
   display: block;
   width: 100svw;
   height: 50svh;
-  @media (max-height: 1050px), (max-width: 950px) {
+  @media (max-width: 950px) {
     height: auto;
   }
   &__container {
