@@ -1,16 +1,28 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+} from 'react';
 import { useRootRef } from '~/film-database/context/RootRefContext';
+
+type ChunkSize = { viewport: number; modal: number };
+
+const DEFAULT_CHUNK_SIZE: ChunkSize = { viewport: 2, modal: 2 };
 
 const Context = createContext<
   | {
-      chunkSize: Record<'viewport' | 'modal', number>;
-      setChunkSize: React.Dispatch<React.SetStateAction<Record<'viewport' | 'modal', number>>>;
+      chunkSize: ChunkSize;
+      setChunkSize: Dispatch<SetStateAction<ChunkSize>>;
     }
   | undefined
 >(undefined);
 
 export const ChunkSizeProvider = ({ children }: { children: ReactNode }) => {
-  const [chunkSize, setChunkSize] = useState<Record<'viewport' | 'modal', number>>({ viewport: 2, modal: 2 });
+  const [chunkSize, setChunkSize] = useState(DEFAULT_CHUNK_SIZE);
   const { root } = useRootRef();
 
   useEffect(() => {
@@ -18,28 +30,20 @@ export const ChunkSizeProvider = ({ children }: { children: ReactNode }) => {
      * Determines the number of carousel items based on the viewport or modal size.
      * This ensures that the carousel adapts to variable screen sizes within their feature.
      */
-    const getDynamicChunkSize = (): void => {
+    const updateChunkSize = () => {
       if (!root.current) return;
 
-      const styles: CSSStyleDeclaration = getComputedStyle(root.current);
+      const styles = getComputedStyle(root.current);
+      const viewport = Number(styles.getPropertyValue('--fd-carousel-items-per-page')) || DEFAULT_CHUNK_SIZE.viewport;
+      const modal = Number(styles.getPropertyValue('--fd-collection-items-per-page')) || DEFAULT_CHUNK_SIZE.modal;
 
-      function getQuantity(value: string): number {
-        return parseInt(styles.getPropertyValue(value).trim());
-      }
-
-      const carouselQuantity: number = getQuantity('--fd-carousel-items-per-page');
-      const collectionQuantity: number = getQuantity('--fd-collection-items-per-page');
-
-      setChunkSize({
-        viewport: isNaN(carouselQuantity) ? 2 : carouselQuantity,
-        modal: isNaN(collectionQuantity) ? 2 : collectionQuantity,
-      });
+      setChunkSize({ viewport, modal });
     };
 
-    getDynamicChunkSize();
-    window.addEventListener('resize', getDynamicChunkSize);
-    return () => window.removeEventListener('resize', getDynamicChunkSize);
-  }, []);
+    updateChunkSize();
+    window.addEventListener('resize', updateChunkSize);
+    return () => window.removeEventListener('resize', updateChunkSize);
+  }, [root]);
 
   return <Context.Provider value={{ chunkSize, setChunkSize }}>{children}</Context.Provider>;
 };
