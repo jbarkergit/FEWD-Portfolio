@@ -29,43 +29,11 @@
   }
   &--edit {
     transition: color 170ms ease-in-out;
-    &[data-toggle='true'] {
+    &[data-toggle='false'] {
       color: var(--fd-font-color-primary);
     }
-    &[data-toggle='false'] {
+    &[data-toggle='true'] {
       color: #6dbe45;
-    }
-  }
-  &--visibility {
-    &[data-toggle='false'] svg {
-      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-    }
-    &[data-toggle='true'] svg:nth-of-type(2) {
-      clip-path: polygon(100% 100%, 100% 100%, 0% 100%, 0% 100%);
-    }
-    & svg {
-      transition: clip-path 170ms ease-in-out;
-    }
-  }
-  &--layout {
-    & svg {
-      transition: top 170ms ease-in-out;
-    }
-    &[data-toggle='true'] svg {
-      &:nth-of-type(1) {
-        top: 0;
-      }
-      &:nth-of-type(2) {
-        top: -3em;
-      }
-    }
-    &[data-toggle='false'] svg {
-      &:nth-of-type(1) {
-        top: -3em;
-      }
-      &:nth-of-type(2) {
-        top: 0;
-      }
     }
   }
 }

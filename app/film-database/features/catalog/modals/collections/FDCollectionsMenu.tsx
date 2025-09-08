@@ -1,4 +1,4 @@
-import { forwardRef, type Dispatch, type SetStateAction } from 'react';
+import { useEffect, useRef, type Dispatch, type SetStateAction } from 'react';
 import { TablerCategoryPlus, TablerEdit, MaterialSymbolsLogoutSharp } from '~/film-database/assets/svg/icons';
 import { useModal } from '~/film-database/context/ModalContext';
 import { useUserCollection } from '~/film-database/context/UserCollectionContext';
@@ -9,9 +9,16 @@ type Props = {
   setIsEditMode: Dispatch<SetStateAction<boolean>>;
 };
 
-const FDCollectionsMenu = forwardRef<HTMLButtonElement, Props>(({ isEditMode, setIsEditMode }, ref) => {
+const FDCollectionsMenu = ({ isEditMode, setIsEditMode }: Props) => {
   const { userCollections, setUserCollections } = useUserCollection();
   const { setIsModal } = useModal();
+  const editBtnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (editBtnRef.current) {
+      editBtnRef.current.setAttribute('data-toggle', String(isEditMode));
+    }
+  }, [isEditMode]);
 
   /** @returns */
   return (
@@ -19,7 +26,6 @@ const FDCollectionsMenu = forwardRef<HTMLButtonElement, Props>(({ isEditMode, se
       <button
         className='fdCollectionsMenu--collection'
         aria-label='Create new list'
-        data-toggle='true'
         onPointerUp={() =>
           addUserCollection({
             userCollections,
@@ -34,10 +40,10 @@ const FDCollectionsMenu = forwardRef<HTMLButtonElement, Props>(({ isEditMode, se
         <TablerCategoryPlus />
       </button>
       <button
-        ref={ref}
+        ref={editBtnRef}
         className='fdCollectionsMenu--edit'
         aria-label='Switch to edit mode'
-        data-toggle='true'
+        data-toggle='false'
         onPointerUp={() => setIsEditMode((state) => !state)}>
         <TablerEdit />
       </button>
@@ -49,6 +55,6 @@ const FDCollectionsMenu = forwardRef<HTMLButtonElement, Props>(({ isEditMode, se
       </button>
     </div>
   );
-});
+};
 
 export default FDCollectionsMenu;

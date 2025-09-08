@@ -49,63 +49,46 @@ const FDCollections = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false); // Edit mode flag
 
   const ulRefs = useRef<HTMLUListElement[]>([]);
-  const editModeBtn = useRef<HTMLButtonElement>(null); // Reference to the "Edit Mode" button forwarded from CollectionsMenu
   const errorRef = useRef<HTMLDivElement>(null); // Reference storage to errors occuring in the drop and drag logic
 
   const sensorRef = useRef<Sensor>(createSensorDefault()); // Sensor
   const sourceRef = useRef<Source>(createSourceDefault()); // Source
   const targetRef = useRef<Target>(createTargetDefault()); // Target
 
-  /**
-   * @function ulRef
-   * @description Stores unordered list dom nodes as an array reference
-   */
+  /** Stores unordered list dom nodes as an array reference */
   const ulRef = (reference: HTMLUListElement): void => {
     if (reference && !ulRefs.current.includes(reference)) {
       ulRefs.current.push(reference);
     }
   };
 
-  /**
-   * @function triggerError
-   * @description Handles visibility of the errors notifcation
-   */
+  /** Handles visibility of the errors notifcation */
   const triggerError = useCallback((): void => {
     const attr: string = 'data-error';
     errorRef.current?.setAttribute(attr, 'true');
     setTimeout(() => errorRef.current?.setAttribute(attr, 'false'), 3200);
   }, []);
 
-  /**
-   * @function resetStores
-   * @description Rolls stores back to default state
-   */
+  /** Rolls stores back to default state */
   const resetStores = useCallback((): void => {
     sensorRef.current = createSensorDefault();
     sourceRef.current = createSourceDefault();
     targetRef.current = createTargetDefault();
   }, []);
 
-  /**
-   * @function toggleAttributes
-   * @description Handles visual indicators via dom node attributes for both 'data-toggle' and 'data-list-item-fx'
-   */
-  const toggleAttributes = () => {
-    if (editModeBtn.current) {
-      editModeBtn.current.setAttribute('data-toggle', String(isEditMode));
-    }
-
-    if (ulRefs.current) {
-      for (let i = 0; i < ulRefs.current.length; i++) {
-        const ul = ulRefs.current[i];
-        if (!ul || i === 0) continue;
-        ul.setAttribute('data-list-item-fx', !isEditMode ? 'true' : 'false');
-      }
-    }
-  };
-
+  /** Handles interaction visual indicators via dom node attributes for 'data-list-item-fx' */
   useEffect(() => {
-    toggleAttributes();
+    const toggleVisibility = () => {
+      if (ulRefs.current) {
+        for (let i = 0; i < ulRefs.current.length; i++) {
+          const ul = ulRefs.current[i];
+          if (!ul || i === 0) continue;
+          ul.setAttribute('data-list-item-fx', !isEditMode ? 'true' : 'false');
+        }
+      }
+    };
+
+    toggleVisibility();
   }, [isEditMode]);
 
   return (
