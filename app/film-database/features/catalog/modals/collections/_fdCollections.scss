@@ -75,7 +75,8 @@
   flex-direction: column;
   gap: calc(var(--fd-gap) * 2 - 15px + 8px);
   // Add menu height to padding-bottom (svg size + padding-top + padding-bottom)
-  padding: calc(var(--fd-padding-generic) / 2) 0 calc(var(--fd-padding-generic) + 2em + (calc(var(--fd-padding-generic) / 9) * 2)) 0;
+  padding: calc(var(--fd-padding-generic) / 2) 0
+    calc(var(--fd-padding-generic) + 2em + (calc(var(--fd-padding-generic) / 9) * 2)) 0;
   &__collection {
     display: flex;
     flex-direction: column;
@@ -101,27 +102,12 @@
         transition: opacity 0.22s ease-in-out;
       }
       & ul {
-        // Allocate room for shadows (padding-bottom)
-        padding: 0 calc(var(--fd-padding-generic) / 1.5) calc(15px + 8px) calc(var(--fd-padding-generic) / 1.5);
-        &[data-layout='flex'] {
-          display: flex;
-          gap: var(--fd-gap);
-          overflow-y: clip;
-          overflow-x: scroll;
-          scrollbar-width: none;
-        }
-        &[data-layout='grid'] {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(var(--fd-collection-node-width), auto));
-          column-gap: var(--fd-gap);
-          row-gap: calc(var(--fd-gap) + 23px); // Add ul's padding-bottom for visual consistency
-          & li {
-            cursor: pointer;
-          }
-          & ~ nav {
-            display: none;
-          }
-        }
+        display: flex;
+        gap: var(--fd-gap);
+        padding: 0 calc(var(--fd-padding-generic) / 1.5) calc(15px + 8px) calc(var(--fd-padding-generic) / 1.5); // Allocate room for shadows (padding-bottom)
+        overflow-y: clip;
+        overflow-x: scroll;
+        scrollbar-width: none;
         &[data-edit-mode='true'] {
           &:has(li) {
             cursor: grab;
@@ -236,7 +222,13 @@
             z-index: 1;
             width: 99%;
             height: 120%;
-            background: linear-gradient(226deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 35%, rgba(255, 255, 255, 0.2) 42%, rgba(255, 255, 255, 0) 60%);
+            background: linear-gradient(
+              226deg,
+              rgba(255, 255, 255, 0.4) 0%,
+              rgba(255, 255, 255, 0.4) 35%,
+              rgba(255, 255, 255, 0.2) 42%,
+              rgba(255, 255, 255, 0) 60%
+            );
             transition: transform 0.65s cubic-bezier(0.18, 0.9, 0.58, 1);
             will-change: transform;
             opacity: 0.25;
