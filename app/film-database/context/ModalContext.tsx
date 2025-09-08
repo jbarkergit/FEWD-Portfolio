@@ -18,7 +18,7 @@ const Context = createContext<
   | undefined
 >(undefined);
 
-export const ChunkSizeProvider = ({ children }: { children: ReactNode }) => {
+export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [isModal, setIsModal] = useState<'collections' | 'movie' | 'person' | undefined>(undefined);
   const personRef = useRef<number>(null);
 
