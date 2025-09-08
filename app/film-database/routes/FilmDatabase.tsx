@@ -3,10 +3,15 @@ import type { Route } from './+types/FilmDatabase';
 import { useLoaderData } from 'react-router';
 // Auth
 import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAuthorized';
+// Context
+import { HeroDataProvider } from '~/film-database/context/HeroDataContext';
+import { ChunkSizeProvider } from '~/film-database/context/ChunkSizeContext';
+import { RootRefProvider } from '~/film-database/context/RootRefContext';
+import { TrailerQueueProvider } from '~/film-database/context/TrailerQueueContext';
+import { UserCollectionProvider } from '~/film-database/context/UserCollectionContext';
+import { ModalProvider } from '~/film-database/context/ModalContext';
 // Composables
 import { tmdbCall } from '../composables/tmdbCall';
-// Context
-import { CatalogProvider } from '../context/CatalogContext';
 // Features: Account Page
 import FDAccountAnimation from '../features/account/animation/FDAccountAnimation';
 import FDAccountModal from '../features/account/FDAccountModal';
@@ -64,12 +69,22 @@ export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
   };
 
   return isAuth ? (
-    <CatalogProvider>
-      <div className='filmDatabase'>
-        <FDHeader />
-        <FDCatalog />
-      </div>
-    </CatalogProvider>
+    <RootRefProvider>
+      <ChunkSizeProvider>
+        <HeroDataProvider>
+          <ModalProvider>
+            <UserCollectionProvider>
+              <TrailerQueueProvider>
+                <div className='filmDatabase'>
+                  <FDHeader />
+                  <FDCatalog />
+                </div>
+              </TrailerQueueProvider>
+            </UserCollectionProvider>
+          </ModalProvider>
+        </HeroDataProvider>
+      </ChunkSizeProvider>
+    </RootRefProvider>
   ) : (
     <>
       <FDAccountAnimation
