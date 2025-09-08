@@ -1,16 +1,16 @@
 import type { Dispatch, SetStateAction } from 'react';
-import { type User_Collection } from '../context/CatalogContext';
+import type { UserCollection } from '~/film-database/context/UserCollectionContext';
 
 /**
  * @function addCollection
  * Adds new collection to carousels state
  */
 type Params = {
-  userCollections: Record<string, User_Collection>;
-  setUserCollections: Dispatch<SetStateAction<Record<string, User_Collection>>>;
+  userCollections: Record<string, UserCollection>;
+  setUserCollections: Dispatch<SetStateAction<Record<string, UserCollection>>>;
   isEditMode: boolean;
   payload: {
-    data: User_Collection['data'] | undefined;
+    data: UserCollection['data'] | undefined;
     colIndex: number;
   };
 };
