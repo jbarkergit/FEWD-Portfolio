@@ -23,4 +23,5 @@ export const HeroDataProvider = ({ children }: { children: ReactNode }) => {
 export const useHeroData = () => {
   const context = useContext(Context);
   if (!context) throw new Error('A provider is required to consume HeroData.');
+  return context;
 };
