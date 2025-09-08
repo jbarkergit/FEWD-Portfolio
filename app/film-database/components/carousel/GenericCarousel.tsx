@@ -33,31 +33,26 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
           ? true
           : false;
 
-  /**
-   * @function observer Virtual Scroll
-   * Handles visibility of list items as the user scrolls
-   */
+  /** Handles visibility of list items as the user scrolls */
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting && entry.target.getAttribute('data-hidden') === 'true') {
-            entry.target.setAttribute('data-hidden', 'false');
-            observer.unobserve(entry.target);
+    const handleScroll = () => {
+      if (!carouselRef.current) return;
+      const listItems = Array.from(carouselRef.current.children) as HTMLLIElement[];
+      const rect = carouselRef.current.getBoundingClientRect();
+
+      for (const li of listItems) {
+        const liRect = li.getBoundingClientRect();
+        if (liRect.left < rect.right && liRect.right > rect.left) {
+          if (li.getAttribute('data-hidden') === 'true') {
+            li.setAttribute('data-hidden', 'false');
           }
         }
-      },
-      { threshold: 0 }
-    );
-
-    if (carouselRef.current) {
-      for (const node of carouselRef.current.children) {
-        observer.observe(node);
       }
-    }
+    };
 
-    return () => observer.disconnect();
-  }, [data]);
+    carouselRef.current?.addEventListener('scroll', handleScroll);
+    return () => carouselRef.current?.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <section
