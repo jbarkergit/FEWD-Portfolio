@@ -1,6 +1,7 @@
 import { forwardRef, type Dispatch, type SetStateAction } from 'react';
 import { TablerCategoryPlus, TablerEdit, MaterialSymbolsLogoutSharp } from '~/film-database/assets/svg/icons';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { useModal } from '~/film-database/context/ModalContext';
+import { useUserCollection } from '~/film-database/context/UserCollectionContext';
 import { addUserCollection } from '~/film-database/hooks/addUserCollection';
 
 type Props = {
@@ -9,7 +10,8 @@ type Props = {
 };
 
 const FDCollectionsMenu = forwardRef<HTMLButtonElement, Props>(({ isEditMode, setIsEditMode }, ref) => {
-  const { userCollections, setUserCollections, setIsModal } = useCatalogProvider();
+  const { userCollections, setUserCollections } = useUserCollection();
+  const { setIsModal } = useModal();
 
   /** @returns */
   return (

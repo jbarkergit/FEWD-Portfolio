@@ -1,12 +1,12 @@
 import { useRef, useEffect } from 'react';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { useModal } from '~/film-database/context/ModalContext';
 import FDCineInfo from '~/film-database/features/catalog/modals/cineInfo/FDCineInfo';
 import FDCollections from '~/film-database/features/catalog/modals/collections/FDCollections';
 import FDPerson from '~/film-database/features/catalog/modals/person/FDPerson';
 
 const FDModal = () => {
   // Context
-  const { isModal, setIsModal } = useCatalogProvider();
+  const { isModal, setIsModal } = useModal();
 
   // References
   const modal = useRef<HTMLDivElement>(null);

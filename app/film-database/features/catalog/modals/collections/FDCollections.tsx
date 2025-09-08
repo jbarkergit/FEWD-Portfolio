@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import FDCollectionsModalMenu from './FDCollectionsMenu';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import FDiFrame from '~/film-database/components/iframe/FDiFrame';
 import FDCollectionsErrorHandler from './FDCollectionsErrorHandler';
 import FDCollectionsCollection from './FDCollectionsCollection';
+import { useUserCollection } from '~/film-database/context/UserCollectionContext';
 
 const NOT_FOUND_INDEX = -1 as const;
 
@@ -44,7 +44,7 @@ const createTargetDefault = (): Target => ({
 });
 
 const FDCollections = () => {
-  const { userCollections } = useCatalogProvider(); // Context
+  const { userCollections } = useUserCollection(); // Context
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false); // Edit mode flag
 
@@ -112,13 +112,12 @@ const FDCollections = () => {
     <>
       <FDiFrame type='modal' />
       <section className='fdCollections'>
-        {Object.values(userCollections).map(({ header, data, display }, index) => (
+        {Object.values(userCollections).map(({ header, data }, index) => (
           <FDCollectionsCollection
             key={`user-collections-collection-${index}`}
             mapIndex={index}
             header={header}
             data={data}
-            display={display}
             isEditMode={isEditMode}
             ulRef={ulRef}
             ulRefs={ulRefs}

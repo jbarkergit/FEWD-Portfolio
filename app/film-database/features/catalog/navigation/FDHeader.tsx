@@ -1,7 +1,7 @@
 import { MaterialSymbolsLogoutSharp, MaterialSymbolsMovieSharp } from '~/film-database/assets/svg/icons';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { signOut } from 'firebase/auth';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { useModal } from '~/film-database/context/ModalContext';
 
 type CTAButton = {
   key: string;
@@ -10,7 +10,7 @@ type CTAButton = {
 };
 
 const FDHeader = () => {
-  const { setIsModal } = useCatalogProvider();
+  const { setIsModal } = useModal();
 
   const cta: { left: CTAButton[]; right: CTAButton[] } = {
     left: [{ key: 'Saved Movies', icon: <MaterialSymbolsMovieSharp />, func: (): void => setIsModal('collections') }],

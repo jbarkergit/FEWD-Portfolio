@@ -2,10 +2,12 @@ import { useState, useEffect, useRef, type ChangeEvent } from 'react';
 import { IcOutlinePlayCircle, IcBaselineSearch } from '~/film-database/assets/svg/icons';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
+import { useHeroData } from '~/film-database/context/HeroDataContext';
 
 const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
-  const { setHeroData, viewportChunkSize } = useCatalogProvider();
+  const { setHeroData } = useHeroData();
+  const { chunkSize } = useChunkSize();
 
   const isTypingRef = useRef<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -90,7 +92,7 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
         data-anim={searchResults && searchResults.length ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
           {!isTypingRef.current && searchResults
-            ? searchResults.slice(0, viewportChunkSize).map((props, index) => (
+            ? searchResults.slice(0, chunkSize.viewport).map((props, index) => (
                 <li
                   className='fdSearchBar__results__ul__li'
                   key={`fd-search-result-${index}`}>
@@ -111,7 +113,7 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
                   </div>
                 </li>
               ))
-            : Array.from({ length: viewportChunkSize }).map((_, i) => (
+            : Array.from({ length: chunkSize.viewport }).map((_, i) => (
                 <li
                   className='fdSearchBar__results__ul__li'
                   key={`fd-search-result-placeholder-${i}`}></li>

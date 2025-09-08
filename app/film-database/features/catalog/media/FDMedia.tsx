@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { useFLoader } from '~/film-database/routes/FilmDatabase';
-import { useCatalogProvider } from '../../../context/CatalogContext';
 import FDSearch from '~/film-database/features/catalog/media/search/FDSearch';
 import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
+import { useModal } from '~/film-database/context/ModalContext';
 
 const FDMedia = () => {
-  const { isModal } = useCatalogProvider();
+  const { isModal } = useModal();
   const { primaryData } = useFLoader();
   const fdMediaRef = useRef<HTMLElement>(null);
 

@@ -1,12 +1,12 @@
 import { useEffect, useState, useMemo } from 'react';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
 import { SvgSpinnersRingResize } from '~/film-database/assets/svg/icons';
+import { useModal } from '~/film-database/context/ModalContext';
 
 const FDPerson = () => {
-  const { personRef } = useCatalogProvider();
+  const { personRef } = useModal();
 
   const [person, setPerson] = useState<{
     details: TmdbResponseFlat['personDetails'] | undefined;

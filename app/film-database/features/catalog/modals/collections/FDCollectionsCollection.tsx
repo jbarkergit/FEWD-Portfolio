@@ -1,10 +1,11 @@
 import { useEffect, type RefObject } from 'react';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
-import { useCatalogProvider, type User_Collection } from '~/film-database/context/CatalogContext';
 import type { Sensor, Source, Target } from './FDCollections';
 import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import GenericCarouselNavigation from '~/film-database/components/carousel/GenericCarouselNavigation';
+import { useUserCollection, type UserCollection } from '~/film-database/context/UserCollectionContext';
+import { useTrailerQueue } from '~/film-database/context/TrailerQueueContext';
 
 // Magic constant
 const NOT_FOUND_INDEX = -1 as const;
@@ -50,7 +51,6 @@ type Props = {
   mapIndex: number;
   header: string;
   data: TmdbMovieProvider[] | null;
-  display: 'flex' | 'grid';
   isEditMode: boolean;
   ulRef: (reference: HTMLUListElement) => void;
   ulRefs: React.RefObject<HTMLUListElement[]>;
@@ -65,7 +65,6 @@ const FDCollectionsCollection = ({
   mapIndex,
   header,
   data,
-  display,
   isEditMode,
   ulRef,
   ulRefs,
@@ -76,7 +75,8 @@ const FDCollectionsCollection = ({
   triggerError,
 }: Props) => {
   // Context
-  const { setUserCollections, userCollections, setModalTrailer } = useCatalogProvider();
+  const { userCollections, setUserCollections } = useUserCollection();
+  const { setModalTrailer } = useTrailerQueue();
 
   /**
    * @function resetEventListeners
@@ -256,11 +256,11 @@ const FDCollectionsCollection = ({
         [sourceKey]: {
           ...prevCarousels[sourceKey]!,
           data: newSourceData,
-        } as User_Collection,
+        } as UserCollection,
         [targetKey]: {
           ...prevCarousels[targetKey]!,
           data: newTargetData,
-        } as User_Collection,
+        } as UserCollection,
       };
 
       // Update state
@@ -369,7 +369,6 @@ const FDCollectionsCollection = ({
           <FDCollectionsCollectionUl
             mapIndex={mapIndex}
             data={data}
-            display={display}
             isEditMode={isEditMode}
             ref={ulRef}
             sensorRef={sensorRef}
@@ -377,8 +376,8 @@ const FDCollectionsCollection = ({
           {ulRefs.current[mapIndex] && (
             <GenericCarouselNavigation
               dataLength={data.length}
-              chunkSize={'modal'}
               reference={ulRefs.current[mapIndex]}
+              chunkSizePref='modal'
             />
           )}
         </div>

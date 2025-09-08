@@ -4,7 +4,7 @@ import { useEffect, useState, type JSX } from 'react';
 import type { YouTubePlayer } from 'react-youtube';
 // Assets
 import { MaterialSymbolsPause, IcOutlinePlayCircle, SvgSpinnersRingResize } from '../../../assets/svg/icons';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { useModal } from '~/film-database/context/ModalContext';
 
 const IFrameControllerPlayPause = ({
   player,
@@ -13,7 +13,7 @@ const IFrameControllerPlayPause = ({
   player: YouTubePlayer;
   playState: 'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined;
 }) => {
-  const { isModal } = useCatalogProvider();
+  const { isModal } = useModal();
   const [playStateSymbolComponent, setPlayStateSymbolComponent] = useState<JSX.Element>(<SvgSpinnersRingResize />);
 
   // Reflect player state

@@ -1,7 +1,10 @@
 import { useRef, useState, useEffect, type ReactNode } from 'react';
 import { BxDotsVerticalRounded, IcOutlinePlayCircle, TablerCategoryPlus } from '~/film-database/assets/svg/icons';
 import type { GenericCarouselMap } from '~/film-database/components/carousel/GenericCarousel';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
+import { useHeroData } from '~/film-database/context/HeroDataContext';
+import { useModal } from '~/film-database/context/ModalContext';
+import { useUserCollection } from '~/film-database/context/UserCollectionContext';
 import { addUserCollection } from '~/film-database/hooks/addUserCollection';
 
 function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
@@ -15,8 +18,11 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   posterIndex: number;
   entry: GenericCarouselMap[K][number];
 }) {
-  const { userCollections, setUserCollections, setHeroData, viewportChunkSize, modalChunkSize, setIsModal, personRef } =
-    useCatalogProvider();
+  const { userCollections, setUserCollections } = useUserCollection();
+  const { setHeroData } = useHeroData();
+  const { chunkSize } = useChunkSize();
+  const { setIsModal, personRef } = useModal();
+
   const collectionsMenu = useRef<HTMLUListElement>(null);
   const collectionAttribute: string = 'data-active';
   const [isCollectionDropdown, setIsCollectionDropdown] = useState<boolean>(false);
@@ -54,7 +60,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   const Parent = ({ children }: { children: ReactNode }) => (
     <li
       className='genericCarousel__wrapper__ul__li'
-      data-hidden={posterIndex < viewportChunkSize + 1 ? 'false' : 'true'}>
+      data-hidden={posterIndex < chunkSize.viewport + 1 ? 'false' : 'true'}>
       {children}
     </li>
   );
@@ -153,7 +159,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
               <img
                 src={`https://image.tmdb.org/t/p/w780/${cinemaEntry.profile_path}`}
                 alt={`${cinemaEntry.name}`}
-                fetchPriority={carouselIndex <= modalChunkSize ? 'high' : 'low'}
+                fetchPriority={carouselIndex <= chunkSize.viewport ? 'high' : 'low'}
               />
             ) : (
               <img

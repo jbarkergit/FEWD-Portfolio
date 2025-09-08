@@ -1,15 +1,15 @@
 import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/assets/svg/icons';
 import { navigateGenericCarousel } from '~/film-database/components/carousel/navigateGenericCarousel';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
+import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
 
 type Props = {
   dataLength: number;
-  chunkSize: 'viewport' | 'modal';
+  chunkSizePref: 'viewport' | 'modal';
   reference: HTMLUListElement | null;
 };
 
-const GenericCarouselNavigation = ({ dataLength, chunkSize, reference }: Props) => {
-  const { viewportChunkSize, modalChunkSize } = useCatalogProvider();
+const GenericCarouselNavigation = ({ dataLength, chunkSizePref, reference }: Props) => {
+  const { chunkSize } = useChunkSize();
 
   /**
    * @function useCarouselNavigation
@@ -17,7 +17,7 @@ const GenericCarouselNavigation = ({ dataLength, chunkSize, reference }: Props) 
    */
   const updateCarouselIndex = navigateGenericCarousel(
     reference,
-    chunkSize === 'viewport' ? viewportChunkSize : modalChunkSize,
+    chunkSizePref === 'viewport' ? chunkSize.viewport : chunkSize.modal,
     dataLength
   );
 

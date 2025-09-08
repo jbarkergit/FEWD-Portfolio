@@ -1,6 +1,5 @@
 import { useEffect, useState, type JSX } from 'react';
 import { Link } from 'react-router';
-import { useCatalogProvider } from '../../context/CatalogContext';
 import {
   EmptyStar,
   FullStar,
@@ -12,11 +11,14 @@ import {
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { tmdbDiscoveryIds } from '~/film-database/composables/const/tmdbDiscoveryIds';
+import { useHeroData } from '~/film-database/context/HeroDataContext';
+import { useModal } from '~/film-database/context/ModalContext';
 
 const discoveryIdMap = Object.fromEntries(Object.entries(tmdbDiscoveryIds).map(([k, v]) => [v, k]));
 
 const FDDetails = ({ modal }: { modal: boolean }) => {
-  const { heroData, setIsModal } = useCatalogProvider();
+  const { heroData } = useHeroData();
+  const { setIsModal } = useModal();
 
   if (!heroData)
     return (

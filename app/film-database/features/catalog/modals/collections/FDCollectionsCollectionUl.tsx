@@ -1,13 +1,12 @@
 import { forwardRef, type JSX, type RefObject, useMemo } from 'react';
 import { IcBaselinePlus } from '~/film-database/assets/svg/icons';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import type { Sensor } from './FDCollections';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
+import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
 
 type Props = {
   mapIndex: number;
   data: TmdbMovieProvider[] | null;
-  display: string;
   isEditMode: boolean;
   sensorRef: RefObject<Sensor>;
 };
@@ -22,9 +21,9 @@ const EmptyListItem = (): JSX.Element => {
 };
 
 const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
-  ({ mapIndex, data, display, isEditMode, sensorRef }, ulRef) => {
+  ({ mapIndex, data, isEditMode, sensorRef }, ulRef) => {
     // Dynamic integer limitation of list items in a carousel
-    const { modalChunkSize } = useCatalogProvider();
+    const { chunkSize } = useChunkSize();
 
     /**
      * @function ListItem @returns {JSX.Element}
@@ -64,13 +63,13 @@ const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
         ));
 
         // If initMap's length is greater than or equal to modalChunkSize, return initMap
-        if (initMap.length + 1 >= modalChunkSize) {
+        if (initMap.length + 1 >= chunkSize.modal) {
           initMap.push(<EmptyListItem key={`collection-${mapIndex}-emptyListItem-${initMap.length + 1}`} />);
           return initMap;
         }
 
         // If initMap isn't at least the length of modalChunkSize, push empty lists
-        for (let i = 0; i < modalChunkSize; i++) {
+        for (let i = 0; i < chunkSize.modal; i++) {
           let listAtIndex = initMap[i];
           if (!listAtIndex)
             initMap.push(<EmptyListItem key={`collection-${mapIndex}-emptyListItem-${initMap.length + i + 1}`} />);
@@ -80,17 +79,16 @@ const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
         return initMap;
       } else {
         // If data is empty
-        const EmptyList = Array.from({ length: modalChunkSize + 1 }).map((eli, index) => (
+        const EmptyList = Array.from({ length: chunkSize.modal + 1 }).map((eli, index) => (
           <EmptyListItem key={`collection-${mapIndex}-emptyListItem-${index}`} />
         ));
         return EmptyList;
       }
-    }, [data, modalChunkSize]);
+    }, [data, chunkSize.modal]);
 
     return (
       <ul
         ref={ulRef}
-        data-layout={display}
         data-list-item-fx='true'
         data-edit-mode={isEditMode}
         aria-label='Reorderable list of movies'

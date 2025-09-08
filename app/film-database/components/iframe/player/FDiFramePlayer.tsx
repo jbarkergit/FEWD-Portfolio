@@ -2,8 +2,10 @@ import { useRef, useState } from 'react';
 import YouTube from 'react-youtube';
 import type { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
 import IFrameController from '../iframe-controller/IFrameController';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
+import { useModal } from '~/film-database/context/ModalContext';
+import { useUserCollection } from '~/film-database/context/UserCollectionContext';
+import { useTrailerQueue } from '~/film-database/context/TrailerQueueContext';
 
 // iFrame options
 const opts: YouTubeProps['opts'] = {
@@ -43,7 +45,9 @@ const FDiFramePlayer = ({
   setTrailers: React.Dispatch<React.SetStateAction<TmdbResponseFlat['videos']['results'] | undefined>>;
 }) => {
   // Context
-  const { isModal, userCollections, modalTrailer, setModalTrailer } = useCatalogProvider();
+  const { isModal } = useModal();
+  const { userCollections } = useUserCollection();
+  const { modalTrailer, setModalTrailer } = useTrailerQueue();
 
   // Init player
   const playerRef = useRef<YouTube | null>(null);

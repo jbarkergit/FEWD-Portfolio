@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import FDiFrame from '~/film-database/components/iframe/FDiFrame';
 import FDDetails from '~/film-database/components/movie/FDDetails';
-import { useCatalogProvider } from '~/film-database/context/CatalogContext';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
+import { useHeroData } from '~/film-database/context/HeroDataContext';
 
 const FDCineInfo = () => {
-  const { heroData } = useCatalogProvider();
+  const { heroData } = useHeroData();
   const [credits, setCredits] = useState<TmdbResponseFlat['credits'] | undefined>(undefined);
 
   const fetch = async (): Promise<void> => {
