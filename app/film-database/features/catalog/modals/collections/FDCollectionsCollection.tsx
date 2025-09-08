@@ -10,11 +10,7 @@ import { useTrailerQueue } from '~/film-database/context/TrailerQueueContext';
 // Magic constant
 const NOT_FOUND_INDEX = -1 as const;
 
-/**
- * @function findEuclidean
- * @returns {number}
- * @description Finds Eudclidean distance within supplied DOMRect[] and returns the index of the closest element
- */
+/** Finds Eudclidean distance within supplied DOMRect[] and returns the index of the closest element */
 const findEuclidean = (detach: Record<'x' | 'y', number>, data: DOMRect[]): number => {
   return data.reduce<{
     rect: DOMRect | null;
@@ -78,10 +74,7 @@ const FDCollectionsCollection = ({
   const { userCollections, setUserCollections } = useUserCollection();
   const { setModalTrailer } = useTrailerQueue();
 
-  /**
-   * @function resetEventListeners
-   * @description Rolls event listeners back to original mount state
-   */
+  /** Rolls event listeners back to original mount state */
   function resetEventListeners(): void {
     // Remove target's inline styles and event listeners
     if (sourceRef.current.listItem instanceof HTMLLIElement) {
@@ -96,20 +89,14 @@ const FDCollectionsCollection = ({
     }
   }
 
-  /**
-   * @function resetInteraction
-   * @description Invokes @function resetStores and @function resetEventListeners to prepare dom for new potential interactions
-   */
+  /** Invokes resetStores and resetEventListeners to prepare dom for new potential interactions */
   function resetInteraction(error?: { event: 'down' | 'move' | 'up' | 'attach' | 'detach'; reason: string }): void {
     resetEventListeners();
     resetStores();
     if (error) console.error(`Event ${error.event.toLocaleUpperCase()} failed. ${error.reason}`);
   }
 
-  /**
-   * @function pointerDown
-   * @description Sets interactivity in motion by toggling a flag and assigning dependency values
-   */
+  /** Sets interactivity in motion by toggling a flag and assigning dependency values */
 
   function pointerDown(event: PointerEvent): void {
     const currentTarget: EventTarget | null = event.currentTarget;
@@ -141,10 +128,7 @@ const FDCollectionsCollection = ({
     }
   }
 
-  /**
-   * @function attachListItem
-   * @description Attaches active list item to cursor
-   */
+  /** Attaches active list item to cursor */
   function attachListItem(event: PointerEvent): void {
     const x: number | null = sensorRef.current.pointerCoords.x;
     const y: number | null = sensorRef.current.pointerCoords.y;
@@ -159,99 +143,107 @@ const FDCollectionsCollection = ({
     }
   }
 
-  /**
-   * @function detachListItem
-   * @description Detaches active list item from cursor, handles transfer of list item inbetween collections
-   */
+  /** Detaches active list item from cursor, handles transfer of list item inbetween collections */
   function detachListItem(event: PointerEvent): void {
-    // Get detachment position
-    const detach: Record<'x' | 'y', number> = { x: event.clientX, y: event.clientY };
+    const { x, y } = sensorRef.current.initialPointerCoords; // Attachment position
+    const detach: Record<'x' | 'y', number> = { x: event.clientX, y: event.clientY }; // Detachment position
 
-    // Ensure that the user isn't misclicking
-    const { x, y } = sensorRef.current.initialPointerCoords;
-
+    // Handle misclicks
     if (detach.x === x && detach.y === y) {
       resetInteraction();
       return;
     }
 
-    // Get index of new collection
+    // Identify target collection index
     const collectionRects: DOMRect[] = ulRefs.current.map((col) => col.getBoundingClientRect());
+    const targetCollectionIndex = findEuclidean(detach, collectionRects);
 
-    targetRef.current.colIndex = findEuclidean(detach, collectionRects);
-
-    if (targetRef.current.colIndex == NOT_FOUND_INDEX) {
-      resetInteraction({ event: 'detach', reason: 'target.colIndex is not valid.' });
+    if (targetCollectionIndex == NOT_FOUND_INDEX) {
+      resetInteraction({ event: 'detach', reason: 'Failure to identify target index.' });
       return;
     }
 
-    // Get new collection's unordered list
-    const targetCol = ulRefs.current[targetRef.current.colIndex];
+    targetRef.current.colIndex = targetCollectionIndex;
 
+    // Get target collection's list item rects
+    const targetCol = ulRefs.current[targetCollectionIndex];
     if (!targetCol) {
-      resetInteraction({ event: 'detach', reason: 'Failure to identify target.colIndex.' });
+      resetInteraction({
+        event: 'detach',
+        reason: 'Failure to identify target index within unordered list reference array.',
+      });
       return;
     }
 
-    // Get new collection's list item rects
     const targetColListItems: (HTMLLIElement | HTMLDivElement)[] = Array.from(targetCol.children) as Array<
       HTMLDivElement | HTMLLIElement
     >;
     const targetColRects: DOMRect[] = targetColListItems.map((li) => li.getBoundingClientRect());
 
     // Find the closest item index to the detach point
-    targetRef.current.listItemIndex = findEuclidean(detach, targetColRects);
-
-    if (targetRef.current.listItemIndex == NOT_FOUND_INDEX) {
-      resetInteraction({ event: 'detach', reason: 'target.listItemIndex is not valid.' });
+    const targetListIndex: number = findEuclidean(detach, targetColRects);
+    if (targetListIndex == NOT_FOUND_INDEX) {
+      resetInteraction({ event: 'detach', reason: 'Failure to identify euclidean.' });
       return;
     }
 
+    targetRef.current.listItemIndex = targetListIndex;
+
+    // Capture source information prior to state sets to avoid mutable ref issues
+    const sourceColIndex = sourceRef.current.colIndex;
+    const sourceListIndex = sourceRef.current.listItemIndex;
+    const sourceKey = Object.keys(userCollections)[sourceColIndex];
+    const targetKey = Object.keys(userCollections)[targetCollectionIndex];
+
+    if (sourceColIndex === NOT_FOUND_INDEX || sourceListIndex === NOT_FOUND_INDEX || !sourceKey || !targetKey) {
+      resetInteraction({ event: 'detach', reason: 'Invalid source and/or target keys.' });
+      return;
+    }
+
+    // Establish flag determining if the dragged list item is dropped in the same collection at the same position
+    const isSameCollection: boolean = sourceColIndex === targetCollectionIndex;
+    const isSameListItemIndex: boolean = sourceListIndex === targetListIndex;
+    const isFaultyInteraction: boolean = isSameCollection && isSameListItemIndex;
+
     // Update carousels when user drags a list item to a collection and drops it in a new position
     setUserCollections((prevCarousels) => {
-      const isSameCollection: boolean = sourceRef.current.colIndex == targetRef.current.colIndex;
-      const isSameListItemIndex: boolean = sourceRef.current.listItemIndex == targetRef.current.listItemIndex;
+      if (isFaultyInteraction) return prevCarousels;
 
-      // If the dragged list item is dropped in the same collection at the same position
-      if (isSameCollection && isSameListItemIndex) return prevCarousels;
+      const prevSourceData = prevCarousels[sourceKey]?.data as TmdbMovieProvider[];
+      const prevTargetData = prevCarousels[targetKey]?.data as TmdbMovieProvider[];
 
-      // Identify the source and target collections by their keys
-      const sourceKey = Object.keys(prevCarousels)[sourceRef.current.colIndex];
-      const targetKey = Object.keys(prevCarousels)[targetRef.current.colIndex];
-      if (!sourceKey || !targetKey) return prevCarousels;
+      // Determine if the dragged list item is dropped in a target collection (not source collection for reordering) that already contains the list item
+      const targetIncludesListItem: boolean =
+        !isSameCollection && prevTargetData.some((item) => item.id === prevSourceData[sourceListIndex]?.id);
 
-      const source = prevCarousels[sourceKey];
-      const target = prevCarousels[targetKey];
-
-      const sourceData = (source && (source.data as TmdbMovieProvider[])) || [];
-      const targetData = (target && (target.data as TmdbMovieProvider[])) || [];
-
-      // If the dragged list item is dropped in a collection that already contains the list item
-      const containsListItem: boolean = targetData.some(
-        (item) => item.id === sourceData[sourceRef.current.listItemIndex]?.id
-      );
-
-      if (containsListItem) {
+      if (targetIncludesListItem) {
         triggerError();
         return prevCarousels;
       }
 
-      // Remove the item from sourceData
-      const newSourceData: TmdbMovieProvider[] = sourceData.filter(
-        (_, index) => index !== sourceRef.current.listItemIndex
-      );
+      let newSourceData: TmdbMovieProvider[];
+      let newTargetData: TmdbMovieProvider[];
 
-      // Insert item into targetData
-      const newTargetData = [
-        ...targetData.slice(0, targetRef.current.listItemIndex),
-        sourceData[sourceRef.current.listItemIndex],
-        ...targetData.slice(targetRef.current.listItemIndex),
-      ];
+      if (isSameCollection) {
+        // Reordering within the same collection
+        newSourceData = [...prevSourceData];
+        const [movedItem] = newSourceData.splice(sourceListIndex, 1); // Remove original
+        if (!movedItem) return prevCarousels;
+        newSourceData.splice(targetListIndex, 0, movedItem); // Insert at new index
+        newTargetData = newSourceData; // Same array for source and target
+      } else {
+        // Moving to target collection
+        newSourceData = prevSourceData.filter((_, index) => index !== sourceListIndex);
+        const movedItem = structuredClone(prevSourceData[sourceListIndex]);
+        if (!movedItem) return prevCarousels;
+        newTargetData = [
+          ...prevTargetData.slice(0, targetListIndex),
+          movedItem,
+          ...prevTargetData.slice(targetListIndex),
+        ];
+      }
 
-      if (!newTargetData || !newTargetData.length) return prevCarousels;
-
-      // State object
-      const updatedCarousels = {
+      return {
         ...prevCarousels,
         [sourceKey]: {
           ...prevCarousels[sourceKey]!,
@@ -262,18 +254,12 @@ const FDCollectionsCollection = ({
           data: newTargetData,
         } as UserCollection,
       };
-
-      // Update state
-      return updatedCarousels;
     });
 
     setTimeout(() => resetInteraction(), 0);
   }
 
-  /**
-   * @function pointerMove
-   * @description Tracks collections and their items
-   */
+  /** Tracks collections and their items */
   function pointerMove(): void {
     if (
       isEditMode &&
@@ -295,10 +281,7 @@ const FDCollectionsCollection = ({
     }
   }
 
-  /**
-   * @function handleModalTrailer
-   * @description Sets modal trailer
-   */
+  /** Sets modal trailer */
   function handleModalTrailer(): void {
     const listItems: Element[] | null = ulRefs.current[mapIndex] ? Array.from(ulRefs.current[mapIndex].children) : null;
 
@@ -325,10 +308,7 @@ const FDCollectionsCollection = ({
     setTimeout(() => resetInteraction(), 0);
   }
 
-  /**
-   * @function pointerUp
-   * @description Scales all list items and applies filters to their images then invokes @func `resetInteraction`
-   */
+  /** Scales all list items and applies filters to their images then invokes resetInteraction */
   function pointerUp(): void {
     if (!isEditMode && !sensorRef.current.isActiveElement) {
       handleModalTrailer();
@@ -338,10 +318,7 @@ const FDCollectionsCollection = ({
     }
   }
 
-  /**
-   * @function useEffect
-   * @description Handles module's event listeners
-   */
+  /** Handles module's event listeners */
   useEffect(() => {
     ulRefs.current[mapIndex]?.addEventListener('pointerdown', pointerDown);
     ulRefs.current[mapIndex]?.addEventListener('pointermove', pointerMove);
@@ -354,10 +331,6 @@ const FDCollectionsCollection = ({
     };
   }, [isEditMode]);
 
-  /**
-   * @function FDCollectionsCollection
-   * @returns {JSX.Element}
-   */
   if (data)
     return (
       <section className='fdCollections__collection'>
