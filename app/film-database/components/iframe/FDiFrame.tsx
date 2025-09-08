@@ -37,6 +37,7 @@ const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
         <FDiFramePlayer
           trailers={trailers}
           setTrailers={setTrailers}
+          type={type}
         />
       ) : (
         <picture className='fdiFrame__player'>
