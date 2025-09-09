@@ -4,9 +4,13 @@ import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbRes
 import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
 import { SvgSpinnersRingResize } from '~/film-database/assets/svg/icons';
 import { useModal } from '~/film-database/context/ModalContext';
+import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
+
+type Cast = TmdbResponseFlat['personCredits']['cast'][number];
 
 const FDPerson = () => {
   const { personRef } = useModal();
+  const { chunkSize } = useChunkSize();
 
   const [person, setPerson] = useState<{
     details: TmdbResponseFlat['personDetails'] | undefined;
@@ -36,13 +40,23 @@ const FDPerson = () => {
     fetchPerson();
   }, [personRef]);
 
+  // Dep
+  const allCast = useMemo(() => {
+    if (!credits) return [];
+    const allCast: Cast[] = Array.isArray(credits.cast[0]) ? credits.cast.flat(1) : credits.cast;
+    return allCast;
+  }, [credits]);
+
+  // Known for
+  const knownFor = useMemo(() => {
+    return allCast
+      .flat()
+      .sort((a, b) => b.vote_average - a.vote_average)
+      .slice(0, chunkSize.modal * 2);
+  }, [credits]);
+
   // Group cast credits by year
   const castCreditsGrouped = useMemo(() => {
-    if (!credits) return [];
-
-    type Cast = TmdbResponseFlat['personCredits']['cast'][number];
-    const allCast: Cast[] = Array.isArray(credits.cast[0]) ? credits.cast.flat(1) : credits.cast;
-
     const filteredCast = allCast.filter((film) => film.media_type !== 'tv' && film.release_date);
 
     const grouped: Record<string, Cast[]> = {};
@@ -132,8 +146,8 @@ const FDPerson = () => {
           <GenericCarousel
             carouselIndex={1}
             carouselName='media'
-            heading='Movies'
-            data={credits.cast}
+            heading='Known For'
+            data={knownFor}
           />
         </div>
 
