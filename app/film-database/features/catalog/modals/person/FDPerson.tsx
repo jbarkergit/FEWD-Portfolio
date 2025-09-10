@@ -21,24 +21,23 @@ const FDPerson = () => {
 
   const clampRef = useRef<HTMLSpanElement>(null);
 
-  // Fetch
-  const fetchPerson = async () => {
-    if (!person) return;
-
-    const responses = await tmdbCall([{ personDetails: person }, { personCredits: person }]);
-
-    const details = responses.find(
-      (r): r is { key: 'personDetails'; response: TmdbResponseFlat['personDetails'] } => r.key === 'personDetails'
-    )?.response;
-
-    const credits = responses.find(
-      (r): r is { key: 'personCredits'; response: TmdbResponseFlat['personCredits'] } => r.key === 'personCredits'
-    )?.response;
-
-    setResponse({ details, credits });
-  };
-
   useEffect(() => {
+    const fetchPerson = async () => {
+      if (!person) return;
+
+      const responses = await tmdbCall([{ personDetails: person }, { personCredits: person }]);
+
+      const details = responses.find(
+        (r): r is { key: 'personDetails'; response: TmdbResponseFlat['personDetails'] } => r.key === 'personDetails'
+      )?.response;
+
+      const credits = responses.find(
+        (r): r is { key: 'personCredits'; response: TmdbResponseFlat['personCredits'] } => r.key === 'personCredits'
+      )?.response;
+
+      setResponse({ details, credits });
+    };
+
     fetchPerson();
   }, [person]);
 
