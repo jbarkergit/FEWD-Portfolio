@@ -5,7 +5,7 @@ import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import GenericCarouselNavigation from '~/film-database/components/carousel/GenericCarouselNavigation';
 import { useUserCollection, type UserCollection } from '~/film-database/context/UserCollectionContext';
-import { useTrailerQueue } from '~/film-database/context/TrailerQueueContext';
+import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 
 // Magic constant
 const NOT_FOUND_INDEX = -1 as const;
@@ -72,7 +72,7 @@ const FDCollectionsCollection = ({
 }: Props) => {
   // Context
   const { userCollections, setUserCollections } = useUserCollection();
-  const { setModalTrailer } = useTrailerQueue();
+  const { setModalTrailer } = useModalTrailer();
 
   /** Rolls event listeners back to original mount state */
   function resetEventListeners(): void {

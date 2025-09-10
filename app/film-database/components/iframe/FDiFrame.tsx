@@ -3,7 +3,7 @@ import FDiFramePlayer from './player/FDiFramePlayer';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import { useHeroData } from '~/film-database/context/HeroDataContext';
-import { useTrailerQueue } from '~/film-database/context/TrailerQueueContext';
+import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 
 /** This component utilizes YouTube Player API
  * https://developers.google.com/youtube/iframe_api_reference
@@ -12,7 +12,7 @@ import { useTrailerQueue } from '~/film-database/context/TrailerQueueContext';
 
 const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
   const { heroData } = useHeroData();
-  const { modalTrailer } = useTrailerQueue();
+  const { modalTrailer } = useModalTrailer();
   const [trailers, setTrailers] = useState<TmdbResponseFlat['videos']['results'] | undefined>(undefined);
 
   // Fetch trailer user request

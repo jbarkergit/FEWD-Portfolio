@@ -43,7 +43,7 @@ export const TrailerQueueProvider = ({ children }: { children: ReactNode }) => {
   return <Context.Provider value={{ modalTrailer, setModalTrailer }}>{children}</Context.Provider>;
 };
 
-export const useTrailerQueue = () => {
+export const useModalTrailer = () => {
   const context = useContext(Context);
   if (!context) throw new Error('A provider is required to consume TrailerQueue.');
   return context;

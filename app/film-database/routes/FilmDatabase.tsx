@@ -7,7 +7,7 @@ import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAutho
 import { HeroDataProvider } from '~/film-database/context/HeroDataContext';
 import { ChunkSizeProvider } from '~/film-database/context/ChunkSizeContext';
 import { RootRefProvider } from '~/film-database/context/RootRefContext';
-import { TrailerQueueProvider } from '~/film-database/context/TrailerQueueContext';
+import { TrailerQueueProvider } from '~/film-database/context/ModalTrailerContext';
 import { UserCollectionProvider } from '~/film-database/context/UserCollectionContext';
 import { ModalProvider } from '~/film-database/context/ModalContext';
 // Composables

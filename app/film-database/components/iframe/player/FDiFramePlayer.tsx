@@ -5,7 +5,7 @@ import IFrameController from '../iframe-controller/IFrameController';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { useModal } from '~/film-database/context/ModalContext';
 import { useUserCollection } from '~/film-database/context/UserCollectionContext';
-import { useTrailerQueue } from '~/film-database/context/TrailerQueueContext';
+import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 
 const FDiFramePlayer = ({
   trailers,
@@ -19,7 +19,7 @@ const FDiFramePlayer = ({
   // Context
   const { isModal } = useModal();
   const { userCollections } = useUserCollection();
-  const { modalTrailer, setModalTrailer } = useTrailerQueue();
+  const { modalTrailer, setModalTrailer } = useModalTrailer();
 
   // iFrame options
   const opts: YouTubeProps['opts'] = {
