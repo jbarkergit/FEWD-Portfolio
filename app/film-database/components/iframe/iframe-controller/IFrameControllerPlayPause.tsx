@@ -51,7 +51,7 @@ const IFrameControllerPlayPause = ({
     <button
       className='fdiFrame__controller__controls__button'
       aria-label={playState === 'playing' ? 'Pause video' : 'Play video'}
-      onClick={() => alterPlayState()}>
+      onPointerUp={alterPlayState}>
       {playStateSymbolComponent}
     </button>
   );

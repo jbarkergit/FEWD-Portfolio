@@ -52,7 +52,7 @@ const IFrameControllerPlayback = ({
         className='iFrameController__controls__playback__cog'
         ref={playbackCogRef}
         aria-label='Change video playback quality'
-        onClick={() => {
+        onPointerUp={() => {
           setIsModalOpen((prevState) => (prevState === true ? false : true));
           mountEventListeners();
         }}>
@@ -66,7 +66,7 @@ const IFrameControllerPlayback = ({
           <li key={`iFrame-controller-playback-rate-${rate.resolution}-${index}`}>
             <button
               aria-label={`Set video quality to ${rate.resolution}`}
-              onClick={() => {
+              onPointerUp={() => {
                 player?.setPlaybackQuality(`${qualityState[index]}`);
                 setIsModalOpen(false);
               }}>
