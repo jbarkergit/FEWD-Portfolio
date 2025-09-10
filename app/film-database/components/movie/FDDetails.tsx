@@ -13,11 +13,13 @@ import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbRes
 import { tmdbDiscoveryIds } from '~/film-database/composables/const/tmdbDiscoveryIds';
 import { useHeroData } from '~/film-database/context/HeroDataContext';
 import { useModal } from '~/film-database/context/ModalContext';
+import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 
 const discoveryIdMap = Object.fromEntries(Object.entries(tmdbDiscoveryIds).map(([k, v]) => [v, k]));
 
 const FDDetails = ({ modal }: { modal: boolean }) => {
   const { heroData } = useHeroData();
+  const { setModalTrailer } = useModalTrailer();
   const { setIsModal } = useModal();
 
   if (!heroData)
@@ -197,7 +199,10 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
             <nav>
               <button
                 aria-label={`View more details about ${heroData.title}`}
-                onClick={() => setIsModal('movie')}>
+                onClick={() => {
+                  setIsModal('movie');
+                  setModalTrailer(heroData);
+                }}>
                 View more details
               </button>
             </nav>
