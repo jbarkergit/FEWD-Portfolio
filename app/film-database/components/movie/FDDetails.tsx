@@ -17,6 +17,8 @@ import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 
 const discoveryIdMap = Object.fromEntries(Object.entries(tmdbDiscoveryIds).map(([k, v]) => [v, k]));
 
+const earlyViewingProviders = ['Google Play Movies', 'Apple TV', 'Prime Video'];
+
 const FDDetails = ({ modal }: { modal: boolean }) => {
   const { heroData } = useHeroData();
   const { setModalTrailer } = useModalTrailer();
@@ -34,17 +36,19 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
   );
 
   /**
-   * @function fetchWatchProviders
+   * Fetch watch providers when heroData changes
    */
   useEffect(() => {
     if (!heroData) return;
 
-    let cancelled = false;
+    let cancelled: boolean = false;
 
-    (async () => {
+    const fetchWatchProviders = async () => {
       const data = await tmdbCall({ watchProviders: heroData.id });
       if (!cancelled) setWatchProviders(data.response.results.US);
-    })();
+    };
+
+    fetchWatchProviders;
 
     return () => {
       cancelled = true;
@@ -52,8 +56,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
   }, [heroData]);
 
   /**
-   * @function voteAvg
-   * @returns Visual rating of movie out of 5 stars
+   * Get visual representation of vote average as stars
    */
   const getVoteAverageVisual = (): JSX.Element | undefined => {
     const voteAvg = heroData.vote_average;
@@ -91,22 +94,9 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
   };
 
   /**
-   * @function getAvailability
-   * @returns Movie availability
-   * Determines if movie has been released by comparing current date to movie release date
-   * Checks for rent or buy options and streaming service availability
-   * Note: Some services offer early streaming for movies in theatres via rental and/or purchase
+   * Determine a movie's availability on streaming platforms or theatres
+   * This includes early viewing options (rent or buy) on major platforms
    */
-  const earlyViewingProviders = ['Google Play Movies', 'Apple TV', 'Prime Video'];
-
-  const hasEarlyViewing =
-    watchProviders &&
-    watchProviders.buy?.some(
-      (p) =>
-        earlyViewingProviders.includes(p.provider_name) ||
-        watchProviders.rent?.some((p) => earlyViewingProviders.includes(p.provider_name))
-    );
-
   const getAvailability = (): JSX.Element | undefined => {
     const rel = heroData!.release_date.replaceAll('-', ''); // YYYY/MM/DD ISO format converted to 8 digits
 
@@ -143,6 +133,15 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
           </li>
         );
       }
+
+      const hasEarlyViewing =
+        watchProviders &&
+        watchProviders.buy?.some(
+          (p) =>
+            earlyViewingProviders.includes(p.provider_name) ||
+            watchProviders.rent?.some((p) => earlyViewingProviders.includes(p.provider_name))
+        );
+
       // In Theatres & Early Streaming
       // Note that the TMDB API does not list these providers as streaming service (.flatrate property) if available for early streaming
       if ((!watchProviders.flatrate && watchProviders.buy) || (!watchProviders.flatrate && watchProviders.rent)) {
