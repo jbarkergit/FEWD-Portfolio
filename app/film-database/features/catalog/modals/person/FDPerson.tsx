@@ -9,23 +9,23 @@ import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
 type Cast = TmdbResponseFlat['personCredits']['cast'][number];
 
 const FDPerson = () => {
-  const { personRef } = useModal();
+  const { person } = useModal();
   const { chunkSize } = useChunkSize();
 
-  const [person, setPerson] = useState<{
+  const [response, setResponse] = useState<{
     details: TmdbResponseFlat['personDetails'] | undefined;
     credits: TmdbResponseFlat['personCredits'] | undefined;
   }>({ details: undefined, credits: undefined });
 
-  const { details, credits } = person;
+  const { details, credits } = response;
 
   const clampRef = useRef<HTMLSpanElement>(null);
 
   // Fetch
   const fetchPerson = async () => {
-    if (!personRef.current) return;
+    if (!person) return;
 
-    const responses = await tmdbCall([{ personDetails: personRef.current }, { personCredits: personRef.current }]);
+    const responses = await tmdbCall([{ personDetails: person }, { personCredits: person }]);
 
     const details = responses.find(
       (r): r is { key: 'personDetails'; response: TmdbResponseFlat['personDetails'] } => r.key === 'personDetails'
@@ -35,12 +35,12 @@ const FDPerson = () => {
       (r): r is { key: 'personCredits'; response: TmdbResponseFlat['personCredits'] } => r.key === 'personCredits'
     )?.response;
 
-    setPerson({ details, credits });
+    setResponse({ details, credits });
   };
 
   useEffect(() => {
     fetchPerson();
-  }, [personRef]);
+  }, [person]);
 
   // Dep
   const allCast = useMemo(() => {

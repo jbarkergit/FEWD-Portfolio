@@ -21,7 +21,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   const { userCollections, setUserCollections } = useUserCollection();
   const { setHeroData } = useHeroData();
   const { chunkSize } = useChunkSize();
-  const { setIsModal, personRef } = useModal();
+  const { setIsModal, setPerson } = useModal();
 
   const collectionsMenu = useRef<HTMLUListElement>(null);
   const collectionAttribute: string = 'data-active';
@@ -150,7 +150,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
           aria-label={`Read more about ${cinemaEntry.name}`}
           onPointerUp={() => {
             setIsModal('person');
-            personRef.current = cinemaEntry.id;
+            setPerson(cinemaEntry.id);
           }}>
           <picture
             className='genericCarousel__wrapper__ul__li__picture'

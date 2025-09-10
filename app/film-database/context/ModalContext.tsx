@@ -1,28 +1,20 @@
-import {
-  createContext,
-  useContext,
-  useRef,
-  useState,
-  type Dispatch,
-  type ReactNode,
-  type RefObject,
-  type SetStateAction,
-} from 'react';
+import { createContext, useContext, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 
 const Context = createContext<
   | {
       isModal: 'collections' | 'movie' | 'person' | undefined;
       setIsModal: Dispatch<SetStateAction<'collections' | 'movie' | 'person' | undefined>>;
-      personRef: RefObject<number | null>;
+      person: number | undefined;
+      setPerson: Dispatch<SetStateAction<number | undefined>>;
     }
   | undefined
 >(undefined);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [isModal, setIsModal] = useState<'collections' | 'movie' | 'person' | undefined>(undefined);
-  const personRef = useRef<number>(null);
+  const [person, setPerson] = useState<number | undefined>(undefined);
 
-  return <Context.Provider value={{ isModal, setIsModal, personRef }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ isModal, setIsModal, person, setPerson }}>{children}</Context.Provider>;
 };
 
 export const useModal = () => {
