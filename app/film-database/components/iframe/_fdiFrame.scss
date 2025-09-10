@@ -66,7 +66,6 @@ $final-scale: $scale-factor * $scale-buffer;
         transform: scale($final-scale);
         // Align scaling from the top; top stays put, extra height grows downward
         transform-origin: center right;
-        pointer-events: none;
         @media (max-width: 1850px) {
           position: absolute;
           width: 100svw;

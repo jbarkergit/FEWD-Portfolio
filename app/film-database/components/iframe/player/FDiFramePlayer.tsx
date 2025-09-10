@@ -32,7 +32,7 @@ const FDiFramePlayer = ({
       cc_load_policy: 1,
       // color: undefined,
       controls: type === 'hero' ? 0 : 1, // 0 = disabled
-      disablekb: 1, // 1 = disabled
+      disablekb: 0, // 1 = disabled
       // enablejsapi?: 0 | 1 | undefined;
       // end?: number | undefined;
       fs: 0, // 0 = disabled

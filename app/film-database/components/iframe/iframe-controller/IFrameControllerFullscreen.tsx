@@ -1,5 +1,6 @@
-import type { SVGProps } from 'react';
+import { useEffect, useState, type SVGProps } from 'react';
 import type { YouTubePlayer } from 'react-youtube';
+import { useHeroData } from '~/film-database/context/HeroDataContext';
 
 function IcTwotoneFullscreen(props: SVGProps<SVGSVGElement>) {
   return (
@@ -19,24 +20,39 @@ function IcTwotoneFullscreen(props: SVGProps<SVGSVGElement>) {
 }
 
 const IFrameControllerFullscreen = ({ player }: { player: YouTubePlayer }) => {
-  const fullscreenPlayer = async () => {
-    const iframe = await player.getIframe();
-    if (iframe.requestFullscreen) {
-      iframe.requestFullscreen();
-    } else if ((iframe as any).mozRequestFullScreen) {
-      (iframe as any).mozRequestFullScreen();
-    } else if ((iframe as any).webkitRequestFullscreen) {
-      (iframe as any).webkitRequestFullscreen();
-    } else if ((iframe as any).msRequestFullscreen) {
-      (iframe as any).msRequestFullscreen();
-    }
-  };
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const { heroData } = useHeroData();
+
+  useEffect(() => {
+    const changePlayerOpts = async () => {
+      try {
+        await player.setOption('playerVars', 'controls', isFullscreen ? 1 : 0);
+        await player.setOption('playerVars', 'disablekb', isFullscreen ? 0 : 1);
+
+        const iframe = await player.getIframe();
+
+        if (iframe.requestFullscreen) {
+          iframe.requestFullscreen();
+        } else if ((iframe as any).mozRequestFullScreen) {
+          (iframe as any).mozRequestFullScreen();
+        } else if ((iframe as any).webkitRequestFullscreen) {
+          (iframe as any).webkitRequestFullscreen();
+        } else if ((iframe as any).msRequestFullscreen) {
+          (iframe as any).msRequestFullscreen();
+        }
+      } catch (error) {
+        console.error('Error updating player options:', error);
+      }
+    };
+
+    changePlayerOpts();
+  }, [isFullscreen]);
 
   return (
     <button
       className='fdiFrame__controller__controls__button'
       aria-label='Open trailer in fullscreen mode'
-      onPointerUp={fullscreenPlayer}>
+      onPointerUp={() => setIsFullscreen((prev) => !prev)}>
       <IcTwotoneFullscreen />
     </button>
   );

@@ -20,8 +20,11 @@ const IFrameController = ({
   const [playerVolume, setPlayerVolume] = useState<number>(0);
 
   useEffect(() => {
-    if (playerVolume > 0) player.unMute();
-    player.setVolume(playerVolume);
+    const handleVolume = () => {
+      if (playerVolume > 0) player.unMute();
+      player.setVolume(playerVolume);
+    };
+    handleVolume();
   }, [playerVolume]);
 
   return (
@@ -38,7 +41,8 @@ const IFrameController = ({
         />
         <IFrameControllerVolumeSlider setPlayerVolume={setPlayerVolume} />
         <IFrameControllerTimeStamp player={player} />
-        <IFrameControllerFullscreen player={player} />
+        {/* Fullscreen requires a reload of the embed, which breaks the embed. */}
+        {/* <IFrameControllerFullscreen player={player} /> */}
       </div>
     </div>
   );
