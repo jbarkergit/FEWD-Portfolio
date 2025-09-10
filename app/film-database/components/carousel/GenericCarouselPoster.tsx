@@ -66,7 +66,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   );
 
   /** @JSX */
-  if (carouselName === 'media') {
+  if (carouselName === 'media' || carouselName === 'person') {
     const mediaEntry = entry as GenericCarouselMap['media'][number];
     return (
       <Parent>
@@ -176,20 +176,6 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
             <span>{cinemaEntry.known_for_department !== 'Acting' ? cinemaEntry.known_for_department : null}</span>
           </div>
         </button>
-      </Parent>
-    );
-  } else if (carouselName === 'person') {
-    const personEntry = entry as GenericCarouselMap['cinemaInformation'][number];
-    return (
-      <Parent>
-        <picture className='genericCarousel__wrapper__ul__li__picture'>
-          <img
-            className='genericCarousel__wrapper__ul__li__picture--img'
-            src={`https://image.tmdb.org/t/p/w780/${personEntry.name}`}
-            alt={`${personEntry.name}`}
-            fetchPriority={carouselIndex === 0 ? 'high' : 'low'}
-          />
-        </picture>
       </Parent>
     );
   } else {

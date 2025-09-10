@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
@@ -18,6 +18,8 @@ const FDPerson = () => {
   }>({ details: undefined, credits: undefined });
 
   const { details, credits } = person;
+
+  const clampRef = useRef<HTMLSpanElement>(null);
 
   // Fetch
   const fetchPerson = async () => {
@@ -70,6 +72,23 @@ const FDPerson = () => {
       .map((year) => ({ year, films: grouped[year] }));
   }, [credits]);
 
+  // Clamp handler
+  const handleClamp = () => {
+    if (!clampRef.current) return;
+
+    const isClamped = clampRef.current.getAttribute('data-clamp') === 'true';
+
+    if (isClamped) {
+      clampRef.current.style.maxHeight = `${clampRef.current.scrollHeight}px`;
+      clampRef.current.setAttribute('data-clamp', 'false');
+    } else {
+      const lineHeight = parseFloat(getComputedStyle(clampRef.current).lineHeight || '20');
+      clampRef.current.style.maxHeight = `${lineHeight * 4}px`;
+      clampRef.current.setAttribute('data-clamp', 'true');
+    }
+  };
+
+  // JSX
   if (!details || !credits)
     return (
       <div className='fdPerson'>
@@ -78,7 +97,7 @@ const FDPerson = () => {
     );
   return (
     <article className='fdPerson'>
-      <div className='fdPerson__section'>
+      <div className='fdPerson__column'>
         <picture data-missing={details.profile_path ? 'false' : 'true'}>
           {details.profile_path ? (
             <img
@@ -136,34 +155,44 @@ const FDPerson = () => {
         </ul>
       </div>
 
-      <div className='fdPerson__section'>
-        <div className='fdPerson__section__bio'>
+      <div className='fdPerson__column'>
+        <div className='fdPerson__column__bio'>
           <span>Biography</span>
-          <span>{details.biography}</span>
+          <span
+            ref={clampRef}
+            data-clamp='true'
+            onPointerUp={handleClamp}>
+            {details.biography}
+          </span>
         </div>
 
-        <div className='fdPerson__section__knownFor'>
-          <GenericCarousel
-            carouselIndex={1}
-            carouselName='media'
-            heading='Known For'
-            data={knownFor}
-          />
-        </div>
+        <GenericCarousel
+          carouselIndex={1}
+          carouselName='person'
+          heading='Known For'
+          data={knownFor}
+        />
 
-        <table className='fdPerson__table'>
-          <tbody className='fdPerson__table__tbody'>
+        <table className='fdPerson__column__table'>
+          <thead>
+            <tr>
+              <th>Filmography</th>
+            </tr>
+          </thead>
+          <tbody className='fdPerson__column__table__tbody'>
             {castCreditsGrouped.map((group, index) => (
               <tr
-                className='fdPerson__table__tbody__tr'
+                className='fdPerson__column__table__tbody__tr'
                 key={`person-casted-group-${index}`}>
-                <td className='fdPerson__table__tbody__tr__td'>
-                  <table className='fdPerson__table__tbody__tr__td__table'>
-                    <tbody className='fdPerson__table__tbody__tr__td__table__tbody'>
+                <td className='fdPerson__column__table__tbody__tr__td'>
+                  <table className='fdPerson__column__table__tbody__tr__td__table'>
+                    <tbody className='fdPerson__column__table__tbody__tr__td__table__tbody'>
                       {group.films?.map((film) => (
-                        <tr key={`person-casted-group-${index}-movieId-${film.id}`}>
-                          <td>{group.year}</td>
-                          <td>{film.title}</td>
+                        <tr
+                          className='fdPerson__column__table__tbody__tr__td__table__tbody__tr'
+                          key={`person-casted-group-${index}-movieId-${film.id}`}>
+                          <td className='fdPerson__column__table__tbody__tr__td__table__tbody__tr__td'>{group.year}</td>
+                          <td className='fdPerson__column__table__tbody__tr__td__table__tbody__tr__td'>{film.title}</td>
                         </tr>
                       ))}
                     </tbody>
