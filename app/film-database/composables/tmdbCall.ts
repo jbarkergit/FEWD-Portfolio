@@ -90,7 +90,7 @@ const handleArg = async <K extends TmdbEndpointKeys>(
   key: K,
   query: Query<K>
 ): Promise<ReturnType<typeof retrieveCachedValue | typeof callApi>> => {
-  const excludedKeys = ['videos', 'personDetails', 'personCredits'] as const;
+  const excludedKeys = ['videos', 'personDetails', 'personCredits', 'credits', 'watchProviders'] as const;
 
   if (!excludedKeys.includes(key)) {
     const cachedValue = retrieveCachedValue(key);
