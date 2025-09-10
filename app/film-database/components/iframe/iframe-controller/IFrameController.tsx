@@ -8,6 +8,7 @@ import IFrameControllerVolumeIndicator from './IFrameControllerVolumeIndicator';
 import IFrameControllerVolumeSlider from './IFrameControllerVolumeSlider';
 import IFrameControllerTimeStamp from './IFrameControllerTimeStamp';
 import IFrameControllerSeeker from './IFrameControllerSeeker';
+import IFrameControllerFullscreen from '~/film-database/components/iframe/iframe-controller/IFrameControllerFullscreen';
 
 const IFrameController = ({
   player,
@@ -37,6 +38,7 @@ const IFrameController = ({
         />
         <IFrameControllerVolumeSlider setPlayerVolume={setPlayerVolume} />
         <IFrameControllerTimeStamp player={player} />
+        <IFrameControllerFullscreen player={player} />
       </div>
     </div>
   );
