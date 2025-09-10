@@ -6,33 +6,86 @@
   z-index: 10;
   top: 0;
   left: 0;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   width: 100svw;
-  height: auto;
   padding: 30px calc(var(--fd-padding-generic) / 1.5);
   pointer-events: none;
   @media (max-width: 950px) {
     position: relative;
   }
+  & button {
+    pointer-events: all;
+  }
+  & svg {
+    aspect-ratio: 1/1;
+    filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.4));
+  }
+  &__app {
+    justify-self: start;
+    padding-right: calc(var(--fd-gap) * 4);
+    @include m.fdFontL;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
   &__ul {
-    flex: 0 0 50%;
+    justify-self: left;
     display: flex;
-    gap: var(--fd-gap);
-    &:nth-of-type(2) {
-      justify-content: flex-end;
+    gap: calc(var(--fd-gap) * 1.5);
+    &:nth-of-type(1) button svg {
+      width: 1.6rem;
+      margin-top: -4px;
     }
     &__li {
-      display: block;
-      pointer-events: all;
+      display: grid;
+      place-items: center;
       &__button {
-        display: grid;
-        place-items: center;
-        @include m.fdFontL;
-        color: var(--fd-font-color-primary);
-        & svg {
-          width: 1.8rem;
-          aspect-ratio: 1/1;
-          filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.4));
+        display: flex;
+        align-items: center;
+        gap: calc(var(--fd-gap) / 2);
+        @include m.fdFontM;
+        text-transform: capitalize;
+        white-space: nowrap;
+        font-weight: 300;
+      }
+    }
+  }
+  &__account {
+    justify-self: end;
+    & button {
+      display: block;
+      & svg {
+        width: 2rem;
+      }
+      & div {
+        position: absolute;
+        top: calc(30px + 2rem + 8px);
+        right: calc((var(--fd-padding-generic) / 1.5));
+        display: flex;
+        flex-direction: column;
+        background-color: var(--fd-bc-offset);
+        border-radius: calc(var(--fd-border-radius) / 2);
+        padding: 8px 16px;
+        box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+        opacity: 1;
+        pointer-events: all;
+        transform: scale(1);
+        transition:
+          opacity 150ms ease,
+          transform 150ms ease;
+
+        &[data-open='false'] {
+          opacity: 0;
+          pointer-events: none;
+          transform: scale(0.95);
+          transition:
+            opacity 150ms ease,
+            transform 150ms ease;
+        }
+        & button {
+          @include m.fdFontM;
+          text-transform: capitalize;
         }
       }
     }
