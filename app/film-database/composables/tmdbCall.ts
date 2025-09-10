@@ -24,6 +24,8 @@ type DataReturn<K> = K extends TmdbNeverKeys
       ? TmdbResponse['string'][K]
       : never;
 
+const excludedKeys = ['videos', 'personDetails', 'personCredits', 'credits', 'watchProviders'] as const;
+
 const createEndpoint = <K extends TmdbEndpointKeys>(key: K, query: Query<K>): string | undefined => {
   const allEndpoints = Object.assign({}, tmdbEndpoints.never, tmdbEndpoints.number, tmdbEndpoints.string);
   const endpoint = allEndpoints[key];
@@ -72,7 +74,7 @@ const callApi = async <K extends TmdbEndpointKeys>(key: K, query: Query<K>): Pro
     }
 
     const result = await response.json();
-    sessionStorage.setItem(key, JSON.stringify(result));
+    if (!excludedKeys.includes(key)) sessionStorage.setItem(key, JSON.stringify(result));
     return result as DataReturn<K>;
   } catch (e) {
     console.error(e);
@@ -90,8 +92,6 @@ const handleArg = async <K extends TmdbEndpointKeys>(
   key: K,
   query: Query<K>
 ): Promise<ReturnType<typeof retrieveCachedValue | typeof callApi>> => {
-  const excludedKeys = ['videos', 'personDetails', 'personCredits', 'credits', 'watchProviders'] as const;
-
   if (!excludedKeys.includes(key)) {
     const cachedValue = retrieveCachedValue(key);
     if (cachedValue) return cachedValue;
