@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
 import { zodSchema } from '~/base/validation/zodSchema';
-import { useFormValues } from '~/film-database/hooks/useFormValues';
 import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
 import { handleAuthProvider } from '~/base/firebase/authentication/utility/handleAuthProvider';
 import { createFirestoreUser } from '~/base/firebase/firestore/utility/createFirestoreUser';
@@ -111,8 +110,22 @@ const schemas = {
   }),
 };
 
+const useFormValues = <T extends Record<string, string>>(initialValues: T) => {
+  const [values, setValues] = useState<T>(initialValues);
+
+  const handleValues = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+
+    setValues((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  return { values, setValues, handleValues };
+};
+
 const FDAccountFieldset = () => {
-  /** @state */
   const [form, setForm] = useState<'registration' | 'login'>('registration');
 
   const formValues = {
@@ -125,25 +138,19 @@ const FDAccountFieldset = () => {
     }),
     login: useFormValues({ emailAddress: '', password: '' }),
   };
-
   const { values, handleValues } = form === 'registration' ? formValues.registration : formValues.login;
 
-  /** @refs */
   const fieldsetRef = useRef<HTMLFieldSetElement>(null);
 
-  /** @zod schema and parsing */
+  const fields = fieldStore[form];
+
+  // Schema, parsing and errors
   const schema = schemas[form];
   const parse = schema.safeParse(values);
-
-  /**
-   * @function getFieldError
-   * @description Returns parse error if one is present for @param name
-   */
   const getFieldError = (name: string) => parse.error?.errors.find((err) => err.path.includes(name))?.message;
 
   /**
-   * @function handleSubmit
-   * @description Invokes @function useFirestore hook corresponding to current form
+   * Invokes useFirestore hook corresponding to current form
    */
   const handleSubmit = () => {
     if (!parse.success) return;
@@ -152,8 +159,7 @@ const FDAccountFieldset = () => {
   };
 
   /**
-   * @function animateForm @function onAnimationStart @function onFormChange
-   * @description Animates fieldsets on form state change
+   * Animates fieldsets on form state change
    */
   const handleState = () => setForm((f) => (f === 'registration' ? 'login' : 'registration'));
 
@@ -180,10 +186,6 @@ const FDAccountFieldset = () => {
     return () => observer.disconnect();
   }, [form]);
 
-  /** @map */
-  const fields = fieldStore[form];
-
-  /** @JSX */
   return (
     <fieldset
       className='fdAccount__container__wrapper__form__fieldset'
