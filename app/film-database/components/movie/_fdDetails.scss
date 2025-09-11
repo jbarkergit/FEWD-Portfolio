@@ -184,9 +184,15 @@
 
 .formattedReleaseDate {
   text-transform: capitalize;
+  font-weight: 700;
+  text-transform: uppercase;
   &[data-status='green'] {
     color: #54c470;
-    text-transform: uppercase;
-    font-weight: 700;
+  }
+  &[data-status='gold'] {
+    color: #f0c419;
+  }
+  &[data-status='red'] {
+    color: #e04f5f;
   }
 }

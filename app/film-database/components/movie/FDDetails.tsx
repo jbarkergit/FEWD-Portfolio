@@ -1,4 +1,4 @@
-import { useEffect, useState, type JSX } from 'react';
+import { useEffect, useMemo, useState, type JSX } from 'react';
 import { Link } from 'react-router';
 import {
   EmptyStar,
@@ -21,8 +21,6 @@ const earlyViewingProviders = ['Google Play Movies', 'Apple TV', 'Prime Video'];
 
 const FDDetails = ({ modal }: { modal: boolean }) => {
   const { heroData } = useHeroData();
-  const { setModalTrailer } = useModalTrailer();
-  const { setIsModal } = useModal();
 
   if (!heroData)
     return (
@@ -31,9 +29,14 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
       </section>
     );
 
+  const { setModalTrailer } = useModalTrailer();
+  const { setIsModal } = useModal();
+
   const [watchProviders, setWatchProviders] = useState<TmdbResponseFlat['watchProviders']['results']['US'] | undefined>(
     undefined
   );
+
+  const genreIds = useMemo(() => heroData?.genre_ids.map((id) => discoveryIdMap[id]), [heroData]);
 
   /**
    * Fetch watch providers when heroData changes
@@ -48,7 +51,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
       if (!cancelled) setWatchProviders(data.response.results.US);
     };
 
-    fetchWatchProviders;
+    fetchWatchProviders();
 
     return () => {
       cancelled = true;
@@ -58,7 +61,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
   /**
    * Get visual representation of vote average as stars
    */
-  const getVoteAverageVisual = (): JSX.Element | undefined => {
+  const getVoteAverageVisual = useMemo((): JSX.Element | undefined => {
     const voteAvg = heroData.vote_average;
 
     // 0-10 vote scale (contains floating point value) floored and converted to 0-5 vote scale
@@ -91,28 +94,42 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
         ))}
       </li>
     );
-  };
+  }, [heroData]);
 
   /**
    * Determine a movie's availability on streaming platforms or theatres
    * This includes early viewing options (rent or buy) on major platforms
+   * NOTE: TMDB API does not list early streaming providers as streaming service (.flatrate property)
+   * NOTE: TMDB API is not fully reliable, so we'll simplify "STREAMING" prompt as the primary handler of "EARLY VIEWING"
    */
-  const getAvailability = (): JSX.Element | undefined => {
-    const rel = heroData!.release_date.replaceAll('-', ''); // YYYY/MM/DD ISO format converted to 8 digits
+  const getAvailability = useMemo((): JSX.Element | undefined => {
+    if (!heroData || !heroData.release_date) return undefined;
 
-    const relDates = {
-      year: parseInt(rel.slice(0, 4), 10),
-      month: parseInt(rel.slice(4, 6), 10) - 1,
-      day: parseInt(rel.slice(6, 8), 10),
+    const releaseDate = heroData.release_date.replaceAll('-', ''); // YYYY/MM/DD ISO format converted to 8 digits
+    const releaseDates = {
+      year: parseInt(releaseDate.slice(0, 4), 10),
+      month: parseInt(releaseDate.slice(4, 6), 10) - 1,
+      day: parseInt(releaseDate.slice(6, 8), 10),
     };
 
-    const release = new Date(relDates.year, relDates.month, relDates.day);
+    const release = new Date(releaseDates.year, releaseDates.month, releaseDates.day);
     const local = new Date();
 
-    // Not yet released
-    if (release > local) {
+    // NOTE: These variables are in priority order to ensure the correct status is prompted, handle them accordingly
+    const isReleased = release < local;
+    const isStreaming = watchProviders?.flatrate?.length;
+    const isPurchasable = watchProviders?.buy?.length;
+    const isRentable = watchProviders?.rent?.length;
+    const isInTheatres = local > release;
+    // const hasEarlyBuy = watchProviders.buy?.some((p) => earlyViewingProviders.includes(p.provider_name));
+    // const hasEarlyRent = watchProviders.rent?.some((p) => earlyViewingProviders.includes(p.provider_name));
+    // const hasEarlyViewing = hasEarlyBuy || hasEarlyRent;
+
+    if (!isReleased) {
       return (
-        <li className='formattedReleaseDate'>
+        <li
+          className='formattedReleaseDate'
+          data-status='gold'>
           {`Available ${release.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
@@ -120,43 +137,56 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
           })}`}
         </li>
       );
+    } else if (isStreaming) {
+      return (
+        <li
+          className='formattedReleaseDate'
+          data-status='green'>
+          Streaming
+        </li>
+      );
+    } else if (isPurchasable && isRentable) {
+      return (
+        <li
+          className='formattedReleaseDate'
+          data-status='green'>
+          Purchase or Rent
+        </li>
+      );
+    } else if (isPurchasable) {
+      return (
+        <li
+          className='formattedReleaseDate'
+          data-status='green'>
+          Purchase
+        </li>
+      );
+    } else if (isRentable) {
+      return (
+        <li
+          className='formattedReleaseDate'
+          data-status='green'>
+          Rent
+        </li>
+      );
+    } else if (isInTheatres) {
+      return (
+        <li
+          className='formattedReleaseDate'
+          data-status='green'>
+          In Theatres
+        </li>
+      );
+    } else {
+      return (
+        <li
+          className='formattedReleaseDate'
+          data-status='red'>
+          Viewing Options Unknown
+        </li>
+      );
     }
-
-    if (watchProviders) {
-      // Streaming
-      if (watchProviders.flatrate && watchProviders.flatrate.length > 0) {
-        return (
-          <li
-            className='formattedReleaseDate'
-            data-status='green'>
-            Streaming
-          </li>
-        );
-      }
-
-      const hasEarlyViewing =
-        watchProviders &&
-        watchProviders.buy?.some(
-          (p) =>
-            earlyViewingProviders.includes(p.provider_name) ||
-            watchProviders.rent?.some((p) => earlyViewingProviders.includes(p.provider_name))
-        );
-
-      // In Theatres & Early Streaming
-      // Note that the TMDB API does not list these providers as streaming service (.flatrate property) if available for early streaming
-      if ((!watchProviders.flatrate && watchProviders.buy) || (!watchProviders.flatrate && watchProviders.rent)) {
-        return (
-          <li
-            className='formattedReleaseDate'
-            data-status='green'>
-            {hasEarlyViewing ? 'In Theatres & Early Streaming' : 'In Theatres'}
-          </li>
-        );
-      }
-    }
-  };
-
-  const genreIds = heroData?.genre_ids.map((id) => discoveryIdMap[id]);
+  }, [watchProviders]);
 
   /** @returns */
   return (
@@ -191,8 +221,8 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
         <h2>{heroData.title}</h2>
       </header>
       <ul className='fdDetails__col'>
-        {getVoteAverageVisual()}
-        {getAvailability()}
+        {getVoteAverageVisual}
+        {getAvailability}
         {!modal && (
           <li>
             <nav>
