@@ -156,13 +156,17 @@ const FDPerson = () => {
 
       <div className='fdPerson__column'>
         <div className='fdPerson__column__bio'>
-          <span>Biography</span>
-          <span
-            ref={clampRef}
-            data-clamp='true'
-            onPointerUp={handleClamp}>
-            {details.biography}
-          </span>
+          {details.biography && details.biography.length > 0 && (
+            <>
+              <span>Biography</span>
+              <span
+                ref={clampRef}
+                data-clamp='true'
+                onPointerUp={handleClamp}>
+                {details.biography}
+              </span>
+            </>
+          )}
         </div>
 
         <GenericCarousel
