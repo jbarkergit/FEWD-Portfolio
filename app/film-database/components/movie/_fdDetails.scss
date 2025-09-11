@@ -165,6 +165,16 @@
       }
     }
   }
+  & nav button {
+    display: flex;
+    @include m.fdFontS;
+    font-weight: 800;
+    text-transform: capitalize;
+    & svg {
+      width: 1.4em;
+      aspect-ratio: 1/1;
+    }
+  }
   ~ .fdCineInfoCarousel:last-child {
     padding-bottom: var(--fd-padding-generic);
   }

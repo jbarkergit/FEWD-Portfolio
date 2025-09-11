@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type JSX } from 'react';
+import { useEffect, useMemo, useState, type JSX, type SVGProps } from 'react';
 import { Link } from 'react-router';
 import {
   EmptyStar,
@@ -17,7 +17,7 @@ import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 
 const discoveryIdMap = Object.fromEntries(Object.entries(tmdbDiscoveryIds).map(([k, v]) => [v, k]));
 
-const earlyViewingProviders = ['Google Play Movies', 'Apple TV', 'Prime Video'];
+// const earlyViewingProviders = ['Google Play Movies', 'Apple TV', 'Prime Video'];
 
 const FDDetails = ({ modal }: { modal: boolean }) => {
   const { heroData } = useHeroData();
@@ -223,20 +223,6 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
       <ul className='fdDetails__col'>
         {getVoteAverageVisual}
         {getAvailability}
-        {!modal && (
-          <li>
-            <nav>
-              <button
-                aria-label={`View more details about ${heroData.title}`}
-                onClick={() => {
-                  setIsModal('movie');
-                  setModalTrailer(heroData);
-                }}>
-                View more details
-              </button>
-            </nav>
-          </li>
-        )}
       </ul>
       <p>{heroData.overview}</p>
       {modal && (
@@ -302,6 +288,18 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
               ))}
             </ul>
           </div>
+        )}
+        {!modal && (
+          <nav>
+            <button
+              aria-label={`View more details about ${heroData.title}`}
+              onClick={() => {
+                setIsModal('movie');
+                setModalTrailer(heroData);
+              }}>
+              View more details
+            </button>
+          </nav>
         )}
       </div>
     </article>
