@@ -7,7 +7,8 @@
   display: flex;
   flex-direction: column;
   height: inherit;
-  padding: var(--fd-padding-generic) 0 calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5);
+  padding: calc(var(--fd-padding-generic) / 2) calc(var(--fd-padding-generic) / 1.5) 0
+    calc(var(--fd-padding-generic) / 1.5);
   @media (min-width: 950px) and (max-width: 1850px) {
     position: absolute;
     top: calc(50svh - var(--fd-gap) - (2.25rem * 2.5));
@@ -42,43 +43,34 @@
       aspect-ratio: 1/1;
     }
   }
-  & header {
-    display: flex;
-    align-items: center;
-    gap: var(--fd-gap);
-    & h2 {
-      max-width: 28ch;
-      white-space: nowrap;
-      overflow: clip;
-      text-overflow: ellipsis;
-      @include m.fdFontXXL;
-      text-transform: uppercase;
-      text-shadow: var(--fd-font-shadow);
-      @media (max-width: 650px) {
-        white-space: wrap;
-      }
-    }
-    & button svg {
-      width: 1.6em;
-      aspect-ratio: 1/1;
-    }
-  }
-  & footer {
+  &__footer {
     display: flex;
     gap: var(--fd-gap);
-    padding-bottom: var(--fd-gap);
+    padding-bottom: calc(var(--fd-gap) / 2);
     & a {
-      display: block;
       width: calc(2.25rem * 3.5); // 3.5x header font-size
     }
   }
-  & p {
+  &__header h2 {
+    max-width: 28ch;
+    white-space: nowrap;
+    overflow: clip;
+    text-overflow: ellipsis;
+    @include m.fdFontXXL;
+    text-transform: uppercase;
+    text-shadow: var(--fd-font-shadow);
+    @media (max-width: 650px) {
+      white-space: wrap;
+    }
+  }
+  &__overview {
     display: -webkit-box;
     line-clamp: 4;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
-    overflow: clip;
     max-width: 57ch;
+    padding-bottom: calc(var(--fd-gap) / 2);
+    overflow: clip;
     @include m.fdFontM;
     text-shadow: var(--fd-font-shadow);
     @media (max-width: 1850px) {
@@ -92,117 +84,100 @@
       max-width: 100%;
     }
   }
-  &__col {
+  &__genres {
     display: flex;
-    @media (max-width: 1850px) {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      width: min-content;
-    }
-    @media (max-width: 950px) {
-      display: flex;
-    }
-    @media (max-width: 650px) {
-      display: flex;
-      flex-direction: column;
-    }
-    &:nth-of-type(1) {
-      gap: var(--fd-gap);
-      @media (max-width: 650px) {
-        gap: 5px;
-        padding-bottom: 10px;
-      }
-    }
-    &:nth-of-type(2) {
-      gap: 6px;
-      padding: calc(var(--fd-gap) / 2) 0 var(--fd-gap) 0;
-      @include m.fdFontS;
-      letter-spacing: 0.03em;
-    }
+    flex-wrap: wrap;
     & li {
-      display: flex;
       text-transform: capitalize;
-      white-space: nowrap;
-      @media (max-width: 1850px) {
-        &:nth-of-type(1) {
-          grid-area: 1 / 1 / 2 / 2;
-        }
-        &:nth-of-type(2) {
-          grid-area: 1 / 2 / 2 / 3;
-        }
-        &:nth-of-type(3) {
-          grid-area: 2 / 1 / 3 / 3;
-          font-weight: 700;
-          letter-spacing: 0.03em;
-        }
-      }
+      @include m.fdFontM;
+      font-weight: 300;
     }
   }
   &__providers {
     display: flex;
     flex-direction: column;
     gap: var(--fd-gap);
-    padding: var(--fd-gap) 0 calc(var(--fd-gap) * 2) 0;
+    padding: calc(var(--fd-gap) * 2.5) 0;
     &__provider {
+      display: flex;
       flex-direction: column;
-      gap: var(--fd-gap);
-      & div {
-        @include m.fdFontM;
-        text-transform: uppercase;
-        font-weight: 700;
-        line-height: 235%;
-        letter-spacing: 0.04em;
+      & header {
+        padding-bottom: 8px;
+        & h3 {
+          @include m.fdFontM;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+        }
       }
       & ul {
         display: flex;
-        gap: var(--fd-gap);
-        & li picture img {
-          max-width: 60px;
-          border-radius: var(--fd-border-radius);
-          box-shadow: 0px 10px 11px -3px rgb(11 11 11);
+        gap: calc(var(--fd-gap) / 1.5);
+        flex-wrap: wrap;
+        & li {
+          display: flex;
+          flex-direction: column;
+          & img {
+            max-width: 50px;
+            border-radius: var(--fd-border-radius);
+            box-shadow: 0px 10px 11px -3px rgb(11 11 11);
+          }
         }
       }
     }
   }
-  & nav button {
+  &__row {
     display: flex;
-    @include m.fdFontS;
-    font-weight: 800;
-    text-transform: capitalize;
-    & svg {
-      width: 1.4em;
-      aspect-ratio: 1/1;
+    flex-direction: column;
+    gap: calc(var(--fd-gap) * 1.5);
+    & li,
+    & nav button {
+      @include m.fdFontM;
+      text-transform: none;
+      white-space: nowrap;
+    }
+    & li {
+      font-weight: 900;
+    }
+    & nav button {
+      display: flex;
+      gap: 6px;
+      padding: 8px 12px;
+      background-color: hsl(165, 60%, 45%);
+      border-radius: calc(var(--fd-border-radius) / 2);
+      box-shadow: 0px 10px 11px -3px rgb(11 11 11);
+      text-shadow: var(--fd-font-shadow);
+      font-weight: 800;
+      text-transform: capitalize;
+      & svg {
+        width: 1.5rem;
+        aspect-ratio: 1/1;
+      }
+    }
+    &__formattedReleaseDate {
+      text-transform: capitalize;
+      font-weight: 700;
+      text-transform: uppercase;
+      &[data-status='green'] {
+        color: #54c470;
+      }
+      &[data-status='gold'] {
+        color: #f0c419;
+      }
+      &[data-status='red'] {
+        color: #e04f5f;
+      }
     }
   }
-  ~ .fdCineInfoCarousel:last-child {
-    padding-bottom: var(--fd-padding-generic);
-  }
-}
-
-.voteAvgVisual {
-  display: flex;
-  gap: calc(var(--fd-gap) / 12);
-  &__star {
-    width: 1.25em;
-    & svg {
-      width: inherit;
-      aspect-ratio: 1;
+  &__voteAvgVisual {
+    display: flex;
+    gap: calc(var(--fd-gap) / 12);
+    &__star {
+      width: 1.25em;
+      & svg {
+        width: inherit;
+        aspect-ratio: 1;
+      }
     }
-  }
-}
-
-.formattedReleaseDate {
-  text-transform: capitalize;
-  font-weight: 700;
-  text-transform: uppercase;
-  &[data-status='green'] {
-    color: #54c470;
-  }
-  &[data-status='gold'] {
-    color: #f0c419;
-  }
-  &[data-status='red'] {
-    color: #e04f5f;
+    display: none;
   }
 }

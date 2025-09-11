@@ -19,6 +19,21 @@ const discoveryIdMap = Object.fromEntries(Object.entries(tmdbDiscoveryIds).map((
 
 // const earlyViewingProviders = ['Google Play Movies', 'Apple TV', 'Prime Video'];
 
+export function MaterialSymbolsOpenRun(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      {...props}>
+      {/* Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE */}
+      <path
+        fill='currentColor'
+        d='m12 19.175l2.125-2.125l1.425 1.4L12 22l-3.55-3.55l1.425-1.4zM4.825 12l2.125 2.125l-1.4 1.425L2 12l3.55-3.55l1.4 1.425zm14.35 0L17.05 9.875l1.4-1.425L22 12l-3.55 3.55l-1.4-1.425zM12 4.825L9.875 6.95L8.45 5.55L12 2l3.55 3.55l-1.425 1.4z'
+      />
+    </svg>
+  );
+}
+
 const FDDetails = ({ modal }: { modal: boolean }) => {
   const { heroData } = useHeroData();
 
@@ -36,7 +51,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     undefined
   );
 
-  const genreIds = useMemo(() => heroData?.genre_ids.map((id) => discoveryIdMap[id]), [heroData]);
+  const genreIds = useMemo(() => heroData?.genre_ids.map((id) => discoveryIdMap[id]?.replaceAll('_', ' ')), [heroData]);
 
   /**
    * Fetch watch providers when heroData changes
@@ -82,15 +97,9 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     ];
 
     return (
-      <li
-        className='voteAvgVisual'
-        aria-label={`Vote Average ${voteAvg / 2} out of 5`}>
+      <li aria-label={`Vote Average ${voteAvg / 2} out of 5`}>
         {stars.map((Star, index) => (
-          <span
-            className='voteAvgVisual__star'
-            key={`star-${index}`}>
-            {Star}
-          </span>
+          <span key={`star-${index}`}>{Star}</span>
         ))}
       </li>
     );
@@ -128,7 +137,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     if (!isReleased) {
       return (
         <li
-          className='formattedReleaseDate'
+          className='fdDetails__row__formattedReleaseDate'
           data-status='gold'>
           {`Available ${release.toLocaleDateString('en-US', {
             year: 'numeric',
@@ -140,15 +149,15 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     } else if (isStreaming) {
       return (
         <li
-          className='formattedReleaseDate'
+          className='fdDetails__row__formattedReleaseDate'
           data-status='green'>
-          Streaming
+          Now Available to Stream
         </li>
       );
     } else if (isPurchasable && isRentable) {
       return (
         <li
-          className='formattedReleaseDate'
+          className='fdDetails__row__formattedReleaseDate'
           data-status='green'>
           Purchase or Rent
         </li>
@@ -156,31 +165,31 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     } else if (isPurchasable) {
       return (
         <li
-          className='formattedReleaseDate'
+          className='fdDetails__row__formattedReleaseDate'
           data-status='green'>
-          Purchase
+          Available for Purchase
         </li>
       );
     } else if (isRentable) {
       return (
         <li
-          className='formattedReleaseDate'
+          className='fdDetails__row__formattedReleaseDate'
           data-status='green'>
-          Rent
+          Rental Available
         </li>
       );
     } else if (isInTheatres) {
       return (
         <li
-          className='formattedReleaseDate'
+          className='fdDetails__row__formattedReleaseDate'
           data-status='green'>
-          In Theatres
+          Now In Theatres
         </li>
       );
     } else {
       return (
         <li
-          className='formattedReleaseDate'
+          className='fdDetails__row__formattedReleaseDate'
           data-status='red'>
           Viewing Options Unknown
         </li>
@@ -188,26 +197,28 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     }
   }, [watchProviders]);
 
+  /**
+   * Reduce provider categories by combining providers that offer 'buy' and 'rent' options
+   * Then handle providers that offer only 'buy' or 'rent'
+   */
+  const providers = useMemo(() => {
+    if (!watchProviders || !watchProviders.buy || !watchProviders.rent) return undefined;
+
+    const combined = Array.from(
+      new Map([...watchProviders.buy, ...watchProviders.rent].map((entry) => [entry.provider_id, entry])).values()
+    );
+    const combinedIds = new Set(combined.map((entry) => entry.provider_id));
+    const purchasable = watchProviders.buy.filter((entry) => !combinedIds.has(entry.provider_id));
+    const rentable = watchProviders.rent.filter((entry) => !combinedIds.has(entry.provider_id));
+
+    return { combined, purchasable, rentable };
+  }, [watchProviders]);
+
   /** @returns */
   return (
     <article
       className='fdDetails'
       data-modal={modal}>
-      <footer className='fdDetails__footer'>
-        <Link to='https://www.themoviedb.org/?language=en-US'>
-          <TheMovieDatabaseLogo />
-        </Link>
-        {modal && (
-          <Link to='https://www.justwatch.com/us/JustWatch-Streaming-API'>
-            <picture>
-              <img
-                aria-label='JustWatch API'
-                src='/app/film-database/assets/api/JustWatch-logo-large.webp'
-              />
-            </picture>
-          </Link>
-        )}
-      </footer>
       {modal && (
         <button
           className='fdDetails--close'
@@ -217,91 +228,139 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
         </button>
       )}
 
+      <footer className='fdDetails__footer'>
+        <Link to='https://www.themoviedb.org/?language=en-US'>
+          <TheMovieDatabaseLogo />
+        </Link>
+        <Link to='https://www.justwatch.com/us/JustWatch-Streaming-API'>
+          <img
+            aria-label='JustWatch API'
+            src='/app/film-database/assets/api/JustWatch-logo-large.webp'
+          />
+        </Link>
+      </footer>
+
       <header className='fdDetails__header'>
         <h2>{heroData.title}</h2>
       </header>
-      <ul className='fdDetails__col'>
-        {getVoteAverageVisual}
-        {getAvailability}
-      </ul>
-      <p>{heroData.overview}</p>
+
+      <p className='fdDetails__overview'>{heroData.overview}</p>
+
       {modal && (
-        <ul className='fdDetails__col'>
-          {genreIds.map((genre, index) => (
-            <li key={`genre-${genre}-index-${index}`}>
-              {genre?.replaceAll('_', ' ')}
-              {index !== heroData.genre_ids.length - 1 ? ' •' : null}
-            </li>
-          ))}
-        </ul>
+        <>
+          {genreIds.length && (
+            <ul className='fdDetails__genres'>
+              {genreIds.map((genre, index) => (
+                <li key={`genre-${genre}-index-${index}`}>
+                  {genre}&nbsp;
+                  {index !== heroData.genre_ids.length - 1 ? '•' : null}&nbsp;
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {watchProviders && (
+            <div className='fdDetails__providers'>
+              {watchProviders.flatrate && (
+                <div className='fdDetails__providers__provider'>
+                  <header>
+                    <h3>{heroData.title} is Streaming on:</h3>
+                  </header>
+                  <ul aria-label='Streaming Platforms'>
+                    {watchProviders.flatrate.map((provider, index) => (
+                      <li key={`provider-stream-${provider.provider_id}-${index}`}>
+                        {/* {provider.provider_name} */}
+                        {/* {index !== watchProviders.flatrate!.length - 1 ? ',' : null} */}
+                        <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {providers && providers.combined && (
+                <div className='fdDetails__providers__provider'>
+                  <header>
+                    <h3>Rent or Purchase {heroData.title}</h3>
+                  </header>
+                  <ul aria-label='Purchase or rental available on Platforms'>
+                    {providers.combined.map((entry) => (
+                      <li
+                        aria-label={entry.provider_name}
+                        key={`provider-buy-${entry.provider_id}`}>
+                        <img
+                          src={`https://image.tmdb.org/t/p/w780/${entry.logo_path}`}
+                          alt={`${entry.provider_name}`}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {providers && providers.purchasable && providers.purchasable.length > 0 && (
+                <div className='fdDetails__providers__provider'>
+                  <header>
+                    <h3>Purchase {heroData.title}</h3>
+                  </header>
+                  <ul aria-label='Purchase available on Platforms'>
+                    {providers.purchasable.map((entry) => (
+                      <li
+                        aria-label={entry.provider_name}
+                        key={`provider-buy-${entry.provider_id}`}>
+                        <img
+                          src={`https://image.tmdb.org/t/p/w780/${entry.logo_path}`}
+                          alt={`${entry.provider_name}`}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {providers && providers.purchasable && providers.purchasable.length > 0 && (
+                <div className='fdDetails__providers__provider'>
+                  <header>
+                    <h3>Rent {heroData.title}</h3>
+                  </header>
+                  <ul aria-label='Rental available on Platforms'>
+                    {providers.purchasable.map((entry) => (
+                      <li
+                        aria-label={entry.provider_name}
+                        key={`provider-rent-${entry.provider_id}`}>
+                        <img
+                          src={`https://image.tmdb.org/t/p/w780/${entry.logo_path}`}
+                          alt={`${entry.provider_name}`}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </>
       )}
-      <div className='fdDetails__providers'>
-        {modal && watchProviders?.flatrate?.length && (
-          <ul
-            className='fdDetails__providers__provider'
-            aria-label='Streaming Platforms'>
-            Streaming on:{' '}
-            {watchProviders.flatrate?.map((provider, index) => (
-              <li key={`provider-stream-${provider.provider_id}`}>
-                {provider.provider_name}
-                {index !== watchProviders.flatrate!.length - 1 ? ',' : null}
-                <img src={`https://image.tmdb.org/t/p/${`original`}/${provider.logo_path}`} />
-              </li>
-            ))}
-          </ul>
-        )}
-        {modal && watchProviders?.buy?.length && (
-          <div className='fdDetails__providers__provider'>
-            <div>Purchase {heroData.title}</div>
-            <ul aria-label='Purchase available on Platforms'>
-              {watchProviders.buy.map((entry) => (
-                <li
-                  aria-label={entry.provider_name}
-                  key={`provider-buy-${entry.provider_id}`}>
-                  {/* <Link to={`${entry.}`}></Link> */}
-                  <picture>
-                    <img
-                      src={`https://image.tmdb.org/t/p/w780/${entry.logo_path}`}
-                      alt={`${entry.provider_name}`}
-                    />
-                  </picture>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {modal && watchProviders?.rent?.length && (
-          <div className='fdDetails__providers__provider'>
-            <div>Rent {heroData.title}</div>
-            <ul aria-label='Rental available on Platforms'>
-              {watchProviders.rent.map((entry) => (
-                <li
-                  aria-label={entry.provider_name}
-                  key={`provider-rent-${entry.provider_id}`}>
-                  <picture>
-                    <img
-                      src={`https://image.tmdb.org/t/p/w780/${entry.logo_path}`}
-                      alt={`${entry.provider_name}`}
-                    />
-                  </picture>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+
+      <ul className='fdDetails__row'>
         {!modal && (
-          <nav>
-            <button
-              aria-label={`View more details about ${heroData.title}`}
-              onClick={() => {
-                setIsModal('movie');
-                setModalTrailer(heroData);
-              }}>
-              View more details
-            </button>
-          </nav>
+          <>
+            {getAvailability}
+            <li>
+              <nav>
+                <button
+                  aria-label={`View more details about ${heroData.title}`}
+                  onClick={() => {
+                    setIsModal('movie');
+                    setModalTrailer(heroData);
+                  }}>
+                  <MaterialSymbolsOpenRun />
+                  More Details
+                </button>
+              </nav>
+            </li>
+          </>
         )}
-      </div>
+      </ul>
+
+      <ul className='fdDetails__voteAvgVisual'>{getVoteAverageVisual}</ul>
     </article>
   );
 };
