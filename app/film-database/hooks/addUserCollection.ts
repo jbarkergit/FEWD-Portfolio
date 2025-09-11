@@ -8,7 +8,6 @@ import type { UserCollection } from '~/film-database/context/UserCollectionConte
 type Params = {
   userCollections: Record<string, UserCollection>;
   setUserCollections: Dispatch<SetStateAction<Record<string, UserCollection>>>;
-  isEditMode: boolean;
   payload: {
     data: UserCollection['data'] | undefined;
     colIndex: number;
@@ -55,12 +54,10 @@ type Params = {
 //   }
 // };
 
-export const addUserCollection = ({ userCollections, setUserCollections, isEditMode, payload }: Params): void => {
+export const addUserCollection = ({ userCollections, setUserCollections, payload }: Params): void => {
   if (Object.keys(userCollections).length >= 5) return;
 
   const key: string = `user-collection-${payload.colIndex}`;
-  // const display: 'grid' | 'flex' = isEditMode ? 'grid' : 'flex';
-  const display = 'flex' as const;
   const header: string = userCollections[payload.colIndex]?.header ?? 'Unnamed Collection';
 
   setUserCollections((prev) => {
@@ -72,7 +69,6 @@ export const addUserCollection = ({ userCollections, setUserCollections, isEditM
       [key]: {
         ...existing,
         header,
-        display,
         data: payload?.data ? [...(existing.data ?? []), ...payload.data] : (existing.data ?? []),
       },
     };

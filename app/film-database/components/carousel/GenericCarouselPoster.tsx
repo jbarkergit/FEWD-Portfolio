@@ -106,7 +106,6 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
                     addUserCollection({
                       userCollections,
                       setUserCollections,
-                      isEditMode: false,
                       payload: {
                         data: [mediaEntry],
                         colIndex: keyIndex,
@@ -127,7 +126,6 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
                   addUserCollection({
                     userCollections,
                     setUserCollections,
-                    isEditMode: false,
                     payload: {
                       data: [mediaEntry],
                       colIndex: Object.keys(userCollections).length + 1,

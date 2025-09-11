@@ -30,7 +30,6 @@ const FDCollectionsMenu = ({ isEditMode, setIsEditMode }: Props) => {
           addUserCollection({
             userCollections,
             setUserCollections,
-            isEditMode: isEditMode,
             payload: {
               data: undefined,
               colIndex: Object.keys(userCollections).length + 1,
