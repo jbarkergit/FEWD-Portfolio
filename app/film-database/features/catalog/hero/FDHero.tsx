@@ -1,5 +1,5 @@
 import FDiFrame from '../../../components/iframe/FDiFrame';
-import FDDetails from '../../../components/movie/FDDetails';
+import FDDetails from '../../../components/details/FDDetails';
 
 const FDHero = () => {
   return (

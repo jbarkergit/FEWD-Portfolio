@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import FDiFrame from '~/film-database/components/iframe/FDiFrame';
-import FDDetails from '~/film-database/components/movie/FDDetails';
+import FDDetails from '~/film-database/components/details/FDDetails';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
