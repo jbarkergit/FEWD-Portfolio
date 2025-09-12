@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, type ReactNode } from 'react';
+import { useRef, useState, useEffect, type ReactNode, useCallback } from 'react';
 import { BxDotsVerticalRounded, IcOutlinePlayCircle, TablerCategoryPlus } from '~/film-database/assets/svg/icons';
 import type { GenericCarouselMap } from '~/film-database/components/carousel/GenericCarousel';
 import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
@@ -23,38 +23,21 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   const { chunkSize } = useChunkSize();
   const { setIsModal, setPerson } = useModal();
 
-  const collectionsMenu = useRef<HTMLUListElement>(null);
-  const collectionAttribute: string = 'data-active';
-  const [isCollectionDropdown, setIsCollectionDropdown] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLUListElement>(null);
 
-  /**
-   * @function toggleCollectionMenu
-   * @returns {void}
-   * @description Toggles the collection menu on independent movie list items
-   */
-  const toggleCollectionMenu = (): void => {
-    if (collectionsMenu.current) {
-      const status: string | null = collectionsMenu.current.getAttribute(collectionAttribute);
-      setIsCollectionDropdown(status === 'false' ? true : false);
+  const handleExteriorClick = useCallback((event: MouseEvent): void => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      dropdownRef.current.setAttribute('data-open', 'false');
     }
-  };
+  }, []);
 
-  /**
-   * @function handleExteriorClicks
-   * @returns void
-   * @description Sets modal state to false when the user isn't directly interacting with modal
-   */
-  const handleExteriorClicks = (event: PointerEvent): void => {
-    if (collectionsMenu.current && !collectionsMenu.current?.contains(event.target as Node)) {
-      setIsCollectionDropdown(false);
-    }
+  const toggleDropdown = () => {
+    if (!dropdownRef.current) return;
+    const isOpen = dropdownRef.current.getAttribute('data-open') === 'true';
+    dropdownRef.current.setAttribute('data-open', String(!isOpen));
+    if (isOpen) document.addEventListener('pointerup', handleExteriorClick);
+    else document.removeEventListener('pointerup', handleExteriorClick);
   };
-
-  useEffect(() => {
-    if (isCollectionDropdown) document.addEventListener('pointerup', handleExteriorClicks);
-    else document.removeEventListener('pointerup', handleExteriorClicks);
-    return () => document.removeEventListener('pointerup', handleExteriorClicks);
-  }, [isCollectionDropdown]);
 
   /** @Parent */
   const Parent = ({ children }: { children: ReactNode }) => (
@@ -69,7 +52,10 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   if (carouselName === 'media' || carouselName === 'person') {
     const mediaEntry = entry as GenericCarouselMap['media'][number];
     return (
-      <Parent>
+      <li
+        className='genericCarousel__wrapper__ul__li'
+        onPointerLeave={() => dropdownRef.current?.setAttribute('data-open', 'false')}
+        data-hidden={posterIndex < chunkSize.viewport + 1 ? 'false' : 'true'}>
         <picture className='genericCarousel__wrapper__ul__li__picture'>
           <img
             className='genericCarousel__wrapper__ul__li__picture--img'
@@ -80,9 +66,9 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
         </picture>
         <div className='genericCarousel__wrapper__ul__li__overlay'>
           <button
-            className='genericCarousel__wrapper__ul__li__overlay--collections'
+            className='genericCarousel__wrapper__ul__li__overlay--toggleMenu'
             aria-label='Add movie to collections'
-            onPointerUp={toggleCollectionMenu}>
+            onPointerUp={toggleDropdown}>
             <BxDotsVerticalRounded />
           </button>
           <button
@@ -94,8 +80,8 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
         </div>
         <ul
           className='genericCarousel__wrapper__ul__li__collections'
-          ref={collectionsMenu}
-          data-active={isCollectionDropdown ? 'true' : 'false'}>
+          ref={dropdownRef}
+          data-open='false'>
           {Object.entries(userCollections).map(([key, collection], i) => {
             const keyIndex = parseInt(key.split('-').pop() || '0', 10);
             return (
@@ -111,7 +97,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
                         colIndex: keyIndex,
                       },
                     });
-                    setIsCollectionDropdown(false);
+                    toggleDropdown();
                   }}>
                   {collection.header}
                 </button>
@@ -131,14 +117,14 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
                       colIndex: Object.keys(userCollections).length + 1,
                     },
                   });
-                  setIsCollectionDropdown(false);
+                  toggleDropdown();
                 }}>
                 <TablerCategoryPlus /> New Collection
               </button>
             </li>
           ) : null}
         </ul>
-      </Parent>
+      </li>
     );
   } else if (carouselName === 'cinemaInformation') {
     const cinemaEntry = entry as GenericCarouselMap['cinemaInformation'][number];
