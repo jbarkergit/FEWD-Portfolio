@@ -46,7 +46,7 @@
   &__footer {
     display: flex;
     gap: var(--fd-gap);
-    padding-bottom: calc(var(--fd-gap) / 2);
+    padding-bottom: calc(var(--fd-gap) * 0.5);
     & a {
       width: calc(2.25rem * 3.5); // 3.5x header font-size
     }
@@ -125,59 +125,66 @@
       }
     }
   }
-  &__row {
+  &__extra {
     display: flex;
     flex-direction: column;
-    gap: calc(var(--fd-gap) * 1.5);
-    & li,
-    & nav button {
-      @include m.fdFontM;
-      text-transform: none;
-      white-space: nowrap;
-    }
-    & li {
-      font-weight: 900;
-    }
-    & nav button {
+    gap: calc(var(--fd-gap) * 2);
+    &__inf {
       display: flex;
-      gap: 6px;
-      padding: 8px 12px;
-      background-color: hsl(165, 60%, 45%);
-      border-radius: calc(var(--fd-border-radius) / 2);
-      box-shadow: 0px 10px 11px -3px rgb(11 11 11);
-      text-shadow: var(--fd-font-shadow);
-      font-weight: 800;
-      text-transform: capitalize;
-      & svg {
-        width: 1.5rem;
-        aspect-ratio: 1/1;
+      align-items: center;
+      gap: var(--fd-gap);
+      &__voteAvgVisual {
+        display: flex;
+        gap: calc(var(--fd-gap) / 12);
+        & span {
+          width: 1.5em;
+          & svg {
+            width: inherit;
+            aspect-ratio: 1;
+          }
+        }
+      }
+      & div:nth-of-type(2) {
+        @include m.fdFontM;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+        &[data-status='green'] {
+          color: #54c470;
+        }
+        &[data-status='gold'] {
+          color: #f0c419;
+        }
+        &[data-status='red'] {
+          color: #e04f5f;
+        }
       }
     }
-    &__formattedReleaseDate {
-      text-transform: capitalize;
-      font-weight: 700;
-      text-transform: uppercase;
-      &[data-status='green'] {
-        color: #54c470;
-      }
-      &[data-status='gold'] {
-        color: #f0c419;
-      }
-      &[data-status='red'] {
-        color: #e04f5f;
+    & nav {
+      display: flex;
+      gap: var(--fd-gap);
+      & button {
+        display: flex;
+        gap: 6px;
+        padding: 8px 12px;
+        border-radius: calc(var(--fd-border-radius) / 2);
+        box-shadow: 0px 10px 11px -3px rgb(11 11 11);
+        @include m.fdFontM;
+        text-transform: capitalize;
+        &:nth-of-type(1) {
+          background-color: var(--fd-bc-secondary);
+          color: var(--fd-bc-offset);
+          font-weight: 600;
+        }
+        &:nth-of-type(2) {
+          background-color: #5d5b5a;
+          font-weight: 500;
+        }
+        & svg {
+          width: 1.5rem;
+          aspect-ratio: 1/1;
+        }
       }
     }
-  }
-  &__voteAvgVisual {
-    display: flex;
-    gap: calc(var(--fd-gap) / 12);
-    &__star {
-      width: 1.25em;
-      & svg {
-        width: inherit;
-        aspect-ratio: 1;
-      }
-    }
-    display: none;
   }
 }

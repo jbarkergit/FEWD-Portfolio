@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type JSX, type SVGProps } from 'react';
+import { useEffect, useMemo, useState, type JSX } from 'react';
 import { Link } from 'react-router';
 import {
   EmptyStar,
@@ -18,21 +18,6 @@ import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 const discoveryIdMap = Object.fromEntries(Object.entries(tmdbDiscoveryIds).map(([k, v]) => [v, k]));
 
 // const earlyViewingProviders = ['Google Play Movies', 'Apple TV', 'Prime Video'];
-
-export function MaterialSymbolsOpenRun(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      viewBox='0 0 24 24'
-      {...props}>
-      {/* Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE */}
-      <path
-        fill='currentColor'
-        d='m12 19.175l2.125-2.125l1.425 1.4L12 22l-3.55-3.55l1.425-1.4zM4.825 12l2.125 2.125l-1.4 1.425L2 12l3.55-3.55l1.4 1.425zm14.35 0L17.05 9.875l1.4-1.425L22 12l-3.55 3.55l-1.4-1.425zM12 4.825L9.875 6.95L8.45 5.55L12 2l3.55 3.55l-1.425 1.4z'
-      />
-    </svg>
-  );
-}
 
 const FDDetails = ({ modal }: { modal: boolean }) => {
   const { heroData } = useHeroData();
@@ -99,11 +84,13 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     ];
 
     return (
-      <li aria-label={`Vote Average ${voteAvg / 2} out of 5`}>
+      <div
+        className='fdDetails__extra__inf__voteAvgVisual'
+        aria-label={`Vote Average ${voteAvg / 2} out of 5`}>
         {stars.map((Star, index) => (
           <span key={`star-${index}`}>{Star}</span>
         ))}
-      </li>
+      </div>
     );
   }, [data]);
 
@@ -138,64 +125,26 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
 
     if (!isReleased) {
       return (
-        <li
-          className='fdDetails__row__formattedReleaseDate'
-          data-status='gold'>
+        <div data-status='gold'>
           {`Available ${release.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
           })}`}
-        </li>
+        </div>
       );
     } else if (isStreaming) {
-      return (
-        <li
-          className='fdDetails__row__formattedReleaseDate'
-          data-status='green'>
-          Now Available to Stream
-        </li>
-      );
+      return <div data-status='green'>Available to Stream</div>;
     } else if (isPurchasable && isRentable) {
-      return (
-        <li
-          className='fdDetails__row__formattedReleaseDate'
-          data-status='green'>
-          Purchase or Rent
-        </li>
-      );
+      return <div data-status='green'>Available for Purchase or Rent</div>;
     } else if (isPurchasable) {
-      return (
-        <li
-          className='fdDetails__row__formattedReleaseDate'
-          data-status='green'>
-          Available for Purchase
-        </li>
-      );
+      return <div data-status='green'>Available for Purchase</div>;
     } else if (isRentable) {
-      return (
-        <li
-          className='fdDetails__row__formattedReleaseDate'
-          data-status='green'>
-          Rental Available
-        </li>
-      );
+      return <div data-status='green'>Rental Available</div>;
     } else if (isInTheatres) {
-      return (
-        <li
-          className='fdDetails__row__formattedReleaseDate'
-          data-status='green'>
-          Now In Theatres
-        </li>
-      );
+      return <div data-status='green'>Playing In Theatres</div>;
     } else {
-      return (
-        <li
-          className='fdDetails__row__formattedReleaseDate'
-          data-status='red'>
-          Viewing Options Unknown
-        </li>
-      );
+      return <div data-status='red'>Whoops! Viewing Options Unavailable.</div>;
     }
   }, [watchProviders]);
 
@@ -341,28 +290,29 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
         </>
       )}
 
-      <ul className='fdDetails__row'>
+      <div className='fdDetails__extra'>
+        <div className='fdDetails__extra__inf'>
+          {getVoteAverageVisual}
+          {getAvailability}
+        </div>
         {!modal && (
-          <>
-            {getAvailability}
-            <li>
-              <nav>
-                <button
-                  aria-label={`View more details about ${data.title}`}
-                  onPointerUp={() => {
-                    setIsModal('movie');
-                    setModalTrailer(data);
-                  }}>
-                  <MaterialSymbolsOpenRun />
-                  More Details
-                </button>
-              </nav>
-            </li>
-          </>
+          <nav>
+            <button
+              aria-label={`View more details about ${data.title}`}
+              onPointerUp={() => {
+                setIsModal('movie');
+                setModalTrailer(data);
+              }}>
+              More Details
+            </button>
+            <button
+              aria-label={`Add ${data.title} to collections`}
+              onPointerUp={() => {}}>
+              Add to collections
+            </button>
+          </nav>
         )}
-      </ul>
-
-      <ul className='fdDetails__voteAvgVisual'>{getVoteAverageVisual}</ul>
+      </div>
     </article>
   );
 };
