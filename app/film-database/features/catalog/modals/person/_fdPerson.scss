@@ -75,19 +75,19 @@
           @include m.fdFontM;
           text-shadow: var(--fd-font-shadow);
           transition: max-height 0.4s ease;
-          &:hover {
-            cursor: pointer;
-          }
-          &[data-clamp='true'] {
-            display: -webkit-box;
-            line-clamp: 4;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: clip;
-          }
-          &[data-clamp='false'] {
-            display: block;
-          }
+          // &:hover {
+          //   cursor: pointer;
+          // }
+          // &[data-clamp='true'] {
+          //   display: -webkit-box;
+          //   line-clamp: 4;
+          //   -webkit-line-clamp: 4;
+          //   -webkit-box-orient: vertical;
+          //   overflow: clip;
+          // }
+          // &[data-clamp='false'] {
+          //   display: block;
+          // }
         }
       }
       .genericCarousel {
@@ -147,6 +147,9 @@
                     &:nth-of-type(2) {
                       @include m.fdFontM;
                       white-space: wrap;
+                      & button:hover {
+                        color: rgb(205, 205, 205);
+                      }
                     }
                   }
                 }

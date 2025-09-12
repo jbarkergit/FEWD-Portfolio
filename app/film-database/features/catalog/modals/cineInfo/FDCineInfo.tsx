@@ -4,21 +4,20 @@ import FDDetails from '~/film-database/components/movie/FDDetails';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
-import { useHeroData } from '~/film-database/context/HeroDataContext';
+import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 
 const FDCineInfo = () => {
-  const { heroData } = useHeroData();
   const [credits, setCredits] = useState<TmdbResponseFlat['credits'] | undefined>(undefined);
-
-  const fetch = async (): Promise<void> => {
-    if (!heroData) return;
-    const credits = await tmdbCall({ credits: heroData.id });
-    setCredits(credits.response);
-  };
+  const { modalTrailer } = useModalTrailer();
 
   useEffect(() => {
+    const fetch = async (): Promise<void> => {
+      if (!modalTrailer) return;
+      const credits = await tmdbCall({ credits: modalTrailer.id });
+      setCredits(credits.response);
+    };
     fetch();
-  }, [heroData]);
+  }, [modalTrailer]);
 
   if (credits)
     return (

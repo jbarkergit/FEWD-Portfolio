@@ -5,12 +5,15 @@ import GenericCarousel from '~/film-database/components/carousel/GenericCarousel
 import { SvgSpinnersRingResize } from '~/film-database/assets/svg/icons';
 import { useModal } from '~/film-database/context/ModalContext';
 import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
+import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 
 type Cast = TmdbResponseFlat['personCredits']['cast'][number];
 
 const FDPerson = () => {
   const { person } = useModal();
   const { chunkSize } = useChunkSize();
+  const { setModalTrailer } = useModalTrailer();
+  const { setIsModal } = useModal();
 
   const [response, setResponse] = useState<{
     details: TmdbResponseFlat['personDetails'] | undefined;
@@ -72,20 +75,20 @@ const FDPerson = () => {
   }, [credits]);
 
   // Clamp handler
-  const handleClamp = () => {
-    if (!clampRef.current) return;
+  // const handleClamp = () => {
+  //   if (!clampRef.current) return;
 
-    const isClamped = clampRef.current.getAttribute('data-clamp') === 'true';
+  //   const isClamped = clampRef.current.getAttribute('data-clamp') === 'true';
 
-    if (isClamped) {
-      clampRef.current.style.maxHeight = `${clampRef.current.scrollHeight}px`;
-      clampRef.current.setAttribute('data-clamp', 'false');
-    } else {
-      const lineHeight = parseFloat(getComputedStyle(clampRef.current).lineHeight || '20');
-      clampRef.current.style.maxHeight = `${lineHeight * 4}px`;
-      clampRef.current.setAttribute('data-clamp', 'true');
-    }
-  };
+  //   if (isClamped) {
+  //     clampRef.current.style.maxHeight = `${clampRef.current.scrollHeight}px`;
+  //     clampRef.current.setAttribute('data-clamp', 'false');
+  //   } else {
+  //     const lineHeight = parseFloat(getComputedStyle(clampRef.current).lineHeight || '20');
+  //     clampRef.current.style.maxHeight = `${lineHeight * 4}px`;
+  //     clampRef.current.setAttribute('data-clamp', 'true');
+  //   }
+  // };
 
   // JSX
   if (!details || !credits)
@@ -155,56 +158,68 @@ const FDPerson = () => {
       </div>
 
       <div className='fdPerson__column'>
-        <div className='fdPerson__column__bio'>
-          {details.biography && details.biography.length > 0 && (
-            <>
-              <span>Biography</span>
-              <span
-                ref={clampRef}
-                data-clamp='true'
-                onPointerUp={handleClamp}>
-                {details.biography}
-              </span>
-            </>
-          )}
-        </div>
+        {details.biography && details.biography.length > 0 && (
+          <div className='fdPerson__column__bio'>
+            <span>Biography</span>
+            <span
+              ref={clampRef}
+              data-clamp='true'>
+              {details.biography}
+            </span>
+          </div>
+        )}
 
-        <GenericCarousel
-          carouselIndex={1}
-          carouselName='person'
-          heading='Known For'
-          data={knownFor}
-        />
+        {knownFor.length > 0 && (
+          <GenericCarousel
+            carouselIndex={1}
+            carouselName='person'
+            heading='Known For'
+            data={knownFor}
+          />
+        )}
 
-        <table className='fdPerson__column__table'>
-          <thead>
-            <tr>
-              <th>Filmography</th>
-            </tr>
-          </thead>
-          <tbody className='fdPerson__column__table__tbody'>
-            {castCreditsGrouped.map((group, index) => (
-              <tr
-                className='fdPerson__column__table__tbody__tr'
-                key={`person-casted-group-${index}`}>
-                <td className='fdPerson__column__table__tbody__tr__td'>
-                  <table className='fdPerson__column__table__tbody__tr__td__table'>
-                    <tbody className='fdPerson__column__table__tbody__tr__td__table__tbody'>
-                      {group.films?.map((film) => (
-                        <tr
-                          className='fdPerson__column__table__tbody__tr__td__table__tbody__tr'
-                          key={`person-casted-group-${index}-movieId-${film.id}`}>
-                          <td className='fdPerson__column__table__tbody__tr__td__table__tbody__tr__td'>{group.year}</td>
-                          <td className='fdPerson__column__table__tbody__tr__td__table__tbody__tr__td'>{film.title}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </td>
+        {castCreditsGrouped.length > 0 && (
+          <table className='fdPerson__column__table'>
+            <thead>
+              <tr>
+                <th>Filmography</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className='fdPerson__column__table__tbody'>
+              {castCreditsGrouped.map((group, index) => (
+                <tr
+                  className='fdPerson__column__table__tbody__tr'
+                  key={`person-casted-group-${index}`}>
+                  <td className='fdPerson__column__table__tbody__tr__td'>
+                    <table className='fdPerson__column__table__tbody__tr__td__table'>
+                      <tbody className='fdPerson__column__table__tbody__tr__td__table__tbody'>
+                        {group.films?.map((film) => (
+                          <tr
+                            className='fdPerson__column__table__tbody__tr__td__table__tbody__tr'
+                            key={`person-casted-group-${index}-movieId-${film.id}`}>
+                            <td className='fdPerson__column__table__tbody__tr__td__table__tbody__tr__td'>
+                              {group.year}
+                            </td>
+                            <td className='fdPerson__column__table__tbody__tr__td__table__tbody__tr__td'>
+                              <button
+                                aria-label={`View ${film.title}`}
+                                onPointerUp={() => {
+                                  setModalTrailer(film);
+                                  setIsModal('movie');
+                                }}>
+                                {film.title}
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </article>
   );

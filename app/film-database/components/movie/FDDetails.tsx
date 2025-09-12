@@ -36,8 +36,10 @@ export function MaterialSymbolsOpenRun(props: SVGProps<SVGSVGElement>) {
 
 const FDDetails = ({ modal }: { modal: boolean }) => {
   const { heroData } = useHeroData();
+  const { modalTrailer } = useModalTrailer();
+  const data = !modal ? heroData : modalTrailer;
 
-  if (!heroData)
+  if (!data)
     return (
       <section className='fdDetails'>
         <SvgSpinnersRingResize />
@@ -51,19 +53,19 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     undefined
   );
 
-  const genreIds = useMemo(() => heroData?.genre_ids.map((id) => discoveryIdMap[id]?.replaceAll('_', ' ')), [heroData]);
+  const genreIds = useMemo(() => data?.genre_ids.map((id) => discoveryIdMap[id]?.replaceAll('_', ' ')), [data]);
 
   /**
-   * Fetch watch providers when heroData changes
+   * Fetch watch providers when data changes
    */
   useEffect(() => {
-    if (!heroData) return;
+    if (!data) return;
 
     let cancelled: boolean = false;
 
     const fetchWatchProviders = async () => {
-      const data = await tmdbCall({ watchProviders: heroData.id });
-      if (!cancelled) setWatchProviders(data.response.results.US);
+      const res = await tmdbCall({ watchProviders: data.id });
+      if (!cancelled) setWatchProviders(res.response.results.US);
     };
 
     fetchWatchProviders();
@@ -71,13 +73,13 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     return () => {
       cancelled = true;
     };
-  }, [heroData]);
+  }, [data]);
 
   /**
    * Get visual representation of vote average as stars
    */
   const getVoteAverageVisual = useMemo((): JSX.Element | undefined => {
-    const voteAvg = heroData.vote_average;
+    const voteAvg = data.vote_average;
 
     // 0-10 vote scale (contains floating point value) floored and converted to 0-5 vote scale
     const flooredVoteAverage: number = Math.floor(voteAvg / 2);
@@ -103,7 +105,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
         ))}
       </li>
     );
-  }, [heroData]);
+  }, [data]);
 
   /**
    * Determine a movie's availability on streaming platforms or theatres
@@ -112,9 +114,9 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
    * NOTE: TMDB API is not fully reliable, so we'll simplify "STREAMING" prompt as the primary handler of "EARLY VIEWING"
    */
   const getAvailability = useMemo((): JSX.Element | undefined => {
-    if (!heroData || !heroData.release_date) return undefined;
+    if (!data || !data.release_date) return undefined;
 
-    const releaseDate = heroData.release_date.replaceAll('-', ''); // YYYY/MM/DD ISO format converted to 8 digits
+    const releaseDate = data.release_date.replaceAll('-', ''); // YYYY/MM/DD ISO format converted to 8 digits
     const releaseDates = {
       year: parseInt(releaseDate.slice(0, 4), 10),
       month: parseInt(releaseDate.slice(4, 6), 10) - 1,
@@ -241,10 +243,10 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
       </footer>
 
       <header className='fdDetails__header'>
-        <h2>{heroData.title}</h2>
+        <h2>{data.title}</h2>
       </header>
 
-      <p className='fdDetails__overview'>{heroData.overview}</p>
+      <p className='fdDetails__overview'>{data.overview}</p>
 
       {modal && (
         <>
@@ -253,7 +255,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
               {genreIds.map((genre, index) => (
                 <li key={`genre-${genre}-index-${index}`}>
                   {genre}&nbsp;
-                  {index !== heroData.genre_ids.length - 1 ? '•' : null}&nbsp;
+                  {index !== data.genre_ids.length - 1 ? '•' : null}&nbsp;
                 </li>
               ))}
             </ul>
@@ -264,7 +266,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
               {watchProviders.flatrate && (
                 <div className='fdDetails__providers__provider'>
                   <header>
-                    <h3>{heroData.title} is Streaming on:</h3>
+                    <h3>{data.title} is Streaming on:</h3>
                   </header>
                   <ul aria-label='Streaming Platforms'>
                     {watchProviders.flatrate.map((provider, index) => (
@@ -280,7 +282,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
               {providers && providers.combined && (
                 <div className='fdDetails__providers__provider'>
                   <header>
-                    <h3>Rent or Purchase {heroData.title}</h3>
+                    <h3>Rent or Purchase {data.title}</h3>
                   </header>
                   <ul aria-label='Purchase or rental available on Platforms'>
                     {providers.combined.map((entry) => (
@@ -299,7 +301,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
               {providers && providers.purchasable && providers.purchasable.length > 0 && (
                 <div className='fdDetails__providers__provider'>
                   <header>
-                    <h3>Purchase {heroData.title}</h3>
+                    <h3>Purchase {data.title}</h3>
                   </header>
                   <ul aria-label='Purchase available on Platforms'>
                     {providers.purchasable.map((entry) => (
@@ -318,7 +320,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
               {providers && providers.purchasable && providers.purchasable.length > 0 && (
                 <div className='fdDetails__providers__provider'>
                   <header>
-                    <h3>Rent {heroData.title}</h3>
+                    <h3>Rent {data.title}</h3>
                   </header>
                   <ul aria-label='Rental available on Platforms'>
                     {providers.purchasable.map((entry) => (
@@ -346,10 +348,10 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
             <li>
               <nav>
                 <button
-                  aria-label={`View more details about ${heroData.title}`}
+                  aria-label={`View more details about ${data.title}`}
                   onPointerUp={() => {
                     setIsModal('movie');
-                    setModalTrailer(heroData);
+                    setModalTrailer(data);
                   }}>
                   <MaterialSymbolsOpenRun />
                   More Details

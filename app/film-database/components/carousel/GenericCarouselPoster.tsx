@@ -1,9 +1,10 @@
-import { useRef, useState, useEffect, type ReactNode, useCallback } from 'react';
+import { useRef, type ReactNode, useCallback } from 'react';
 import { BxDotsVerticalRounded, IcOutlinePlayCircle, TablerCategoryPlus } from '~/film-database/assets/svg/icons';
 import type { GenericCarouselMap } from '~/film-database/components/carousel/GenericCarousel';
 import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
 import { useHeroData } from '~/film-database/context/HeroDataContext';
 import { useModal } from '~/film-database/context/ModalContext';
+import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 import { useUserCollection } from '~/film-database/context/UserCollectionContext';
 import { addUserCollection } from '~/film-database/hooks/addUserCollection';
 
@@ -22,6 +23,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   const { setHeroData } = useHeroData();
   const { chunkSize } = useChunkSize();
   const { setIsModal, setPerson } = useModal();
+  const { setModalTrailer } = useModalTrailer();
 
   const dropdownRef = useRef<HTMLUListElement>(null);
 
@@ -49,7 +51,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   );
 
   /** @JSX */
-  if (carouselName === 'media' || carouselName === 'person') {
+  if (carouselName === 'media') {
     const mediaEntry = entry as GenericCarouselMap['media'][number];
     return (
       <li
@@ -161,6 +163,28 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
           </div>
         </button>
       </Parent>
+    );
+  } else if (carouselName === 'person') {
+    const mediaEntry = entry as GenericCarouselMap['media'][number];
+    return (
+      <li
+        className='genericCarousel__wrapper__ul__li'
+        onPointerDown={() => {
+          setModalTrailer(mediaEntry);
+          setIsModal('movie');
+        }}
+        onPointerLeave={() => dropdownRef.current?.setAttribute('data-open', 'false')}
+        data-hidden={posterIndex < chunkSize.viewport + 1 ? 'false' : 'true'}>
+        <picture className='genericCarousel__wrapper__ul__li__picture'>
+          <img
+            className='genericCarousel__wrapper__ul__li__picture--img'
+            src={`https://image.tmdb.org/t/p/w780/${mediaEntry.poster_path}`}
+            alt={`${mediaEntry.title}`}
+            fetchPriority={carouselIndex === 0 ? 'high' : 'low'}
+          />
+        </picture>
+        <div className='genericCarousel__wrapper__ul__li__overlay' />
+      </li>
     );
   } else {
     console.error('Invalid carouselName');
