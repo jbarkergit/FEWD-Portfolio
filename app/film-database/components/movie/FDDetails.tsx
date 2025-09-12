@@ -347,7 +347,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
               <nav>
                 <button
                   aria-label={`View more details about ${heroData.title}`}
-                  onClick={() => {
+                  onPointerUp={() => {
                     setIsModal('movie');
                     setModalTrailer(heroData);
                   }}>

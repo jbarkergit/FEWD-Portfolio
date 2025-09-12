@@ -82,13 +82,13 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
           <button
             className='genericCarousel__wrapper__ul__li__overlay--collections'
             aria-label='Add movie to collections'
-            onPointerUp={() => toggleCollectionMenu()}>
+            onPointerUp={toggleCollectionMenu}>
             <BxDotsVerticalRounded />
           </button>
           <button
             className='genericCarousel__wrapper__ul__li__overlay--play'
             aria-label='Play trailer'
-            onClick={() => setHeroData(mediaEntry)}>
+            onPointerUp={() => setHeroData(mediaEntry)}>
             <IcOutlinePlayCircle />
           </button>
         </div>

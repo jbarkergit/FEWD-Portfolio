@@ -104,7 +104,7 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
                   </picture>
                   <div
                     className='fdSearchBar__results__ul__li__overlay'
-                    onClick={() => setHeroData(props)}>
+                    onPointerUp={() => setHeroData(props)}>
                     <button
                       className='fdSearchBar__results__ul__li__overlay--play'
                       aria-label='Play trailer'>
