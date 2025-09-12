@@ -69,7 +69,7 @@
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     max-width: 57ch;
-    padding-bottom: calc(var(--fd-gap) / 2);
+    margin-bottom: calc(var(--fd-gap) / 2);
     overflow: clip;
     @include m.fdFontM;
     text-shadow: var(--fd-font-shadow);
