@@ -128,7 +128,7 @@
             z-index: 4;
             top: calc(var(--fd-gap) / 2);
             right: calc(var(--fd-gap) / 4);
-            padding: 3px;
+            padding: calc(var(--fd-gap) / 2.3);
             background-color: transparent;
             transition:
               background-color 200ms ease,
@@ -147,13 +147,15 @@
         }
         &__collections {
           position: absolute;
-          top: 3px;
+          top: 4px;
           right: calc(var(--fd-gap) + 1.8em - 8px);
           z-index: 3;
           display: flex;
           flex-direction: column;
           border: 1px solid rgba(16 18 27 / 40%);
-          border-radius: var(--fd-border-radius);
+          border-bottom-right-radius: var(--fd-border-radius);
+          border-bottom-left-radius: var(--fd-border-radius);
+          border-top-left-radius: var(--fd-border-radius);
           overflow: clip;
           background-color: var(--fd-bc-offset);
           transition: all 0.2s ease;
@@ -168,7 +170,7 @@
           }
           & li {
             &:hover {
-              background-color: var(--fd-bc-btn);
+              background-color: var(--fd-bc-hover-poster);
             }
             &:first-of-type button {
               border-top-left-radius: var(--fd-border-radius);
@@ -179,7 +181,7 @@
               border-bottom-left-radius: var(--fd-border-radius);
             }
             & button {
-              padding: calc(var(--fd-gap) / 2);
+              padding: calc(var(--fd-gap) / 1.5) var(--fd-gap);
               @include m.fdFontS;
               color: var(--fd-font-color-primary);
               white-space: nowrap;
