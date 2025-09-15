@@ -1,11 +1,16 @@
-import { useUserCollection, type UserCollection } from '~/film-database/context/UserCollectionContext';
+import type { Dispatch, SetStateAction } from 'react';
+import { type UserCollection } from '~/film-database/context/UserCollectionContext';
 
-export const useNewUserCollectionEntry = (payload: {
+type Payload = {
   data: UserCollection['data'] | undefined;
   colIndex: number;
-}): void => {
-  const { userCollections, setUserCollections } = useUserCollection();
+};
 
+export const addIdToCollection = (
+  userCollections: Record<string, UserCollection>,
+  setUserCollections: Dispatch<SetStateAction<Record<string, UserCollection>>>,
+  payload: Payload
+): void => {
   if (Object.keys(userCollections).length >= 5) return;
 
   const key: string = `user-collection-${payload.colIndex}`;

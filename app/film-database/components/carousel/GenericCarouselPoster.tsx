@@ -6,7 +6,7 @@ import { useHeroData } from '~/film-database/context/HeroDataContext';
 import { useModal } from '~/film-database/context/ModalContext';
 import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 import { useUserCollection } from '~/film-database/context/UserCollectionContext';
-import { useNewUserCollectionEntry } from '~/film-database/hooks/useNewUserCollectionEntry';
+import { addIdToCollection } from '~/film-database/utility/addIdToCollection';
 
 function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   carouselName,
@@ -19,7 +19,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   posterIndex: number;
   entry: GenericCarouselMap[K][number];
 }) {
-  const { userCollections } = useUserCollection();
+  const { userCollections, setUserCollections } = useUserCollection();
   const { setHeroData } = useHeroData();
   const { chunkSize } = useChunkSize();
   const { setIsModal, setPerson } = useModal();
@@ -91,7 +91,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
                 <button
                   aria-label={`Add movie to ${collection.header}`}
                   onPointerUp={() => {
-                    useNewUserCollectionEntry({
+                    addIdToCollection(userCollections, setUserCollections, {
                       data: [mediaEntry],
                       colIndex: keyIndex,
                     });
@@ -107,7 +107,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
               <button
                 aria-label='Add movie to a new collection'
                 onPointerUp={() => {
-                  useNewUserCollectionEntry({
+                  addIdToCollection(userCollections, setUserCollections, {
                     data: [mediaEntry],
                     colIndex: Object.keys(userCollections).length + 1,
                   });

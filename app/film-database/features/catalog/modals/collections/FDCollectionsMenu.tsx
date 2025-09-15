@@ -2,7 +2,7 @@ import { useEffect, useRef, type Dispatch, type SetStateAction } from 'react';
 import { TablerCategoryPlus, TablerEdit, MaterialSymbolsLogoutSharp } from '~/film-database/assets/svg/icons';
 import { useModal } from '~/film-database/context/ModalContext';
 import { useUserCollection } from '~/film-database/context/UserCollectionContext';
-import { useNewUserCollectionEntry } from '~/film-database/hooks/useNewUserCollectionEntry';
+import { addIdToCollection } from '~/film-database/utility/addIdToCollection';
 
 type Props = {
   isEditMode: boolean;
@@ -10,7 +10,7 @@ type Props = {
 };
 
 const FDCollectionsMenu = ({ isEditMode, setIsEditMode }: Props) => {
-  const { userCollections } = useUserCollection();
+  const { userCollections, setUserCollections } = useUserCollection();
   const { setIsModal } = useModal();
   const editBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -27,7 +27,7 @@ const FDCollectionsMenu = ({ isEditMode, setIsEditMode }: Props) => {
         className='fdCollectionsMenu--collection'
         aria-label='Create new list'
         onPointerUp={() =>
-          useNewUserCollectionEntry({
+          addIdToCollection(userCollections, setUserCollections, {
             data: undefined,
             colIndex: Object.keys(userCollections).length + 1,
           })
