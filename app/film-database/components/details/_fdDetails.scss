@@ -171,10 +171,6 @@
         box-shadow: 0px 10px 11px -3px rgb(11 11 11);
         @include m.fdFontM;
         text-transform: capitalize;
-        & svg {
-          width: 1.5rem;
-          aspect-ratio: 1/1;
-        }
       }
       &--details {
         background-color: var(--fd-bc-secondary);
@@ -219,7 +215,6 @@
             & > button {
               display: block;
               width: 100%;
-              padding: 0.5rem 1rem;
               border: 1px solid rgba(16 18 27 / 40%);
               background: var(--fd-bc-offset);
               color: var(--fd-font-color-primary);
@@ -229,6 +224,16 @@
               text-overflow: ellipsis;
               &:hover {
                 background-color: var(--fd-bc-hover-poster);
+              }
+              & span {
+                display: inline-block;
+                padding-right: 4px;
+                & svg {
+                  display: inline-block;
+                  width: 1.1em;
+                  aspect-ratio: 1;
+                  margin-top: -4px;
+                }
               }
             }
           }

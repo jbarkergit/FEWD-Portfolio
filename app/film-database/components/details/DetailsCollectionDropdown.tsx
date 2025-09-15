@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { TablerCategoryPlus } from '~/film-database/assets/svg/icons';
 import { useHeroData } from '~/film-database/context/HeroDataContext';
 import { useUserCollection } from '~/film-database/context/UserCollectionContext';
 import { addIdToCollection } from '~/film-database/utility/addIdToCollection';
@@ -45,12 +46,11 @@ const DetailsCollectionDropdown = () => {
               <button
                 aria-label={`Add ${heroData?.title} to collection ${col.header}`}
                 onPointerUp={() => {
-                  if (heroData) {
+                  if (heroData)
                     addIdToCollection(userCollections, setUserCollections, {
                       data: [heroData],
                       colIndex: index,
                     });
-                  }
                   toggleDropdown();
                 }}>
                 {col.header}
@@ -58,6 +58,25 @@ const DetailsCollectionDropdown = () => {
             </li>
           );
         })}
+        {Object.entries(userCollections).length < 5 ? (
+          <li>
+            <button
+              aria-label={`Add ${heroData?.title} to a new collection`}
+              onPointerUp={() => {
+                if (heroData)
+                  addIdToCollection(userCollections, setUserCollections, {
+                    data: [heroData],
+                    colIndex: Object.keys(userCollections).length + 1,
+                  });
+                toggleDropdown();
+              }}>
+              <span>
+                <TablerCategoryPlus />
+              </span>
+              New Collection
+            </button>
+          </li>
+        ) : null}
       </ul>
     </div>
   );
