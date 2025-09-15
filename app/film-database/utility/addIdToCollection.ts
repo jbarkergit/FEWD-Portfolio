@@ -22,7 +22,7 @@ export const addIdToCollection = (
     return {
       ...s,
       [key]: {
-        header: target?.header ?? 'New Collection',
+        header: target?.header ?? 'Unnamed Collection',
         data: target?.data && payload.data ? [...target.data, ...payload.data] : payload.data ? [...payload.data] : [],
       },
     };
