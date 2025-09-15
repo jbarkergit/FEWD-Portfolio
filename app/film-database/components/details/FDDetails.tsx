@@ -14,6 +14,8 @@ import { tmdbDiscoveryIds } from '~/film-database/composables/const/tmdbDiscover
 import { useHeroData } from '~/film-database/context/HeroDataContext';
 import { useModal } from '~/film-database/context/ModalContext';
 import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
+import { useUserCollection } from '~/film-database/context/UserCollectionContext';
+import DetailsCollectionDropdown from '~/film-database/components/details/DetailsCollectionDropdown';
 
 const discoveryIdMap = Object.fromEntries(Object.entries(tmdbDiscoveryIds).map(([k, v]) => [v, k]));
 
@@ -46,18 +48,12 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
   useEffect(() => {
     if (!data) return;
 
-    let cancelled: boolean = false;
-
     const fetchWatchProviders = async () => {
       const res = await tmdbCall({ watchProviders: data.id });
-      if (!cancelled) setWatchProviders(res.response.results.US);
+      setWatchProviders(res.response.results.US);
     };
 
     fetchWatchProviders();
-
-    return () => {
-      cancelled = true;
-    };
   }, [data]);
 
   /**
@@ -214,8 +210,9 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
           {getAvailability}
         </div>
         {!modal && (
-          <nav>
+          <nav className='fdDetails__extra__nav'>
             <button
+              className='fdDetails__extra__nav--details'
               aria-label={`View more details about ${data.title}`}
               onPointerUp={() => {
                 setIsModal('movie');
@@ -223,11 +220,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
               }}>
               More Details
             </button>
-            <button
-              aria-label={`Add ${data.title} to collections`}
-              onPointerUp={() => {}}>
-              Add to collections
-            </button>
+            <DetailsCollectionDropdown />
           </nav>
         )}
       </div>

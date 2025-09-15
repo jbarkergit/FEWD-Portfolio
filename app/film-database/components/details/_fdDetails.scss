@@ -160,7 +160,7 @@
         }
       }
     }
-    & nav {
+    &__nav {
       display: flex;
       gap: var(--fd-gap);
       & button {
@@ -171,18 +171,67 @@
         box-shadow: 0px 10px 11px -3px rgb(11 11 11);
         @include m.fdFontM;
         text-transform: capitalize;
-        &:nth-of-type(1) {
-          background-color: var(--fd-bc-secondary);
-          color: var(--fd-bc-offset);
-          font-weight: 600;
-        }
-        &:nth-of-type(2) {
-          background-color: #5d5b5a;
-          font-weight: 500;
-        }
         & svg {
           width: 1.5rem;
           aspect-ratio: 1/1;
+        }
+      }
+      &--details {
+        background-color: var(--fd-bc-secondary);
+        color: var(--fd-bc-offset);
+        font-weight: 600;
+      }
+      &__collections {
+        position: relative;
+        z-index: 3;
+        display: inline-block;
+        & > button {
+          position: relative;
+          z-index: 4;
+          width: 100%;
+          background-color: #5d5b5a;
+          font-weight: 500;
+        }
+        &__dropdown {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          z-index: 2;
+          display: flex;
+          flex-direction: column;
+          gap: 1px;
+          width: 100%;
+          max-height: 500px;
+          overflow: visible;
+          &[data-open='false'] li {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+          }
+          &[data-open='true'] li {
+            transform: translateY(6px);
+            opacity: 1;
+          }
+          li {
+            transition:
+              transform 0.35s ease,
+              opacity 0.35s ease;
+            & > button {
+              display: block;
+              width: 100%;
+              padding: 0.5rem 1rem;
+              border: 1px solid rgba(16 18 27 / 40%);
+              background: var(--fd-bc-offset);
+              color: var(--fd-font-color-primary);
+              overflow: clip;
+              text-align: left;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              &:hover {
+                background-color: var(--fd-bc-hover-poster);
+              }
+            }
+          }
         }
       }
     }
