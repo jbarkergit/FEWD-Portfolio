@@ -69,7 +69,6 @@
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     max-width: 57ch;
-    margin-bottom: calc(var(--fd-gap) / 2);
     overflow: clip;
     @include m.fdFontM;
     text-shadow: var(--fd-font-shadow);
@@ -87,6 +86,7 @@
   &__genres {
     display: flex;
     flex-wrap: wrap;
+    margin: calc(var(--fd-gap) / 2) 0;
     & li {
       text-transform: capitalize;
       @include m.fdFontM;

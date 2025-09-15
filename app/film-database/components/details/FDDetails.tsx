@@ -197,19 +197,43 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
 
       <p className='fdDetails__overview'>{data.overview}</p>
 
+      {genreIds.length && (
+        <ul className='fdDetails__genres'>
+          {genreIds.map((genre, index) => (
+            <li key={`genre-${genre}-index-${index}`}>
+              {genre}&nbsp;
+              {index !== data.genre_ids.length - 1 ? '•' : null}&nbsp;
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className='fdDetails__extra'>
+        <div className='fdDetails__extra__inf'>
+          {getVoteAverageVisual}
+          {getAvailability}
+        </div>
+        {!modal && (
+          <nav>
+            <button
+              aria-label={`View more details about ${data.title}`}
+              onPointerUp={() => {
+                setIsModal('movie');
+                setModalTrailer(data);
+              }}>
+              More Details
+            </button>
+            <button
+              aria-label={`Add ${data.title} to collections`}
+              onPointerUp={() => {}}>
+              Add to collections
+            </button>
+          </nav>
+        )}
+      </div>
+
       {modal && (
         <>
-          {genreIds.length && (
-            <ul className='fdDetails__genres'>
-              {genreIds.map((genre, index) => (
-                <li key={`genre-${genre}-index-${index}`}>
-                  {genre}&nbsp;
-                  {index !== data.genre_ids.length - 1 ? '•' : null}&nbsp;
-                </li>
-              ))}
-            </ul>
-          )}
-
           {watchProviders && (
             <div className='fdDetails__providers'>
               {watchProviders.flatrate && (
@@ -289,30 +313,6 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
           )}
         </>
       )}
-
-      <div className='fdDetails__extra'>
-        <div className='fdDetails__extra__inf'>
-          {getVoteAverageVisual}
-          {getAvailability}
-        </div>
-        {!modal && (
-          <nav>
-            <button
-              aria-label={`View more details about ${data.title}`}
-              onPointerUp={() => {
-                setIsModal('movie');
-                setModalTrailer(data);
-              }}>
-              More Details
-            </button>
-            <button
-              aria-label={`Add ${data.title} to collections`}
-              onPointerUp={() => {}}>
-              Add to collections
-            </button>
-          </nav>
-        )}
-      </div>
     </article>
   );
 };
