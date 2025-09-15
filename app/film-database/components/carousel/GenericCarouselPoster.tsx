@@ -89,7 +89,6 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
           ref={dropdownRef}
           data-open='false'>
           {Object.entries(userCollections).map(([key, collection], i) => {
-            const keyIndex = parseInt(key.split('-').pop() || '0', 10);
             return (
               <li key={`${carouselName}-carousel-${carouselIndex}-poster-${posterIndex}-collection-dropdown-${i}`}>
                 <button
@@ -97,7 +96,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
                   onPointerUp={() => {
                     addIdToCollection(userCollections, setUserCollections, {
                       data: [mediaEntry],
-                      colIndex: keyIndex,
+                      colIndex: i,
                     });
                     toggleDropdown();
                   }}>

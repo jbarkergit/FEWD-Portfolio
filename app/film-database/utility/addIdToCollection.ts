@@ -11,21 +11,19 @@ export const addIdToCollection = (
   setUserCollections: Dispatch<SetStateAction<Record<string, UserCollection>>>,
   payload: Payload
 ): void => {
-  if (Object.keys(userCollections).length >= 5) return;
+  const hasHitCollectionLimit: boolean = Object.keys(userCollections).length >= 5;
+  if (hasHitCollectionLimit) return;
 
   const key: string = `user-collection-${payload.colIndex}`;
-  const header: string = userCollections[payload.colIndex]?.header ?? 'Unnamed Collection';
 
-  setUserCollections((prev) => {
-    const existing = prev[key];
-    if (!existing) return prev;
+  setUserCollections((s) => {
+    const target = s[key];
 
     return {
-      ...prev,
+      ...s,
       [key]: {
-        ...existing,
-        header,
-        data: payload?.data ? [...(existing.data ?? []), ...payload.data] : (existing.data ?? []),
+        header: target?.header ?? 'New Collection',
+        data: target?.data && payload.data ? [...target.data, ...payload.data] : payload.data ? [...payload.data] : [],
       },
     };
   });

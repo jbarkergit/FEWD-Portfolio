@@ -39,8 +39,7 @@ const DetailsCollectionDropdown = () => {
         className='fdDetails__extra__nav__collections__dropdown'
         ref={dropdownRef}
         data-open='false'>
-        {Object.entries(userCollections).map(([key, col]) => {
-          const keyIndex = parseInt(key.split('-').pop() || '0', 10);
+        {Object.entries(userCollections).map(([key, col], index) => {
           return (
             <li key={`detail-dropdown-${col.header}`}>
               <button
@@ -49,7 +48,7 @@ const DetailsCollectionDropdown = () => {
                   if (heroData) {
                     addIdToCollection(userCollections, setUserCollections, {
                       data: [heroData],
-                      colIndex: keyIndex,
+                      colIndex: index,
                     });
                   }
                   toggleDropdown();
