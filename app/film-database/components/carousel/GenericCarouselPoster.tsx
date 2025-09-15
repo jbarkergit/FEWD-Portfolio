@@ -1,4 +1,4 @@
-import { useRef, type ReactNode, useCallback } from 'react';
+import { useRef, type ReactNode, useCallback, useEffect } from 'react';
 import { BxDotsVerticalRounded, IcOutlinePlayCircle, TablerCategoryPlus } from '~/film-database/assets/svg/icons';
 import type { GenericCarouselMap } from '~/film-database/components/carousel/GenericCarousel';
 import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
@@ -40,6 +40,10 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
     if (isOpen) document.addEventListener('pointerup', handleExteriorClick);
     else document.removeEventListener('pointerup', handleExteriorClick);
   };
+
+  useEffect(() => {
+    return () => document.removeEventListener('pointerup', handleExteriorClick);
+  }, []);
 
   /** @Parent */
   const Parent = ({ children }: { children: ReactNode }) => (
