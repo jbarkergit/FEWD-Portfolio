@@ -1,60 +1,8 @@
-import type { Dispatch, SetStateAction } from 'react';
-import type { UserCollection } from '~/film-database/context/UserCollectionContext';
+import { useUserCollection, type UserCollection } from '~/film-database/context/UserCollectionContext';
 
-/**
- * @function addCollection
- * Adds new collection to carousels state
- */
-type Params = {
-  userCollections: Record<string, UserCollection>;
-  setUserCollections: Dispatch<SetStateAction<Record<string, UserCollection>>>;
-  payload: {
-    data: UserCollection['data'] | undefined;
-    colIndex: number;
-  };
-};
+export const addUserCollection = (payload: { data: UserCollection['data'] | undefined; colIndex: number }): void => {
+  const { userCollections, setUserCollections } = useUserCollection();
 
-// export const addUserCollection = ({ userCollections, setUserCollections, isEditMode, payload }: Params): void => {
-//   if (Object.keys(userCollections).length >= 5) return;
-
-//   const index = payload?.colIndex ?? Object.keys(userCollections).length + 1;
-//   const key = `user-collection-${index}`;
-//   const newHeader = 'Uncategorized Movies';
-//   const newDisplay: 'grid' | 'flex' = isEditMode ? 'grid' : 'flex';
-
-//   if (payload && userCollections[index]) {
-//     // Append to existing collection
-//     setUserCollections((prev) => ({
-//       ...prev,
-//       [key]: {
-//         ...prev[key],
-//         data: [...(prev[key].data ?? []), ...payload.data!],
-//       },
-//     }));
-//   } else if (payload) {
-//     // Create new collection with payload data
-//     setUserCollections((prev) => ({
-//       ...prev,
-//       [key]: {
-//         header: newHeader,
-//         data: [...payload.data!],
-//         display: newDisplay,
-//       },
-//     }));
-//   } else {
-//     // Create new empty collection
-//     setUserCollections((prev) => ({
-//       ...prev,
-//       [key]: {
-//         header: newHeader,
-//         data: undefined,
-//         display: newDisplay,
-//       },
-//     }));
-//   }
-// };
-
-export const addUserCollection = ({ userCollections, setUserCollections, payload }: Params): void => {
   if (Object.keys(userCollections).length >= 5) return;
 
   const key: string = `user-collection-${payload.colIndex}`;
