@@ -2,7 +2,7 @@ import { useEffect, useRef, type Dispatch, type SetStateAction } from 'react';
 import { TablerCategoryPlus, TablerEdit, MaterialSymbolsLogoutSharp } from '~/film-database/assets/svg/icons';
 import { useModal } from '~/film-database/context/ModalContext';
 import { useUserCollection } from '~/film-database/context/UserCollectionContext';
-import { addUserCollection } from '~/film-database/hooks/addUserCollection';
+import { useNewUserCollectionEntry } from '~/film-database/hooks/useNewUserCollectionEntry';
 
 type Props = {
   isEditMode: boolean;
@@ -10,7 +10,7 @@ type Props = {
 };
 
 const FDCollectionsMenu = ({ isEditMode, setIsEditMode }: Props) => {
-  const { userCollections, setUserCollections } = useUserCollection();
+  const { userCollections } = useUserCollection();
   const { setIsModal } = useModal();
   const editBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -27,13 +27,9 @@ const FDCollectionsMenu = ({ isEditMode, setIsEditMode }: Props) => {
         className='fdCollectionsMenu--collection'
         aria-label='Create new list'
         onPointerUp={() =>
-          addUserCollection({
-            userCollections,
-            setUserCollections,
-            payload: {
-              data: undefined,
-              colIndex: Object.keys(userCollections).length + 1,
-            },
+          useNewUserCollectionEntry({
+            data: undefined,
+            colIndex: Object.keys(userCollections).length + 1,
           })
         }>
         <TablerCategoryPlus />

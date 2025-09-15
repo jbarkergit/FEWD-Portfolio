@@ -6,7 +6,7 @@ import { useHeroData } from '~/film-database/context/HeroDataContext';
 import { useModal } from '~/film-database/context/ModalContext';
 import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 import { useUserCollection } from '~/film-database/context/UserCollectionContext';
-import { addUserCollection } from '~/film-database/hooks/addUserCollection';
+import { useNewUserCollectionEntry } from '~/film-database/hooks/useNewUserCollectionEntry';
 
 function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   carouselName,
@@ -19,7 +19,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   posterIndex: number;
   entry: GenericCarouselMap[K][number];
 }) {
-  const { userCollections, setUserCollections } = useUserCollection();
+  const { userCollections } = useUserCollection();
   const { setHeroData } = useHeroData();
   const { chunkSize } = useChunkSize();
   const { setIsModal, setPerson } = useModal();
@@ -91,13 +91,9 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
                 <button
                   aria-label={`Add movie to ${collection.header}`}
                   onPointerUp={() => {
-                    addUserCollection({
-                      userCollections,
-                      setUserCollections,
-                      payload: {
-                        data: [mediaEntry],
-                        colIndex: keyIndex,
-                      },
+                    useNewUserCollectionEntry({
+                      data: [mediaEntry],
+                      colIndex: keyIndex,
                     });
                     toggleDropdown();
                   }}>
@@ -111,13 +107,9 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
               <button
                 aria-label='Add movie to a new collection'
                 onPointerUp={() => {
-                  addUserCollection({
-                    userCollections,
-                    setUserCollections,
-                    payload: {
-                      data: [mediaEntry],
-                      colIndex: Object.keys(userCollections).length + 1,
-                    },
+                  useNewUserCollectionEntry({
+                    data: [mediaEntry],
+                    colIndex: Object.keys(userCollections).length + 1,
                   });
                   toggleDropdown();
                 }}>
