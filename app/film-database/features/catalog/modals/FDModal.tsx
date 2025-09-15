@@ -11,22 +11,14 @@ const FDModal = () => {
   // References
   const modal = useRef<HTMLDivElement>(null);
 
-  /**
-   * @function handleExteriorClicks
-   * @returns void
-   * Sets modal state (in context) to false when the user isn't directly interacting with modal
-   */
+  /** Sets modal state (in context) to false when the user isn't directly interacting with modal */
   const handleExteriorClicks = (event: PointerEvent): void => {
     if (!modal.current?.contains(event.target as Node)) {
       setIsModal(undefined);
     }
   };
 
-  /**
-   * @function useEffect
-   * @returns (() => void
-   * Mount event listeners for @handleExteriorClicks
-   */
+  /** Mount event listeners for @handleExteriorClicks */
   useEffect(() => {
     if (isModal) document.addEventListener('pointerdown', handleExteriorClicks);
     return () => document.removeEventListener('pointerdown', handleExteriorClicks);
