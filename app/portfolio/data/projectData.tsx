@@ -8,6 +8,7 @@ export const projectData = [
       software_development_kits: ['firebase', 'firebase-tools'],
       utilities_and_services: ['zod'],
       tools_and_libraries: ['vite', 'react', 'react-router', 'typescript', 'sass'],
+      testing_tools: ['jest', '@testing-library/react'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
       content_moderation: ['naughty-words'],
     },
