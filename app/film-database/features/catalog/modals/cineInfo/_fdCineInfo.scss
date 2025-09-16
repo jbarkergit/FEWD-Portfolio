@@ -8,4 +8,7 @@
   .fdDetails__overview {
     display: block;
   }
+  .fdDetails {
+    margin-bottom: calc(var(--fd-gap) * 3);
+  }
 }
