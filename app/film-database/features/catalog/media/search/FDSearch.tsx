@@ -9,51 +9,42 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
   const { setHeroData } = useHeroData();
   const { chunkSize } = useChunkSize();
 
-  const isTypingRef = useRef<boolean>(false);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<TmdbResponseFlat['search']['results'] | undefined>(undefined);
-
-  /**
-   * @function fetch
-   * @returns Promise<void>
-   * Invoke debounced fetch
-   */
-  const fetch = async () => {
-    const search = await tmdbCall({ search: searchTerm });
-    if (search) setSearchResults(search.response.results);
-  };
-
-  const timeoutId = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    // Clear timer
-    if (timeoutId.current) window.clearTimeout(timeoutId.current);
-
-    // Assign new timer
-    timeoutId.current = window.setTimeout(() => {
-      if (searchTerm.length > 0) fetch();
-    }, 850) as unknown as NodeJS.Timeout;
-
-    return () => {
-      if (timeoutId.current) {
-        isTypingRef.current = false;
-        window.clearTimeout(timeoutId.current);
-      }
-    };
-  }, [searchTerm]);
-
-  /**
-   * @function handleLabelVisibility
-   * @returns void undefined
-   * Alters visibility of the input label
-   */
   const labelRef = useRef<HTMLLabelElement>(null);
 
-  const handleLabelVisibility = (prop: 'visible' | 'barelyVisible'): void | undefined => {
-    if (labelRef.current && searchTerm.length === 0) {
-      return labelRef.current?.setAttribute('data-opacity', prop);
+  const searchTermRef = useRef<string>('');
+  const timeoutId = useRef<NodeJS.Timeout | null>(null);
+
+  const [searchResults, setSearchResults] = useState<TmdbResponseFlat['search']['results'] | undefined>(undefined);
+
+  /** Handle label visibility */
+  const handleLabelVisibility = (state: 'visible' | 'barelyVisible' | 'hidden') => {
+    if (state !== 'hidden' && !searchTermRef.current.length) labelRef.current?.setAttribute('data-opacity', state);
+    else labelRef.current?.setAttribute('data-opacity', 'hidden');
+  };
+
+  /** Handle input changes */
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // Set search term
+    searchTermRef.current = e.target.value.trim().replaceAll(' ', '-').toLowerCase();
+
+    // Update label visibility
+    if (e.target.value.length) handleLabelVisibility('hidden');
+
+    // Clear timeout
+    if (timeoutId.current) {
+      clearTimeout(timeoutId.current);
     }
-    return undefined;
+
+    // Assign timeout
+    timeoutId.current = setTimeout(() => {
+      if (searchTermRef.current.length) fetch();
+    }, 850);
+  };
+
+  /** Debounced fetch */
+  const fetch = async () => {
+    const search = await tmdbCall({ search: searchTermRef.current });
+    if (search) setSearchResults(search.response.results);
   };
 
   return (
@@ -65,7 +56,7 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
           <label
             className='fdSearchBar__header__fieldset__label'
             htmlFor='fdSearchBar__fieldset__input'
-            data-opacity={searchTerm.length > 0 ? 'hidden' : 'barelyVisible'}
+            data-opacity='barelyVisible'
             ref={labelRef}>
             <IcBaselineSearch />
             <h2>Find the movies you're interested in</h2>
@@ -79,10 +70,7 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
             onPointerLeave={() => handleLabelVisibility('barelyVisible')}
             onFocus={() => handleLabelVisibility('visible')}
             onBlur={() => handleLabelVisibility('barelyVisible')}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              isTypingRef.current = true;
-              setSearchTerm(e?.target.value.replace(' ', '-').toLowerCase());
-            }}
+            onChange={handleChange}
           />
         </fieldset>
       </div>
@@ -91,7 +79,7 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
         className='fdSearchBar__results'
         data-anim={searchResults && searchResults.length ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
-          {!isTypingRef.current && searchResults
+          {searchResults
             ? searchResults.slice(0, chunkSize.viewport).map((props, index) => (
                 <li
                   className='fdSearchBar__results__ul__li'
