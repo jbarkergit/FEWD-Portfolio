@@ -3,21 +3,14 @@ import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbRe
 import { useFLoader } from '~/film-database/routes/FilmDatabase';
 
 const FDAccountModalPoster = () => {
-  /** @loaderData */
   const { primaryData } = useFLoader();
   const nowPlaying = primaryData[0]?.response.results;
   if (!nowPlaying) return;
 
-  /** @state */
   const [posters, setPosters] = useState<TmdbMovieProvider[]>([]);
-
-  /** @ref */
   const indexQueue = useRef<number[]>([]);
 
-  /**
-   * @function shuffleIndexes
-   * @description Randomly shuffle indexQueue within bounds of the films array.
-   */
+  /** Randomly shuffle indexQueue within bounds of the films array. */
   const shuffleIndexes = (): void => {
     const isIndexQueueFull: boolean = indexQueue.current.length >= nowPlaying.length;
     const nextQueue: number[] = isIndexQueueFull ? indexQueue.current : [...nowPlaying.keys()];
@@ -40,10 +33,7 @@ const FDAccountModalPoster = () => {
     indexQueue.current = nextQueue;
   };
 
-  /**
-   * @function createPosters
-   * @description Generate a random queue of film posters for the fade effect.
-   */
+  /** Generate a random queue of film posters for the fade effect */
   const createPosters = (): void => {
     shuffleIndexes();
     let queue: typeof posters = [];
@@ -73,7 +63,6 @@ const FDAccountModalPoster = () => {
     }
   }, [posters]);
 
-  /** @JSX */
   return (
     <div className='fdAccount__container__wrapper'>
       <picture>

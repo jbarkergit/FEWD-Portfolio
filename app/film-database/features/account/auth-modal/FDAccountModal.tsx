@@ -1,11 +1,11 @@
 import { forwardRef, useEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
-import FDAccountModalPoster from './features/FDAccountModalPoster';
 import z from 'zod';
 import { zodSchema } from '~/base/validation/zodSchema';
 import { createFirestoreUser } from '~/base/firebase/firestore/utility/createFirestoreUser';
 import { useFirestoreLogin } from '~/base/firebase/firestore/utility/useFirestoreLogin';
 import { handleAuthProvider } from '~/base/firebase/authentication/utility/handleAuthProvider';
 import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
+import FDAccountModalPoster from '~/film-database/features/account/auth-modal/FDAccountModalPoster';
 
 const registration = [
   {

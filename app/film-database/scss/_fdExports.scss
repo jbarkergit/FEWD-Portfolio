@@ -5,8 +5,8 @@
 @forward '/app/film-database/routes/fdRoutes';
 
 // Account Page Features
-@forward '/app/film-database/features/account/fdAccountModal';
-@forward '/app/film-database/features/account/animation/fdAccountAnimation';
+@forward '/app/film-database/features/account/animator/fdAccountAnimation';
+@forward '/app/film-database/features/account/auth-modal/fdAccountModal';
 
 // Catalog Page Features
 @forward '/app/film-database/features/catalog/navigation/fdHeader';

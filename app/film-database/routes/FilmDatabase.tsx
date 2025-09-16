@@ -1,23 +1,18 @@
 import { useRef } from 'react';
 import { useLoaderData } from 'react-router';
 import type { Route } from './+types/FilmDatabase';
-
 import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAuthorized';
-
 import { tmdbCall } from '../composables/tmdbCall';
-
 import { HeroDataProvider } from '~/film-database/context/HeroDataContext';
 import { ChunkSizeProvider } from '~/film-database/context/ChunkSizeContext';
 import { RootRefProvider } from '~/film-database/context/RootRefContext';
 import { TrailerQueueProvider } from '~/film-database/context/ModalTrailerContext';
 import { UserCollectionProvider } from '~/film-database/context/UserCollectionContext';
 import { ModalProvider } from '~/film-database/context/ModalContext';
-
-import FDAccountAnimation from '../features/account/animation/FDAccountAnimation';
-import FDAccountModal from '../features/account/FDAccountModal';
-
+import FDAccountAnimation from '../features/account/animator/FDAccountAnimation';
 import FDHeader from '../features/catalog/navigation/FDHeader';
 import FDCatalog from '../features/catalog/FDCatalog';
+import FDAccountModal from '~/film-database/features/account/auth-modal/FDAccountModal';
 
 export async function clientLoader() {
   const isAuth = await isUserAuthorized();
