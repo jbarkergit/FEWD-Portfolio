@@ -11,7 +11,7 @@ type Cast = TmdbResponseFlat['personCredits']['cast'][number];
 
 const FDPerson = () => {
   const { person } = useModal();
-  const { chunkSize } = useChunkSize();
+  // const { chunkSize } = useChunkSize();
   const { setModalTrailer } = useModalTrailer();
   const { setIsModal } = useModal();
 
