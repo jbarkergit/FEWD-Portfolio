@@ -52,12 +52,12 @@ const FDPerson = () => {
   }, [credits]);
 
   // Known for
-  const knownFor = useMemo(() => {
-    return allCast
-      .flat()
-      .sort((a, b) => b.vote_average - a.vote_average)
-      .slice(0, chunkSize.modal * 2);
-  }, [credits]);
+  // const knownFor = useMemo(() => {
+  //   return allCast
+  //     .flat()
+  //     .sort((a, b) => b.vote_average - a.vote_average)
+  //     .slice(0, chunkSize.modal * 2);
+  // }, [credits]);
 
   // Group cast credits by year
   const castCreditsGrouped = useMemo(() => {
@@ -169,14 +169,14 @@ const FDPerson = () => {
           </div>
         )}
 
-        {knownFor.length > 0 && (
+        {/* {knownFor.length > 0 && (
           <GenericCarousel
             carouselIndex={1}
             carouselName='person'
             heading='Known For'
             data={knownFor}
           />
-        )}
+        )} */}
 
         {castCreditsGrouped.length > 0 && (
           <table className='fdPerson__column__table'>
