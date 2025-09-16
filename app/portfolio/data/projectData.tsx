@@ -9,6 +9,7 @@ export const projectData = [
       utilities_and_services: ['zod'],
       tools_and_libraries: ['vite', 'react', 'react-router', 'typescript', 'sass'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
+      content_moderation: ['naughty-words'],
     },
     insights: (
       <>
