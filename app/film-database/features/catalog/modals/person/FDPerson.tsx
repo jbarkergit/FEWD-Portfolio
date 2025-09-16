@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useRef } from 'react';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
-import { SvgSpinnersRingResize } from '~/film-database/assets/svg/icons';
+import { MaterialSymbolsLogoutSharp, SvgSpinnersRingResize } from '~/film-database/assets/svg/icons';
 import { useModal } from '~/film-database/context/ModalContext';
 import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
 import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
@@ -94,11 +94,20 @@ const FDPerson = () => {
   if (!details || !credits)
     return (
       <div className='fdPerson'>
-        <SvgSpinnersRingResize />
+        <div className='fdPerson__loader'>
+          <SvgSpinnersRingResize />
+        </div>
       </div>
     );
   return (
     <article className='fdPerson'>
+      <button
+        className='fdPerson--exit'
+        aria-label='Close View More Modal'
+        onPointerUp={() => setIsModal('movie')}>
+        <MaterialSymbolsLogoutSharp />
+      </button>
+
       <div className='fdPerson__column'>
         <picture data-missing={details.profile_path ? 'false' : 'true'}>
           {details.profile_path ? (
