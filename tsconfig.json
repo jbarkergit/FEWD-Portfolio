@@ -4,9 +4,9 @@
     // "**/.server/**/*",
     // "**/.client/**/*",
     ".react-router/types/**/*",
+    "react-router.config.ts",
     "vite.config.ts",
     ".eslintrc.cjs",
-    "react-router.config.ts",
     "reset.d.ts",
     "app"
   ],
@@ -53,7 +53,7 @@
     },
 
     // Additional
-    // "types": ["node", "vite/client"], // Include type definitions for Node and Vite client
+    "types": ["node", "vite/client", "@testing-library/react", "@testing-library/dom", "@testing-library/jest-dom"],
     "outDir": "dist" // Output directory for compiled files (not used with noEmit: true)
   }
 }
