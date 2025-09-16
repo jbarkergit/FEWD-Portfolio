@@ -53,8 +53,10 @@
   }
   &__account {
     justify-self: end;
-    & button {
+    & div {
       display: block;
+      pointer-events: all;
+      cursor: pointer;
       & svg {
         width: 2rem;
       }

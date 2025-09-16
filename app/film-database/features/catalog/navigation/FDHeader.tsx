@@ -90,7 +90,7 @@ const FDHeader = () => {
         </li>
       </ul>
       <div className='fdHeader__account'>
-        <button
+        <div
           aria-label='My Account'
           onPointerUp={() => setIsAccountDropdownOpen((prev) => !prev)}>
           <StreamlinePlumpUserStickerSquareSolid />
@@ -103,7 +103,7 @@ const FDHeader = () => {
               Sign out
             </button>
           </div>
-        </button>
+        </div>
       </div>
     </div>
   );
