@@ -24,7 +24,7 @@ type DataReturn<K> = K extends TmdbNeverKeys
       ? TmdbResponse['string'][K]
       : never;
 
-const excludedKeys = ['videos', 'personDetails', 'personCredits', 'credits', 'watchProviders'] as const;
+const excludedKeys = ['videos', 'personDetails', 'personCredits', 'credits', 'watchProviders', 'search'] as const;
 
 const createEndpoint = <K extends TmdbEndpointKeys>(key: K, query: Query<K>): string | undefined => {
   const allEndpoints = Object.assign({}, tmdbEndpoints.never, tmdbEndpoints.number, tmdbEndpoints.string);
