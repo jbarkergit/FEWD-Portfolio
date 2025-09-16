@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef, type ChangeEvent } from 'react';
+import { useState, useRef, type ChangeEvent } from 'react';
 import { IcOutlinePlayCircle, IcBaselineSearch } from '~/film-database/assets/svg/icons';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
 import { useHeroData } from '~/film-database/context/HeroDataContext';
+import englishBadWordsRaw from 'naughty-words/en.json';
 
 const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
   const { setHeroData } = useHeroData();
@@ -41,10 +42,24 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
     }, 850);
   };
 
-  /** Debounced fetch */
+  /**
+   * Debounced fetch
+   * NOTE: TMDB 'adult' query parameter partially filters out adult results given not all films may have the correct flag.
+   * There's too many loopholes to abuse the system; therefore, filtering results isn't as simple as filtering title and overview by a keyword array.
+   * The only options to combat this is a content moderation service AND some combination of region locking, keyword and genre filtering and/or locking results by PG-13 rating.
+   * Utilizing the naughty-words npm package is the best non-subscription service/solution we can employ.
+   */
   const fetch = async () => {
     const search = await tmdbCall({ search: searchTermRef.current });
-    if (search) setSearchResults(search.response.results);
+
+    const filteredResults = search.response.results.filter((res) => {
+      if (res.adult || !res.title || !res.overview) return false;
+      const title = res.title.trim().toLowerCase();
+      const overview = res.overview.toLowerCase();
+      return !englishBadWordsRaw.some((word) => title.includes(word) || overview.includes(word));
+    });
+
+    if (search) setSearchResults(filteredResults);
   };
 
   return (
@@ -79,7 +94,7 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
         className='fdSearchBar__results'
         data-anim={searchResults && searchResults.length ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
-          {searchResults
+          {searchResults && searchResults.length
             ? searchResults.slice(0, chunkSize.viewport).map((props, index) => (
                 <li
                   className='fdSearchBar__results__ul__li'
