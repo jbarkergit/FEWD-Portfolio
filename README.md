@@ -32,7 +32,7 @@
 
 - **[@testing-library/react](https://www.npmjs.com/package/@testing-library/react)**: React testing utilities.
 - **[@testing-library/dom](https://www.npmjs.com/package/@testing-library/dom)**: DOM testing helpers encouraging best practices.
-- **[jest](https://www.npmjs.com/package/jest)**: Unit and integration test runner.
+- **[Vitest](https://vitest.dev/)**: Unit and integration test runner compatible with Vite.
 - **[@testing-library/jest-dom](https://www.npmjs.com/package/@testing-library/jest-dom)**: Custom Jest matchers for DOM assertions.
 
 ## Linting
