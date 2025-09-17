@@ -23,7 +23,6 @@
 ## Backend & Deployment
 
 - **[Firebase](https://www.npmjs.com/package/firebase)**: Backend services including database, auth, and integrations.
-- **[firebase-tools](https://www.npmjs.com/package/firebase-tools)**: Tooling for deployment, database management, and local servers.
 
 ## Utilities & Services
 
