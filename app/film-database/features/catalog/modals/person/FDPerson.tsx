@@ -25,10 +25,12 @@ const FDPerson = () => {
   const clampRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchPerson = async () => {
       if (!person) return;
 
-      const responses = await tmdbCall([{ personDetails: person }, { personCredits: person }]);
+      const responses = await tmdbCall(controller, [{ personDetails: person }, { personCredits: person }]);
 
       const details = responses.find(
         (r): r is { key: 'personDetails'; response: TmdbResponseFlat['personDetails'] } => r.key === 'personDetails'
@@ -42,6 +44,8 @@ const FDPerson = () => {
     };
 
     fetchPerson();
+
+    return () => controller.abort();
   }, [person]);
 
   // Dep

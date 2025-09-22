@@ -50,7 +50,9 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
    * Utilizing the naughty-words npm package is the best non-subscription service/solution we can employ.
    */
   const fetch = async () => {
-    const search = await tmdbCall({ search: searchTermRef.current });
+    const controller = new AbortController();
+
+    const search = await tmdbCall(controller, { search: searchTermRef.current });
 
     const filteredResults = search.response.results.filter((res) => {
       if (res.adult || !res.title || !res.overview) return false;
@@ -60,6 +62,8 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
     });
 
     if (search) setSearchResults(filteredResults);
+
+    return () => controller.abort();
   };
 
   return (

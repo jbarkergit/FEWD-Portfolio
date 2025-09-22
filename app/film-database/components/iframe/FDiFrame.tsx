@@ -15,17 +15,20 @@ const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
   const { modalTrailer } = useModalTrailer();
   const [trailers, setTrailers] = useState<TmdbResponseFlat['videos']['results'] | undefined>(undefined);
 
-  // Fetch trailer user request
-  const fetchTrailer = async (): Promise<void> => {
-    const id = type === 'hero' ? heroData?.id : modalTrailer?.id;
-    if (!id) return;
-    const videos = await tmdbCall({ videos: id });
-    const filteredEntries = videos.response.results.filter((obj) => obj.name.includes('Trailer'));
-    setTrailers(filteredEntries);
-  };
-
   useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchTrailer = async (): Promise<void> => {
+      const id = type === 'hero' ? heroData?.id : modalTrailer?.id;
+      if (!id) return;
+      const videos = await tmdbCall(controller, { videos: id });
+      const filteredEntries = videos.response.results.filter((obj) => obj.name.includes('Trailer'));
+      setTrailers(filteredEntries);
+    };
+
     fetchTrailer();
+
+    return () => controller.abort();
   }, [heroData, modalTrailer]);
 
   // JSX

@@ -17,7 +17,7 @@ import FDAccountModal from '~/film-database/features/account/auth-modal/FDAccoun
 export async function clientLoader() {
   const isAuth = await isUserAuthorized();
 
-  const primaryData = await tmdbCall([
+  const primaryData = await tmdbCall(new AbortController(), [
     'now_playing',
     'upcoming',
     'trending_today',

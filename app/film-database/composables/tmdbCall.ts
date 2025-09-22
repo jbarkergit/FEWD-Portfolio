@@ -24,9 +24,16 @@ type DataReturn<K> = K extends TmdbNeverKeys
       ? TmdbResponse['string'][K]
       : never;
 
-const excludedKeys = ['videos', 'personDetails', 'personCredits', 'credits', 'watchProviders', 'search'] as const;
+export const excludedKeys = [
+  'videos',
+  'personDetails',
+  'personCredits',
+  'credits',
+  'watchProviders',
+  'search',
+] as const;
 
-const createEndpoint = <K extends TmdbEndpointKeys>(key: K, query: Query<K>): string | undefined => {
+export const createEndpoint = <K extends TmdbEndpointKeys>(key: K, query: Query<K>): string | undefined => {
   const allEndpoints = Object.assign({}, tmdbEndpoints.never, tmdbEndpoints.number, tmdbEndpoints.string);
   const endpoint = allEndpoints[key];
 
@@ -52,7 +59,11 @@ const createEndpoint = <K extends TmdbEndpointKeys>(key: K, query: Query<K>): st
   }
 };
 
-const callApi = async <K extends TmdbEndpointKeys>(key: K, query: Query<K>): Promise<DataReturn<K> | undefined> => {
+export const callApi = async <K extends TmdbEndpointKeys>(
+  controller: AbortController,
+  key: K,
+  query: Query<K>
+): Promise<DataReturn<K> | undefined> => {
   try {
     const controller = new AbortController();
 
@@ -81,14 +92,15 @@ const callApi = async <K extends TmdbEndpointKeys>(key: K, query: Query<K>): Pro
   }
 };
 
-const retrieveCachedValue = <K extends TmdbEndpointKeys>(key: K): DataReturn<K> | null => {
+export const retrieveCachedValue = <K extends TmdbEndpointKeys>(key: K): DataReturn<K> | null => {
   const entry = sessionStorage.getItem(key);
   const value = entry ? JSON.parse(entry) : null;
   if (value) return value as DataReturn<K>;
   return null;
 };
 
-const handleArg = async <K extends TmdbEndpointKeys>(
+export const handleArg = async <K extends TmdbEndpointKeys>(
+  controller: AbortController,
   key: K,
   query: Query<K>
 ): Promise<ReturnType<typeof retrieveCachedValue | typeof callApi>> => {
@@ -97,7 +109,7 @@ const handleArg = async <K extends TmdbEndpointKeys>(
     if (cachedValue) return cachedValue;
   }
 
-  return await callApi(key, query);
+  return await callApi(controller, key, query);
 };
 
 type ArgumentOptions<K> = K extends TmdbNeverKeys
@@ -124,7 +136,10 @@ type CallReturn<T> = T extends any[] // If T is an array of arguments
     }
   : { key: ArgumentToKey<T>; response: DataReturn<ArgumentToKey<T>> };
 
-export const tmdbCall = async <T extends Arguments | Arguments[]>(args: T): Promise<CallReturn<T>> => {
+export const tmdbCall = async <T extends Arguments | Arguments[]>(
+  controller: AbortController,
+  args: T
+): Promise<CallReturn<T>> => {
   const parameters = (Array.isArray(args) ? args : [args]) as Arguments[];
 
   const handleBadArgument = (arg: unknown) => {
@@ -134,10 +149,11 @@ export const tmdbCall = async <T extends Arguments | Arguments[]>(args: T): Prom
 
   const promises = parameters.map(async (arg) => {
     if (typeof arg === 'string') {
-      return { key: arg, response: await handleArg(arg, undefined) };
+      return { key: arg, response: await handleArg(controller, arg, undefined) };
     } else if (arg && typeof arg === 'object') {
       const entries = Object.entries(arg)[0];
-      if (entries) return { key: entries[0], response: await handleArg(entries[0] as TmdbEndpointKeys, entries[1]) };
+      if (entries)
+        return { key: entries[0], response: await handleArg(controller, entries[0] as TmdbEndpointKeys, entries[1]) };
       else handleBadArgument(arg);
     } else {
       handleBadArgument(arg);

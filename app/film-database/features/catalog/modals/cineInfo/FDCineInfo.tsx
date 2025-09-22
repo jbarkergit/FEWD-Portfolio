@@ -11,12 +11,16 @@ const FDCineInfo = () => {
   const { modalTrailer } = useModalTrailer();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetch = async (): Promise<void> => {
       if (!modalTrailer) return;
-      const credits = await tmdbCall({ credits: modalTrailer.id });
+      const credits = await tmdbCall(controller, { credits: modalTrailer.id });
       setCredits(credits.response);
     };
     fetch();
+
+    return () => controller.abort();
   }, [modalTrailer]);
 
   if (credits)

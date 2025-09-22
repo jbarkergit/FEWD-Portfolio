@@ -47,13 +47,16 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
    */
   useEffect(() => {
     if (!data) return;
+    const controller = new AbortController();
 
     const fetchWatchProviders = async () => {
-      const res = await tmdbCall({ watchProviders: data.id });
+      const res = await tmdbCall(controller, { watchProviders: data.id });
       setWatchProviders(res.response.results.US);
     };
 
     fetchWatchProviders();
+
+    return () => controller.abort();
   }, [data]);
 
   /**
