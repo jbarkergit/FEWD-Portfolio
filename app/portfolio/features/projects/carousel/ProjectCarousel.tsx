@@ -321,7 +321,7 @@ const ProjectCarousel = () => {
     if (mainRef.current && articleArray.current) {
       const carouselSliderWidth: number = mainRef.current.clientWidth as number;
 
-      articleArray.current.forEach((slide: HTMLElement) => {
+      for (const slide of articleArray.current) {
         // Resize Slides
         const slideBound: DOMRect = slide.getBoundingClientRect();
         const slideCenterX: number = slideBound.right - slideBound.width / 2;
@@ -361,7 +361,7 @@ const ProjectCarousel = () => {
         };
 
         styleDists.push(styleDistances);
-      });
+      }
     }
 
     return styleDists;
@@ -403,8 +403,11 @@ const ProjectCarousel = () => {
   useEffect(() => {
     if (initialRender.current) {
       initialRender.current = false;
+      carouselRef.current?.setAttribute('data-visible', 'true');
     }
+  }, []);
 
+  useEffect(() => {
     if (Object.values(featureState).some((value) => value === true)) {
       const entryWithTrue = Object.entries(featureState).find(([key, value]) => value === true);
       const trueKey = entryWithTrue ? entryWithTrue[0] : null;
@@ -425,6 +428,7 @@ const ProjectCarousel = () => {
         className='mainContent__track'
         ref={carouselRef}
         style={state.trackStyle}
+        data-visible={'false'}
         data-status={!state.pointerDown ? 'smooth' : ''}>
         {projectData.map((project) => (
           <Link
