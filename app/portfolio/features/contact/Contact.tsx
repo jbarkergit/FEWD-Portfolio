@@ -13,111 +13,56 @@ const schema = z.object({
   message: zodSchema.fields.shape.message,
 });
 
-type Inputs = Record<
-  'firstName' | 'lastName' | 'email' | 'phone' | 'agency' | 'role',
-  Record<'htmlFor' | 'label' | 'inputType' | 'inputReg', string>
->;
+const inputs = {
+  firstName: { htmlFor: 'first-name', inputType: 'text' },
+  lastName: { htmlFor: 'last-name', inputType: 'text' },
+  emailAddress: { htmlFor: 'email', inputType: 'email' },
+  phoneNumber: { htmlFor: 'phone', inputType: 'tel' },
+  business: { htmlFor: 'business', inputType: 'text' },
+  role: { htmlFor: 'role', inputType: 'text' },
+  message: { htmlFor: 'message', inputType: 'text' },
+} as const;
 
-const inputs: Inputs = {
-  firstName: { htmlFor: 'first-name', label: 'First Name', inputType: 'text', inputReg: 'first' },
-  lastName: { htmlFor: 'last-name', label: 'Last Name', inputType: 'text', inputReg: 'last' },
-  email: { htmlFor: 'email', label: 'Email', inputType: 'email', inputReg: 'email' },
-  phone: { htmlFor: 'phone', label: 'Phone', inputType: 'tel', inputReg: 'phone' },
-  agency: { htmlFor: 'agency', label: 'Agency (Optional)', inputType: 'text', inputReg: 'agency' },
-  role: { htmlFor: 'role', label: 'Role (Optional)', inputType: 'text', inputReg: 'role' },
-};
+const submitToWeb3Forms = async (formData: FormData) => {
+  formData.append('access_key', import.meta.env.VITE_WEB_FORMS_KEY!);
 
-type FormData = {
-  firstName: string;
-  lastName: string;
-  emailAddress: string;
-  phoneNumber: string;
-  message: string;
-  business?: string;
-  role?: string;
+  const response = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    body: formData,
+  });
+
+  const result = (await response.json()) as { success: boolean };
+
+  if (!result.success) throw new Error(JSON.stringify(result));
 };
 
 const Contact = () => {
   const { setFeatureState } = usePortfolioContext();
-
-  const [formData, setFormData] = useState<FormData>({
-    firstName: '',
-    lastName: '',
-    emailAddress: '',
-    phoneNumber: '',
-    message: '',
-    business: '',
-    role: '',
-  });
-
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Handle input change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  // Web3Forms submission
-  const submitForm = async (data: typeof formData) => {
-    const formDataObj = new FormData();
-    formDataObj.append('access_key', import.meta.env.VITE_WEB_FORMS_KEY!);
-
-    for (const key in data) {
-      const value = data[key as keyof typeof data];
-      if (value !== undefined) {
-        formDataObj.append(key, value);
-      }
-    }
-
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      body: formDataObj,
-    });
-
-    const result = (await response.json()) as { success: boolean };
-
-    if (!result.success) {
-      throw new Error(JSON.stringify(result));
-    }
-  };
-
-  // Submit handler
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Zod Schema Validation
-    const result = schema.safeParse(formData);
+    const formData = new FormData(e.currentTarget);
+    const formObject = Object.fromEntries(formData.entries());
+    const result = schema.safeParse(formObject);
 
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
       for (const issue of result.error.issues) {
-        fieldErrors[issue.path[0] as string] = issue.message;
+        if (typeof issue.path[0] === 'string') {
+          fieldErrors[issue.path[0]] = issue.message;
+        }
       }
       setErrors(fieldErrors);
-      return;
-    }
-
-    // Clear errors
-    setErrors({});
-
-    try {
-      await submitForm(result.data);
-
-      // Reset form input values to provide a visual indicator that the form has been submitted
-      setFormData({
-        firstName: '',
-        lastName: '',
-        emailAddress: '',
-        phoneNumber: '',
-        business: '',
-        role: '',
-        message: '',
-      });
-    } catch (error) {
-      console.error('Submission error:', error);
+    } else {
+      try {
+        await submitToWeb3Forms(formData);
+        setErrors({});
+      } catch (error) {
+        console.error('Submission error:', error);
+        // do something to inform the user of failure
+      }
     }
   };
 
@@ -138,65 +83,51 @@ const Contact = () => {
           onSubmit={handleSubmit}
           aria-labelledby='form-title'>
           <ul className='contact__container__form__ul'>
-            {Object.entries(inputs).map(([key, { htmlFor, label, inputType }]) => (
+            {Object.entries(inputs).map(([key, { htmlFor, inputType }]) => (
               <li key={`contact-list-item-${key}`}>
-                <label htmlFor={htmlFor}>{label}</label>
-                <input
-                  id={htmlFor}
-                  type={inputType}
-                  name={key === 'phone' ? 'phoneNumber' : key === 'email' ? 'emailAddress' : key} // match schema keys
-                  placeholder=' '
-                  value={
-                    key === 'phone'
-                      ? formData.phoneNumber
-                      : key === 'email'
-                        ? formData.emailAddress
-                        : formData[key as keyof FormData]
-                  }
-                  onChange={handleChange}
-                  aria-invalid={!!errors[key === 'phone' ? 'phoneNumber' : key === 'email' ? 'emailAddress' : key]}
-                  aria-describedby={`${htmlFor}-error`}
-                />
-                {errors[key === 'phone' ? 'phoneNumber' : key === 'email' ? 'emailAddress' : key] && (
+                <label htmlFor={htmlFor}>
+                  {htmlFor === 'business'
+                    ? 'Agency (optional)'
+                    : htmlFor === 'role'
+                      ? 'Role (optional)'
+                      : htmlFor.replaceAll('-', ' ')}
+                </label>
+                {key === 'message' ? (
+                  <textarea
+                    id='message'
+                    name='message'
+                    aria-invalid={!!errors.message}
+                    aria-describedby='message-error'
+                  />
+                ) : (
+                  <input
+                    id={htmlFor}
+                    type={inputType}
+                    name={key}
+                    placeholder=' '
+                    aria-invalid={!!errors[key]}
+                    aria-describedby={`${htmlFor}-error`}
+                  />
+                )}
+                {errors[key] && (
                   <span
                     id={`${htmlFor}-error`}
                     role='alert'>
-                    {errors[key === 'phone' ? 'phoneNumber' : key === 'email' ? 'emailAddress' : key]}
+                    {errors[key]}
                   </span>
                 )}
               </li>
             ))}
-
-            {/* Message textarea */}
-            <li>
-              <label htmlFor='message'>Message</label>
-              <textarea
-                id='message'
-                name='message'
-                value={formData.message}
-                onChange={handleChange}
-                aria-invalid={!!errors.message}
-                aria-describedby='message-error'
-              />
-              {errors.message && (
-                <span
-                  id='message-error'
-                  role='alert'>
-                  {errors.message}
-                </span>
-              )}
-            </li>
           </ul>
-
-          <button type='submit'>Submit</button>
+          <button
+            type='submit'
+            aria-label='Submit form'>
+            Submit
+          </button>
         </form>
         <button
           className='contact__container--return'
-          onPointerUp={() =>
-            setFeatureState((p) => {
-              return { ...p, contactFormActive: false };
-            })
-          }>
+          onPointerUp={() => setFeatureState((p) => ({ ...p, contactFormActive: false }))}>
           Return
         </button>
       </div>
