@@ -8,7 +8,7 @@ export const projectData = [
       software_development_kits: ['firebase', 'firebase-tools'],
       utilities_and_services: ['zod'],
       tools_and_libraries: ['vite', 'react', 'react-router', 'typescript', 'sass'],
-      testing_tools: ['jest', '@testing-library/react'],
+      testing_tools: ['Vitest', '@testing-library/react'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
       content_moderation: ['naughty-words'],
     },
@@ -16,48 +16,58 @@ export const projectData = [
       <>
         <h2>Film Database</h2>
         <p>
-          This self-initiated movie database website was developed from the ground up using Vite, React, TypeScript, and
-          styled with SASS. It integrates the TheMovieDatabase (TMDB) API for movie data, React-YouTube for embedded
-          video playback, and Firebase for authentication and full CRUD operations. Form validation is handled using
-          Zod.
+          This self-initiated movie database website was built from scratch using Vite, React, TypeScript, and styled
+          with SASS. It integrates TheMovieDatabase (TMDB) API for movie data, React-YouTube for embedded video
+          playback, and Firebase for authentication and full CRUD operations. Form validation is handled with Zod.
         </p>
         <p>
-          Working with TMDB presented several challenges, such as inconsistently formatted URLs and the absence of WEBP
-          image support. To minimize the risk of API call failures, I built custom type-safe fetch utilities and used
-          TypeScript guards—paired with an experimental naming convention—for reliable type inference and
-          autocompletion. I also optimized data fetching by leveraging sessionStorage to avoid redundant requests. While
-          these solutions improved performance and stability, some areas could benefit from further refactoring.
+          Working with TMDB presented challenges, such as inconsistently formatted URLs and the lack of WEBP image
+          support. To reduce API calls and prevent failures, I built a type-safe API wrapper from scratch. It handles
+          endpoint construction, type inference, caching via sessionStorage, and batch requests with
+          `Promise.allSettled`. This gave me autocompletion, consistent error handling, and predictable data shaping
+          across the app. I invested time in Vitest for unit testing the wrapper and explored advanced TypeScript
+          patterns to make the codebase developer-friendly.
         </p>
         <p>
-          The user interface draws inspiration from platforms like Netflix and Prime Video. For trailer playback, I
-          integrated the YouTube IFrame Player API, and to enhance the user experience, I developed a custom overlay
-          using React-YouTube to match the application’s aesthetic. While YouTube’s recommendation overlays cannot be
-          removed, the final implementation maintains a cohesive and visually consistent experience.
+          To capture the polished feel of platforms like Netflix, I built a custom SCSS-driven loading screen that
+          appears on initial load. It uses staggered animations and subtle transforms to create a smooth reveal,
+          juggling CSS timing, scale effects, and transition sequencing—a fun little challenge that ensures a polished
+          first impression without impacting performance. The loader also ties into our React Router v7 client loader,
+          prefetching the movie carousel data to make the UI feel responsive from the very first render.
         </p>
         <p>
-          A significant UI challenge was implementing a responsive carousel with dynamically sized items. Rather than
-          relying on JavaScript-heavy solutions, I built a CSS-driven approach using viewport-based calculations and
-          custom properties to determine item dimensions. The layout adapts across screen sizes using media queries
-          informed by real-world device usage statistics. Custom properties dynamically calculate width-to-height ratios
-          and the number of items per page. To support interactivity and synchronize layout logic, I mounted resize
-          event listeners and passed computed values through context as dependencies for various components. This
-          approach improved performance, reduced layout-related edge cases, and achieved a maintainable balance between
-          CSS and JavaScript.
+          For trailer playback, I used YouTube's IFrame Player API, which aligns with TMDB's trailer results. To match
+          the aesthetic of other movie-driven platforms, I stretched the iFrame. This came at the cost of losing the
+          native controller, so I built a custom one to handle positioning and maintain a consistent, polished look
+          where the custom embed exists.
         </p>
         <p>
-          To deepen my backend integration experience, I implemented authentication and a modal feature that allows
-          users to organize movies into custom collections and queue trailers for sequential viewing. These interactions
-          are backed by Firestore for data persistence and real-time updates. Rather than using drag-and-drop libraries
-          like dndkit or relying on HTML5’s native draggable attributes, I chose to build the drag-and-drop
-          functionality from scratch to better understand the underlying mechanics. This involved managing native drag
-          events, calculating distances, handling complex state transitions, and resolving race conditions. A limitation
-          to this approach is reduced accessibility—due to the deprecation of ARIA support for draggable elements, full
-          WAI-ARIA compliance is not fully achievable.
+          A major UI challenge was implementing a responsive carousel with dynamically sized items. Instead of relying
+          on JavaScript-heavy solutions, I used CSS with viewport-based calculations and custom properties to determine
+          item dimensions. This was a real head-scratcher, and the resolution became clear after poking around in
+          Amazon’s DOM—shout out to whoever wrote the CSS calculations, they were super handy as a reference. I also
+          considered approaches like preloading or skeleton states, but ultimately went with an IntersectionObserver
+          solution that toggles data-attributes to manage display properties and fetch-priority hints without adding
+          unnecessary network load.
         </p>
         <p>
-          Finally, the project offered a chance to refine my CSS animation and transition skills. I optimized
-          stylesheets, explored advanced animation properties, and ensured smooth visual transitions across devices,
-          contributing to a polished and responsive user experience.
+          Implementing search and content filtering introduced an interesting challenge. TMDB’s 'adult' query parameter
+          partially filters adult results, but gaps remain. I explored options such as region-locking, genre-based
+          filtering, and rating restrictions, but decided on a simpler approach: removing results flagged as adult and
+          filtering the remaining titles/overviews through the <code>naughty-words</code> npm package. It’s a
+          lightweight, non-subscription solution that responsibly cuts down inappropriate results without slowing
+          searches—good enough to keep search both usable and safe.
+        </p>
+        <p>
+          I also built features that let users organize movies into custom collections and queue trailers for sequential
+          viewing. Firestore handles data persistence and real-time updates. Drag-and-drop functionality was built from
+          scratch to better understand native drag events, state transitions, and race conditions. A limitation remains:
+          full WAI-ARIA compliance is not possible due to deprecation of ARIA support for draggable elements.
+        </p>
+        <p>
+          This project helped me solidify my understanding of React, refine CSS animations and transitions, and deliver
+          smoother visual updates across devices. Having rewritten it multiple times, it remains my flagship project and
+          demonstrates my ongoing focus on improving both code quality and the user experience.
         </p>
       </>
     ),
