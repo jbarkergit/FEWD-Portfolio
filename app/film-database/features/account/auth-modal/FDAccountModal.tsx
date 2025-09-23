@@ -139,8 +139,8 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
     }
 
     try {
-      if (activeForm === 'registration') await createFirestoreUser(result);
-      else await useFirestoreLogin(result);
+      if (activeForm === 'registration') await createFirestoreUser(result.data);
+      else await useFirestoreLogin(result.data);
     } catch (error) {
       console.error('Submission error:', error);
     }
