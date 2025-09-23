@@ -1,11 +1,12 @@
-import { forwardRef, useEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
+import { forwardRef, useEffect, useRef, useState, type HTMLAttributes } from 'react';
 import { loginSchema, registrationSchema } from '~/base/validation/zodSchema';
 import { createFirestoreUser } from '~/base/firebase/firestore/utility/createFirestoreUser';
 import { useFirestoreLogin } from '~/base/firebase/firestore/utility/useFirestoreLogin';
 import { handleAuthProvider } from '~/base/firebase/authentication/utility/handleAuthProvider';
 import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
 import FDAccountModalPoster from '~/film-database/features/account/auth-modal/FDAccountModalPoster';
-import type { ZodIssue } from 'zod';
+import { type ZodIssue } from 'zod';
+import { FirebaseError } from 'firebase/app';
 
 const registration = [
   {
@@ -108,8 +109,9 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
   const fieldsetRef = useRef<HTMLFieldSetElement>(null);
   const submittingRef = useRef<boolean>(false);
   const [errors, setErrors] = useState<ZodIssue[]>([]);
+  useEffect(() => console.log(errors), [errors]);
 
-  const getError = (name: string) => errors.find((err) => err.path[0] === name)?.message;
+  const getFieldError = (name: string) => errors.find((err) => err.path[0] === name)?.message;
 
   /** On form submission, parse form data, handle errors, invoke corresponding active form's Firestore utility */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -120,28 +122,36 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const formObject = Object.fromEntries(formData.entries());
+    const formObject = Object.fromEntries(formData.entries()) as Record<string, any>;
+    formObject.tos = formData.has('tos');
+
     const result = schemas[activeForm].safeParse(formObject);
 
     if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
+      setErrors(result.error.issues.filter((issue) => typeof issue.path[0] === 'string'));
+    } else {
+      setErrors([]);
 
-      for (const issue of result.error.issues) {
-        if (typeof issue.path[0] === 'string') {
-          fieldErrors[issue.path[0]] = issue.message;
+      try {
+        if (activeForm === 'registration') {
+          await createFirestoreUser(result.data);
+        } else {
+          await useFirestoreLogin(result.data);
         }
+        e.currentTarget.reset();
+      } catch (error) {
+        let firebaseErrorMsg = 'An unexpected error occurred.';
+
+        if (error instanceof FirebaseError) {
+          firebaseErrorMsg =
+            error.code === 'auth/email-already-in-use' ? 'This email is already in use.' : error.message;
+        }
+
+        setErrors((p) => [
+          ...p,
+          { code: 'firebase' as any, path: ['__global'], message: firebaseErrorMsg, source: 'firebase' },
+        ]);
       }
-
-      setErrors(result.error.errors);
-      submittingRef.current = false;
-      return;
-    }
-
-    try {
-      if (activeForm === 'registration') await createFirestoreUser(result.data);
-      else await useFirestoreLogin(result.data);
-    } catch (error) {
-      console.error('Submission error:', error);
     }
 
     submittingRef.current = false;
@@ -185,7 +195,8 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
         <main className='fdAccount__container__wrapper'>
           <form
             className='fdAccount__container__wrapper__form'
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+            noValidate>
             <fieldset
               className='fdAccount__container__wrapper__form__fieldset'
               ref={fieldsetRef}
@@ -241,9 +252,9 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                         minLength={minLength}
                         maxLength={maxLength}
                       />
-                      {getError(name) && (
+                      {getFieldError(name) && (
                         <div className='fdAccount__container__wrapper__form__fieldset__ul__li--error'>
-                          {getError(name)}
+                          {getFieldError(name)}
                         </div>
                       )}
                     </li>
@@ -261,6 +272,14 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                       <button aria-label='Read terms and conditions'>terms and conditions</button>
                     </label>
                   </li>
+                )}
+
+                {errors.length > 0 && (
+                  <div
+                    key='error-tos'
+                    className='fdAccount__container__wrapper__form__fieldset__ul__li--error'>
+                    {errors.find((error) => error.code === ('firebase' as any))?.message}
+                  </div>
                 )}
               </ul>
               <nav>
