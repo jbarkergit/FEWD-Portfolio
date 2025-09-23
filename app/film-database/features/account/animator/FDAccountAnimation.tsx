@@ -32,9 +32,6 @@ const FDAccountAnimation = ({ accountRef }: { accountRef: React.RefObject<HTMLDi
     return middleItem?.id ?? -1;
   }, [primaryData[0]]);
 
-  /** Mount animator */
-  useEffect(() => animationRef.current?.setAttribute('data-visible', 'true'), []);
-
   /** Unmount animator */
   const unmountAnimation = (): void => {
     if (!animationRef.current || !accountRef.current) return;
@@ -54,20 +51,29 @@ const FDAccountAnimation = ({ accountRef }: { accountRef: React.RefObject<HTMLDi
           <ul
             className='fdAccountAnimation__backdrop__set'
             key={`backdrop-set-${setIndex}`}>
-            {set.map((article: TmdbMovieProvider, index: number) => (
-              <li
-                className='fdAccountAnimation__backdrop__set__li'
-                key={`backdrop-image-${article.id}`}
-                style={{ '--i': index } as CSSProperties}>
-                <picture className='fdAccountAnimation__backdrop__set__li__container'>
-                  <img
-                    className='fdAccountAnimation__backdrop__set__li__container--img'
-                    src={`https://image.tmdb.org/t/p/${article.id === mostCenteredImageID ? `original` : `w780`}/${article?.backdrop_path}`}
-                    alt={article?.title}
-                  />
-                </picture>
-              </li>
-            ))}
+            {set.map((article: TmdbMovieProvider, index: number) => {
+              const isLast = setIndex === posters.length - 1 && index === set.length - 1;
+
+              return (
+                <li
+                  className='fdAccountAnimation__backdrop__set__li'
+                  key={`backdrop-image-${article.id}`}
+                  style={{ '--i': index } as CSSProperties}>
+                  <picture className='fdAccountAnimation__backdrop__set__li__container'>
+                    <img
+                      className='fdAccountAnimation__backdrop__set__li__container--img'
+                      src={`https://image.tmdb.org/t/p/${
+                        article.id === mostCenteredImageID ? `original` : `w780`
+                      }/${article?.backdrop_path}`}
+                      alt={article?.title}
+                      onLoad={() => {
+                        if (isLast) animationRef.current?.setAttribute('data-visible', 'true');
+                      }}
+                    />
+                  </picture>
+                </li>
+              );
+            })}
           </ul>
         ))}
       </div>
