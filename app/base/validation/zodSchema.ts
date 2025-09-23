@@ -1,64 +1,101 @@
 import { z } from 'zod';
 
-const zodSchema = {
-  user: z.object({
-    firstName: z
-      .string()
-      .trim()
-      .regex(/[a-zA-Z-']{1,}$/)
-      .min(1, { message: 'First name is required.' }),
-    lastName: z
-      .string()
-      .trim()
-      .regex(/[a-zA-Z-']{1,}$/)
-      .min(1, { message: 'Last name is required.' }),
-    dateOfBirth: z.date(),
-    age: z.number().min(18, { message: 'You are not of age. Access permissions revoked.' }),
+export const zodSchema = z.object({
+  firstName: z
+    .string()
+    .trim()
+    .regex(/^[\p{L} '-]+$/u, { message: 'Invalid characters in first name.' })
+    .min(1, { message: 'First name is required.' }),
+
+  lastName: z
+    .string()
+    .trim()
+    .regex(/^[\p{L} '-]+$/u, { message: 'Invalid characters in last name.' })
+    .min(1, { message: 'Last name is required.' }),
+
+  dateOfBirth: z.date().refine(
+    (dob) => {
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+
+      const hasHadBirthdayThisYear =
+        today.getMonth() > dob.getMonth() || (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
+
+      if (!hasHadBirthdayThisYear) age -= 1;
+      return age >= 18;
+    },
+    { message: 'You must be at least 18 years old.' }
+  ),
+
+  password: z
+    .string()
+    .min(8, 'Password must be at least 8 characters long.')
+    .refine((val) => /[A-Za-z]/.test(val), {
+      message: 'Password must contain a letter.',
+    })
+    .refine((val) => /\d/.test(val), {
+      message: 'Password must contain a digit.',
+    })
+    .refine((val) => /[@$!%*?&]/.test(val), {
+      message: 'Password must contain a special character.',
+    }),
+
+  business: z.string().trim().optional(),
+  role: z.string().trim().optional(),
+
+  website: z
+    .string()
+    .trim()
+    .superRefine((val, ctx) => {
+      if (val === '') return;
+      try {
+        new URL(val);
+      } catch {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Invalid website URL.',
+        });
+      }
+    })
+    .optional(),
+
+  emailAddress: z.string().trim().email({ message: 'Invalid email address.' }),
+
+  phoneNumber: z
+    .string()
+    .transform((val) => val.replace(/\D/g, ''))
+    .refine((digits) => digits.length >= 10, {
+      message: 'Phone number must have at least 10 digits.',
+    }),
+
+  message: z.string().trim().min(5, { message: 'Please type your inquiry.' }),
+
+  tos: z.literal(true, {
+    errorMap: () => ({ message: 'You must accept the terms.' }),
   }),
-  account: z.object({
-    password: z
-      .string()
-      .trim()
-      .regex(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        'Password must contain at least one digit, one special character, and be at least 8 characters long.'
-      ),
-  }),
-  entity: z.object({
-    business: z.string().trim().optional(),
-    role: z.string().trim().optional(),
-    website: z.string().trim().url().optional(),
-  }),
-  contact: z.object({
-    emailAddress: z.string().trim().email({ message: 'Invalid email address.' }),
-    phoneNumber: z
-      .string()
-      .min(10, { message: 'Phone number must be at least 10 digits.' })
-      .refine((val) => val.replace(/\D/g, '').length >= 10, {
-        message: 'Phone number must have at least 10 digits',
-      }),
-  }),
-  fields: z.object({ message: z.string().trim().min(5, { message: 'Please type your inquiry.' }) }),
-};
+});
+
+export type Schema = z.infer<typeof zodSchema>;
 
 export const contactSchema = z.object({
-  firstName: zodSchema.user.shape.firstName,
-  lastName: zodSchema.user.shape.lastName,
-  phoneNumber: zodSchema.contact.shape.phoneNumber,
-  emailAddress: zodSchema.contact.shape.emailAddress,
-  business: zodSchema.entity.shape.business,
-  role: zodSchema.entity.shape.role,
-  message: zodSchema.fields.shape.message,
+  firstName: zodSchema.shape.firstName,
+  lastName: zodSchema.shape.lastName,
+  phoneNumber: zodSchema.shape.phoneNumber,
+  emailAddress: zodSchema.shape.emailAddress,
+  business: zodSchema.shape.business,
+  role: zodSchema.shape.role,
+  message: zodSchema.shape.message,
 });
 
 export const registrationSchema = z.object({
-  firstName: zodSchema.user.shape.firstName,
-  lastName: zodSchema.user.shape.lastName,
-  emailAddress: zodSchema.contact.shape.emailAddress,
-  password: zodSchema.account.shape.password,
+  firstName: zodSchema.shape.firstName,
+  lastName: zodSchema.shape.lastName,
+  emailAddress: zodSchema.shape.emailAddress,
+  password: zodSchema.shape.password,
+  tos: zodSchema.shape.tos,
 });
 
 export const loginSchema = z.object({
-  emailAddress: zodSchema.contact.shape.emailAddress,
-  password: zodSchema.account.shape.password,
+  emailAddress: zodSchema.shape.emailAddress,
+  password: zodSchema.shape.password,
 });
