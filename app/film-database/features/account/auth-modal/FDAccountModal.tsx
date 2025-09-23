@@ -5,11 +5,7 @@ import { useFirestoreLogin } from '~/base/firebase/firestore/utility/useFirestor
 import { handleAuthProvider } from '~/base/firebase/authentication/utility/handleAuthProvider';
 import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
 import FDAccountModalPoster from '~/film-database/features/account/auth-modal/FDAccountModalPoster';
-
-const schemas = {
-  registration: registrationSchema,
-  login: loginSchema,
-};
+import type { ZodIssue } from 'zod';
 
 const registration = [
   {
@@ -102,54 +98,59 @@ const fieldStore = {
   login: login,
 };
 
-const useFormValues = <T extends Record<string, string>>(initialValues: T) => {
-  const [values, setValues] = useState<T>(initialValues);
-
-  const handleValues = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-
-    setValues((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  return { values, setValues, handleValues };
+const schemas = {
+  registration: registrationSchema,
+  login: loginSchema,
 };
 
 const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
-  const [form, setForm] = useState<'registration' | 'login'>('registration');
-
-  const formValues = {
-    registration: useFormValues({
-      firstName: '',
-      lastName: '',
-      emailAddress: '',
-      password: '',
-      passwordConfirmation: '',
-    }),
-    login: useFormValues({ emailAddress: '', password: '' }),
-  };
-  const { values, handleValues } = form === 'registration' ? formValues.registration : formValues.login;
-
+  const [activeForm, setActiveForm] = useState<'registration' | 'login'>('registration');
   const fieldsetRef = useRef<HTMLFieldSetElement>(null);
+  const submittingRef = useRef<boolean>(false);
+  const [errors, setErrors] = useState<ZodIssue[]>([]);
 
-  const fields = fieldStore[form];
+  const getError = (name: string) =>
+    errors.find((err) => typeof err.path[0] === 'string' && err.path[0] === name)?.message;
 
-  // Schema, parsing and errors
-  const schema = schemas[form];
-  const parse = schema.safeParse(values);
-  const getFieldError = (name: string) => parse.error?.errors.find((err) => err.path.includes(name))?.message;
+  /** On form submission, parse form data, handle errors, invoke corresponding active form's Firestore utility */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  /** Invokes useFirestore hook corresponding to current form */
-  const handleSubmit = () => {
-    if (!parse.success) return;
-    if (form === 'registration') createFirestoreUser(parse, values);
-    else useFirestoreLogin(parse, values);
+    if (submittingRef.current) return;
+    submittingRef.current = true;
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const formObject = Object.fromEntries(formData.entries());
+    const result = schemas[activeForm].safeParse(formObject);
+
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+
+      for (const issue of result.error.issues) {
+        if (typeof issue.path[0] === 'string') {
+          fieldErrors[issue.path[0]] = issue.message;
+        }
+      }
+
+      setErrors(result.error.errors);
+      submittingRef.current = false;
+      return;
+    }
+
+    try {
+      if (activeForm === 'registration') await createFirestoreUser(result);
+      else await useFirestoreLogin(result);
+    } catch (error) {
+      console.error('Submission error:', error);
+    }
+
+    submittingRef.current = false;
+    return;
   };
 
   /** Animates fieldsets on form state change */
-  const handleState = () => setForm((f) => (f === 'registration' ? 'login' : 'registration'));
+  const handleState = () => setActiveForm((f) => (f === 'registration' ? 'login' : 'registration'));
 
   const onFormChange = () => {
     if (!fieldsetRef.current) {
@@ -172,7 +173,7 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
 
     observer.observe(node, { childList: true, subtree: true });
     return () => observer.disconnect();
-  }, [form]);
+  }, [activeForm]);
 
   return (
     <div
@@ -183,15 +184,18 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
         ref={accountRef}
         data-visible='false'>
         <main className='fdAccount__container__wrapper'>
-          <form className='fdAccount__container__wrapper__form'>
+          <form
+            className='fdAccount__container__wrapper__form'
+            onSubmit={handleSubmit}>
             <fieldset
               className='fdAccount__container__wrapper__form__fieldset'
               ref={fieldsetRef}
-              data-animate='mount'>
-              <div>
-                <legend>{form === 'registration' ? `Get Started Now` : `Start a new session`}</legend>
+              data-animate='mount'
+              aria-labelledby='legend-id'>
+              <div id='legend-id'>
+                <legend>{activeForm === 'registration' ? `Get Started Now` : `Start a new session`}</legend>
                 <p>
-                  {form === 'registration'
+                  {activeForm === 'registration'
                     ? `Welcome to Film Database, create an account to start a session.`
                     : `Welcome back to Film Database, let's get you logged in.`}
                 </p>
@@ -212,8 +216,8 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
               </div>
               <ul
                 className='fdAccount__container__wrapper__form__fieldset__ul'
-                data-form={form}>
-                {fields.map(
+                data-form={activeForm}>
+                {fieldStore[activeForm].map(
                   ({ labelId, id, name, label, type, inputMode, required, placeholder, minLength, maxLength }) => (
                     <li
                       key={id}
@@ -224,30 +228,27 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                         {label}
                       </label>
                       <input
-                        form='fdRegistery'
                         id={id}
                         name={name}
                         type={type}
                         inputMode={inputMode as HTMLAttributes<HTMLInputElement>['inputMode']}
                         size={12}
                         required={required}
-                        aria-required={required ? 'true' : 'false'}
-                        aria-invalid={!!parse.error?.errors.some((err) => err.path.includes(name))}
+                        aria-invalid={!!errors.some((err) => err.path.includes(name))}
                         autoCapitalize={type === 'text' ? 'words' : 'off'}
                         placeholder={placeholder}
                         minLength={minLength}
                         maxLength={maxLength}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleValues(e)}
                       />
-                      {getFieldError(name) && values[name as keyof typeof values]?.length > 0 && (
+                      {getError(name) && (
                         <div className='fdAccount__container__wrapper__form__fieldset__ul__li--error'>
-                          {getFieldError(name)}
+                          {getError(name)}
                         </div>
                       )}
                     </li>
                   )
                 )}
-                {form === 'registration' && (
+                {activeForm === 'registration' && (
                   <li className='fdAccount__container__wrapper__form__fieldset__ul__li'>
                     <input
                       type='checkbox'
@@ -261,21 +262,22 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                   </li>
                 )}
               </ul>
-              <div>
-                <button
-                  type='button'
-                  aria-label={form === 'registration' ? 'Submit registration form' : 'Sign in with your credentials'}
-                  onPointerUp={handleSubmit}>
-                  <span>{form === 'registration' ? 'Complete Registration' : 'Log in'}</span>
-                </button>
-                <button
-                  type='button'
-                  aria-label={form === 'registration' ? 'Log into an existing account' : 'Create a new account'}
-                  onPointerUp={onFormChange}>
-                  {form === 'registration' ? 'Log into an existing account' : 'Create a new account'}
-                </button>
-              </div>
             </fieldset>
+            <nav>
+              <button
+                type='submit'
+                aria-label={
+                  activeForm === 'registration' ? 'Submit registration form' : 'Sign in with your credentials'
+                }>
+                <span>{activeForm === 'registration' ? 'Complete Registration' : 'Log in'}</span>
+              </button>
+              <button
+                type='button'
+                aria-label={activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
+                onPointerUp={onFormChange}>
+                {activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
+              </button>
+            </nav>
           </form>
         </main>
         <FDAccountModalPoster />
