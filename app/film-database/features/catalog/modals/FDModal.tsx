@@ -30,6 +30,7 @@ const FDModal = () => {
       <div className='fdModal'>
         <div
           className='fdModal__container'
+          role='dialog'
           ref={modal}>
           {isModal === 'movie' && <FDCineInfo />}
           {isModal === 'collections' && <FDCollections />}
