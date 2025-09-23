@@ -1,20 +1,14 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import type z from 'zod';
 import { firebaseAuth } from '../../config/firebaseConfig';
 
-export const createFirestoreUser = async <Input, Output>(parse: z.SafeParseReturnType<Input, Output>, values: Record<string, string>) => {
+export const createFirestoreUser = async (data: { emailAddress: string; password: string }) => {
+  const { emailAddress, password } = data;
+
   try {
-    if (!parse.success) {
-      const errorMessage = parse.error.errors.map((err) => `${err.path.join('.')} - ${err.message}`).join(', ');
-      throw new Error(`One or more form fields are not valid: ${errorMessage}`);
-    }
-
-    const userCredential = await createUserWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
-
+    const userCredential = await createUserWithEmailAndPassword(firebaseAuth, emailAddress, password);
     if (!userCredential?.user) throw new Error('Failed to create user account.');
 
-    await signInWithEmailAndPassword(firebaseAuth, values.emailAddress, values.password);
-
+    await signInWithEmailAndPassword(firebaseAuth, emailAddress, password);
     setTimeout(() => window.location.reload(), 0);
   } catch (error) {
     console.error(error);
