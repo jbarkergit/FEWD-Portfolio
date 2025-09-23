@@ -35,6 +35,10 @@
       padding: 0 s.$box-model-viewport-x calc(s.$box-model-viewport-x * 2) s.$box-model-viewport-x;
       background: none;
     }
+    &[data-submission-invalid='true'] {
+      -webkit-animation: shake-quirky 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+      animation: shake-quirky 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+    }
     & article {
       & h2,
       p {
@@ -135,5 +139,93 @@
         display: none;
       }
     }
+  }
+}
+
+@-webkit-keyframes shake-quirky {
+  0%,
+  100% {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  10% {
+    -webkit-transform: translate(-12px, 2px);
+    transform: translate(-12px, 2px);
+  }
+  20% {
+    -webkit-transform: translate(8px, -1px);
+    transform: translate(8px, -1px);
+  }
+  30% {
+    -webkit-transform: translate(-9px, 3px);
+    transform: translate(-9px, 3px);
+  }
+  40% {
+    -webkit-transform: translate(11px, -2px);
+    transform: translate(11px, -2px);
+  }
+  50% {
+    -webkit-transform: translate(-7px, 1px);
+    transform: translate(-7px, 1px);
+  }
+  60% {
+    -webkit-transform: translate(10px, -3px);
+    transform: translate(10px, -3px);
+  }
+  70% {
+    -webkit-transform: translate(-8px, 2px);
+    transform: translate(-8px, 2px);
+  }
+  80% {
+    -webkit-transform: translate(6px, -1px);
+    transform: translate(6px, -1px);
+  }
+  90% {
+    -webkit-transform: translate(-5px, 1px);
+    transform: translate(-5px, 1px);
+  }
+}
+
+@keyframes shake-quirky {
+  0%,
+  100% {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  10% {
+    -webkit-transform: translate(-12px, 2px);
+    transform: translate(-12px, 2px);
+  }
+  20% {
+    -webkit-transform: translate(8px, -1px);
+    transform: translate(8px, -1px);
+  }
+  30% {
+    -webkit-transform: translate(-9px, 3px);
+    transform: translate(-9px, 3px);
+  }
+  40% {
+    -webkit-transform: translate(11px, -2px);
+    transform: translate(11px, -2px);
+  }
+  50% {
+    -webkit-transform: translate(-7px, 1px);
+    transform: translate(-7px, 1px);
+  }
+  60% {
+    -webkit-transform: translate(10px, -3px);
+    transform: translate(10px, -3px);
+  }
+  70% {
+    -webkit-transform: translate(-8px, 2px);
+    transform: translate(-8px, 2px);
+  }
+  80% {
+    -webkit-transform: translate(6px, -1px);
+    transform: translate(6px, -1px);
+  }
+  90% {
+    -webkit-transform: translate(-5px, 1px);
+    transform: translate(-5px, 1px);
   }
 }
