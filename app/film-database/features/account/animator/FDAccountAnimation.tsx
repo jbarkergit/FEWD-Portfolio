@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { memo, useMemo, useRef, useState, type CSSProperties } from 'react';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import { useFLoader } from '~/film-database/routes/FilmDatabase';
 
 // Find the visual center of an array's length
 const getCenteredIndex = (length: number) => Math.round((length - 1) / 2);
 
-const FDAccountAnimation = ({ accountRef }: { accountRef: React.RefObject<HTMLDivElement | null> }) => {
+const FDAccountAnimation = memo(({ accountRef }: { accountRef: React.RefObject<HTMLDivElement | null> }) => {
   const { primaryData } = useFLoader();
   const [posters, setPosters] = useState<TmdbMovieProvider[][]>();
   const animationRef = useRef<HTMLDivElement>(null);
@@ -79,6 +79,6 @@ const FDAccountAnimation = ({ accountRef }: { accountRef: React.RefObject<HTMLDi
       </div>
     </div>
   );
-};
+});
 
 export default FDAccountAnimation;

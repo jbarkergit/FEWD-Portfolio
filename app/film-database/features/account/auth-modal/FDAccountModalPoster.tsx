@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { memo, useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import { useFLoader } from '~/film-database/routes/FilmDatabase';
 
-const FDAccountModalPoster = () => {
+const FDAccountModalPoster = memo(() => {
   const { primaryData } = useFLoader();
   const nowPlaying = primaryData[0]?.response.results;
   if (!nowPlaying) return;
@@ -78,6 +78,6 @@ const FDAccountModalPoster = () => {
       </picture>
     </div>
   );
-};
+});
 
 export default FDAccountModalPoster;
