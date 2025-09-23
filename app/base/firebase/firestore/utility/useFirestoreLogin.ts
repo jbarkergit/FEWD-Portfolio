@@ -5,9 +5,10 @@ export const useFirestoreLogin = async (data: { emailAddress: string; password: 
   const { emailAddress, password } = data;
 
   try {
-    await signInWithEmailAndPassword(firebaseAuth, emailAddress, password);
-    window.location.reload();
+    const userCredential = await signInWithEmailAndPassword(firebaseAuth, emailAddress, password);
+    return userCredential.user;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };
