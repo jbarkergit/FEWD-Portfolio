@@ -70,9 +70,11 @@ export const zodSchema = z.object({
 
   message: z.string().trim().min(5, { message: 'Please type your inquiry.' }),
 
-  tos: z.literal(true, {
-    errorMap: () => ({ message: 'You must accept the terms.' }),
-  }),
+  tos: z
+    .string()
+    .optional()
+    .transform((val) => val === 'on')
+    .refine((val) => val === true, { message: 'You must accept the terms.' }),
 });
 
 export type Schema = z.infer<typeof zodSchema>;
