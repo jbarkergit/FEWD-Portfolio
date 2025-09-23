@@ -1,17 +1,6 @@
 import { useState } from 'react';
-import { z } from 'zod';
-import { zodSchema } from '~/base/validation/zodSchema';
+import { contactSchema } from '~/base/validation/zodSchema';
 import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
-
-const schema = z.object({
-  firstName: zodSchema.user.shape.firstName,
-  lastName: zodSchema.user.shape.lastName,
-  phoneNumber: zodSchema.contact.shape.phoneNumber,
-  emailAddress: zodSchema.contact.shape.emailAddress,
-  business: zodSchema.entity.shape.business,
-  role: zodSchema.entity.shape.role,
-  message: zodSchema.fields.shape.message,
-});
 
 const inputs = {
   firstName: { htmlFor: 'first-name', inputType: 'text' },
@@ -45,7 +34,7 @@ const Contact = () => {
 
     const formData = new FormData(e.currentTarget);
     const formObject = Object.fromEntries(formData.entries());
-    const result = schema.safeParse(formObject);
+    const result = contactSchema.safeParse(formObject);
 
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};

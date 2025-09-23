@@ -1,15 +1,6 @@
 import { z } from 'zod';
 
-type ZodSchema = typeof zodSchema;
-
-type Type_ZodSchema = {
-  Contact: z.infer<ZodSchema['contact']>;
-  Entity: z.infer<ZodSchema['entity']>;
-  Fields: z.infer<ZodSchema['fields']>;
-  User: z.infer<ZodSchema['user']>;
-};
-
-export const zodSchema = {
+const zodSchema = {
   user: z.object({
     firstName: z
       .string()
@@ -49,3 +40,25 @@ export const zodSchema = {
   }),
   fields: z.object({ message: z.string().trim().min(5, { message: 'Please type your inquiry.' }) }),
 };
+
+export const contactSchema = z.object({
+  firstName: zodSchema.user.shape.firstName,
+  lastName: zodSchema.user.shape.lastName,
+  phoneNumber: zodSchema.contact.shape.phoneNumber,
+  emailAddress: zodSchema.contact.shape.emailAddress,
+  business: zodSchema.entity.shape.business,
+  role: zodSchema.entity.shape.role,
+  message: zodSchema.fields.shape.message,
+});
+
+export const registrationSchema = z.object({
+  firstName: zodSchema.user.shape.firstName,
+  lastName: zodSchema.user.shape.lastName,
+  emailAddress: zodSchema.contact.shape.emailAddress,
+  password: zodSchema.account.shape.password,
+});
+
+export const loginSchema = z.object({
+  emailAddress: zodSchema.contact.shape.emailAddress,
+  password: zodSchema.account.shape.password,
+});

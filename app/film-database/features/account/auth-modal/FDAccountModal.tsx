@@ -1,11 +1,15 @@
 import { forwardRef, useEffect, useRef, useState, type ChangeEvent, type HTMLAttributes } from 'react';
-import z from 'zod';
-import { zodSchema } from '~/base/validation/zodSchema';
+import { loginSchema, registrationSchema } from '~/base/validation/zodSchema';
 import { createFirestoreUser } from '~/base/firebase/firestore/utility/createFirestoreUser';
 import { useFirestoreLogin } from '~/base/firebase/firestore/utility/useFirestoreLogin';
 import { handleAuthProvider } from '~/base/firebase/authentication/utility/handleAuthProvider';
 import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
 import FDAccountModalPoster from '~/film-database/features/account/auth-modal/FDAccountModalPoster';
+
+const schemas = {
+  registration: registrationSchema,
+  login: loginSchema,
+};
 
 const registration = [
   {
@@ -96,19 +100,6 @@ const login = [
 const fieldStore = {
   registration: registration,
   login: login,
-};
-
-const schemas = {
-  registration: z.object({
-    firstName: zodSchema.user.shape.firstName,
-    lastName: zodSchema.user.shape.lastName,
-    emailAddress: zodSchema.contact.shape.emailAddress,
-    password: zodSchema.account.shape.password,
-  }),
-  login: z.object({
-    emailAddress: zodSchema.contact.shape.emailAddress,
-    password: zodSchema.account.shape.password,
-  }),
 };
 
 const useFormValues = <T extends Record<string, string>>(initialValues: T) => {
