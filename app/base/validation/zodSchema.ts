@@ -70,11 +70,9 @@ export const zodSchema = z.object({
 
   message: z.string().trim().min(5, { message: 'Please type your inquiry.' }),
 
-  tos: z
-    .string()
-    .optional()
-    .transform((val) => val === 'on')
-    .refine((val) => val === true, { message: 'You must accept the terms.' }),
+  tos: z.boolean().refine((val) => val === true, {
+    message: 'You must accept the terms.',
+  }),
 });
 
 export type Schema = z.infer<typeof zodSchema>;
@@ -89,13 +87,19 @@ export const contactSchema = z.object({
   message: zodSchema.shape.message,
 });
 
-export const registrationSchema = z.object({
-  firstName: zodSchema.shape.firstName,
-  lastName: zodSchema.shape.lastName,
-  emailAddress: zodSchema.shape.emailAddress,
-  password: zodSchema.shape.password,
-  tos: zodSchema.shape.tos,
-});
+export const registrationSchema = z
+  .object({
+    firstName: zodSchema.shape.firstName,
+    lastName: zodSchema.shape.lastName,
+    emailAddress: zodSchema.shape.emailAddress,
+    password: zodSchema.shape.password,
+    passwordConfirmation: z.string().min(1, 'Please retype your password.'),
+    tos: zodSchema.shape.tos,
+  })
+  .refine((data) => data.password === data.passwordConfirmation, {
+    path: ['passwordConfirmation'],
+    message: 'Passwords must match',
+  });
 
 export const loginSchema = z.object({
   emailAddress: zodSchema.shape.emailAddress,
