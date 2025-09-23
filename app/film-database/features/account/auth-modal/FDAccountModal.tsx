@@ -192,8 +192,10 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
               ref={fieldsetRef}
               data-animate='mount'
               aria-labelledby='legend-id'>
-              <div id='legend-id'>
-                <legend>{activeForm === 'registration' ? `Get Started Now` : `Start a new session`}</legend>
+              <div>
+                <legend id='legend-id'>
+                  {activeForm === 'registration' ? `Get Started Now` : `Start a new session`}
+                </legend>
                 <p>
                   {activeForm === 'registration'
                     ? `Welcome to Film Database, create an account to start a session.`
@@ -262,22 +264,22 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                   </li>
                 )}
               </ul>
+              <nav>
+                <button
+                  type='submit'
+                  aria-label={
+                    activeForm === 'registration' ? 'Submit registration form' : 'Sign in with your credentials'
+                  }>
+                  <span>{activeForm === 'registration' ? 'Complete Registration' : 'Log in'}</span>
+                </button>
+                <button
+                  type='button'
+                  aria-label={activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
+                  onPointerUp={onFormChange}>
+                  {activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
+                </button>
+              </nav>
             </fieldset>
-            <nav>
-              <button
-                type='submit'
-                aria-label={
-                  activeForm === 'registration' ? 'Submit registration form' : 'Sign in with your credentials'
-                }>
-                <span>{activeForm === 'registration' ? 'Complete Registration' : 'Log in'}</span>
-              </button>
-              <button
-                type='button'
-                aria-label={activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
-                onPointerUp={onFormChange}>
-                {activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
-              </button>
-            </nav>
           </form>
         </main>
         <FDAccountModalPoster />
