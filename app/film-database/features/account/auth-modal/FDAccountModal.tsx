@@ -109,8 +109,7 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
   const submittingRef = useRef<boolean>(false);
   const [errors, setErrors] = useState<ZodIssue[]>([]);
 
-  const getError = (name: string) =>
-    errors.find((err) => typeof err.path[0] === 'string' && err.path[0] === name)?.message;
+  const getError = (name: string) => errors.find((err) => err.path[0] === name)?.message;
 
   /** On form submission, parse form data, handle errors, invoke corresponding active form's Firestore utility */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -254,10 +253,10 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                   <li className='fdAccount__container__wrapper__form__fieldset__ul__li'>
                     <input
                       type='checkbox'
-                      name='agree'
-                      id='agree'
+                      name='tos'
+                      id='tos'
                     />
-                    <label htmlFor='agree'>
+                    <label htmlFor='tos'>
                       <span>I have read and agree to the</span>&nbsp;
                       <button aria-label='Read terms and conditions'>terms and conditions</button>
                     </label>
