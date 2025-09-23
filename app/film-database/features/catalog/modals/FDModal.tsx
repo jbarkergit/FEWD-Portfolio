@@ -31,6 +31,16 @@ const FDModal = () => {
         <div
           className='fdModal__container'
           role='dialog'
+          aria-modal='true'
+          aria-label={
+            isModal === 'collections'
+              ? 'User movie collections'
+              : isModal === 'movie'
+                ? 'Movie details'
+                : isModal === 'person'
+                  ? 'Person details'
+                  : ''
+          }
           ref={modal}>
           {isModal === 'movie' && <FDCineInfo />}
           {isModal === 'collections' && <FDCollections />}
