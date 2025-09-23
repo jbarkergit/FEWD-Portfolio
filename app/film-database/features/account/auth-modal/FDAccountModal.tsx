@@ -140,11 +140,26 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
         }
         e.currentTarget.reset();
       } catch (error) {
-        let firebaseErrorMsg = 'An unexpected error occurred.';
+        let firebaseErrorMsg = 'An unexpected error occurred. Please try again later.';
 
         if (error instanceof FirebaseError) {
-          firebaseErrorMsg =
-            error.code === 'auth/email-already-in-use' ? 'This email is already in use.' : error.message;
+          switch (error.code) {
+            case 'auth/email-already-in-use':
+              firebaseErrorMsg = 'This email is already in use.';
+              break;
+
+            case 'auth/invalid-credential':
+              firebaseErrorMsg = 'Invalid credentials. Consider a password reset.';
+              break;
+
+            case 'auth/too-many-requests':
+              firebaseErrorMsg = 'Too many requests. Please try again later.';
+              break;
+
+            default:
+              firebaseErrorMsg = 'An unexpected error occurred. Please try again later.';
+              break;
+          }
         }
 
         setErrors((p) => [
