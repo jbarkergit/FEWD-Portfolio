@@ -22,8 +22,6 @@ export function normalizeFirebaseAuthError(error: unknown): Error {
         );
       case 'auth/unauthorized-domain':
         return new Error('This app domain is not authorized for OAuth operations.');
-      case 'auth/user-disabled':
-        return new Error('This user account has been disabled by an administrator.');
       case 'auth/user-token-expired':
         return new Error('The user’s credential has expired or the account was deleted. Please sign in again.');
       case 'auth/web-storage-unsupported':
@@ -44,10 +42,6 @@ export function normalizeFirebaseAuthError(error: unknown): Error {
         return new Error('No account found with this email.');
       case 'auth/wrong-password':
         return new Error('Incorrect password.');
-      case 'auth/too-many-requests':
-        return new Error('Too many login attempts. Try again later.');
-      case 'auth/requires-recent-login':
-        return new Error('Please sign in again to continue.');
       case 'auth/email-already-exists':
         return new Error('The email is already in use by another account.');
       case 'auth/internal-error':
@@ -56,8 +50,6 @@ export function normalizeFirebaseAuthError(error: unknown): Error {
         return new Error('Password must be at least 6 characters.');
       case 'auth/invalid-phone-number':
         return new Error('Invalid phone number provided.');
-      case 'auth/operation-not-allowed':
-        return new Error('This sign-in method is disabled.');
       case 'auth/phone-number-already-exists':
         return new Error('This phone number is already in use.');
       case 'auth/session-cookie-expired':
