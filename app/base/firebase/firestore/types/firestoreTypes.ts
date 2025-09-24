@@ -1,7 +1,5 @@
 import type { User } from 'firebase/auth';
-
-export type FirestoreCollectionNames = 'users';
-export type FirestoreMovieListUpdate = { movieId: number; concat: boolean };
+import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 
 export type FirestoreUserDocument = {
   credentials: {
@@ -15,5 +13,5 @@ export type FirestoreUserDocument = {
     creationTime: User['metadata']['creationTime'];
     lastSignInTime: User['metadata']['lastSignInTime'];
   };
-  movies: Array<number> | [];
+  movies: Record<string, { data: TmdbMovieProvider[]; header: string }>;
 };
