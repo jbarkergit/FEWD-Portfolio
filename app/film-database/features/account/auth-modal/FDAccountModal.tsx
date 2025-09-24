@@ -1,13 +1,18 @@
 import { forwardRef, useEffect, useRef, useState, type HTMLAttributes } from 'react';
 import { loginSchema, registrationSchema } from '~/base/validation/zodSchema';
-import { handleAuthProvider } from '~/base/firebase/authentication/utility/handleAuthProvider';
 import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
 import FDAccountModalPoster from '~/film-database/features/account/auth-modal/FDAccountModalPoster';
 import { type ZodIssue } from 'zod';
-import { FirebaseError } from 'firebase/app';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
-import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
 import { normalizeFirebaseAuthError } from '~/base/firebase/firestore/helpers/normalizeFirebaseAuthError';
+import { GithubAuthProvider } from 'firebase/auth/web-extension';
 
 const registration = [
   {
@@ -98,12 +103,17 @@ const login = [
 const fieldStore = {
   registration: registration,
   login: login,
-};
+} as const;
 
 const schemas = {
   registration: registrationSchema,
   login: loginSchema,
-};
+} as const;
+
+const providerMap = {
+  github: GithubAuthProvider,
+  google: GoogleAuthProvider,
+} as const;
 
 const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
   const [activeForm, setActiveForm] = useState<'registration' | 'login'>('registration');
@@ -166,6 +176,18 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
 
     submittingRef.current = false;
     return;
+  };
+
+  const handleAuthProviderLogin = async (provider: keyof typeof providerMap) => {
+    const ProviderClass = providerMap[provider];
+    const authProvider = new ProviderClass();
+
+    try {
+      await signInWithPopup(firebaseAuth, authProvider);
+    } catch (error) {
+      console.error(error);
+      handleError(error);
+    }
   };
 
   /** Handle user request to reset password */
@@ -243,13 +265,13 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                 <button
                   type='button'
                   aria-label='Log in with Github'
-                  onPointerUp={() => handleAuthProvider('github')}>
+                  onPointerUp={() => handleAuthProviderLogin('github')}>
                   <TablerBrandGithubFilled /> <span>Log in with GitHub</span>
                 </button>
                 <button
                   type='button'
                   aria-label='Log in with Google'
-                  onPointerUp={() => handleAuthProvider('google')}>
+                  onPointerUp={() => handleAuthProviderLogin('google')}>
                   <DeviconGoogle /> <span>Log in with Google</span>
                 </button>
               </div>
