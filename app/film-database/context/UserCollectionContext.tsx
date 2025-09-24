@@ -1,3 +1,4 @@
+import { updateDoc } from 'firebase/firestore';
 import {
   createContext,
   useContext,
@@ -7,6 +8,12 @@ import {
   type ReactNode,
   type SetStateAction,
 } from 'react';
+import { useAuth } from '~/base/firebase/authentication/context/authProvider';
+import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAuthorized';
+import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
+import type { FirestoreUserDocument } from '~/base/firebase/firestore/types/firestoreTypes';
+import { getFirestoreUserDocument } from '~/base/firebase/firestore/utility/getFirestoreUserDocument';
+import { updateFirestoreUserDocument } from '~/base/firebase/firestore/utility/updateFirestoreUserDocument';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import { useFLoader } from '~/film-database/routes/FilmDatabase';
 
@@ -29,36 +36,41 @@ const Context = createContext<
 
 export const UserCollectionProvider = ({ children }: { children: ReactNode }) => {
   const { primaryData } = useFLoader();
+  const { user } = useAuth();
   const [userCollections, setUserCollections] = useState<Record<string, UserCollection>>({});
 
   useEffect(() => {
     /**
-     * Initializes user collections utilizing client loader's primary data.
+     * If the user document has no collection, pre-populate it with film intelligence from clientLoader
+     * If the user already has a collection, restore it from their document
      */
-    const initializeUserCollections = async (): Promise<void> => {
-      // Get user's collection document
-      // const collection: Firestore_UserDocument | undefined = await useFirestore.getDocument('users');
-      // if (!collection) return;
+    const populateUserCollection = async (): Promise<void> => {
+      const userDocument = await getFirestoreUserDocument();
 
-      // Get, filter and set movies from clientLoader's primaryData to prevent api call
-      // const moviesArr: TmdbMovieProvider[] = flattenedPrimaryData.filter((movie) => collection.movies.some((id) => id === movie.id));
-
-      // Set initial collection
-      // if (moviesArr.length > 0 && !carousels.length) {}
-      setUserCollections({
-        'user-collection-0': {
-          header: 'Trailer Queue',
-          data: [],
-        },
-        'user-collection-1': {
-          header: 'Unnamed Collection',
-          data: primaryData[0]?.response.results!,
-        },
-      });
+      if (userDocument && userDocument.movies.length === 0) {
+        setUserCollections({
+          'user-collection-0': {
+            header: 'Trailer Queue',
+            data: [],
+          },
+          'user-collection-1': {
+            header: 'Unnamed Collection',
+            data: primaryData[0]?.response.results!,
+          },
+        });
+      } else {
+        // setUserCollections(userDocument?.movies)
+      }
+      console.log(userDocument);
     };
 
-    initializeUserCollections();
+    populateUserCollection();
   }, []);
+
+  useEffect(() => {
+    /** Update user document collection */
+    updateFirestoreUserDocument(userCollections);
+  }, [userCollections]);
 
   return <Context.Provider value={{ userCollections, setUserCollections }}>{children}</Context.Provider>;
 };
@@ -68,3 +80,33 @@ export const useUserCollection = () => {
   if (!context) throw new Error('A provider is required to consume UserCollection.');
   return context;
 };
+
+// export const updateFirestoreUserDocumentMovies = async (
+//   collectionName: FirestoreCollectionNames,
+//   movies: FirestoreMovieListUpdate
+// ): Promise<void> => {
+//   // If the user is authorized && user exists, create document if it doesn't exist. (We won't be using the return)
+//   await getFirestoreUserDocument(collectionName);
+//   // getFirestoreUserDocument will fire getUser, so we can safely assume it's available.
+//   const user = (await getFirestoreUser()) as User;
+
+//   try {
+//     // Get document to spread values
+//     const userDoc: FirestoreUserDocument | undefined = await getFirestoreUserDocument(collectionName);
+//     if (!userDoc) throw new Error('user document could not be retrieved.');
+
+//     // Create new document reference
+//     const docRef: DocumentReference<DocumentData, DocumentData> = doc(database, collectionName, user.uid);
+
+//     // Create new movies object
+//     const userMovies =
+//       movies.concat && !userDoc.movies.some((movie: number) => movie === movies.movieId)
+//         ? [...userDoc.movies, movies.movieId]
+//         : userDoc.movies.filter((id: number) => id !== movies.movieId);
+
+//     // Overwrite existing document
+//     await updateDoc(docRef, { ...userDoc, movies: userMovies });
+//   } catch (error) {
+//     console.error('Failed to update document movies: ' + error);
+//   }
+// };
