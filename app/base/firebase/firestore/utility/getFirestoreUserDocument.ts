@@ -38,7 +38,7 @@ export const getFirestoreUserDocument = async (): Promise<FirestoreUserDocument 
           creationTime: user.metadata.creationTime,
           lastSignInTime: user.metadata.lastSignInTime,
         },
-        movies: [],
+        movies: {},
       };
 
       await setDoc(docRef, newDocument);

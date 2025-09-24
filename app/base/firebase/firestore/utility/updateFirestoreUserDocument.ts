@@ -13,6 +13,7 @@ export const updateFirestoreUserDocument = async (
   if (!user) throw new Error('No current user');
 
   const docRef = doc(database, 'users', user.uid);
+
   await updateDoc(docRef, partialUpdate);
 
   return { ...userDoc, ...partialUpdate };
