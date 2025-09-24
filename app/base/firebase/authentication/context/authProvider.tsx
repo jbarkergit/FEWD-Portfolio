@@ -19,7 +19,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const [user, setUser] = useState<AuthUser | null>(null);
 
   useEffect(() => {
-    const authStateListener = onAuthStateChanged(firebaseAuth, (user: User | null) => {
+    const callback = (user: User | null) => {
       setUser(
         user
           ? {
@@ -29,7 +29,9 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
             }
           : null
       );
-    });
+    };
+
+    const authStateListener = onAuthStateChanged(firebaseAuth, callback);
     return () => authStateListener();
   }, []);
 
@@ -39,7 +41,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('A provider is required to consume useAuth.');
   }
   return context;
 };
