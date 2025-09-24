@@ -1,24 +1,30 @@
-import { DocumentReference, type DocumentData, doc, DocumentSnapshot, getDoc, setDoc } from 'firebase/firestore';
-import { database, firebaseAuth } from '../../config/firebaseConfig';
-import type { FirestoreCollectionNames, FirestoreUserDocument } from '../types/firestoreTypes';
+import {
+  doc,
+  getDoc,
+  setDoc,
+  type DocumentData,
+  type DocumentReference,
+  type DocumentSnapshot,
+} from 'firebase/firestore';
 import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAuthorized';
+import { database, firebaseAuth } from '~/base/firebase/config/firebaseConfig';
+import type { FirestoreUserDocument } from '~/base/firebase/firestore/types/firestoreTypes';
 
-/** @todo memoize with real time updates */
-export const getFirestoreUserDocument = async (
-  collectionName: FirestoreCollectionNames
-): Promise<FirestoreUserDocument | undefined> => {
+let cachedUserDocument: FirestoreUserDocument | undefined;
+
+export const getFirestoreUserDocument = async (): Promise<FirestoreUserDocument | undefined> => {
+  if (cachedUserDocument) return cachedUserDocument;
+
   try {
     const isAuth = await isUserAuthorized();
-    if (!isAuth) throw new Error('Failed to retrieve document. User is not authorized.');
+    if (!isAuth) throw new Error('User is not authorized.');
 
     const user = firebaseAuth.currentUser;
     if (!user) throw new Error('Failed to identify user.');
 
-    // Reference to 'users' collection and the user's document
-    const docRef: DocumentReference<DocumentData, DocumentData> = doc(database, collectionName, user.uid);
+    const docRef: DocumentReference<DocumentData, DocumentData> = doc(database, 'users', user.uid);
     const docSnap: DocumentSnapshot<unknown, DocumentData> = await getDoc(docRef);
 
-    // If the user's document does not exist, create it
     if (!docSnap.exists()) {
       const newDocument: FirestoreUserDocument = {
         credentials: {
@@ -36,11 +42,13 @@ export const getFirestoreUserDocument = async (
       };
 
       await setDoc(docRef, newDocument);
+      cachedUserDocument = newDocument;
+    } else {
+      cachedUserDocument = docSnap.data() as FirestoreUserDocument;
     }
-
-    // Return requested document
-    return docSnap.data() as FirestoreUserDocument;
   } catch (error) {
     console.error(error);
   }
+
+  return cachedUserDocument;
 };
