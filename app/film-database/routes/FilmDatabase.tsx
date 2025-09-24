@@ -13,17 +13,16 @@ import FDAccountAnimation from '../features/account/animator/FDAccountAnimation'
 import FDHeader from '../features/catalog/navigation/FDHeader';
 import FDCatalog from '../features/catalog/FDCatalog';
 import FDAccountModal from '~/film-database/features/account/auth-modal/FDAccountModal';
+import { useAuth } from '~/base/firebase/authentication/context/authProvider';
 
 export async function clientLoader() {
-  const isAuth = await isUserAuthorized();
-
   const primaryData = await tmdbCall(new AbortController(), [
     'now_playing',
-    'upcoming',
-    'trending_today',
-    'trending_this_week',
-    'popular',
-    'top_rated',
+    // 'upcoming',
+    // 'trending_today',
+    // 'trending_this_week',
+    // 'popular',
+    // 'top_rated',
     // { discover: 'action' },
     // { discover: 'adventure' },
     // { discover: 'animation' },
@@ -45,17 +44,16 @@ export async function clientLoader() {
     // { discover: 'western' },
   ]);
 
-  return { isAuth, primaryData };
+  return { primaryData };
 }
 
 export const useFLoader = () => useLoaderData() as Awaited<ReturnType<typeof clientLoader>>;
 
 export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
-  const { isAuth } = loaderData;
-
+  const { user } = useAuth();
   const accountRef = useRef<HTMLDivElement>(null);
 
-  return isAuth ? (
+  return user ? (
     <RootRefProvider>
       <ChunkSizeProvider>
         <HeroDataProvider>
