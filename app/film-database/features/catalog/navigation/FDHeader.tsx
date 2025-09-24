@@ -46,10 +46,6 @@ function SolarVideoLibraryBoldDuotone(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-const handleSignOut = async (): Promise<void> => {
-  await signOut(firebaseAuth);
-  window.location.reload();
-};
 
 const FDHeader = () => {
   const { setIsModal } = useModal();
@@ -99,7 +95,7 @@ const FDHeader = () => {
             data-open='false'>
             <button
               aria-label='Sign out'
-              onPointerUp={handleSignOut}>
+              onPointerUp={async () => await signOut(firebaseAuth)}>
               Sign out
             </button>
           </div>
