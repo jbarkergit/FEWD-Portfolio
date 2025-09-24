@@ -1,16 +1,19 @@
-import type { User } from 'firebase/auth';
 import { DocumentReference, type DocumentData, doc, DocumentSnapshot, getDoc, setDoc } from 'firebase/firestore';
-import { database } from '../../config/firebaseConfig';
+import { database, firebaseAuth } from '../../config/firebaseConfig';
 import type { FirestoreCollectionNames, FirestoreUserDocument } from '../types/firestoreTypes';
-import { getFirestoreUser } from './getFirestoreUser';
+import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAuthorized';
 
 /** @todo memoize with real time updates */
-export const getFirestoreUserDocument = async (collectionName: FirestoreCollectionNames): Promise<FirestoreUserDocument | undefined> => {
-  // Get user
-  const user: User | undefined = await getFirestoreUser();
+export const getFirestoreUserDocument = async (
+  collectionName: FirestoreCollectionNames
+): Promise<FirestoreUserDocument | undefined> => {
+  try {
+    const isAuth = await isUserAuthorized();
+    if (!isAuth) throw new Error('Failed to retrieve document. User is not authorized.');
 
-  // If user is authorized && user exists, otherwise do nothing
-  if (user) {
+    const user = firebaseAuth.currentUser;
+    if (!user) throw new Error('Failed to identify user.');
+
     // Reference to 'users' collection and the user's document
     const docRef: DocumentReference<DocumentData, DocumentData> = doc(database, collectionName, user.uid);
     const docSnap: DocumentSnapshot<unknown, DocumentData> = await getDoc(docRef);
@@ -31,10 +34,13 @@ export const getFirestoreUserDocument = async (collectionName: FirestoreCollecti
         },
         movies: [],
       };
+
       await setDoc(docRef, newDocument);
     }
 
-    // Return user document
+    // Return requested document
     return docSnap.data() as FirestoreUserDocument;
+  } catch (error) {
+    console.error(error);
   }
 };
