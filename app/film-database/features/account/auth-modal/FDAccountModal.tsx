@@ -1,12 +1,13 @@
 import { forwardRef, useEffect, useRef, useState, type HTMLAttributes } from 'react';
 import { loginSchema, registrationSchema } from '~/base/validation/zodSchema';
-import { createFirestoreUser } from '~/base/firebase/firestore/utility/createFirestoreUser';
-import { useFirestoreLogin } from '~/base/firebase/firestore/utility/useFirestoreLogin';
 import { handleAuthProvider } from '~/base/firebase/authentication/utility/handleAuthProvider';
 import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
 import FDAccountModalPoster from '~/film-database/features/account/auth-modal/FDAccountModalPoster';
 import { type ZodIssue } from 'zod';
 import { FirebaseError } from 'firebase/app';
+import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import { normalizeFirebaseAuthError } from '~/base/firebase/firestore/helpers/normalizeFirebaseAuthError';
 
 const registration = [
   {
@@ -109,9 +110,29 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
   const fieldsetRef = useRef<HTMLFieldSetElement>(null);
   const submittingRef = useRef<boolean>(false);
   const [errors, setErrors] = useState<ZodIssue[]>([]);
-  useEffect(() => console.log(errors), [errors]);
 
+  /** Retrieves field errors for JSX */
   const getFieldError = (name: string) => errors.find((err) => err.path[0] === name)?.message;
+
+  /** Create FormData, validate with zod, return result */
+  const getParsedForm = (e: React.FormEvent<HTMLFormElement>) => {
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const formObject = Object.fromEntries(formData.entries()) as Record<string, any>;
+    formObject.tos = formData.has('tos');
+    const result = schemas[activeForm].safeParse(formObject);
+    return result;
+  };
+
+  /** Firebase auth error helper */
+  const handleError = (error: unknown) => {
+    const firebaseError = normalizeFirebaseAuthError(error);
+    console.error(firebaseError);
+    setErrors((p) => [
+      ...p,
+      { code: 'firebase' as any, path: ['__global'], message: firebaseError.message, source: 'firebase' },
+    ]);
+  };
 
   /** On form submission, parse form data, handle errors, invoke corresponding active form's Firestore utility */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -120,12 +141,7 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
     if (submittingRef.current) return;
     submittingRef.current = true;
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const formObject = Object.fromEntries(formData.entries()) as Record<string, any>;
-    formObject.tos = formData.has('tos');
-
-    const result = schemas[activeForm].safeParse(formObject);
+    const result = getParsedForm(e);
 
     if (!result.success) {
       setErrors(result.error.issues.filter((issue) => typeof issue.path[0] === 'string'));
@@ -133,44 +149,40 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
       setErrors([]);
 
       try {
+        const { emailAddress, password } = result.data;
+
         if (activeForm === 'registration') {
-          await createFirestoreUser(result.data);
+          await createUserWithEmailAndPassword(firebaseAuth, emailAddress, password);
+          await signInWithEmailAndPassword(firebaseAuth, emailAddress, password);
         } else {
-          await useFirestoreLogin(result.data);
+          await signInWithEmailAndPassword(firebaseAuth, emailAddress, password);
         }
+
         e.currentTarget.reset();
       } catch (error) {
-        let firebaseErrorMsg = 'An unexpected error occurred. Please try again later.';
-
-        if (error instanceof FirebaseError) {
-          switch (error.code) {
-            case 'auth/email-already-in-use':
-              firebaseErrorMsg = 'This email is already in use.';
-              break;
-
-            case 'auth/invalid-credential':
-              firebaseErrorMsg = 'Invalid credentials. Consider a password reset.';
-              break;
-
-            case 'auth/too-many-requests':
-              firebaseErrorMsg = 'Too many requests. Please try again later.';
-              break;
-
-            default:
-              firebaseErrorMsg = 'An unexpected error occurred. Please try again later.';
-              break;
-          }
-        }
-
-        setErrors((p) => [
-          ...p,
-          { code: 'firebase' as any, path: ['__global'], message: firebaseErrorMsg, source: 'firebase' },
-        ]);
+        handleError(error);
       }
     }
 
     submittingRef.current = false;
     return;
+  };
+
+  /** Handle user request to reset password */
+  const handlePasswordReset = async (emailInputElement: HTMLInputElement) => {
+    const emailAddress = emailInputElement.value;
+
+    if (!emailAddress) {
+      alert('Please enter your email address.');
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(firebaseAuth, emailAddress);
+      alert('Check your email for password reset instructions.');
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   /** Animates fieldsets on form state change */
@@ -298,19 +310,39 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                 )}
               </ul>
               <nav>
-                <button
-                  type='submit'
-                  aria-label={
-                    activeForm === 'registration' ? 'Submit registration form' : 'Sign in with your credentials'
-                  }>
-                  <span>{activeForm === 'registration' ? 'Complete Registration' : 'Log in'}</span>
-                </button>
-                <button
-                  type='button'
-                  aria-label={activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
-                  onPointerUp={onFormChange}>
-                  {activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
-                </button>
+                <div>
+                  <button
+                    type='submit'
+                    aria-label={
+                      activeForm === 'registration' ? 'Submit registration form' : 'Sign in with your credentials'
+                    }>
+                    <span>{activeForm === 'registration' ? 'Complete Registration' : 'Log in with credentials'}</span>
+                  </button>
+                </div>
+                <div>
+                  <button
+                    type='button'
+                    aria-label={activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
+                    onPointerUp={onFormChange}>
+                    {activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
+                  </button>
+                  {activeForm === 'login' && (
+                    <>
+                      {'• '}
+                      <button
+                        type='button'
+                        aria-label='Request a password reset'
+                        onPointerUp={() => {
+                          const emailInput = document.getElementById(
+                            'fdUserAccountSignInEmailAddress'
+                          ) as HTMLInputElement;
+                          handlePasswordReset(emailInput);
+                        }}>
+                        Reset password
+                      </button>
+                    </>
+                  )}
+                </div>
               </nav>
             </fieldset>
           </form>
