@@ -11,7 +11,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./setupTests.ts'],
+    include: ['**/*.test.{ts,tsx}'],
   },
   build: { copyPublicDir: false, cssMinify: true, ssr: false },
-  // define: { 'process.env': process.env },
 }) as ViteUserConfig;
