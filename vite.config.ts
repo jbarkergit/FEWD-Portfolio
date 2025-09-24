@@ -5,7 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 /** https://vite.dev/config/ */
 export default defineConfig({
-  plugins: [reactRouter(), tsconfigPaths()],
+  plugins: [!process.env.VITEST && reactRouter(), tsconfigPaths()],
   server: { watch: { usePolling: true } },
   test: {
     globals: true,
