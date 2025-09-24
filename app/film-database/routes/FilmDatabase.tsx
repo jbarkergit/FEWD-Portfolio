@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { useLoaderData } from 'react-router';
 import type { Route } from './+types/FilmDatabase';
-import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAuthorized';
 import { tmdbCall } from '../composables/tmdbCall';
 import { HeroDataProvider } from '~/film-database/context/HeroDataContext';
 import { ChunkSizeProvider } from '~/film-database/context/ChunkSizeContext';
