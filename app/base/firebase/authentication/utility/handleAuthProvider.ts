@@ -1,10 +1,7 @@
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { firebaseAuth } from '../../config/firebaseConfig';
 
-/**
- * @function handleAuthProvider
- * @description Handles Firebase authentication via provider
- */
+/** Handles Firebase authentication via provider */
 export const handleAuthProvider = async (provider: 'github' | 'google'): Promise<void> => {
   let authProvider: GithubAuthProvider | GoogleAuthProvider;
 
