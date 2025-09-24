@@ -1,4 +1,3 @@
-import { updateDoc } from 'firebase/firestore';
 import {
   createContext,
   useContext,
@@ -8,10 +7,6 @@ import {
   type ReactNode,
   type SetStateAction,
 } from 'react';
-import { useAuth } from '~/base/firebase/authentication/context/authProvider';
-import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAuthorized';
-import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
-import type { FirestoreUserDocument } from '~/base/firebase/firestore/types/firestoreTypes';
 import { getFirestoreUserDocument } from '~/base/firebase/firestore/utility/getFirestoreUserDocument';
 import { updateFirestoreUserDocument } from '~/base/firebase/firestore/utility/updateFirestoreUserDocument';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
@@ -23,7 +18,7 @@ import { useFLoader } from '~/film-database/routes/FilmDatabase';
  */
 export type UserCollection = {
   header: string;
-  data: TmdbMovieProvider[] | null;
+  data: TmdbMovieProvider[];
 };
 
 const Context = createContext<
@@ -36,7 +31,6 @@ const Context = createContext<
 
 export const UserCollectionProvider = ({ children }: { children: ReactNode }) => {
   const { primaryData } = useFLoader();
-  const { user } = useAuth();
   const [userCollections, setUserCollections] = useState<Record<string, UserCollection>>({});
 
   useEffect(() => {
@@ -47,7 +41,7 @@ export const UserCollectionProvider = ({ children }: { children: ReactNode }) =>
     const populateUserCollection = async (): Promise<void> => {
       const userDocument = await getFirestoreUserDocument();
 
-      if (userDocument && userDocument.movies.length === 0) {
+      if (userDocument && Object.entries(userDocument.movies).length === 0) {
         setUserCollections({
           'user-collection-0': {
             header: 'Trailer Queue',
@@ -59,7 +53,17 @@ export const UserCollectionProvider = ({ children }: { children: ReactNode }) =>
           },
         });
       } else {
-        // setUserCollections(userDocument?.movies)
+        setUserCollections(
+          Object.fromEntries(
+            Object.entries(userDocument?.movies ?? {}).map(([key, movieCollection]) => [
+              key,
+              {
+                header: movieCollection.header,
+                data: movieCollection.data ?? [],
+              },
+            ])
+          )
+        );
       }
       console.log(userDocument);
     };
@@ -69,7 +73,7 @@ export const UserCollectionProvider = ({ children }: { children: ReactNode }) =>
 
   useEffect(() => {
     /** Update user document collection */
-    updateFirestoreUserDocument(userCollections);
+    updateFirestoreUserDocument({ movies: userCollections });
   }, [userCollections]);
 
   return <Context.Provider value={{ userCollections, setUserCollections }}>{children}</Context.Provider>;
@@ -80,33 +84,3 @@ export const useUserCollection = () => {
   if (!context) throw new Error('A provider is required to consume UserCollection.');
   return context;
 };
-
-// export const updateFirestoreUserDocumentMovies = async (
-//   collectionName: FirestoreCollectionNames,
-//   movies: FirestoreMovieListUpdate
-// ): Promise<void> => {
-//   // If the user is authorized && user exists, create document if it doesn't exist. (We won't be using the return)
-//   await getFirestoreUserDocument(collectionName);
-//   // getFirestoreUserDocument will fire getUser, so we can safely assume it's available.
-//   const user = (await getFirestoreUser()) as User;
-
-//   try {
-//     // Get document to spread values
-//     const userDoc: FirestoreUserDocument | undefined = await getFirestoreUserDocument(collectionName);
-//     if (!userDoc) throw new Error('user document could not be retrieved.');
-
-//     // Create new document reference
-//     const docRef: DocumentReference<DocumentData, DocumentData> = doc(database, collectionName, user.uid);
-
-//     // Create new movies object
-//     const userMovies =
-//       movies.concat && !userDoc.movies.some((movie: number) => movie === movies.movieId)
-//         ? [...userDoc.movies, movies.movieId]
-//         : userDoc.movies.filter((id: number) => id !== movies.movieId);
-
-//     // Overwrite existing document
-//     await updateDoc(docRef, { ...userDoc, movies: userMovies });
-//   } catch (error) {
-//     console.error('Failed to update document movies: ' + error);
-//   }
-// };
