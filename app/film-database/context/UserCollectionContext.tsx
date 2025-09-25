@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { useAuth } from '~/base/firebase/authentication/context/authProvider';
 import isUserAuthorized from '~/base/firebase/authentication/utility/isUserAuthorized';
+import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { getFirestoreUserDocument } from '~/base/firebase/firestore/utility/getFirestoreUserDocument';
 import { updateFirestoreUserDocument } from '~/base/firebase/firestore/utility/updateFirestoreUserDocument';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
@@ -52,32 +53,23 @@ export const UserCollectionProvider = ({ children }: { children: ReactNode }) =>
      * If the user already has a collection, restore it from their document
      */
     const populateUserCollection = async (): Promise<void> => {
-      const userDocument = await getFirestoreUserDocument();
+      const user = firebaseAuth.currentUser;
+      if (!user?.email) return;
 
-      if (userDocument && Object.entries(userDocument.movies).length === 0) {
-        setUserCollections({
-          'user-collection-0': {
-            header: 'Trailer Queue',
-            data: [],
-          },
-          'user-collection-1': {
-            header: 'Unnamed Collection',
-            data: primaryData[0]?.response.results!,
-          },
-        });
-      } else {
-        setUserCollections(
-          Object.fromEntries(
-            Object.entries(userDocument?.movies ?? {}).map(([key, movieCollection]) => [
-              key,
-              {
-                header: movieCollection.header,
-                data: movieCollection.data ?? [],
-              },
-            ])
-          )
-        );
-      }
+      const userDocument = await getFirestoreUserDocument();
+      if (userDocument && Object.entries(userDocument.movies).length === 0) return;
+
+      setUserCollections(
+        Object.fromEntries(
+          Object.entries(userDocument?.movies ?? {}).map(([key, movieCollection]) => [
+            key,
+            {
+              header: movieCollection.header,
+              data: movieCollection.data ?? [],
+            },
+          ])
+        )
+      );
     };
 
     populateUserCollection();
