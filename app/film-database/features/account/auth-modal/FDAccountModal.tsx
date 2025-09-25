@@ -208,30 +208,13 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
   };
 
   /** Animates fieldsets on form state change */
-  const handleState = () => setActiveForm((f) => (f === 'registration' ? 'login' : 'registration'));
-
-  const onFormChange = () => {
-    if (!fieldsetRef.current) {
-      handleState();
-    } else {
-      fieldsetRef.current.setAttribute('data-animate', 'unmount');
-      setTimeout(() => handleState(), 600);
-    }
+  const onActiveFormChange = () => {
+    fieldsetRef.current?.setAttribute('data-animate', 'unmount');
+    setTimeout(() => {
+      setActiveForm((f) => (f === 'registration' ? 'login' : 'registration'));
+      requestAnimationFrame(() => fieldsetRef.current?.setAttribute('data-animate', 'mount'));
+    }, 600);
   };
-
-  // There's no reliable way to ensure the fieldsets elements have mounted, so we're utilizing MutationObserver to handle the 'data-animate' MOUNT
-  useEffect(() => {
-    const node = fieldsetRef.current;
-    if (!node) return;
-
-    const observer = new MutationObserver(() => {
-      node.setAttribute('data-animate', 'mount');
-      observer.disconnect();
-    });
-
-    observer.observe(node, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, [activeForm]);
 
   return (
     <div
@@ -345,7 +328,7 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                   <button
                     type='button'
                     aria-label={activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
-                    onPointerUp={onFormChange}>
+                    onPointerUp={onActiveFormChange}>
                     {activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
                   </button>
                   {activeForm === 'login' && (
