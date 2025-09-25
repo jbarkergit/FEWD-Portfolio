@@ -78,7 +78,6 @@ export const UserCollectionProvider = ({ children }: { children: ReactNode }) =>
           )
         );
       }
-      console.log(userDocument);
     };
 
     populateUserCollection();
