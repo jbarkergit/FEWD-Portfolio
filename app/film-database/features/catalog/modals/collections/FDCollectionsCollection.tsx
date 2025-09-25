@@ -1,6 +1,5 @@
-import { memo, useEffect, type RefObject } from 'react';
+import { memo, useCallback, useEffect, useRef, type RefObject } from 'react';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
-import type { Sensor, Source, Target } from './FDCollections';
 import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import GenericCarouselNavigation from '~/film-database/components/carousel/GenericCarouselNavigation';
@@ -9,6 +8,42 @@ import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 
 // Magic constant
 const NOT_FOUND_INDEX = -1 as const;
+
+export type Sensor = {
+  isInteract: boolean;
+  isActiveElement: boolean;
+  initialPointerCoords: Record<'x' | 'y', number | null>;
+  pointerCoords: Record<'x' | 'y', number | null>;
+};
+
+const createSensorDefault = (): Sensor => ({
+  isInteract: false,
+  isActiveElement: false,
+  initialPointerCoords: { x: null, y: null },
+  pointerCoords: { x: null, y: null },
+});
+
+export type Source = {
+  colIndex: number;
+  listItem: HTMLLIElement | null;
+  listItemIndex: number;
+};
+
+const createSourceDefault = (): Source => ({
+  colIndex: NOT_FOUND_INDEX,
+  listItem: null,
+  listItemIndex: NOT_FOUND_INDEX,
+});
+
+export type Target = {
+  colIndex: number;
+  listItemIndex: number;
+};
+
+const createTargetDefault = (): Target => ({
+  colIndex: NOT_FOUND_INDEX,
+  listItemIndex: NOT_FOUND_INDEX,
+});
 
 /** Finds Eudclidean distance within supplied DOMRect[] and returns the index of the closest element */
 const findEuclidean = (detach: Record<'x' | 'y', number>, data: DOMRect[]): number => {
@@ -43,20 +78,6 @@ const findEuclidean = (detach: Record<'x' | 'y', number>, data: DOMRect[]): numb
   ).index;
 };
 
-type Props = {
-  mapIndex: number;
-  header: string;
-  data: TmdbMovieProvider[] | null;
-  isEditMode: boolean;
-  ulRef: (reference: HTMLUListElement) => void;
-  ulRefs: React.RefObject<HTMLUListElement[]>;
-  sensorRef: RefObject<Sensor>;
-  sourceRef: RefObject<Source>;
-  targetRef: RefObject<Target>;
-  resetStores: () => void;
-  triggerError: () => void;
-};
-
 const FDCollectionsCollection = memo(
   ({
     mapIndex,
@@ -65,15 +86,31 @@ const FDCollectionsCollection = memo(
     isEditMode,
     ulRef,
     ulRefs,
-    sensorRef,
-    sourceRef,
-    targetRef,
-    resetStores,
     triggerError,
-  }: Props) => {
+  }: {
+    mapIndex: number;
+    header: string;
+    data: TmdbMovieProvider[] | null;
+    isEditMode: boolean;
+    ulRef: (reference: HTMLUListElement) => void;
+    ulRefs: React.RefObject<HTMLUListElement[]>;
+    triggerError: () => void;
+  }) => {
     // Context
     const { userCollections, setUserCollections } = useUserCollection();
     const { setModalTrailer } = useModalTrailer();
+
+    // Sensors
+    const sensorRef = useRef<Sensor>(createSensorDefault()); // Sensor
+    const sourceRef = useRef<Source>(createSourceDefault()); // Source
+    const targetRef = useRef<Target>(createTargetDefault()); // Target
+
+    /** Rolls sensors back to default state */
+    const resetSensors = useCallback((): void => {
+      sensorRef.current = createSensorDefault();
+      sourceRef.current = createSourceDefault();
+      targetRef.current = createTargetDefault();
+    }, []);
 
     /** Rolls event listeners back to original mount state */
     function resetEventListeners(): void {
@@ -90,10 +127,10 @@ const FDCollectionsCollection = memo(
       }
     }
 
-    /** Invokes resetStores and resetEventListeners to prepare dom for new potential interactions */
+    /** Invokes resetSensors and resetEventListeners to prepare dom for new potential interactions */
     function resetInteraction(error?: { event: 'down' | 'move' | 'up' | 'attach' | 'detach'; reason: string }): void {
       resetEventListeners();
-      resetStores();
+      resetSensors();
       if (error) console.error(`Event ${error.event.toLocaleUpperCase()} failed. ${error.reason}`);
     }
 

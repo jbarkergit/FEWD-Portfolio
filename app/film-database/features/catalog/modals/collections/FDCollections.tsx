@@ -5,55 +5,14 @@ import FDCollectionsErrorHandler from './FDCollectionsErrorHandler';
 import FDCollectionsCollection from './FDCollectionsCollection';
 import { useUserCollection } from '~/film-database/context/UserCollectionContext';
 
-const NOT_FOUND_INDEX = -1 as const;
-
-export type Sensor = {
-  isInteract: boolean;
-  isActiveElement: boolean;
-  initialPointerCoords: Record<'x' | 'y', number | null>;
-  pointerCoords: Record<'x' | 'y', number | null>;
-};
-
-const createSensorDefault = (): Sensor => ({
-  isInteract: false,
-  isActiveElement: false,
-  initialPointerCoords: { x: null, y: null },
-  pointerCoords: { x: null, y: null },
-});
-
-export type Source = {
-  colIndex: number;
-  listItem: HTMLLIElement | null;
-  listItemIndex: number;
-};
-
-const createSourceDefault = (): Source => ({
-  colIndex: NOT_FOUND_INDEX,
-  listItem: null,
-  listItemIndex: NOT_FOUND_INDEX,
-});
-
-export type Target = {
-  colIndex: number;
-  listItemIndex: number;
-};
-
-const createTargetDefault = (): Target => ({
-  colIndex: NOT_FOUND_INDEX,
-  listItemIndex: NOT_FOUND_INDEX,
-});
-
 const FDCollections = () => {
   const { userCollections } = useUserCollection(); // Context
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false); // Edit mode flag
 
-  const ulRefs = useRef<HTMLUListElement[]>([]);
   const errorRef = useRef<HTMLDivElement>(null); // Reference storage to errors occuring in the drop and drag logic
 
-  const sensorRef = useRef<Sensor>(createSensorDefault()); // Sensor
-  const sourceRef = useRef<Source>(createSourceDefault()); // Source
-  const targetRef = useRef<Target>(createTargetDefault()); // Target
+  const ulRefs = useRef<HTMLUListElement[]>([]);
 
   /** Stores unordered list dom nodes as an array reference */
   const ulRef = (reference: HTMLUListElement): void => {
@@ -67,13 +26,6 @@ const FDCollections = () => {
     const attr: string = 'data-error';
     errorRef.current?.setAttribute(attr, 'true');
     setTimeout(() => errorRef.current?.setAttribute(attr, 'false'), 3200);
-  }, []);
-
-  /** Rolls stores back to default state */
-  const resetStores = useCallback((): void => {
-    sensorRef.current = createSensorDefault();
-    sourceRef.current = createSourceDefault();
-    targetRef.current = createTargetDefault();
   }, []);
 
   /** Handles interaction visual indicators via dom node attributes for 'data-list-item-fx' */
@@ -104,10 +56,6 @@ const FDCollections = () => {
             isEditMode={isEditMode}
             ulRef={ulRef}
             ulRefs={ulRefs}
-            sensorRef={sensorRef}
-            sourceRef={sourceRef}
-            targetRef={targetRef}
-            resetStores={resetStores}
             triggerError={triggerError}
           />
         ))}
