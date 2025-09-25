@@ -1,4 +1,4 @@
-import { useDeferredValue, useRef, useState, type ChangeEvent } from 'react';
+import { memo, useDeferredValue, useRef, useState, type ChangeEvent } from 'react';
 import { TablerCategoryFilled } from '~/film-database/assets/svg/icons';
 import { useUserCollection } from '~/film-database/context/UserCollectionContext';
 
@@ -7,7 +7,7 @@ type Props = {
   header: string;
 };
 
-const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
+const FDCollectionsCollectionHeader = memo(({ mapIndex, header }: Props) => {
   const { userCollections, setUserCollections } = useUserCollection();
   const [inputValue, setInputValue] = useState<string>(
     userCollections[Object.keys(userCollections)[mapIndex]!]?.header || 'Unnamed Collection'
@@ -63,6 +63,6 @@ const FDCollectionsCollectionHeader = ({ mapIndex, header }: Props) => {
       </h2>
     </header>
   );
-};
+});
 
 export default FDCollectionsCollectionHeader;

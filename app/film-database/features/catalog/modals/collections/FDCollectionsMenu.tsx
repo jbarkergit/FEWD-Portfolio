@@ -1,4 +1,4 @@
-import { useEffect, useRef, type Dispatch, type SetStateAction } from 'react';
+import { memo, useEffect, useRef, type Dispatch, type SetStateAction } from 'react';
 import { TablerCategoryPlus, TablerEdit, MaterialSymbolsLogoutSharp } from '~/film-database/assets/svg/icons';
 import { useModal } from '~/film-database/context/ModalContext';
 import { useUserCollection } from '~/film-database/context/UserCollectionContext';
@@ -9,7 +9,7 @@ type Props = {
   setIsEditMode: Dispatch<SetStateAction<boolean>>;
 };
 
-const FDCollectionsMenu = ({ isEditMode, setIsEditMode }: Props) => {
+const FDCollectionsMenu = memo(({ isEditMode, setIsEditMode }: Props) => {
   const { userCollections, setUserCollections } = useUserCollection();
   const { setIsModal } = useModal();
   const editBtnRef = useRef<HTMLButtonElement>(null);
@@ -50,6 +50,6 @@ const FDCollectionsMenu = ({ isEditMode, setIsEditMode }: Props) => {
       </button>
     </div>
   );
-};
+});
 
 export default FDCollectionsMenu;
