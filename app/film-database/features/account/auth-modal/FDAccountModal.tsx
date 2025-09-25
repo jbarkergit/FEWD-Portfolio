@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef, useState, type HTMLAttributes } from 'react';
 import { loginSchema, registrationSchema } from '~/base/validation/zodSchema';
-import { TablerBrandGithubFilled, DeviconGoogle } from '~/film-database/assets/svg/icons';
+import { TablerBrandGithubFilled, DeviconGoogle, GameIconsSpy } from '~/film-database/assets/svg/icons';
 import FDAccountModalPoster from '~/film-database/features/account/auth-modal/FDAccountModalPoster';
 import { type ZodIssue } from 'zod';
 import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
@@ -8,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   sendPasswordResetEmail,
+  signInAnonymously,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
@@ -278,6 +279,12 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                   aria-label='Log in with Google'
                   onPointerUp={() => handleAuthProviderLogin('google')}>
                   <DeviconGoogle /> <span>Log in with Google</span>
+                </button>
+                <button
+                  type='button'
+                  aria-label='Log in Anonymously'
+                  onPointerUp={() => signInAnonymously(firebaseAuth)}>
+                  <GameIconsSpy /> <span>Log in Anonymously</span>
                 </button>
               </div>
               <ul
