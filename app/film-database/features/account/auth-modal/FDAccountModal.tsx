@@ -118,7 +118,6 @@ const providerMap = {
 const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
   const [activeForm, setActiveForm] = useState<'registration' | 'login'>('registration');
   const fieldsetRef = useRef<HTMLFieldSetElement>(null);
-  const submittingRef = useRef<boolean>(false);
   const [errors, setErrors] = useState<ZodIssue[]>([]);
 
   /** Retrieves field errors for JSX */
@@ -145,6 +144,8 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
   };
 
   /** On form submission, parse form data, handle errors, invoke corresponding active form's Firestore utility */
+  const submittingRef = useRef<boolean>(false);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -178,7 +179,13 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
     return;
   };
 
+  /** Handle auth provider login */
+  const isAuthorizingViaProviderRef = useRef<boolean>(false);
+
   const handleAuthProviderLogin = async (provider: keyof typeof providerMap) => {
+    if (isAuthorizingViaProviderRef.current) return;
+    isAuthorizingViaProviderRef.current = true;
+
     const ProviderClass = providerMap[provider];
     const authProvider = new ProviderClass();
 
@@ -188,10 +195,17 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
       console.error(error);
       handleError(error);
     }
+
+    isAuthorizingViaProviderRef.current = false;
   };
 
   /** Handle user request to reset password */
+  const isRequestingPasswordResetRef = useRef<boolean>(false);
+
   const handlePasswordReset = async (emailInputElement: HTMLInputElement) => {
+    if (isRequestingPasswordResetRef.current) return;
+    isRequestingPasswordResetRef.current = true;
+
     const emailAddress = emailInputElement.value;
 
     if (!emailAddress) {
@@ -205,14 +219,22 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
     } catch (error) {
       handleError(error);
     }
+
+    isRequestingPasswordResetRef.current = false;
   };
 
   /** Animates fieldsets on form state change */
+  const isActiveFormChangingRef = useRef<boolean>(false);
+
   const onActiveFormChange = () => {
+    if (isActiveFormChangingRef.current) return;
+    isActiveFormChangingRef.current = true;
+
     fieldsetRef.current?.setAttribute('data-animate', 'unmount');
     setTimeout(() => {
       setActiveForm((f) => (f === 'registration' ? 'login' : 'registration'));
       requestAnimationFrame(() => fieldsetRef.current?.setAttribute('data-animate', 'mount'));
+      isActiveFormChangingRef.current = false;
     }, 600);
   };
 
