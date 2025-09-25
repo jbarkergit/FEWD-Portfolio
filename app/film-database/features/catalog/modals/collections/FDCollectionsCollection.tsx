@@ -6,7 +6,6 @@ import GenericCarouselNavigation from '~/film-database/components/carousel/Gener
 import { useUserCollection, type UserCollection } from '~/film-database/context/UserCollectionContext';
 import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
 
-// Magic constant
 const NOT_FOUND_INDEX = -1 as const;
 
 export type Sensor = {
@@ -100,93 +99,126 @@ const FDCollectionsCollection = memo(
     const { userCollections, setUserCollections } = useUserCollection();
     const { setModalTrailer } = useModalTrailer();
 
-    // Sensors
+    // Stores
     const sensorRef = useRef<Sensor>(createSensorDefault()); // Sensor
     const sourceRef = useRef<Source>(createSourceDefault()); // Source
     const targetRef = useRef<Target>(createTargetDefault()); // Target
 
-    /** Rolls sensors back to default state */
-    const resetSensors = useCallback((): void => {
+    /** Rolls stores back to default state */
+    const resetStores = useCallback((): void => {
       sensorRef.current = createSensorDefault();
       sourceRef.current = createSourceDefault();
       targetRef.current = createTargetDefault();
     }, []);
 
-    /** Rolls event listeners back to original mount state */
-    function resetEventListeners(): void {
+    /** Prepare dom for new potential interactions */
+    function resetInteraction(error?: { event: 'down' | 'move' | 'up' | 'attach' | 'detach'; reason: string }): void {
       // Remove target's inline styles and event listeners
       if (sourceRef.current.listItem instanceof HTMLLIElement) {
-        if (sourceRef.current.listItem.hasAttribute('style')) sourceRef.current.listItem.removeAttribute('style');
+        if (sourceRef.current.listItem.hasAttribute('style')) {
+          sourceRef.current.listItem.removeAttribute('style');
+        }
         sourceRef.current.listItem.removeEventListener('pointermove', attachListItem);
       }
 
-      // Re-add event listeners to ulRef
-      if (ulRefs.current[mapIndex]) {
-        ulRefs.current[mapIndex].addEventListener('pointermove', pointerMove);
-        ulRefs.current[mapIndex].addEventListener('pointerup', pointerUp);
-      }
-    }
+      // Re-attach (remove first to guarantee single registration)
+      const ul = ulRefs.current[mapIndex];
 
-    /** Invokes resetSensors and resetEventListeners to prepare dom for new potential interactions */
-    function resetInteraction(error?: { event: 'down' | 'move' | 'up' | 'attach' | 'detach'; reason: string }): void {
-      resetEventListeners();
-      resetSensors();
+      if (ul) {
+        ul.removeEventListener('pointermove', pointerMove);
+        ul.removeEventListener('pointerup', pointerUp);
+
+        ul.addEventListener('pointermove', pointerMove);
+        ul.addEventListener('pointerup', pointerUp);
+      }
+
+      // Rollback sensors
+      resetStores();
+
+      // Log errors
       if (error) console.error(`Event ${error.event.toLocaleUpperCase()} failed. ${error.reason}`);
     }
 
     /** Sets interactivity in motion by toggling a flag and assigning dependency values */
     function pointerDown(event: PointerEvent): void {
+      resetStores();
+
       const currentTarget: EventTarget | null = event.currentTarget;
       const target: EventTarget | null = event.target;
 
       if (currentTarget instanceof HTMLUListElement && target instanceof HTMLLIElement) {
-        sensorRef.current.isInteract = true;
-        sensorRef.current.initialPointerCoords = { x: event.clientX, y: event.clientY };
-        sensorRef.current.pointerCoords = { x: event.clientX, y: event.clientY };
+        event.preventDefault();
+        event.stopPropagation();
 
-        sourceRef.current.colIndex = ulRefs.current.findIndex((collection) => collection === currentTarget);
-        sourceRef.current.listItem = target as HTMLLIElement;
+        // Find collection (UL) index
+        const colIndex = ulRefs.current.findIndex((collection) => collection === currentTarget);
 
-        const srcColUl = ulRefs.current[sourceRef.current.colIndex];
-
-        if (sourceRef.current.colIndex == NOT_FOUND_INDEX || !srcColUl) {
+        if (colIndex === NOT_FOUND_INDEX) {
           resetInteraction({ event: 'down', reason: 'Source collection index not found.' });
           return;
         }
 
-        const liElements = Array.from(srcColUl.children) as Array<HTMLLIElement | HTMLDivElement>;
-        const targetIndex: number = liElements.findIndex((li) => li === target);
-        sourceRef.current.listItemIndex = targetIndex;
+        // Identify UL
+        const srcColUl = ulRefs.current[colIndex];
 
-        if (sourceRef.current.listItemIndex == NOT_FOUND_INDEX) {
+        if (!srcColUl) {
+          resetInteraction({ event: 'down', reason: 'Source UL not found.' });
+          return;
+        }
+
+        // Find index of LI within the collection (UL)
+        const liElements = Array.from(srcColUl.children) as Array<HTMLLIElement | HTMLDivElement>;
+        const targetIndex = liElements.findIndex((li) => li === target);
+
+        if (targetIndex === NOT_FOUND_INDEX) {
           resetInteraction({ event: 'down', reason: 'Source list item index not found.' });
           return;
         }
+
+        // Assignment
+        sourceRef.current = {
+          colIndex,
+          listItem: target,
+          listItemIndex: targetIndex,
+        };
+
+        sensorRef.current = {
+          ...sensorRef.current,
+          isInteract: true,
+          initialPointerCoords: { x: event.clientX, y: event.clientY },
+          pointerCoords: { x: event.clientX, y: event.clientY },
+        };
       }
     }
 
     /** Attaches active list item to cursor */
     function attachListItem(event: PointerEvent): void {
-      const x: number | null = sensorRef.current.pointerCoords.x;
-      const y: number | null = sensorRef.current.pointerCoords.y;
+      const { x, y } = sensorRef.current.pointerCoords;
+      const li = sourceRef.current.listItem;
 
-      if (sourceRef.current.listItem instanceof HTMLLIElement && x !== null && y !== null) {
-        const rect: DOMRect = sourceRef.current.listItem.getBoundingClientRect();
-        const offsetX: number = x - rect.width / 2;
-        const offsetY: number = y - rect.height / 2;
+      if (!li || x === null || y === null) return;
 
-        sourceRef.current.listItem.style.cssText = `position: fixed; z-index: 2; left: ${offsetX}px; top: ${offsetY}px;`;
-        sensorRef.current.pointerCoords = { x: event.clientX, y: event.clientY };
-      }
+      const rect: DOMRect = li.getBoundingClientRect();
+      const offsetX: number = x - rect.width / 2; // event.clientX
+      const offsetY: number = y - rect.height / 2; // event.clientY
+
+      li.style.cssText = `position: fixed; z-index: 2; left: ${offsetX}px; top: ${offsetY}px;`;
+      sensorRef.current.pointerCoords = { x: event.clientX, y: event.clientY };
     }
 
     /** Detaches active list item from cursor, handles transfer of list item inbetween collections */
     function detachListItem(event: PointerEvent): void {
-      const { x, y } = sensorRef.current.initialPointerCoords; // Attachment position
+      const { x: startX, y: startY } = sensorRef.current.initialPointerCoords; // Attachment position
       const detach: Record<'x' | 'y', number> = { x: event.clientX, y: event.clientY }; // Detachment position
 
-      // Handle misclicks
-      if (detach.x === x && detach.y === y) {
+      const li = sourceRef.current.listItem;
+      if (!li) return;
+
+      const sourceColIndex = sourceRef.current.colIndex;
+      const sourceListIndex = sourceRef.current.listItemIndex;
+
+      // Misclick threshold (Euclidean distance)
+      if (Math.hypot(detach.x - (startX ?? 0), detach.y - (startY ?? 0)) < 2) {
         resetInteraction();
         return;
       }
@@ -204,6 +236,7 @@ const FDCollectionsCollection = memo(
 
       // Get target collection's list item rects
       const targetCol = ulRefs.current[targetCollectionIndex];
+
       if (!targetCol) {
         resetInteraction({
           event: 'detach',
@@ -219,6 +252,7 @@ const FDCollectionsCollection = memo(
 
       // Find the closest item index to the detach point
       const targetListIndex: number = findEuclidean(detach, targetColRects);
+
       if (targetListIndex == NOT_FOUND_INDEX) {
         resetInteraction({ event: 'detach', reason: 'Failure to identify euclidean.' });
         return;
@@ -227,8 +261,6 @@ const FDCollectionsCollection = memo(
       targetRef.current.listItemIndex = targetListIndex;
 
       // Capture source information prior to state sets to avoid mutable ref issues
-      const sourceColIndex = sourceRef.current.colIndex;
-      const sourceListIndex = sourceRef.current.listItemIndex;
       const sourceKey = Object.keys(userCollections)[sourceColIndex];
       const targetKey = Object.keys(userCollections)[targetCollectionIndex];
 
@@ -293,36 +325,40 @@ const FDCollectionsCollection = memo(
         };
       });
 
-      setTimeout(() => resetInteraction(), 0);
+      resetInteraction();
     }
 
     /** Tracks collections and their items */
     function pointerMove(): void {
       if (
-        isEditMode &&
-        sensorRef.current.isInteract &&
-        !sensorRef.current.isActiveElement &&
-        sourceRef.current.listItem instanceof HTMLLIElement &&
-        ulRefs.current[mapIndex]
+        !isEditMode ||
+        !sensorRef.current.isInteract ||
+        sensorRef.current.isActiveElement ||
+        !(sourceRef.current.listItem instanceof HTMLLIElement)
       ) {
-        ulRefs.current[mapIndex].removeEventListener('pointermove', pointerMove);
-        ulRefs.current[mapIndex].removeEventListener('pointerup', pointerUp);
-
-        sensorRef.current.isActiveElement = true;
-
-        ulRefs.current[mapIndex].addEventListener('pointerup', detachListItem);
-        sourceRef.current.listItem.addEventListener('pointermove', attachListItem);
-      } else {
         resetInteraction();
         return;
       }
+
+      sensorRef.current.isActiveElement = true;
+
+      const ul = ulRefs.current[mapIndex];
+      if (!ul) return;
+
+      ul.removeEventListener('pointermove', pointerMove);
+      ul.removeEventListener('pointerup', pointerUp);
+
+      ul.addEventListener('pointerup', detachListItem);
+
+      const li = sourceRef.current.listItem;
+      li.removeEventListener('pointermove', attachListItem);
+      li.addEventListener('pointermove', attachListItem);
     }
 
     /** Sets modal trailer */
     function handleModalTrailer(): void {
-      const listItems: Element[] | null = ulRefs.current[mapIndex]
-        ? Array.from(ulRefs.current[mapIndex].children)
-        : null;
+      const ul = ulRefs.current[mapIndex];
+      const listItems: Element[] | null = ul ? Array.from(ul.children) : null;
 
       if (!listItems) {
         resetInteraction({ event: 'up', reason: 'Failure to identify list items.' });
@@ -344,7 +380,7 @@ const FDCollectionsCollection = memo(
       const targetData = collectionData?.[elementIndex];
       if (targetData) setModalTrailer(targetData);
 
-      setTimeout(() => resetInteraction(), 0);
+      resetInteraction();
     }
 
     /** Scales all list items and applies filters to their images then invokes resetInteraction */
