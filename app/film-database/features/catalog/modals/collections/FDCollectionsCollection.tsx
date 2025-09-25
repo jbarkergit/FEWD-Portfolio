@@ -344,6 +344,7 @@ const FDCollectionsCollection = memo(
           listItemIndex: targetIndex,
         };
 
+        // isEditMode assignment
         sensorRef.current = {
           ...sensorRef.current,
           isInteract: true,
@@ -371,14 +372,21 @@ const FDCollectionsCollection = memo(
 
     /** Handles module's event listeners */
     useEffect(() => {
-      ulRefs.current[mapIndex]?.addEventListener('pointerdown', pointerDown);
-      ulRefs.current[mapIndex]?.addEventListener('pointermove', pointerMove);
-      ulRefs.current[mapIndex]?.addEventListener('pointerup', pointerUp);
+      const ul = ulRefs.current[mapIndex];
+      if (!ul) return;
+
+      ul.addEventListener('pointerdown', pointerDown);
+      if (isEditMode) {
+        ul.addEventListener('pointermove', pointerMove);
+      }
+      ul.addEventListener('pointerup', pointerUp);
 
       return () => {
-        ulRefs.current[mapIndex]?.removeEventListener('pointerdown', pointerDown);
-        ulRefs.current[mapIndex]?.removeEventListener('pointermove', pointerMove);
-        ulRefs.current[mapIndex]?.removeEventListener('pointerup', pointerUp);
+        ul.removeEventListener('pointerdown', pointerDown);
+        if (isEditMode) {
+          ul.removeEventListener('pointermove', pointerMove);
+        }
+        ul.removeEventListener('pointerup', pointerUp);
       };
     }, [isEditMode, userCollections]);
 
