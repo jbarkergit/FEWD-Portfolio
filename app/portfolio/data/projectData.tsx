@@ -136,30 +136,28 @@ export const projectData = [
       <>
         <h2>An Application Hub with Seamless Transitions</h2>
         <p>
-          This portfolio was designed to serve as an intuitive environment for skill assessment, housing multiple
-          applications under one domain to enhance the user experience. While working with React Router v6, I
-          encountered challenges related to routing complexities and optimizing Web Core Vitals such as Largest
-          Contentful Paint (LCP) and Time to Interactive (TTI).
+          This portfolio was designed as an intuitive environment for skill demonstration, hosting multiple applications
+          under one domain to improve the user experience. While working with React Router v6, I faced challenges with
+          routing complexity and optimizing Web Core Vitals such as Largest Contentful Paint (LCP) and Time to
+          Interactive (TTI).
         </p>
         <p>
           Initially, I focused on lazy-loading project landing pages and improving performance metrics. Using the
-          Network Developer Tool, I analyzed file sizes and transfer times, dynamically generating routes and managing
-          them in the state to create a module loading queue. However, I faced issues with the 404 error handler loading
-          prematurely, which required a workaround involving network observers and prop drilling to pass error states to
-          the Suspense loader.
+          Network Developer Tool, I analyzed file sizes and transfer times, dynamically generating routes and managing a
+          module loading queue in state. A key issue was the 404 error handler loading prematurely, which required a
+          workaround using network observers and prop drilling to propagate error states to the Suspense loader.
         </p>
         <p>
-          After experimenting with custom solutions, I realized the need for a more scalable and flexible approach. I
-          decided to implement a simpler, manually routed system with dynamic imports. This change significantly reduced
-          complexity, improved performance, and provided a more maintainable structure. The focus was on optimizing both
-          routing and the overall user experience, resulting in a smoother and more efficient application hub.
+          After experimenting with custom solutions, I implemented a simpler, manually routed system with dynamic
+          imports. This reduced complexity, improved performance, and created a more maintainable structure. The focus
+          remained on optimizing routing and overall user experience, resulting in a smoother and more efficient
+          application hub.
         </p>
         <p>
-          Upon the release of React Router V7, the application no longer required a manual routing solution. I
-          thoroughly reviewed the new documentation, scaffolded a new Vite project with React and React Router V7, and
-          successfully migrated my application to the latest version. This migration significantly improved performance
-          metrics, reduced the boilerplate code associated with manual routing, and enabled efficient prerendering,
-          ultimately enhancing the application's overall performance and maintainability.
+          With the release of React Router V7, the manual routing system became unnecessary. I reviewed the new
+          documentation, scaffolded a reference Vite project with React and React Router V7, and successfully migrated
+          the application. This migration improved performance metrics, reduced boilerplate, and enabled efficient
+          prerendering, enhancing the application's maintainability and responsiveness.
         </p>
       </>
     ),
