@@ -16,6 +16,13 @@ export const projectData = [
       <>
         <h2>Film Database</h2>
         <p>
+          <strong>TL;DR:</strong> Movie trailer platform built from scratch with a type-safe TMDB API wrapper, caching,
+          batch requests, and autocompletion. Custom YouTube iFrame solution, native JavaScript drag-and-drop
+          collections, safe search queries, responsive carousels, polished animations, Firebase Authentication,
+          Firestore storage, SCSS animation sequencing. Explored advanced TypeScript patterns and unit testing.
+        </p>
+
+        <p>
           This self-initiated movie database website was built from scratch using Vite, React, TypeScript, and styled
           with SASS. It integrates TheMovieDatabase (TMDB) API for movie data, React-YouTube for embedded video
           playback, and Firebase for authentication and full CRUD operations. Form validation is handled with Zod.
@@ -78,16 +85,19 @@ export const projectData = [
     key: 'ecommerce',
     url: 'ecommerce',
     technologies: {
-      application_programming_interface: ['N/A - Custom JSON Store'],
-      ui_component_libraries: ['N/A'],
-      software_development_kits: ['N/A'],
-      utilities_and_services: ['N/A'],
+      application_programming_interface: ['Custom JSON Store'],
       tools_and_libraries: ['vite', 'react', 'react-router', 'typescript', 'sass'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
     },
     insights: (
       <>
         <h2>Neumorphic eCommerce Audio Shop</h2>
+        <p>
+          <strong>TL;DR:</strong> First-from-scratch eCommerce site with dynamic routing, a custom database with
+          Photoshop-optimized batch exports for three device breakpoints, basic commerce functionality, and an
+          experimental neumorphic UI featuring skeleton loaders.
+        </p>
+
         <p>
           This audio shop was built with maintainability and scalability in mind. Site-wide conditions were defined
           before building components, requiring a flexible database structure and consideration of routing, data
@@ -126,8 +136,6 @@ export const projectData = [
     key: '2024 portfolio',
     url: '',
     technologies: {
-      application_programming_interface: ['N/A'],
-      software_development_kits: ['N/A'],
       utilities_and_services: ['Zod', 'Web3Forms'],
       tools_and_libraries: ['vite', 'react', 'react-router', 'typescript', 'sass'],
       code_quality: ['prettier', 'eslint', 'eslint-config-airbnb'],
@@ -135,6 +143,12 @@ export const projectData = [
     insights: (
       <>
         <h2>An Application Hub with Seamless Transitions</h2>
+        <p>
+          <strong>TL;DR:</strong> Portfolio hub with dynamic routing, lazy-loading, and Vite-powered performance
+          optimization. Migrated from React Router v6 to v7, replacing a custom import queue utility to simplify code
+          and improve responsiveness.
+        </p>
+
         <p>
           This portfolio was designed as an intuitive environment for skill demonstration, hosting multiple applications
           under one domain to improve the user experience. While working with React Router v6, I faced challenges with
