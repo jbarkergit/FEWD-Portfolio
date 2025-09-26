@@ -1,5 +1,4 @@
-import type { CartProductType } from '../../context/CartContext';
-import { useCart } from '../../hooks/useCart';
+import { useCart, type CartProductType } from '../../context/CartContext';
 import { commerceDatabase } from '~/ecommerce/data/commerceDatabase';
 
 const CartProducts = () => {

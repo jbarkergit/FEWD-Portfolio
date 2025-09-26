@@ -1,4 +1,4 @@
-import { createContext, useMemo, useReducer } from 'react';
+import { createContext, useContext, useMemo, useReducer } from 'react';
 import type { ReactElement, ReactNode } from 'react';
 import { commerceDatabase } from '../data/commerceDatabase';
 
@@ -105,7 +105,8 @@ const cartReducer = (state: CartStateType, action: CartReducerAction): CartState
       const { sku } = action.payload; //grab necessary data from CartProductType to send to our shopping cart
       const cartProductIndex: number = state.shoppingCart.findIndex((product) => product.sku === sku);
 
-      if (state.shoppingCart[cartProductIndex].quantity <= 1) {
+      const product = state.shoppingCart[cartProductIndex];
+      if (product && product.quantity <= 1) {
         return { ...state, shoppingCart: state.shoppingCart.filter((product) => product.sku !== sku) }; //removes product sku from cart if quantity <=1
       } else
         return {
@@ -148,8 +149,8 @@ const useCartContext = (initCartState: CartStateType) => {
   return { dispatch, REDUCER_ACTIONS, cartProductQuantity, cartProductSubtotal, shoppingCart };
 };
 
-//export type for UseCartContext
-export type UseCartContextType = ReturnType<typeof useCartContext>;
+//type for UseCartContext
+type UseCartContextType = ReturnType<typeof useCartContext>;
 
 //define initial values for UseCartContext
 const initCartContextState: UseCartContextType = {
@@ -161,9 +162,15 @@ const initCartContextState: UseCartContextType = {
 };
 
 //create CartContext
-export const CartContext = createContext<UseCartContextType>(initCartContextState);
+const CartContext = createContext<UseCartContextType>(initCartContextState);
 
 //export CartContext Provider to pass required Shopping Cart data throughout application
 export const CartProvider = ({ children }: { children?: ReactNode }): ReactElement => {
   return <CartContext.Provider value={useCartContext(initCartState)}>{children}</CartContext.Provider>;
+};
+
+export const useCart = (): UseCartContextType => {
+  const context = useContext(CartContext);
+  if (!context) throw new Error('A provider is required to consume CartContext.');
+  return context;
 };
