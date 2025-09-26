@@ -90,7 +90,8 @@
     padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x s.$box-model-viewport-x s.$box-model-viewport-x;
   }
   @media (width <= 460px) {
-    padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x calc(s.$box-model-viewport-x * 2) s.$box-model-viewport-x;
+    padding: calc(s.$box-model-viewport-x / 2) s.$box-model-viewport-x calc(s.$box-model-viewport-x * 2)
+      s.$box-model-viewport-x;
   }
 
   &__technology {
@@ -163,6 +164,12 @@
       }
       @media (width <= 620px) {
         font-size: clamp(f.rem(20), f.rem(22) + 1vw, f.rem(28));
+      }
+    }
+    & p:nth-of-type(1) ul {
+      padding: 0 0 2ch 2ch;
+      & li {
+        list-style: disc;
       }
     }
     & p {

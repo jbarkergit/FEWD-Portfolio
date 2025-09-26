@@ -16,10 +16,18 @@ export const projectData = [
       <>
         <h2>Film Database</h2>
         <p>
-          <strong>TL;DR:</strong> Movie trailer platform built from scratch with a type-safe TMDB API wrapper, caching,
-          batch requests, and autocompletion. Custom YouTube iFrame solution, native JavaScript drag-and-drop
-          collections, safe search queries, responsive carousels, polished animations, Firebase Authentication,
-          Firestore storage, SCSS animation sequencing. Explored advanced TypeScript patterns and unit testing.
+          <strong>TL;DR:</strong>
+          <ul>
+            <li>Built movie trailer platform from scratch</li>
+            <li>Type-safe TMDB API wrapper with caching, batch requests, and autocompletion</li>
+            <li>Custom YouTube iFrame solution</li>
+            <li>Native JavaScript drag-and-drop collections</li>
+            <li>Safe search queries</li>
+            <li>Responsive carousels</li>
+            <li>Polished animations with SCSS sequencing</li>
+            <li>Firebase Authentication & Firestore storage</li>
+            <li>Explored advanced TypeScript patterns and unit testing</li>
+          </ul>
         </p>
 
         <p>
@@ -93,9 +101,14 @@ export const projectData = [
       <>
         <h2>Neumorphic eCommerce Audio Shop</h2>
         <p>
-          <strong>TL;DR:</strong> First-from-scratch eCommerce site with dynamic routing, a custom database with
-          Photoshop-optimized batch exports for three device breakpoints, basic commerce functionality, and an
-          experimental neumorphic UI featuring skeleton loaders.
+          <strong>TL;DR:</strong>
+          <ul>
+            <li>First-from-scratch eCommerce site</li>
+            <li>Dynamic routing with custom database</li>
+            <li>Photoshop-optimized batch exports for three device breakpoints</li>
+            <li>Basic commerce functionality</li>
+            <li>Experimental neumorphic UI with skeleton loaders</li>
+          </ul>
         </p>
 
         <p>
@@ -144,9 +157,16 @@ export const projectData = [
       <>
         <h2>An Application Hub with Seamless Transitions</h2>
         <p>
-          <strong>TL;DR:</strong> Portfolio hub with dynamic routing, lazy-loading, and Vite-powered performance
-          optimization. Migrated from React Router v6 to v7, replacing a custom import queue utility to simplify code
-          and improve responsiveness.
+          <strong>TL;DR:</strong>
+          <ul>
+            <li>Portfolio hub consolidating multiple applications</li>
+            <li>Dynamic routing and lazy-loading</li>
+            <li>Vite-powered performance optimization</li>
+            <li>
+              Migrated to React Router v7, eliminating the custom import queue and improving maintainability and
+              responsiveness
+            </li>
+          </ul>
         </p>
 
         <p>
