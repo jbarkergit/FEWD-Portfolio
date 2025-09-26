@@ -87,42 +87,35 @@ export const projectData = [
     },
     insights: (
       <>
-        <h2>A Dynamic eCommerce Application with Monochromatic and Neumorphic Styling</h2>
+        <h2>Neumorphic eCommerce Audio Shop</h2>
         <p>
-          This audio shop was built with a focus on maintainability and performance. To streamline potential
-          complexities, site-wide conditions were defined before building components. This introduced the challenge of
-          acquiring a database with diverse key-value pairs. Issues such as routing, data persistence, and component
-          re-renders arose, highlighting that the real challenge of this project was idealizing solutions before writing
-          any code.
+          This audio shop was built with maintainability and scalability in mind. Site-wide conditions were defined
+          before building components, requiring a flexible database structure and consideration of routing, data
+          persistence, and component re-renders—challenges that revealed the limits of my early frontend foundation and
+          informed better practices in later projects.
         </p>
         <p>
-          Instead of using an API, I opted to partially scrape images and data, which involved image touch-ups, aspect
-          ratio matching, and large batch exports to meet Web Core Vitals for three device breakpoints. Initially, the
-          database was written in TSX format but was later converted to JSON post-completion—a clear example of why
-          planning ahead is essential. This was eventually reformatted once more during React Router V7 migration. I
-          built custom hooks to filter and return alphabetized, unique data from the database; enabling dynamic route
-          mapping, product search functionality, filters, and categories—effectively resolving most pending issues.
+          To make the project feel more personal, I opted out of API usage. Instead, I partially scraped images and
+          data, optimizing them in Photoshop to meet Web Core Vitals across three device breakpoints. The database was
+          initially written in TSX, converted to JSON, and later restructured during React Router V7 migration to
+          support dynamic pathing as the application scaled. A simple database utility filters and returns unique,
+          alphabetized data, enabling dynamic routing, product search, and basic commerce features.
         </p>
         <p>
-          The app utilizes reusable, type-safe functional components, incorporating best practices like lazy loading and
-          the Intersection Observer API to reduce bloat and optimize performance. React's performance hooks, constructor
-          patterns, BEM methodology, and DRY principles helped streamline refactoring, though SEO and WAI-ARIA
-          compliance posed a bigger challenge. Managing side effects, event propagation, and resolving conflicts between
-          conditional rendering and animations required the most effort.
+          Components were designed to be reusable, type-safe, and performant. Lazy loading and Intersection Observer
+          managed expanding lists efficiently, while careful handling of state, side effects, and conditional animations
+          ensured smooth interactions.
         </p>
         <p>
-          Conceptualizing the UX and UI was a major focus. By blending various style structures from miscellaneous
-          domains, I aimed for an experimental and playful design with subtle interactive elements throughout the
-          application. I also accounted for edge cases in image and data mappings. However, the neumorphic styling, not
-          ideal for production environments, may not display correctly if monitors aren’t calibrated.
+          The UI blends experimental monochromatic and neumorphic styles with subtle interactive elements and loading
+          skeletons. Styling may render differently across monitors depending on color calibration, which was an
+          intentional design tradeoff.
         </p>
         <p>
-          To simulate the core functionality of an eCommerce site, I implemented user registration and authentication
-          using localStorage, solely for practice, with Regular Expressions for field validation. The final step was
-          adding shopping cart functionality, which provided the highly sought-after honor and absolute pleasure of
-          writing useReducer boilerplate. Firebase and Stripe integration was omitted. This project remains imperfect
-          and will only be maintained to properly render as it was my first from scratch full-fledged site, so you can
-          imagine it would require a lot of love to be production worthy.
+          Core functionality, including authentication and shopping cart storage, was implemented using native
+          JavaScript and localStorage rather than full solutions like Firebase or Stripe. This first-from-scratch
+          application demonstrates architectural and design decisions for a maintainable eCommerce site. It is not
+          production-ready, but reflects growth, experimentation, and practical problem-solving in frontend development.
         </p>
       </>
     ),
