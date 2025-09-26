@@ -1,6 +1,6 @@
 import type { CartProductType } from '../../context/CartContext';
 import { useCart } from '../../hooks/useCart';
-import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
+import { commerceDatabase } from '~/ecommerce/data/commerceDatabase';
 
 const CartProducts = () => {
   const { dispatch, REDUCER_ACTIONS, shoppingCart } = useCart();
@@ -8,7 +8,7 @@ const CartProducts = () => {
   return shoppingCart.map((product: CartProductType) => {
     const shoppingCartProductSku: string = product.sku;
     const shoppingCartProductQuantity: number = product.quantity;
-    const databaseProductStock: number | undefined = ecommerceProducts.find(
+    const databaseProductStock: number | undefined = commerceDatabase.find(
       (product) => product.sku === shoppingCartProductSku
     )?.stock;
     const maximumStockMet = shoppingCartProductQuantity === databaseProductStock;

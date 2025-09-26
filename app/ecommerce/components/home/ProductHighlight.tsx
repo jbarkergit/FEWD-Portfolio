@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import type { ProductType } from '../../context/CartContext';
-import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
+import { commerceDatabase } from '~/ecommerce/data/commerceDatabase';
 
 const ProductHighlight = () => {
   //Play video on user pointer hover
@@ -23,27 +23,47 @@ const ProductHighlight = () => {
         </span>
       </h2>
       <ul>
-        {ecommerceProducts
+        {commerceDatabase
           .filter((product: ProductType) => product.productshowcase === true)
           .map((product: ProductType) => (
             <li key={`product-highlight-${product.sku}`}>
-              <Link to={`/ecommerce/products/${product.sku}`} tabIndex={0}>
+              <Link
+                to={`/ecommerce/products/${product.sku}`}
+                tabIndex={0}>
                 <article>
                   <picture
                     onPointerOver={(e: React.PointerEvent<HTMLPictureElement>) => playPauseVideo(e, true)}
                     onPointerLeave={(e: React.PointerEvent<HTMLPictureElement>) => playPauseVideo(e, false)}>
-                    <img src={product.images!.medium[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchPriority='low' />
+                    <img
+                      src={product.images!.medium[0]}
+                      alt={`${product.company} ${product.unit}`}
+                      loading='lazy'
+                      decoding='async'
+                      fetchPriority='low'
+                    />
                   </picture>
                   <aside>
-                    <video preload='none' playsInline loop muted aria-label='Video of joyful people wearing headphones listening to music' tabIndex={-1}>
-                      <source src='/app/ecommerce/assets/production-videos/stock-footage-splice-374x467.webm' type='video/webm' />
+                    <video
+                      preload='none'
+                      playsInline
+                      loop
+                      muted
+                      aria-label='Video of joyful people wearing headphones listening to music'
+                      tabIndex={-1}>
+                      <source
+                        src='/app/ecommerce/assets/production-videos/stock-footage-splice-374x467.webm'
+                        type='video/webm'
+                      />
                     </video>
                   </aside>
                   <hgroup className='productHighlightInfo'>
                     <h2>
                       {product.company} {product.unit}
                     </h2>
-                    <h3>Starting at {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h3>
+                    <h3>
+                      Starting at{' '}
+                      {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}
+                    </h3>
                   </hgroup>
                 </article>
               </Link>

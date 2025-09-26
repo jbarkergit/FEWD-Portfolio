@@ -1,8 +1,8 @@
 import { Link } from 'react-router';
-import { useUniqueData } from '../../../hooks/useUniqueData';
+import { commerceData } from '~/ecommerce/data/commerceData';
 
 const EcoNavigationLinks = () => {
-  const categories: string[] = useUniqueData.useUniqueCategories();
+  const categories: string[] = commerceData.categories;
 
   return (
     <>

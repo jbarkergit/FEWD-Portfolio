@@ -1,6 +1,6 @@
 import { createContext, useMemo, useReducer } from 'react';
 import type { ReactElement, ReactNode } from 'react';
-import { ecommerceProducts } from '../data/ecommerceProducts';
+import { commerceDatabase } from '../data/commerceDatabase';
 
 // Product type
 export type ProductType = {
@@ -86,14 +86,16 @@ const cartReducer = (state: CartStateType, action: CartReducerAction): CartState
       if (!action.payload) throw new Error('Action Payload may be void or undefined for Reducer Action Type ADD');
       const { quantity, sku, company, unit, price, images } = action.payload; //grab necessary data from CartProductType to send to our shopping cart
       const productExists: CartProductType | undefined = state.shoppingCart.find((product) => product.sku === sku); //identifies products in cart to update (if in cart)
-      const databaseProductStock: number | undefined = ecommerceProducts.find((product) => product.sku === sku)?.stock; //checks for product stock in database
+      const databaseProductStock: number | undefined = commerceDatabase.find((product) => product.sku === sku)?.stock; //checks for product stock in database
 
       if (productExists === undefined && databaseProductStock && databaseProductStock > 0) {
         const newItem = { quantity, sku, company, unit, price, images }; //destructure action.payload into new variable
         const updatedCart = [...state.shoppingCart, newItem]; //if product is not in cart, create new array, push new product
         return { ...state, shoppingCart: updatedCart }; //update shoppingCart with new array of products
       } else if (productExists && databaseProductStock && productExists.quantity < databaseProductStock) {
-        const updatedCart = state.shoppingCart.map((product) => (product.sku === sku ? { ...product, quantity: product.quantity + 1 } : product)); //if product is in cart
+        const updatedCart = state.shoppingCart.map((product) =>
+          product.sku === sku ? { ...product, quantity: product.quantity + 1 } : product
+        ); //if product is in cart
         return { ...state, shoppingCart: updatedCart }; //update quantity
       } else return state;
     }
@@ -106,7 +108,12 @@ const cartReducer = (state: CartStateType, action: CartReducerAction): CartState
       if (state.shoppingCart[cartProductIndex].quantity <= 1) {
         return { ...state, shoppingCart: state.shoppingCart.filter((product) => product.sku !== sku) }; //removes product sku from cart if quantity <=1
       } else
-        return { ...state, shoppingCart: state.shoppingCart.map((product) => (product.sku === sku ? { ...product, quantity: product.quantity - 1 } : product)) }; //decrement
+        return {
+          ...state,
+          shoppingCart: state.shoppingCart.map((product) =>
+            product.sku === sku ? { ...product, quantity: product.quantity - 1 } : product
+          ),
+        }; //decrement
     }
     case CART_REDUCER_ACTION_TYPE.SUBMIT: {
       localStorage.setItem('shoppingCartState', '');

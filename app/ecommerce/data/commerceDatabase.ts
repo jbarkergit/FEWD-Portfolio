@@ -1,4 +1,4 @@
-export const ecommerceProducts = [
+export const commerceDatabase = [
   {
     sku: 'Avid-MBOX-Studio',
     stock: 2,
@@ -557,9 +557,15 @@ export const ecommerceProducts = [
     category: 'headphones',
     wearStyle: 'closed-back',
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Beyerdynamic/headphone/DT 770 PRO/beyerdynamic-dt-770-pro-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Beyerdynamic/headphone/DT 770 PRO/beyerdynamic-dt-770-pro-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Beyerdynamic/headphone/DT 770 PRO/beyerdynamic-dt-770-pro-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Beyerdynamic/headphone/DT 770 PRO/beyerdynamic-dt-770-pro-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Beyerdynamic/headphone/DT 770 PRO/beyerdynamic-dt-770-pro-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Beyerdynamic/headphone/DT 770 PRO/beyerdynamic-dt-770-pro-1.jpg',
+      ],
     },
   },
   {
@@ -735,9 +741,15 @@ export const ecommerceProducts = [
     productshowcase: false,
     category: 'interfaces',
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Audient/interface/iD4/audient-id4-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-660x660/Audient/interface/iD4/audient-id4-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-1000x1000/Audient/interface/iD4/audient-id4-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Audient/interface/iD4/audient-id4-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-660x660/Audient/interface/iD4/audient-id4-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-1000x1000/Audient/interface/iD4/audient-id4-1.jpg',
+      ],
     },
   },
   {
@@ -750,9 +762,15 @@ export const ecommerceProducts = [
     productshowcase: false,
     category: 'interfaces',
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Audient/interface/iD14/audient-id14-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-660x660/Audient/interface/iD14/audient-id14-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-1000x1000/Audient/interface/iD14/audient-id14-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Audient/interface/iD14/audient-id14-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-660x660/Audient/interface/iD14/audient-id14-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-1000x1000/Audient/interface/iD14/audient-id14-1.jpg',
+      ],
     },
   },
   {
@@ -765,9 +783,15 @@ export const ecommerceProducts = [
     productshowcase: false,
     category: 'interfaces',
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Audient/interface/iD22/audient-id22-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-660x660/Audient/interface/iD22/audient-id22-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-1000x1000/Audient/interface/iD22/audient-id22-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Audient/interface/iD22/audient-id22-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-660x660/Audient/interface/iD22/audient-id22-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-1000x1000/Audient/interface/iD22/audient-id22-1.jpg',
+      ],
     },
   },
   {
@@ -780,9 +804,15 @@ export const ecommerceProducts = [
     productshowcase: true,
     category: 'interfaces',
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Audient/interface/iD24/audient-id24-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-660x660/Audient/interface/iD24/audient-id24-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-1000x1000/Audient/interface/iD24/audient-id24-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Audient/interface/iD24/audient-id24-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-660x660/Audient/interface/iD24/audient-id24-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-1000x1000/Audient/interface/iD24/audient-id24-1.jpg',
+      ],
     },
   },
   {
@@ -795,9 +825,15 @@ export const ecommerceProducts = [
     productshowcase: false,
     category: 'interfaces',
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Audient/interface/iD44/audient-id44-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-660x660/Audient/interface/iD44/audient-id44-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-1000x1000/Audient/interface/iD44/audient-id44-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Audient/interface/iD44/audient-id44-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-660x660/Audient/interface/iD44/audient-id44-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-1000x1000/Audient/interface/iD44/audient-id44-1.jpg',
+      ],
     },
   },
   {
@@ -1167,9 +1203,15 @@ export const ecommerceProducts = [
     category: 'microphones',
     polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Neumann/TLM 107 BK Studio Set/neumann-tlm-107-bk-studio-set-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-660x660/Neumann/TLM 107 BK Studio Set/neumann-tlm-107-bk-studio-set-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-1000x1000/Neumann/TLM 107 BK Studio Set/neumann-tlm-107-bk-studio-set-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Neumann/TLM 107 BK Studio Set/neumann-tlm-107-bk-studio-set-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-660x660/Neumann/TLM 107 BK Studio Set/neumann-tlm-107-bk-studio-set-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-1000x1000/Neumann/TLM 107 BK Studio Set/neumann-tlm-107-bk-studio-set-1.jpg',
+      ],
     },
   },
   {
@@ -1183,9 +1225,15 @@ export const ecommerceProducts = [
     category: 'microphones',
     polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Neumann/TLM 107 Studio Set/neumann-tlm-107-studio-set-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-660x660/Neumann/TLM 107 Studio Set/neumann-tlm-107-studio-set-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-1000x1000/Neumann/TLM 107 Studio Set/neumann-tlm-107-studio-set-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Neumann/TLM 107 Studio Set/neumann-tlm-107-studio-set-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-660x660/Neumann/TLM 107 Studio Set/neumann-tlm-107-studio-set-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-1000x1000/Neumann/TLM 107 Studio Set/neumann-tlm-107-studio-set-1.jpg',
+      ],
     },
   },
   {
@@ -1199,9 +1247,15 @@ export const ecommerceProducts = [
     category: 'microphones',
     polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Neumann/TLM 107 BK/neumann-tlm-107-bk-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-660x660/Neumann/TLM 107 BK/neumann-tlm-107-bk-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-1000x1000/Neumann/TLM 107 BK/neumann-tlm-107-bk-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Neumann/TLM 107 BK/neumann-tlm-107-bk-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-660x660/Neumann/TLM 107 BK/neumann-tlm-107-bk-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-1000x1000/Neumann/TLM 107 BK/neumann-tlm-107-bk-1.jpg',
+      ],
     },
   },
   {
@@ -1215,9 +1269,15 @@ export const ecommerceProducts = [
     category: 'microphones',
     polarPattern: ['omni', 'wide-cardioid', 'cardioid', 'hyper-cardioid', 'figure-8'],
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Neumann/TLM 107/neumann-tlm-107-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-660x660/Neumann/TLM 107/neumann-tlm-107-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-1000x1000/Neumann/TLM 107/neumann-tlm-107-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Neumann/TLM 107/neumann-tlm-107-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-660x660/Neumann/TLM 107/neumann-tlm-107-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-1000x1000/Neumann/TLM 107/neumann-tlm-107-1.jpg',
+      ],
     },
   },
   {
@@ -1225,7 +1285,8 @@ export const ecommerceProducts = [
     stock: 2,
     company: 'Schiit',
     unit: 'Fulla',
-    description: 'Fulla E is a great DAC/amp with top-shelf components—that also has a very nice microphone input, too. ',
+    description:
+      'Fulla E is a great DAC/amp with top-shelf components—that also has a very nice microphone input, too. ',
     price: 136.0,
     productshowcase: false,
     category: 'amps-dacs',
@@ -1252,7 +1313,8 @@ export const ecommerceProducts = [
     stock: 2,
     company: 'Schiit',
     unit: 'Hel',
-    description: 'Plug Hel 2E in to any PC, Mac, PS4, PS5, or Switch, and you’ll get tremendous sound…and you’ll also sound amazing to all of your friends.',
+    description:
+      'Plug Hel 2E in to any PC, Mac, PS4, PS5, or Switch, and you’ll get tremendous sound…and you’ll also sound amazing to all of your friends.',
     price: 262.0,
     productshowcase: false,
     category: 'amps-dacs',
@@ -1288,7 +1350,8 @@ export const ecommerceProducts = [
     stock: 2,
     company: 'Schiit',
     unit: 'Magni+ (Black)',
-    description: 'Magni+: Exotic, current-feedback, all-discrete design, high-spec sorted potentiometer, high-end thin-film resistors, silicon capacitors. ',
+    description:
+      'Magni+: Exotic, current-feedback, all-discrete design, high-spec sorted potentiometer, high-end thin-film resistors, silicon capacitors. ',
     price: 145.0,
     productshowcase: false,
     category: 'amps-dacs',
@@ -1312,7 +1375,8 @@ export const ecommerceProducts = [
     stock: 2,
     company: 'Schiit',
     unit: 'Magni+ (Silver)',
-    description: 'Magni+: Exotic, current-feedback, all-discrete design, high-spec sorted potentiometer, high-end thin-film resistors, silicon capacitors. ',
+    description:
+      'Magni+: Exotic, current-feedback, all-discrete design, high-spec sorted potentiometer, high-end thin-film resistors, silicon capacitors. ',
     price: 145.0,
     category: 'amps-dacs',
     productshowcase: false,
@@ -1336,7 +1400,8 @@ export const ecommerceProducts = [
     stock: 2,
     company: 'Schiit',
     unit: 'Magnius',
-    description: 'Magnius delivers high power, superb measurements, and best volume control in its price class. It is also designed and built in California, USA. ',
+    description:
+      'Magnius delivers high power, superb measurements, and best volume control in its price class. It is also designed and built in California, USA. ',
     price: 262.0,
     productshowcase: false,
     category: 'amps-dacs',
@@ -1369,9 +1434,15 @@ export const ecommerceProducts = [
     category: 'amps-dacs',
     productshowcase: false,
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Apos/amp/topping-a90-discrete/apos-topping-a90-discrete-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-660x660/Apos/amp/topping-a90-discrete/apos-topping-a90-discrete-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-1000x1000/Apos/amp/topping-a90-discrete/apos-topping-a90-discrete-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Apos/amp/topping-a90-discrete/apos-topping-a90-discrete-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-660x660/Apos/amp/topping-a90-discrete/apos-topping-a90-discrete-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-1000x1000/Apos/amp/topping-a90-discrete/apos-topping-a90-discrete-1.jpg',
+      ],
     },
   },
   {
@@ -1385,9 +1456,15 @@ export const ecommerceProducts = [
     category: 'amps-dacs',
     productshowcase: false,
     images: {
-      small: ['/app/ecommerce/assets/production-images/compressed-products-300x300/Apos/amp/topping-dx3-pro+/apos-topping-dx3-pro+-1.jpg'],
-      medium: ['/app/ecommerce/assets/production-images/compressed-products-660x660/Apos/amp/topping-dx3-pro+/apos-topping-dx3-pro+-1.jpg'],
-      large: ['/app/ecommerce/assets/production-images/compressed-products-1000x1000/Apos/amp/topping-dx3-pro+/apos-topping-dx3-pro+-1.jpg'],
+      small: [
+        '/app/ecommerce/assets/production-images/compressed-products-300x300/Apos/amp/topping-dx3-pro+/apos-topping-dx3-pro+-1.jpg',
+      ],
+      medium: [
+        '/app/ecommerce/assets/production-images/compressed-products-660x660/Apos/amp/topping-dx3-pro+/apos-topping-dx3-pro+-1.jpg',
+      ],
+      large: [
+        '/app/ecommerce/assets/production-images/compressed-products-1000x1000/Apos/amp/topping-dx3-pro+/apos-topping-dx3-pro+-1.jpg',
+      ],
     },
   },
   {

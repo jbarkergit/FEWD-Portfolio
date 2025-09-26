@@ -1,12 +1,10 @@
 import { useRef, useState, useEffect } from 'react';
 import type { ChangeEvent } from 'react';
 import { Link } from 'react-router';
-import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
+import { commerceDatabase } from '~/ecommerce/data/commerceDatabase';
 
-function useProductSearch(searchTerm: string) {
-  return ecommerceProducts
-    .filter((product) => product.sku.toLowerCase().includes(searchTerm.toLowerCase()))
-    .slice(0, 9);
+function productSearch(searchTerm: string) {
+  return commerceDatabase.filter((product) => product.sku.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 9);
 }
 
 const SearchBar = () => {
@@ -28,7 +26,7 @@ const SearchBar = () => {
     };
   }, []);
 
-  const searchResults = useProductSearch(searchTerm);
+  const searchResults = productSearch(searchTerm);
 
   return (
     <div

@@ -1,14 +1,16 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router';
 import type { ProductType } from '../../../context/CartContext';
-import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
+import { commerceDatabase } from '~/ecommerce/data/commerceDatabase';
 
 type MoreLikeThisType = {
   findProduct: ProductType;
 };
 
 const MoreLikeThis = ({ findProduct }: MoreLikeThisType) => {
-  const filteredRecommenders = ecommerceProducts.filter((product) => product.sku !== findProduct.sku && product.category === findProduct.category);
+  const filteredRecommenders = commerceDatabase.filter(
+    (product) => product.sku !== findProduct.sku && product.category === findProduct.category
+  );
 
   //Force page refresh upon component change
   const { paramId } = useParams() as { paramId: string };
@@ -30,15 +32,26 @@ const MoreLikeThis = ({ findProduct }: MoreLikeThisType) => {
       </h2>
       <ul className='recommenders__unorderedList'>
         {filteredRecommenders.splice(0, 8).map((product) => (
-          <li key={`more-like-this-${product.sku}`} className='recommenders__unorderedList__item'>
+          <li
+            key={`more-like-this-${product.sku}`}
+            className='recommenders__unorderedList__item'>
             <Link to={`/ecommerce/products/${product.sku}`}>
               <article>
                 <picture>
-                  <img src={product.images?.small[0]} alt={`${product.company} ${product.unit}`} loading='lazy' decoding='async' fetchPriority='low' />
+                  <img
+                    src={product.images?.small[0]}
+                    alt={`${product.company} ${product.unit}`}
+                    loading='lazy'
+                    decoding='async'
+                    fetchPriority='low'
+                  />
                 </picture>
                 <hgroup>
                   <h2>{product.unit}</h2>
-                  <h3>Starting at {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}</h3>
+                  <h3>
+                    Starting at{' '}
+                    {Intl.NumberFormat('en-us', { currency: 'USD', style: 'currency' }).format(product.price)}
+                  </h3>
                 </hgroup>
               </article>
             </Link>

@@ -1,16 +1,16 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import type { ProductType } from '~/ecommerce/context/CartContext';
-import { ecommerceProducts } from '~/ecommerce/data/ecommerceProducts';
+import { commerceDatabase } from '~/ecommerce/data/commerceDatabase';
 import ProductProp from './ProductProp';
 
 // Custom hook to filter products based on the location (category or other attributes)
 const useProductFilter = (location: string): ProductType[] => {
-  const filteredData = ecommerceProducts.reduce((result: ProductType[], product: ProductType) => {
+  const filteredData = commerceDatabase.reduce((result: ProductType[], product: ProductType) => {
     if (product.category) {
       switch (location) {
         case 'products':
-          return ecommerceProducts.sort((a, b) => a.company.localeCompare(b.company));
+          return commerceDatabase.sort((a, b) => a.company.localeCompare(b.company));
 
         case 'headphones':
         case 'microphones':
@@ -20,15 +20,23 @@ const useProductFilter = (location: string): ProductType[] => {
           break;
 
         case 'amps-dacs':
-          if (Array.isArray(product.category) && (product.category as string[]).some((cat) => ['amps', 'dacs', 'amps-dacs'].includes(cat))) result.push(product);
-          else if (typeof product.category === 'string' && ['amps', 'dacs', 'amps-dacs'].includes(product.category)) result.push(product);
+          if (
+            Array.isArray(product.category) &&
+            (product.category as string[]).some((cat) => ['amps', 'dacs', 'amps-dacs'].includes(cat))
+          )
+            result.push(product);
+          else if (typeof product.category === 'string' && ['amps', 'dacs', 'amps-dacs'].includes(product.category))
+            result.push(product);
           break;
 
         default:
           if (product.company?.includes(location)) result.push(product);
           else if (product.wearStyle?.includes(location)) result.push(product);
           else if (product.polarPattern?.includes(location)) result.push(product);
-          else console.error('Failure at ProductProvider: Location unavailable or property are unavailable in default case.');
+          else
+            console.error(
+              'Failure at ProductProvider: Location unavailable or property are unavailable in default case.'
+            );
       }
     }
     return result;
@@ -99,7 +107,9 @@ const ProductProvider = () => {
   return (
     <ul className='productGrid'>
       {visibleProducts.map((product, index) => (
-        <li key={product.sku} ref={index === visibleProducts.length - 1 ? lastProductRef : null}>
+        <li
+          key={product.sku}
+          ref={index === visibleProducts.length - 1 ? lastProductRef : null}>
           <ProductProp product={product} />
         </li>
       ))}
