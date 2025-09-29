@@ -235,8 +235,3 @@ export type TmdbResponseFlat = {
         ? TmdbResponse['string'][K]
         : never;
 };
-
-export type TmdbEndpointResponseMap =
-  | Exclude<TmdbResponseFlat[keyof TmdbResponseFlat], TmdbResponseFlat['credits']>
-  | TmdbResponseFlat['credits']['cast']
-  | TmdbResponseFlat['credits']['crew'];
