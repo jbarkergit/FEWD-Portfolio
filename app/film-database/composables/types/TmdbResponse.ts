@@ -1,10 +1,3 @@
-import type { tmdbEndpoints } from '~/film-database/composables/const/tmdbEndpoints';
-
-export type TmdbNeverKeys = keyof typeof tmdbEndpoints.never;
-export type TmdbNumberKeys = keyof typeof tmdbEndpoints.number;
-export type TmdbStringKeys = keyof typeof tmdbEndpoints.string;
-export type TmdbEndpointKeys = TmdbNeverKeys | TmdbNumberKeys | TmdbStringKeys;
-
 export type TmdbMovieProvider = {
   adult: boolean;
   backdrop_path: string | null;
