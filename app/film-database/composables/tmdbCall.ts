@@ -1,12 +1,11 @@
 import { tmdbDiscoveryIds } from './const/tmdbDiscoveryIds';
 import { tmdbEndpoints } from './const/tmdbEndpoints';
-import type {
-  TmdbEndpointKeys,
-  TmdbNeverKeys,
-  TmdbNumberKeys,
-  TmdbResponse,
-  TmdbStringKeys,
-} from './types/TmdbResponse';
+import type { TmdbResponse } from './types/TmdbResponse';
+
+type TmdbNeverKeys = keyof typeof tmdbEndpoints.never;
+type TmdbNumberKeys = keyof typeof tmdbEndpoints.number;
+type TmdbStringKeys = keyof typeof tmdbEndpoints.string;
+type TmdbEndpointKeys = TmdbNeverKeys | TmdbNumberKeys | TmdbStringKeys;
 
 type Query<K extends TmdbEndpointKeys> = K extends TmdbNeverKeys
   ? undefined
@@ -24,7 +23,31 @@ type DataReturn<K> = K extends TmdbNeverKeys
       ? TmdbResponse['string'][K]
       : never;
 
-export const excludedKeys = [
+type ArgumentOptions<K> = K extends TmdbNeverKeys
+  ? K // literal
+  : K extends TmdbNumberKeys
+    ? { [P in K]: number } // {key: number}
+    : K extends TmdbStringKeys
+      ? { [P in K]: string } // {key: string}
+      : undefined;
+
+type Arguments = {
+  [K in TmdbEndpointKeys]: ArgumentOptions<K>; // Generate option for every key
+}[TmdbEndpointKeys]; // Unionize
+
+type ArgumentToKey<T> = {
+  [K in TmdbEndpointKeys]: T extends ArgumentOptions<K> ? K : never; // If T is assignable to argument shape K
+}[TmdbEndpointKeys]; // Unionize
+
+type CallResponse<T> = T extends any[] // If T is an array of arguments
+  ? {
+      [K in keyof T]: T[K] extends Arguments
+        ? { key: ArgumentToKey<T[K]>; response: DataReturn<ArgumentToKey<T[K]>> }
+        : never;
+    }
+  : { key: ArgumentToKey<T>; response: DataReturn<ArgumentToKey<T>> };
+
+export const excludedCacheKeys = [
   'videos',
   'personDetails',
   'personCredits',
@@ -33,14 +56,11 @@ export const excludedKeys = [
   'search',
 ] as const;
 
-export const createEndpoint = <K extends TmdbEndpointKeys>(key: K, query: Query<K>): string | undefined => {
-  const allEndpoints = Object.assign({}, tmdbEndpoints.never, tmdbEndpoints.number, tmdbEndpoints.string);
-  const endpoint = allEndpoints[key];
+const allEndpoints = { ...tmdbEndpoints.never, ...tmdbEndpoints.number, ...tmdbEndpoints.string };
 
-  if (!endpoint) {
-    console.error(`Function 'createEndpoint' failed to identify the requested key in API endpoints.`);
-    return undefined;
-  }
+export const createEndpoint = <K extends TmdbEndpointKeys>(key: K, query: Query<K>): string | undefined => {
+  const endpoint = allEndpoints[key];
+  if (!endpoint) return undefined;
 
   switch (typeof query) {
     case 'number':
@@ -65,8 +85,6 @@ export const callApi = async <K extends TmdbEndpointKeys>(
   query: Query<K>
 ): Promise<DataReturn<K> | undefined> => {
   try {
-    const controller = new AbortController();
-
     const endpoint = createEndpoint(key, query);
     if (!endpoint) return undefined;
 
@@ -85,91 +103,46 @@ export const callApi = async <K extends TmdbEndpointKeys>(
     }
 
     const result = await response.json();
-    if (!excludedKeys.includes(key)) sessionStorage.setItem(key, JSON.stringify(result));
+    if (!excludedCacheKeys.includes(key)) sessionStorage.setItem(key, JSON.stringify(result));
     return result as DataReturn<K>;
   } catch (e) {
     console.error(e);
+    return undefined;
   }
-};
-
-export const retrieveCachedValue = <K extends TmdbEndpointKeys>(key: K): DataReturn<K> | null => {
-  const entry = sessionStorage.getItem(key);
-  const value = entry ? JSON.parse(entry) : null;
-  if (value) return value as DataReturn<K>;
-  return null;
 };
 
 export const handleArg = async <K extends TmdbEndpointKeys>(
   controller: AbortController,
   key: K,
   query: Query<K>
-): Promise<ReturnType<typeof retrieveCachedValue | typeof callApi>> => {
-  if (!excludedKeys.includes(key)) {
-    const cachedValue = retrieveCachedValue(key);
-    if (cachedValue) return cachedValue;
+): Promise<ReturnType<typeof callApi>> => {
+  if (!excludedCacheKeys.includes(key)) {
+    const item = sessionStorage.getItem(key);
+    const cached = item ? JSON.parse(item) : undefined;
+    if (cached) return cached as DataReturn<K>;
   }
 
   return await callApi(controller, key, query);
 };
 
-type ArgumentOptions<K> = K extends TmdbNeverKeys
-  ? K // literal
-  : K extends TmdbNumberKeys
-    ? { [P in K]: number } // {key: number}
-    : K extends TmdbStringKeys
-      ? { [P in K]: string } // {key: string}
-      : undefined;
-
-type Arguments = {
-  [K in TmdbEndpointKeys]: ArgumentOptions<K>; // Generate option for every key
-}[TmdbEndpointKeys]; // Unionize
-
-type ArgumentToKey<T> = {
-  [K in TmdbEndpointKeys]: T extends ArgumentOptions<K> ? K : never; // If T is assignable to argument shape K
-}[TmdbEndpointKeys]; // Unionize
-
-type CallReturn<T> = T extends any[] // If T is an array of arguments
-  ? {
-      [K in keyof T]: T[K] extends Arguments
-        ? { key: ArgumentToKey<T[K]>; response: DataReturn<ArgumentToKey<T[K]>> }
-        : never;
-    }
-  : { key: ArgumentToKey<T>; response: DataReturn<ArgumentToKey<T>> };
-
 export const tmdbCall = async <T extends Arguments | Arguments[]>(
   controller: AbortController,
   args: T
-): Promise<CallReturn<T>> => {
-  const parameters = (Array.isArray(args) ? args : [args]) as Arguments[];
+): Promise<CallResponse<T>> => {
+  const params = (Array.isArray(args) ? args : [args]) as Arguments[];
 
-  const handleBadArgument = (arg: unknown) => {
-    console.error(`Failure to map promise for ${arg}`);
-    return { key: arg && typeof arg === 'string' ? arg : undefined, response: undefined };
-  };
+  const promises = params.map(async (arg) => {
+    if (typeof arg === 'string') return { key: arg, response: await handleArg(controller, arg, undefined) };
 
-  const promises = parameters.map(async (arg) => {
-    if (typeof arg === 'string') {
-      return { key: arg, response: await handleArg(controller, arg, undefined) };
-    } else if (arg && typeof arg === 'object') {
-      const entries = Object.entries(arg)[0];
-      if (entries)
-        return { key: entries[0], response: await handleArg(controller, entries[0] as TmdbEndpointKeys, entries[1]) };
-      else handleBadArgument(arg);
-    } else {
-      handleBadArgument(arg);
+    if (arg && typeof arg === 'object') {
+      const [key, value] = Object.entries(arg)[0] as [TmdbEndpointKeys, Query<any>];
+      return { key, response: await handleArg(controller, key, value) };
     }
+
+    return { key: arg && typeof arg === 'string' ? arg : undefined, response: undefined };
   });
 
-  const responses = await Promise.allSettled(promises);
-  const fulfilled = responses.filter((entry) => entry.status === 'fulfilled').map((f) => f.value as DataReturn<any>);
-  const rejected = responses.filter((entry) => entry.status === 'rejected');
-
-  if (rejected.length) {
-    for (const rejection of rejected) {
-      console.error(`Function 'tmdbCall' rejection ${rejection.reason}`);
-    }
-  }
-
-  const result = Array.isArray(args) ? fulfilled : fulfilled[0];
-  return result as CallReturn<T>;
+  const responses = await Promise.all(promises);
+  const result = Array.isArray(args) ? responses : responses[0];
+  return result as CallResponse<T>;
 };
