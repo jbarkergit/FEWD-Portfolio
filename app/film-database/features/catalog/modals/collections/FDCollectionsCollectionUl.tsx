@@ -1,6 +1,6 @@
 import { forwardRef, type JSX, type RefObject, useMemo } from 'react';
 import { IcBaselinePlus } from '~/film-database/assets/svg/icons';
-import type { Sensor } from './FDCollections';
+import type { Sensor } from '~/film-database/features/catalog/modals/collections/FDCollectionsCollection';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
 
