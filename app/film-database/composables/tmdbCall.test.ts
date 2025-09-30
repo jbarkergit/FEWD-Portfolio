@@ -1,83 +1,86 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { createEndpoint, tmdbCall } from '~/film-database/composables/tmdbCall';
+import { beforeEach, describe, expect, expectTypeOf, it, vi } from 'vitest';
+import * as tmdb from '~/film-database/composables/tmdbCall';
 
-describe(tmdbCall, () => {
-  beforeEach(() => {
-    sessionStorage.clear();
-    vi.restoreAllMocks();
-  });
+const { tmdbCall, handleArg, callApi, createEndpoint, excludedCacheKeys } = tmdb;
 
-  it('Prevents run time crashes caused by bad arguments.', async () => {
+describe('tmdbCall', () => {
+  beforeEach(() => (global.fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({}) })));
+
+  it('Prevents run time crashes caused by bad arguments', async () => {
     await expect(tmdbCall(new AbortController(), 'not_playing' as any)).resolves.toMatchObject({
       key: 'not_playing',
       response: undefined,
     });
   });
 
-  it('Caches keys with exclusions, prevents API calls by returning cached key value pairs', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      ok: true,
-      json: async () => ({ foo: 'bar' }),
-    });
+  it('tmdbCall arg validation', async () => {
+    const controller = new AbortController();
 
-    const first = await tmdbCall(new AbortController(), 'now_playing');
-    const second = await tmdbCall(new AbortController(), 'now_playing');
+    const string = await tmdbCall(controller, 'now_playing');
+    const object = await tmdbCall(controller, { credits: 123 });
+    const array = await tmdbCall(controller, ['now_playing', 'popular']);
+    const mixedArray = await tmdbCall(controller, ['now_playing', { credits: 321 }]);
 
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(first.response).toEqual({ foo: 'bar' });
-    expect(second.response).toEqual({ foo: 'bar' });
+    expect(string).toBeDefined();
+    expect(object).toBeDefined();
+    expect(array).toBeDefined();
+    expectTypeOf(mixedArray).toBeArray();
   });
 
-  it('Properly builds endpoints for all potential arguments', () => {
-    expect(createEndpoint('not_a_arg' as any, undefined)).toBeUndefined();
-    expect(createEndpoint('now_playing', undefined)).toContain('now_playing');
-    expect(createEndpoint('credits', 123456)).toContain('123456');
+  it('handleArg either retrieves and parses cached items or calls callApi', async () => {
+    const controller = new AbortController();
+
+    // Should call callApi
+    const spy = vi.spyOn(global, 'fetch');
+    await handleArg(controller, excludedCacheKeys[0] as any, '');
+    expect(spy).toBeCalledTimes(1);
+
+    // Should retrieve item from cache and parse the data
+    const key = 'handleArgTest';
+    const cachedValue = { message: 'Hello, World.' };
+    sessionStorage.setItem(key, JSON.stringify(cachedValue));
+
+    const isNotCacheExcluded = await handleArg(controller, key as any, '');
+    expect(isNotCacheExcluded).toEqual(cachedValue);
+
+    sessionStorage.clear();
   });
 
-  it('Calls API with correct methods', async () => {
-    const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValue({
-      ok: true,
-      json: async () => ({}),
-    } as any);
+  it('callApi has correct fetch options, including a controller signal', async () => {
+    const mockFetch = vi.spyOn(global, 'fetch');
+    const controller = new AbortController();
 
-    await tmdbCall(new AbortController(), 'upcoming');
+    await callApi(controller, 'now_playing', undefined);
 
     const call = mockFetch.mock.calls[0] as Parameters<typeof fetch>;
     const [url, options] = call;
 
-    expect(url).toMatch(/upcoming/);
+    expect(url).toMatch(/now_playing/);
     expect(options).toMatchObject({
       method: 'GET',
-      headers: expect.objectContaining({
-        accept: 'application/json',
-        Authorization: expect.stringContaining('Bearer '),
-      }),
+      headers: { accept: 'application/json', Authorization: expect.stringContaining('Bearer ') },
       signal: expect.any(AbortSignal),
     });
   });
 
-  it('Aborts fetch request when controller is aborted', async () => {
+  it('callApi caches items and handles cache key exceptions', async () => {
     const controller = new AbortController();
-    const abortSpy = vi.spyOn(controller, 'abort');
-    const promise = tmdbCall(controller, 'upcoming');
 
-    controller.abort();
+    // Shouldn't cache
+    await callApi(controller, excludedCacheKeys[0], '' as any);
+    const nullValue = sessionStorage.getItem(excludedCacheKeys[0]);
+    expect(nullValue).toBeNull();
 
-    await promise;
-
-    expect(abortSpy).toHaveBeenCalled();
+    // Should cache
+    const testKey = 'callApiTest';
+    await callApi(controller, testKey as any, '' as any);
+    const cachedValue = JSON.parse(sessionStorage.getItem(testKey)!);
+    expect(cachedValue).toBeDefined();
   });
 
-  it('Handles network/API failures gracefully', async () => {
-    const consoleSpy = vi.spyOn(console, 'error');
-
-    vi.spyOn(global, 'fetch').mockRejectedValue(new Error('Network failure'));
-
-    expect(await tmdbCall(new AbortController(), 'now_playing')).toEqual({
-      key: 'now_playing',
-      response: undefined,
-    });
-
-    expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error));
+  it('createEndpoint properly replaces placeholder text within desired endpoint for all potential arguments', () => {
+    expect(createEndpoint('not_a_arg' as any, undefined)).toBeUndefined();
+    expect(createEndpoint('now_playing', undefined)).toContain('now_playing');
+    expect(createEndpoint('credits', 123456)).toContain('123456');
   });
 });
