@@ -5,6 +5,7 @@ import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbRe
 import GenericCarouselNavigation from '~/film-database/components/carousel/GenericCarouselNavigation';
 import { useUserCollection, type UserCollection } from '~/film-database/context/UserCollectionContext';
 import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
+import { findEuclidean } from '~/film-database/utility/findEuclidean';
 
 const NOT_FOUND_INDEX = -1 as const;
 
@@ -41,39 +42,6 @@ const createTargetDefault = (): Target => ({
   colIndex: NOT_FOUND_INDEX,
   listItemIndex: NOT_FOUND_INDEX,
 });
-
-/** Finds Eudclidean distance within supplied DOMRect[] and returns the index of the closest element */
-const findEuclidean = (detach: Record<'x' | 'y', number>, data: DOMRect[]): number => {
-  return data.reduce<{
-    rect: DOMRect | null;
-    index: number;
-    distance: number;
-  }>(
-    (closest, rect, index) => {
-      // Check if the detachment point is within the bounds of the current rect
-      const isWithinBounds =
-        detach.x >= rect.left && detach.x <= rect.right && detach.y >= rect.top && detach.y <= rect.bottom;
-
-      if (isWithinBounds) return { rect, index, distance: 0 };
-
-      // Find the center of the rect
-      const rectCenter: { x: number; y: number } = {
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2,
-      };
-
-      // Calculate Euclidean distance: sqrt((x2-x1)^2 + (y2-y1)^2)
-      const distance = Math.sqrt(Math.pow(rectCenter.x - detach.x, 2) + Math.pow(rectCenter.y - detach.y, 2));
-
-      // If the current rect is closer, update closest
-      if (distance < closest.distance) return { rect, index, distance };
-
-      // If this rect is farther, keep the previous closest
-      return closest;
-    },
-    { rect: null, index: NOT_FOUND_INDEX, distance: Infinity }
-  ).index;
-};
 
 const FDCollectionsCollection = memo(
   ({
