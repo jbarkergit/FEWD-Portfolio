@@ -97,10 +97,7 @@ export const callApi = async <K extends TmdbEndpointKeys>(
       signal: controller.signal,
     });
 
-    if (!response.ok) {
-      controller.abort();
-      throw new Error(`Function 'callApi' aborted request for ${key}`);
-    }
+    if (!response.ok) throw new Error(`Function 'callApi' aborted request for ${key}`);
 
     const result = await response.json();
     if (!excludedCacheKeys.includes(key)) sessionStorage.setItem(key, JSON.stringify(result));
