@@ -22,8 +22,8 @@ const EmptyListItem = (): JSX.Element => {
 
 const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
   ({ mapIndex, data, isEditMode, sensorRef }, ulRef) => {
-    // Dynamic integer limitation of list items in a carousel
     const { visibleCount } = useVisibleCountContext();
+    const { modal } = visibleCount;
 
     /**
      * @function ListItem @returns {JSX.Element}
@@ -63,13 +63,13 @@ const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
         ));
 
         // If initMap's length is greater than or equal to visibleCount, return initMap
-        if (initMap.length + 1 >= visibleCount.modal) {
+        if (initMap.length + 1 >= modal) {
           initMap.push(<EmptyListItem key={`collection-${mapIndex}-emptyListItem-${initMap.length + 1}`} />);
           return initMap;
         }
 
         // If initMap isn't at least the length of visibleCount, push empty lists
-        for (let i = 0; i < visibleCount.modal; i++) {
+        for (let i = 0; i < modal; i++) {
           let listAtIndex = initMap[i];
           if (!listAtIndex)
             initMap.push(<EmptyListItem key={`collection-${mapIndex}-emptyListItem-${initMap.length + i + 1}`} />);
@@ -79,12 +79,12 @@ const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
         return initMap;
       } else {
         // If data is empty
-        const EmptyList = Array.from({ length: visibleCount.modal + 1 }).map((eli, index) => (
+        const EmptyList = Array.from({ length: modal + 1 }).map((eli, index) => (
           <EmptyListItem key={`collection-${mapIndex}-emptyListItem-${index}`} />
         ));
         return EmptyList;
       }
-    }, [data, visibleCount.modal]);
+    }, [data, modal]);
 
     return (
       <ul
