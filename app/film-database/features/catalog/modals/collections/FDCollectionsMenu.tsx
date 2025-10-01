@@ -26,12 +26,13 @@ const FDCollectionsMenu = memo(({ isEditMode, setIsEditMode }: Props) => {
       <button
         className='fdCollectionsMenu--collection'
         aria-label='Create new list'
-        onPointerUp={() =>
-          addIdToCollection(userCollections, setUserCollections, {
+        onPointerUp={() => {
+          const data = addIdToCollection(userCollections, {
             data: undefined,
             colIndex: Object.keys(userCollections).length + 1,
-          })
-        }>
+          });
+          setUserCollections(data);
+        }}>
         <TablerCategoryPlus />
       </button>
       <button

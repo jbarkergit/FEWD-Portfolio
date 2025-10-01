@@ -1,4 +1,3 @@
-import type { Dispatch, SetStateAction } from 'react';
 import { type UserCollection } from '~/film-database/context/UserCollectionContext';
 
 type Payload = {
@@ -8,23 +7,19 @@ type Payload = {
 
 export const addIdToCollection = (
   userCollections: Record<string, UserCollection>,
-  setUserCollections: Dispatch<SetStateAction<Record<string, UserCollection>>>,
   payload: Payload
-): void => {
-  const hasHitCollectionLimit: boolean = Object.keys(userCollections).length >= 5;
-  if (hasHitCollectionLimit) return;
+): Record<string, UserCollection> => {
+  const hasHitCollectionLimit = Object.keys(userCollections).length >= 5;
+  if (hasHitCollectionLimit) return userCollections;
 
-  const key: string = `user-collection-${payload.colIndex}`;
+  const key = `user-collection-${payload.colIndex}`;
+  const target = userCollections[key];
 
-  setUserCollections((s) => {
-    const target = s[key];
-
-    return {
-      ...s,
-      [key]: {
-        header: target?.header ?? 'Unnamed Collection',
-        data: target?.data && payload.data ? [...target.data, ...payload.data] : payload.data ? [...payload.data] : [],
-      },
-    };
-  });
+  return {
+    ...userCollections,
+    [key]: {
+      header: target?.header ?? 'Unnamed Collection',
+      data: target?.data && payload.data ? [...target.data, ...payload.data] : payload.data ? [...payload.data] : [],
+    },
+  };
 };

@@ -46,11 +46,13 @@ const DetailsCollectionDropdown = () => {
               <button
                 aria-label={`Add ${heroData?.title} to collection ${col.header}`}
                 onPointerUp={() => {
-                  if (heroData)
-                    addIdToCollection(userCollections, setUserCollections, {
+                  if (heroData) {
+                    const data = addIdToCollection(userCollections, {
                       data: [heroData],
                       colIndex: index,
                     });
+                    setUserCollections(data);
+                  }
                   toggleDropdown();
                 }}>
                 {col.header}
@@ -63,11 +65,13 @@ const DetailsCollectionDropdown = () => {
             <button
               aria-label={`Add ${heroData?.title} to a new collection`}
               onPointerUp={() => {
-                if (heroData)
-                  addIdToCollection(userCollections, setUserCollections, {
+                if (heroData) {
+                  const data = addIdToCollection(userCollections, {
                     data: [heroData],
                     colIndex: Object.keys(userCollections).length + 1,
                   });
+                  setUserCollections(data);
+                }
                 toggleDropdown();
               }}>
               <span>

@@ -94,10 +94,12 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
                 <button
                   aria-label={`Add movie to ${collection.header}`}
                   onPointerUp={() => {
-                    addIdToCollection(userCollections, setUserCollections, {
+                    const data = addIdToCollection(userCollections, {
                       data: [mediaEntry],
                       colIndex: i,
                     });
+                    setUserCollections(data);
+
                     toggleDropdown();
                   }}>
                   {collection.header}
@@ -110,10 +112,12 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
               <button
                 aria-label='Add movie to a new collection'
                 onPointerUp={() => {
-                  addIdToCollection(userCollections, setUserCollections, {
+                  const data = addIdToCollection(userCollections, {
                     data: [mediaEntry],
                     colIndex: Object.keys(userCollections).length + 1,
                   });
+                  setUserCollections(data);
+
                   toggleDropdown();
                 }}>
                 <TablerCategoryPlus /> New Collection
