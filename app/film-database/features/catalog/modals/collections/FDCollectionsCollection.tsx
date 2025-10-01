@@ -377,6 +377,7 @@ const FDCollectionsCollection = memo(
               <GenericCarouselNavigation
                 dataLength={data.length}
                 reference={ulRefs.current[mapIndex]}
+                isModal={true}
               />
             )}
           </div>

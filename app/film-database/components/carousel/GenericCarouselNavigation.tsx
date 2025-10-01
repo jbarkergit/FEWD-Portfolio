@@ -1,18 +1,17 @@
 import { useRef, useCallback, useEffect } from 'react';
 import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/assets/svg/icons';
-import { useModalContext } from '~/film-database/context/ModalContext';
 import { useVisibleCountContext } from '~/film-database/context/VisibleCountContext';
 
 type Props = {
   dataLength: number;
   reference: HTMLUListElement | null;
+  isModal: boolean;
 };
 
-const GenericCarouselNavigation = ({ dataLength, reference }: Props) => {
+const GenericCarouselNavigation = ({ dataLength, reference, isModal }: Props) => {
   const { visibleCount } = useVisibleCountContext();
-  const { modal } = useModalContext();
 
-  const itemsPerPage = modal === undefined ? visibleCount.viewport : visibleCount.modal;
+  const itemsPerPage = !isModal ? visibleCount.viewport : visibleCount.modal;
   const indexRef = useRef(0);
 
   const scrollToIndex = useCallback(
@@ -42,7 +41,7 @@ const GenericCarouselNavigation = ({ dataLength, reference }: Props) => {
 
       reference.scrollTo({ left: adjustedScroll, behavior: 'smooth' });
     },
-    [itemsPerPage, reference]
+    [itemsPerPage]
   );
 
   const navigate = useCallback(
