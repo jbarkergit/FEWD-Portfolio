@@ -3,71 +3,75 @@ import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/asset
 import { useModalContext } from '~/film-database/context/ModalContext';
 import { useVisibleCountContext } from '~/film-database/context/VisibleCountContext';
 
-const navigateGenericCarousel = (reference: HTMLUListElement | null, dataLength: number): ((delta: number) => void) => {
-  const { visibleCount } = useVisibleCountContext();
-  const { modal } = useModalContext();
-  const itemsCount = modal === undefined ? visibleCount.viewport : visibleCount.modal;
-  const carouselIndexRef = useRef<number>(0);
-
-  const navigate = useCallback((): void => {
-    if (reference instanceof HTMLUListElement) {
-      const listItems: HTMLCollection = reference.children;
-      const targetIndex: number = carouselIndexRef.current * itemsCount;
-
-      let targetElement: HTMLLIElement | null = listItems[targetIndex] as HTMLLIElement;
-      if (!targetElement) targetElement = listItems[listItems.length - 1] as HTMLLIElement;
-
-      const carouselPosition: number = reference.offsetLeft;
-      const scrollPosition: number = targetElement.offsetLeft - carouselPosition;
-
-      const firstItem = listItems[0] as HTMLLIElement | HTMLDivElement;
-      const carouselMargin: number = parseInt(firstItem.style.marginLeft.trim());
-
-      const newScrollPosition: number =
-        targetIndex === 0
-          ? scrollPosition - carouselMargin
-          : targetIndex >= listItems.length
-            ? scrollPosition + carouselMargin
-            : scrollPosition;
-
-      reference.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
-    }
-  }, [itemsCount, reference]);
-
-  const updateCarouselIndex = useCallback(
-    (delta: number): void => {
-      const maxIndex = Math.ceil(dataLength / itemsCount) - 1;
-      carouselIndexRef.current = Math.max(0, Math.min(carouselIndexRef.current + delta, maxIndex));
-      navigate();
-    },
-    [dataLength, itemsCount, navigate]
-  );
-
-  useEffect(() => updateCarouselIndex(0), [itemsCount]);
-
-  return updateCarouselIndex;
-};
-
 type Props = {
   dataLength: number;
   reference: HTMLUListElement | null;
 };
 
 const GenericCarouselNavigation = ({ dataLength, reference }: Props) => {
-  const updateCarouselIndex = navigateGenericCarousel(reference, dataLength);
+  const { visibleCount } = useVisibleCountContext();
+  const { modal } = useModalContext();
+
+  const itemsPerPage = modal === undefined ? visibleCount.viewport : visibleCount.modal;
+  const indexRef = useRef(0);
+
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      if (!reference) return;
+
+      const listItems = Array.from(reference.children) as HTMLElement[];
+      if (listItems.length === 0) return;
+
+      const targetIndex = Math.min(index * itemsPerPage, listItems.length - 1);
+      const targetEl = listItems[targetIndex];
+      if (!targetEl) return;
+
+      const firstItem = listItems[0];
+      if (!firstItem) return;
+
+      const marginLeft = parseInt(getComputedStyle(firstItem).marginLeft, 10) || 0;
+
+      const scrollPosition = targetEl.offsetLeft - reference.offsetLeft;
+
+      const adjustedScroll =
+        targetIndex === 0
+          ? scrollPosition - marginLeft
+          : targetIndex >= listItems.length
+            ? scrollPosition + marginLeft
+            : scrollPosition;
+
+      reference.scrollTo({ left: adjustedScroll, behavior: 'smooth' });
+    },
+    [itemsPerPage, reference]
+  );
+
+  const navigate = useCallback(
+    (delta: number) => {
+      const maxIndex = Math.ceil(dataLength / itemsPerPage) - 1;
+      indexRef.current = Math.max(0, Math.min(indexRef.current + delta, maxIndex));
+      scrollToIndex(indexRef.current);
+    },
+    [itemsPerPage]
+  );
+
+  // Re-align when itemsPerPage changes (resize)
+  useEffect(() => {
+    indexRef.current = 0;
+    navigate(0);
+  }, [itemsPerPage]);
 
   return (
     <nav className='genericCarousel__wrapper__navigation'>
       <button
         className='genericCarousel__wrapper__navigation--button'
-        aria-label={'Show Previous'}
-        onPointerUp={() => updateCarouselIndex(-1)}>
+        aria-label='Show Previous'
+        onPointerUp={() => navigate(-1)}>
         <IcBaselineArrowLeft />
       </button>
       <button
         className='genericCarousel__wrapper__navigation--button'
-        aria-label={'Show More'}
-        onPointerUp={() => updateCarouselIndex(1)}>
+        aria-label='Show More'
+        onPointerUp={() => navigate(1)}>
         <IcBaselineArrowRight />
       </button>
     </nav>
