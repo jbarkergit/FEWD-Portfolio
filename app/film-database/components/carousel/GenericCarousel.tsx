@@ -86,7 +86,7 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
         </ul>
         <GenericCarouselNavigation
           dataLength={data.length}
-          reference={carouselRef.current}
+          reference={carouselRef}
           isModal={isModal}
         />
       </div>

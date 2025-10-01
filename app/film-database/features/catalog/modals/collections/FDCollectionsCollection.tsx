@@ -369,13 +369,11 @@ const FDCollectionsCollection = memo(
               ref={grandChildRef}
               sensorRef={sensorRef}
             />
-            {grandChildRef.current && (
-              <GenericCarouselNavigation
-                dataLength={data.length}
-                reference={grandChildRef.current}
-                isModal={true}
-              />
-            )}
+            <GenericCarouselNavigation
+              dataLength={data.length}
+              reference={grandChildRef}
+              isModal={true}
+            />
           </div>
         </section>
       );

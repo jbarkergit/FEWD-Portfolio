@@ -1,14 +1,20 @@
-import { useRef, useCallback, useEffect } from 'react';
+import { useRef, useCallback, useEffect, useState, useLayoutEffect, type RefObject } from 'react';
 import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/assets/svg/icons';
 import { useVisibleCountContext } from '~/film-database/context/VisibleCountContext';
 
 type Props = {
   dataLength: number;
-  reference: HTMLUListElement | null;
+  reference: RefObject<HTMLUListElement | null>;
   isModal: boolean;
 };
 
 const GenericCarouselNavigation = ({ dataLength, reference, isModal }: Props) => {
+  const [forceRerender, setForceRerender] = useState(false);
+
+  useLayoutEffect(() => {
+    if (reference.current) setForceRerender(true);
+  }, []);
+
   const { visibleCount } = useVisibleCountContext();
 
   const itemsPerPage = !isModal ? visibleCount.viewport : visibleCount.modal;
@@ -16,9 +22,9 @@ const GenericCarouselNavigation = ({ dataLength, reference, isModal }: Props) =>
 
   const scrollToIndex = useCallback(
     (index: number) => {
-      if (!reference) return;
+      if (!reference.current) return;
 
-      const listItems = Array.from(reference.children) as HTMLElement[];
+      const listItems = Array.from(reference.current.children) as HTMLElement[];
       if (listItems.length === 0) return;
 
       const targetIndex = Math.min(index * itemsPerPage, listItems.length - 1);
@@ -30,7 +36,7 @@ const GenericCarouselNavigation = ({ dataLength, reference, isModal }: Props) =>
 
       const marginLeft = parseInt(getComputedStyle(firstItem).marginLeft, 10) || 0;
 
-      const scrollPosition = targetEl.offsetLeft - reference.offsetLeft;
+      const scrollPosition = targetEl.offsetLeft - reference.current.offsetLeft;
 
       const adjustedScroll =
         targetIndex === 0
@@ -39,7 +45,7 @@ const GenericCarouselNavigation = ({ dataLength, reference, isModal }: Props) =>
             ? scrollPosition + marginLeft
             : scrollPosition;
 
-      reference.scrollTo({ left: adjustedScroll, behavior: 'smooth' });
+      reference.current.scrollTo({ left: adjustedScroll, behavior: 'smooth' });
     },
     [itemsPerPage]
   );
