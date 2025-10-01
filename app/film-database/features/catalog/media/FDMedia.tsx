@@ -2,10 +2,10 @@ import { useEffect, useRef } from 'react';
 import { useFLoader } from '~/film-database/routes/FilmDatabase';
 import FDSearch from '~/film-database/features/catalog/media/search/FDSearch';
 import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
-import { useModal } from '~/film-database/context/ModalContext';
+import { useModalContext } from '~/film-database/context/ModalContext';
 
 const FDMedia = () => {
-  const { isModal } = useModal();
+  const { modal } = useModalContext();
   const { primaryData } = useFLoader();
   const fdMediaRef = useRef<HTMLElement>(null);
 
@@ -43,10 +43,10 @@ const FDMedia = () => {
 
   /** Event Listeners */
   useEffect(() => {
-    if (!isModal) window.addEventListener('wheel', handleWheel);
+    if (!modal) window.addEventListener('wheel', handleWheel);
     else window.removeEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [fdMediaRef.current, isModal]);
+  }, [fdMediaRef.current, modal]);
 
   /** JSX */
   return (

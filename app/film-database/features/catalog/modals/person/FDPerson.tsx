@@ -1,19 +1,17 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
-import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
 import { MaterialSymbolsLogoutSharp, SvgSpinnersRingResize } from '~/film-database/assets/svg/icons';
-import { useModal } from '~/film-database/context/ModalContext';
-import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
-import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
+import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
+import { usePersonContext } from '~/film-database/context/PersonContext';
+import { useModalContext } from '~/film-database/context/ModalContext';
 
 type Cast = TmdbResponseFlat['personCredits']['cast'][number];
 
 const FDPerson = () => {
-  const { person } = useModal();
-  // const { chunkSize } = useChunkSize();
-  const { setModalTrailer } = useModalTrailer();
-  const { setIsModal } = useModal();
+  const { person } = usePersonContext();
+  const { setModalTrailer } = useModalTrailerContext();
+  const { setModal } = useModalContext();
 
   const [response, setResponse] = useState<{
     details: TmdbResponseFlat['personDetails'] | undefined;
@@ -108,7 +106,7 @@ const FDPerson = () => {
       <button
         className='fdPerson--exit'
         aria-label='Close View More Modal'
-        onPointerUp={() => setIsModal('movie')}>
+        onPointerUp={() => setModal('movie')}>
         <MaterialSymbolsLogoutSharp />
       </button>
 
@@ -218,7 +216,7 @@ const FDPerson = () => {
                                 aria-label={`View ${film.title}`}
                                 onPointerUp={() => {
                                   setModalTrailer(film);
-                                  setIsModal('movie');
+                                  setModal('movie');
                                 }}>
                                 {film.title}
                               </button>

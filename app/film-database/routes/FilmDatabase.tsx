@@ -3,9 +3,9 @@ import { useLoaderData } from 'react-router';
 import type { Route } from './+types/FilmDatabase';
 import { tmdbCall } from '../composables/tmdbCall';
 import { HeroDataProvider } from '~/film-database/context/HeroDataContext';
-import { ChunkSizeProvider } from '~/film-database/context/ChunkSizeContext';
+import { VisibleCountProvider } from '~/film-database/context/VisibleCountContext';
 import { RootRefProvider } from '~/film-database/context/RootRefContext';
-import { TrailerQueueProvider } from '~/film-database/context/ModalTrailerContext';
+import { ModalTrailerProvider } from '~/film-database/context/ModalTrailerContext';
 import { UserCollectionProvider } from '~/film-database/context/UserCollectionContext';
 import { ModalProvider } from '~/film-database/context/ModalContext';
 import FDAccountAnimation from '../features/account/animator/FDAccountAnimation';
@@ -13,6 +13,7 @@ import FDHeader from '../features/catalog/navigation/FDHeader';
 import FDCatalog from '../features/catalog/FDCatalog';
 import FDAccountModal from '~/film-database/features/account/auth-modal/FDAccountModal';
 import { useAuth } from '~/base/firebase/authentication/context/authProvider';
+import { PersonProvider } from '~/film-database/context/PersonContext';
 
 export async function clientLoader() {
   const primaryData = await tmdbCall(new AbortController(), [
@@ -54,20 +55,22 @@ export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
 
   return user ? (
     <RootRefProvider>
-      <ChunkSizeProvider>
-        <HeroDataProvider>
-          <ModalProvider>
+      <ModalProvider>
+        <VisibleCountProvider>
+          <HeroDataProvider>
             <UserCollectionProvider>
-              <TrailerQueueProvider>
-                <div className='filmDatabase'>
-                  <FDHeader />
-                  <FDCatalog />
-                </div>
-              </TrailerQueueProvider>
+              <ModalTrailerProvider>
+                <PersonProvider>
+                  <div className='filmDatabase'>
+                    <FDHeader />
+                    <FDCatalog />
+                  </div>
+                </PersonProvider>
+              </ModalTrailerProvider>
             </UserCollectionProvider>
-          </ModalProvider>
-        </HeroDataProvider>
-      </ChunkSizeProvider>
+          </HeroDataProvider>
+        </VisibleCountProvider>
+      </ModalProvider>
     </RootRefProvider>
   ) : (
     <>

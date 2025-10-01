@@ -1,10 +1,10 @@
-import { memo, useCallback, useEffect, useRef, type RefObject } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
 import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import GenericCarouselNavigation from '~/film-database/components/carousel/GenericCarouselNavigation';
-import { useUserCollection, type UserCollection } from '~/film-database/context/UserCollectionContext';
-import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
+import { useUserCollectionContext, type UserCollection } from '~/film-database/context/UserCollectionContext';
+import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
 import { findEuclidean } from '~/film-database/utility/findEuclidean';
 
 const NOT_FOUND_INDEX = -1 as const;
@@ -62,8 +62,8 @@ const FDCollectionsCollection = memo(
     triggerError: () => void;
   }) => {
     // Context
-    const { userCollections, setUserCollections } = useUserCollection();
-    const { setModalTrailer } = useModalTrailer();
+    const { userCollections, setUserCollections } = useUserCollectionContext();
+    const { setModalTrailer } = useModalTrailerContext();
 
     // Stores
     const sensorRef = useRef<Sensor>(createSensorDefault()); // Sensor
@@ -377,7 +377,6 @@ const FDCollectionsCollection = memo(
               <GenericCarouselNavigation
                 dataLength={data.length}
                 reference={ulRefs.current[mapIndex]}
-                chunkSizePref='modal'
               />
             )}
           </div>

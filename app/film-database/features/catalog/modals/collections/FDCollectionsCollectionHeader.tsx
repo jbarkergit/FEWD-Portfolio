@@ -1,6 +1,6 @@
 import { memo, useDeferredValue, useRef, useState, type ChangeEvent } from 'react';
 import { TablerCategoryFilled } from '~/film-database/assets/svg/icons';
-import { useUserCollection } from '~/film-database/context/UserCollectionContext';
+import { useUserCollectionContext } from '~/film-database/context/UserCollectionContext';
 
 type Props = {
   mapIndex: number;
@@ -8,7 +8,7 @@ type Props = {
 };
 
 const FDCollectionsCollectionHeader = memo(({ mapIndex, header }: Props) => {
-  const { userCollections, setUserCollections } = useUserCollection();
+  const { userCollections, setUserCollections } = useUserCollectionContext();
   const [inputValue, setInputValue] = useState<string>(
     userCollections[Object.keys(userCollections)[mapIndex]!]?.header || 'Unnamed Collection'
   );

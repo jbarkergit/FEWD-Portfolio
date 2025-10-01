@@ -3,9 +3,9 @@ import YouTube from 'react-youtube';
 import type { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
 import IFrameController from '../iframe-controller/IFrameController';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
-import { useModal } from '~/film-database/context/ModalContext';
-import { useUserCollection } from '~/film-database/context/UserCollectionContext';
-import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
+import { useUserCollectionContext } from '~/film-database/context/UserCollectionContext';
+import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
+import { useModalContext } from '~/film-database/context/ModalContext';
 
 const FDiFramePlayer = ({
   trailers,
@@ -17,9 +17,9 @@ const FDiFramePlayer = ({
   type: 'modal' | 'hero';
 }) => {
   // Context
-  const { isModal } = useModal();
-  const { userCollections } = useUserCollection();
-  const { modalTrailer, setModalTrailer } = useModalTrailer();
+  const { modal } = useModalContext();
+  const { userCollections } = useUserCollectionContext();
+  const { modalTrailer, setModalTrailer } = useModalTrailerContext();
 
   // iFrame options
   const opts: YouTubeProps['opts'] = {
@@ -60,7 +60,7 @@ const FDiFramePlayer = ({
       setTrailers(undefined);
     };
 
-    if (!isModal) {
+    if (!modal) {
       destroy();
       return;
     }

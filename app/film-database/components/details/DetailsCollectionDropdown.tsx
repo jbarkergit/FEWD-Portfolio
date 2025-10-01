@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { TablerCategoryPlus } from '~/film-database/assets/svg/icons';
-import { useHeroData } from '~/film-database/context/HeroDataContext';
-import { useUserCollection } from '~/film-database/context/UserCollectionContext';
+import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
+import { useUserCollectionContext } from '~/film-database/context/UserCollectionContext';
 import { addIdToCollection } from '~/film-database/utility/addIdToCollection';
 
 const DetailsCollectionDropdown = () => {
-  const { userCollections, setUserCollections } = useUserCollection();
-  const { heroData } = useHeroData();
+  const { userCollections, setUserCollections } = useUserCollectionContext();
+  const { heroData } = useHeroDataContext();
   const dropdownRef = useRef<HTMLUListElement>(null);
   const attr: string = 'data-open';
 

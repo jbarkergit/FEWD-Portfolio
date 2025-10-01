@@ -11,19 +11,18 @@ import {
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { tmdbDiscoveryIds } from '~/film-database/composables/const/tmdbDiscoveryIds';
-import { useHeroData } from '~/film-database/context/HeroDataContext';
-import { useModal } from '~/film-database/context/ModalContext';
-import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
-import { useUserCollection } from '~/film-database/context/UserCollectionContext';
+import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
+import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
 import DetailsCollectionDropdown from '~/film-database/components/details/DetailsCollectionDropdown';
+import { useModalContext } from '~/film-database/context/ModalContext';
 
 const discoveryIdMap = Object.fromEntries(Object.entries(tmdbDiscoveryIds).map(([k, v]) => [v, k]));
 
 // const earlyViewingProviders = ['Google Play Movies', 'Apple TV', 'Prime Video'];
 
 const FDDetails = ({ modal }: { modal: boolean }) => {
-  const { heroData } = useHeroData();
-  const { modalTrailer } = useModalTrailer();
+  const { heroData } = useHeroDataContext();
+  const { modalTrailer, setModalTrailer } = useModalTrailerContext();
   const data = !modal ? heroData : modalTrailer;
 
   if (!data)
@@ -33,9 +32,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
       </section>
     );
 
-  const { setModalTrailer } = useModalTrailer();
-  const { setIsModal } = useModal();
-
+  const { setModal } = useModalContext();
   const [watchProviders, setWatchProviders] = useState<TmdbResponseFlat['watchProviders']['results']['US'] | undefined>(
     undefined
   );
@@ -173,7 +170,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
         <button
           className='fdDetails--close'
           aria-label='Close View More Modal'
-          onPointerUp={() => setIsModal(undefined)}>
+          onPointerUp={() => setModal(undefined)}>
           <MaterialSymbolsLogoutSharp />
         </button>
       )}
@@ -218,7 +215,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
               className='fdDetails__extra__nav--details'
               aria-label={`View more details about ${data.title}`}
               onPointerUp={() => {
-                setIsModal('movie');
+                setModal('movie');
                 setModalTrailer(data);
               }}>
               More Details

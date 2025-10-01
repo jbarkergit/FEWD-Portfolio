@@ -3,7 +3,7 @@ import GenericCarouselNavigation from '~/film-database/components/carousel/Gener
 import type { TmdbMovieProvider, TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import GenericCarouselPoster from '~/film-database/components/carousel/GenericCarouselPoster';
 import { SvgSpinnersRingResize } from '~/film-database/assets/svg/icons';
-import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
+import { useVisibleCountContext } from '~/film-database/context/VisibleCountContext';
 
 export type GenericCarouselMap = {
   media: TmdbMovieProvider[];
@@ -22,7 +22,7 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
   heading: string;
   data: GenericCarouselMap[CN];
 }) {
-  const { chunkSize } = useChunkSize();
+  const { visibleCount } = useVisibleCountContext();
   const carouselRef = useRef<HTMLUListElement>(null);
   const isModal: boolean =
     carouselName === 'media'
@@ -76,7 +76,7 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
                   key={`${carouselName}-carousel-${carouselIndex}-li-${posterIndex}`}
                 />
               ))
-            : Array.from({ length: isModal ? chunkSize.modal : chunkSize.viewport }).map((_, i) => (
+            : Array.from({ length: isModal ? visibleCount.modal : visibleCount.viewport }).map((_, i) => (
                 <li
                   className='genericCarousel__wrapper__ul__loading'
                   key={`generic-carousel-${carouselName}-ul-loader-${i}`}>
@@ -86,7 +86,6 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
         </ul>
         <GenericCarouselNavigation
           dataLength={data.length}
-          chunkSizePref={isModal ? 'modal' : 'viewport'}
           reference={carouselRef.current}
         />
       </div>

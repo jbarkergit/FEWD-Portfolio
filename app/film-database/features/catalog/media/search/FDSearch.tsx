@@ -2,13 +2,13 @@ import { useState, useRef, type ChangeEvent } from 'react';
 import { IcOutlinePlayCircle, IcBaselineSearch } from '~/film-database/assets/svg/icons';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
-import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
-import { useHeroData } from '~/film-database/context/HeroDataContext';
+import { useVisibleCountContext } from '~/film-database/context/VisibleCountContext';
+import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
 import englishBadWordsRaw from 'naughty-words/en.json';
 
 const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
-  const { setHeroData } = useHeroData();
-  const { chunkSize } = useChunkSize();
+  const { setHeroData } = useHeroDataContext();
+  const { visibleCount } = useVisibleCountContext();
 
   const labelRef = useRef<HTMLLabelElement>(null);
 
@@ -99,7 +99,7 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
         data-anim={searchResults && searchResults.length ? 'enabled' : 'disabled'}>
         <ul className='fdSearchBar__results__ul'>
           {searchResults && searchResults.length
-            ? searchResults.slice(0, chunkSize.viewport).map((props, index) => (
+            ? searchResults.slice(0, visibleCount.viewport).map((props, index) => (
                 <li
                   className='fdSearchBar__results__ul__li'
                   key={`fd-search-result-${index}`}>
@@ -120,7 +120,7 @@ const FDSearch = ({ orientation }: { orientation: 'desktop' | 'mobile' }) => {
                   </div>
                 </li>
               ))
-            : Array.from({ length: chunkSize.viewport }).map((_, i) => (
+            : Array.from({ length: visibleCount.viewport }).map((_, i) => (
                 <li
                   className='fdSearchBar__results__ul__li'
                   key={`fd-search-result-placeholder-${i}`}></li>

@@ -1,10 +1,7 @@
-// Deps
 import { useEffect, useState, type JSX } from 'react';
-// Lib
 import type { YouTubePlayer } from 'react-youtube';
-// Assets
 import { MaterialSymbolsPause, IcOutlinePlayCircle, SvgSpinnersRingResize } from '../../../assets/svg/icons';
-import { useModal } from '~/film-database/context/ModalContext';
+import { useModalContext } from '~/film-database/context/ModalContext';
 
 const IFrameControllerPlayPause = ({
   player,
@@ -13,7 +10,7 @@ const IFrameControllerPlayPause = ({
   player: YouTubePlayer;
   playState: 'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined;
 }) => {
-  const { isModal } = useModal();
+  const { modal } = useModalContext();
   const [playStateSymbolComponent, setPlayStateSymbolComponent] = useState<JSX.Element>(<SvgSpinnersRingResize />);
 
   // Reflect player state
@@ -44,8 +41,8 @@ const IFrameControllerPlayPause = ({
 
   // Pause video when modal opens
   useEffect(() => {
-    if (isModal) player.pauseVideo();
-  }, [isModal]);
+    if (modal) player.pauseVideo();
+  }, [modal]);
 
   return (
     <button

@@ -85,7 +85,7 @@ export const UserCollectionProvider = ({ children }: { children: ReactNode }) =>
   return <Context.Provider value={{ userCollections, setUserCollections }}>{children}</Context.Provider>;
 };
 
-export const useUserCollection = () => {
+export const useUserCollectionContext = () => {
   const context = useContext(Context);
   if (!context) throw new Error('A provider is required to consume UserCollection.');
   return context;

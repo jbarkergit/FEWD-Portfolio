@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef, type Dispatch, type SetStateAction } from 'react';
 import { TablerCategoryPlus, TablerEdit, MaterialSymbolsLogoutSharp } from '~/film-database/assets/svg/icons';
-import { useModal } from '~/film-database/context/ModalContext';
-import { useUserCollection } from '~/film-database/context/UserCollectionContext';
+import { useModalContext } from '~/film-database/context/ModalContext';
+import { useUserCollectionContext } from '~/film-database/context/UserCollectionContext';
 import { addIdToCollection } from '~/film-database/utility/addIdToCollection';
 
 type Props = {
@@ -10,8 +10,8 @@ type Props = {
 };
 
 const FDCollectionsMenu = memo(({ isEditMode, setIsEditMode }: Props) => {
-  const { userCollections, setUserCollections } = useUserCollection();
-  const { setIsModal } = useModal();
+  const { userCollections, setUserCollections } = useUserCollectionContext();
+  const { setModal } = useModalContext();
   const editBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const FDCollectionsMenu = memo(({ isEditMode, setIsEditMode }: Props) => {
       <button
         className='fdCollectionsMenu--close'
         aria-label='Close collections modal'
-        onPointerUp={() => setIsModal(undefined)}>
+        onPointerUp={() => setModal(undefined)}>
         <MaterialSymbolsLogoutSharp />
       </button>
     </div>

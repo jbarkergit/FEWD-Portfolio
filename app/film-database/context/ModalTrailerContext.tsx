@@ -8,7 +8,7 @@ import {
   type SetStateAction,
 } from 'react';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
-import { useUserCollection } from '~/film-database/context/UserCollectionContext';
+import { useUserCollectionContext } from '~/film-database/context/UserCollectionContext';
 
 const Context = createContext<
   | {
@@ -18,14 +18,12 @@ const Context = createContext<
   | undefined
 >(undefined);
 
-export const TrailerQueueProvider = ({ children }: { children: ReactNode }) => {
+export const ModalTrailerProvider = ({ children }: { children: ReactNode }) => {
   const [modalTrailer, setModalTrailer] = useState<TmdbMovieProvider | undefined>(undefined);
-  const { userCollections } = useUserCollection();
+  const { userCollections } = useUserCollectionContext();
 
   useEffect(() => {
-    /**
-     * Sets the modal trailer data for the featured media item.
-     */
+    /** Sets the modal trailer data for the featured media item */
     const handleModalTrailerQueue = (): void => {
       if (userCollections) {
         const collection = userCollections['user-collection-0'];
@@ -43,7 +41,7 @@ export const TrailerQueueProvider = ({ children }: { children: ReactNode }) => {
   return <Context.Provider value={{ modalTrailer, setModalTrailer }}>{children}</Context.Provider>;
 };
 
-export const useModalTrailer = () => {
+export const useModalTrailerContext = () => {
   const context = useContext(Context);
   if (!context) throw new Error('A provider is required to consume TrailerQueue.');
   return context;

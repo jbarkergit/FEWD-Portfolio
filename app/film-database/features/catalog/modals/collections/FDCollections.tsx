@@ -3,10 +3,10 @@ import FDCollectionsModalMenu from './FDCollectionsMenu';
 import FDiFrame from '~/film-database/components/iframe/FDiFrame';
 import FDCollectionsErrorHandler from './FDCollectionsErrorHandler';
 import FDCollectionsCollection from './FDCollectionsCollection';
-import { useUserCollection } from '~/film-database/context/UserCollectionContext';
+import { useUserCollectionContext } from '~/film-database/context/UserCollectionContext';
 
 const FDCollections = () => {
-  const { userCollections } = useUserCollection(); // Context
+  const { userCollections } = useUserCollectionContext(); // Context
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false); // Edit mode flag
 

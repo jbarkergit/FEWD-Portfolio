@@ -9,11 +9,10 @@ const Context = createContext<
 
 export const RootRefProvider = ({ children }: { children: ReactNode }) => {
   const root = useRef<HTMLDivElement>(null);
-
   return <Context.Provider value={{ root }}>{children}</Context.Provider>;
 };
 
-export const useRootRef = () => {
+export const useRootRefContext = () => {
   const context = useContext(Context);
   if (!context) throw new Error('A provider is required to consume ChunkSize.');
   return context;

@@ -1,11 +1,12 @@
 import { useRef, type ReactNode, useCallback, useEffect } from 'react';
 import { BxDotsVerticalRounded, IcOutlinePlayCircle, TablerCategoryPlus } from '~/film-database/assets/svg/icons';
 import type { GenericCarouselMap } from '~/film-database/components/carousel/GenericCarousel';
-import { useChunkSize } from '~/film-database/context/ChunkSizeContext';
-import { useHeroData } from '~/film-database/context/HeroDataContext';
-import { useModal } from '~/film-database/context/ModalContext';
-import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
-import { useUserCollection } from '~/film-database/context/UserCollectionContext';
+import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
+import { useModalContext } from '~/film-database/context/ModalContext';
+import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
+import { usePersonContext } from '~/film-database/context/PersonContext';
+import { useUserCollectionContext } from '~/film-database/context/UserCollectionContext';
+import { useVisibleCountContext } from '~/film-database/context/VisibleCountContext';
 import { addIdToCollection } from '~/film-database/utility/addIdToCollection';
 
 function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
@@ -19,11 +20,12 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   posterIndex: number;
   entry: GenericCarouselMap[K][number];
 }) {
-  const { userCollections, setUserCollections } = useUserCollection();
-  const { setHeroData } = useHeroData();
-  const { chunkSize } = useChunkSize();
-  const { setIsModal, setPerson } = useModal();
-  const { setModalTrailer } = useModalTrailer();
+  const { userCollections, setUserCollections } = useUserCollectionContext();
+  const { setHeroData } = useHeroDataContext();
+  const { visibleCount } = useVisibleCountContext();
+  const { setModal } = useModalContext();
+  const { setPerson } = usePersonContext();
+  const { setModalTrailer } = useModalTrailerContext();
 
   const dropdownRef = useRef<HTMLUListElement>(null);
 
@@ -49,7 +51,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
   const Parent = ({ children }: { children: ReactNode }) => (
     <li
       className='genericCarousel__wrapper__ul__li'
-      data-hidden={posterIndex < chunkSize.viewport + 1 ? 'false' : 'true'}>
+      data-hidden={posterIndex < visibleCount.viewport + 1 ? 'false' : 'true'}>
       {children}
     </li>
   );
@@ -61,7 +63,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
       <li
         className='genericCarousel__wrapper__ul__li'
         onPointerLeave={() => dropdownRef.current?.setAttribute('data-open', 'false')}
-        data-hidden={posterIndex < chunkSize.viewport + 1 ? 'false' : 'true'}>
+        data-hidden={posterIndex < visibleCount.viewport + 1 ? 'false' : 'true'}>
         <picture className='genericCarousel__wrapper__ul__li__picture'>
           <img
             className='genericCarousel__wrapper__ul__li__picture--img'
@@ -134,7 +136,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
         <button
           aria-label={`Read more about ${cinemaEntry.name}`}
           onPointerUp={() => {
-            setIsModal('person');
+            setModal('person');
             setPerson(cinemaEntry.id);
           }}>
           <picture
@@ -144,7 +146,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
               <img
                 src={`https://image.tmdb.org/t/p/w780/${cinemaEntry.profile_path}`}
                 alt={`${cinemaEntry.name}`}
-                fetchPriority={carouselIndex <= chunkSize.viewport ? 'high' : 'low'}
+                fetchPriority={carouselIndex <= visibleCount.viewport ? 'high' : 'low'}
               />
             ) : (
               <img
@@ -170,10 +172,10 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
         className='genericCarousel__wrapper__ul__li'
         onPointerDown={() => {
           setModalTrailer(mediaEntry);
-          setIsModal('movie');
+          setModal('movie');
         }}
         onPointerLeave={() => dropdownRef.current?.setAttribute('data-open', 'false')}
-        data-hidden={posterIndex < chunkSize.viewport + 1 ? 'false' : 'true'}>
+        data-hidden={posterIndex < visibleCount.viewport + 1 ? 'false' : 'true'}>
         <picture className='genericCarousel__wrapper__ul__li__picture'>
           <img
             className='genericCarousel__wrapper__ul__li__picture--img'

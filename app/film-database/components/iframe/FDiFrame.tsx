@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import FDiFramePlayer from './player/FDiFramePlayer';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
-import { useHeroData } from '~/film-database/context/HeroDataContext';
-import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
+import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
+import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
 
 /** This component utilizes YouTube Player API
  * https://developers.google.com/youtube/iframe_api_reference
@@ -11,8 +11,8 @@ import { useModalTrailer } from '~/film-database/context/ModalTrailerContext';
  */
 
 const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
-  const { heroData } = useHeroData();
-  const { modalTrailer } = useModalTrailer();
+  const { heroData } = useHeroDataContext();
+  const { modalTrailer } = useModalTrailerContext();
   const [trailers, setTrailers] = useState<TmdbResponseFlat['videos']['results'] | undefined>(undefined);
 
   useEffect(() => {

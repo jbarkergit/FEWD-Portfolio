@@ -1,6 +1,6 @@
 import { useEffect, useState, type SVGProps } from 'react';
 import type { YouTubePlayer } from 'react-youtube';
-import { useHeroData } from '~/film-database/context/HeroDataContext';
+import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
 
 function IcTwotoneFullscreen(props: SVGProps<SVGSVGElement>) {
   return (
@@ -21,7 +21,7 @@ function IcTwotoneFullscreen(props: SVGProps<SVGSVGElement>) {
 
 const IFrameControllerFullscreen = ({ player }: { player: YouTubePlayer }) => {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-  const { heroData } = useHeroData();
+  const { heroData } = useHeroDataContext();
 
   useEffect(() => {
     const changePlayerOpts = async () => {
