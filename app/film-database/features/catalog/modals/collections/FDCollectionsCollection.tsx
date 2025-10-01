@@ -366,9 +366,7 @@ const FDCollectionsCollection = memo(
               mapIndex={mapIndex}
               data={data}
               isEditMode={isEditMode}
-              ref={(node) => {
-                grandChildRef.current = node;
-              }}
+              ref={grandChildRef}
               sensorRef={sensorRef}
             />
             {grandChildRef.current && (
