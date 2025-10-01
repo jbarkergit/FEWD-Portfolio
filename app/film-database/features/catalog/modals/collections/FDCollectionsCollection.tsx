@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef } from 'react';
+import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 import FDCollectionsCollectionHeader from './FDCollectionsCollectionHeader';
 import FDCollectionsCollectionUl from './FDCollectionsCollectionUl';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
@@ -43,24 +43,20 @@ const createTargetDefault = (): Target => ({
   listItemIndex: NOT_FOUND_INDEX,
 });
 
+type Props = {
+  mapIndex: number;
+  header: string;
+  data: TmdbMovieProvider[] | null;
+  isEditMode: boolean;
+  ulRefs: React.RefObject<HTMLUListElement[]>;
+  triggerError: () => void;
+};
+
 const FDCollectionsCollection = memo(
-  ({
-    mapIndex,
-    header,
-    data,
-    isEditMode,
-    ulRef,
-    ulRefs,
-    triggerError,
-  }: {
-    mapIndex: number;
-    header: string;
-    data: TmdbMovieProvider[] | null;
-    isEditMode: boolean;
-    ulRef: (reference: HTMLUListElement) => void;
-    ulRefs: React.RefObject<HTMLUListElement[]>;
-    triggerError: () => void;
-  }) => {
+  forwardRef<HTMLUListElement, Props>(({ mapIndex, header, data, isEditMode, ulRefs, triggerError }, ref) => {
+    const grandChildRef = useRef<HTMLUListElement>(null);
+    useImperativeHandle(ref, () => grandChildRef.current!, [grandChildRef]);
+
     // Context
     const { userCollections, setUserCollections } = useUserCollectionContext();
     const { setModalTrailer } = useModalTrailerContext();
@@ -88,7 +84,7 @@ const FDCollectionsCollection = memo(
       }
 
       // Re-attach (remove first to guarantee single registration)
-      const ul = ulRefs.current[mapIndex];
+      const ul = grandChildRef.current;
 
       if (ul) {
         ul.removeEventListener('pointermove', pointerMove);
@@ -107,7 +103,7 @@ const FDCollectionsCollection = memo(
 
     /** Sets modal trailer */
     function handleModalTrailer(): void {
-      const ul = ulRefs.current[mapIndex];
+      const ul = grandChildRef.current;
       const listItems: Element[] | null = ul ? Array.from(ul.children) : null;
 
       if (!listItems) {
@@ -340,7 +336,7 @@ const FDCollectionsCollection = memo(
 
     /** Handles module's event listeners */
     useEffect(() => {
-      const ul = ulRefs.current[mapIndex];
+      const ul = grandChildRef.current;
       if (!ul) return;
 
       ul.addEventListener('pointerdown', pointerDown);
@@ -370,19 +366,21 @@ const FDCollectionsCollection = memo(
               mapIndex={mapIndex}
               data={data}
               isEditMode={isEditMode}
-              ref={ulRef}
+              ref={(node) => {
+                grandChildRef.current = node;
+              }}
               sensorRef={sensorRef}
             />
-            {ulRefs.current[mapIndex] && (
+            {grandChildRef.current && (
               <GenericCarouselNavigation
                 dataLength={data.length}
-                reference={ulRefs.current[mapIndex]}
+                reference={grandChildRef.current}
                 isModal={true}
               />
             )}
           </div>
         </section>
       );
-  }
+  })
 );
 export default FDCollectionsCollection;

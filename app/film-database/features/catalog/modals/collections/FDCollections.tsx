@@ -7,15 +7,12 @@ import { useUserCollectionContext } from '~/film-database/context/UserCollection
 
 const FDCollections = () => {
   const { userCollections } = useUserCollectionContext(); // Context
-
   const [isEditMode, setIsEditMode] = useState<boolean>(false); // Edit mode flag
-
   const errorRef = useRef<HTMLDivElement>(null); // Reference storage to errors occuring in the drop and drag logic
-
-  const ulRefs = useRef<HTMLUListElement[]>([]);
+  const ulRefs = useRef<HTMLUListElement[]>([]); // Collection of mapped ULs, must live within this scope
 
   /** Stores unordered list dom nodes as an array reference */
-  const ulRef = (reference: HTMLUListElement): void => {
+  const passRefToArray = (reference: HTMLUListElement): void => {
     if (reference && !ulRefs.current.includes(reference)) {
       ulRefs.current.push(reference);
     }
@@ -50,11 +47,13 @@ const FDCollections = () => {
         {Object.values(userCollections).map(({ header, data }, index) => (
           <FDCollectionsCollection
             key={`user-collections-collection-${index}`}
+            ref={(node) => {
+              if (node) passRefToArray(node);
+            }}
             mapIndex={index}
             header={header}
             data={data}
             isEditMode={isEditMode}
-            ulRef={ulRef}
             ulRefs={ulRefs}
             triggerError={triggerError}
           />

@@ -21,7 +21,7 @@ const EmptyListItem = (): JSX.Element => {
 };
 
 const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
-  ({ mapIndex, data, isEditMode, sensorRef }, ulRef) => {
+  ({ mapIndex, data, isEditMode, sensorRef }, ref) => {
     const { visibleCount } = useVisibleCountContext();
     const { modal } = visibleCount;
 
@@ -88,7 +88,7 @@ const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
 
     return (
       <ul
-        ref={ulRef}
+        ref={ref}
         data-list-item-fx='true'
         data-edit-mode={isEditMode}
         aria-label='Reorderable list of movies'
