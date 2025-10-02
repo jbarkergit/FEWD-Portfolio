@@ -106,7 +106,7 @@ const FDiFramePlayer = ({
 
   return (
     <>
-      {playerRef.current && playerRef.current.internalPlayer ? (
+      {!modal && playerRef.current && playerRef.current.internalPlayer ? (
         <IFrameController
           player={playerRef.current.internalPlayer}
           playState={playState}
