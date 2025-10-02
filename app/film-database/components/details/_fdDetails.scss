@@ -33,16 +33,6 @@
   &[data-modal='false'] {
     justify-content: center;
   }
-  &__loader {
-    display: block;
-    width: 100%;
-    height: 250px;
-    & svg {
-      display: inline-block;
-      height: inherit;
-      aspect-ratio: 1/1;
-    }
-  }
   &--close {
     position: absolute;
     z-index: 13;

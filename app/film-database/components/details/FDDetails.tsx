@@ -1,51 +1,35 @@
 import { useEffect, useMemo, useState, type JSX } from 'react';
 import { Link } from 'react-router';
-import {
-  EmptyStar,
-  FullStar,
-  HalfStar,
-  MaterialSymbolsLogoutSharp,
-  SvgSpinnersRingResize,
-  TheMovieDatabaseLogo,
-} from '../../assets/svg/icons';
+import { MaterialSymbolsLogoutSharp, TheMovieDatabaseLogo } from '../../assets/svg/icons';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { tmdbDiscoveryIds } from '~/film-database/composables/const/tmdbDiscoveryIds';
 import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
 import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
-import DetailsCollectionDropdown from '~/film-database/components/details/DetailsCollectionDropdown';
 import { useModalContext } from '~/film-database/context/ModalContext';
+import VoteAverageVisual from '~/film-database/components/details/FDDetailsVoteAverageVisual';
+import FDDetailsCollectionDropdown from '~/film-database/components/details/FDDetailsCollectionDropdown';
+import FDDetailsAvailability from '~/film-database/components/details/FDDetailsAvailability';
 
 const discoveryIdMap = Object.fromEntries(Object.entries(tmdbDiscoveryIds).map(([k, v]) => [v, k]));
 
-// const earlyViewingProviders = ['Google Play Movies', 'Apple TV', 'Prime Video'];
-
 const FDDetails = ({ modal }: { modal: boolean }) => {
+  const { setModal } = useModalContext();
+
   const { heroData } = useHeroDataContext();
   const { modalTrailer, setModalTrailer } = useModalTrailerContext();
+
   const data = !modal ? heroData : modalTrailer;
+  if (!data) return;
 
-  if (!data)
-    return (
-      <section className='fdDetails'>
-        <div className='fdDetails__loader'>
-          <SvgSpinnersRingResize />
-        </div>
-      </section>
-    );
-
-  const { setModal } = useModalContext();
   const [watchProviders, setWatchProviders] = useState<TmdbResponseFlat['watchProviders']['results']['US'] | undefined>(
     undefined
   );
 
-  const genreIds = useMemo(() => data?.genre_ids.map((id) => discoveryIdMap[id]?.replaceAll('_', ' ')), [data]);
+  const genreIds = useMemo(() => data.genre_ids.map((id) => discoveryIdMap[id]?.replaceAll('_', ' ')), [data]);
 
-  /**
-   * Fetch watch providers when data changes
-   */
+  /** Fetch watch providers when data changes */
   useEffect(() => {
-    if (!data) return;
     const controller = new AbortController();
 
     const fetchWatchProviders = async () => {
@@ -57,94 +41,6 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
 
     return () => controller.abort();
   }, [data]);
-
-  /**
-   * Get visual representation of vote average as stars
-   */
-  const getVoteAverageVisual = useMemo((): JSX.Element | undefined => {
-    const voteAvg = data.vote_average;
-
-    // 0-10 vote scale (contains floating point value) floored and converted to 0-5 vote scale
-    const flooredVoteAverage: number = Math.floor(voteAvg / 2);
-
-    // Helpers
-    const hasFloatingValue: boolean = voteAvg % 2 >= 1;
-    const maxStars: number = 5;
-
-    const fullStars: number = flooredVoteAverage;
-    const halfStars: 1 | 0 = hasFloatingValue ? 1 : 0;
-    const emptyStars: number = maxStars - fullStars - halfStars;
-
-    const stars: JSX.Element[] = [
-      ...Array(fullStars).fill(<FullStar />),
-      ...Array(halfStars).fill(<HalfStar />),
-      ...Array(emptyStars).fill(<EmptyStar />),
-    ];
-
-    return (
-      <div
-        className='fdDetails__extra__inf__voteAvgVisual'
-        aria-label={`Vote Average ${voteAvg / 2} out of 5`}>
-        {stars.map((Star, index) => (
-          <span key={`star-${index}`}>{Star}</span>
-        ))}
-      </div>
-    );
-  }, [data]);
-
-  /**
-   * Determine a movie's availability on streaming platforms or theatres
-   * This includes early viewing options (rent or buy) on major platforms
-   * NOTE: TMDB API does not list early streaming providers as streaming service (.flatrate property)
-   * NOTE: TMDB API is not fully reliable, so we'll simplify "STREAMING" prompt as the primary handler of "EARLY VIEWING"
-   */
-  const getAvailability = useMemo((): JSX.Element | undefined => {
-    if (!data || !data.release_date) return undefined;
-
-    const releaseDate = data.release_date.replaceAll('-', ''); // YYYY/MM/DD ISO format converted to 8 digits
-    const releaseDates = {
-      year: parseInt(releaseDate.slice(0, 4), 10),
-      month: parseInt(releaseDate.slice(4, 6), 10) - 1,
-      day: parseInt(releaseDate.slice(6, 8), 10),
-    };
-
-    const release = new Date(releaseDates.year, releaseDates.month, releaseDates.day);
-    const local = new Date();
-
-    // NOTE: These variables are in priority order to ensure the correct status is prompted, handle them accordingly
-    const isReleased = release < local;
-    const isStreaming = watchProviders?.flatrate?.length;
-    const isPurchasable = watchProviders?.buy?.length;
-    const isRentable = watchProviders?.rent?.length;
-    const isInTheatres = local > release;
-    // const hasEarlyBuy = watchProviders.buy?.some((p) => earlyViewingProviders.includes(p.provider_name));
-    // const hasEarlyRent = watchProviders.rent?.some((p) => earlyViewingProviders.includes(p.provider_name));
-    // const hasEarlyViewing = hasEarlyBuy || hasEarlyRent;
-
-    if (!isReleased) {
-      return (
-        <div data-status='gold'>
-          {`Available ${release.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}`}
-        </div>
-      );
-    } else if (isStreaming) {
-      return <div data-status='green'>Available to Stream</div>;
-    } else if (isPurchasable && isRentable) {
-      return <div data-status='green'>Available for Purchase or Rent</div>;
-    } else if (isPurchasable) {
-      return <div data-status='green'>Available for Purchase</div>;
-    } else if (isRentable) {
-      return <div data-status='green'>Rental Available</div>;
-    } else if (isInTheatres) {
-      return <div data-status='green'>Playing In Theatres</div>;
-    } else {
-      return <div data-status='red'>Whoops! Viewing Options Unavailable.</div>;
-    }
-  }, [watchProviders]);
 
   /**
    * Reduce provider categories by combining providers that offer 'buy' and 'rent' options
@@ -208,8 +104,13 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
 
       <div className='fdDetails__extra'>
         <div className='fdDetails__extra__inf'>
-          {getVoteAverageVisual}
-          {getAvailability}
+          <VoteAverageVisual data={data} />
+          {watchProviders && (
+            <FDDetailsAvailability
+              data={data}
+              watchProviders={watchProviders}
+            />
+          )}
         </div>
         {!modal && (
           <nav className='fdDetails__extra__nav'>
@@ -222,7 +123,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
               }}>
               More Details
             </button>
-            <DetailsCollectionDropdown />
+            <FDDetailsCollectionDropdown />
           </nav>
         )}
       </div>

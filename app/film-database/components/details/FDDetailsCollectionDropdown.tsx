@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import { TablerCategoryPlus } from '~/film-database/assets/svg/icons';
 import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
 import { useUserCollectionContext } from '~/film-database/context/UserCollectionContext';
 import { addIdToCollection } from '~/film-database/utility/addIdToCollection';
 
-const DetailsCollectionDropdown = () => {
+const FDDetailsCollectionDropdown = memo(() => {
   const { userCollections, setUserCollections } = useUserCollectionContext();
   const { heroData } = useHeroDataContext();
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -84,6 +84,6 @@ const DetailsCollectionDropdown = () => {
       </ul>
     </div>
   );
-};
+});
 
-export default DetailsCollectionDropdown;
+export default FDDetailsCollectionDropdown;
