@@ -135,12 +135,12 @@ const FDiFrame = memo(({ type }: { type: 'hero' | 'modal' }) => {
       data-type={type}>
       {trailer ? (
         <>
-          {!modal && playerRef.current && playerRef.current.internalPlayer ? (
+          {modal === undefined && playerRef.current && playerRef.current.internalPlayer && (
             <IFrameController
               player={playerRef.current.internalPlayer}
               playState={playState}
             />
-          ) : null}
+          )}
           <YouTube
             ref={playerRef}
             videoId={`${trailer.key}`}
