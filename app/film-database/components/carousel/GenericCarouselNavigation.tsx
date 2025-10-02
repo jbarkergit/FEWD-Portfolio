@@ -34,7 +34,8 @@ const GenericCarouselNavigation = ({ dataLength, reference, isModal }: Props) =>
       const firstItem = listItems[0];
       if (!firstItem) return;
 
-      const marginLeft = parseInt(getComputedStyle(firstItem).marginLeft, 10) || 0;
+      const marginLeft =
+        parseInt(getComputedStyle(firstItem).marginLeft) || parseInt(getComputedStyle(reference.current).paddingLeft);
 
       const scrollPosition = targetEl.offsetLeft - reference.current.offsetLeft;
 
