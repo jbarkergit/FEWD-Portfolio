@@ -139,7 +139,9 @@ export const tmdbCall = async <T extends Arguments | Arguments[]>(
     return { key: arg && typeof arg === 'string' ? arg : undefined, response: undefined };
   });
 
-  const responses = await Promise.all(promises);
-  const result = Array.isArray(args) ? responses : responses[0];
+  const responses = await Promise.allSettled(promises);
+  const fulfilled = responses.filter((entry) => entry.status === 'fulfilled').map((f) => f.value as DataReturn<any>);
+
+  const result = Array.isArray(args) ? fulfilled : fulfilled[0];
   return result as CallResponse<T>;
 };
