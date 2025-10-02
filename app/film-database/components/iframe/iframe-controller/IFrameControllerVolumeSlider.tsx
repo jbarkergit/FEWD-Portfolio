@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import type { PointerEvent } from 'react';
-import { usePlayerVolumeContext } from '~/film-database/components/iframe/context/PlayerVolumeContext';
+import { usePlayerVolumeContext } from '~/film-database/components/iframe/iframe-controller/context/PlayerVolumeContext';
 
 const IFrameControllerVolumeSlider = () => {
   const { setPlayerVolume } = usePlayerVolumeContext();

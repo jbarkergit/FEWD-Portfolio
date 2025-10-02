@@ -4,7 +4,7 @@ import IFrameControllerVolumeIndicator from './IFrameControllerVolumeIndicator';
 import IFrameControllerVolumeSlider from './IFrameControllerVolumeSlider';
 import IFrameControllerTimeStamp from './IFrameControllerTimeStamp';
 import IFrameControllerSeeker from './IFrameControllerSeeker';
-import { PlayerVolumeProvider } from '~/film-database/components/iframe/context/PlayerVolumeContext';
+import { PlayerVolumeProvider } from '~/film-database/components/iframe/iframe-controller/context/PlayerVolumeContext';
 import type { PlayerPlayState } from '~/film-database/components/iframe/player/FDiFramePlayer';
 
 const IFrameController = ({ player, playState }: { player: YouTubePlayer; playState: PlayerPlayState }) => {
