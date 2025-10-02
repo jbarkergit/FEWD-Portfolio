@@ -63,7 +63,7 @@ const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
   const { userCollections, setUserCollections } = useUserCollectionContext();
 
   // Locally scoped state
-  const [trailers, setTrailers] = useState<TmdbResponseFlat['videos']['results'] | undefined>(undefined);
+  const [trailer, setTrailer] = useState<TmdbResponseFlat['videos']['results'][number] | undefined>(undefined);
   const [playState, setPlayState] = useState<PlayerPlayState>(undefined); // The player cannot be stateless due to the conditional rendering of IFrameController.
 
   // Player reference
@@ -77,8 +77,14 @@ const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
       if (!id) return;
 
       const videos = await tmdbCall(controller, { videos: id });
-      const filteredEntries = videos.response.results.filter((obj) => obj.name.includes('Trailer'));
-      setTrailers(filteredEntries);
+      let filteredEntries = videos.response.results.filter((obj) => obj.name.includes('Official Trailer'));
+
+      if (!filteredEntries.length) {
+        filteredEntries = videos.response.results.filter((obj) => obj.name.includes('Trailer'));
+      }
+
+      setTrailer(filteredEntries[0]);
+      console.log(filteredEntries);
     };
 
     fetchTrailer();
@@ -91,7 +97,7 @@ const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
     /** Non-modal content */
     if (!modal) {
       target.destroy();
-      setTrailers(undefined);
+      setTrailer(undefined);
       return;
     }
 
@@ -128,7 +134,7 @@ const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
     <section
       className='fdiFrame'
       data-type={type}>
-      {trailers && trailers.length ? (
+      {trailer ? (
         <>
           {!modal && playerRef.current && playerRef.current.internalPlayer ? (
             <IFrameController
@@ -138,11 +144,11 @@ const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
           ) : null}
           <YouTube
             ref={playerRef}
-            videoId={`${trailers[0]?.key}`}
+            videoId={`${trailer.key}`}
             opts={iFrameOptions}
             className='fdiFrame__player'
             iframeClassName='fdiFrame__player__iframe'
-            title={`YouTube video player: ${trailers[0]?.name}`}
+            title={`YouTube video player: ${trailer.name}`}
             style={undefined}
             loading={'eager'}
             onStateChange={(event: YouTubeEvent<number>) =>
