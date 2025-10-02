@@ -1,38 +1,23 @@
-// Deps
-import { useRef, useState } from 'react';
-import type { PointerEvent, Dispatch, SetStateAction } from 'react';
+import { useRef } from 'react';
+import type { PointerEvent } from 'react';
+import { usePlayerVolumeContext } from '~/film-database/components/iframe/context/PlayerVolumeContext';
 
-const IFrameControllerVolumeSlider = ({ setPlayerVolume }: { setPlayerVolume: Dispatch<SetStateAction<number>> }) => {
+const IFrameControllerVolumeSlider = () => {
+  const { setPlayerVolume } = usePlayerVolumeContext();
   const sliderRef = useRef<HTMLButtonElement>(null);
   const handleRef = useRef<HTMLSpanElement>(null);
-
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [dragTimeout, setDragTimeout] = useState<NodeJS.Timeout | null>(null);
+  const isDragging = useRef<boolean>(false);
 
   const moveHandle = (e: PointerEvent<HTMLButtonElement>) => {
-    if (sliderRef.current && handleRef.current && dragTimeout) {
-      const sliderRect: DOMRect = sliderRef.current.getBoundingClientRect();
-      const xOffset: number = e.clientX - sliderRect.left;
-      const position: number = (xOffset / sliderRect.width) * 100;
-      const clampedPosition: number = Math.min(100, Math.max(0, position));
+    if (!sliderRef.current || !handleRef.current) return;
 
-      handleRef.current.style.left = `${clampedPosition}%`;
-      setPlayerVolume(clampedPosition);
-    }
-  };
+    const sliderRect = sliderRef.current.getBoundingClientRect();
+    const xOffset = e.clientX - sliderRect.left;
+    const position = (xOffset / sliderRect.width) * 100;
+    const clampedPosition = Math.min(100, Math.max(0, position));
 
-  const handlePointerDown = () => {
-    const timeout = setTimeout(() => setIsDragging(true), 60);
-    setDragTimeout(timeout);
-  };
-
-  const handlePointerUp = (e: PointerEvent<HTMLButtonElement>) => {
-    if (dragTimeout) {
-      clearTimeout(dragTimeout);
-      setDragTimeout(null);
-    }
-    if (!isDragging) moveHandle(e);
-    setIsDragging(false);
+    handleRef.current.style.left = `${clampedPosition}%`;
+    setPlayerVolume(clampedPosition);
   };
 
   return (
@@ -40,12 +25,22 @@ const IFrameControllerVolumeSlider = ({ setPlayerVolume }: { setPlayerVolume: Di
       className='fdiFrame__controller__controls__slider'
       aria-label='Volume adjustment slider'
       ref={sliderRef}
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
-      onPointerLeave={handlePointerUp}
-      onPointerMove={(e: PointerEvent<HTMLButtonElement>) => moveHandle(e)}>
+      onPointerDown={() => (isDragging.current = true)}
+      onPointerMove={(e) => {
+        if (isDragging.current) moveHandle(e);
+      }}
+      onPointerUp={(e) => {
+        moveHandle(e);
+        isDragging.current = false;
+      }}
+      onPointerLeave={() => (isDragging.current = false)}>
       <span className='fdiFrame__controller__controls__slider--range' />
-      <span className='fdiFrame__controller__controls__slider--handle' aria-label='Volume adjustment knob' ref={handleRef} style={{ left: '0%' }} />
+      <span
+        className='fdiFrame__controller__controls__slider--handle'
+        aria-label='Volume adjustment knob'
+        ref={handleRef}
+        style={{ left: '0%' }}
+      />
     </button>
   );
 };

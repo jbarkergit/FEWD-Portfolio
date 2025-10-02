@@ -1,9 +1,6 @@
-// Deps
 import { useEffect, useRef, useState } from 'react';
-// Lib
 import type { YouTubePlayer } from 'react-youtube';
-// Assets
-import { MaterialSymbolsSettings } from '../../../assets/svg/icons';
+import { MaterialSymbolsSettings } from '../../../../assets/svg/icons';
 
 const IFrameControllerPlayback = ({
   player,

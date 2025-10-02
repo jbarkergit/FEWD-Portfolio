@@ -7,6 +7,17 @@ import { useUserCollectionContext } from '~/film-database/context/UserCollection
 import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
 import { useModalContext } from '~/film-database/context/ModalContext';
 
+type iFramePlayState = 'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering';
+export type PlayerPlayState = iFramePlayState | 'cued' | undefined;
+
+const playStates: Record<number, iFramePlayState> = {
+  [-1]: 'unstarted',
+  0: 'ended',
+  1: 'playing',
+  2: 'paused',
+  3: 'buffering',
+} as const;
+
 const FDiFramePlayer = ({
   trailers,
   setTrailers,
@@ -84,34 +95,8 @@ const FDiFramePlayer = ({
     setModalTrailer(nextTrailer);
   };
 
-  // Global player states
-  const [playState, setPlayState] = useState<
-    'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering' | 'cued' | undefined
-  >(undefined);
-
-  // playState
-  const onStateChange = (playState: number) => {
-    switch (playState) {
-      case -1:
-        setPlayState('unstarted');
-        break;
-      case 0:
-        setPlayState('ended');
-        break;
-      case 1:
-        setPlayState('playing');
-        break;
-      case 2:
-        setPlayState('paused');
-        break;
-      case 3:
-        setPlayState('buffering');
-        break;
-      default:
-        setPlayState('cued');
-        break;
-    }
-  };
+  // This component cannot be stateless due to the conditional rendering of IFrameController. This state exists solely to force a rerender on player ready.
+  const [playState, setPlayState] = useState<PlayerPlayState>(undefined);
 
   return (
     <>
@@ -130,7 +115,9 @@ const FDiFramePlayer = ({
         title={`YouTube video player: ${trailers[0]?.name}`}
         style={undefined}
         loading={'eager'}
-        onStateChange={(event: YouTubeEvent<number>) => onStateChange(event.data)}
+        onStateChange={(event: YouTubeEvent<number>) =>
+          setPlayState(playStates[event.data as keyof typeof playStates] ?? 'cued')
+        }
         // onPlaybackQualityChange={(event: YouTubeEvent<string>) => onPlaybackQualityChange(event.data)}
         onEnd={(event: YouTubeEvent) => destroyPlayer(event.target)}
         onError={(event: YouTubeEvent) => destroyPlayer(event.target)}

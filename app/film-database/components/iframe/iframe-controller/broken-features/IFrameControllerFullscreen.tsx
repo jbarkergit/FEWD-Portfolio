@@ -2,6 +2,8 @@ import { useEffect, useState, type SVGProps } from 'react';
 import type { YouTubePlayer } from 'react-youtube';
 import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
 
+/* Fullscreen requires a reload of the embed, which breaks the embed. */
+
 function IcTwotoneFullscreen(props: SVGProps<SVGSVGElement>) {
   return (
     <svg

@@ -1,6 +1,4 @@
-// Deps
 import { useState, useEffect } from 'react';
-// Lib
 import type { YouTubePlayer } from 'react-youtube';
 
 const formatTime = (time: number): string => {
@@ -18,6 +16,8 @@ const IFrameControllerTimeStamp = ({ player }: { player: YouTubePlayer }) => {
   const updatePlayerTimeStamp = async () => {
     const currentTime: number = await player.getCurrentTime();
     const videoDuration: number = await player.getDuration();
+
+    if (isNaN(currentTime) || isNaN(videoDuration)) return;
 
     setTimeStamp({ current: formatTime(currentTime), duration: formatTime(videoDuration) });
   };
