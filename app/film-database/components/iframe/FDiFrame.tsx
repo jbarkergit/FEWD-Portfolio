@@ -1,19 +1,73 @@
-import { useEffect, useState } from 'react';
-import FDiFramePlayer from './player/FDiFramePlayer';
+import { useEffect, useRef, useState } from 'react';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
 import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
+import { useModalContext } from '~/film-database/context/ModalContext';
+import { useUserCollectionContext } from '~/film-database/context/UserCollectionContext';
+import type { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
+import YouTube from 'react-youtube';
+import IFrameController from '~/film-database/components/iframe/iframe-controller/IFrameController';
 
 /** This component utilizes YouTube Player API
  * https://developers.google.com/youtube/iframe_api_reference
  * via third party library https://github.com/tjallingt/react-youtube
  */
 
+type iFramePlayState = 'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering';
+export type PlayerPlayState = iFramePlayState | 'cued' | undefined;
+
+const iFrameOptions: YouTubeProps['opts'] = {
+  height: undefined,
+  width: undefined,
+  playerVars: {
+    // https://developers.google.com/youtube/player_parameters
+    autoplay: 1,
+    cc_lang_pref: 'eng',
+    cc_load_policy: 1,
+    // color: undefined,
+    controls: 0, // 0 = disabled
+    disablekb: 0, // 1 = disabled
+    // enablejsapi?: 0 | 1 | undefined;
+    // end?: number | undefined;
+    fs: 0, // 0 = disabled
+    hl: 'eng',
+    iv_load_policy: 3,
+    loop: 0,
+    // origin: '',
+    // playlist?: string | undefined;
+    playsinline: 1,
+    rel: 0,
+    // start?: number | undefined;
+    widget_referrer: undefined,
+    // @ts-ignore
+    mute: 1, // Required for autoplay, is not defined by react-youtube lib
+  },
+} as const;
+
+const playStates: Record<number, iFramePlayState> = {
+  [-1]: 'unstarted',
+  0: 'ended',
+  1: 'playing',
+  2: 'paused',
+  3: 'buffering',
+} as const;
+
 const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
+  // Trailer related state
   const { heroData } = useHeroDataContext();
-  const { modalTrailer } = useModalTrailerContext();
+  const { modalTrailer, setModalTrailer } = useModalTrailerContext();
+
+  // Modal related state
+  const { modal } = useModalContext();
+  const { userCollections, setUserCollections } = useUserCollectionContext();
+
+  // Locally scoped state
   const [trailers, setTrailers] = useState<TmdbResponseFlat['videos']['results'] | undefined>(undefined);
+  const [playState, setPlayState] = useState<PlayerPlayState>(undefined); // The player cannot be stateless due to the conditional rendering of IFrameController.
+
+  // Player reference
+  const playerRef = useRef<YouTube | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -21,6 +75,7 @@ const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
     const fetchTrailer = async (): Promise<void> => {
       const id = type === 'hero' ? heroData?.id : modalTrailer?.id;
       if (!id) return;
+
       const videos = await tmdbCall(controller, { videos: id });
       const filteredEntries = videos.response.results.filter((obj) => obj.name.includes('Trailer'));
       setTrailers(filteredEntries);
@@ -31,17 +86,73 @@ const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
     return () => controller.abort();
   }, [heroData, modalTrailer]);
 
+  // Player destruction
+  const destroyPlayer = (target: YouTubePlayer) => {
+    /** Non-modal content */
+    if (!modal) {
+      target.destroy();
+      setTrailers(undefined);
+      return;
+    }
+
+    /** Modal content */
+    // ID Trailer Queue collection
+    let queueCollection = structuredClone(userCollections['user-collection-0']);
+    if (!queueCollection || !queueCollection.data) return;
+
+    // Capture current trailer index
+    const trailerQueue = queueCollection.data;
+    const currentTrailerIndex = trailerQueue.findIndex((prop) => prop.id === modalTrailer?.id);
+
+    // Set the next trailer at index + 1
+    let nextTrailer = trailerQueue[currentTrailerIndex + 1];
+    // If a trailer does not exist at index + 1, try index - 1
+    if (!nextTrailer) nextTrailer = trailerQueue[currentTrailerIndex - 1];
+    // If neither + 1 nor - 1 trailer exists, don't set a new trailer.
+    if (nextTrailer) setModalTrailer(nextTrailer);
+
+    // Remove ended trailer from queueCollection
+    queueCollection.data = queueCollection.data.filter((_, i) => i !== currentTrailerIndex);
+
+    // Update userCollections, removing the ended trailer
+    setUserCollections((prev) => ({
+      ...prev,
+      ['user-collection-0']: {
+        ...queueCollection,
+      },
+    }));
+  };
+
   // JSX
   return (
     <section
       className='fdiFrame'
       data-type={type}>
       {trailers && trailers.length ? (
-        <FDiFramePlayer
-          trailers={trailers}
-          setTrailers={setTrailers}
-          type={type}
-        />
+        <>
+          {!modal && playerRef.current && playerRef.current.internalPlayer ? (
+            <IFrameController
+              player={playerRef.current.internalPlayer}
+              playState={playState}
+            />
+          ) : null}
+          <YouTube
+            ref={playerRef}
+            videoId={`${trailers[0]?.key}`}
+            opts={iFrameOptions}
+            className='fdiFrame__player'
+            iframeClassName='fdiFrame__player__iframe'
+            title={`YouTube video player: ${trailers[0]?.name}`}
+            style={undefined}
+            loading={'eager'}
+            onStateChange={(event: YouTubeEvent<number>) =>
+              setPlayState(playStates[event.data as keyof typeof playStates] ?? 'cued')
+            }
+            // onPlaybackQualityChange={(event: YouTubeEvent<string>) => onPlaybackQualityChange(event.data)}
+            onEnd={(event: YouTubeEvent) => destroyPlayer(event.target)}
+            onError={(event: YouTubeEvent) => destroyPlayer(event.target)}
+          />
+        </>
       ) : (
         <picture className='fdiFrame__player'>
           <img

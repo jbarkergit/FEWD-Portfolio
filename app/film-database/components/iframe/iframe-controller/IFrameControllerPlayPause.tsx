@@ -2,7 +2,7 @@ import { useEffect, useState, type JSX, type SVGProps } from 'react';
 import type { YouTubePlayer } from 'react-youtube';
 import { SvgSpinnersRingResize } from '../../../assets/svg/icons';
 import { useModalContext } from '~/film-database/context/ModalContext';
-import type { PlayerPlayState } from '~/film-database/components/iframe/player/FDiFramePlayer';
+import type { PlayerPlayState } from '~/film-database/components/iframe/FDiFrame';
 
 function MaterialSymbolsPauseRounded(props: SVGProps<SVGSVGElement>) {
   return (
