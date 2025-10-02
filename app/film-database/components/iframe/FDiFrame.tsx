@@ -56,7 +56,6 @@ const FDiFrame = memo(({ type }: { type: 'hero' | 'modal' }) => {
       }
 
       setTrailer(filteredEntries[0]);
-      console.log(filteredEntries);
     };
 
     fetchTrailer();

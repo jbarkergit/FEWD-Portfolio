@@ -25,7 +25,6 @@ const FDAccountModalPoster = memo(() => {
       if (typeof valI === 'number' && typeof valJ === 'number') {
         [nextQueue[i], nextQueue[j]] = [valJ, valI];
       } else {
-        console.log(nextQueue);
         console.error('Failure to shuffle poster indexes.');
       }
     }
