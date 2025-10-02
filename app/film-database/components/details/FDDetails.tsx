@@ -28,7 +28,9 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
   if (!data)
     return (
       <section className='fdDetails'>
-        <SvgSpinnersRingResize />
+        <div className='fdDetails__loader'>
+          <SvgSpinnersRingResize />
+        </div>
       </section>
     );
 
