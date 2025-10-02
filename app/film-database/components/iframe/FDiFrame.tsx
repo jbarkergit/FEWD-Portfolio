@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
@@ -17,34 +17,6 @@ import IFrameController from '~/film-database/components/iframe/iframe-controlle
 type iFramePlayState = 'unstarted' | 'ended' | 'playing' | 'paused' | 'buffering';
 export type PlayerPlayState = iFramePlayState | 'cued' | undefined;
 
-const iFrameOptions: YouTubeProps['opts'] = {
-  height: undefined,
-  width: undefined,
-  playerVars: {
-    // https://developers.google.com/youtube/player_parameters
-    autoplay: 1,
-    cc_lang_pref: 'eng',
-    cc_load_policy: 1,
-    // color: undefined,
-    controls: 0, // 0 = disabled
-    disablekb: 0, // 1 = disabled
-    // enablejsapi?: 0 | 1 | undefined;
-    // end?: number | undefined;
-    fs: 0, // 0 = disabled
-    hl: 'eng',
-    iv_load_policy: 3,
-    loop: 0,
-    // origin: '',
-    // playlist?: string | undefined;
-    playsinline: 1,
-    rel: 0,
-    // start?: number | undefined;
-    widget_referrer: undefined,
-    // @ts-ignore
-    mute: 1, // Required for autoplay, is not defined by react-youtube lib
-  },
-} as const;
-
 const playStates: Record<number, iFramePlayState> = {
   [-1]: 'unstarted',
   0: 'ended',
@@ -53,7 +25,7 @@ const playStates: Record<number, iFramePlayState> = {
   3: 'buffering',
 } as const;
 
-const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
+const FDiFrame = memo(({ type }: { type: 'hero' | 'modal' }) => {
   // Trailer related state
   const { heroData } = useHeroDataContext();
   const { modalTrailer, setModalTrailer } = useModalTrailerContext();
@@ -129,6 +101,34 @@ const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
     }));
   };
 
+  const iFrameOptions: YouTubeProps['opts'] = {
+    height: undefined,
+    width: undefined,
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+      cc_lang_pref: 'eng',
+      cc_load_policy: 1,
+      // color: undefined,
+      controls: type === 'hero' ? 0 : 1, // 0 = disabled
+      disablekb: type === 'hero' ? 1 : 0, // 1 = disabled
+      // enablejsapi?: 0 | 1 | undefined;
+      // end?: number | undefined;
+      fs: type === 'hero' ? 0 : 1, // 0 = disabled
+      hl: 'eng',
+      iv_load_policy: 3,
+      loop: 0,
+      // origin: '',
+      // playlist?: string | undefined;
+      playsinline: 1,
+      rel: 0,
+      // start?: number | undefined;
+      widget_referrer: undefined,
+      // @ts-ignore
+      mute: 1, // Required for autoplay, is not defined by react-youtube lib
+    },
+  } as const;
+
   // JSX
   return (
     <section
@@ -169,6 +169,6 @@ const FDiFrame = ({ type }: { type: 'hero' | 'modal' }) => {
       )}
     </section>
   );
-};
+});
 
 export default FDiFrame;
