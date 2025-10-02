@@ -29,7 +29,7 @@ const FDiFramePlayer = ({
 }) => {
   // Context
   const { modal } = useModalContext();
-  const { userCollections } = useUserCollectionContext();
+  const { userCollections, setUserCollections } = useUserCollectionContext();
   const { modalTrailer, setModalTrailer } = useModalTrailerContext();
 
   // iFrame options
@@ -66,33 +66,39 @@ const FDiFramePlayer = ({
 
   // Player destruction
   const destroyPlayer = (target: YouTubePlayer) => {
-    const destroy = (): void => {
+    /** Non-modal content */
+    if (!modal) {
       target.destroy();
       setTrailers(undefined);
-    };
-
-    if (!modal) {
-      destroy();
       return;
     }
 
-    const queueCollection = userCollections['user-collection-0'];
+    /** Modal content */
+    // ID Trailer Queue collection
+    let queueCollection = structuredClone(userCollections['user-collection-0']);
+    if (!queueCollection || !queueCollection.data) return;
 
-    if (!queueCollection?.data) {
-      destroy();
-      return;
-    }
+    // Capture current trailer index
+    const trailerQueue = queueCollection.data;
+    const currentTrailerIndex = trailerQueue.findIndex((prop) => prop.id === modalTrailer?.id);
 
-    const queueData = queueCollection.data;
-    const endedTrailerId = queueData.findIndex((prop) => prop.id === modalTrailer?.id);
-    const nextTrailer = queueData[endedTrailerId + 1];
+    // Set the next trailer at index + 1
+    let nextTrailer = trailerQueue[currentTrailerIndex + 1];
+    // If a trailer does not exist at index + 1, try index - 1
+    if (!nextTrailer) nextTrailer = trailerQueue[currentTrailerIndex - 1];
+    // If neither + 1 nor - 1 trailer exists, don't set a new trailer.
+    if (nextTrailer) setModalTrailer(nextTrailer);
 
-    if (!nextTrailer) {
-      destroy();
-      return;
-    }
+    // Remove ended trailer from queueCollection
+    queueCollection.data = queueCollection.data.filter((_, i) => i !== currentTrailerIndex);
 
-    setModalTrailer(nextTrailer);
+    // Update userCollections, removing the ended trailer
+    setUserCollections((prev) => ({
+      ...prev,
+      ['user-collection-0']: {
+        ...queueCollection,
+      },
+    }));
   };
 
   // This component cannot be stateless due to the conditional rendering of IFrameController. This state exists solely to force a rerender on player ready.
