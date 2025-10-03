@@ -6,8 +6,9 @@ import IFrameControllerTimeStamp from './IFrameControllerTimeStamp';
 import IFrameControllerSeeker from './IFrameControllerSeeker';
 import { PlayerVolumeProvider } from '~/film-database/components/iframe/iframe-controller/context/PlayerVolumeContext';
 import type { PlayerPlayState } from '~/film-database/components/iframe/FDiFrame';
+import { memo } from 'react';
 
-const IFrameController = ({ player, playState }: { player: YouTubePlayer; playState: PlayerPlayState }) => {
+const IFrameController = memo(({ player, playState }: { player: YouTubePlayer; playState: PlayerPlayState }) => {
   if (!player) return null;
   return (
     <div className='fdiFrame__controller'>
@@ -25,6 +26,6 @@ const IFrameController = ({ player, playState }: { player: YouTubePlayer; playSt
       </div>
     </div>
   );
-};
+});
 
 export default IFrameController;

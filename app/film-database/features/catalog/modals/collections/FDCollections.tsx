@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import FDCollectionsModalMenu from './FDCollectionsMenu';
+import FDCollectionsMenu from './FDCollectionsMenu';
 import FDiFrame from '~/film-database/components/iframe/FDiFrame';
 import FDCollectionsErrorHandler from './FDCollectionsErrorHandler';
 import FDCollectionsCollection from './FDCollectionsCollection';
@@ -59,7 +59,7 @@ const FDCollections = () => {
           />
         ))}
       </section>
-      <FDCollectionsModalMenu
+      <FDCollectionsMenu
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
       />

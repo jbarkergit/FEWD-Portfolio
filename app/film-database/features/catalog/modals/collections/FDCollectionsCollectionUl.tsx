@@ -1,4 +1,4 @@
-import { forwardRef, type JSX, type RefObject, useMemo } from 'react';
+import { forwardRef, type JSX, memo, type RefObject, useMemo } from 'react';
 import { IcBaselinePlus } from '~/film-database/assets/svg/icons';
 import type { Sensor } from '~/film-database/features/catalog/modals/collections/FDCollectionsCollection';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
@@ -20,8 +20,8 @@ const EmptyListItem = (): JSX.Element => {
   );
 };
 
-const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
-  ({ mapIndex, data, isEditMode, sensorRef }, ref) => {
+const FDCollectionsCollectionUl = memo(
+  forwardRef<HTMLUListElement, Props>(({ mapIndex, data, isEditMode, sensorRef }, ref) => {
     const { visibleCount } = useVisibleCountContext();
     const { modal } = visibleCount;
 
@@ -96,7 +96,7 @@ const FDCollectionsCollectionUl = forwardRef<HTMLUListElement, Props>(
         {buildJSX}
       </ul>
     );
-  }
+  })
 );
 
 export default FDCollectionsCollectionUl;

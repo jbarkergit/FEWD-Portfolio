@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect, useState, useLayoutEffect, type RefObject } from 'react';
+import { useRef, useCallback, useEffect, useState, useLayoutEffect, type RefObject, memo } from 'react';
 import { IcBaselineArrowLeft, IcBaselineArrowRight } from '~/film-database/assets/svg/icons';
 import { useVisibleCountContext } from '~/film-database/context/VisibleCountContext';
 
@@ -8,7 +8,7 @@ type Props = {
   isModal: boolean;
 };
 
-const GenericCarouselNavigation = ({ dataLength, reference, isModal }: Props) => {
+const GenericCarouselNavigation = memo(({ dataLength, reference, isModal }: Props) => {
   const [forceRerender, setForceRerender] = useState(false);
 
   useLayoutEffect(() => {
@@ -82,6 +82,6 @@ const GenericCarouselNavigation = ({ dataLength, reference, isModal }: Props) =>
       </button>
     </nav>
   );
-};
+});
 
 export default GenericCarouselNavigation;

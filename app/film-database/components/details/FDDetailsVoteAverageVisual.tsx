@@ -1,9 +1,9 @@
-import { memo, type JSX } from 'react';
+import { type JSX } from 'react';
 import { FullStar, HalfStar, EmptyStar } from '~/film-database/assets/svg/icons';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 
 /** Get visual representation of vote average as stars */
-const VoteAverageVisual = memo(({ data }: { data: TmdbMovieProvider }): JSX.Element | undefined => {
+const VoteAverageVisual = ({ data }: { data: TmdbMovieProvider }): JSX.Element | undefined => {
   const voteAvg = data.vote_average;
 
   // 0-10 vote scale (contains floating point value) floored and converted to 0-5 vote scale
@@ -32,6 +32,6 @@ const VoteAverageVisual = memo(({ data }: { data: TmdbMovieProvider }): JSX.Elem
       ))}
     </div>
   );
-});
+};
 
 export default VoteAverageVisual;

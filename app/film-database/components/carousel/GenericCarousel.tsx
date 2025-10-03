@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import GenericCarouselNavigation from '~/film-database/components/carousel/GenericCarouselNavigation';
 import type { TmdbMovieProvider, TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import GenericCarouselPoster from '~/film-database/components/carousel/GenericCarouselPoster';
@@ -11,7 +11,7 @@ export type GenericCarouselMap = {
   person: TmdbResponseFlat['personCredits']['cast'] | TmdbResponseFlat['personCredits']['crew'];
 };
 
-function GenericCarousel<CN extends keyof GenericCarouselMap>({
+function Carousel<CN extends keyof GenericCarouselMap>({
   carouselIndex,
   carouselName,
   heading,
@@ -93,5 +93,7 @@ function GenericCarousel<CN extends keyof GenericCarouselMap>({
     </section>
   );
 }
+
+const GenericCarousel = memo(Carousel);
 
 export default GenericCarousel;
