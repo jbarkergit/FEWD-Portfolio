@@ -1,7 +1,6 @@
 import { memo, useRef, type ChangeEvent } from 'react';
 import { IcBaselineSearch } from '~/film-database/assets/svg/icons';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
-import englishBadWordsRaw from 'naughty-words/en.json';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 
 const FDSearchHeader = memo(
@@ -20,27 +19,11 @@ const FDSearchHeader = memo(
       else labelRef.current?.setAttribute('data-opacity', 'hidden');
     };
 
-    /**
-     * Debounced fetch
-     * NOTE: TMDB 'adult' query parameter partially filters out adult results given not all films may have the correct flag.
-     * There's too many loopholes to abuse the system; therefore, filtering results isn't as simple as filtering title and overview by a keyword array.
-     * The only options to combat this is a content moderation service AND some combination of region locking, keyword and genre filtering and/or locking results by PG-13 rating.
-     * Utilizing the naughty-words npm package is the best non-subscription service/solution we can employ.
-     */
+    /** Debounced fetch */
     const fetch = async () => {
       const controller = new AbortController();
-
       const search = await tmdbCall(controller, { search: searchTermRef.current });
-
-      const filteredResults = search.response.results.filter((res) => {
-        if (res.adult || !res.title || !res.overview) return false;
-        const title = res.title.trim().toLowerCase();
-        const overview = res.overview.toLowerCase();
-        return !englishBadWordsRaw.some((word) => title.includes(word) || overview.includes(word));
-      });
-
-      if (search) setSearchResults(filteredResults);
-
+      if (search) setSearchResults(search.response.results);
       return () => controller.abort();
     };
 
