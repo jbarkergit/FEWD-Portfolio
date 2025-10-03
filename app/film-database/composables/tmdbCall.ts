@@ -124,7 +124,9 @@ async function processArgument(controller: AbortController, arg: Argument): Prom
   // Identify if the request is cached
   const item = sessionStorage.getItem(keyQuery.key);
   // If cached, return cached, else await fetch
-  const data = item ? JSON.parse(item) : { key: keyQuery.key, response: await callApi(controller, keyQuery) };
+  const data = item
+    ? { key: keyQuery.key, response: JSON.parse(item) }
+    : { key: keyQuery.key, response: await callApi(controller, keyQuery) };
 
   // Return cached item or fetch response
   return data;
