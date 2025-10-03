@@ -1,19 +1,13 @@
 import { useRef } from 'react';
 import { useLoaderData } from 'react-router';
-import type { Route } from './+types/FilmDatabase';
 import { tmdbCall } from '../composables/tmdbCall';
-import { HeroDataProvider } from '~/film-database/context/HeroDataContext';
-import { VisibleCountProvider } from '~/film-database/context/VisibleCountContext';
-import { RootRefProvider } from '~/film-database/context/RootRefContext';
-import { ModalTrailerProvider } from '~/film-database/context/ModalTrailerContext';
-import { UserCollectionProvider } from '~/film-database/context/UserCollectionContext';
-import { ModalProvider } from '~/film-database/context/ModalContext';
 import FDAccountAnimation from '../features/account/animator/FDAccountAnimation';
 import FDHeader from '../features/catalog/navigation/FDHeader';
 import FDCatalog from '../features/catalog/FDCatalog';
 import FDAccountModal from '~/film-database/features/account/auth-modal/FDAccountModal';
 import { useAuth } from '~/base/firebase/authentication/context/authProvider';
-import { PersonProvider } from '~/film-database/context/PersonContext';
+import { ModalProvider } from '~/film-database/context/ModalContext';
+import { RootRefProvider } from '~/film-database/context/RootRefContext';
 
 export async function clientLoader() {
   const primaryData = await tmdbCall(new AbortController(), [
@@ -49,29 +43,19 @@ export async function clientLoader() {
 
 export const useFLoader = () => useLoaderData() as Awaited<ReturnType<typeof clientLoader>>;
 
-export default function FilmDatabase({ loaderData }: Route.ComponentProps) {
+export default function FilmDatabase() {
   const { user } = useAuth();
   const accountRef = useRef<HTMLDivElement>(null);
 
   return user ? (
-    <RootRefProvider>
-      <ModalProvider>
-        <VisibleCountProvider>
-          <HeroDataProvider>
-            <UserCollectionProvider>
-              <ModalTrailerProvider>
-                <PersonProvider>
-                  <div className='filmDatabase'>
-                    <FDHeader />
-                    <FDCatalog />
-                  </div>
-                </PersonProvider>
-              </ModalTrailerProvider>
-            </UserCollectionProvider>
-          </HeroDataProvider>
-        </VisibleCountProvider>
-      </ModalProvider>
-    </RootRefProvider>
+    <div className='filmDatabase'>
+      <RootRefProvider>
+        <ModalProvider>
+          <FDHeader />
+          <FDCatalog />
+        </ModalProvider>
+      </RootRefProvider>
+    </div>
   ) : (
     <>
       <FDAccountAnimation accountRef={accountRef} />
