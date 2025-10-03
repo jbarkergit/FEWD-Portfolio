@@ -14,6 +14,6 @@ export const RootRefProvider = ({ children }: { children: ReactNode }) => {
 
 export const useRootRefContext = () => {
   const context = useContext(Context);
-  if (!context) throw new Error('A provider is required to consume ChunkSize.');
+  if (!context) throw new Error('A provider is required to consume RootRef.');
   return context;
 };

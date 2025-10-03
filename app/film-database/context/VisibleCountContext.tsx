@@ -51,6 +51,6 @@ export const VisibleCountProvider = ({ children }: { children: ReactNode }) => {
 
 export const useVisibleCountContext = () => {
   const context = useContext(Context);
-  if (!context) throw new Error('A provider is required to consume ChunkSize.');
+  if (!context) throw new Error('A provider is required to consume VisibleCount.');
   return context;
 };

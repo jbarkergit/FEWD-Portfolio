@@ -10,12 +10,11 @@ const Context = createContext<
 
 export const PersonProvider = ({ children }: { children: ReactNode }) => {
   const [person, setPerson] = useState<number | undefined>(undefined);
-
   return <Context.Provider value={{ person, setPerson }}>{children}</Context.Provider>;
 };
 
 export const usePersonContext = () => {
   const context = useContext(Context);
-  if (!context) throw new Error('A provider is required to consume ChunkSize.');
+  if (!context) throw new Error('A provider is required to consume Person.');
   return context;
 };
