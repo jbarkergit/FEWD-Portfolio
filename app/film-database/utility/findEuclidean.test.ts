@@ -7,7 +7,6 @@ it('findEuclidean returns the index of the closest element', () => {
     { left: 200, top: 200, right: 250, bottom: 250, width: 50, height: 50 } as DOMRect,
   ];
 
-  const result = findEuclidean({ x: 50, y: 50 }, rects);
-
-  expect(result).toBe(0);
+  expect(findEuclidean({ x: 50, y: 50 }, rects)).toBe(0);
+  expect(findEuclidean({ x: 200, y: 200 }, rects)).toBe(1);
 });
