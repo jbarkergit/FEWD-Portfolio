@@ -1,6 +1,7 @@
 import { tmdbDiscoveryIds } from '~/film-database/composables/const/tmdbDiscoveryIds';
 import { tmdbEndpoints } from '~/film-database/composables/const/tmdbEndpoints';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
+import englishBadWordsRaw from 'naughty-words/en.json';
 
 // Group keys by nest properties 'never', 'number', 'string' to isolate argument shape
 type TmdbNeverKeys = keyof typeof tmdbEndpoints.never;
@@ -136,6 +137,20 @@ function isFulfilled<T>(result: PromiseSettledResult<T>): result is PromiseFulfi
   return result.status === 'fulfilled';
 }
 
+/**
+ * TMDB Api 'adult' query partially filters adult content but some results may leak adult content due to incorrect internal flags.
+ * Some options to combat this are a third party moderation service, some combination of region locking, filtering by rating and keyword filtering.
+ * We've leveraging keyword filtering with npm pkg naughty-words as a solution.
+ */
+function isNotNaughty(item: any): boolean {
+  if (item && typeof item === 'object' && 'title' in item && 'overview' in item && 'adult' in item) {
+    const title = (item.title as string)?.trim().toLowerCase() ?? '';
+    const overview = (item.overview as string)?.toLowerCase() ?? '';
+    return !item.adult && !englishBadWordsRaw.some((word) => title.includes(word) || overview.includes(word));
+  }
+  return true;
+}
+
 export async function tmdbCall<T extends Argument | Argument[]>(
   controller: AbortController,
   args: T
@@ -153,8 +168,31 @@ export async function tmdbCall<T extends Argument | Argument[]>(
   const fulfilled = responses.filter(isFulfilled).map((f) => f.value);
 
   // If argument is an array, return, else if argument is a single string or object, return the data at index 0
-  const result = Array.isArray(args) ? fulfilled : fulfilled[0];
+  const result = (Array.isArray(args) ? fulfilled : fulfilled[0]) as CallResponse<T>;
 
-  // Return type narrowed fulfilled responses
-  return result as CallResponse<T>;
+  console.log(result);
+
+  // Filter content
+  let filteredResult;
+
+  if (Array.isArray(result)) {
+    filteredResult = result.map(({ key, response }) => ({
+      key,
+      response:
+        'results' in response && Array.isArray(response.results)
+          ? { ...response, results: response.results.filter(isNotNaughty) }
+          : response, // untouched if no results array
+    }));
+  } else {
+    filteredResult = {
+      key: result.key,
+      response:
+        'results' in result.response && Array.isArray(result.response.results)
+          ? { ...result.response, results: result.response.results.filter(isNotNaughty) }
+          : result.response,
+    };
+  }
+
+  // Return filtered and type narrowed fulfilled responses
+  return filteredResult as CallResponse<T>;
 }
