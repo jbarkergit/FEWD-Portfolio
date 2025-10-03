@@ -156,10 +156,3 @@ export async function tmdbCall<T extends Argument | Argument[]>(
   // Return type narrowed fulfilled responses
   return result as CallResponse<T>;
 }
-
-async function test() {
-  const controller = new AbortController();
-  const x = await tmdbCall(controller, 'now_playing');
-  const y = await tmdbCall(controller, { credits: 999 });
-  const z = await tmdbCall(controller, ['now_playing', { credits: 999 }]);
-}
