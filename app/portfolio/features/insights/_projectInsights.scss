@@ -106,25 +106,31 @@
       width: inherit;
       & h2 {
         font-size: clamp(f.rem(24), f.rem(30) + 1vw, f.rem(36));
-        padding-bottom: calc(s.$portfolio-gap * 2);
+        padding-bottom: calc(0.75em * 2);
         @media (width <= 460px) {
           text-align: center;
           line-height: 200%;
         }
       }
+      &__tech:nth-of-type(1) {
+        padding-top: 0;
+        padding-bottom: calc(0.75em * 2);
+      }
       &__tech {
         display: flex;
-        align-items: center;
-        gap: f.rem(100);
-        border-bottom: 1px solid hsl(240, 4%, 16%);
+        // align-items: center;
+        padding: calc(0.75em * 2) 0;
+        gap: calc(0.75em * 6);
+        border-bottom: 1px solid hsl(240, 4%, 22%);
+        &:last-child {
+          border-bottom: 0px;
+        }
         @media (width <= 460px) {
           flex-direction: column;
           gap: 0;
         }
         &--key {
-          flex: 0 0 30%;
-          padding: s.$portfolio-gap 0;
-          font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
+          flex: 1 0 auto;
           text-transform: capitalize;
           white-space: nowrap;
           @media (width <= 460px) {
@@ -134,16 +140,17 @@
         &__values {
           display: flex;
           justify-content: flex-end;
-          flex: 0 1 70%;
+          flex: 1 1 auto;
           flex-wrap: wrap;
-          gap: calc(s.$portfolio-gap / 2);
-          padding: s.$portfolio-gap 0;
-          text-transform: uppercase;
+          row-gap: 1em;
+          column-gap: 0.75em;
+          text-transform: lowercase;
           @media (width <= 460px) {
             justify-content: center;
           }
           & li {
             font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
+            letter-spacing: 0.06em;
             cursor: text;
           }
         }
@@ -151,14 +158,15 @@
     }
   }
   &__project {
-    display: table;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     padding-bottom: calc(s.$box-model-viewport-x - s.$portfolio-gap);
     cursor: text;
     & h2 {
       width: clamp(27ch, 100%, 40ch);
-      padding-bottom: s.$portfolio-gap;
+      padding-bottom: calc(0.75em * 2);
       font-size: clamp(f.rem(24), f.rem(30) + 1vw, f.rem(36));
-      line-height: 125%;
       @media (width <= 1480px) {
         width: auto;
       }
@@ -166,22 +174,8 @@
         font-size: clamp(f.rem(20), f.rem(22) + 1vw, f.rem(28));
       }
     }
-    & p:nth-of-type(1) ul {
-      padding: 0 0 2ch 2ch;
-      & li {
-        list-style: disc;
-      }
-    }
-    & p {
-      width: 100%;
-    }
-    & p:not(p:last-of-type) {
-      padding-bottom: 12px;
-    }
-    @media (width <= 1480px) {
-      order: 1;
-      display: flex;
-      justify-content: center;
+    & p:not(:nth-of-type(1)) {
+      margin-block-start: 0.75em;
     }
   }
 }
