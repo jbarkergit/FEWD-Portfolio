@@ -17,16 +17,12 @@ export const projectData = [
         <h2>Film Database</h2>
         <p>
           <strong>TL;DR:</strong> Built a movie trailer platform from scratch featuring a type-safe TMDB API wrapper
-          with argument autocompletion, batch requests, response caching, and content filtering. The project also
-          includes a custom YouTube iFrame solution, native JavaScript drag-and-drop collections, responsive carousels,
-          polished SCSS animations, Firebase authentication with Firestore storage, and exploration of advanced
-          TypeScript patterns using Vitest, Jest, and RTL.
+          with argument autocompletion, batch requests, response caching, and content filtering. Includes a custom
+          YouTube iFrame solution, native JavaScript drag-and-drop collections, responsive carousels, polished
+          SCSS-based animations, Firebase authentication with Firestore storage, and exploration of advanced TypeScript
+          patterns with Vitest, Jest, and RTL testing.
         </p>
-        <strong>TL;DR:</strong> Built a movie trailer platform from scratch featuring a type-safe TMDB API wrapper with
-        argument autocompletion, batch requests, response caching, and content filtering. Includes a custom YouTube
-        iFrame solution, native JavaScript drag-and-drop collections, responsive carousels, polished SCSS-based
-        animations, Firebase authentication with Firestore storage, and exploration of advanced TypeScript patterns with
-        Vitest, Jest, and RTL testing.
+
         <p>
           This self-initiated movie database website was built using Vite, React, TypeScript, and styled with SASS. It
           integrates TheMovieDatabase (TMDB) API for movie data, React-YouTube for embedded video playback, and Firebase
