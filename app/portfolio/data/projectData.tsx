@@ -93,14 +93,11 @@ export const projectData = [
       <>
         <h2>Neumorphic eCommerce Audio Shop</h2>
         <div>
-          <strong>TL;DR:</strong>
-          <ul>
-            <li>First-from-scratch eCommerce site</li>
-            <li>Dynamic routing with custom database</li>
-            <li>Photoshop-optimized batch exports for three device breakpoints</li>
-            <li>Basic commerce functionality</li>
-            <li>Experimental neumorphic UI with skeleton loaders</li>
-          </ul>
+          <p>
+            <strong>TL;DR:</strong> Built a first-from-scratch eCommerce site featuring dynamic routing with a custom
+            database, Photoshop-optimized batch exports for three device breakpoints, basic commerce functionality, and
+            an experimental neumorphic UI with skeleton loaders.
+          </p>
         </div>
 
         <p>
@@ -149,16 +146,11 @@ export const projectData = [
       <>
         <h2>An Application Hub with Seamless Transitions</h2>
         <div>
-          <strong>TL;DR:</strong>
-          <ul>
-            <li>Portfolio hub consolidating multiple applications</li>
-            <li>Dynamic routing and lazy-loading</li>
-            <li>Vite-powered performance optimization</li>
-            <li>
-              Migrated to React Router v7, eliminating the custom import queue and improving maintainability and
-              responsiveness
-            </li>
-          </ul>
+          <p>
+            <strong>TL;DR:</strong> Built a portfolio hub consolidating multiple applications, featuring dynamic routing
+            and lazy-loading, Vite-powered performance optimizations, and a migration to React Router v7 that eliminated
+            a custom import queue while improving maintainability and responsiveness.
+          </p>
         </div>
 
         <p>
