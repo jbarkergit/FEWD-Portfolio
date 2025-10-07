@@ -1,4 +1,4 @@
-import { useRef, type ReactNode, useCallback, useEffect } from 'react';
+import { useRef, type ReactNode, useCallback, useEffect, useState } from 'react';
 import { BxDotsVerticalRounded, IcOutlinePlayCircle, TablerCategoryPlus } from '~/film-database/assets/svg/icons';
 import type { GenericCarouselMap } from '~/film-database/components/carousel/GenericCarousel';
 import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
@@ -35,6 +35,8 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
         : carouselName === 'person'
           ? true
           : false;
+
+  const [isInterested, setIsInterested] = useState<boolean>(false);
 
   const itemCount = isModal ? visibleCount.modal : visibleCount.viewport;
 
@@ -73,71 +75,77 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
     return (
       <li
         className='genericCarousel__wrapper__ul__li'
+        onPointerOver={() => setIsInterested(true)}
         onPointerLeave={() => dropdownRef.current?.setAttribute('data-open', 'false')}
         data-hidden={posterIndex < itemCount + 1 ? 'false' : 'true'}>
         <picture className='genericCarousel__wrapper__ul__li__picture'>
           <img
             className='genericCarousel__wrapper__ul__li__picture--img'
-            src={`https://image.tmdb.org/t/p/w780/${mediaEntry.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w500/${mediaEntry.poster_path}`}
             alt={`${mediaEntry.title}`}
             fetchPriority={carouselIndex === 0 ? 'high' : 'low'}
+            loading={carouselIndex === 0 ? 'eager' : 'lazy'}
           />
         </picture>
-        <div className='genericCarousel__wrapper__ul__li__overlay'>
-          <button
-            className='genericCarousel__wrapper__ul__li__overlay--toggleMenu'
-            aria-label='Add movie to collections'
-            onPointerUp={toggleDropdown}>
-            <BxDotsVerticalRounded />
-          </button>
-          <button
-            className='genericCarousel__wrapper__ul__li__overlay--play'
-            aria-label='Play trailer'
-            onPointerUp={() => setHeroData(mediaEntry)}>
-            <IcOutlinePlayCircle />
-          </button>
-        </div>
-        <ul
-          className='genericCarousel__wrapper__ul__li__collections'
-          ref={dropdownRef}
-          data-open='false'>
-          {Object.entries(userCollections).map(([key, collection], i) => {
-            return (
-              <li key={`${carouselName}-carousel-${carouselIndex}-poster-${posterIndex}-collection-dropdown-${i}`}>
-                <button
-                  aria-label={`Add movie to ${collection.header}`}
-                  onPointerUp={() => {
-                    const data = addIdToCollection(userCollections, {
-                      data: [mediaEntry],
-                      colIndex: i,
-                    });
-                    setUserCollections(data);
-
-                    toggleDropdown();
-                  }}>
-                  {collection.header}
-                </button>
-              </li>
-            );
-          })}
-          {Object.entries(userCollections).length < 5 ? (
-            <li className='genericCarousel__wrapper__ul__li__collections__mtnc'>
+        {isInterested && (
+          <>
+            <div className='genericCarousel__wrapper__ul__li__overlay'>
               <button
-                aria-label='Add movie to a new collection'
-                onPointerUp={() => {
-                  const data = addIdToCollection(userCollections, {
-                    data: [mediaEntry],
-                    colIndex: Object.keys(userCollections).length + 1,
-                  });
-                  setUserCollections(data);
-
-                  toggleDropdown();
-                }}>
-                <TablerCategoryPlus /> New Collection
+                className='genericCarousel__wrapper__ul__li__overlay--toggleMenu'
+                aria-label='Add movie to collections'
+                onPointerUp={toggleDropdown}>
+                <BxDotsVerticalRounded />
               </button>
-            </li>
-          ) : null}
-        </ul>
+              <button
+                className='genericCarousel__wrapper__ul__li__overlay--play'
+                aria-label='Play trailer'
+                onPointerUp={() => setHeroData(mediaEntry)}>
+                <IcOutlinePlayCircle />
+              </button>
+            </div>
+            <ul
+              className='genericCarousel__wrapper__ul__li__collections'
+              ref={dropdownRef}
+              data-open='false'>
+              {Object.entries(userCollections).map(([key, collection], i) => {
+                return (
+                  <li key={`${carouselName}-carousel-${carouselIndex}-poster-${posterIndex}-collection-dropdown-${i}`}>
+                    <button
+                      aria-label={`Add movie to ${collection.header}`}
+                      onPointerUp={() => {
+                        const data = addIdToCollection(userCollections, {
+                          data: [mediaEntry],
+                          colIndex: i,
+                        });
+                        setUserCollections(data);
+
+                        toggleDropdown();
+                      }}>
+                      {collection.header}
+                    </button>
+                  </li>
+                );
+              })}
+              {Object.entries(userCollections).length < 5 ? (
+                <li className='genericCarousel__wrapper__ul__li__collections__mtnc'>
+                  <button
+                    aria-label='Add movie to a new collection'
+                    onPointerUp={() => {
+                      const data = addIdToCollection(userCollections, {
+                        data: [mediaEntry],
+                        colIndex: Object.keys(userCollections).length + 1,
+                      });
+                      setUserCollections(data);
+
+                      toggleDropdown();
+                    }}>
+                    <TablerCategoryPlus /> New Collection
+                  </button>
+                </li>
+              ) : null}
+            </ul>
+          </>
+        )}
       </li>
     );
   } else if (carouselName === 'cinemaInformation') {
@@ -155,7 +163,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
             data-missing={cinemaEntry.profile_path ? 'false' : 'true'}>
             {cinemaEntry.profile_path ? (
               <img
-                src={`https://image.tmdb.org/t/p/w780/${cinemaEntry.profile_path}`}
+                src={`https://image.tmdb.org/t/p/w500/${cinemaEntry.profile_path}`}
                 alt={`${cinemaEntry.name}`}
                 fetchPriority={carouselIndex <= itemCount ? 'high' : 'low'}
               />
@@ -190,7 +198,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
         <picture className='genericCarousel__wrapper__ul__li__picture'>
           <img
             className='genericCarousel__wrapper__ul__li__picture--img'
-            src={`https://image.tmdb.org/t/p/w780/${mediaEntry.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w500/${mediaEntry.poster_path}`}
             alt={`${mediaEntry.title}`}
             fetchPriority={carouselIndex === 0 ? 'high' : 'low'}
           />
