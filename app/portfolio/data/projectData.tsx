@@ -16,73 +16,69 @@ export const projectData = [
       <>
         <h2>Film Database</h2>
         <p>
-          <strong>TL;DR:</strong>
-          <ul>
-            <li>Built movie trailer platform from scratch</li>
-            <li>Type-safe TMDB API wrapper with caching, batch requests, and autocompletion</li>
-            <li>Custom YouTube iFrame solution</li>
-            <li>Native JavaScript drag-and-drop collections</li>
-            <li>Safe search queries</li>
-            <li>Responsive carousels</li>
-            <li>Polished animations with SCSS sequencing</li>
-            <li>Firebase Authentication & Firestore storage</li>
-            <li>Explored advanced TypeScript patterns and unit testing</li>
-          </ul>
+          <strong>TL;DR:</strong> Built a movie trailer platform from scratch featuring a type-safe TMDB API wrapper
+          with argument autocompletion, batch requests, response caching, and content filtering. The project also
+          includes a custom YouTube iFrame solution, native JavaScript drag-and-drop collections, responsive carousels,
+          polished SCSS animations, Firebase authentication with Firestore storage, and exploration of advanced
+          TypeScript patterns using Vitest, Jest, and RTL.
         </p>
-
+        <strong>TL;DR:</strong> Built a movie trailer platform from scratch featuring a type-safe TMDB API wrapper with
+        argument autocompletion, batch requests, response caching, and content filtering. Includes a custom YouTube
+        iFrame solution, native JavaScript drag-and-drop collections, responsive carousels, polished SCSS-based
+        animations, Firebase authentication with Firestore storage, and exploration of advanced TypeScript patterns with
+        Vitest, Jest, and RTL testing.
         <p>
-          This self-initiated movie database website was built from scratch using Vite, React, TypeScript, and styled
-          with SASS. It integrates TheMovieDatabase (TMDB) API for movie data, React-YouTube for embedded video
-          playback, and Firebase for authentication and full CRUD operations. Form validation is handled with Zod.
+          This self-initiated movie database website was built using Vite, React, TypeScript, and styled with SASS. It
+          integrates TheMovieDatabase (TMDB) API for movie data, React-YouTube for embedded video playback, and Firebase
+          for authentication and full CRUD operations. Form validation is handled with Zod. Vitest was used for unit
+          testing, and advanced TypeScript patterns were explored to ensure the codebase is developer-friendly.
         </p>
         <p>
-          Working with TMDB presented challenges, such as inconsistently formatted URLs and the lack of WEBP image
-          support. To reduce API calls and prevent failures, I built a type-safe API wrapper from scratch. It handles
-          endpoint construction, type inference, caching via sessionStorage, and batch requests with
-          `Promise.allSettled`. This gave me autocompletion, consistent error handling, and predictable data shaping
-          across the app. I invested time in Vitest for unit testing the wrapper and explored advanced TypeScript
-          patterns to make the codebase developer-friendly.
+          TMDB presented several challenges: inconsistently formatted URLs, limited WEBP support, and adult content
+          slipping through endpoint queries. To reduce API calls and prevent runtime errors, a type-safe API wrapper was
+          built to handle endpoint construction, type inference, sessionStorage caching, and batch requests with{' '}
+          <code>Promise.allSettled</code>. Content filtering was a head-scratcher: Since TMDB is an open platform where
+          users contribute content, the 'adult' query parameter only partially filters results, requiring additional
+          checks to keep content appropriate. Various options were considered, including region-locking, genre-based
+          filtering, and rating restrictions. To further refine results, the <code>naughty-words</code> package was
+          applied to titles and overviews, reducing adult content while remaining performant.
         </p>
         <p>
-          To capture the polished feel of platforms like Netflix, I built a custom SCSS-driven loading screen that
-          appears on initial load. It uses staggered animations and subtle transforms to create a smooth reveal,
-          juggling CSS timing, scale effects, and transition sequencing—a fun little challenge that ensures a polished
-          first impression without impacting performance. The loader also ties into our React Router v7 client loader,
-          prefetching the movie carousel data to make the UI feel responsive from the very first render.
+          To capture a polished feel similar to platforms like Netflix, a custom SCSS-driven loading screen (inspired by
+          camillemormal's JavaScript variant) was created for initial load. It uses staggered animations, subtle
+          transforms, and careful timing to produce a smooth reveal. Designing it required juggling scale effects and
+          transition sequencing—a fun challenge that preserves performance. The loader integrates with React Router v7’s
+          client loader, which prefetches carousel data, helping the UI feel immediately responsive.
         </p>
         <p>
-          For trailer playback, I used YouTube's IFrame Player API, which aligns with TMDB's trailer results. To match
-          the aesthetic of other movie-driven platforms, I stretched the iFrame. This came at the cost of losing the
-          native controller, so I built a custom one to handle positioning and maintain a consistent, polished look
-          where the custom embed exists.
+          For trailer playback, YouTube’s IFrame Player API was used in combination with the React-YouTube UI library to
+          manipulate the player and match TMDB’s trailer data. The iFrame was stretched beyond its native aspect ratio,
+          and a custom controller was built to replace the default YouTube UI, ensuring consistent positioning and
+          styling across breakpoints and preserving the desired cinematic layout. Recommended videos appear when paused,
+          a limitation of the embed.
         </p>
         <p>
           A major UI challenge was implementing a responsive carousel with dynamically sized items. Instead of relying
-          on JavaScript-heavy solutions, I used CSS with viewport-based calculations and custom properties to determine
-          item dimensions. This was a real head-scratcher, and the resolution became clear after poking around in
-          Amazon’s DOM—shout out to whoever wrote the CSS calculations, they were super handy as a reference. I also
-          considered approaches like preloading or skeleton states, but ultimately went with an IntersectionObserver
-          solution that toggles data-attributes to manage display properties and fetch-priority hints without adding
-          unnecessary network load.
+          on JavaScript-heavy solutions, CSS with viewport-based calculations and custom properties determined item
+          dimensions. This approach was inspired by examining Amazon’s DOM for reference calculations, which were then
+          adapted to fit the application's design. Computed styles were placed in context, allowing consumers—like the
+          carousel and collections features—to dynamically and conditionally adjust. IntersectionObserver toggles
+          data-attributes to manage display properties and fetch-priority hints, minimizing network load while keeping
+          the carousel smooth and responsive.
         </p>
         <p>
-          Implementing search and content filtering introduced an interesting challenge. TMDB’s 'adult' query parameter
-          partially filters adult results, but gaps remain. I explored options such as region-locking, genre-based
-          filtering, and rating restrictions, but decided on a simpler approach: removing results flagged as adult and
-          filtering the remaining titles/overviews through the <code>naughty-words</code> npm package. It’s a
-          lightweight, non-subscription solution that responsibly cuts down inappropriate results without slowing
-          searches—good enough to keep search both usable and safe.
+          Given the limitations of TMDB’s data, the only feasible feature was a collections page where users can
+          organize movies into custom collections and queue trailers for sequential viewing. Drag-and-drop functionality
+          was implemented natively, revealing the intricacies of drag events, state transitions, and race conditions.
+          Firestore handles persistence and real-time updates. While full WAI-ARIA compliance isn’t achievable for
+          draggable elements due to deprecation, interactions remain fluid and intuitive, preserving usability without
+          compromising the learning experience. Due to data limitations, data visualization features weren't possible.
         </p>
         <p>
-          I also built features that let users organize movies into custom collections and queue trailers for sequential
-          viewing. Firestore handles data persistence and real-time updates. Drag-and-drop functionality was built from
-          scratch to better understand native drag events, state transitions, and race conditions. A limitation remains:
-          full WAI-ARIA compliance is not possible due to deprecation of ARIA support for draggable elements.
-        </p>
-        <p>
-          This project helped me solidify my understanding of React, refine CSS animations and transitions, and deliver
-          smoother visual updates across devices. Having rewritten it multiple times, it remains my flagship project and
-          demonstrates my ongoing focus on improving both code quality and the user experience.
+          This project served as a comprehensive exercise in building scalable front-end architecture, refining CSS
+          animations, and optimizing UI responsiveness across devices. Multiple rewrites deepened understanding of React
+          patterns, performance trade-offs, and type-safe API design, culminating in a polished flagship project that
+          balances developer ergonomics with user experience.
         </p>
       </>
     ),
@@ -100,7 +96,7 @@ export const projectData = [
     insights: (
       <>
         <h2>Neumorphic eCommerce Audio Shop</h2>
-        <p>
+        <div>
           <strong>TL;DR:</strong>
           <ul>
             <li>First-from-scratch eCommerce site</li>
@@ -109,7 +105,7 @@ export const projectData = [
             <li>Basic commerce functionality</li>
             <li>Experimental neumorphic UI with skeleton loaders</li>
           </ul>
-        </p>
+        </div>
 
         <p>
           This audio shop was built with maintainability and scalability in mind. Site-wide conditions were defined
@@ -156,7 +152,7 @@ export const projectData = [
     insights: (
       <>
         <h2>An Application Hub with Seamless Transitions</h2>
-        <p>
+        <div>
           <strong>TL;DR:</strong>
           <ul>
             <li>Portfolio hub consolidating multiple applications</li>
@@ -167,13 +163,12 @@ export const projectData = [
               responsiveness
             </li>
           </ul>
-        </p>
+        </div>
 
         <p>
           This portfolio was designed as an intuitive environment for skill demonstration, hosting multiple applications
           under one domain to improve the user experience. While working with React Router v6, I faced challenges with
-          routing complexity and optimizing Web Core Vitals such as Largest Contentful Paint (LCP) and Time to
-          Interactive (TTI).
+          routing complexity and optimizing Web Core Vitals.
         </p>
         <p>
           Initially, I focused on lazy-loading project landing pages and improving performance metrics. Using the
