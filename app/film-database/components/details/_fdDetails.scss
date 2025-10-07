@@ -11,7 +11,7 @@
     calc(var(--fd-padding-generic) / 1.5);
   @media (min-width: 950px) and (max-width: 1850px) {
     position: absolute;
-    top: calc(50svh - var(--fd-gap) - (2.25rem * 2.5));
+    top: calc(50svh - var(--fd-gap) * 4 - (2.25rem * 2.5));
     transform: translateY(-50%);
     left: calc(var(--fd-padding-generic) / 1.5);
     padding: 0;
