@@ -1,7 +1,37 @@
 import { tmdbDiscoveryIds } from '~/film-database/composables/const/tmdbDiscoveryIds';
-import { tmdbEndpoints } from '~/film-database/composables/const/tmdbEndpoints';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import englishBadWordsRaw from 'naughty-words/en.json';
+
+// Endpoints
+const BASE_URL = 'https://api.themoviedb.org/3/';
+const QUERY_PARAMS = 'language=en-US&page=1&region=US';
+const ADULT_PARAMS = '&include_adult=false';
+
+const tmdbEndpoints = {
+  never: {
+    now_playing: () => `${BASE_URL}movie/now_playing?${QUERY_PARAMS}`,
+    popular: () => `${BASE_URL}movie/popular?${QUERY_PARAMS}`,
+    top_rated: () => `${BASE_URL}movie/top_rated?${QUERY_PARAMS}`,
+    trending_this_week: () => `${BASE_URL}trending/movie/week?${QUERY_PARAMS}`,
+    trending_today: () => `${BASE_URL}trending/movie/day?${QUERY_PARAMS}`,
+    upcoming: () => `${BASE_URL}movie/upcoming?${QUERY_PARAMS}`,
+  },
+  number: {
+    credits: (movie_id: number) => `${BASE_URL}movie/${movie_id}/credits`,
+    details: (movie_id: number) => `${BASE_URL}movie/${movie_id}`,
+    recommendations: (movie_id: number) => `${BASE_URL}movie/${movie_id}/recommendations`,
+    reviews: (movie_id: number) => `${BASE_URL}movie/${movie_id}/reviews`,
+    videos: (movie_id: number) => `${BASE_URL}movie/${movie_id}/videos`,
+    watchProviders: (movie_id: number) => `${BASE_URL}movie/${movie_id}/watch/providers`,
+    discover: (genre_id: number) => `${BASE_URL}discover/movie?with_genres=${genre_id}`,
+    personDetails: (person_id: number) => `${BASE_URL}person/${person_id}`,
+    personCredits: (person_id: number) => `${BASE_URL}person/${person_id}/combined_credits`,
+  },
+  string: {
+    search: (search_term: string) =>
+      `${BASE_URL}search/movie?query=${encodeURIComponent(search_term)}&${QUERY_PARAMS}${ADULT_PARAMS}`,
+  },
+} as const;
 
 // Group keys by nest properties 'never', 'number', 'string' to isolate argument shape
 type TmdbNeverKeys = keyof typeof tmdbEndpoints.never;
@@ -12,7 +42,9 @@ type TmdbStringKeys = keyof typeof tmdbEndpoints.string;
 type ArgumentShapes<K> = K extends TmdbNeverKeys
   ? K // Literal
   : K extends TmdbNumberKeys
-    ? { [P in K]: number } // All Number endpoints mapped to { key: number }
+    ? K extends 'discover'
+      ? { [P in K]: keyof typeof tmdbDiscoveryIds }
+      : { [P in K]: number } // All Number endpoints mapped to { key: number }
     : K extends TmdbStringKeys
       ? { [P in K]: string } // All String endpoints apped to { key: string }
       : undefined;
@@ -36,49 +68,26 @@ type CallResponse<T> = T extends any[] // If T is an array of arguments
     }
   : { key: ArgumentToKey<T>; response: TmdbResponseFlat[ArgumentToKey<T>] };
 
-// Denest endpoints
-const endpoints = { ...tmdbEndpoints.never, ...tmdbEndpoints.number, ...tmdbEndpoints.string } as const;
-
-function buildEndpoint(keyQuery: { key: keyof TmdbResponseFlat; query: number | string | undefined }): string {
-  // Destructure
-  const { key, query } = keyQuery;
-
-  // Identify endpoint
-  const endpoint = endpoints[key];
-
-  // Mutate and return endpoint
-  switch (typeof query) {
-    case 'number':
-      return endpoint.replace('{movie_id}', query.toString());
-
-    case 'string':
-      if (endpoint.includes('{genre_id}')) {
-        const genreId = tmdbDiscoveryIds[query as keyof typeof tmdbDiscoveryIds];
-        return endpoint.replace('{genre_id}', genreId?.toString() ?? '');
-      } else {
-        return endpoint.replace('{search_term}', query);
-      }
-
-    default:
-      return endpoint;
-  }
-}
-
 // Array of keys we do not want to cache
-const excludedCacheKeys = ['videos', 'personDetails', 'personCredits', 'credits', 'watchProviders', 'search'] as const;
+const excludedCacheKeys = [
+  'videos',
+  'personDetails',
+  'personCredits',
+  'credits',
+  'watchProviders',
+  'search',
+  'discover',
+] as const;
 
 async function callApi(
   controller: AbortController,
-  keyQuery: {
-    key: keyof TmdbResponseFlat;
-    query: number | string | undefined;
+  keyEndpoint: {
+    key: keyof TmdbResponseFlat | keyof typeof tmdbDiscoveryIds;
+    endpoint: string;
   }
 ): Promise<unknown | undefined> {
   // Destructure
-  const { key, query } = keyQuery;
-
-  // Build endpoint
-  const endpoint = buildEndpoint(keyQuery);
+  const { key, endpoint } = keyEndpoint;
 
   // Fetch
   try {
@@ -111,24 +120,37 @@ async function callApi(
 
 async function processArgument(controller: AbortController, arg: Argument): Promise<unknown> {
   // Assignment
-  let keyQuery: { key: keyof TmdbResponseFlat; query: number | string | undefined };
+  let key: keyof TmdbResponseFlat | keyof typeof tmdbDiscoveryIds | undefined;
+  let endpoint: string | undefined;
 
   if (typeof arg === 'string') {
-    keyQuery = { key: arg, query: undefined };
+    key = arg;
+    endpoint = tmdbEndpoints.never[key]?.();
   } else if (typeof arg === 'object') {
-    const [key, query] = Object.entries(arg)[0] as [TmdbNumberKeys, number] | [TmdbStringKeys, string];
-    keyQuery = { key: key, query: query };
-  } else {
-    keyQuery = { key: arg, query: undefined };
+    const [argKey, query] = Object.entries(arg)[0] as [TmdbNumberKeys, number] | [TmdbStringKeys, string];
+    const isDiscoverQuery: boolean = Object.keys(tmdbDiscoveryIds).includes(query as string);
+
+    if (isDiscoverQuery) {
+      key = query as keyof typeof tmdbDiscoveryIds;
+      endpoint = tmdbEndpoints.number.discover(tmdbDiscoveryIds[key]);
+    } else {
+      key = argKey;
+      if (argKey in tmdbEndpoints.number) {
+        endpoint = tmdbEndpoints.number[argKey as TmdbNumberKeys](query as number);
+      } else if (argKey in tmdbEndpoints.string) {
+        endpoint = tmdbEndpoints.string[argKey as TmdbStringKeys](query as string);
+      } else {
+        return undefined;
+      }
+    }
   }
 
-  // Identify if the request is cached
-  const item = sessionStorage.getItem(keyQuery.key);
-  // If cached, return cached, else await fetch
-  const data = item
-    ? { key: keyQuery.key, response: JSON.parse(item) }
-    : { key: keyQuery.key, response: await callApi(controller, keyQuery) };
+  if (!key || !endpoint) return undefined;
 
+  // Identify if the request is cached
+  const item = sessionStorage.getItem(key);
+  // If cached, return cached, else await fetch
+  const data = { key: key, response: item ? JSON.parse(item) : await callApi(controller, { key, endpoint }) };
   // Return cached item or fetch response
   return data;
 }
@@ -151,6 +173,34 @@ function isNotNaughty(item: any): boolean {
   return true;
 }
 
+function filterContent<T>(result: CallResponse<T>):
+  | {
+      key: any;
+      response: any;
+    }[]
+  | {
+      key: ArgumentToKey<T>;
+      response: TmdbResponseFlat[ArgumentToKey<T>];
+    } {
+  if (Array.isArray(result)) {
+    return result.map(({ key, response }) => ({
+      key,
+      response:
+        'results' in response && Array.isArray(response.results)
+          ? { ...response, results: response.results.filter(isNotNaughty) }
+          : response,
+    }));
+  } else {
+    return {
+      key: result.key,
+      response:
+        'results' in result.response && Array.isArray(result.response.results)
+          ? { ...result.response, results: result.response.results.filter(isNotNaughty) }
+          : result.response,
+    };
+  }
+}
+
 export async function tmdbCall<T extends Argument | Argument[]>(
   controller: AbortController,
   args: T
@@ -170,28 +220,8 @@ export async function tmdbCall<T extends Argument | Argument[]>(
   // If argument is an array, return, else if argument is a single string or object, return the data at index 0
   const result = (Array.isArray(args) ? fulfilled : fulfilled[0]) as CallResponse<T>;
 
-  console.log(result);
-
   // Filter content
-  let filteredResult;
-
-  if (Array.isArray(result)) {
-    filteredResult = result.map(({ key, response }) => ({
-      key,
-      response:
-        'results' in response && Array.isArray(response.results)
-          ? { ...response, results: response.results.filter(isNotNaughty) }
-          : response, // untouched if no results array
-    }));
-  } else {
-    filteredResult = {
-      key: result.key,
-      response:
-        'results' in result.response && Array.isArray(result.response.results)
-          ? { ...result.response, results: result.response.results.filter(isNotNaughty) }
-          : result.response,
-    };
-  }
+  const filteredResult = filterContent(result);
 
   // Return filtered and type narrowed fulfilled responses
   return filteredResult as CallResponse<T>;
