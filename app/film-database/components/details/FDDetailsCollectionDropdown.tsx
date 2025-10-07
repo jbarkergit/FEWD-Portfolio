@@ -33,7 +33,7 @@ const FDDetailsCollectionDropdown = memo(() => {
     <div className='fdDetails__extra__nav__collections'>
       <button
         aria-label={`Add ${heroData?.title} to a collection`}
-        onPointerUp={toggleDropdown}>
+        onClick={toggleDropdown}>
         Add to collections
       </button>
       <ul
@@ -45,7 +45,7 @@ const FDDetailsCollectionDropdown = memo(() => {
             <li key={`detail-dropdown-${col.header}`}>
               <button
                 aria-label={`Add ${heroData?.title} to collection ${col.header}`}
-                onPointerUp={() => {
+                onClick={() => {
                   if (heroData) {
                     const data = addIdToCollection(userCollections, {
                       data: [heroData],
@@ -64,7 +64,7 @@ const FDDetailsCollectionDropdown = memo(() => {
           <li>
             <button
               aria-label={`Add ${heroData?.title} to a new collection`}
-              onPointerUp={() => {
+              onClick={() => {
                 if (heroData) {
                   const data = addIdToCollection(userCollections, {
                     data: [heroData],

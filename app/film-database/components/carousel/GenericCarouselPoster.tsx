@@ -93,13 +93,13 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
               <button
                 className='genericCarousel__wrapper__ul__li__overlay--toggleMenu'
                 aria-label='Add movie to collections'
-                onPointerUp={toggleDropdown}>
+                onClick={toggleDropdown}>
                 <BxDotsVerticalRounded />
               </button>
               <button
                 className='genericCarousel__wrapper__ul__li__overlay--play'
                 aria-label='Play trailer'
-                onPointerUp={() => setHeroData(mediaEntry)}>
+                onClick={() => setHeroData(mediaEntry)}>
                 <IcOutlinePlayCircle />
               </button>
             </div>
@@ -112,7 +112,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
                   <li key={`${carouselName}-carousel-${carouselIndex}-poster-${posterIndex}-collection-dropdown-${i}`}>
                     <button
                       aria-label={`Add movie to ${collection.header}`}
-                      onPointerUp={() => {
+                      onClick={() => {
                         const data = addIdToCollection(userCollections, {
                           data: [mediaEntry],
                           colIndex: i,
@@ -130,7 +130,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
                 <li className='genericCarousel__wrapper__ul__li__collections__mtnc'>
                   <button
                     aria-label='Add movie to a new collection'
-                    onPointerUp={() => {
+                    onClick={() => {
                       const data = addIdToCollection(userCollections, {
                         data: [mediaEntry],
                         colIndex: Object.keys(userCollections).length + 1,
@@ -154,7 +154,7 @@ function GenericCarouselPoster<K extends keyof GenericCarouselMap>({
       <Parent>
         <button
           aria-label={`Read more about ${cinemaEntry.name}`}
-          onPointerUp={() => {
+          onClick={() => {
             setModal('person');
             setPerson(cinemaEntry.id);
           }}>

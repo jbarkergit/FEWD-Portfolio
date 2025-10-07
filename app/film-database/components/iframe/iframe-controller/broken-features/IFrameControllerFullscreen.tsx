@@ -54,7 +54,7 @@ const IFrameControllerFullscreen = ({ player }: { player: YouTubePlayer }) => {
     <button
       className='fdiFrame__controller__controls__button'
       aria-label='Open trailer in fullscreen mode'
-      onPointerUp={() => setIsFullscreen((prev) => !prev)}>
+      onClick={() => setIsFullscreen((prev) => !prev)}>
       <IcTwotoneFullscreen />
     </button>
   );

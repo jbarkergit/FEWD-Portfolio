@@ -26,7 +26,7 @@ const FDCollectionsMenu = memo(({ isEditMode, setIsEditMode }: Props) => {
       <button
         className='fdCollectionsMenu--collection'
         aria-label='Create new list'
-        onPointerUp={() => {
+        onClick={() => {
           const data = addIdToCollection(userCollections, {
             data: undefined,
             colIndex: Object.keys(userCollections).length + 1,
@@ -40,13 +40,13 @@ const FDCollectionsMenu = memo(({ isEditMode, setIsEditMode }: Props) => {
         className='fdCollectionsMenu--edit'
         aria-label='Switch to edit mode'
         data-toggle='false'
-        onPointerUp={() => setIsEditMode((state) => !state)}>
+        onClick={() => setIsEditMode((state) => !state)}>
         <TablerEdit />
       </button>
       <button
         className='fdCollectionsMenu--close'
         aria-label='Close collections modal'
-        onPointerUp={() => setModal(undefined)}>
+        onClick={() => setModal(undefined)}>
         <MaterialSymbolsLogoutSharp />
       </button>
     </div>

@@ -79,7 +79,7 @@ const FDHeader = () => {
           <button
             className='fdHeader__ul__li__button'
             aria-label='Open Collections'
-            onPointerUp={() => setModal('collections')}>
+            onClick={() => setModal('collections')}>
             <SolarVideoLibraryBoldDuotone />
             Open Collections
           </button>
@@ -88,14 +88,14 @@ const FDHeader = () => {
       <div className='fdHeader__account'>
         <div
           aria-label='My Account'
-          onPointerUp={() => setIsAccountDropdownOpen((prev) => !prev)}>
+          onClick={() => setIsAccountDropdownOpen((prev) => !prev)}>
           <StreamlinePlumpUserStickerSquareSolid />
           <div
             ref={accountDropdownRef}
             data-open='false'>
             <button
               aria-label='Sign out'
-              onPointerUp={async () => await signOut(firebaseAuth)}>
+              onClick={async () => await signOut(firebaseAuth)}>
               Sign out
             </button>
           </div>

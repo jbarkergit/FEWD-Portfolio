@@ -71,13 +71,13 @@ const GenericCarouselNavigation = memo(({ dataLength, reference, isModal }: Prop
       <button
         className='genericCarousel__wrapper__navigation--button'
         aria-label='Show Previous'
-        onPointerUp={() => navigate(-1)}>
+        onClick={() => navigate(-1)}>
         <IcBaselineArrowLeft />
       </button>
       <button
         className='genericCarousel__wrapper__navigation--button'
         aria-label='Show More'
-        onPointerUp={() => navigate(1)}>
+        onClick={() => navigate(1)}>
         <IcBaselineArrowRight />
       </button>
     </nav>

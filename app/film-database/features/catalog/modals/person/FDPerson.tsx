@@ -106,7 +106,7 @@ const FDPerson = () => {
       <button
         className='fdPerson--exit'
         aria-label='Close View More Modal'
-        onPointerUp={() => setModal('movie')}>
+        onClick={() => setModal('movie')}>
         <MaterialSymbolsLogoutSharp />
       </button>
 
@@ -214,7 +214,7 @@ const FDPerson = () => {
                             <td className='fdPerson__column__table__tbody__tr__td__table__tbody__tr__td'>
                               <button
                                 aria-label={`View ${film.title}`}
-                                onPointerUp={() => {
+                                onClick={() => {
                                   setModalTrailer(film);
                                   setModal('movie');
                                 }}>

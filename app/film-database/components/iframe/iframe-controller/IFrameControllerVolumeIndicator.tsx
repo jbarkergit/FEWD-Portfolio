@@ -97,7 +97,7 @@ const IFrameControllerVolumeIndicator = ({ player }: { player: YouTubePlayer }) 
     <button
       className='fdiFrame__controller__controls__button'
       aria-label={playerVolume === 0 ? 'Unmute video' : 'Mute video'}
-      onPointerUp={changeMuteState}>
+      onClick={changeMuteState}>
       {svg}
     </button>
   );

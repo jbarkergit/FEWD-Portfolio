@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import type { PointerEvent } from 'react';
+import type { MouseEvent } from 'react';
 import { usePlayerVolumeContext } from '~/film-database/components/iframe/iframe-controller/context/PlayerVolumeContext';
 
 const IFrameControllerVolumeSlider = () => {
@@ -8,7 +8,7 @@ const IFrameControllerVolumeSlider = () => {
   const handleRef = useRef<HTMLSpanElement>(null);
   const isDragging = useRef<boolean>(false);
 
-  const moveHandle = (e: PointerEvent<HTMLButtonElement>) => {
+  const moveHandle = (e: MouseEvent<HTMLButtonElement>) => {
     if (!sliderRef.current || !handleRef.current) return;
 
     const sliderRect = sliderRef.current.getBoundingClientRect();
@@ -29,7 +29,7 @@ const IFrameControllerVolumeSlider = () => {
       onPointerMove={(e) => {
         if (isDragging.current) moveHandle(e);
       }}
-      onPointerUp={(e) => {
+      onClick={(e) => {
         moveHandle(e);
         isDragging.current = false;
       }}

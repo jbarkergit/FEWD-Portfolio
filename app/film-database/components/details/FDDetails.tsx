@@ -68,7 +68,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
         <button
           className='fdDetails--close'
           aria-label='Close View More Modal'
-          onPointerUp={() => setModal(undefined)}>
+          onClick={() => setModal(undefined)}>
           <MaterialSymbolsLogoutSharp />
         </button>
       )}
@@ -117,7 +117,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
             <button
               className='fdDetails__extra__nav--details'
               aria-label={`View more details about ${data.title}`}
-              onPointerUp={() => {
+              onClick={() => {
                 setModal('movie');
                 setModalTrailer(data);
               }}>

@@ -25,7 +25,7 @@ const FDSearchResults = ({ searchResults }: { searchResults: TmdbMovieProvider[]
                 </picture>
                 <div
                   className='fdSearchBar__results__ul__li__overlay'
-                  onPointerUp={() => setHeroData(props)}>
+                  onClick={() => setHeroData(props)}>
                   <button
                     className='fdSearchBar__results__ul__li__overlay--play'
                     aria-label='Play trailer'>

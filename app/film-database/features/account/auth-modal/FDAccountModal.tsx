@@ -271,19 +271,19 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                 <button
                   type='button'
                   aria-label='Log in with Github'
-                  onPointerUp={() => handleAuthProviderLogin('github')}>
+                  onClick={() => handleAuthProviderLogin('github')}>
                   <TablerBrandGithubFilled /> <span>Log in with GitHub</span>
                 </button>
                 <button
                   type='button'
                   aria-label='Log in with Google'
-                  onPointerUp={() => handleAuthProviderLogin('google')}>
+                  onClick={() => handleAuthProviderLogin('google')}>
                   <DeviconGoogle /> <span>Log in with Google</span>
                 </button>
                 <button
                   type='button'
                   aria-label='Log in Anonymously'
-                  onPointerUp={() => signInAnonymously(firebaseAuth)}>
+                  onClick={() => signInAnonymously(firebaseAuth)}>
                   <GameIconsSpy /> <span>Log in Anonymously</span>
                 </button>
               </div>
@@ -357,7 +357,7 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                   <button
                     type='button'
                     aria-label={activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
-                    onPointerUp={onActiveFormChange}>
+                    onClick={onActiveFormChange}>
                     {activeForm === 'registration' ? 'Log into an existing account' : 'Create a new account'}
                   </button>
                   {activeForm === 'login' && (
@@ -366,7 +366,7 @@ const FDAccountModal = forwardRef<HTMLDivElement, {}>(({}, accountRef) => {
                       <button
                         type='button'
                         aria-label='Request a password reset'
-                        onPointerUp={() => {
+                        onClick={() => {
                           const emailInput = document.getElementById(
                             'fdUserAccountSignInEmailAddress'
                           ) as HTMLInputElement;
