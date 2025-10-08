@@ -26,6 +26,8 @@
   flex-direction: column;
   height: 100svh;
   background-color: var(--fd-bc-primary);
+  overflow-x: clip;
+  touch-action: pan-y;
   @include m.fdFontM;
   @media (min-width: 1025px) {
     overflow-y: clip;
