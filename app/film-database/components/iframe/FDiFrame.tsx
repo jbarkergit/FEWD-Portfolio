@@ -1,9 +1,8 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
 import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
-import { useModalContext } from '~/film-database/context/ModalContext';
 import { useUserCollectionContext } from '~/film-database/context/UserCollectionContext';
 import type { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
 import YouTube from 'react-youtube';
@@ -27,21 +26,38 @@ const playStates: Record<number, iFramePlayState> = {
 
 const FDiFrame = memo(({ type }: { type: 'hero' | 'modal' }) => {
   // Trailer related state
-  const { heroData } = useHeroDataContext();
-  const { modalTrailer, setModalTrailer } = useModalTrailerContext();
+  const heroDataContext = type === 'hero' ? useHeroDataContext() : undefined;
+  const modalTrailerContext = type === 'modal' ? useModalTrailerContext() : undefined;
+
+  const heroData = heroDataContext?.heroData;
+  const modalTrailer = modalTrailerContext?.modalTrailer;
+  const setModalTrailer = modalTrailerContext?.setModalTrailer;
 
   // Modal related state
-  const { modal } = useModalContext();
-  const { userCollections, setUserCollections } = useUserCollectionContext();
+  const userCollectionContext = type === 'modal' ? useUserCollectionContext() : undefined;
+
+  const userCollections = userCollectionContext?.userCollections;
+  const setUserCollections = userCollectionContext?.setUserCollections;
 
   // Locally scoped state
   const [trailer, setTrailer] = useState<TmdbResponseFlat['videos']['results'][number] | undefined>(undefined);
-  const [playState, setPlayState] = useState<PlayerPlayState>(undefined); // The player cannot be stateless due to the conditional rendering of IFrameController.
+  const [playState, setPlayState] = useState<PlayerPlayState>(undefined); // The modal player cannot be stateless due to the conditional rendering of IFrameController.
+
+  // console.log(heroData, modalTrailer, userCollections, trailer, playState);
 
   // Player reference
   const playerRef = useRef<YouTube | null>(null);
 
+  // Conditionals
+  const modalTrailerId = useRef<number | undefined>(undefined);
+
   useEffect(() => {
+    if (type === 'hero' && !heroData) return;
+    if (type === 'modal') {
+      if (!modalTrailer) return;
+      if (modalTrailerId.current === modalTrailer.id) return;
+    }
+
     const controller = new AbortController();
 
     const fetchTrailer = async (): Promise<void> => {
@@ -55,6 +71,7 @@ const FDiFrame = memo(({ type }: { type: 'hero' | 'modal' }) => {
         filteredEntries = videos.response.results.filter((obj) => obj.name.includes('Trailer'));
       }
 
+      if (type === 'modal') modalTrailerId.current = id;
       setTrailer(filteredEntries[0]);
     };
 
@@ -64,17 +81,18 @@ const FDiFrame = memo(({ type }: { type: 'hero' | 'modal' }) => {
   }, [heroData, modalTrailer]);
 
   // Player destruction
-  const destroyPlayer = (target: YouTubePlayer) => {
-    /** Non-modal content */
-    if (!modal) {
-      target.destroy();
-      setTrailer(undefined);
-      return;
-    }
+  const destroyMainPlayer = useCallback((target: YouTubePlayer) => {
+    if (type !== 'hero') return;
+    target.destroy();
+    setTrailer(undefined);
+    return;
+  }, []);
 
-    /** Modal content */
+  const destroyModalPlayer = useCallback(() => {
+    if (type !== 'modal') return;
+
     // ID Trailer Queue collection
-    let queueCollection = structuredClone(userCollections['user-collection-0']);
+    let queueCollection = structuredClone(userCollections!['user-collection-0']);
     if (!queueCollection || !queueCollection.data) return;
 
     // Capture current trailer index
@@ -86,56 +104,64 @@ const FDiFrame = memo(({ type }: { type: 'hero' | 'modal' }) => {
     // If a trailer does not exist at index + 1, try index - 1
     if (!nextTrailer) nextTrailer = trailerQueue[currentTrailerIndex - 1];
     // If neither + 1 nor - 1 trailer exists, don't set a new trailer.
-    if (nextTrailer) setModalTrailer(nextTrailer);
+    if (nextTrailer) setModalTrailer!(nextTrailer);
 
     // Remove ended trailer from queueCollection
     queueCollection.data = queueCollection.data.filter((_, i) => i !== currentTrailerIndex);
 
     // Update userCollections, removing the ended trailer
-    setUserCollections((prev) => ({
+    setUserCollections!((prev) => ({
       ...prev,
       ['user-collection-0']: {
         ...queueCollection,
       },
     }));
-  };
+  }, []);
 
-  const iFrameOptions: YouTubeProps['opts'] = {
-    height: undefined,
-    width: undefined,
-    playerVars: {
+  const destroyPlayer = useCallback((target: YouTubePlayer) => {
+    if (type === 'hero') destroyMainPlayer(target);
+    else destroyModalPlayer();
+  }, []);
+
+  const iFrameOptions = useMemo<YouTubeProps['opts']>(
+    () => ({
+      height: undefined,
+      width: undefined,
       // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-      cc_lang_pref: 'eng',
-      cc_load_policy: 1,
-      // color: undefined,
-      controls: type === 'hero' ? 0 : 1, // 0 = disabled
-      disablekb: type === 'hero' ? 1 : 0, // 1 = disabled
-      // enablejsapi?: 0 | 1 | undefined;
-      // end?: number | undefined;
-      fs: type === 'hero' ? 0 : 1, // 0 = disabled
-      hl: 'eng',
-      iv_load_policy: 3,
-      loop: 0,
-      // origin: '',
-      // playlist?: string | undefined;
-      playsinline: 1,
-      rel: 0,
-      // start?: number | undefined;
-      widget_referrer: undefined,
-      // @ts-ignore
-      mute: 1, // Required for autoplay, is not defined by react-youtube lib
-    },
-  } as const;
+      playerVars: {
+        autoplay: 1,
+        cc_lang_pref: 'eng',
+        cc_load_policy: 1,
+        // color: undefined,
+        controls: type === 'hero' ? 0 : 1, // 0 = disabled
+        disablekb: type === 'hero' ? 1 : 0, // 1 = disabled
+        // enablejsapi?: 0 | 1 | undefined;
+        // end?: number | undefined;
+        fs: type === 'hero' ? 0 : 1, // 0 = disabled
+        hl: 'eng',
+        iv_load_policy: 3,
+        loop: 0,
+        // origin: '',
+        // playlist?: string | undefined;
+        playsinline: 1,
+        rel: 0,
+        // start?: number | undefined;
+        widget_referrer: undefined,
+        // @ts-ignore
+        mute: 1, // Required for autoplay, is not defined by react-youtube lib
+      },
+    }),
+    [type]
+  );
 
   // JSX
   return (
     <section
       className='fdiFrame'
       data-type={type}>
-      {trailer ? (
+      {trailer && (type === 'hero' ? heroData : modalTrailer) ? (
         <>
-          {modal === undefined && playerRef.current && playerRef.current.internalPlayer && (
+          {type === 'hero' && playerRef.current?.internalPlayer && (
             <IFrameController
               player={playerRef.current.internalPlayer}
               playState={playState}
@@ -150,9 +176,9 @@ const FDiFrame = memo(({ type }: { type: 'hero' | 'modal' }) => {
             title={`YouTube video player: ${trailer.name}`}
             style={undefined}
             loading={'eager'}
-            onStateChange={(event: YouTubeEvent<number>) =>
-              setPlayState(playStates[event.data as keyof typeof playStates] ?? 'cued')
-            }
+            onStateChange={(event: YouTubeEvent<number>) => {
+              if (type === 'modal') setPlayState(playStates[event.data as keyof typeof playStates] ?? 'cued');
+            }}
             // onPlaybackQualityChange={(event: YouTubeEvent<string>) => onPlaybackQualityChange(event.data)}
             onEnd={(event: YouTubeEvent) => destroyPlayer(event.target)}
             onError={(event: YouTubeEvent) => destroyPlayer(event.target)}
@@ -161,7 +187,7 @@ const FDiFrame = memo(({ type }: { type: 'hero' | 'modal' }) => {
       ) : (
         <picture className='fdiFrame__player'>
           <img
-            src={`https://image.tmdb.org/t/p/original/${heroData?.backdrop_path}`}
+            src={`https://image.tmdb.org/t/p/original/${type === 'hero' ? heroData?.backdrop_path : modalTrailer?.backdrop_path}`}
             alt={heroData?.title}
           />
         </picture>
