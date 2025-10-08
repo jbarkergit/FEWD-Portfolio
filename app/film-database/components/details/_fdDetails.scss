@@ -96,8 +96,9 @@
   &__providers {
     display: flex;
     flex-direction: column;
-    gap: var(--fd-gap);
-    padding: calc(var(--fd-gap) * 2.5) 0;
+    gap: calc(var(--fd-gap) * 2);
+    padding-top: calc(var(--fd-gap) * 2);
+    // padding: calc(var(--fd-gap) * 2.5) 0;
     &__provider {
       display: flex;
       flex-direction: column;
@@ -128,10 +129,12 @@
   &__extra {
     display: flex;
     flex-direction: column;
-    gap: calc(var(--fd-gap) * 2);
+    gap: calc(var(--fd-gap) * 4);
+    // padding-top: var(--fd-gap);
     &__inf {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      // justify-content: center;
       gap: var(--fd-gap);
       &__voteAvgVisual {
         display: flex;

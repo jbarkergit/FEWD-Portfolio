@@ -91,7 +91,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
 
       <p className='fdDetails__overview'>{data.overview}</p>
 
-      {genreIds.length && (
+      {modal && genreIds.length && (
         <ul className='fdDetails__genres'>
           {genreIds.map((genre, index) => (
             <li key={`genre-${genre}-index-${index}`}>
@@ -103,15 +103,17 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
       )}
 
       <div className='fdDetails__extra'>
-        <div className='fdDetails__extra__inf'>
-          <VoteAverageVisual data={data} />
-          {watchProviders && (
-            <FDDetailsAvailability
-              data={data}
-              watchProviders={watchProviders}
-            />
-          )}
-        </div>
+        {modal && data && (
+          <div className='fdDetails__extra__inf'>
+            <VoteAverageVisual data={data} />
+            {watchProviders && (
+              <FDDetailsAvailability
+                data={data}
+                watchProviders={watchProviders}
+              />
+            )}
+          </div>
+        )}
         {!modal && (
           <nav className='fdDetails__extra__nav'>
             <button
