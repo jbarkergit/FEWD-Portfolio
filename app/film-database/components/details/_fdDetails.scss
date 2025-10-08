@@ -130,7 +130,7 @@
     display: flex;
     flex-direction: column;
     gap: calc(var(--fd-gap) * 4);
-    // padding-top: var(--fd-gap);
+    padding-top: var(--fd-gap);
     &__inf {
       display: flex;
       flex-direction: column;
