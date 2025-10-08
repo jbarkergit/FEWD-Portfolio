@@ -30,6 +30,8 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
 
   /** Fetch watch providers when data changes */
   useEffect(() => {
+    if (!modal) return;
+
     const controller = new AbortController();
 
     const fetchWatchProviders = async () => {
@@ -40,7 +42,7 @@ const FDDetails = ({ modal }: { modal: boolean }) => {
     fetchWatchProviders();
 
     return () => controller.abort();
-  }, [data]);
+  }, [data, modal]);
 
   /**
    * Reduce provider categories by combining providers that offer 'buy' and 'rent' options
