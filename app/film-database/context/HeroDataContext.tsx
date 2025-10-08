@@ -1,4 +1,12 @@
-import { createContext, type Dispatch, type ReactNode, type SetStateAction, useContext, useState } from 'react';
+import {
+  createContext,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import { useFLoader } from '~/film-database/routes/FilmDatabase';
 
@@ -17,7 +25,9 @@ export const HeroDataProvider = ({ children }: { children: ReactNode }) => {
     primaryData[0] ? primaryData[0].response.results[0] : undefined
   );
 
-  return <Context.Provider value={{ heroData, setHeroData }}>{children}</Context.Provider>;
+  const value = useMemo(() => ({ heroData, setHeroData }), [heroData]);
+
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export const useHeroDataContext = () => {

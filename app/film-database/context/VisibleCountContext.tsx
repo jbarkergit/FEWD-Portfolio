@@ -2,6 +2,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
   type Dispatch,
   type ReactNode,
@@ -24,6 +25,7 @@ const Context = createContext<
 export const VisibleCountProvider = ({ children }: { children: ReactNode }) => {
   const { root } = useRootRefContext();
   const [visibleCount, setVisibleCount] = useState(DEFAULT_QUANTITY);
+  const value = useMemo(() => ({ visibleCount, setVisibleCount }), [visibleCount]);
 
   /**
    * Determine the number of items viewable within the viewport and modal widths
@@ -46,7 +48,7 @@ export const VisibleCountProvider = ({ children }: { children: ReactNode }) => {
     return () => window.removeEventListener('resize', updateVisibleCount);
   }, [root]);
 
-  return <Context.Provider value={{ visibleCount, setVisibleCount }}>{children}</Context.Provider>;
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export const useVisibleCountContext = () => {

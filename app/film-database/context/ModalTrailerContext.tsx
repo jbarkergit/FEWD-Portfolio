@@ -2,6 +2,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
   type Dispatch,
   type ReactNode,
@@ -38,7 +39,9 @@ export const ModalTrailerProvider = ({ children }: { children: ReactNode }) => {
     handleModalTrailerQueue();
   }, [userCollections]);
 
-  return <Context.Provider value={{ modalTrailer, setModalTrailer }}>{children}</Context.Provider>;
+  const value = useMemo(() => ({ modalTrailer, setModalTrailer }), [modalTrailer]);
+
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export const useModalTrailerContext = () => {

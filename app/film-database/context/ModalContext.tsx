@@ -1,4 +1,12 @@
-import { createContext, useContext, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+} from 'react';
 
 const Context = createContext<
   | {
@@ -10,7 +18,8 @@ const Context = createContext<
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [modal, setModal] = useState<'collections' | 'movie' | 'person' | undefined>(undefined);
-  return <Context.Provider value={{ modal, setModal }}>{children}</Context.Provider>;
+  const value = useMemo(() => ({ modal, setModal }), [modal]);
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export const useModalContext = () => {

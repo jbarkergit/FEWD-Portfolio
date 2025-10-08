@@ -1,4 +1,12 @@
-import { createContext, useContext, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+} from 'react';
 
 const Context = createContext<
   | {
@@ -10,7 +18,8 @@ const Context = createContext<
 
 export const PersonProvider = ({ children }: { children: ReactNode }) => {
   const [person, setPerson] = useState<number | undefined>(undefined);
-  return <Context.Provider value={{ person, setPerson }}>{children}</Context.Provider>;
+  const value = useMemo(() => ({ person, setPerson }), [person]);
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export const usePersonContext = () => {

@@ -2,6 +2,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
   type Dispatch,
   type ReactNode,
@@ -45,6 +46,8 @@ export const UserCollectionProvider = ({ children }: { children: ReactNode }) =>
     },
   });
 
+  const value = useMemo(() => ({ userCollections, setUserCollections }), [userCollections]);
+
   useEffect(() => {
     if (!isUserAuthorized()) return;
 
@@ -82,7 +85,7 @@ export const UserCollectionProvider = ({ children }: { children: ReactNode }) =>
     updateFirestoreUserDocument({ movies: userCollections });
   }, [userCollections]);
 
-  return <Context.Provider value={{ userCollections, setUserCollections }}>{children}</Context.Provider>;
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export const useUserCollectionContext = () => {
