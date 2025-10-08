@@ -2,13 +2,17 @@ import { useState, useEffect } from 'react';
 import GenericCarousel from '~/film-database/components/carousel/GenericCarousel';
 import { tmdbCall } from '~/film-database/composables/tmdbCall';
 import type { TmdbResponseFlat } from '~/film-database/composables/types/TmdbResponse';
+import { useModalContext } from '~/film-database/context/ModalContext';
 import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
 
 const FDCineInfoCredits = () => {
+  const { modal } = useModalContext();
   const { modalTrailer } = useModalTrailerContext();
   const [credits, setCredits] = useState<TmdbResponseFlat['credits'] | undefined>(undefined);
 
   useEffect(() => {
+    if (!modal) return;
+
     const controller = new AbortController();
 
     const fetch = async (): Promise<void> => {
