@@ -1,0 +1,41 @@
+@use '/app/base/sass/util/functions' as f;
+@use '/app/portfolio/scss/portfolioStyles' as s;
+
+.portfolio {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  height: 100svh;
+  background-color: s.$background-color-primary;
+  overflow: hidden;
+  font-size: s.$font-size-generic;
+  letter-spacing: 0.04em;
+  @media (width <= 1480px) {
+    display: flex;
+    flex-direction: column;
+    gap: s.$portfolio-gap;
+    height: auto;
+  }
+  & > * {
+    position: relative;
+    width: 100svw;
+    height: 100svh;
+    overflow: clip;
+    @media (width <= 1000px) {
+      height: max-content;
+    }
+  }
+}
+
+.projectHub {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.projectDetails {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.contact {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+//grid-area: 2 / 2 / 3 / 3;

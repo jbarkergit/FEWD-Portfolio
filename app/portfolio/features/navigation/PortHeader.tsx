@@ -1,11 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { projectData } from '../../data/projectData';
-import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
+import { useFeatureState } from '~/portfolio/context/FeatureStateContext';
+import { useProjectSlideIndex } from '~/portfolio/context/ProjectSlideContext';
 
 /** Component */
 const PortHeader = () => {
-  const { projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState } = usePortfolioContext();
+  const { featureState, setFeatureState } = useFeatureState();
+  const { projectSlideIndex, setProjectSlideIndex } = useProjectSlideIndex();
 
   const initialRender = useRef<boolean>(true),
     carouselNavSectionLeft = useRef<HTMLDivElement>(null),

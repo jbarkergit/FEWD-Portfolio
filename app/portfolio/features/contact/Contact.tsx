@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { contactSchema } from '~/base/validation/zodSchema';
-import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
+import { useFeatureState } from '~/portfolio/context/FeatureStateContext';
 
 const inputs = {
   firstName: { htmlFor: 'first-name', inputType: 'text' },
@@ -26,7 +26,8 @@ const submitToWeb3Forms = async (formData: FormData) => {
 };
 
 const Contact = () => {
-  const { setFeatureState } = usePortfolioContext();
+  const { setFeatureState } = useFeatureState();
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   const submittingRef = useRef<boolean>(false);
   const contactContainerRef = useRef<HTMLDivElement>(null);

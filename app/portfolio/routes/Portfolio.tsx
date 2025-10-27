@@ -1,10 +1,20 @@
-import { PortfolioProvider } from '~/portfolio/context/PortfolioContext';
-import PortfolioContainer from '~/portfolio/features/PortfolioContainer';
+import { useRef } from 'react';
+import { FeatureStateProvider } from '~/portfolio/context/FeatureStateContext';
+import { ProjectSlideIndexProvider } from '~/portfolio/context/ProjectSlideContext';
+import PortGrid from '~/portfolio/features/PortGrid';
 
 export default function () {
+  const portfolioRef = useRef<HTMLDivElement>(null);
+
   return (
-    <PortfolioProvider>
-      <PortfolioContainer />
-    </PortfolioProvider>
+    <div
+      className='portfolio'
+      ref={portfolioRef}>
+      <FeatureStateProvider>
+        <ProjectSlideIndexProvider>
+          <PortGrid portfolioRef={portfolioRef} />
+        </ProjectSlideIndexProvider>
+      </FeatureStateProvider>
+    </div>
   );
 }

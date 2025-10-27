@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { projectData } from '../../data/projectData';
-import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
+import { useFeatureState } from '~/portfolio/context/FeatureStateContext';
+import { useProjectSlideIndex } from '~/portfolio/context/ProjectSlideContext';
 
 const PortFooter = () => {
-  const { projectSlideIndex, featureState, setFeatureState } = usePortfolioContext();
+  const { featureState, setFeatureState } = useFeatureState();
+  const { projectSlideIndex } = useProjectSlideIndex();
 
   const footerNavigationLeft = useRef<HTMLElement>(null);
   const footerNavigationRight = useRef<HTMLDivElement>(null);

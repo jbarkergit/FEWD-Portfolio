@@ -1,8 +1,10 @@
-import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
+import { useFeatureState } from '~/portfolio/context/FeatureStateContext';
+import { useProjectSlideIndex } from '~/portfolio/context/ProjectSlideContext';
 import { projectData } from '~/portfolio/data/projectData';
 
 const ProjectInsights = () => {
-  const { projectSlideIndex, setProjectSlideIndex, featureState, setFeatureState } = usePortfolioContext();
+  const { featureState, setFeatureState } = useFeatureState();
+  const { projectSlideIndex, setProjectSlideIndex } = useProjectSlideIndex();
 
   return (
     <section className='projectDetails'>

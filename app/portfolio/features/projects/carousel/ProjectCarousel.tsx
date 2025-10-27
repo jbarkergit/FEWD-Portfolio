@@ -1,7 +1,8 @@
 import { useEffect, useReducer, useRef, type RefObject } from 'react';
 import { Link } from 'react-router';
 import { projectData } from '../../../data/projectData';
-import { usePortfolioContext } from '~/portfolio/context/PortfolioContext';
+import { useFeatureState } from '~/portfolio/context/FeatureStateContext';
+import { useProjectSlideIndex } from '~/portfolio/context/ProjectSlideContext';
 
 type ActionType =
   | {
@@ -61,7 +62,8 @@ const initState = {
 };
 
 const ProjectCarousel = () => {
-  const { projectSlideIndex, setProjectSlideIndex, featureState } = usePortfolioContext();
+  const { featureState } = useFeatureState();
+  const { projectSlideIndex, setProjectSlideIndex } = useProjectSlideIndex();
 
   /** References */
   const mainRef = useRef<HTMLDivElement>(null);

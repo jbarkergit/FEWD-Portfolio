@@ -1,8 +1,8 @@
 // Global Styles
 @forward '/app/portfolio/scss/portfolioStyles';
 
-// Pages (Main Grid Styles)
-@forward '/app/portfolio/features/portfolio';
+// Routes
+@forward '/app/portfolio/routes/portfolio';
 
 // Features
 @forward '/app/portfolio/features/projects/carousel/projectCarousel.scss';
