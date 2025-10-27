@@ -1,6 +1,9 @@
 import type { ProductType } from '../context/CartContext';
 import { commerceDatabase } from './commerceDatabase';
 
+/** Helper */
+const sort = (data: Set<string>) => [...data].sort((a, b) => (a > b ? 1 : -1));
+
 /** Internal builder */
 function buildCommerceData() {
   const sets = commerceDatabase.reduce(
@@ -56,9 +59,6 @@ function buildCommerceData() {
       categories: new Set<string>(),
     }
   );
-
-  /** Helper */
-  const sort = (data: Set<string>) => [...data].sort((a, b) => (a > b ? 1 : -1));
 
   /**
    * Convert sets to arrays, sort in descending order
