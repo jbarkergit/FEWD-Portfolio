@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
-import { projectData } from '../../data/projectData';
 import { useFeatureState } from '~/portfolio/context/FeatureStateContext';
 import { useProjectSlideIndex } from '~/portfolio/context/ProjectSlideContext';
+import { projectData } from '~/portfolio/data/projectData';
 
 const PortFooter = () => {
   const { featureState, setFeatureState } = useFeatureState();
