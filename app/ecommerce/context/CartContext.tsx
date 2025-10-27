@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useMemo, useReducer } from 'react
 import type { ReactElement, ReactNode } from 'react';
 import { commerceDatabase } from '../data/commerceDatabase';
 
-// Product type
 export type ProductType = {
   sku: string;
   stock: number;
@@ -21,7 +20,6 @@ export type ProductType = {
   };
 };
 
-//define type for product in shopping cart
 export type CartProductType = {
   sku: string;
   quantity: number;
@@ -35,12 +33,10 @@ export type CartProductType = {
   };
 };
 
-//define type for shopping cart
 type CartStateType = {
   shoppingCart: CartProductType[];
 };
 
-//grab Shopping Cart array from local Storage
 const getShoppingCartState = (): CartProductType[] => {
   if (typeof window === 'undefined' || !window.localStorage) return [];
   const cache = window.localStorage.getItem('shoppingCartState');
@@ -57,16 +53,23 @@ const CART_REDUCER_ACTION_TYPE = {
   ADD: 'ADD',
   REMOVE: 'REMOVE',
   SUBMIT: 'SUBMIT',
-};
+  HYDRATE: 'HYDRATE',
+} as const;
 
 //export reducer action type
 export type CartReducerActionType = typeof CART_REDUCER_ACTION_TYPE;
 
 //export type for reducer action (CART_REDUCER_ACTION_TYPE): string, PAYLOAD(optional): CartProductType
-export type CartReducerAction = {
-  type: string;
-  payload?: CartProductType;
-};
+export type CartReducerAction =
+  | {
+      type:
+        | typeof CART_REDUCER_ACTION_TYPE.ADD
+        | typeof CART_REDUCER_ACTION_TYPE.REMOVE
+        | typeof CART_REDUCER_ACTION_TYPE.QUANTITY
+        | typeof CART_REDUCER_ACTION_TYPE.SUBMIT;
+      payload?: CartProductType;
+    }
+  | { type: typeof CART_REDUCER_ACTION_TYPE.HYDRATE; payload: CartProductType[] };
 
 //implement reducer using our pre-defined types, arguments for reducer are state and action
 const cartReducer = (state: CartStateType, action: CartReducerAction): CartStateType => {
@@ -121,6 +124,9 @@ const cartReducer = (state: CartStateType, action: CartReducerAction): CartState
       return { ...state, shoppingCart: [] }; //handle submission logic -> returning an empty array until I'm ready to handle a payment gateway/processor
     }
 
+    case CART_REDUCER_ACTION_TYPE.HYDRATE:
+      return { ...state, shoppingCart: action.payload };
+
     default:
       throw new Error('Reducer Action Type may be unidentified');
   }
@@ -130,15 +136,19 @@ const cartReducer = (state: CartStateType, action: CartReducerAction): CartState
 const useCartContext = (initCartState: CartStateType) => {
   const [state, dispatch] = useReducer(cartReducer, initCartState);
 
-  const REDUCER_ACTIONS = useMemo(() => {
-    return CART_REDUCER_ACTION_TYPE;
-  }, []); //prevents rerenders via caching
+  const REDUCER_ACTIONS = useMemo(() => CART_REDUCER_ACTION_TYPE, []); //prevents rerenders via caching
 
-  // Persistence
+  // Hydrate from localStorage on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('shoppingCartState', JSON.stringify(state.shoppingCart));
+      const cached = getShoppingCartState();
+      if (cached.length) dispatch({ type: REDUCER_ACTIONS.HYDRATE, payload: cached });
     }
+  }, [REDUCER_ACTIONS]);
+
+  // Persist to localStorage on every change
+  useEffect(() => {
+    if (typeof window !== 'undefined') localStorage.setItem('shoppingCartState', JSON.stringify(state.shoppingCart));
   }, [state.shoppingCart]);
 
   const cartProductQuantity: number = state.shoppingCart.reduce((previousValue, cartProduct) => {

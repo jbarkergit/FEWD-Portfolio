@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import CartProduct from './CartProduct';
 import EmptyCart from './EmptyCart';
@@ -11,7 +10,6 @@ type PropType = {
 const ShoppingCart = ({ setUnmount }: PropType) => {
   /** Ecommerce Shopping Cart localStorage setter */
   const { dispatch, REDUCER_ACTIONS, shoppingCart, cartProductSubtotal, cartProductQuantity } = useCart();
-  useEffect(() => localStorage.setItem('shoppingCartState', JSON.stringify(shoppingCart)), [cartProductQuantity]);
 
   return (
     <div className='shoppingCart'>
