@@ -14,10 +14,6 @@ const FDAccountAnimation = memo(({ accountRef }: { accountRef: React.RefObject<H
   const [allPosters, setAllPosters] = useState<TmdbMovieProvider[][]>();
   const animationRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    console.log(allPosters);
-  }, [allPosters]);
-
   // Create 5 sets of 4 posters
   useEffect(() => {
     const posters: TmdbMovieProvider[][] = [];
