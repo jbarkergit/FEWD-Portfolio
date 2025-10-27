@@ -79,6 +79,16 @@ const excludedCacheKeys = [
   'discover',
 ] as const;
 
+// Array of keys we do not want to filter
+const excludedFilterKeys = [
+  'credits',
+  'details',
+  'reviews',
+  'watchProviders',
+  'personDetails',
+  'personCredits',
+] as const;
+
 async function callApi(
   controller: AbortController,
   keyEndpoint: {
@@ -113,7 +123,7 @@ async function callApi(
 
     return result;
   } catch (error) {
-    console.error(error);
+    console.error('Key:', key, error);
     return undefined;
   }
 }
@@ -137,7 +147,6 @@ async function processArgument(controller: AbortController, arg: Argument): Prom
       key = argKey;
       if (argKey in tmdbEndpoints.number) {
         endpoint = tmdbEndpoints.number[argKey as TmdbNumberKeys](query as number);
-        console.log(endpoint);
       } else if (argKey in tmdbEndpoints.string) {
         endpoint = tmdbEndpoints.string[argKey as TmdbStringKeys](query as string);
       } else {
@@ -152,12 +161,14 @@ async function processArgument(controller: AbortController, arg: Argument): Prom
   const item = sessionStorage.getItem(key);
   // If cached, return cached, else await fetch
   const data = { key: key, response: item ? JSON.parse(item) : await callApi(controller, { key, endpoint }) };
+  // If data is undefined, short circuit instead of returning undefined
+  if (!data.response) return;
   // Return cached item or fetch response
   return data;
 }
 
 function isFulfilled<T>(result: PromiseSettledResult<T>): result is PromiseFulfilledResult<T> {
-  return result.status === 'fulfilled';
+  return result.status === 'fulfilled' && result.value !== undefined;
 }
 
 /**
@@ -187,7 +198,7 @@ function filterContent<T>(result: CallResponse<T>):
     return result.map(({ key, response }) => ({
       key,
       response:
-        'results' in response && Array.isArray(response.results)
+        'results' in response && Array.isArray(response.results) && !excludedFilterKeys.includes(key)
           ? { ...response, results: response.results.filter(isNotNaughty) }
           : response,
     }));
@@ -195,7 +206,9 @@ function filterContent<T>(result: CallResponse<T>):
     return {
       key: result.key,
       response:
-        'results' in result.response && Array.isArray(result.response.results)
+        'results' in result.response &&
+        Array.isArray(result.response.results) &&
+        !excludedFilterKeys.includes(result.key)
           ? { ...result.response, results: result.response.results.filter(isNotNaughty) }
           : result.response,
     };
@@ -215,14 +228,27 @@ export async function tmdbCall<T extends Argument | Argument[]>(
   // Await allSettled
   const responses = await Promise.allSettled(promises);
 
-  // Filter out rejected while narrowing type from PromiseSettledResult to PromiseFulfilledResult then create a new array of values
-  const fulfilled = responses.filter(isFulfilled).map((f) => f.value);
+  // Filter out rejected and undefined while narrowing type from PromiseSettledResult to PromiseFulfilledResult then create a new array of values
+  const fulfilled = responses.filter(isFulfilled).map((f) => f.value) as CallResponse<T>[];
+
+  // Prevent empty arrays from proceeding
+  if (fulfilled.length === 0) {
+    throw new Error('The requested TMDB API call failed to return a response.');
+  }
 
   // If argument is an array, return, else if argument is a single string or object, return the data at index 0
   const result = (Array.isArray(args) ? fulfilled : fulfilled[0]) as CallResponse<T>;
 
   // Filter content
   const filteredResult = filterContent(result);
+
+  // Test logs
+  // console.log('Parameters:', parameters);
+  // console.log('Responses:', responses);
+  // console.log('Fulfilled:', fulfilled);
+  // console.log('Result:', result);
+  // console.log('Filtered Result:', filteredResult);
+  // console.log(' -------------------------- ');
 
   // Return filtered and type narrowed fulfilled responses
   return filteredResult as CallResponse<T>;
