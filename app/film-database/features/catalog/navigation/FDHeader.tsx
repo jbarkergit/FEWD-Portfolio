@@ -2,6 +2,8 @@ import { firebaseAuth } from '~/base/firebase/config/firebaseConfig';
 import { signOut } from 'firebase/auth';
 import { useCallback, useEffect, useRef, useState, type SVGProps } from 'react';
 import { useModalContext } from '~/film-database/context/ModalContext';
+import { useModalTrailerContext } from '~/film-database/context/ModalTrailerContext';
+import { useHeroDataContext } from '~/film-database/context/HeroDataContext';
 
 function StreamlinePlumpUserStickerSquareSolid(props: SVGProps<SVGSVGElement>) {
   return (
@@ -49,6 +51,8 @@ function SolarVideoLibraryBoldDuotone(props: SVGProps<SVGSVGElement>) {
 
 const FDHeader = () => {
   const { setModal } = useModalContext();
+  const { setModalTrailer } = useModalTrailerContext();
+  const { heroData } = useHeroDataContext();
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState<boolean>(false);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -79,7 +83,10 @@ const FDHeader = () => {
           <button
             className='fdHeader__ul__li__button'
             aria-label='Open Collections'
-            onClick={() => setModal('collections')}>
+            onClick={() => {
+              setModal('collections');
+              setModalTrailer(heroData);
+            }}>
             <SolarVideoLibraryBoldDuotone />
             Open Collections
           </button>

@@ -8,6 +8,9 @@ import FDAccountModal from '~/film-database/features/account/auth-modal/FDAccoun
 import { useAuth } from '~/base/firebase/authentication/context/authProvider';
 import { ModalProvider } from '~/film-database/context/ModalContext';
 import { RootRefProvider } from '~/film-database/context/RootRefContext';
+import { HeroDataProvider } from '~/film-database/context/HeroDataContext';
+import { ModalTrailerProvider } from '~/film-database/context/ModalTrailerContext';
+import { UserCollectionProvider } from '~/film-database/context/UserCollectionContext';
 
 export async function clientLoader() {
   const primaryData = await tmdbCall(new AbortController(), [
@@ -51,8 +54,14 @@ export default function FilmDatabase() {
     <div className='filmDatabase'>
       <RootRefProvider>
         <ModalProvider>
-          <FDHeader />
-          <FDCatalog />
+          <HeroDataProvider>
+            <UserCollectionProvider>
+              <ModalTrailerProvider>
+                <FDHeader />
+                <FDCatalog />
+              </ModalTrailerProvider>
+            </UserCollectionProvider>
+          </HeroDataProvider>
         </ModalProvider>
       </RootRefProvider>
     </div>
