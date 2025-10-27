@@ -11,11 +11,11 @@ const commercePaths = buildCommercePaths();
 export default [
   index('./portfolio/routes/Portfolio.tsx'),
 
-  route('ecommerce', './ecommerce/pages/Home.tsx'),
-  route('ecommerce/products', './ecommerce/pages/ProductCatalog.tsx'),
-  route('ecommerce/products/:paramId', './ecommerce/pages/ProductDetailPage.tsx'),
+  route('ecommerce', './ecommerce/routes/Home.tsx'),
+  route('ecommerce/products', './ecommerce/routes/ProductCatalog.tsx'),
+  route('ecommerce/products/:paramId', './ecommerce/routes/ProductDetailPage.tsx'),
   ...commercePaths.map((path) => {
-    return route(`ecommerce/products/${path}`, './ecommerce/pages/ProductCatalog.tsx', { id: `filter-${path}` });
+    return route(`ecommerce/products/${path}`, './ecommerce/routes/ProductCatalog.tsx', { id: `filter-${path}` });
   }),
 
   route('film-database', './film-database/routes/FilmDatabase.tsx'),
