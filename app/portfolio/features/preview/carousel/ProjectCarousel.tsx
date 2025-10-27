@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, type RefObject } from 'react';
 import { Link } from 'react-router';
-import { projectData } from '../../../data/projectData';
+import { projectData } from '../../data/projectData';
 import { useFeatureState } from '~/portfolio/context/FeatureStateContext';
 import { useProjectSlideIndex } from '~/portfolio/context/ProjectSlideContext';
 

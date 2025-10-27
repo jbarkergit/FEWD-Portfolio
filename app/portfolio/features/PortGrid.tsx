@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { useFeatureState } from '~/portfolio/context/FeatureStateContext';
 import Contact from '~/portfolio/features/contact/Contact';
 import ProjectInsights from '~/portfolio/features/insights/ProjectInsights';
-import ProjectHub from '~/portfolio/features/projects/ProjectHub';
+import ProjectCarousel from '~/portfolio/features/preview/carousel/ProjectCarousel';
+import PortFooter from '~/portfolio/features/preview/navigation/footer/PortFooter';
+import PortHeader from '~/portfolio/features/preview/navigation/header/PortHeader';
 
 const PortGrid = ({ portfolioRef }: { portfolioRef: React.RefObject<HTMLDivElement | null> }) => {
   const { featureState } = useFeatureState();
@@ -52,7 +54,12 @@ const PortGrid = ({ portfolioRef }: { portfolioRef: React.RefObject<HTMLDivEleme
 
   return (
     <>
-      <ProjectHub />
+      <section className='projectHub'>
+        <h2>Project hub</h2>
+        <PortHeader />
+        <ProjectCarousel />
+        <PortFooter />
+      </section>
       <ProjectInsights />
       <Contact />
     </>
