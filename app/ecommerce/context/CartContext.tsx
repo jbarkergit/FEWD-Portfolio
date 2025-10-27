@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useReducer } from 'react';
+import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 import type { ReactElement, ReactNode } from 'react';
 import { commerceDatabase } from '../data/commerceDatabase';
 
@@ -42,10 +42,10 @@ type CartStateType = {
 
 //grab Shopping Cart array from local Storage
 const getShoppingCartState = (): CartProductType[] => {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    return JSON.parse(localStorage.getItem('shoppingCartState') || '[]') as CartProductType[];
-  }
-  return [];
+  if (typeof window === 'undefined' || !window.localStorage) return [];
+  const cache = window.localStorage.getItem('shoppingCartState');
+  if (cache) return JSON.parse(cache) as CartProductType[];
+  else return [];
 };
 
 //initialize cart with local Storage Shopping Cart array
@@ -133,6 +133,13 @@ const useCartContext = (initCartState: CartStateType) => {
   const REDUCER_ACTIONS = useMemo(() => {
     return CART_REDUCER_ACTION_TYPE;
   }, []); //prevents rerenders via caching
+
+  // Persistence
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('shoppingCartState', JSON.stringify(state.shoppingCart));
+    }
+  }, [state.shoppingCart]);
 
   const cartProductQuantity: number = state.shoppingCart.reduce((previousValue, cartProduct) => {
     return previousValue + cartProduct.quantity;
