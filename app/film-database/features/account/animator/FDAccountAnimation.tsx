@@ -1,36 +1,56 @@
-import { memo, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { memo, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import type { TmdbMovieProvider } from '~/film-database/composables/types/TmdbResponse';
 import { useFLoader } from '~/film-database/routes/FilmDatabase';
 
 // Find the visual center of an array's length
 const getCenteredIndex = (length: number) => Math.round((length - 1) / 2);
 
+// Constants
+const totalSets: number = 5;
+const totalSetPosters: number = 4;
+
 const FDAccountAnimation = memo(({ accountRef }: { accountRef: React.RefObject<HTMLDivElement | null> }) => {
   const { primaryData } = useFLoader();
-  const [posters, setPosters] = useState<TmdbMovieProvider[][]>();
+  const [allPosters, setAllPosters] = useState<TmdbMovieProvider[][]>();
   const animationRef = useRef<HTMLDivElement>(null);
 
-  /** Aims to abstract logic from map scope in order to leverage TMDB image paths with numerous dimensions to improve image load times */
-  const mostCenteredImageID: number = useMemo(() => {
-    if (!primaryData[0]) return -1;
+  useEffect(() => {
+    console.log(allPosters);
+  }, [allPosters]);
 
-    const nowPlaying = primaryData[0].response.results;
-    let posters: TmdbMovieProvider[][] = [];
+  // Create 5 sets of 4 posters
+  useEffect(() => {
+    const posters: TmdbMovieProvider[][] = [];
+    let dataIteration = 0;
+    let buffer: TmdbMovieProvider[] = [];
 
-    for (let i = 0; i < Math.ceil(nowPlaying.length / 4); i++) {
-      posters.push(nowPlaying.slice(i * 4, i * 4 + 4));
+    while (posters.length < totalSets && dataIteration < primaryData.length) {
+      const currentData = primaryData[dataIteration]?.response.results ?? [];
+
+      // Merge left over posters from previous results
+      buffer = buffer.concat(currentData);
+
+      // While a full set of 4 is possible
+      while (buffer.length >= totalSetPosters && posters.length < totalSets) {
+        posters.push(buffer.splice(0, totalSetPosters));
+      }
+
+      // If no more posters are available, move on to the next data set from primaryData
+      dataIteration++;
     }
 
-    if (!posters.length) return -1;
+    setAllPosters(posters);
+  }, [primaryData]);
 
-    setPosters(posters);
+  const mostCenteredImageID: number = useMemo(() => {
+    if (!allPosters) return -1;
 
-    const middleSet = posters[getCenteredIndex(posters.length)];
+    const middleSet = allPosters[getCenteredIndex(allPosters.length)];
     if (!middleSet?.length) return -1;
 
     const middleItem = middleSet?.[getCenteredIndex(middleSet.length)];
     return middleItem?.id ?? -1;
-  }, [primaryData[0]]);
+  }, [allPosters]);
 
   /** Unmount animator */
   const unmountAnimation = (): void => {
@@ -47,12 +67,12 @@ const FDAccountAnimation = memo(({ accountRef }: { accountRef: React.RefObject<H
         ref={animationRef}
         data-visible='false'
         onAnimationEnd={unmountAnimation}>
-        {posters?.map((set: TmdbMovieProvider[], setIndex: number) => (
+        {allPosters?.map((set: TmdbMovieProvider[], setIndex: number) => (
           <ul
             className='fdAccountAnimation__backdrop__set'
             key={`backdrop-set-${setIndex}`}>
             {set.map((article: TmdbMovieProvider, index: number) => {
-              const isLast = setIndex === posters.length - 1 && index === set.length - 1;
+              const isLast = setIndex === allPosters.length - 1 && index === set.length - 1;
 
               return (
                 <li
