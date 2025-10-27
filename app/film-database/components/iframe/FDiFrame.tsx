@@ -133,8 +133,8 @@ const FDiFrame = memo(({ type }: { type: 'hero' | 'modal' }) => {
         cc_lang_pref: 'eng',
         cc_load_policy: 1,
         // color: undefined,
-        controls: type === 'hero' ? 0 : 1, // 0 = disabled
-        disablekb: type === 'hero' ? 1 : 0, // 1 = disabled
+        controls: type === 'hero' ? 0 : 1, // 0 = not displayed
+        disablekb: type === 'hero' ? 1 : 0, // 0 = enabled
         // enablejsapi?: 0 | 1 | undefined;
         // end?: number | undefined;
         fs: type === 'hero' ? 0 : 1, // 0 = disabled
@@ -176,6 +176,7 @@ const FDiFrame = memo(({ type }: { type: 'hero' | 'modal' }) => {
             title={`YouTube video player: ${trailer.name}`}
             style={undefined}
             loading={'eager'}
+            onPlay={() => setPlayState('playing')}
             onStateChange={(event: YouTubeEvent<number>) => {
               if (type === 'modal') setPlayState(playStates[event.data as keyof typeof playStates] ?? 'cued');
             }}

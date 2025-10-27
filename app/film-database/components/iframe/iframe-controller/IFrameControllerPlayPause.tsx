@@ -62,12 +62,10 @@ const IFrameControllerPlayPause = ({ player, playState }: { player: YouTubePlaye
     reflectPlayerState();
   }, [playState]);
 
+  // Pause playback when modal is opened, play when closed
   useEffect(() => {
-    // Pause video when modal opens
-    const onModalOpen = async () => {
-      if (modal) await player.pauseVideo();
-    };
-    onModalOpen();
+    const onModalOpen = async () => await player.pauseVideo();
+    if (modal) onModalOpen();
   }, [modal]);
 
   const changePlaystate = async () => {
