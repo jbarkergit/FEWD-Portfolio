@@ -6,7 +6,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 /** https://vite.dev/config/ */
 export default defineConfig({
   plugins: [!process.env.VITEST && reactRouter(), tsconfigPaths()],
-  server: { watch: { usePolling: true } },
+  server: { host: '127.0.0.1', watch: { usePolling: true } },
   test: {
     globals: true,
     environment: 'jsdom',
