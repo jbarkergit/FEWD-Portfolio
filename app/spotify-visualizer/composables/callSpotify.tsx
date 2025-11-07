@@ -1,3 +1,692 @@
+type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+type PathParams = {
+  id: string;
+  ids: number[];
+  category_id: string;
+  genres: string[];
+  market: keyof typeof iso.market;
+  markets: (keyof typeof iso.market)[];
+  locale: keyof typeof iso.market;
+  limit: number;
+  offset: number;
+  additional_types: string;
+  device_id: string;
+  device_ids: string[];
+  play: boolean;
+  position_ms: number;
+  state: 'track' | 'context' | 'off';
+  volume_percent: number;
+  after: number;
+  before: number;
+  uri: string;
+  playlist_id: string;
+  fields: string;
+  uris: string[];
+  position: number;
+  user_id: string;
+  q: 'album' | 'artist' | 'track' | 'year' | 'upc' | 'tag:hipster' | 'tag:new' | 'isrc' | 'genre';
+  type: string[];
+  include_external: 'audio';
+  seed_artists: string[];
+  seed_genres: string[];
+  seed_tracks: string[];
+  min_acousticness: number;
+  max_acousticness: number;
+  target_acousticness: number;
+  min_danceability: number;
+  max_danceability: number;
+  target_danceability: number;
+  min_duration_ms: number;
+  max_duration_ms: number;
+  target_duration_ms: number;
+  min_energy: number;
+  max_energy: number;
+  target_energy: number;
+  min_instrumentalness: number;
+  max_instrumentalness: number;
+  target_instrumentalness: number;
+  min_key: number;
+  max_key: number;
+  target_key: number;
+  min_liveness: number;
+  max_liveness: number;
+  target_liveness: number;
+  min_loudness: number;
+  max_loudness: number;
+  target_loudness: number;
+  min_mode: number;
+  max_mode: number;
+  target_mode: number;
+  min_popularity: number;
+  max_popularity: number;
+  target_popularity: number;
+  min_speechiness: number;
+  max_speechiness: number;
+  target_speechiness: number;
+  min_tempo: number;
+  max_tempo: number;
+  target_tempo: number;
+  min_time_signature: number;
+  max_time_signature: number;
+  target_time_signature: number;
+  min_valence: number;
+  max_valence: number;
+  target_valence: number;
+  time_range: string;
+  include_groups: string[];
+};
+
+type BodyParams = {
+  ids: string[];
+  name: string;
+  public: boolean;
+  collaborative: boolean;
+  description: string;
+  uris: string[];
+  range_start: number;
+  insert_before: number;
+  range_length: number;
+  snapshot_id: string;
+  position: number;
+  tracks: {}[];
+  uri: string;
+  timestamped_ids: { id: string; added_at: string }[];
+};
+
+const iso = {
+  // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+  base: 'market=',
+  get market() {
+    return {
+      Afghanistan: `${this.base}AF`,
+      Albania: `${this.base}AL`,
+      Algeria: `${this.base}DZ`,
+      Andorra: `${this.base}AD`,
+      Angola: `${this.base}AO`,
+      Argentina: `${this.base}AR`,
+      Armenia: `${this.base}AM`,
+      Australia: `${this.base}AU`,
+      Austria: `${this.base}AT`,
+      Azerbaijan: `${this.base}AZ`,
+      Bahrain: `${this.base}BH`,
+      Bangladesh: `${this.base}BD`,
+      Belarus: `${this.base}BY`,
+      Belgium: `${this.base}BE`,
+      Belize: `${this.base}BZ`,
+      Benin: `${this.base}BJ`,
+      Bhutan: `${this.base}BT`,
+      Bolivia: `${this.base}BO`,
+      'Bosnia and Herzegovina': `${this.base}BA`,
+      Botswana: `${this.base}BW`,
+      Brazil: `${this.base}BR`,
+      Bulgaria: `${this.base}BG`,
+      'Burkina Faso': `${this.base}BF`,
+      Burundi: `${this.base}BI`,
+      Cambodia: `${this.base}KH`,
+      Cameroon: `${this.base}CM`,
+      Canada: `${this.base}CA`,
+      'Cape Verde': `${this.base}CV`,
+      'Central African Republic': `${this.base}CF`,
+      Chad: `${this.base}TD`,
+      Chile: `${this.base}CL`,
+      China: `${this.base}CN`,
+      Colombia: `${this.base}CO`,
+      Congo: `${this.base}CG`,
+      'Costa Rica': `${this.base}CR`,
+      'Côte d’Ivoire': `${this.base}CI`,
+      Croatia: `${this.base}HR`,
+      Cyprus: `${this.base}CY`,
+      'Czech Republic': `${this.base}CZ`,
+      Denmark: `${this.base}DK`,
+      Djibouti: `${this.base}DJ`,
+      'Dominican Republic': `${this.base}DO`,
+      Ecuador: `${this.base}EC`,
+      Egypt: `${this.base}EG`,
+      'El Salvador': `${this.base}SV`,
+      Estonia: `${this.base}EE`,
+      Ethiopia: `${this.base}ET`,
+      Fiji: `${this.base}FJ`,
+      Finland: `${this.base}FI`,
+      France: `${this.base}FR`,
+      Gabon: `${this.base}GA`,
+      Georgia: `${this.base}GE`,
+      Germany: `${this.base}DE`,
+      Ghana: `${this.base}GH`,
+      Greece: `${this.base}GR`,
+      Guatemala: `${this.base}GT`,
+      Guinea: `${this.base}GN`,
+      'Guinea-Bissau': `${this.base}GW`,
+      Honduras: `${this.base}HN`,
+      'Hong Kong': `${this.base}HK`,
+      Hungary: `${this.base}HU`,
+      Iceland: `${this.base}IS`,
+      India: `${this.base}IN`,
+      Indonesia: `${this.base}ID`,
+      Ireland: `${this.base}IE`,
+      Israel: `${this.base}IL`,
+      Italy: `${this.base}IT`,
+      Jamaica: `${this.base}JM`,
+      Japan: `${this.base}JP`,
+      Jordan: `${this.base}JO`,
+      Kazakhstan: `${this.base}KZ`,
+      Kenya: `${this.base}KE`,
+      Kuwait: `${this.base}KW`,
+      Kyrgyzstan: `${this.base}KG`,
+      Laos: `${this.base}LA`,
+      Latvia: `${this.base}LV`,
+      Lebanon: `${this.base}LB`,
+      Lesotho: `${this.base}LS`,
+      Liberia: `${this.base}LR`,
+      Libya: `${this.base}LY`,
+      Liechtenstein: `${this.base}LI`,
+      Lithuania: `${this.base}LT`,
+      Luxembourg: `${this.base}LU`,
+      Macau: `${this.base}MO`,
+      'North Macedonia': `${this.base}MK`,
+      Madagascar: `${this.base}MG`,
+      Malawi: `${this.base}MW`,
+      Malaysia: `${this.base}MY`,
+      Mali: `${this.base}ML`,
+      Malta: `${this.base}MT`,
+      Mauritania: `${this.base}MR`,
+      Mauritius: `${this.base}MU`,
+      Mexico: `${this.base}MX`,
+      Moldova: `${this.base}MD`,
+      Monaco: `${this.base}MC`,
+      Mongolia: `${this.base}MN`,
+      Montenegro: `${this.base}ME`,
+      Morocco: `${this.base}MA`,
+      Mozambique: `${this.base}MZ`,
+      Myanmar: `${this.base}MM`,
+      Namibia: `${this.base}NA`,
+      Nepal: `${this.base}NP`,
+      Netherlands: `${this.base}NL`,
+      'New Zealand': `${this.base}NZ`,
+      Nicaragua: `${this.base}NI`,
+      Niger: `${this.base}NE`,
+      Nigeria: `${this.base}NG`,
+      Norway: `${this.base}NO`,
+      Oman: `${this.base}OM`,
+      Pakistan: `${this.base}PK`,
+      Panama: `${this.base}PA`,
+      'Papua New Guinea': `${this.base}PG`,
+      Paraguay: `${this.base}PY`,
+      Peru: `${this.base}PE`,
+      Philippines: `${this.base}PH`,
+      Poland: `${this.base}PL`,
+      Portugal: `${this.base}PT`,
+      Qatar: `${this.base}QA`,
+      Romania: `${this.base}RO`,
+      Russia: `${this.base}RU`,
+      Rwanda: `${this.base}RW`,
+      'Saudi Arabia': `${this.base}SA`,
+      Senegal: `${this.base}SN`,
+      Serbia: `${this.base}RS`,
+      Singapore: `${this.base}SG`,
+      Slovakia: `${this.base}SK`,
+      Slovenia: `${this.base}SI`,
+      'South Africa': `${this.base}ZA`,
+      'South Korea': `${this.base}KR`,
+      Spain: `${this.base}ES`,
+      'Sri Lanka': `${this.base}LK`,
+      Sweden: `${this.base}SE`,
+      Switzerland: `${this.base}CH`,
+      Taiwan: `${this.base}TW`,
+      Tanzania: `${this.base}TZ`,
+      Thailand: `${this.base}TH`,
+      Tunisia: `${this.base}TN`,
+      Turkey: `${this.base}TR`,
+      Ukraine: `${this.base}UA`,
+      'United Arab Emirates': `${this.base}AE`,
+      'United Kingdom': `${this.base}GB`,
+      USA: `${this.base}US`,
+      Uruguay: `${this.base}UY`,
+      Venezuela: `${this.base}VE`,
+      Vietnam: `${this.base}VN`,
+      Zambia: `${this.base}ZM`,
+      Zimbabwe: `${this.base}ZW`,
+    };
+  },
+};
+
+const buildEndpoint = (endpoint: string, pathParams: Partial<PathParams> | undefined): string => {
+  // defaultLimit: 50, // spotify default: 20
+
+  if (pathParams) {
+  }
+
+  return endpoint;
+};
+
+type SpotifyRequest = {
+  method: Method;
+  endpoint: string;
+  body?: Record<string, any>;
+};
+
+const endpoints = {
+  albums: {
+    getAlbum: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/albums/{id}`, pathParams),
+    }),
+    getSeveralAlbums: (pathParams: Pick<PathParams, 'ids' | 'market'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/albums`, pathParams),
+    }),
+    getAlbumTracks: (pathParams: Pick<PathParams, 'id' | 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/albums/{id}/tracks`, pathParams),
+    }),
+    getUsersSavedAlbums: (pathParams: Pick<PathParams, 'limit' | 'offset' | 'market'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/albums`, pathParams),
+    }),
+    saveAlbumsForCurrentUser: (pathParams = undefined, body: Pick<BodyParams, 'ids'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/albums`, pathParams),
+      body,
+    }),
+    removeUsersSavedAlbums: (pathParams: undefined, body: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'DELETE',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/albums`, pathParams),
+      body,
+    }),
+    checkUsersSavedAlbums: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/albums/contains`, pathParams),
+    }),
+    getNewReleases: (pathParams: Pick<PathParams, 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/browse/new-releases`, pathParams),
+    }),
+  },
+  artists: {
+    getArtist: (pathParams: Pick<PathParams, 'id'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/artists/{id}`, pathParams),
+    }),
+    getSeveralArtists: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/artists`, pathParams),
+    }),
+    getArtistsAlbums: (
+      pathParams: Pick<PathParams, 'id' | 'include_groups' | 'market' | 'limit' | 'offset'>
+    ): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/artists/{id}/albums`, pathParams),
+    }),
+    getArtistsTopTracks: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/artists/{id}/top-tracks`, pathParams),
+    }),
+    // getArtistsRelatedTracks
+  },
+  audiobooks: {
+    getAnAudiobook: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/audiobooks/{id}`, pathParams),
+    }),
+    getSeveralAudiobooks: (pathParams: Pick<PathParams, 'ids' | 'market'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/audiobooks`, pathParams),
+    }),
+    getAudiobookChapters: (pathParams: Pick<PathParams, 'id' | 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/audiobooks/{id}/chapters`, pathParams),
+    }),
+    getUsersSavedAudiobooks: (pathParams: Pick<PathParams, 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/audiobooks`, pathParams),
+    }),
+    saveAudiobooksForCurrentUser: (body: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/audiobooks`, undefined),
+      body,
+    }),
+    removeUsersSavedAudiobooks: (body: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'DELETE',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/audiobooks`, undefined),
+      body,
+    }),
+    checkUsersSavedAudiobooks: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/audiobooks/contains`, pathParams),
+    }),
+  },
+  categories: {
+    getSeveralBrowseCategories: (pathParams: Pick<PathParams, 'locale' | 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/browse/categories`, pathParams),
+    }),
+    getSingleBrowseCategory: (pathParams: Pick<PathParams, 'category_id' | 'locale'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/browse/categories/{category_id}`, pathParams),
+    }),
+  },
+  chapters: {
+    getAChapter: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/chapters/{id}`, pathParams),
+    }),
+    getSeveralChapters: (pathParams: Pick<PathParams, 'ids' | 'market'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/chapters`, pathParams),
+    }),
+  },
+  episodes: {
+    getEpisode: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/episodes/{id}`, pathParams),
+    }),
+    getSeveralEpisodes: (pathParams: Pick<PathParams, 'ids' | 'market'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/episodes`, pathParams),
+    }),
+    getUsersSavedEpisodes: (pathParams: Pick<PathParams, 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/episodes`, pathParams),
+    }),
+    saveEpisodesForCurrentUser: (body: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/episodes`, undefined),
+      body,
+    }),
+    removeUsersSavedEpisodes: (body: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'DELETE',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/episodes`, undefined),
+      body,
+    }),
+    checkUsersSavedEpisodes: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/episodes/contains`, pathParams),
+    }),
+  },
+  //   genres: {
+  //     getAvailableGenreSeeds
+  //   },
+  markets: {
+    getAvailableMarkets: (): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/markets`, undefined),
+    }),
+  },
+  player: {
+    getPlaybackState: (pathParams: Pick<PathParams, 'market' | 'additional_types'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player`, pathParams),
+    }),
+    transferPlayback: (body: Pick<PathParams, 'device_ids' | 'play'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player`, undefined),
+      body,
+    }),
+    getAvailableDevices: (): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/devices`, undefined),
+    }),
+    getCurrentlyPlayingTrack: (pathParams: Pick<PathParams, 'market' | 'additional_types'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/currently-playing`, pathParams),
+    }),
+    startOrResumePlayback: (body: Pick<PathParams, 'device_id'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/play`, undefined),
+      body,
+    }),
+    pausePlayback: (body: Pick<PathParams, 'device_id'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/pause`, undefined),
+      body,
+    }),
+    skipToNext: (body: Pick<PathParams, 'device_id'>): SpotifyRequest => ({
+      method: 'POST',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/next`, undefined),
+      body,
+    }),
+    skipToPrevious: (body: Pick<PathParams, 'device_id'>): SpotifyRequest => ({
+      method: 'POST',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/previous`, undefined),
+      body,
+    }),
+    seekToPosition: (body: Pick<PathParams, 'position_ms' | 'device_id'>): SpotifyRequest => ({
+      method: 'POST',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/seek`, undefined),
+      body,
+    }),
+    setRepeatMode: (body: Pick<PathParams, 'state' | 'device_id'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/repeat`, undefined),
+      body,
+    }),
+    setPlaybackVolume: (body: Pick<PathParams, 'volume_percent' | 'device_id'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/volume`, undefined),
+      body,
+    }),
+    togglePlaybackShuffle: (body: Pick<PathParams, 'state' | 'device_id'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/shuffle`, undefined),
+      body,
+    }),
+    getRecentlyPlayedTracks: (pathParams: Pick<PathParams, 'limit' | 'after' | 'before'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/recently-played`, pathParams),
+    }),
+    getTheUsersQueue: (): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/queue`, undefined),
+    }),
+    addItemsToPlaybackQueue: (body: Pick<PathParams, 'uri' | 'device_id'>): SpotifyRequest => ({
+      method: 'POST',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/queue`, undefined),
+      body,
+    }),
+  },
+  playlists: {
+    getPlaylist: (
+      pathParams: Pick<PathParams, 'playlist_id' | 'market' | 'fields' | 'additional_types'>
+    ): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}`, pathParams),
+    }),
+    changePlaylistDetails: (
+      pathParams: Pick<PathParams, 'playlist_id'>,
+      body: Pick<BodyParams, 'name' | 'public' | 'collaborative' | 'description'>
+    ): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}`, pathParams),
+      body,
+    }),
+    getPlaylistItems: (
+      pathParams: Pick<PathParams, 'playlist_id' | 'market' | 'fields' | 'limit' | 'offset' | 'additional_types'>
+    ): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
+    }),
+    updatePlaylistItems: (
+      pathParams: Pick<PathParams, 'playlist_id' | 'uris'>,
+      body: Pick<BodyParams, 'uris' | 'range_start' | 'insert_before' | 'range_length' | 'snapshot_id'>
+    ): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
+      body,
+    }),
+    addItemsToPlaylist: (
+      pathParams: Pick<PathParams, 'playlist_id'>,
+      body: Pick<BodyParams, 'position' | 'uris'>
+    ): SpotifyRequest => ({
+      method: 'POST',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
+      body,
+    }),
+    removePlaylistItems: (
+      pathParams: Pick<PathParams, 'playlist_id'>,
+      body: Pick<BodyParams, 'tracks' | 'uri' | 'snapshot_id'>
+    ): SpotifyRequest => ({
+      method: 'DELETE',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
+      body,
+    }),
+    getCurrentUsersPlaylists: (pathParams: Pick<PathParams, 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/playlists`, pathParams),
+    }),
+    getUsersPlaylists: (pathParams: Pick<PathParams, 'user_id' | 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/users/{user_id}/playlists`, pathParams),
+    }),
+    createPlaylist: (
+      pathParams: Pick<PathParams, 'user_id'>,
+      body: Pick<BodyParams, 'name' | 'public' | 'collaborative' | 'description'>
+    ): SpotifyRequest => ({
+      method: 'POST',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/users/{user_id}/playlists`, pathParams),
+      body,
+    }),
+    // getFeaturedPlaylists
+    // getCategorysPlaylists
+    getPlaylistCoverImage: (pathParams: Pick<PathParams, 'playlist_id'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/images`, pathParams),
+    }),
+    addCustomPlaylistCoverImage: (pathParams: Pick<PathParams, 'playlist_id'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/images`, pathParams),
+    }),
+  },
+  search: {
+    searchForItem: (
+      pathParams: Pick<PathParams, 'q' | 'type' | 'market' | 'limit' | 'offset' | 'include_external'>
+    ): SpotifyRequest => ({ method: 'GET', endpoint: buildEndpoint(`https://api.spotify.com/v1/search`, pathParams) }),
+  },
+  shows: {
+    getShow: (pathParams: Pick<PathParams, 'market' | 'id'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/shows/{id}`, pathParams),
+    }),
+    getSeveralShows: (pathParams: Pick<PathParams, 'market' | 'ids'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/shows`, pathParams),
+    }),
+    getShowEpisodes: (pathParams: Pick<PathParams, 'id' | 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/shows/{id}/episodes`, pathParams),
+    }),
+    getUsersSavedShows: (pathParams: Pick<PathParams, 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/shows`, pathParams),
+    }),
+    saveShowsForCurrentUser: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/shows`, pathParams),
+    }),
+    removeUsersSavedShows: (pathParams: Pick<PathParams, 'ids' | 'market'>): SpotifyRequest => ({
+      method: 'DELETE',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/shows`, pathParams),
+    }),
+    checkUsersSavedShows: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/shows/contains`, pathParams),
+    }),
+  },
+  tracks: {
+    getTrack: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/tracks/{id}`, pathParams),
+    }),
+    getSeveralTracks: (pathParams: Pick<PathParams, 'market' | 'ids'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/tracks`, pathParams),
+    }),
+    getUsersSavedTracks: (pathParams: Pick<PathParams, 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/tracks`, pathParams),
+    }),
+    saveTracksForCurrentUser: (body: Pick<BodyParams, 'ids' | 'timestamped_ids'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/tracks`, undefined),
+      body,
+    }),
+    removeUsersSavedTracks: (body: Pick<BodyParams, 'ids'>): SpotifyRequest => ({
+      method: 'DELETE',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/tracks`, undefined),
+      body,
+    }),
+    checkUsersSavedTracks: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/tracks/contains`, pathParams),
+    }),
+    // getSeveralTracksAudioFeatures
+    // getTracksAudioFeatures
+    // getTracksAudioAnalysis
+    // getRecommendations
+  },
+  users: {
+    getCurrentUsersProfile: (): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me`, undefined),
+    }),
+    getUsersTopItems: (pathParams: Pick<PathParams, 'type' | 'time_range' | 'limit' | 'offset'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/top/{type}`, pathParams),
+    }),
+    getUsersProfile: (pathParams: Pick<PathParams, 'user_id'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/users/{user_id}`, pathParams),
+    }),
+    followPlaylist: (pathParams: Pick<PathParams, 'playlist_id'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/followers`, pathParams),
+    }),
+    unfollowPlaylist: (pathParams: Pick<PathParams, 'playlist_id'>): SpotifyRequest => ({
+      method: 'DELETE',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/followers`, pathParams),
+    }),
+    getFollowedArtists: (pathParams: Pick<PathParams, 'type' | 'after' | 'limit'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/following`, pathParams),
+    }),
+    followArtistsOrUsers: (pathParams: Pick<PathParams, 'type' | 'ids'>): SpotifyRequest => ({
+      method: 'PUT',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/following`, pathParams),
+    }),
+    unfollowArtistsOrUsers: (
+      pathParams: Pick<PathParams, 'type' | 'ids'>,
+      body: Pick<BodyParams, 'ids'>
+    ): SpotifyRequest => ({
+      method: 'DELETE',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/following`, pathParams),
+      body,
+    }),
+    checkIfUserFollowsArtistsOrUsers: (pathParams: Pick<PathParams, 'type' | 'ids'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/following/contains`, pathParams),
+    }),
+    checkIfCurrentUserFollowsPlaylist: (pathParams: Pick<PathParams, 'playlist_id'>): SpotifyRequest => ({
+      method: 'GET',
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/followers/contains`, pathParams),
+    }),
+  },
+} as const;
+
+const flatEndpoints = {
+  ...endpoints.albums,
+  ...endpoints.artists,
+  ...endpoints.audiobooks,
+  ...endpoints.categories,
+  ...endpoints.chapters,
+  ...endpoints.episodes,
+  ...endpoints.markets,
+  ...endpoints.player,
+  ...endpoints.playlists,
+  ...endpoints.search,
+  ...endpoints.shows,
+  ...endpoints.tracks,
+  ...endpoints.users,
+};
+
 // https://developer.spotify.com/documentation/web-api
 type Response = {
   albums: {
@@ -118,716 +807,4 @@ type Response = {
   };
 };
 
-type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-
-type QueryArgs = Partial<{
-  id: string;
-  ids: number[];
-  category_id: string;
-  genres: string[];
-  market: keyof typeof provider.market;
-  markets: (keyof typeof provider.market)[];
-  locale: keyof typeof provider.market;
-  limit: number;
-  offset: number;
-  additional_types: string;
-  device_id: string;
-  device_ids: string[];
-  play: boolean;
-  position_ms: number;
-  state: 'track' | 'context' | 'off';
-  volume_percent: number;
-  after: number;
-  before: number;
-  uri: string;
-  playlist_id: string;
-  fields: string;
-  uris: string[];
-  position: number;
-  user_id: string;
-  q: 'album' | 'artist' | 'track' | 'year' | 'upc' | 'tag:hipster' | 'tag:new' | 'isrc' | 'genre';
-  type: string[];
-  include_external: 'audio';
-  seed_artists: string[];
-  seed_genres: string[];
-  seed_tracks: string[];
-  min_acousticness: number;
-  max_acousticness: number;
-  target_acousticness: number;
-  min_danceability: number;
-  max_danceability: number;
-  target_danceability: number;
-  min_duration_ms: number;
-  max_duration_ms: number;
-  target_duration_ms: number;
-  min_energy: number;
-  max_energy: number;
-  target_energy: number;
-  min_instrumentalness: number;
-  max_instrumentalness: number;
-  target_instrumentalness: number;
-  min_key: number;
-  max_key: number;
-  target_key: number;
-  min_liveness: number;
-  max_liveness: number;
-  target_liveness: number;
-  min_loudness: number;
-  max_loudness: number;
-  target_loudness: number;
-  min_mode: number;
-  max_mode: number;
-  target_mode: number;
-  min_popularity: number;
-  max_popularity: number;
-  target_popularity: number;
-  min_speechiness: number;
-  max_speechiness: number;
-  target_speechiness: number;
-  min_tempo: number;
-  max_tempo: number;
-  target_tempo: number;
-  min_time_signature: number;
-  max_time_signature: number;
-  target_time_signature: number;
-  min_valence: number;
-  max_valence: number;
-  target_valence: number;
-  time_range: string;
-  include_groups: string[];
-}>;
-
-type BodyArgs = {
-  ids: string[];
-  name: string;
-  public: boolean;
-  collaborative: boolean;
-  description: string;
-  uris: string[];
-  range_start: number;
-  insert_before: number;
-  range_length: number;
-  snapshot_id: string;
-  position: number;
-  tracks: {}[];
-  uri: string;
-  timestamped_ids: { id: string; added_at: string }[];
-};
-
-const provider = {
-  base: 'https://api.spotify.com/v1',
-  marketBase: 'market=',
-  // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-  get market() {
-    return {
-      Afghanistan: `${this.marketBase}AF`,
-      Albania: `${this.marketBase}AL`,
-      Algeria: `${this.marketBase}DZ`,
-      Andorra: `${this.marketBase}AD`,
-      Angola: `${this.marketBase}AO`,
-      Argentina: `${this.marketBase}AR`,
-      Armenia: `${this.marketBase}AM`,
-      Australia: `${this.marketBase}AU`,
-      Austria: `${this.marketBase}AT`,
-      Azerbaijan: `${this.marketBase}AZ`,
-      Bahrain: `${this.marketBase}BH`,
-      Bangladesh: `${this.marketBase}BD`,
-      Belarus: `${this.marketBase}BY`,
-      Belgium: `${this.marketBase}BE`,
-      Belize: `${this.marketBase}BZ`,
-      Benin: `${this.marketBase}BJ`,
-      Bhutan: `${this.marketBase}BT`,
-      Bolivia: `${this.marketBase}BO`,
-      'Bosnia and Herzegovina': `${this.marketBase}BA`,
-      Botswana: `${this.marketBase}BW`,
-      Brazil: `${this.marketBase}BR`,
-      Bulgaria: `${this.marketBase}BG`,
-      'Burkina Faso': `${this.marketBase}BF`,
-      Burundi: `${this.marketBase}BI`,
-      Cambodia: `${this.marketBase}KH`,
-      Cameroon: `${this.marketBase}CM`,
-      Canada: `${this.marketBase}CA`,
-      'Cape Verde': `${this.marketBase}CV`,
-      'Central African Republic': `${this.marketBase}CF`,
-      Chad: `${this.marketBase}TD`,
-      Chile: `${this.marketBase}CL`,
-      China: `${this.marketBase}CN`,
-      Colombia: `${this.marketBase}CO`,
-      Congo: `${this.marketBase}CG`,
-      'Costa Rica': `${this.marketBase}CR`,
-      'Côte d’Ivoire': `${this.marketBase}CI`,
-      Croatia: `${this.marketBase}HR`,
-      Cyprus: `${this.marketBase}CY`,
-      'Czech Republic': `${this.marketBase}CZ`,
-      Denmark: `${this.marketBase}DK`,
-      Djibouti: `${this.marketBase}DJ`,
-      'Dominican Republic': `${this.marketBase}DO`,
-      Ecuador: `${this.marketBase}EC`,
-      Egypt: `${this.marketBase}EG`,
-      'El Salvador': `${this.marketBase}SV`,
-      Estonia: `${this.marketBase}EE`,
-      Ethiopia: `${this.marketBase}ET`,
-      Fiji: `${this.marketBase}FJ`,
-      Finland: `${this.marketBase}FI`,
-      France: `${this.marketBase}FR`,
-      Gabon: `${this.marketBase}GA`,
-      Georgia: `${this.marketBase}GE`,
-      Germany: `${this.marketBase}DE`,
-      Ghana: `${this.marketBase}GH`,
-      Greece: `${this.marketBase}GR`,
-      Guatemala: `${this.marketBase}GT`,
-      Guinea: `${this.marketBase}GN`,
-      'Guinea-Bissau': `${this.marketBase}GW`,
-      Honduras: `${this.marketBase}HN`,
-      'Hong Kong': `${this.marketBase}HK`,
-      Hungary: `${this.marketBase}HU`,
-      Iceland: `${this.marketBase}IS`,
-      India: `${this.marketBase}IN`,
-      Indonesia: `${this.marketBase}ID`,
-      Ireland: `${this.marketBase}IE`,
-      Israel: `${this.marketBase}IL`,
-      Italy: `${this.marketBase}IT`,
-      Jamaica: `${this.marketBase}JM`,
-      Japan: `${this.marketBase}JP`,
-      Jordan: `${this.marketBase}JO`,
-      Kazakhstan: `${this.marketBase}KZ`,
-      Kenya: `${this.marketBase}KE`,
-      Kuwait: `${this.marketBase}KW`,
-      Kyrgyzstan: `${this.marketBase}KG`,
-      Laos: `${this.marketBase}LA`,
-      Latvia: `${this.marketBase}LV`,
-      Lebanon: `${this.marketBase}LB`,
-      Lesotho: `${this.marketBase}LS`,
-      Liberia: `${this.marketBase}LR`,
-      Libya: `${this.marketBase}LY`,
-      Liechtenstein: `${this.marketBase}LI`,
-      Lithuania: `${this.marketBase}LT`,
-      Luxembourg: `${this.marketBase}LU`,
-      Macau: `${this.marketBase}MO`,
-      'North Macedonia': `${this.marketBase}MK`,
-      Madagascar: `${this.marketBase}MG`,
-      Malawi: `${this.marketBase}MW`,
-      Malaysia: `${this.marketBase}MY`,
-      Mali: `${this.marketBase}ML`,
-      Malta: `${this.marketBase}MT`,
-      Mauritania: `${this.marketBase}MR`,
-      Mauritius: `${this.marketBase}MU`,
-      Mexico: `${this.marketBase}MX`,
-      Moldova: `${this.marketBase}MD`,
-      Monaco: `${this.marketBase}MC`,
-      Mongolia: `${this.marketBase}MN`,
-      Montenegro: `${this.marketBase}ME`,
-      Morocco: `${this.marketBase}MA`,
-      Mozambique: `${this.marketBase}MZ`,
-      Myanmar: `${this.marketBase}MM`,
-      Namibia: `${this.marketBase}NA`,
-      Nepal: `${this.marketBase}NP`,
-      Netherlands: `${this.marketBase}NL`,
-      'New Zealand': `${this.marketBase}NZ`,
-      Nicaragua: `${this.marketBase}NI`,
-      Niger: `${this.marketBase}NE`,
-      Nigeria: `${this.marketBase}NG`,
-      Norway: `${this.marketBase}NO`,
-      Oman: `${this.marketBase}OM`,
-      Pakistan: `${this.marketBase}PK`,
-      Panama: `${this.marketBase}PA`,
-      'Papua New Guinea': `${this.marketBase}PG`,
-      Paraguay: `${this.marketBase}PY`,
-      Peru: `${this.marketBase}PE`,
-      Philippines: `${this.marketBase}PH`,
-      Poland: `${this.marketBase}PL`,
-      Portugal: `${this.marketBase}PT`,
-      Qatar: `${this.marketBase}QA`,
-      Romania: `${this.marketBase}RO`,
-      Russia: `${this.marketBase}RU`,
-      Rwanda: `${this.marketBase}RW`,
-      'Saudi Arabia': `${this.marketBase}SA`,
-      Senegal: `${this.marketBase}SN`,
-      Serbia: `${this.marketBase}RS`,
-      Singapore: `${this.marketBase}SG`,
-      Slovakia: `${this.marketBase}SK`,
-      Slovenia: `${this.marketBase}SI`,
-      'South Africa': `${this.marketBase}ZA`,
-      'South Korea': `${this.marketBase}KR`,
-      Spain: `${this.marketBase}ES`,
-      'Sri Lanka': `${this.marketBase}LK`,
-      Sweden: `${this.marketBase}SE`,
-      Switzerland: `${this.marketBase}CH`,
-      Taiwan: `${this.marketBase}TW`,
-      Tanzania: `${this.marketBase}TZ`,
-      Thailand: `${this.marketBase}TH`,
-      Tunisia: `${this.marketBase}TN`,
-      Turkey: `${this.marketBase}TR`,
-      Ukraine: `${this.marketBase}UA`,
-      'United Arab Emirates': `${this.marketBase}AE`,
-      'United Kingdom': `${this.marketBase}GB`,
-      USA: `${this.marketBase}US`,
-      Uruguay: `${this.marketBase}UY`,
-      Venezuela: `${this.marketBase}VE`,
-      Vietnam: `${this.marketBase}VN`,
-      Zambia: `${this.marketBase}ZM`,
-      Zimbabwe: `${this.marketBase}ZW`,
-    };
-  },
-  defaultLimit: 50, // spotify default: 20
-};
-
-const endpoints = {
-  albums: {
-    getAlbum: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'id' | 'market'>,
-      endpoint = 'https://api.spotify.com/v1/albums/{id}'
-    ): string => '',
-    getSeveralAlbums: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'ids' | 'market'>,
-      endpoint = 'https://api.spotify.com/v1/albums'
-    ): string => '',
-    getAlbumTracks: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'id' | 'market' | 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/albums/{id}/tracks'
-    ): string => '',
-    getUsersSavedAlbums: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'limit' | 'offset' | 'market'>,
-      endpoint = 'https://api.spotify.com/v1/me/albums'
-    ): string => '',
-    saveAlbumsForCurrentUser: (
-      method: Method = 'PUT',
-      args = undefined,
-      body: Pick<BodyArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/albums'
-    ): string => '',
-    removeUsersSavedAlbums: (
-      method: Method = 'DELETE',
-      args: undefined,
-      body: Pick<QueryArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/albums'
-    ): string => '',
-    checkUsersSavedAlbums: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/albums/contains'
-    ): string => '',
-    getNewReleases: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/browse/new-releases'
-    ): string => '',
-  },
-  artists: {
-    getArtist: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'id'>,
-      endpoint = 'https://api.spotify.com/v1/artists/{id}'
-    ): string => '',
-    getSeveralArtists: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/artists'
-    ): string => '',
-    getArtistsAlbums: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'id' | 'include_groups' | 'market' | 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/artists/{id}/albums'
-    ): string => '',
-    getArtistsTopTracks: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'id' | 'market'>,
-      endpoint = 'https://api.spotify.com/v1/artists/{id}/top-tracks'
-    ): string => '',
-    // getArtistsRelatedTracks
-  },
-  audiobooks: {
-    getAnAudiobook: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'id' | 'market'>,
-      endpoint = 'https://api.spotify.com/v1/audiobooks/{id}'
-    ): string => '',
-    getSeveralAudiobooks: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'ids' | 'market'>,
-      endpoint = 'https://api.spotify.com/v1/audiobooks'
-    ): string => '',
-    getAudiobookChapters: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'id' | 'market' | 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/audiobooks/{id}/chapters'
-    ): string => '',
-    getUsersSavedAudiobooks: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/me/audiobooks'
-    ): string => '',
-    saveAudiobooksForCurrentUser: (
-      method: Method = 'PUT',
-      args = undefined,
-      body: Pick<QueryArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/audiobooks'
-    ): string => '',
-    removeUsersSavedAudiobooks: (
-      method: Method = 'DELETE',
-      args = undefined,
-      body: Pick<QueryArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/audiobooks'
-    ): string => '',
-    checkUsersSavedAudiobooks: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/audiobooks/contains'
-    ): string => '',
-  },
-  categories: {
-    getSeveralBrowseCategories: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'locale' | 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/browse/categories'
-    ): string => '',
-    getSingleBrowseCategory: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'category_id' | 'locale'>,
-      endpoint = 'https://api.spotify.com/v1/browse/categories/{category_id}'
-    ): string => '',
-  },
-  chapters: {
-    getAChapter: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'id' | 'market'>,
-      endpoint = 'https://api.spotify.com/v1/chapters/{id}'
-    ): string => '',
-    getSeveralChapters: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'ids' | 'market'>,
-      endpoint = 'https://api.spotify.com/v1/chapters'
-    ): string => '',
-  },
-  episodes: {
-    getEpisode: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'id' | 'market'>,
-      endpoint = 'https://api.spotify.com/v1/episodes/{id}'
-    ): string => '',
-    getSeveralEpisodes: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'ids' | 'market'>,
-      endpoint = 'https://api.spotify.com/v1/episodes'
-    ): string => '',
-    getUsersSavedEpisodes: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'market' | 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/me/episodes'
-    ): string => '',
-    saveEpisodesForCurrentUser: (
-      method: Method = 'PUT',
-      args = undefined,
-      body: Pick<QueryArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/episodes'
-    ): string => '',
-    removeUsersSavedEpisodes: (
-      method: Method = 'DELETE',
-      args = undefined,
-      body: Pick<QueryArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/episodes'
-    ): string => '',
-    checkUsersSavedEpisodes: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/episodes/contains'
-    ): string => '',
-  },
-  //   genres: {
-  //     getAvailableGenreSeeds
-  //   },
-  markets: {
-    getAvailableMarkets: (method: Method = 'GET', endpoint = 'https://api.spotify.com/v1/markets'): string => '',
-  },
-  player: {
-    getPlaybackState: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'market' | 'additional_types'>,
-      endpoint = 'https://api.spotify.com/v1/me/player'
-    ): string => '',
-    transferPlayback: (
-      method: Method = 'PUT',
-      args = undefined,
-      body: Pick<QueryArgs, 'device_ids' | 'play'>,
-      endpoint = 'https://api.spotify.com/v1/me/player'
-    ): string => '',
-    getAvailableDevices: (method: Method = 'GET', endpoint = 'https://api.spotify.com/v1/me/player/devices'): string =>
-      '',
-    getCurrentlyPlayingTrack: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'market' | 'additional_types'>,
-      endpoint = 'https://api.spotify.com/v1/me/player/currently-playing'
-    ): string => '',
-    startOrResumePlayback: (
-      method: Method = 'PUT',
-      args = undefined,
-      body: Pick<QueryArgs, 'device_id'>,
-      endpoint = 'https://api.spotify.com/v1/me/player/play'
-    ): string => '',
-    pausePlayback: (
-      method: Method = 'PUT',
-      args = undefined,
-      body: Pick<QueryArgs, 'device_id'>,
-      endpoint = 'https://api.spotify.com/v1/me/player/pause'
-    ): string => '',
-    skipToNext: (
-      method: Method = 'POST',
-      args = undefined,
-      body: Pick<QueryArgs, 'device_id'>,
-      endpoint = 'https://api.spotify.com/v1/me/player/next'
-    ): string => '',
-    skipToPrevious: (
-      method: Method = 'POST',
-      args = undefined,
-      body: Pick<QueryArgs, 'device_id'>,
-      endpoint = 'https://api.spotify.com/v1/me/player/previous'
-    ): string => '',
-    seekToPosition: (
-      method: Method = 'POST',
-      args = undefined,
-      body: Pick<QueryArgs, 'position_ms' | 'device_id'>,
-      endpoint = 'https://api.spotify.com/v1/me/player/seek'
-    ): string => '',
-    setRepeatMode: (
-      method: Method = 'PUT',
-      args = undefined,
-      body: Pick<QueryArgs, 'state' | 'device_id'>,
-      endpoint = 'https://api.spotify.com/v1/me/player/repeat'
-    ): string => '',
-    setPlaybackVolume: (
-      method: Method = 'PUT',
-      args = undefined,
-      body: Pick<QueryArgs, 'volume_percent' | 'device_id'>,
-      endpoint = 'https://api.spotify.com/v1/me/player/volume'
-    ): string => '',
-    togglePlaybackShuffle: (
-      method: Method = 'PUT',
-      args = undefined,
-      body: Pick<QueryArgs, 'state' | 'device_id'>,
-      endpoint = 'https://api.spotify.com/v1/me/player/shuffle'
-    ): string => '',
-    getRecentlyPlayedTracks: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'limit' | 'after' | 'before'>,
-      endpoint = 'https://api.spotify.com/v1/me/player/recently-played'
-    ): string => '',
-    getTheUsersQueue: (
-      method: Method = 'GET',
-      args = undefined,
-      endpoint = 'https://api.spotify.com/v1/me/player/queue'
-    ): string => '',
-    addItemsToPlaybackQueue: (
-      method: Method = 'POST',
-      args = undefined,
-      body: Pick<QueryArgs, 'uri' | 'device_id'>,
-      endpoint = 'https://api.spotify.com/v1/me/player/queue'
-    ): string => '',
-  },
-  playlists: {
-    getPlaylist: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'playlist_id' | 'market' | 'fields' | 'additional_types'>,
-      endpoint = 'https://api.spotify.com/v1/playlists/{playlist_id}'
-    ): string => '',
-    changePlaylistDetails: (
-      method: Method = 'PUT',
-      args: Pick<QueryArgs, 'playlist_id'>,
-      body: Pick<BodyArgs, 'name' | 'public' | 'collaborative' | 'description'>,
-      endpoint = 'https://api.spotify.com/v1/playlists/{playlist_id}'
-    ): string => '',
-    getPlaylistItems: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'playlist_id' | 'market' | 'fields' | 'limit' | 'offset' | 'additional_types'>,
-      endpoint = 'https://api.spotify.com/v1/playlists/{playlist_id}/tracks'
-    ): string => '',
-    updatePlaylistItems: (
-      method: Method = 'PUT',
-      args: Pick<QueryArgs, 'playlist_id' | 'uris'>,
-      body: Pick<BodyArgs, 'uris' | 'range_start' | 'insert_before' | 'range_length' | 'snapshot_id'>,
-      endpoint = 'https://api.spotify.com/v1/playlists/{playlist_id}/tracks'
-    ): string => '',
-    addItemsToPlaylist: (
-      method: Method = 'POST',
-      args: Pick<QueryArgs, 'playlist_id'>,
-      body: Pick<BodyArgs, 'position' | 'uris'>,
-      endpoint = 'https://api.spotify.com/v1/playlists/{playlist_id}/tracks'
-    ): string => '',
-    removePlaylistItems: (
-      method: Method = 'DELETE',
-      args: Pick<QueryArgs, 'playlist_id'>,
-      body: Pick<BodyArgs, 'tracks' | 'uri' | 'snapshot_id'>,
-      endpoint = 'https://api.spotify.com/v1/playlists/{playlist_id}/tracks'
-    ): string => '',
-    getCurrentUsersPlaylists: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/me/playlists'
-    ): string => '',
-    getUsersPlaylists: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'user_id' | 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/users/{user_id}/playlists'
-    ): string => '',
-    createPlaylist: (
-      method: Method = 'POST',
-      args: Pick<QueryArgs, 'user_id'>,
-      body: Pick<BodyArgs, 'name' | 'public' | 'collaborative' | 'description'>,
-      endpoint = 'https://api.spotify.com/v1/users/{user_id}/playlists'
-    ): string => '',
-    // getFeaturedPlaylists
-    // getCategorysPlaylists
-    getPlaylistCoverImage: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'playlist_id'>,
-      endpoint = 'https://api.spotify.com/v1/playlists/{playlist_id}/images'
-    ): string => '',
-    addCustomPlaylistCoverImage: (
-      method: Method = 'PUT',
-      args: Pick<QueryArgs, 'playlist_id'>,
-      body = undefined,
-      endpoint = 'https://api.spotify.com/v1/playlists/3cEYpjA9oz9GiPac4AsH4n/images'
-    ): string => '',
-  },
-  search: {
-    searchForItem: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'q' | 'type' | 'market' | 'limit' | 'offset' | 'include_external'>,
-      endpoint = 'https://api.spotify.com/v1/search'
-    ): string => '',
-  },
-  shows: {
-    getShow: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'market' | 'id'>,
-      endpoint = 'https://api.spotify.com/v1/shows/{id}'
-    ): string => '',
-    getSeveralShows: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'market' | 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/shows'
-    ): string => '',
-    getShowEpisodes: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'id' | 'market' | 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/shows/{id}/episodes'
-    ): string => '',
-    getUsersSavedShows: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/me/shows'
-    ): string => '',
-    saveShowsForCurrentUser: (
-      method: Method = 'PUT',
-      args: Pick<QueryArgs, 'ids'>,
-      body = undefined,
-      endpoint = 'https://api.spotify.com/v1/me/shows'
-    ): string => '',
-    removeUsersSavedShows: (
-      method: Method = 'DELETE',
-      args: Pick<QueryArgs, 'ids' | 'market'>,
-      body = undefined,
-      endpoint = 'https://api.spotify.com/v1/me/shows'
-    ): string => '',
-    checkUsersSavedShows: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/shows/contains'
-    ): string => '',
-  },
-  tracks: {
-    getTrack: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'id' | 'market'>,
-      endpoint = 'https://api.spotify.com/v1/tracks/{id}'
-    ): string => '',
-    getSeveralTracks: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'market' | 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/tracks'
-    ): string => '',
-    getUsersSavedTracks: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'market' | 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/me/tracks'
-    ): string => '',
-    saveTracksForCurrentUser: (
-      method: Method = 'PUT',
-      args = undefined,
-      body: Pick<BodyArgs, 'ids' | 'timestamped_ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/tracks'
-    ): string => '',
-    removeUsersSavedTracks: (
-      method: Method = 'DELETE',
-      args = undefined,
-      body: Pick<BodyArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/tracks'
-    ): string => '',
-    checkUsersSavedTracks: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/tracks/contains'
-    ): string => '',
-    // getSeveralTracksAudioFeatures
-    // getTracksAudioFeatures
-    // getTracksAudioAnalysis
-    // getRecommendations
-  },
-  users: {
-    getCurrentUsersProfile: (
-      method: Method = 'GET',
-      args = undefined,
-      endpoint = 'https://api.spotify.com/v1/me'
-    ): string => '',
-    getUsersTopItems: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'type' | 'time_range' | 'limit' | 'offset'>,
-      endpoint = 'https://api.spotify.com/v1/me/top/{type}'
-    ): string => '',
-    getUsersProfile: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'user_id'>,
-      endpoint = 'https://api.spotify.com/v1/users/{user_id}'
-    ): string => '',
-    followPlaylist: (
-      method: Method = 'PUT',
-      args: Pick<QueryArgs, 'playlist_id'>,
-      endpoint = 'https://api.spotify.com/v1/playlists/{playlist_id}/followers'
-    ): string => '',
-    unfollowPlaylist: (
-      method: Method = 'DELETE',
-      args: Pick<QueryArgs, 'playlist_id'>,
-      body = undefined,
-      endpoint = 'https://api.spotify.com/v1/playlists/{playlist_id}/followers'
-    ): string => '',
-    getFollowedArtists: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'type' | 'after' | 'limit'>,
-      endpoint = 'https://api.spotify.com/v1/me/following'
-    ): string => '',
-    followArtistsOrUsers: (
-      method: Method = 'PUT',
-      args: Pick<QueryArgs, 'type' | 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/following'
-    ): string => '',
-    unfollowArtistsOrUsers: (
-      method: Method = 'DELETE',
-      args: Pick<QueryArgs, 'type' | 'ids'>,
-      body: Pick<BodyArgs, 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/following'
-    ): string => '',
-    checkIfUserFollowsArtistsOrUsers: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'type' | 'ids'>,
-      endpoint = 'https://api.spotify.com/v1/me/following/contains'
-    ): string => '',
-    checkIfCurrentUserFollowsPlaylist: (
-      method: Method = 'GET',
-      args: Pick<QueryArgs, 'playlist_id'>,
-      endpoint = 'https://api.spotify.com/v1/playlists/{playlist_id}/followers/contains'
-    ): string => '',
-  },
-} as const;
+export function callSpotify(request: keyof typeof flatEndpoints) {}
