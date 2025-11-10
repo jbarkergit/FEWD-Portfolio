@@ -1,6 +1,6 @@
 import { buildSpotifyEndpoint } from '~/spotify-visualizer/composables/helpers/buildSpotifyEndpoint';
-import type { SpotifyBodyParams } from '~/spotify-visualizer/composables/types/SpotifyBodyParams';
-import type { SpotifyPathParams } from '~/spotify-visualizer/composables/types/SpotifyPathParams';
+import type { SpotifyBodyParams } from '~/spotify-visualizer/composables/types/arguments/SpotifyBodyParams';
+import type { SpotifyPathParams } from '~/spotify-visualizer/composables/types/arguments/SpotifyPathParams';
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
