@@ -1,155 +1,268 @@
-import { buildSpotifyEndpoint } from '~/spotify-visualizer/composables/helpers/buildSpotifyEndpoint';
-import type { SpotifyBodyParams } from '~/spotify-visualizer/composables/types/arguments/SpotifyBodyParams';
-import type { SpotifyPathParams } from '~/spotify-visualizer/composables/types/arguments/SpotifyPathParams';
+import type { iso } from '~/base/const/iso';
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-type SpotifyRequest = {
+export type SpotifyRequest = {
   method: Method;
   endpoint: string;
   body?: Record<string, any>;
 };
 
+type PathParams = {
+  id: string;
+  ids: number[];
+  category_id: string;
+  genres: string[];
+  market: keyof typeof iso.market;
+  markets: (keyof typeof iso.market)[];
+  locale: keyof typeof iso.market;
+  limit: number;
+  offset: number;
+  additional_types: string;
+  device_id: string;
+  device_ids: string[];
+  play: boolean;
+  position_ms: number;
+  state: 'track' | 'context' | 'off';
+  volume_percent: number;
+  after: number;
+  before: number;
+  uri: string;
+  playlist_id: string;
+  fields: string;
+  uris: string[];
+  position: number;
+  user_id: string;
+  q: 'album' | 'artist' | 'track' | 'year' | 'upc' | 'tag:hipster' | 'tag:new' | 'isrc' | 'genre';
+  type: string[];
+  include_external: 'audio';
+  seed_artists: string[];
+  seed_genres: string[];
+  seed_tracks: string[];
+  min_acousticness: number;
+  max_acousticness: number;
+  target_acousticness: number;
+  min_danceability: number;
+  max_danceability: number;
+  target_danceability: number;
+  min_duration_ms: number;
+  max_duration_ms: number;
+  target_duration_ms: number;
+  min_energy: number;
+  max_energy: number;
+  target_energy: number;
+  min_instrumentalness: number;
+  max_instrumentalness: number;
+  target_instrumentalness: number;
+  min_key: number;
+  max_key: number;
+  target_key: number;
+  min_liveness: number;
+  max_liveness: number;
+  target_liveness: number;
+  min_loudness: number;
+  max_loudness: number;
+  target_loudness: number;
+  min_mode: number;
+  max_mode: number;
+  target_mode: number;
+  min_popularity: number;
+  max_popularity: number;
+  target_popularity: number;
+  min_speechiness: number;
+  max_speechiness: number;
+  target_speechiness: number;
+  min_tempo: number;
+  max_tempo: number;
+  target_tempo: number;
+  min_time_signature: number;
+  max_time_signature: number;
+  target_time_signature: number;
+  min_valence: number;
+  max_valence: number;
+  target_valence: number;
+  time_range: string;
+  include_groups: string[];
+};
+
+type SpotifyBodyParams = {
+  ids: string[];
+  name: string;
+  public: boolean;
+  collaborative: boolean;
+  description: string;
+  uris: string[];
+  range_start: number;
+  insert_before: number;
+  range_length: number;
+  snapshot_id: string;
+  position: number;
+  tracks: {}[];
+  uri: string;
+  timestamped_ids: { id: string; added_at: string }[];
+};
+
+function buildEndpoint(endpoint: string, pathParams?: Record<string, any>): string {
+  if (!pathParams) return endpoint;
+
+  const queries: string[] = [];
+
+  // Replace templates with encoded values and track queries
+  for (const [key, value] of Object.entries(pathParams)) {
+    const template = `{${key}}`;
+
+    if (endpoint.includes(template)) {
+      endpoint = endpoint.replace(template, encodeURIComponent(String(value)));
+    } else {
+      queries.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`);
+    }
+  }
+
+  // Merge endpoint and queries
+  if (queries.length) {
+    endpoint += `?${queries.join('&')}`;
+  }
+
+  return endpoint;
+}
+
 const endpoints = {
+  // https://developer.spotify.com/documentation/web-api
   albums: {
-    getAlbum: (pathParams: Pick<SpotifyPathParams, 'id' | 'market'>): SpotifyRequest => ({
+    getAlbum: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/albums/{id}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/albums/{id}`, pathParams),
     }),
-    getSeveralAlbums: (pathParams: Pick<SpotifyPathParams, 'ids' | 'market'>): SpotifyRequest => ({
+    getSeveralAlbums: (pathParams: Pick<PathParams, 'ids' | 'market'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/albums`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/albums`, pathParams),
     }),
-    getAlbumTracks: (pathParams: Pick<SpotifyPathParams, 'id' | 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
+    getAlbumTracks: (pathParams: Pick<PathParams, 'id' | 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/albums/{id}/tracks`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/albums/{id}/tracks`, pathParams),
     }),
-    getUsersSavedAlbums: (pathParams: Pick<SpotifyPathParams, 'limit' | 'offset' | 'market'>): SpotifyRequest => ({
+    getUsersSavedAlbums: (pathParams: Pick<PathParams, 'limit' | 'offset' | 'market'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/albums`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/albums`, pathParams),
     }),
     saveAlbumsForCurrentUser: (pathParams = undefined, body: Pick<SpotifyBodyParams, 'ids'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/albums`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/albums`, pathParams),
       body,
     }),
-    removeUsersSavedAlbums: (pathParams: undefined, body: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    removeUsersSavedAlbums: (pathParams: undefined, body: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'DELETE',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/albums`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/albums`, pathParams),
       body,
     }),
-    checkUsersSavedAlbums: (pathParams: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    checkUsersSavedAlbums: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/albums/contains`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/albums/contains`, pathParams),
     }),
-    getNewReleases: (pathParams: Pick<SpotifyPathParams, 'limit' | 'offset'>): SpotifyRequest => ({
+    getNewReleases: (pathParams: Pick<PathParams, 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/browse/new-releases`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/browse/new-releases`, pathParams),
     }),
   },
   artists: {
-    getArtist: (pathParams: Pick<SpotifyPathParams, 'id'>): SpotifyRequest => ({
+    getArtist: (pathParams: Pick<PathParams, 'id'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/artists/{id}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/artists/{id}`, pathParams),
     }),
-    getSeveralArtists: (pathParams: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    getSeveralArtists: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/artists`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/artists`, pathParams),
     }),
     getArtistsAlbums: (
-      pathParams: Pick<SpotifyPathParams, 'id' | 'include_groups' | 'market' | 'limit' | 'offset'>
+      pathParams: Pick<PathParams, 'id' | 'include_groups' | 'market' | 'limit' | 'offset'>
     ): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/artists/{id}/albums`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/artists/{id}/albums`, pathParams),
     }),
-    getArtistsTopTracks: (pathParams: Pick<SpotifyPathParams, 'id' | 'market'>): SpotifyRequest => ({
+    getArtistsTopTracks: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/artists/{id}/top-tracks`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/artists/{id}/top-tracks`, pathParams),
     }),
     // getArtistsRelatedTracks
   },
   audiobooks: {
-    getAnAudiobook: (pathParams: Pick<SpotifyPathParams, 'id' | 'market'>): SpotifyRequest => ({
+    getAnAudiobook: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/audiobooks/{id}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/audiobooks/{id}`, pathParams),
     }),
-    getSeveralAudiobooks: (pathParams: Pick<SpotifyPathParams, 'ids' | 'market'>): SpotifyRequest => ({
+    getSeveralAudiobooks: (pathParams: Pick<PathParams, 'ids' | 'market'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/audiobooks`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/audiobooks`, pathParams),
     }),
-    getAudiobookChapters: (
-      pathParams: Pick<SpotifyPathParams, 'id' | 'market' | 'limit' | 'offset'>
-    ): SpotifyRequest => ({
+    getAudiobookChapters: (pathParams: Pick<PathParams, 'id' | 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/audiobooks/{id}/chapters`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/audiobooks/{id}/chapters`, pathParams),
     }),
-    getUsersSavedAudiobooks: (pathParams: Pick<SpotifyPathParams, 'limit' | 'offset'>): SpotifyRequest => ({
+    getUsersSavedAudiobooks: (pathParams: Pick<PathParams, 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/audiobooks`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/audiobooks`, pathParams),
     }),
-    saveAudiobooksForCurrentUser: (body: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    saveAudiobooksForCurrentUser: (body: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/audiobooks`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/audiobooks`, undefined),
       body,
     }),
-    removeUsersSavedAudiobooks: (body: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    removeUsersSavedAudiobooks: (body: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'DELETE',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/audiobooks`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/audiobooks`, undefined),
       body,
     }),
-    checkUsersSavedAudiobooks: (pathParams: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    checkUsersSavedAudiobooks: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/audiobooks/contains`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/audiobooks/contains`, pathParams),
     }),
   },
   categories: {
-    getSeveralBrowseCategories: (
-      pathParams: Pick<SpotifyPathParams, 'locale' | 'limit' | 'offset'>
-    ): SpotifyRequest => ({
+    getSeveralBrowseCategories: (pathParams: Pick<PathParams, 'locale' | 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/browse/categories`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/browse/categories`, pathParams),
     }),
-    getSingleBrowseCategory: (pathParams: Pick<SpotifyPathParams, 'category_id' | 'locale'>): SpotifyRequest => ({
+    getSingleBrowseCategory: (pathParams: Pick<PathParams, 'category_id' | 'locale'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/browse/categories/{category_id}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/browse/categories/{category_id}`, pathParams),
     }),
   },
   chapters: {
-    getAChapter: (pathParams: Pick<SpotifyPathParams, 'id' | 'market'>): SpotifyRequest => ({
+    getAChapter: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/chapters/{id}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/chapters/{id}`, pathParams),
     }),
-    getSeveralChapters: (pathParams: Pick<SpotifyPathParams, 'ids' | 'market'>): SpotifyRequest => ({
+    getSeveralChapters: (pathParams: Pick<PathParams, 'ids' | 'market'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/chapters`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/chapters`, pathParams),
     }),
   },
   episodes: {
-    getEpisode: (pathParams: Pick<SpotifyPathParams, 'id' | 'market'>): SpotifyRequest => ({
+    getEpisode: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/episodes/{id}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/episodes/{id}`, pathParams),
     }),
-    getSeveralEpisodes: (pathParams: Pick<SpotifyPathParams, 'ids' | 'market'>): SpotifyRequest => ({
+    getSeveralEpisodes: (pathParams: Pick<PathParams, 'ids' | 'market'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/episodes`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/episodes`, pathParams),
     }),
-    getUsersSavedEpisodes: (pathParams: Pick<SpotifyPathParams, 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
+    getUsersSavedEpisodes: (pathParams: Pick<PathParams, 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/episodes`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/episodes`, pathParams),
     }),
-    saveEpisodesForCurrentUser: (body: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    saveEpisodesForCurrentUser: (body: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/episodes`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/episodes`, undefined),
       body,
     }),
-    removeUsersSavedEpisodes: (body: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    removeUsersSavedEpisodes: (body: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'DELETE',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/episodes`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/episodes`, undefined),
       body,
     }),
-    checkUsersSavedEpisodes: (pathParams: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    checkUsersSavedEpisodes: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/episodes/contains`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/episodes/contains`, pathParams),
     }),
   },
   //   genres: {
@@ -158,217 +271,217 @@ const endpoints = {
   markets: {
     getAvailableMarkets: (): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/markets`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/markets`, undefined),
     }),
   },
   player: {
-    getPlaybackState: (pathParams: Pick<SpotifyPathParams, 'market' | 'additional_types'>): SpotifyRequest => ({
+    getPlaybackState: (pathParams: Pick<PathParams, 'market' | 'additional_types'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player`, pathParams),
     }),
-    transferPlayback: (body: Pick<SpotifyPathParams, 'device_ids' | 'play'>): SpotifyRequest => ({
+    transferPlayback: (body: Pick<PathParams, 'device_ids' | 'play'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player`, undefined),
       body,
     }),
     getAvailableDevices: (): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/devices`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/devices`, undefined),
     }),
-    getCurrentlyPlayingTrack: (pathParams: Pick<SpotifyPathParams, 'market' | 'additional_types'>): SpotifyRequest => ({
+    getCurrentlyPlayingTrack: (pathParams: Pick<PathParams, 'market' | 'additional_types'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/currently-playing`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/currently-playing`, pathParams),
     }),
-    startOrResumePlayback: (body: Pick<SpotifyPathParams, 'device_id'>): SpotifyRequest => ({
+    startOrResumePlayback: (body: Pick<PathParams, 'device_id'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/play`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/play`, undefined),
       body,
     }),
-    pausePlayback: (body: Pick<SpotifyPathParams, 'device_id'>): SpotifyRequest => ({
+    pausePlayback: (body: Pick<PathParams, 'device_id'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/pause`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/pause`, undefined),
       body,
     }),
-    skipToNext: (body: Pick<SpotifyPathParams, 'device_id'>): SpotifyRequest => ({
+    skipToNext: (body: Pick<PathParams, 'device_id'>): SpotifyRequest => ({
       method: 'POST',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/next`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/next`, undefined),
       body,
     }),
-    skipToPrevious: (body: Pick<SpotifyPathParams, 'device_id'>): SpotifyRequest => ({
+    skipToPrevious: (body: Pick<PathParams, 'device_id'>): SpotifyRequest => ({
       method: 'POST',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/previous`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/previous`, undefined),
       body,
     }),
-    seekToPosition: (body: Pick<SpotifyPathParams, 'position_ms' | 'device_id'>): SpotifyRequest => ({
+    seekToPosition: (body: Pick<PathParams, 'position_ms' | 'device_id'>): SpotifyRequest => ({
       method: 'POST',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/seek`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/seek`, undefined),
       body,
     }),
-    setRepeatMode: (body: Pick<SpotifyPathParams, 'state' | 'device_id'>): SpotifyRequest => ({
+    setRepeatMode: (body: Pick<PathParams, 'state' | 'device_id'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/repeat`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/repeat`, undefined),
       body,
     }),
-    setPlaybackVolume: (body: Pick<SpotifyPathParams, 'volume_percent' | 'device_id'>): SpotifyRequest => ({
+    setPlaybackVolume: (body: Pick<PathParams, 'volume_percent' | 'device_id'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/volume`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/volume`, undefined),
       body,
     }),
-    togglePlaybackShuffle: (body: Pick<SpotifyPathParams, 'state' | 'device_id'>): SpotifyRequest => ({
+    togglePlaybackShuffle: (body: Pick<PathParams, 'state' | 'device_id'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/shuffle`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/shuffle`, undefined),
       body,
     }),
-    getRecentlyPlayedTracks: (pathParams: Pick<SpotifyPathParams, 'limit' | 'after' | 'before'>): SpotifyRequest => ({
+    getRecentlyPlayedTracks: (pathParams: Pick<PathParams, 'limit' | 'after' | 'before'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/recently-played`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/recently-played`, pathParams),
     }),
     getTheUsersQueue: (): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/queue`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/queue`, undefined),
     }),
-    addItemsToPlaybackQueue: (body: Pick<SpotifyPathParams, 'uri' | 'device_id'>): SpotifyRequest => ({
+    addItemsToPlaybackQueue: (body: Pick<PathParams, 'uri' | 'device_id'>): SpotifyRequest => ({
       method: 'POST',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/player/queue`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/player/queue`, undefined),
       body,
     }),
   },
   playlists: {
     getPlaylist: (
-      pathParams: Pick<SpotifyPathParams, 'playlist_id' | 'market' | 'fields' | 'additional_types'>
+      pathParams: Pick<PathParams, 'playlist_id' | 'market' | 'fields' | 'additional_types'>
     ): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}`, pathParams),
     }),
     changePlaylistDetails: (
-      pathParams: Pick<SpotifyPathParams, 'playlist_id'>,
+      pathParams: Pick<PathParams, 'playlist_id'>,
       body: Pick<SpotifyBodyParams, 'name' | 'public' | 'collaborative' | 'description'>
     ): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}`, pathParams),
       body,
     }),
     getPlaylistItems: (
-      pathParams: Pick<SpotifyPathParams, 'playlist_id' | 'market' | 'fields' | 'limit' | 'offset' | 'additional_types'>
+      pathParams: Pick<PathParams, 'playlist_id' | 'market' | 'fields' | 'limit' | 'offset' | 'additional_types'>
     ): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
     }),
     updatePlaylistItems: (
-      pathParams: Pick<SpotifyPathParams, 'playlist_id' | 'uris'>,
+      pathParams: Pick<PathParams, 'playlist_id' | 'uris'>,
       body: Pick<SpotifyBodyParams, 'uris' | 'range_start' | 'insert_before' | 'range_length' | 'snapshot_id'>
     ): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
       body,
     }),
     addItemsToPlaylist: (
-      pathParams: Pick<SpotifyPathParams, 'playlist_id'>,
+      pathParams: Pick<PathParams, 'playlist_id'>,
       body: Pick<SpotifyBodyParams, 'position' | 'uris'>
     ): SpotifyRequest => ({
       method: 'POST',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
       body,
     }),
     removePlaylistItems: (
-      pathParams: Pick<SpotifyPathParams, 'playlist_id'>,
+      pathParams: Pick<PathParams, 'playlist_id'>,
       body: Pick<SpotifyBodyParams, 'tracks' | 'uri' | 'snapshot_id'>
     ): SpotifyRequest => ({
       method: 'DELETE',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/tracks`, pathParams),
       body,
     }),
-    getCurrentUsersPlaylists: (pathParams: Pick<SpotifyPathParams, 'limit' | 'offset'>): SpotifyRequest => ({
+    getCurrentUsersPlaylists: (pathParams: Pick<PathParams, 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/playlists`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/playlists`, pathParams),
     }),
-    getUsersPlaylists: (pathParams: Pick<SpotifyPathParams, 'user_id' | 'limit' | 'offset'>): SpotifyRequest => ({
+    getUsersPlaylists: (pathParams: Pick<PathParams, 'user_id' | 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/users/{user_id}/playlists`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/users/{user_id}/playlists`, pathParams),
     }),
     createPlaylist: (
-      pathParams: Pick<SpotifyPathParams, 'user_id'>,
+      pathParams: Pick<PathParams, 'user_id'>,
       body: Pick<SpotifyBodyParams, 'name' | 'public' | 'collaborative' | 'description'>
     ): SpotifyRequest => ({
       method: 'POST',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/users/{user_id}/playlists`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/users/{user_id}/playlists`, pathParams),
       body,
     }),
     // getFeaturedPlaylists
     // getCategorysPlaylists
-    getPlaylistCoverImage: (pathParams: Pick<SpotifyPathParams, 'playlist_id'>): SpotifyRequest => ({
+    getPlaylistCoverImage: (pathParams: Pick<PathParams, 'playlist_id'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/images`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/images`, pathParams),
     }),
-    addCustomPlaylistCoverImage: (pathParams: Pick<SpotifyPathParams, 'playlist_id'>): SpotifyRequest => ({
+    addCustomPlaylistCoverImage: (pathParams: Pick<PathParams, 'playlist_id'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/images`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/images`, pathParams),
     }),
   },
   search: {
     searchForItem: (
-      pathParams: Pick<SpotifyPathParams, 'q' | 'type' | 'market' | 'limit' | 'offset' | 'include_external'>
+      pathParams: Pick<PathParams, 'q' | 'type' | 'market' | 'limit' | 'offset' | 'include_external'>
     ): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/search`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/search`, pathParams),
     }),
   },
   shows: {
-    getShow: (pathParams: Pick<SpotifyPathParams, 'market' | 'id'>): SpotifyRequest => ({
+    getShow: (pathParams: Pick<PathParams, 'market' | 'id'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/shows/{id}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/shows/{id}`, pathParams),
     }),
-    getSeveralShows: (pathParams: Pick<SpotifyPathParams, 'market' | 'ids'>): SpotifyRequest => ({
+    getSeveralShows: (pathParams: Pick<PathParams, 'market' | 'ids'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/shows`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/shows`, pathParams),
     }),
-    getShowEpisodes: (pathParams: Pick<SpotifyPathParams, 'id' | 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
+    getShowEpisodes: (pathParams: Pick<PathParams, 'id' | 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/shows/{id}/episodes`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/shows/{id}/episodes`, pathParams),
     }),
-    getUsersSavedShows: (pathParams: Pick<SpotifyPathParams, 'limit' | 'offset'>): SpotifyRequest => ({
+    getUsersSavedShows: (pathParams: Pick<PathParams, 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/shows`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/shows`, pathParams),
     }),
-    saveShowsForCurrentUser: (pathParams: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    saveShowsForCurrentUser: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/shows`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/shows`, pathParams),
     }),
-    removeUsersSavedShows: (pathParams: Pick<SpotifyPathParams, 'ids' | 'market'>): SpotifyRequest => ({
+    removeUsersSavedShows: (pathParams: Pick<PathParams, 'ids' | 'market'>): SpotifyRequest => ({
       method: 'DELETE',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/shows`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/shows`, pathParams),
     }),
-    checkUsersSavedShows: (pathParams: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    checkUsersSavedShows: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/shows/contains`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/shows/contains`, pathParams),
     }),
   },
   tracks: {
-    getTrack: (pathParams: Pick<SpotifyPathParams, 'id' | 'market'>): SpotifyRequest => ({
+    getTrack: (pathParams: Pick<PathParams, 'id' | 'market'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/tracks/{id}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/tracks/{id}`, pathParams),
     }),
-    getSeveralTracks: (pathParams: Pick<SpotifyPathParams, 'market' | 'ids'>): SpotifyRequest => ({
+    getSeveralTracks: (pathParams: Pick<PathParams, 'market' | 'ids'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/tracks`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/tracks`, pathParams),
     }),
-    getUsersSavedTracks: (pathParams: Pick<SpotifyPathParams, 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
+    getUsersSavedTracks: (pathParams: Pick<PathParams, 'market' | 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/tracks`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/tracks`, pathParams),
     }),
     saveTracksForCurrentUser: (body: Pick<SpotifyBodyParams, 'ids' | 'timestamped_ids'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/tracks`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/tracks`, undefined),
       body,
     }),
     removeUsersSavedTracks: (body: Pick<SpotifyBodyParams, 'ids'>): SpotifyRequest => ({
       method: 'DELETE',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/tracks`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/tracks`, undefined),
       body,
     }),
-    checkUsersSavedTracks: (pathParams: Pick<SpotifyPathParams, 'ids'>): SpotifyRequest => ({
+    checkUsersSavedTracks: (pathParams: Pick<PathParams, 'ids'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/tracks/contains`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/tracks/contains`, pathParams),
     }),
     // getSeveralTracksAudioFeatures
     // getTracksAudioFeatures
@@ -378,52 +491,47 @@ const endpoints = {
   users: {
     getCurrentUsersProfile: (): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me`, undefined),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me`, undefined),
     }),
-    getUsersTopItems: (
-      pathParams: Pick<SpotifyPathParams, 'type' | 'time_range' | 'limit' | 'offset'>
-    ): SpotifyRequest => ({
+    getUsersTopItems: (pathParams: Pick<PathParams, 'type' | 'time_range' | 'limit' | 'offset'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/top/{type}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/top/{type}`, pathParams),
     }),
-    getUsersProfile: (pathParams: Pick<SpotifyPathParams, 'user_id'>): SpotifyRequest => ({
+    getUsersProfile: (pathParams: Pick<PathParams, 'user_id'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/users/{user_id}`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/users/{user_id}`, pathParams),
     }),
-    followPlaylist: (pathParams: Pick<SpotifyPathParams, 'playlist_id'>): SpotifyRequest => ({
+    followPlaylist: (pathParams: Pick<PathParams, 'playlist_id'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/followers`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/followers`, pathParams),
     }),
-    unfollowPlaylist: (pathParams: Pick<SpotifyPathParams, 'playlist_id'>): SpotifyRequest => ({
+    unfollowPlaylist: (pathParams: Pick<PathParams, 'playlist_id'>): SpotifyRequest => ({
       method: 'DELETE',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/followers`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/followers`, pathParams),
     }),
-    getFollowedArtists: (pathParams: Pick<SpotifyPathParams, 'type' | 'after' | 'limit'>): SpotifyRequest => ({
+    getFollowedArtists: (pathParams: Pick<PathParams, 'type' | 'after' | 'limit'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/following`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/following`, pathParams),
     }),
-    followArtistsOrUsers: (pathParams: Pick<SpotifyPathParams, 'type' | 'ids'>): SpotifyRequest => ({
+    followArtistsOrUsers: (pathParams: Pick<PathParams, 'type' | 'ids'>): SpotifyRequest => ({
       method: 'PUT',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/following`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/following`, pathParams),
     }),
     unfollowArtistsOrUsers: (
-      pathParams: Pick<SpotifyPathParams, 'type' | 'ids'>,
+      pathParams: Pick<PathParams, 'type' | 'ids'>,
       body: Pick<SpotifyBodyParams, 'ids'>
     ): SpotifyRequest => ({
       method: 'DELETE',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/following`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/following`, pathParams),
       body,
     }),
-    checkIfUserFollowsArtistsOrUsers: (pathParams: Pick<SpotifyPathParams, 'type' | 'ids'>): SpotifyRequest => ({
+    checkIfUserFollowsArtistsOrUsers: (pathParams: Pick<PathParams, 'type' | 'ids'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(`https://api.spotify.com/v1/me/following/contains`, pathParams),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/me/following/contains`, pathParams),
     }),
-    checkIfCurrentUserFollowsPlaylist: (pathParams: Pick<SpotifyPathParams, 'playlist_id'>): SpotifyRequest => ({
+    checkIfCurrentUserFollowsPlaylist: (pathParams: Pick<PathParams, 'playlist_id'>): SpotifyRequest => ({
       method: 'GET',
-      endpoint: buildSpotifyEndpoint(
-        `https://api.spotify.com/v1/playlists/{playlist_id}/followers/contains`,
-        pathParams
-      ),
+      endpoint: buildEndpoint(`https://api.spotify.com/v1/playlists/{playlist_id}/followers/contains`, pathParams),
     }),
   },
 } as const;

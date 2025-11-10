@@ -1,4 +1,4 @@
-import type { spotifyIso } from '~/spotify-visualizer/composables/const/spotifyIso';
+import type { iso } from '~/base/const/iso';
 
 // Shared base types
 type ExternalUrls = { spotify: string };
@@ -393,7 +393,7 @@ type CategoryObject = {
 };
 
 // Main export type
-export type SpotifyResponse = {
+type SpotifyResponses = {
   albums: {
     getAlbum: FullAlbum;
     getSeveralAlbums: { albums: FullAlbum[] };
@@ -442,7 +442,7 @@ export type SpotifyResponse = {
     checkUsersSavedEpisodes: boolean[];
   };
   markets: {
-    getAvailableMarkets: { markets: keyof (typeof spotifyIso.market)[] };
+    getAvailableMarkets: { markets: keyof (typeof iso.market)[] };
   };
   player: {
     getPlaybackState: PlaybackState;
@@ -529,3 +529,9 @@ export type SpotifyResponse = {
     checkIfCurrentUserFollowsPlaylist: boolean[];
   };
 };
+
+export type SpotifyResponse = {
+  [C in keyof SpotifyResponses]: {
+    [E in keyof SpotifyResponses[C]]: SpotifyResponses[C][E];
+  }[keyof SpotifyResponses[C]];
+}[keyof SpotifyResponses];
