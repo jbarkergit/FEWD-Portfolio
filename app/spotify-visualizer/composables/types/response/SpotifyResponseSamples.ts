@@ -1,6 +1,6 @@
 import type { spotifyIso } from '~/spotify-visualizer/composables/const/spotifyIso';
 
-export type SpotifyResponse = {
+type SpotifyResponseSamples = {
   albums: {
     getAlbum: {
       album_type: string;
