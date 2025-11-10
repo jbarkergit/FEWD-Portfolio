@@ -530,8 +530,14 @@ type SpotifyResponses = {
   };
 };
 
-export type SpotifyResponse = {
-  [C in keyof SpotifyResponses]: {
-    [E in keyof SpotifyResponses[C]]: SpotifyResponses[C][E];
-  }[keyof SpotifyResponses[C]];
+type SpotifyCategories = keyof SpotifyResponses;
+
+type SpotifyEndpoints = {
+  [C in SpotifyCategories]: keyof SpotifyResponses[C];
+};
+
+export type SpotifyEndpointKeys = SpotifyEndpoints[SpotifyCategories];
+
+export type SpotifyResponseFor<K extends SpotifyEndpointKeys> = {
+  [C in keyof SpotifyResponses]: K extends keyof SpotifyResponses[C] ? SpotifyResponses[C][K] : never;
 }[keyof SpotifyResponses];

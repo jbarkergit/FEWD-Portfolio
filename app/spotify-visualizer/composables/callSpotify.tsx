@@ -1,10 +1,10 @@
 import { spotifyEndpoints, type SpotifyRequest } from '~/spotify-visualizer/composables/const/spotifyEndpoints';
-import type { SpotifyResponse } from '~/spotify-visualizer/composables/types/SpotifyResponse';
+import type { SpotifyEndpointKeys, SpotifyResponseFor } from '~/spotify-visualizer/composables/types/SpotifyResponse';
 
-export async function callSpotify<K extends keyof typeof spotifyEndpoints>(
+export async function callSpotify<K extends SpotifyEndpointKeys>(
   request: K,
   ...args: Parameters<(typeof spotifyEndpoints)[K]>
-): Promise<SpotifyResponse> {
+): Promise<SpotifyResponseFor<K>> {
   const endpointFn = spotifyEndpoints[request] as (...args: Parameters<(typeof spotifyEndpoints)[K]>) => SpotifyRequest;
   const endpointRequest = endpointFn(...args);
 
@@ -17,5 +17,5 @@ export async function callSpotify<K extends keyof typeof spotifyEndpoints>(
     },
   });
 
-  return res.json();
+  return res.json() as SpotifyResponseFor<K>;
 }
