@@ -19,4 +19,6 @@ export default [
   }),
 
   route('film-database', './film-database/routes/FilmDatabase.tsx'),
+
+  route('spotify-visualizer', './spotify-visualizer/routes/SpotifyVisualizer.tsx'),
 ] satisfies RouteConfig;
