@@ -1,3 +1,6 @@
 @forward '/app/spotify-visualizer/scss/spotifyStyles';
 
 @forward '/app/spotify-visualizer/routes/spotify';
+
+@forward '/app/spotify-visualizer/features/navigation/nav';
+@forward '/app/spotify-visualizer/features/library/library';

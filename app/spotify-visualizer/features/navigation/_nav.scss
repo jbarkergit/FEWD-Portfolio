@@ -1,0 +1,36 @@
+.nav {
+  &__wrapper {
+    display: flex;
+    gap: var(--sv-padding-between);
+    &__left {
+      justify-content: flex-start;
+    }
+    &__right {
+      justify-content: flex-end;
+      & li:nth-of-type(2) button span:last-of-type svg {
+        display: none;
+      }
+    }
+    &__left,
+    &__right {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      gap: var(--sv-padding-list);
+      & li {
+        & button {
+          display: flex;
+          align-items: center;
+          gap: var(--sv-padding-list-item);
+          & span:nth-of-type(1) svg {
+            width: 1.4em;
+            aspect-ratio: 1/1;
+          }
+          & span:nth-of-type(2) {
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+.library {
+  display: block;
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-padding-list);
+    & button {
+      display: flex;
+      align-items: center;
+      gap: var(--sv-padding-list-item);
+      & span:nth-of-type(1) svg {
+        width: 1.4em;
+        aspect-ratio: 1/1;
+      }
+      & span:nth-of-type(2) {
+        text-transform: capitalize;
+      }
+    }
+  }
+}

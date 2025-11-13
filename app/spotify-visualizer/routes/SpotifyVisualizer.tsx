@@ -15,14 +15,14 @@ export default function SpotifyVisualizer() {
   return (
     <div className='spotify'>
       <div className='spotify__wrapper'>
-        <div className='spotify__wrapper__overlay'>
+        {/* <div className='spotify__wrapper__overlay'>
           <Overlay />
-        </div>
-        <div className='spotify__wrapper__content'>
-          <Navigation />
-          <Library />
-          <Main />
           <Social />
+        </div> */}
+        <div className='spotify__wrapper__content'>
+          <Library />
+          <Navigation />
+          <Main />
         </div>
       </div>
     </div>
