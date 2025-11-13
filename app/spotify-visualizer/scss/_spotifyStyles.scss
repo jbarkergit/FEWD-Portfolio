@@ -3,40 +3,40 @@
 .spotify {
 }
 .spotify__fonts {
-  & > :nth-of-type(1) {
-    @include m.svHeaderXXL;
-  }
-  & > :nth-child(2) {
-    @include m.svHeaderXL;
-  }
-  & > :nth-child(3) {
-    @include m.svHeaderLG;
-  }
-  & > :nth-child(4) {
-    @include m.svHeaderMD;
-  }
-  & > :nth-child(5) {
-    @include m.svHeaderSM;
-  }
-  & > :nth-child(6) {
-    @include m.svBodyLG;
-  }
-  & > :nth-child(7) {
-    @include m.svBodyMD;
-  }
-  & > :nth-child(8) {
-    @include m.svBodySM;
-  }
-  & > :nth-child(9) {
-    @include m.svBodyBold;
-  }
-  & > :nth-child(10) {
-    @include m.svCaption;
-  }
-  & > :nth-child(11) {
-    @include m.svCaptionBold;
-  }
-  & > :nth-child(12) {
-    @include m.svCaptionBold;
-  }
+  // & > :nth-of-type(1) {
+  //   @include m.svHeaderXXL;
+  // }
+  // & > :nth-child(2) {
+  //   @include m.svHeaderXL;
+  // }
+  // & > :nth-child(3) {
+  //   @include m.svHeaderLG;
+  // }
+  // & > :nth-child(4) {
+  //   @include m.svHeaderMD;
+  // }
+  // & > :nth-child(5) {
+  //   @include m.svHeaderSM;
+  // }
+  // & > :nth-child(6) {
+  //   @include m.svBodyLG;
+  // }
+  // & > :nth-child(7) {
+  //   @include m.svBodyMD;
+  // }
+  // & > :nth-child(8) {
+  //   @include m.svBodySM;
+  // }
+  // & > :nth-child(9) {
+  //   @include m.svBodyBold;
+  // }
+  // & > :nth-child(10) {
+  //   @include m.svCaption;
+  // }
+  // & > :nth-child(11) {
+  //   @include m.svCaptionBold;
+  // }
+  // & > :nth-child(12) {
+  //   @include m.svCaptionBold;
+  // }
 }

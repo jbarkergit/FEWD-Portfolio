@@ -1,0 +1,31 @@
+.spotify {
+  display: block;
+  width: 100svw;
+  height: 100svh;
+  border: 12px;
+  &__wrapper {
+    display: inherit;
+    width: inherit;
+    height: inherit;
+    background-color: #000;
+    color: #fff;
+    &__overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 11;
+      width: 100svw;
+      height: 100svh;
+      background-color: #121212;
+    }
+    &__content {
+      position: relative;
+      z-index: 1;
+      & > * {
+        position: relative;
+        z-index: 1;
+        background-color: #121212;
+        color: inherit;
+      }
+    }
+  }
+}
