@@ -104,19 +104,22 @@ export function isAccessTokenExpired() {
 export async function initSpotifyAuth() {
   const params = new URLSearchParams(window.location.search);
   const code = params.get('code');
+  const accessToken = localStorage.getItem('access_token');
 
-  if (!code) {
-    if (!localStorage.getItem('access_token')) {
-      await redirectToSpotifyAuth();
-    }
-  } else {
-    // Exchange code for token
+  // If a code exists in the url, exchange it and cleanup the URL to prevent reuse
+  if (code) {
     await handleSpotifyToken();
-    // Remove code from URL
     window.history.replaceState({}, document.title, redirectUri);
+    return;
   }
 
-  // Auto-refresh access token if expired
+  // If there is no access token, redirect to Spotify auth
+  if (!accessToken || accessToken.trim() === '') {
+    await redirectToSpotifyAuth();
+    return;
+  }
+
+  // Refresh token if expired
   if (isAccessTokenExpired() && localStorage.getItem('refresh_token')) {
     await refreshAccessToken();
   }
