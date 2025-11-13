@@ -13,7 +13,7 @@ export async function callSpotify<K extends SpotifyEndpointKeys>(
     body: endpointRequest.body ? JSON.stringify(endpointRequest.body) : undefined,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${import.meta.env.VITE_SPOTIFY_CLIENT_ID}`,
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     },
   });
 
