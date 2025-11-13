@@ -3,6 +3,7 @@ import Library from '~/spotify-visualizer/features/library/Library';
 import Main from '~/spotify-visualizer/features/main/Main';
 import Navigation from '~/spotify-visualizer/features/navigation/Navigation';
 import Overlay from '~/spotify-visualizer/features/overlay/Overlay';
+import Social from '~/spotify-visualizer/features/social/Social';
 
 export async function clientLoader() {
   void (await initSpotifyAuth());
@@ -21,6 +22,7 @@ export default function SpotifyVisualizer() {
           <Navigation />
           <Library />
           <Main />
+          <Social />
         </div>
       </div>
     </div>
