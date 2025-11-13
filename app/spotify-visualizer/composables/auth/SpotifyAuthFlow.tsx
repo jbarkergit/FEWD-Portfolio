@@ -9,8 +9,7 @@ const generateRandomString = (length: number): string => {
 
 const sha256 = async (plain: string): Promise<ArrayBuffer> => {
   const encoder = new TextEncoder();
-  const data = encoder.encode(plain);
-  return crypto.subtle.digest('SHA-256', data);
+  return crypto.subtle.digest('SHA-256', encoder.encode(plain));
 };
 
 const base64encode = (input: ArrayBuffer): string => {
@@ -20,12 +19,12 @@ const base64encode = (input: ArrayBuffer): string => {
     .replace(/\//g, '_');
 };
 
-// const
+// Constants
 const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID as string;
 const redirectUri = 'http://127.0.0.1:5173/spotify-visualizer';
 const scope = 'user-read-private user-read-email';
 
-// Initial redirect
+// Auth Flow
 async function redirectToSpotifyAuth() {
   const codeVerifier = generateRandomString(64);
   const hashed = await sha256(codeVerifier);
@@ -44,7 +43,28 @@ async function redirectToSpotifyAuth() {
   window.location.href = authUrl.toString();
 }
 
-// Token exchange post initial redirect
+async function fetchToken(body: Record<string, string>) {
+  const res = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(body),
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch token');
+
+  const data = (await res.json()) as any;
+
+  if (data.access_token) localStorage.setItem('access_token', data.access_token);
+  if (data.refresh_token) localStorage.setItem('refresh_token', data.refresh_token);
+  if (data.expires_in) {
+    const expiresAt = Date.now() + data.expires_in * 1000;
+    localStorage.setItem('access_token_expires_at', expiresAt.toString());
+  }
+
+  return data;
+}
+
+// Exchange code for token
 async function handleSpotifyToken() {
   const code = new URLSearchParams(window.location.search).get('code');
   if (!code) return null;
@@ -52,32 +72,62 @@ async function handleSpotifyToken() {
   const codeVerifier = localStorage.getItem('code_verifier');
   if (!codeVerifier) throw new Error('Missing code_verifier');
 
-  const res = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      client_id: clientId,
-      grant_type: 'authorization_code',
-      code,
-      redirect_uri: redirectUri,
-      code_verifier: codeVerifier,
-    }),
+  return fetchToken({
+    client_id: clientId,
+    grant_type: 'authorization_code',
+    code,
+    redirect_uri: redirectUri,
+    code_verifier: codeVerifier,
   });
-
-  const data = (await res.json()) as any;
-
-  if (data.access_token) {
-    localStorage.setItem('access_token', data.access_token);
-  }
-
-  return data;
 }
 
-// Initializer
+// Refresh access token
+export async function refreshAccessToken() {
+  const refreshToken = localStorage.getItem('refresh_token');
+  if (!refreshToken) throw new Error('No refresh token found');
+
+  return fetchToken({
+    client_id: clientId,
+    grant_type: 'refresh_token',
+    refresh_token: refreshToken,
+  });
+}
+
+// Acess token expiry check
+export function isAccessTokenExpired() {
+  const expiresAt = localStorage.getItem('access_token_expires_at');
+  if (!expiresAt) return true;
+  return Date.now() >= parseInt(expiresAt);
+}
+
+// Initialize
 export async function initSpotifyAuth() {
   const params = new URLSearchParams(window.location.search);
   const code = params.get('code');
 
-  if (!code) await redirectToSpotifyAuth();
-  else await handleSpotifyToken();
+  if (!code) {
+    if (!localStorage.getItem('access_token')) {
+      await redirectToSpotifyAuth();
+    }
+  } else {
+    // Exchange code for token
+    await handleSpotifyToken();
+    // Remove code from URL
+    window.history.replaceState({}, document.title, redirectUri);
+  }
+
+  // Auto-refresh access token if expired
+  if (isAccessTokenExpired() && localStorage.getItem('refresh_token')) {
+    await refreshAccessToken();
+  }
 }
+
+// Auto-refresh access token
+setInterval(
+  async () => {
+    if (isAccessTokenExpired() && localStorage.getItem('refresh_token')) {
+      await refreshAccessToken();
+    }
+  },
+  55 * 60 * 1000
+);
