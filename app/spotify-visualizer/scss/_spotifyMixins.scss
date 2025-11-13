@@ -1,0 +1,22 @@
+:root {
+  --sv-font-size-xs: 0.875rem; /* 14px fixed */
+  // Responsive (1.25x scaling upwards)
+  --sv-font-size-s: clamp(1rem, 1vw, 1.125rem); /* 16px - 18px */
+  --sv-font-size-m: clamp(1.125rem, 1.25vw, 1.25rem); /* 18px - 20px */
+  --sv-font-size-l: clamp(1.25rem, 1.5vw, 1.5625rem); /* 20px - 25px */
+  --sv-font-size-xl: clamp(1.5625rem, 2vw, 1.953rem); /* 25px - 31px */
+  --sv-font-size-xxl: clamp(1.75rem, 2.25vw, 2.1875rem); /* 28px - 35px */
+  --sv-font-size-xxxl: clamp(2rem, 3vw, 2.25rem); /* 32px - 36px */
+}
+
+@mixin svFont($size, $weight) {
+  font-family: 'SourceSans3', 'PT Sans', sans-serif;
+  font-size: var(--sv-font-size-#{$size});
+  font-weight: $weight;
+  line-height: 150%;
+}
+
+// Headers
+@mixin svHeaderXXL {
+  @include svFont('xxxl', 900);
+}
