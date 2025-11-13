@@ -25,3 +25,19 @@
   font-display: swap;
   font-style: italic;
 }
+
+// Spotify Project: Source Sans 3 Font Face
+@font-face {
+  font-family: 'SourceSans3';
+  src: url('/app/base/assets/fonts/Source_Sans_3/SourceSans3-VariableFont_wght.ttf') format('truetype');
+  font-weight: 200 900;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SourceSans3';
+  src: url('/app/base/assets/fonts/Source_Sans_3/SourceSans3-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 200 900;
+  font-display: swap;
+  font-style: italic;
+}
