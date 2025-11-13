@@ -22,7 +22,6 @@ const base64encode = (input: ArrayBuffer): string => {
 // Constants
 const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID as string;
 const redirectUri = 'http://127.0.0.1:5173/spotify-visualizer';
-const scope = 'user-read-private user-read-email';
 
 // Auth Flow
 async function redirectToSpotifyAuth() {
@@ -34,7 +33,9 @@ async function redirectToSpotifyAuth() {
   authUrl.search = new URLSearchParams({
     response_type: 'code',
     client_id: clientId,
-    scope,
+    // https://developer.spotify.com/documentation/web-api/concepts/scopes
+    scope:
+      'user-read-playback-state user-modify-playback-state user-read-currently-playing playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-follow-modify user-follow-read user-read-playback-position user-top-read user-read-recently-played user-library-modify user-library-read user-read-private',
     code_challenge_method: 'S256',
     code_challenge: codeChallenge,
     redirect_uri: redirectUri,
