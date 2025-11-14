@@ -1,4 +1,4 @@
-import type { iso } from '~/base/iso/iso';
+import { iso } from '~/base/iso/iso';
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -114,7 +114,8 @@ function buildEndpoint(endpoint: string, pathParams?: Record<string, any>): stri
     if (endpoint.includes(template)) {
       endpoint = endpoint.replace(template, encodeURIComponent(String(value)));
     } else {
-      queries.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`);
+      const normalizedValue = key === 'market' ? iso[value as keyof typeof iso] : value;
+      queries.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(normalizedValue))}`);
     }
   }
 
