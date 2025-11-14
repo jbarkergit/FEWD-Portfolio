@@ -13,7 +13,7 @@ const right = {
   lock: { icons: [<BiUnlock2 />, <BiLockFill />], func: doSomething },
   social: { icon: <BiPersonLinesFill />, func: doSomething },
   settings: { icon: <BiGear />, func: doSomething },
-  user: { icon: undefined, func: doSomething },
+  user: { icon: <MaterialSymbolsLightPersonBook />, func: doSomething },
 } as const;
 
 export type NavigationKeys = keyof typeof left;
@@ -51,12 +51,11 @@ const Navigation = () => {
                   className='nav__wrapper__right__btn'
                   aria-label={formattedKey}
                   onClick={value.func}>
-                  <span>
+                  <div>
                     {icon.map((i, idx) => (
                       <span key={idx}>{i}</span>
                     ))}
-                  </span>
-                  <span>{formattedKey}</span>
+                  </div>
                 </button>
               </li>
             );
@@ -187,6 +186,21 @@ export function BiGear(props: SVGProps<SVGSVGElement>) {
         <path d='M8 4.754a3.246 3.246 0 1 0 0 6.492a3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0a2.246 2.246 0 0 1-4.492 0' />
         <path d='M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z' />
       </g>
+    </svg>
+  );
+}
+
+export function MaterialSymbolsLightPersonBook(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      {...props}>
+      {/* Icon from Material Symbols Light by Google - https://github.com/google/material-design-icons/blob/master/LICENSE */}
+      <path
+        fill='currentColor'
+        d='M12 16.385q-1.725 0-3.234.524q-1.51.525-2.766 1.475v1q0 .25.173.433t.423.183h10.789q.269 0 .442-.173t.173-.443v-1q-1.275-.95-2.775-1.475T12 16.385M6.616 21q-.672 0-1.144-.472T5 19.385V4.615q0-.69.463-1.152T6.616 3h10.769q.69 0 1.153.463T19 4.616v14.769q0 .67-.472 1.143q-.472.472-1.143.472zM12 14.077q1.258 0 2.129-.871T15 11.077t-.871-2.129T12 8.077t-2.129.871T9 11.077t.871 2.129t2.129.871'
+      />
     </svg>
   );
 }
