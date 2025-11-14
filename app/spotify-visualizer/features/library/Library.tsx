@@ -15,6 +15,8 @@ const buttons = {
   artists: { icon: <IconamoonMusicArtistLight />, func: doSomething },
 } as const;
 
+export type LibraryKeys = keyof typeof buttons;
+
 const Library = () => {
   return (
     <div className='library'>

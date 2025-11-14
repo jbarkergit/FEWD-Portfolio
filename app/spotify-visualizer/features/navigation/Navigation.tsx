@@ -16,6 +16,8 @@ const right = {
   user: { icon: undefined, func: doSomething },
 } as const;
 
+export type NavigationKeys = keyof typeof left;
+
 const Navigation = () => {
   return (
     <nav className='nav'>
