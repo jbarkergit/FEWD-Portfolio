@@ -16,7 +16,62 @@
   line-height: 150%;
 }
 
-// Headers
-@mixin svHeaderXXL {
+@mixin XXXL {
   @include svFont('xxxl', 900);
+  letter-spacing: -0.02em;
 }
+@mixin XXL {
+  @include svFont('xxl', 800);
+  letter-spacing: -0.01em;
+}
+@mixin XL {
+  @include svFont('xl', 700);
+}
+@mixin L {
+  @include svFont('l', 600);
+}
+@mixin M {
+  @include svFont('m', 500);
+  letter-spacing: 0.02em;
+}
+@mixin S {
+  @include svFont('s', 500);
+  letter-spacing: 0.03em;
+}
+@mixin XS {
+  @include svFont('xs', 400);
+  letter-spacing: 0.04em;
+}
+
+// .library__wrapper {
+//   & li:nth-of-type(1) button span:nth-of-type(2) {
+//     @include XXXL;
+//   }
+//   & li:nth-of-type(2) button span:nth-of-type(2) {
+//     @include XXL;
+//   }
+//   & li:nth-of-type(3) button span:nth-of-type(2) {
+//     @include XL;
+//   }
+//   & li:nth-of-type(4) button span:nth-of-type(2) {
+//     @include L;
+//   }
+//   & li:nth-of-type(5) button span:nth-of-type(2) {
+//     @include M;
+//   }
+//   & li:nth-of-type(6) button span:nth-of-type(2) {
+//     @include S;
+//   }
+//   & li:nth-of-type(7) button span:nth-of-type(2) {
+//     @include XS;
+//   }
+//   & li:nth-of-type(8) {
+//     display: none;
+//   }
+//   & li:nth-of-type(9) {
+//     display: none;
+//   }
+//   & li:nth-of-type(10) {
+//     display: none;
+//   }
+// }
