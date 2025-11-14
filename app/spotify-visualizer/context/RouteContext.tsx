@@ -20,13 +20,13 @@ const Context = createContext<
   | undefined
 >(undefined);
 
-export const ModalProvider = ({ children }: { children: ReactNode }) => {
+export const RouteProvider = ({ children }: { children: ReactNode }) => {
   const [route, setRoute] = useState<Route>(undefined);
   const value = useMemo(() => ({ route, setRoute }), [route]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
-export const useModalContext = () => {
+export const useRouteContext = () => {
   const context = useContext(Context);
   if (!context) throw new Error('A provider is required to consume Route.');
   return context;
