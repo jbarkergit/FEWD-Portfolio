@@ -1,4 +1,7 @@
-.library {
+@use '/app/base/sass/util/functions' as f;
+@use '/app/spotify-visualizer/scss/spotifyMixins' as m;
+
+.sidebar {
   display: block;
   &__wrapper {
     display: flex;
@@ -14,6 +17,7 @@
       }
       & span:nth-of-type(2) {
         text-transform: capitalize;
+        @include m.M;
       }
     }
   }

@@ -1,19 +1,12 @@
-.nav {
+.navigation {
   &__wrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: 1fr;
     gap: var(--sv-padding-between);
-    &__left {
-      justify-content: flex-start;
-    }
-    &__right {
-      justify-content: flex-end;
-      & li:nth-of-type(2) button span:last-of-type svg {
-        display: none;
-      }
-    }
     &__left,
+    &__center,
     &__right {
-      flex: 1 1 auto;
       display: flex;
       align-items: center;
       gap: var(--sv-padding-list);
@@ -30,6 +23,12 @@
             text-transform: capitalize;
           }
         }
+      }
+    }
+    &__right {
+      justify-content: flex-end;
+      & li:nth-of-type(2) button span:last-of-type svg {
+        display: none;
       }
     }
   }

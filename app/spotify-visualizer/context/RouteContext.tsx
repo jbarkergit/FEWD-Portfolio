@@ -7,7 +7,7 @@ import {
   type ReactNode,
   type SetStateAction,
 } from 'react';
-import type { LibraryKeys } from '~/spotify-visualizer/features/library/Library';
+import type { LibraryKeys } from '~/spotify-visualizer/features/sidebar/Sidebar';
 import type { NavigationKeys } from '~/spotify-visualizer/features/navigation/Navigation';
 
 type Route = NavigationKeys | LibraryKeys | undefined;

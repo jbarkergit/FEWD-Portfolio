@@ -20,16 +20,16 @@ export type NavigationKeys = keyof typeof left;
 
 const Navigation = () => {
   return (
-    <nav className='nav'>
-      <div className='nav__wrapper'>
-        <ul className='nav__wrapper__left'>
+    <nav className='navigation'>
+      <div className='navigation__wrapper'>
+        <ul className='navigation__wrapper__left'>
           {Object.entries(left).map(([key, { icon, func }]) => {
             const formattedKey = key.replace(/([A-Z])/g, ' $1');
 
             return (
               <li key={key}>
                 <button
-                  className='nav__wrapper__left__btn'
+                  className='navigation__wrapper__left__btn'
                   aria-label={formattedKey}
                   onClick={func}>
                   <span>{icon}</span>
@@ -40,7 +40,9 @@ const Navigation = () => {
           })}
         </ul>
 
-        <ul className='nav__wrapper__right'>
+        <div className='navigation__wrapper__center'>SEARCH</div>
+
+        <ul className='navigation__wrapper__right'>
           {Object.entries(right).map(([key, value]) => {
             const icon = 'icons' in value ? value.icons : [value.icon];
             const formattedKey = key.replace(/([A-Z])/g, ' $1');
@@ -48,7 +50,7 @@ const Navigation = () => {
             return (
               <li key={key}>
                 <button
-                  className='nav__wrapper__right__btn'
+                  className='navigation__wrapper__right__btn'
                   aria-label={formattedKey}
                   onClick={value.func}>
                   <div>

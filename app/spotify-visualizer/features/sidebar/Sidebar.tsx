@@ -17,10 +17,10 @@ const buttons = {
 
 export type LibraryKeys = keyof typeof buttons;
 
-const Library = () => {
+const Sidebar = () => {
   return (
-    <div className='library'>
-      <ul className='library__wrapper'>
+    <div className='sidebar'>
+      <ul className='sidebar__wrapper'>
         {Object.entries(buttons).map(([key, { icon, func }]) => {
           const formattedKey = key.replace(/([A-Z])/g, ' $1');
 
@@ -41,7 +41,7 @@ const Library = () => {
   );
 };
 
-export default Library;
+export default Sidebar;
 
 export function BiCollection(props: SVGProps<SVGSVGElement>) {
   return (

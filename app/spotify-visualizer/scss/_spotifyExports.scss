@@ -2,5 +2,7 @@
 
 @forward '/app/spotify-visualizer/routes/spotify';
 
-@forward '/app/spotify-visualizer/features/navigation/nav';
-@forward '/app/spotify-visualizer/features/library/library';
+@forward '/app/spotify-visualizer/features/controller/controller';
+@forward '/app/spotify-visualizer/features/main/main';
+@forward '/app/spotify-visualizer/features/navigation/navigation';
+@forward '/app/spotify-visualizer/features/sidebar/sidebar';
