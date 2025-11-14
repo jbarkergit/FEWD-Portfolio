@@ -123,8 +123,6 @@ function buildEndpoint(endpoint: string, pathParams?: Record<string, any>): stri
     endpoint += `?${queries.join('&')}`;
   }
 
-  console.log(endpoint);
-
   return endpoint;
 }
 
