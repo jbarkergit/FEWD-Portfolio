@@ -1,4 +1,4 @@
-import type { iso } from '~/base/const/iso';
+import type { iso } from '~/base/iso/iso';
 
 // Shared base types
 type ExternalUrls = { spotify: string };
@@ -442,7 +442,7 @@ type SpotifyResponses = {
     checkUsersSavedEpisodes: boolean[];
   };
   markets: {
-    getAvailableMarkets: { markets: keyof (typeof iso.market)[] };
+    getAvailableMarkets: { markets: keyof (typeof iso)[] };
   };
   player: {
     getPlaybackState: PlaybackState;

@@ -1,4 +1,4 @@
-import type { iso } from '~/base/const/iso';
+import type { iso } from '~/base/iso/iso';
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -13,9 +13,9 @@ type PathParams = {
   ids: number[];
   category_id: string;
   genres: string[];
-  market: keyof typeof iso.market;
-  markets: (keyof typeof iso.market)[];
-  locale: keyof typeof iso.market;
+  market: keyof typeof iso;
+  markets: (keyof typeof iso)[];
+  locale: string;
   limit: number;
   offset: number;
   additional_types: string;
@@ -122,6 +122,8 @@ function buildEndpoint(endpoint: string, pathParams?: Record<string, any>): stri
   if (queries.length) {
     endpoint += `?${queries.join('&')}`;
   }
+
+  console.log(endpoint);
 
   return endpoint;
 }
