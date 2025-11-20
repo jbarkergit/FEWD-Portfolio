@@ -11,8 +11,8 @@ const contactInformationInputs = {
 } as const;
 
 const inquiryInputs = {
+  inquiry: { htmlFor: 'inquiry', inputType: 'select' },
   message: { htmlFor: 'message', inputType: 'text' },
-  location: { htmlFor: 'location', inputType: 'text' },
   otherDetails: { htmlFor: 'other', inputType: 'text' },
 } as const;
 
@@ -36,6 +36,18 @@ const Contact = () => {
   const submittingRef = useRef<boolean>(false);
   const contactContainerRef = useRef<HTMLDivElement>(null);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSection = (index: number) => {
+    if (!formRef.current) return;
+
+    const steps = Array.from(formRef.current.children) as HTMLElement[];
+    const clamped = Math.min(Math.max(index, 0), steps.length - 1);
+    const attr = 'data-toggle';
+
+    steps.forEach((el, i) => el.setAttribute(attr, i === clamped ? 'true' : 'false'));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,20 +89,23 @@ const Contact = () => {
   };
 
   return (
-    <section className='contact'>
+    <section
+      className='contact'
+      ref={contactContainerRef}>
       <header className='contact__heading'>
         <h2>Contact Form</h2>
       </header>
       <form
         className='contact__form'
-        action=''>
+        ref={formRef}
+        onSubmit={handleSubmit}>
         <section
           className='contact__form__step'
           data-toggle='true'>
           <header className='contact__form__step__header'>
-            <div>
+            <div className='contact__form__step__header__wrapper'>
               <span>
-                <MaterialSymbolsShieldLock />
+                <MaterialSymbolsCircle />
               </span>
               <h3>Contact Information</h3>
             </div>
@@ -130,84 +145,267 @@ const Contact = () => {
               </li>
             ))}
           </ul>
-          <button className='contact__form__step__button'>Next</button>
+          <nav className='contact__form__step__stepper'>
+            <div className='contact__form__step__stepper__section'>
+              <button
+                className='contact__form__step__stepper__section__button'
+                aria-label='Return to Project Hub'
+                type='button'
+                onClick={() => {
+                  handleSection(0);
+                  setFeatureState({ contactFormActive: false, projectDetailsActive: false });
+                }}>
+                <MaterialSymbolsArrowLeftAlt />
+              </button>
+            </div>
+            <div className='contact__form__step__stepper__section'>
+              <button
+                className='contact__form__step__stepper__section__button'
+                aria-label='Continue to Inquiry Details'
+                type='button'
+                onClick={() => handleSection(1)}>
+                <span>Next</span>
+                <span>
+                  <MaterialSymbolsArrowRightAlt />
+                </span>
+              </button>
+            </div>
+          </nav>
         </section>
+
         <section
           className='contact__form__step'
           data-toggle='false'>
           <header className='contact__form__step__header'>
-            <nav className='contact__form__step__nav'>
-              <span>
+            <nav className='contact__form__step__header__nav'>
+              <button
+                aria-label='Return to Contact Information'
+                type='button'
+                onClick={() => handleSection(0)}>
                 <MaterialSymbolsArrowLeftAlt />
+              </button>
+            </nav>
+            <div className='contact__form__step__header__wrapper'>
+              <span>
+                <MaterialSymbolsCircle />
               </span>
               <h3>Inquiry Details</h3>
-            </nav>
+            </div>
             <h2>What’s the focus of your inquiry, and how can I be of service?</h2>
           </header>
           <ul className='contact__form__step__ul'>
-            {Object.entries(inquiryInputs).map(([key, { htmlFor, inputType }]) => (
-              <li
-                className='contact__form__step__ul__li'
-                key={`contact-form-inquiry-${key}`}>
-                <label
-                  htmlFor={htmlFor}
-                  className='contact__form__step__ul__li__label'>
-                  {htmlFor === 'location'
-                    ? 'Location'
-                    : htmlFor === 'message'
-                      ? 'Message'
-                      : htmlFor === 'other'
-                        ? 'Other Details'
-                        : ''}
-                </label>
-                {htmlFor === 'message' ? (
-                  <textarea
-                    id='message'
-                    name='message'
-                    aria-invalid={!!errors.message}
-                    aria-describedby='message-error'
-                  />
-                ) : (
-                  <input
-                    className='contact__form__step__ul__li__input'
-                    id={htmlFor}
-                    type={inputType}
-                    name={key}
-                    placeholder={key}
-                    aria-invalid={!!errors[key]}
-                    aria-describedby={`${htmlFor}-error`}
-                  />
-                )}
-                {errors[key] && (
-                  <div
-                    className='contact__form__step__ul__li__error'
-                    id={`${htmlFor}-error`}
-                    role='alert'>
-                    {errors[key]}
-                  </div>
-                )}
-              </li>
-            ))}
+            {Object.entries(inquiryInputs).map(([key, { htmlFor, inputType }]) => {
+              const labelText =
+                htmlFor === 'inquiry'
+                  ? 'Inquiry Focus'
+                  : htmlFor === 'message'
+                    ? 'Message'
+                    : htmlFor === 'other'
+                      ? 'Other Details'
+                      : '';
+
+              return (
+                <li
+                  className='contact__form__step__ul__li'
+                  key={`contact-form-inquiry-${key}`}>
+                  {inputType === 'select' ? (
+                    <select
+                      id={htmlFor}
+                      name={key}
+                      required
+                      aria-invalid={!!errors[key]}
+                      aria-describedby={`${htmlFor}-error`}>
+                      <option
+                        value=''
+                        disabled
+                        selected
+                        hidden>
+                        Select your inquiry
+                      </option>
+                      <option value='long-term'>I’m looking to hire a React developer for a full-time role.</option>
+                      <option value='project-build'>
+                        I need a React front-end developer to build a new web application.
+                      </option>
+                      <option value='feature-dev'>
+                        I need a React front-end developer to add new features or improve an existing project.
+                      </option>
+                      <option value='maintenance'>
+                        I'm looking for a React developer for debugging, optimization, or ongoing maintenance.
+                      </option>
+                      <option value='ui-ux-implementation'>I have designs I need implemented in React.</option>
+                      <option value='collaboration'>
+                        I’d like to discuss a partnership or joint project using React.
+                      </option>
+                    </select>
+                  ) : (
+                    <input
+                      className='contact__form__step__ul__li__input'
+                      id={htmlFor}
+                      type={inputType}
+                      name={key}
+                      placeholder=' '
+                      aria-invalid={!!errors[key]}
+                      aria-describedby={`${htmlFor}-error`}
+                    />
+                  )}
+
+                  {errors[key] && (
+                    <div
+                      className='contact__form__step__ul__li__error'
+                      id={`${htmlFor}-error`}
+                      role='alert'
+                      aria-live='polite'>
+                      {errors[key]}
+                    </div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
-          <button className='contact__form__step__button'>Next</button>
+          <nav className='contact__form__step__stepper'>
+            <div className='contact__form__step__stepper__section'>
+              <button
+                className='contact__form__step__stepper__section__button'
+                aria-label='Return to Project Hub'
+                type='button'
+                onClick={() => {
+                  handleSection(0);
+                  setFeatureState({ contactFormActive: false, projectDetailsActive: false });
+                }}>
+                <MaterialSymbolsArrowLeftAlt />
+              </button>
+            </div>
+            <div className='contact__form__step__stepper__section'>
+              <button
+                className='contact__form__step__stepper__section__button'
+                aria-label='Continue to Booking'
+                type='button'
+                onClick={() => handleSection(2)}>
+                <span>Next</span>
+                <span>
+                  <MaterialSymbolsArrowRightAlt />
+                </span>
+              </button>
+            </div>
+          </nav>
         </section>
+
         <section
           className='contact__form__step'
           data-toggle='false'>
           <header className='contact__form__step__header'>
-            <nav className='contact__form__step__nav'>
-              <span>
+            <nav className='contact__form__step__header__nav'>
+              <button
+                aria-label='Return to Inquiry Details'
+                type='button'
+                onClick={() => handleSection(1)}>
                 <MaterialSymbolsArrowLeftAlt />
+              </button>
+            </nav>
+            <div className='contact__form__step__header__wrapper'>
+              <span>
+                <MaterialSymbolsCircle />
               </span>
               <h3>Booking</h3>
-            </nav>
+            </div>
             <h2>Let's book a call.</h2>
           </header>
           <ul className='contact__form__step__ul'></ul>
-          <button className='contact__form__step__button'>Submit</button>
+          <nav className='contact__form__step__stepper'>
+            <div className='contact__form__step__stepper__section'>
+              <button
+                className='contact__form__step__stepper__section__button'
+                aria-label='Return to Project Hub'
+                type='button'
+                onClick={() => {
+                  handleSection(0);
+                  setFeatureState({ contactFormActive: false, projectDetailsActive: false });
+                }}>
+                <MaterialSymbolsArrowLeftAlt />
+              </button>
+            </div>
+            <div className='contact__form__step__stepper__section'>
+              <button
+                className='contact__form__step__stepper__section__button'
+                aria-label='Submit form'
+                type='submit'>
+                <span>Submit</span>
+                <span>
+                  <MaterialSymbolsArrowShapeUpStack2 />
+                </span>
+              </button>
+            </div>
+          </nav>
         </section>
       </form>
-      {/* <nav className='contact__nav'>
+    </section>
+  );
+};
+
+export default Contact;
+
+function MaterialSymbolsCircle(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      {...props}>
+      {/* Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE */}
+      <path
+        fill='currentColor'
+        d='M12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22'
+      />
+    </svg>
+  );
+}
+
+function MaterialSymbolsArrowLeftAlt(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      {...props}>
+      {/* Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE */}
+      <path
+        fill='currentColor'
+        d='m10 18l-6-6l6-6l1.4 1.45L7.85 11H20v2H7.85l3.55 3.55z'
+      />
+    </svg>
+  );
+}
+
+function MaterialSymbolsArrowRightAlt(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      {...props}>
+      {/* Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE */}
+      <path
+        fill='currentColor'
+        d='m14 18l-1.4-1.45L16.15 13H4v-2h12.15L12.6 7.45L14 6l6 6z'
+      />
+    </svg>
+  );
+}
+
+function MaterialSymbolsArrowShapeUpStack2(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      {...props}>
+      {/* Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE */}
+      <path
+        fill='currentColor'
+        d='M9 23v-3H4l8-9l8 9h-5v3zm-5-8l8-9l8 9h-2.675L12 9l-5.325 6zm0-5l8-9l8 9h-2.675L12 4l-5.325 6z'
+      />
+    </svg>
+  );
+}
+
+{
+  /* <nav className='contact__nav'>
         <button
           className='contact__container--return'
           aria-label='Return to project hub'
@@ -286,39 +484,5 @@ const Contact = () => {
             you for your consideration.
           </p>
         )}
-      </div> */}
-    </section>
-  );
-};
-
-export default Contact;
-
-function MaterialSymbolsShieldLock(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      viewBox='0 0 24 24'
-      {...props}>
-      {/* Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE */}
-      <path
-        fill='currentColor'
-        d='M12 22q-3.475-.875-5.738-3.988T4 11.1V5l8-3l8 3v6.1q0 3.8-2.262 6.913T12 22m-2-6h4q.425 0 .713-.288T15 15v-3q0-.425-.288-.712T14 11v-1q0-.825-.587-1.412T12 8t-1.412.588T10 10v1q-.425 0-.712.288T9 12v3q0 .425.288.713T10 16m1-5v-1q0-.425.288-.712T12 9t.713.288T13 10v1z'
-      />
-    </svg>
-  );
-}
-
-function MaterialSymbolsArrowLeftAlt(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      viewBox='0 0 24 24'
-      {...props}>
-      {/* Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE */}
-      <path
-        fill='currentColor'
-        d='m10 18l-6-6l6-6l1.4 1.45L7.85 11H20v2H7.85l3.55 3.55z'
-      />
-    </svg>
-  );
+      </div> */
 }

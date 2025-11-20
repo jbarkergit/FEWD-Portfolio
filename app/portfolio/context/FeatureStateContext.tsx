@@ -8,20 +8,25 @@ import {
   useState,
 } from 'react';
 
-const Context = createContext<
-  | {
-      featureState: Record<string, boolean>;
-      setFeatureState: Dispatch<SetStateAction<Record<string, boolean>>>;
-    }
-  | undefined
->(undefined);
+type Keys = 'projectDetailsActive' | 'contactFormActive';
+
+type FeatureState = Record<Keys, boolean>;
+
+type Value = {
+  featureState: FeatureState;
+  setFeatureState: Dispatch<SetStateAction<FeatureState>>;
+};
+
+const Context = createContext<Value | undefined>(undefined);
 
 export const FeatureStateProvider = ({ children }: { children: ReactNode }) => {
-  const [featureState, setFeatureState] = useState<Record<string, boolean>>({
+  const [featureState, setFeatureState] = useState<FeatureState>({
     projectDetailsActive: false,
     contactFormActive: false,
   });
+
   const value = useMemo(() => ({ featureState, setFeatureState }), [featureState]);
+
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
