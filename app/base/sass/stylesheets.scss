@@ -9,6 +9,9 @@
 // Font Faces
 @forward '/app/base/assets/fonts/fonts';
 
+// Styles
+@forward '/app/base/sass/styles/fonts';
+
 // Projects
 @forward '/app/portfolio/scss/portfolioExports';
 @forward '/app/ecommerce/scss/ecommerceExports';
