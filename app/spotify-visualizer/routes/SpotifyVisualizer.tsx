@@ -5,7 +5,7 @@ import Navigation from '~/spotify-visualizer/features/navigation/Navigation';
 import Sidebar from '~/spotify-visualizer/features/sidebar/Sidebar';
 
 export async function clientLoader() {
-  void (await initSpotifyAuth());
+  // void (await initSpotifyAuth());
 }
 
 // export const useSpotifyLoader = () => useLoaderData() as Awaited<ReturnType<typeof clientLoader>>;
