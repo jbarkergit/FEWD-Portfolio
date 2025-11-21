@@ -16,22 +16,24 @@
     width: inherit;
     height: inherit;
     overflow-y: scroll;
-    &::-webkit-scrollbar {
-      width: 14px;
-      height: 14px;
-    }
-    &::-webkit-scrollbar-track {
-      background: #141414;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: #f3f3f1;
+    @media (width >= 1250px) {
+      &::-webkit-scrollbar {
+        width: 14px;
+        height: 14px;
+      }
+      &::-webkit-scrollbar-track {
+        background: #141414;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #f3f3f1;
+      }
     }
     &__step {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
-      gap: s.$portfolio-gap;
+      gap: 1.5rem;
       height: inherit;
       &:nth-child(1) {
         z-index: 1;
@@ -60,25 +62,22 @@
         flex: 1 0 60svw;
         padding: calc(100svh / 5) calc(s.$box-model-viewport-x / 1.5);
       }
-      & > * {
-        display: block;
-        width: 100%;
-      }
       &__header {
         position: relative;
-        padding-bottom: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
         & h2 {
-          padding-left: 2px;
-          font-size: clamp(f.rem(30), f.rem(38) + 1vw, f.rem(46));
+          font-size: var(--font-size-4xl);
           line-height: 115%;
         }
         &__nav {
           position: absolute;
-          margin-left: -2em;
+          margin-left: -3em;
           & button {
             padding: 4px 2px;
             & svg {
-              width: 1.5rem;
+              width: 1.6rem;
               aspect-ratio: 1/1;
             }
           }
@@ -86,93 +85,91 @@
         &__wrapper {
           display: flex;
           align-items: center;
-          gap: 4px;
-          padding-bottom: 3rem;
+          gap: 6px;
           & svg {
             width: 1.25rem;
             aspect-ratio: 1/1;
+            color: hsl(44, 93%, 73%);
             &[data-success='true'] {
-              color: hsl(44, 93%, 73%);
+              color: hsl(134, 57%, 83%);
             }
           }
           & h3 {
-            font-size: clamp(f.rem(19), f.rem(15) + 1vw, f.rem(22));
           }
         }
       }
       &__ul {
         display: flex;
-        flex-wrap: wrap;
-        row-gap: 1.5rem;
+        flex-direction: column;
+        row-gap: 1rem;
         width: 100%;
-        @media (width <= 660px) {
-          flex-direction: column;
-        }
         &__li {
           position: relative;
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          font-size: clamp(f.rem(16), f.rem(12) + 1vw, f.rem(18));
+          border-radius: 3px;
           overflow: clip;
+          transition: background-color ease-in-out 140ms;
+          font-size: var(--font-size-s);
+          text-transform: capitalize;
+          & > *:not(label) {
+            padding: 12px 16px;
+            border: 1px solid hsl(240, 4%, 22%);
+            border-radius: inherit;
+            font-size: inherit;
+            text-transform: inherit;
+          }
+          // On <li> focus, change background-color, font color and label font color
+          &:focus-within {
+            background-color: #eaeffd;
+            color: black;
+            & label,
+            & textarea#message {
+              color: black !important;
+            }
+          }
+          // On <input> focus, animate label
           &:has(input:focus) label,
           &:has(input:not(:focus):not(:placeholder-shown)) label {
-            // reflects height of input: padding t + padding b
-            transform: translateY(calc((6px * 2) * 1.5) * -1);
+            transform: translateY(calc((12px * 2) * 1.5) * -1); // Reflects height of input: padding t + padding b
             opacity: 0;
             transition:
               transform ease-in-out 65ms,
               opacity ease-in-out 65ms;
+            color: black;
           }
-          &:has(textarea) label {
-            position: relative;
-          }
-          & input,
-          & textarea {
-            padding: 6px 4px;
+          // All li elements except <label> and <textarea>
+          & > *:not(label):not([type='textarea']) {
+            width: 100%;
+            height: calc((6px * 2 + 16px) * 2.25) !important; // (Padding height * 2 + font size) * 2
+            white-space: nowrap;
           }
           & label {
             position: absolute;
-            top: -8px;
-            left: 6px;
-            transform: translateY(14px);
+            top: 50%;
+            transform: translateY(-50%);
+            left: 16px; // Matches padding of <li> elements
             pointer-events: none;
-            text-transform: capitalize;
-          }
-          & input,
-          & select {
-            width: 100%;
-            height: calc((6px * 2 + 16px) * 2.25) !important; // (padding h * 2 + font size) * 2.25
-            border: 1px solid hsl(240, 4%, 22%);
-            border-top-right-radius: 3px;
-            border-bottom-right-radius: 3px;
-            border-bottom-left-radius: 3px;
-          }
-          & input {
-            white-space: nowrap;
-          }
-          & input:not([type='textarea']) {
-            height: calc(1.125rem + 6px); // Matches font-size + padding
           }
           & select {
             background-color: inherit;
-            & option {
+            &:focus {
+              outline: unset;
             }
           }
+          // Prevent labels within a <textarea> from absolutely positioning
+          &:has(textarea) label {
+            position: relative;
+          }
           & textarea {
-            width: 100%;
-            min-height: 2.25rem;
-            border: 1px solid #868686;
-            border-radius: 3px;
-            background-color: transparent;
-            white-space: wrap;
+            height: 100% !important;
+            background-color: inherit;
+            white-space: normal;
           }
         }
       }
       &__stepper {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        width: 100%;
+        padding-top: 1.5rem;
         &__section {
           flex: 1 1 50%;
           display: flex;
@@ -192,8 +189,8 @@
             padding: calc(0.625rem * 1.5) calc(0.625rem * 2);
             border: 1px solid hsl(240, 4%, 22%);
             border-radius: 2.625rem;
-            margin-top: 1.5rem;
             box-shadow: 0px 3px 6px rgb(0 0 0);
+            font-size: var(--font-size-s);
             font-weight: 600;
             text-transform: capitalize;
             &[data-submit='false'] {
@@ -203,7 +200,7 @@
               flex: 1 0 60svw;
             }
             & svg {
-              width: 1.8rem;
+              width: 1.6rem;
               aspect-ratio: 1/1;
               margin-bottom: -2px;
             }
@@ -213,88 +210,3 @@
     }
   }
 }
-
-// .contact {
-//   position: relative;
-//   display: flex;
-//   justify-content: center;
-//   align-items: flex-end;
-//   width: 100svw;
-//   height: 100svh;
-//   @media (width <= 1480px) {
-//     height: auto;
-//   }
-//   &__nav {
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     display: flex;
-//     align-items: center;
-//     width: 100svw;
-//     height: 8rem;
-//     padding: 0 s.$box-model-viewport-x;
-//   }
-//   &__container {
-//     display: flex;
-//     flex-direction: column;
-//     gap: 64px;
-//     height: 90%;
-//     min-width: 65%;
-//     aspect-ratio: 4/3;
-//     padding: 8rem s.$box-model-viewport-x 8rem s.$box-model-viewport-x;
-//     background: radial-gradient(
-//       circle at top left,
-//       hsl(240, 4%, 10%) 0%,
-//       hsl(250, 20%, 15%) 40%,
-//       hsl(200, 40%, 20%) 100%
-//     );
-//     box-shadow: 0px -20px 15px -3px hsl(240, 4%, 8%);
-//     overflow-y: scroll;
-//     scrollbar-width: none;
-//     @media (width <= 1480px) {
-//       width: 100%;
-//       height: fit-content;
-//       aspect-ratio: unset;
-//       padding: 0 s.$box-model-viewport-x calc(s.$box-model-viewport-x * 2) s.$box-model-viewport-x;
-//       background: none;
-//     }
-//     &[data-submission-invalid='true'] {
-//       -webkit-animation: shake-quirky 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
-//       animation: shake-quirky 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
-//     }
-//     & article {
-//       & h2,
-//       p {
-//         width: clamp(20ch, 100%, 65ch);
-//       }
-//       & h2 {
-//         font-size: clamp(1.5rem, 2.5vw, 1.875rem);
-//         font-weight: 600;
-//         line-height: 125%;
-//         white-space: nowrap;
-//       }
-//       & p {
-//         font-size: clamp(1.125rem, 2vw, 1.5rem);
-//         line-height: 125%;
-//       }
-//     }
-//     & form {
-//       display: flex;
-//       flex-direction: column;
-//       margin-top: 14px;
-//       & ul {
-
-//         & li {
-
-//         }
-//       }
-
-//     }
-//     &--return {
-//       width: fit-content;
-//       @media (width <= 1480px) {
-//         display: none;
-//       }
-//     }
-//   }
-// }
