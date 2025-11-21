@@ -34,7 +34,7 @@
       justify-content: flex-start;
       align-items: flex-start;
       gap: 1.5rem;
-      height: inherit;
+      height: 100%;
       &:nth-child(1) {
         z-index: 1;
       }
@@ -45,11 +45,11 @@
         z-index: 3;
       }
       &:not(:last-of-type) {
-        border-right: 1px solid hsl(240, 4%, 22%);
+        border-right: 1.5px solid hsl(240, 4%, 22%);
       }
       &[data-toggle='false'] {
         flex: 0 1 20svw;
-        padding: calc(100svh / 5) calc(s.$box-model-viewport-x / 5);
+        padding: 25svh calc(s.$box-model-viewport-x / 5) 15svh calc(s.$box-model-viewport-x / 5);
         & > *:not(header) {
           opacity: 0;
         }
@@ -60,7 +60,7 @@
       }
       &[data-toggle='true'] {
         flex: 1 0 60svw;
-        padding: calc(100svh / 5) calc(s.$box-model-viewport-x / 1.5);
+        padding: 25svh calc(s.$box-model-viewport-x / 1.5) 15svh calc(s.$box-model-viewport-x / 1.5);
       }
       &__header {
         position: relative;
@@ -75,7 +75,7 @@
           position: absolute;
           margin-left: -3em;
           & button {
-            padding: 4px 2px;
+            padding: 2px 2px;
             & svg {
               width: 1.6rem;
               aspect-ratio: 1/1;
@@ -94,8 +94,6 @@
               color: hsl(134, 57%, 83%);
             }
           }
-          & h3 {
-          }
         }
       }
       &__ul {
@@ -107,39 +105,42 @@
           position: relative;
           border-radius: 3px;
           overflow: clip;
-          transition: background-color ease-in-out 140ms;
+          transition: background-color ease-in-out 240ms;
           font-size: var(--font-size-s);
           text-transform: capitalize;
           & > *:not(label) {
             padding: 12px 16px;
-            border: 1px solid hsl(240, 4%, 22%);
+            border: 1.5px solid hsl(240, 4%, 22%);
             border-radius: inherit;
             font-size: inherit;
             text-transform: inherit;
           }
-          // On <li> focus, change background-color, font color and label font color
+          // On <li> focus, change background-color
           &:focus-within {
             background-color: #eaeffd;
-            color: black;
-            & label,
-            & textarea#message {
-              color: black !important;
-            }
           }
           // On <input> focus, animate label
           &:has(input:focus) label,
           &:has(input:not(:focus):not(:placeholder-shown)) label {
-            transform: translateY(calc((12px * 2) * 1.5) * -1); // Reflects height of input: padding t + padding b
+            transform: translateY(calc((12px * 2) * 1.5) * -1); // Matches <input> padding-top & bottom
             opacity: 0;
             transition:
-              transform ease-in-out 65ms,
-              opacity ease-in-out 65ms;
-            color: black;
+              transform ease-in-out 60ms,
+              opacity ease-in-out 60ms;
+          }
+          // On <input> focus, change font color to black
+          &:has(input:focus) input {
+            color: black !important;
+          }
+          // When <input> has user text, change background and font colors to black
+          & input:not(:placeholder-shown) {
+            background-color: #eaeffd;
+            color: black !important;
           }
           // All li elements except <label> and <textarea>
           & > *:not(label):not([type='textarea']) {
             width: 100%;
-            height: calc((6px * 2 + 16px) * 2.25) !important; // (Padding height * 2 + font size) * 2
+            height: calc((6px * 2 + 16px) * 2.25); // (Padding height * 2 + font size) * 2
             white-space: nowrap;
           }
           & label {
@@ -149,12 +150,6 @@
             left: 16px; // Matches padding of <li> elements
             pointer-events: none;
           }
-          & select {
-            background-color: inherit;
-            &:focus {
-              outline: unset;
-            }
-          }
           // Prevent labels within a <textarea> from absolutely positioning
           &:has(textarea) label {
             position: relative;
@@ -163,6 +158,79 @@
             height: 100% !important;
             background-color: inherit;
             white-space: normal;
+            &:focus {
+              color: black;
+            }
+          }
+        }
+        // Accordion (custom <select>/<option>)
+        &__dropdown {
+          border-right: 1.5px solid hsl(240, 4%, 22%);
+          border-bottom: 1.5px solid hsl(240, 4%, 22%);
+          border-left: 1.5px solid hsl(240, 4%, 22%);
+          border-top: 1.5px solid hsl(240, 4%, 22%);
+          overflow: visible;
+          cursor: pointer;
+          font-size: var(--font-size-m);
+          &:has(ul[data-toggle='true']) {
+            border-bottom: unset;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 3px;
+          }
+          & div {
+            display: flex;
+            border: unset;
+            & span {
+              flex: 1 1 50%;
+              display: flex;
+              align-items: center;
+            }
+            & span:nth-of-type(1) {
+              font-size: var(--font-size-m);
+            }
+            & span:nth-of-type(2) {
+              justify-content: flex-end;
+              & svg {
+                width: 1.6rem;
+                aspect-ratio: 1/1;
+              }
+            }
+          }
+          & ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            z-index: 10;
+            width: calc(100% + 20px);
+            height: auto !important;
+            padding: unset;
+            border-right: 1.5px solid hsl(240, 4%, 22%);
+            border-bottom: 1.5px solid hsl(240, 4%, 22%);
+            border-left: 1.5px solid hsl(240, 4%, 22%);
+            border-top: unset;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            background-color: s.$background-color-primary;
+            cursor: pointer;
+            pointer-events: all;
+            transform: translateX(-50%);
+            &[data-toggle='true'] {
+              display: flex;
+              flex-direction: column;
+            }
+            & li {
+              display: block;
+              background-color: inherit;
+              padding: 6px 12px;
+              cursor: pointer;
+              text-transform: none;
+              &:hover {
+                background-color: hsl(240, 4%, 7%);
+              }
+            }
           }
         }
       }

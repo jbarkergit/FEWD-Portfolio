@@ -34,10 +34,11 @@ const ContactForm = ({ setIsSubmitted }: { setIsSubmitted: React.Dispatch<React.
 
   const isMountedRef = useRef<boolean>(false);
   const formRef = useRef<HTMLFormElement>(null);
-  const steps = useRef<HTMLLIElement[]>([]);
+  const stepsRef = useRef<HTMLLIElement[]>([]);
   const activeStepIndex = useRef<number>(0);
   const submittingRef = useRef<boolean>(false);
   const contactContainerRef = useRef<HTMLDivElement>(null);
+  const accordionRef = useRef<HTMLUListElement>(null);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -47,18 +48,18 @@ const ContactForm = ({ setIsSubmitted }: { setIsSubmitted: React.Dispatch<React.
 
     if (steps) {
       isMountedRef.current = true;
-      return steps;
+      stepsRef.current = steps;
     }
   };
 
   const handleSection = (index?: number) => {
     if (!isMountedRef.current) updateSteps();
-    if (!steps.current.length) return;
+    if (!stepsRef.current.length) return;
 
-    const clamped = Math.min(Math.max(index ?? activeStepIndex.current, 0), steps.current.length - 1);
+    const clamped = Math.min(Math.max(index ?? activeStepIndex.current, 0), stepsRef.current.length - 1);
 
-    for (let i = 0; i < steps.current.length; i++) {
-      const step = steps.current[i];
+    for (let i = 0; i < stepsRef.current.length; i++) {
+      const step = stepsRef.current[i];
       if (step) step.setAttribute('data-toggle', i === clamped ? 'true' : 'false');
     }
 
@@ -103,6 +104,17 @@ const ContactForm = ({ setIsSubmitted }: { setIsSubmitted: React.Dispatch<React.
       </span>
     </button>
   );
+
+  const untoggleAccordion = () => {
+    accordionRef.current?.setAttribute('data-toggle', 'false');
+    document.removeEventListener('pointerdown', untoggleAccordion);
+  };
+
+  const toggleAccordion = () => {
+    if (!accordionRef.current) return;
+    accordionRef.current.setAttribute('data-toggle', 'true');
+    window.document.addEventListener('pointerdown', untoggleAccordion);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -224,37 +236,44 @@ const ContactForm = ({ setIsSubmitted }: { setIsSubmitted: React.Dispatch<React.
             {Object.entries(inquiryInputs).map(([key, { htmlFor, inputType }]) => {
               return (
                 <li
-                  className='contact__form__step__ul__li'
+                  className='contact__form__step__ul__li contact__form__step__ul__dropdown'
                   key={`contact-form-inquiry-${key}`}>
                   {htmlFor === 'inquiry' ? (
-                    <select
-                      id={htmlFor}
-                      name={key}
-                      required
-                      aria-invalid={!!errors[key]}
-                      aria-describedby={`${htmlFor}-error`}>
-                      <option
-                        value=''
-                        disabled
-                        selected
-                        hidden>
-                        Select your inquiry
-                      </option>
-                      <option value='long-term'>I’m looking to hire a React developer for a full-time role.</option>
-                      <option value='project-build'>
-                        I need a React front-end developer to build a new web application.
-                      </option>
-                      <option value='feature-dev'>
-                        I need a React front-end developer to add new features or improve an existing project.
-                      </option>
-                      <option value='maintenance'>
-                        I'm looking for a React developer for debugging, optimization, or ongoing maintenance.
-                      </option>
-                      <option value='ui-ux-implementation'>I have designs I need implemented in React.</option>
-                      <option value='collaboration'>
-                        I’d like to discuss a partnership or joint project using React.
-                      </option>
-                    </select>
+                    <>
+                      <div
+                        className='contact__form__step__ul__li__select'
+                        aria-label='Open inquiry menu'
+                        tabIndex={0}
+                        onClick={toggleAccordion}>
+                        <span>Select your inquiry</span>
+                        <span>
+                          <MaterialSymbolsList />
+                        </span>
+                      </div>
+                      <ul
+                        ref={accordionRef}
+                        className='contact__form__step__ul__li__accordion'
+                        id={htmlFor}
+                        aria-invalid={!!errors[key]}
+                        aria-describedby={`${htmlFor}-error`}
+                        tabIndex={0}>
+                        {[
+                          `I’m looking to hire a React developer for a full-time role.`,
+                          `I need a React front-end developer to build a new web application.`,
+                          `I need a React front-end developer to add new features or improve an existing project.`,
+                          `I'm looking for a React developer for debugging, optimization, or ongoing maintenance.`,
+                          `I have designs I need implemented in React.`,
+                          `I’d like to discuss a partnership or joint project using React.`,
+                        ].map((option, index) => (
+                          <li
+                            className='contact__form__step__ul__li__select__option'
+                            key={`inquiry-option-${index}`}
+                            tabIndex={0}>
+                            {option}
+                          </li>
+                        ))}
+                      </ul>
+                    </>
                   ) : htmlFor === 'message' ? (
                     <textarea
                       id='message'
@@ -470,6 +489,21 @@ function MaterialSymbolsArrowShapeUpStack2(props: SVGProps<SVGSVGElement>) {
       <path
         fill='currentColor'
         d='M9 23v-3H4l8-9l8 9h-5v3zm-5-8l8-9l8 9h-2.675L12 9l-5.325 6zm0-5l8-9l8 9h-2.675L12 4l-5.325 6z'
+      />
+    </svg>
+  );
+}
+
+function MaterialSymbolsList(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      {...props}>
+      {/* Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE */}
+      <path
+        fill='currentColor'
+        d='M7 9V7h14v2zm0 4v-2h14v2zm0 4v-2h14v2zM4 9q-.425 0-.712-.288T3 8t.288-.712T4 7t.713.288T5 8t-.288.713T4 9m0 4q-.425 0-.712-.288T3 12t.288-.712T4 11t.713.288T5 12t-.288.713T4 13m0 4q-.425 0-.712-.288T3 16t.288-.712T4 15t.713.288T5 16t-.288.713T4 17'
       />
     </svg>
   );
